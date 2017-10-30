@@ -26,10 +26,10 @@
 						inHtml += "<option value='" + currentValue.SYSID + "'>" + currentValue.SYSNAME + "</option>\n";
 					});
 					
-					$("#SYSIDCOMBO").append(inHtml);
-					$("#SYSIDCOMBO2").append(inHtml);
+					$("#S_SYSIDCOMBO_L").append(inHtml);
+					$("#S_SYSIDCOMBO_R").append(inHtml);
 					
-					$("#SYSIDCOMBO").change();
+					$("#S_SYSIDCOMBO_L").change();
 				},
 				error:function(e){  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -39,17 +39,17 @@
 		});
 		
 		$(function(){
-			$("#SYSIDCOMBO").change(function() {
+			$("#S_SYSIDCOMBO_L").change(function() {
 				g_menuId1 = "ALL";	//콤보에서 선택 시 무조건 전체를 선택하게 하기
 				
-				$("#MENUIDCOMBO").empty().data('options');
+				$("#S_MENUIDCOMBO_L").empty().data('options');
 				
 				if ($(this).val() == "ALL") {
 					var inHtml = "";
 					
 					inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 					
-					$("#MENUIDCOMBO").append(inHtml);
+					$("#S_MENUIDCOMBO_L").append(inHtml);
 					
 					f_selectPgmList();	//그리드 가져오기
 				} else {
@@ -74,7 +74,7 @@
 								inHtml += "<option value='" + currentValue.MENUID + "' " + selected + ">" + currentValue.MENUNAME + "</option>\n";
 							});
 	
-							$("#MENUIDCOMBO").append(inHtml);
+							$("#S_MENUIDCOMBO_L").append(inHtml);
 							
 							f_selectPgmList();	//그리드 가져오기
 						},
@@ -85,22 +85,22 @@
 				}
 			});
 			
-			$("#SYSIDCOMBO2").change(function() {
+			$("#S_SYSIDCOMBO_R").change(function() {
 				g_menuId2 = "ALL";	//콤보에서 선택 시 무조건 전체를 선택하게 하기
 				
-				$("#MENUIDCOMBO2").empty().data('options');
+				$("#S_MENUIDCOMBO_R").empty().data('options');
 				
-				if ($("#SYSIDCOMBO2").val() == "ALL") {
+				if ($("#S_SYSIDCOMBO_R").val() == "ALL") {
 					var inHtml = "";
 					
 					inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 					
-					$("#MENUIDCOMBO2").append(inHtml);
+					$("#S_MENUIDCOMBO_R").append(inHtml);
 				} else {
 					//메뉴 호출 (SY011001 데이터 사용)
 					$.ajax({ 
 						type: 'POST',
-						data: "SYSID=" + $("#SYSIDCOMBO2").val(),
+						data: "SYSID=" + $("#S_SYSIDCOMBO_R").val(),
 						url: "/home/selectListSysDtl.do", 
 						dataType : 'json' , 
 						success: function(data){
@@ -119,7 +119,7 @@
 								inHtml += "<option value='" + currentValue.MENUID + "' " + selected + ">" + currentValue.MENUNAME + "</option>\n";
 							});
 	
-							$("#MENUIDCOMBO2").append(inHtml);
+							$("#S_MENUIDCOMBO_R").append(inHtml);
 						},
 						error:function(e){  
 							alert("[ERROR]Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -130,7 +130,7 @@
 		})
 		
 		$(function(){
-			$("#MENUIDCOMBO").change(function() {
+			$("#S_MENUIDCOMBO_L").change(function() {
 				f_selectPgmList();
 			});	
 		})
@@ -142,7 +142,7 @@
 				//caption: '시스템 및 메뉴관리' ,
 				url:"/home/selectListMenuPgmTb.do" ,
 				postData : {
-					SYSID:$("#SYSIDCOMBO option:selected").val(),MENUID:$("#MENUIDCOMBO option:selected").val()
+					SYSID:$("#S_SYSIDCOMBO_L option:selected").val(),MENUID:$("#S_MENUIDCOMBO_L option:selected").val()
 				},
 				datatype:"json" ,
 				mtype: 'POST',
@@ -175,24 +175,24 @@
 				onSelectRow: function(ids){
 					var selRowData = $(this).jqGrid('getRowData', ids);
 					
-					$("#SYSIDCOMBO2").val(selRowData.SYSID).attr("selected", "selected").trigger("change");
+					$("#S_SYSIDCOMBO_R").val(selRowData.SYSID).attr("selected", "selected").trigger("change");
 					
 					g_menuId2 = selRowData.MENUID;	//메뉴아이디 무조건 셋팅
 					
-					$("#S_PGMID1").val(selRowData.PGMID);
-					$("#S_PGMID2").val(selRowData.PGMID);
+					$("#S_PGMID_L").val(selRowData.PGMID);
+					$("#S_PGMID_R").val(selRowData.PGMID);
 					$("#S_PGMNAME").val(selRowData.PGMNAME);
 					$("#S_REMARK").val(selRowData.REMARK);
 					$("#S_USEYN").val(selRowData.USEYN).attr("selected", "selected");
 					$("#S_SORTKEY").val(selRowData.SORTKEY);
 				} ,
 				loadComplete: function() {
-					if($("#S_PGMID2").val() != "") {
+					if($("#S_PGMID_R").val() != "") {
 						var ids = jQuery("#leftList").jqGrid('getDataIDs');
 		
 						ids.some(function(currentValue, index, array){
 							var cellData = $("#leftList").jqGrid('getCell', ids[index], 'PGMID');
-							if (cellData == $("#S_PGMID2").val()) {
+							if (cellData == $("#S_PGMID_R").val()) {
 				        		$("#leftList").jqGrid('setSelection', ids[index]);
 				    			return true;
 				        	} else {
@@ -205,31 +205,54 @@
 						});
 					}
 				},
-				hidegrid: false ,
+				hidegrid: false
 			});
 		}
 		
 		$(function() {
 			$("#pgmSearchButton").click(function(){
-				var sysId = $("#SYSIDCOMBO2").val();
+				var sysId = $("#S_SYSIDCOMBO_R").val();
 				
-				var menuId = $("#MENUIDCOMBO2").val();
+				var menuId = $("#S_MENUIDCOMBO_R").val();
 				
-				$("#SYSIDCOMBO").val(sysId).attr("selected", "selected").trigger("change");
+				$("#S_SYSIDCOMBO_L").val(sysId).attr("selected", "selected").trigger("change");
 				
 				g_menuId1 = menuId;	//메뉴아이디 무조건 셋팅
+			});
+		})
+		
+		function f_s_pgmIdSelection() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#pgmSearchButton").click();
+			}
+		}
+		
+		$(function() {
+			$("#selectButton").click(function() {
+				
+				f_selectPgmList();
 			});
 		})
 	</script>
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table class="blueone">
+				<tr>
+					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a></td>
+				</tr>
+			</table>
+		</div>
 		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<table class="blueone">
 				<tr>
 					<td>시스템구분</td>
 					<td>
-						<select id="SYSIDCOMBO" name="SYSIDCOMBO">
+						<select id="S_SYSIDCOMBO_L" name="S_SYSIDCOMBO_L">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
@@ -237,14 +260,14 @@
 				<tr>
 					<td>메뉴구분</td>
 					<td>
-						<select id="MENUIDCOMBO" name="MENUIDCOMBO">
+						<select id="S_MENUIDCOMBO_L" name="S_MENUIDCOMBO_L">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>프로그램명</td>
-					<td><input type="text" id="S_PGMID1" name="S_PGMID1" /></td>
+					<td><input type="text" id="S_PGMID_L" name="S_PGMID_L" /></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
@@ -255,7 +278,7 @@
 				<tr>
 					<td>시스템구분</td>
 					<td>
-						<select id="SYSIDCOMBO2" name="SYSIDCOMBO2">
+						<select id="S_SYSIDCOMBO_R" name="S_SYSIDCOMBO_R">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
@@ -263,14 +286,14 @@
 				<tr>
 					<td>메뉴구분</td>
 					<td>
-						<select id="MENUIDCOMBO2" name="MENUIDCOMBO2">
+						<select id="S_MENUIDCOMBO_R" name="S_MENUIDCOMBO_R">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>프로그램ID</td>
-					<td><input type="text" id="S_PGMID2" name="S_PGMID2" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="pgmSearchButton" name="pgmSearchButton">=></a></td>
+					<td><input type="text" id="S_PGMID_R" name="S_PGMID_R" onkeydown="f_s_pgmIdSelection();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="pgmSearchButton" name="pgmSearchButton">=></a></td>
 				</tr>
 				<tr>
 					<td></td>

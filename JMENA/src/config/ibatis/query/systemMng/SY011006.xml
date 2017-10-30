@@ -5,22 +5,24 @@
 <sqlMap namespace="SY011006">
 	<typeAlias alias="SY011006VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY011006VO"/>
 
-	<resultMap id="SY011006Data" class="SY011006VO">
-		<result property="BANKCODE" 		column="BANKCODE"/>
-		<result property="BANKNAME" 		column="BANKNAME"/>
-		<result property="USEYN" 			column="USEYN"/>
+	<resultMap id="bankMstData" class="SY011006VO">
+		<result property="BANKCODE" 	column="BANKCODE"/>
+		<result property="BANKNAME" 	column="BANKNAME"/>
+		<result property="USEYN" 		column="USEYN"/>
 		<result property="AUXCODE" 		column="AUXCODE"/>
 	</resultMap>
 
-	<select id="selectListEnaBankMst" resultMap="SY011006Data">
+	<select id="selectListBankMst" resultMap="bankMstData">
 		SELECT 
 			T1.BANKCODE, 
 			T1.BANKNAME,
 			T1.USEYN,
 			T1.AUXCODE
-		FROM SY_BANKMST T1
+		FROM sy_bankmst T1
 		WHERE 1=1
-		AND T1.BANKNAME LIKE '%' + #BANKNAME# +'%'
+		<isNotEqual property="BANKNAME" compareValue="">
+			AND T1.BANKNAME LIKE '%$BANKNAME$%'
+		</isNotEqual>
 		ORDER BY T1.BANKCODE ASC
 	</select>
 	

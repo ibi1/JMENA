@@ -75,7 +75,7 @@
 			        	}	        
 					});
 				},
-				hidegrid: false ,
+				hidegrid: false
 			});
 		}
 		
@@ -116,28 +116,27 @@
 				loadComplete: function() {
 					
 				},
-				hidegrid: false ,
+				hidegrid: false
 			});
 		}
 		
 		function f_onEncterUserName() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				f_rightClear("Y");
-				f_selectUserMst();
+				$("#selectButton").click();
 			}
 		}
 		
 		function f_onEncterUserId() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				f_rightClear("N");
 				$("#s_userIdSearchButton").click();
 			}
 		}
 		
 		function f_rightClear(delFlag) {
-			if (delFlag == "Y") $("#S_USERID").val("");
+			if (delFlag == "Y") $("#S_USERNAME_L").val("");
+			if (delFlag == "N") $("#S_USERID").val("");
 			$("#S_USERNAME_R").val("");
 			$("#S_PASSWORD").val("");
 			$("#S_USEYN").val("Y").attr("selected", "selected");
@@ -150,7 +149,14 @@
 		
 		$(function() {
 			$("#s_userIdSearchButton").click(function() {
-				$("#S_USERNAME_L").val("");
+				f_rightClear("Y");
+				f_selectUserMst();
+			});
+		})
+		
+		$(function() {
+			$("#selectButton").click(function() {
+				f_rightClear("N");
 				f_selectUserMst();
 			});
 		})
@@ -158,6 +164,15 @@
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table class="blueone">
+				<tr>
+					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a></td>
+				</tr>
+			</table>
+		</div>
 		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<table class="blueone">
 				<tr>
@@ -204,6 +219,11 @@
 				<tr>
 					<td>모바일</td>
 					<td><input type="text" id="S_MOBILENO" name="S_MOBILENO" /></td>
+				</tr>
+			</table>
+			<table class="blueone">
+				<tr>
+					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="rightSaveButton">저장</a></td>
 				</tr>
 			</table>
 			<table id="rightList"></table>

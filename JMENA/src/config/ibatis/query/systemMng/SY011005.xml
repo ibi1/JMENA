@@ -5,32 +5,61 @@
 <sqlMap namespace="SY011005">
 	<typeAlias alias="SY011005VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY011005VO"/>
 
-	<resultMap id="SY011005Data" class="SY011005VO">
-		<result property="AUX1" 				column="AUX1"/>
-		<result property="AUX1DESC" 		column="AUX1DESC"/>
-		<result property="AUX2" 				column="AUX2"/>
-		<result property="AUX2DESC" 		column="AUX2DESC"/>
-		<result property="AUX3" 				column="AUX3"/>
-		<result property="AUX3DESC" 		column="AUX3DESC"/>
-		<result property="AUX4" 				column="AUX4"/>
-		<result property="AUX4DESC" 		column="AUX4DESC"/>
-		<result property="CCODE" 			column="CCODE"/>
-		<result property="CCODENAME" 	column="CCODENAME"/>
-		<result property="DCODE" 			column="DCODE"/>
+	<resultMap id="ccodeMstData" class="SY011005VO">
+		<result property="CCODE" 		column="CCODE"/>
+		<result property="CCODENAME" 	column="CCODENAME"/>	
+	</resultMap>
+	
+	<resultMap id="ccodeDtlData" class="SY011005VO">
+		<result property="AUX1" 		column="AUX1"/>
+		<result property="AUX1DESC" 	column="AUX1DESC"/>
+		<result property="AUX2" 		column="AUX2"/>
+		<result property="AUX2DESC" 	column="AUX2DESC"/>
+		<result property="AUX3" 		column="AUX3"/>
+		<result property="AUX3DESC" 	column="AUX3DESC"/>
+		<result property="AUX4" 		column="AUX4"/>
+		<result property="AUX4DESC" 	column="AUX4DESC"/>
+		<result property="DCODE" 		column="DCODE"/>
 		<result property="DCODENAME" 	column="DCODENAME"/>
-		<result property="REMARK" 			column="REMARK"/>
+		<result property="REMARK" 		column="REMARK"/>
 		<result property="SORTKEY" 		column="SORTKEY"/>
-		<result property="USERYN" 			column="USERYN"/>
+		<result property="USEYN" 		column="USEYN"/>
 	</resultMap>
 
-	<select id="selectListEnaCcodeMst" resultMap="SY011005Data">
+	<select id="selectListCcodeMst" resultMap="ccodeMstData">
 		SELECT 
 			T1.CCODE, 
 			T1.CCODENAME
-		FROM SY_CCODEMST T1
+		FROM sy_ccodemst T1
 		WHERE 1=1
-		AND T1.CCODENAME = #CCODENAME#
+		<isNotEqual property="CCODENAME" compareValue="">
+			AND T1.CCODENAME LIKE '%$CCODENAME$%'
+		</isNotEqual>
 		ORDER BY T1.CCODE ASC
+	</select>
+	
+	<select id="selectListCcodeDtl" resultMap="ccodeDtlData">
+		SELECT 
+			T1.DCODE,
+			T1.DCODENAME,
+			T1.USEYN,
+			T1.SORTKEY,
+			T1.REMARK,
+			T1.AUX1,
+			T1.AUX1DESC,
+			T1.AUX2,
+			T1.AUX2DESC,
+			T1.AUX3,
+			T1.AUX3DESC,
+			T1.AUX4,
+			T1.AUX4DESC
+		FROM sy_ccodedtl T1
+		WHERE 1=1
+		<isNotEqual property="CCODE" compareValue="">
+			AND T1.CCODE = #CCODE#
+		</isNotEqual>
+		ORDER BY T1.DCODE ASC, T1.SORTKEY
+	
 	</select>
 	
 	<update id="updateEnaCcodeMst">
@@ -57,31 +86,7 @@
 			SYSDATE()
 		)
 	</insert>
-	
-	<select id="selectListEnaCcodeDtl" resultMap="SY011005Data">
-		SELECT 
-			T1.CCODE, 
-			(SELECT CCODENAME FROM SY_CCODEMST WHERE CCODE = T1.CCODE) AS CCODENAME,
-			T1.DCODE,
-			T1.DCODENAME,
-			T1.USERYN,
-			T1.SORTKEY,
-			T1.REMARK,
-			T1.AUX1,
-			T1.AUX1DESC,
-			T1.AUX2,
-			T1.AUX2DESC,
-			T1.AUX3,
-			T1.AUX3DESC,
-			T1.AUX4,
-			T1.AUX4DESC
-		FROM SY_CCODEDTL T1
-		WHERE 1=1
-		AND T1.CCODE = #CCODE#
-		ORDER BY T1.DCODE ASC, T1.SORTKEY
-	
-	</select>
-	
+
 	<update id="updateEnaCcodeDtl">
 		UPDATE SY_CCODEDTL
 		SET

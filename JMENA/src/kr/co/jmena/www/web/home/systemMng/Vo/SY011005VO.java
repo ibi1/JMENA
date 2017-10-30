@@ -16,7 +16,7 @@ public class SY011005VO {
 	private String DCODENAME;
 	private String REMARK;
 	private String SORTKEY;
-	private String USERYN;
+	private String USEYN;
 	
 	
 	public String getAUX1() {
@@ -61,8 +61,8 @@ public class SY011005VO {
 	public String getSORTKEY() {
 		return this.SORTKEY;
 	}
-	public String getUSERYN() {
-		return this.USERYN;
+	public String getUSEYN() {
+		return this.USEYN;
 	}
 	
 	
@@ -108,8 +108,8 @@ public class SY011005VO {
 	public void setSORTKEY(String SORTKEY) {
 		this.SORTKEY = SORTKEY;
 	}
-	public void setUSERYN(String USERYN) {
-		this.USERYN = USERYN;
+	public void setUSEYN(String USEYN) {
+		this.USEYN = USEYN;
 	}
 	
 	

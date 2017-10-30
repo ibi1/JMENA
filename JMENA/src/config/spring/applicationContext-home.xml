@@ -121,7 +121,12 @@
     <bean id="SY011004Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011004Dao"  p:sqlMapClient-ref="sqlMapClient" />
    
     <bean id="SY011005Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011005Ctr" />
+    <bean id="SY011005Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011005Biz" />
+    <bean id="SY011005Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011005Dao"  p:sqlMapClient-ref="sqlMapClient" />
+
     <bean id="SY011006Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011006Ctr" />
+    <bean id="SY011006Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011006Biz" />
+    <bean id="SY011006Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011006Dao"  p:sqlMapClient-ref="sqlMapClient" />
     
     <bean id="SY021001Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY021001Ctr" />
     <bean id="SY021001Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY021001Biz" />

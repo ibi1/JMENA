@@ -10,10 +10,82 @@
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
 
 	<script type="text/javascript">
+		var v_selectUserId = "";	//선택된 사용자
+		
 		$(document).ready(function(){
+			f_selectSysMst();
 			f_selectUserMst4();
 			f_selectUserPgmAuthTb();
 		});
+		
+		function f_selectSysMst() {
+			//시스템 메뉴 호출 (SY011001 데이터 사용)
+		   	$.ajax({ 
+				type: 'POST' ,
+				url: "/home/selectListSysMst.do", 
+				dataType : 'json' , 
+				success: function(data){
+					var inHtml = "";
+					
+					data.rows.forEach(function(currentValue, index, array){
+						inHtml += "<option value='" + currentValue.SYSID + "'>" + currentValue.SYSNAME + "</option>\n";
+					});
+					
+					$("#SYSIDCOMBO").append(inHtml);
+					
+					$("#SYSIDCOMBO").change();
+				},
+				error:function(e){  
+					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+				}  
+			});
+		}
+		
+		$(function(){
+			$("#SYSIDCOMBO").change(function() {
+				$("#MENUIDCOMBO").empty().data('options');
+				
+				if ($(this).val() == "ALL") {
+					var inHtml = "";
+					
+					inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
+					
+					$("#MENUIDCOMBO").append(inHtml);
+					
+					f_selectUserPgmAuthTb();	//그리드 가져오기
+				} else {
+					//메뉴 호출 (SY011001 데이터 사용)
+					$.ajax({ 
+						type: 'POST',
+						data: "SYSID=" + $(this).val(),
+						url: "/home/selectListSysDtl.do", 
+						dataType : 'json' , 
+						success: function(data){
+							var inHtml = "";
+							
+							inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
+							
+							data.rows.forEach(function(currentValue, index, array){
+								inHtml += "<option value='" + currentValue.MENUID + "'>" + currentValue.MENUNAME + "</option>\n";
+							});
+	
+							$("#MENUIDCOMBO").append(inHtml);
+							
+							f_selectUserPgmAuthTb();	//그리드 가져오기
+						},
+						error:function(e){  
+							alert("[ERROR]Menu Combo 호출 중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
+		
+		$(function(){
+			$("#MENUIDCOMBO").change(function() {
+				f_selectUserPgmAuthTb();
+			});	
+		})
 	
 		function f_selectUserMst4() {
 			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
@@ -21,7 +93,8 @@
 			$('#leftList').jqGrid({
 				url:"/home/selectListUserMst4.do",
 				postData : {
-					USERGUBUN:$("#S_USERGUBUN").val(),USERNAME:$("#S_USERNAME").val()
+					USERGUBUN:$("input:radio[name=S_USERGUBUN]:checked").val(),
+					USERNAME:$("#S_USERNAME").val()
 				},
 				datatype:"json" ,
 				mtype: 'POST',
@@ -45,22 +118,28 @@
 				},
 				//height: '100%' ,
 				onSelectRow: function(ids){
-	
+					var selRowData = $(this).jqGrid('getRowData', ids);
+					
+					v_selectUserId = selRowData.USERID;
+					
+					f_selectUserPgmAuthTb();
 				} ,
 				loadComplete: function() {
-					
+					v_selectUserId = "";	//초기화
+					$("#SYSIDCOMBO").val("ALL").attr("selected", "selected").trigger("change");
+					$('#rightList').jqGrid("clearGridData", true);
 				},
-				hidegrid: false ,
+				hidegrid: false
 			});
 		}
 	
-		function f_selectUserPgmAuthTb(userId) {
+		function f_selectUserPgmAuthTb() {
 			$('#rightList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 			
 			$('#rightList').jqGrid({
 				url:"/home/selectListUserPgmAuthTb.do",
 				postData : {
-					USERID:'admin',SYSID:'SY',MENUID:'01'
+					USERID:v_selectUserId,SYSID:$("#SYSIDCOMBO option:selected").val(),MENUID:$("#MENUIDCOMBO option:selected").val()
 				},
 				datatype:"json" ,
 				mtype: 'POST',
@@ -68,9 +147,9 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['시스템코드', '시스템 명', '메뉴코드', '메뉴 명', '프로그램ID', '프로그램 명', '조회', '입력', '수정', '삭제', '출력'] ,
 				colModel:[
-					  {name:"SYSID",		index:'SYSID',		width:60,		align:'center', sortable:false}
+					  {name:"SYSID",		index:'SYSID',		width:60,		align:'center', sortable:false, hidden:true}
 					, {name:"SYSNAME",		index:'SYSNAME',	width:60,		align:'center', sortable:false}
-					, {name:"MENUID",		index:'MENUID',		width:60,		align:'center', sortable:false}
+					, {name:"MENUID",		index:'MENUID',		width:60,		align:'center', sortable:false, hidden:true}
 					, {name:"MENUNAME",		index:'MENUNAME',	width:60,		align:'center', sortable:false}
 					, {name:"PGMID",		index:'PGMID',		width:60,		align:'center', sortable:false}
 					, {name:"PGMNAME",		index:'PGMNAME',	width:60,		align:'center', sortable:false}
@@ -98,13 +177,33 @@
 				loadComplete: function() {
 					
 				},
-				hidegrid: false ,
+				hidegrid: false
 			});
+		}
+		
+		$(function() {
+			$("#selectButton").click(function() {
+				f_selectUserMst4();
+			});
+		})
+		
+		function f_selectUserList() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#selectButton").click();
+			}
 		}
 	</script>
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table class="blueone">
+				<tr>
+					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
+				</tr>
+			</table>
+		</div>
 		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<table class="blueone">
 				<tr>
@@ -116,7 +215,7 @@
 				</tr>
 				<tr>
 					<td>사용자 명</td>
-					<td><input type="text" id="S_USERNAME" name="S_USERNAME" /></td>
+					<td><input type="text" id="S_USERNAME" name="S_USERNAME" onkeydown="f_selectUserList();"/></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
@@ -126,16 +225,16 @@
 				<tr>
 					<td>시스템구분</td>
 					<td>
-						<select id="S_SYSID" name="S_SYSID">
-							<option></option>
+						<select id="SYSIDCOMBO" name="SYSIDCOMBO">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>메뉴구분</td>
 					<td>
-						<select id="S_MENUID" name="S_MENUID">
-							<option></option>
+						<select id="MENUIDCOMBO" name="MENUIDCOMBO">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 				</tr>
