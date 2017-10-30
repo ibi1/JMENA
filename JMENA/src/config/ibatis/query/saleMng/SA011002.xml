@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SA011002">
+	<typeAlias alias="SA011002VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA011002VO"/>
+
+	<resultMap id="SA011002Data" class="SA011002VO">
+		<result property="BRROWAMT" 				column="BRROWAMT"/>
+		<result property="BRROWDATE" 				column="BRROWDATE"/>
+		<result property="BRROWPERIOD" 			column="BRROWPERIOD"/>
+		<result property="BRROWTYPE" 				column="BRROWTYPE"/>
+		<result property="BUYID" 							column="BUYID"/>
+		<result property="CANCELDATE" 				column="CANCELDATE"/>
+		<result property="CANCELYN" 					column="CANCELYN"/>
+		<result property="CONADDRESS" 				column="CONADDRESS"/>
+		<result property="CONJUMINID" 				column="CONJUMINID"/>
+		<result property="CONM2" 						column="CONM2"/>
+		<result property="CONNAME" 					column="CONNAME"/>
+		<result property="CONPY" 						column="CONPY"/>
+		<result property="CONTELNO" 					column="CONTELNO"/>
+		<result property="DCGUBUN" 					column="DCGUBUN"/>
+		<result property="DCRATE" 						column="DCRATE"/>
+		<result property="EXPIREDATE" 				column="EXPIREDATE"/>
+		<result property="EXTENDDATE" 				column="EXTENDDATE"/>
+		<result property="EXTENDYN" 					column="EXTENDYN"/>
+		<result property="JOINTJUMINID" 				column="JOINTJUMINID"/>
+		<result property="JOINTNAME" 					column="JOINTNAME"/>
+		<result property="JOINTSEQ" 					column="JOINTSEQ"/>
+		<result property="JOINTTELNO" 				column="JOINTTELNO"/>
+		<result property="OCCUM2" 						column="OCCUM2"/>
+		<result property="OCCUPY" 						column="OCCUPY"/>
+		<result property="PAPERREGYN" 				column="PAPERREGYN"/>
+		<result property="PAYACCOUNT" 				column="PAYACCOUNT"/>
+		<result property="PAYAMT" 						column="PAYAMT"/>
+		<result property="PAYBANK" 					column="PAYBANK"/>
+		<result property="PAYRATE" 						column="PAYRATE"/>
+		<result property="PERIODGUBUN" 			column="PERIODGUBUN"/>
+		<result property="REMARK" 						column="REMARK"/>
+		<result property="SALEAMT" 					column="SALEAMT"/>
+		<result property="SALEDATE" 					column="SALEDATE"/>
+		<result property="SALEGUBUN" 				column="SALEGUBUN"/>
+		<result property="SALEID" 						column="SALEID"/>
+		<result property="SALERCD" 					column="SALERCD"/>
+		<result property="SELLAMT" 						column="SELLAMT"/>
+		<result property="SELLDANGA" 				column="SELLDANGA"/>
+	</resultMap>
+
+	<select id="selectListEnaSaleMst" resultMap="SA011002Data">
+		SELECT 
+			T1.SALEID,
+			T1.SALEDATE,
+			T1.SALEGUBUN,
+			T1.SALERCD,
+			T1.BUYID,
+			T1.CONNAME,
+			T1.CONJUMINID,
+			T1.CONADDRESS,
+			T1.CONTELNO,
+			T1.CONM2,
+			T1.CONPY,
+			T1.REMARK
+		FROM SA_SALEMST T1
+		WHERE 1=1
+		ORDER BY T1.SALEID ASC
+	</select>
+	
+	<update id="updateEnaSaleMst">
+		UPDATE SA_SALEMST
+		SET
+			SALEDATE = #SALEDATE#,
+			SALEGUBUN = #SALEGUBUN#,
+			SALERCD = #SALERCD#,
+			BUYID = #BUYID#,
+			CONNAME = #CONNAME#,
+			CONJUMINID = #CONJUMINID#,
+			CONADDRESS = #CONADDRESS#,
+			CONTELNO = #CONTELNO#,
+			CONM2 = #CONM2#,
+			CONPY = #CONPY#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE SALEID = #SALEID#
+	</update>
+	
+	<insert id="insertEnaSaleMst">
+		INSERT INTO SA_SALEMST
+		(
+			SALEID,
+			SALEDATE,
+			SALEGUBUN,
+			SALERCD,
+			BUYID,
+			CONNAME,
+			CONJUMINID,
+			CONADDRESS,
+			CONTELNO,
+			CONM2,
+			CONPY,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#SALEID#,
+			#SALEDATE#,
+			#SALEGUBUN#,
+			#SALERCD#,
+			#BUYID#,
+			#CONNAME#,
+			#CONJUMINID#,
+			#CONADDRESS#,
+			#CONTELNO#,
+			#CONM2#,
+			#CONPY#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+
+	<select id="selectListEnaSaleBDtl" resultMap="SA011002Data">
+		SELECT 
+			T1.SALEID,
+			T1.BRROWTYPE,
+			T1.BRROWAMT,
+			T1.BRROWPERIOD,
+			T1.PERIODGUBUN,
+			T1.BRROWDATE,
+			T1.EXPIREDATE,
+			T1.PAYRATE,
+			T1.PAYAMT,
+			T1.PAYACCOUNT,
+			T1.PAYBANK,
+			T1.EXTENDYN,
+			T1.EXTENDDATE,
+			T1.CANCELYN,
+			T1.CANCELDATE
+		FROM SA_SALEBDTL T1
+		WHERE 1=1
+		ORDER BY T1.SALEID ASC
+	</select>
+	
+	<update id="updateEnaSaleBDtl">
+		UPDATE SA_SALEBDTL
+		SET
+			BRROWTYPE = #BRROWTYPE#,
+			BRROWAMT = #BRROWAMT#,
+			BRROWPERIOD = #BRROWPERIOD#,
+			PERIODGUBUN = #PERIODGUBUN#,
+			BRROWDATE = #BRROWDATE#,
+			EXPIREDATE = #EXPIREDATE#,
+			PAYRATE = #PAYRATE#,
+			PAYAMT = #PAYAMT#,
+			PAYACCOUNT = #PAYACCOUNT#,
+			PAYBANK = #PAYBANK#,
+			EXTENDYN = #EXTENDYN#,
+			EXTENDDATE = #EXTENDDATE#,
+			CANCELYN = #CANCELYN#,
+			CANCELDATE = #CANCELDATE#
+		WHERE SALEID = #SALEID#
+	</update>
+	
+	<insert id="insertEnaSaleBDtl">
+		INSERT INTO SA_SALEBDTL
+		(
+			SALEID,
+			BRROWTYPE,
+			BRROWAMT,
+			BRROWPERIOD,
+			PERIODGUBUN,
+			BRROWDATE,
+			EXPIREDATE,
+			PAYRATE,
+			PAYAMT,
+			PAYACCOUNT,
+			PAYBANK,
+			EXTENDYN,
+			EXTENDDATE,
+			CANCELYN,
+			CANCELDATE
+		)
+		VALUES(
+			#SALEID#,
+			#BRROWTYPE#,
+			#BRROWAMT#,
+			#BRROWPERIOD#,
+			#PERIODGUBUN#,
+			#BRROWDATE#,
+			#EXPIREDATE#,
+			#PAYRATE#,
+			#PAYAMT#,
+			#PAYACCOUNT#,
+			#PAYBANK#,
+			#EXTENDYN#,
+			#EXTENDDATE#,
+			#CANCELYN#,
+			#CANCELDATE#
+		)
+	</insert>
+
+	<select id="selectListEnaSaleJNTb" resultMap="SA011002Data">
+		SELECT 
+			T1.SALEID,
+			T1.JOINTSEQ,
+			T1.JOINTNAME,
+			T1.JOINTJUMINID,
+			T1.JOINTTELNO,
+			T1.OCCUM2,
+			T1.OCCUPY,
+			T1.SALEAMT,
+			T1.SELLDANGA,
+			T1.DCGUBUN,
+			T1.DCRATE,
+			T1.SELLAMT,
+			T1.PAPERREGYN,
+			T1.REMARK
+		FROM SA_JOINTNAMETB T1
+		WHERE 1=1
+		AND T1.SALEID = #SALEID# 
+		AND T1.JOINTSEQ = #JOINTSEQ# 
+		ORDER BY T1.SALEID ASC
+	</select>
+	
+	<update id="updateEnaSaleJNTb">
+		UPDATE SA_JOINTNAMETB
+		SET
+			JOINTNAME = #JOINTNAME#,
+			JOINTJUMINID = #JOINTJUMINID#,
+			JOINTTELNO = #JOINTTELNO#,
+			OCCUM2 = #OCCUM2#,
+			OCCUPY = #OCCUPY#,
+			SALEAMT = #SALEAMT#,
+			SELLDANGA = #SELLDANGA#,
+			DCGUBUN = #DCGUBUN#,
+			DCRATE = #DCRATE#,
+			SELLAMT = #SELLAMT#,
+			PAPERREGYN = #PAPERREGYN#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = #UPDATEDATE#
+		WHERE SALEID = #SALEID# 
+		AND JOINTSEQ = #JOINTSEQ# 
+	</update>
+	
+	<insert id="insertEnaSaleJNTb">
+		INSERT INTO SA_JOINTNAMETB
+		(
+			SALEID,
+			JOINTSEQ,
+			JOINTNAME,
+			JOINTJUMINID,
+			JOINTTELNO,
+			OCCUM2,
+			OCCUPY,
+			SALEAMT,
+			SELLDANGA,
+			DCGUBUN,
+			DCRATE,
+			SELLAMT,
+			PAPERREGYN,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#SALEID#,
+			#JOINTSEQ#,
+			#JOINTNAME#,
+			#JOINTJUMINID#,
+			#JOINTTELNO#,
+			#OCCUM2#,
+			#OCCUPY#,
+			#SALEAMT#,
+			#SELLDANGA#,
+			#DCGUBUN#,
+			#DCRATE#,
+			#SELLAMT#,
+			#PAPERREGYN#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+
+</sqlMap>

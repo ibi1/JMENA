@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SY021002">
+	<typeAlias alias="SY021002VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO"/>
+
+	<resultMap id="BranchMstData" class="SY021002VO">
+		<result property="BRANCHCODE" 		column="BRANCHCODE"/>
+		<result property="BRANCHNAME" 		column="BRANCHNAME"/>
+		<result property="USEYN" 			column="USEYN"/>
+	</resultMap>
+	
+	<resultMap id="DeptMstData" class="SY021002VO">
+		<result property="DEPTCODE" 		column="DEPTCODE"/>
+		<result property="DEPTNAME" 		column="DEPTNAME"/>
+		<result property="BRANCHCODE" 		column="BRANCHCODE"/>
+		<result property="DEPTGUBUN" 		column="DEPTGUBUN"/>
+		<result property="SORTKEY" 			column="SORTKEY"/>
+		<result property="USEYN" 			column="USEYN"/>
+		<result property="REMARK" 			column="REMARK"/>
+		
+	</resultMap>
+
+	<select id="selectListEnaBranchMst" resultMap="BranchMstData">
+		SELECT 
+			T1.BRANCHCODE,
+			T1.BRANCHNAME,
+			T1.USEYN
+		FROM ba_branchmst T1
+		WHERE 1=1
+		<isNotEmpty property="BRANCHNAME">
+		AND T1.BRANCHNAME LIKE '%$BRANCHNAME$%'  
+		</isNotEmpty>
+		<isNotEmpty property="BRANCHCODE">
+		AND T1.BRANCHCODE = #BRANCHCODE#
+		</isNotEmpty>
+		
+	</select>
+	
+	<update id="updateEnaBranchMst">
+		UPDATE ba_branchmst
+		SET
+			BRANCHNAME = #BRANCHNAME#,
+			USEYN = #USEYN#,
+			UPDATEUSER = 'admin',
+			UPDATEDATE = NOW()
+		WHERE BRANCHCODE = #BRANCHCODE#
+	</update>
+	
+	<insert id="insertEnaBranchMst">
+		INSERT INTO ba_branchmst
+		(
+			BRANCHCODE,
+			BRANCHNAME,
+			USEYN,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#BRANCHCODE#,
+			#BRANCHNAME#,
+			#USEYN#,
+			'admin',
+			NOW()
+		)
+	</insert>
+	
+	<select id="selectListEnaDeptMst" resultMap="DeptMstData">
+		SELECT 
+			T1.DEPTCODE,
+			T1.DEPTNAME,
+			T1.BRANCHCODE,
+			T1.DEPTGUBUN,
+			T1.SORTKEY,
+			T1.USEYN,
+			T1.REMARK
+		FROM ba_deptmst T1
+		WHERE 1=1
+		AND T1.BRANCHCODE = #BRANCHCODE#
+		ORDER BY T1.SORTKEY ASC
+	</select>
+
+	<select id="chkEnaDeptMst" resultMap="DeptMstData">
+		SELECT 
+			T1.DEPTCODE,
+			T1.DEPTNAME,
+			T1.BRANCHCODE,
+			T1.DEPTGUBUN,
+			T1.SORTKEY,
+			T1.USEYN,
+			T1.REMARK
+		FROM ba_deptmst T1
+		WHERE 1=1
+		AND T1.DEPTGUBUN = #DEPTGUBUN#
+		ORDER BY T1.SORTKEY ASC
+	</select>
+	
+	<update id="updateEnaDeptMst">
+		UPDATE ba_deptmst
+		SET
+			DEPTNAME = #DEPTNAME#,
+			DEPTGUBUN = #DEPTGUBUN#,
+			SORTKEY = #SORTKEY#,
+			USEYN = #USEYN#,
+			REMARK = #REMARK#,
+			UPDATEUSER = 'admin',
+			UPDATEDATE = NOW()
+		WHERE BRANCHCODE = #BRANCHCODE#
+		AND DEPTCODE = #DEPTCODE#
+	</update>
+	
+	<insert id="saveEnaDeptMst">
+		INSERT INTO ba_deptmst
+		(
+			DEPTCODE,
+			DEPTNAME,
+			BRANCHCODE,
+			DEPTGUBUN,
+			SORTKEY,
+			USEYN,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#DEPTCODE#,
+			#DEPTNAME#,
+			#BRANCHCODE#,
+			#DEPTGUBUN#,
+			#SORTKEY#,
+			#USEYN#,
+			#REMARK#,
+			'admin',
+			NOW()
+		)
+	</insert>
+</sqlMap>

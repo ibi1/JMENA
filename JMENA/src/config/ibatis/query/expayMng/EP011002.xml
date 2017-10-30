@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="EP011002">
+
+	<typeAlias alias="EP011002VO" type="kr.co.jmena.www.web.home.expayMng.Vo.EP011002VO"/>
+
+	<resultMap id="EP011002Data" class="EP011002VO">
+		<result property="ACCTNO"				column="ACCTNO"/>
+		<result property="YEARMONTH"		column="YEARMONTH"/>
+		<result property="INSACODE"			column="INSACODE"/>
+		<result property="BRANCHCODE"		column="BRANCHCODE"/>
+		<result property="DEPTCODE"			column="DEPTCODE"/>
+		<result property="GRADE"					column="GRADE"/>
+		<result property="DUTY"					column="DUTY"/>
+		<result property="PAYDATE"				column="PAYDATE"/>
+		<result property="BASICAMT"			column="BASICAMT"/>
+		<result property="ACTAMT"				column="ACTAMT"/>
+		<result property="PRIZEAMT"			column="PRIZEAMT"/>
+		<result property="DAILYAMT"				column="DAILYAMT"/>
+		<result property="TOTALAMT"			column="TOTALAMT"/>
+		<result property="TAXGUBUN"			column="TAXGUBUN"/>
+		<result property="TAXINCOME"			column="TAXINCOME"/>
+		<result property="TAXLOCAL"			column="TAXLOCAL"/>
+		<result property="SUPPLYTAX"			column="SUPPLYTAX"/>
+		<result property="DEDUCTAMT"		column="DEDUCTAMT"/>
+		<result property="BANKID"					column="BANKID"/>
+		<result property="ACCTOWNER"		column="ACCTOWNER"/>
+	</resultMap>
+
+	<select id="selectListEnaMonthPayMst" resultMap="EP011002Data">
+		SELECT 
+			T1.YEARMONTH,
+			T1.INSACODE,
+			T1.BRANCHCODE,
+			T1.DEPTCODE,
+			T1.GRADE,
+			T1.DUTY,
+			T1.PAYDATE,
+			T1.BASICAMT,
+			T1.ACTAMT,
+			T1.PRIZEAMT,
+			T1.DAILYAMT,
+			T1.TOTALAMT,
+			T1.TAXGUBUN,
+			T1.TAXINCOME,
+			T1.TAXLOCAL,
+			T1.SUPPLYTAX,
+			T1.DEDUCTAMT,
+			T1.BANKID,
+			T1.ACCTNO,
+			T1.ACCTOWNER
+		FROM SA_MONTHPAYTB T1
+		WHERE 1=1
+		ORDER BY T1.SALEID ASC, T1.PAYSEQ
+	</select>
+	
+	<update id="updateEnaMonthPayMst">
+		UPDATE SA_MONTHPAYTB
+		SET
+			BRANCHCODE = #BRANCHCODE#,
+			DEPTCODE = #DEPTCODE#,
+			GRADE = #GRADE#,
+			DUTY = #DUTY#,
+			PAYDATE = #PAYDATE#,
+			BASICAMT = #BASICAMT#,
+			ACTAMT = #ACTAMT#,
+			PRIZEAMT = #PRIZEAMT#,
+			DAILYAMT = #DAILYAMT#,
+			TOTALAMT = #TOTALAMT#,
+			TAXGUBUN = #TAXGUBUN#,
+			TAXINCOME = #TAXINCOME#,
+			TAXLOCAL = #TAXLOCAL#,
+			SUPPLYTAX = #SUPPLYTAX#,
+			DEDUCTAMT = #DEDUCTAMT#,
+			BANKID = #BANKID#,
+			ACCTNO = #ACCTNO#,
+			ACCTOWNER = #ACCTOWNER#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE YEARMONTH = #YEARMONTH#
+		AND INSACODE = #INSACODE#
+
+	</update>
+	
+	<insert id="insertEnaMonthPayMst">
+		INSERT INTO SA_MONTHPAYTB
+		(
+			YEARMONTH,
+			INSACODE,
+			BRANCHCODE,
+			DEPTCODE,
+			GRADE,
+			DUTY,
+			PAYDATE,
+			BASICAMT,
+			ACTAMT,
+			PRIZEAMT,
+			DAILYAMT,
+			TOTALAMT,
+			TAXGUBUN,
+			TAXINCOME,
+			TAXLOCAL,
+			SUPPLYTAX,
+			DEDUCTAMT,
+			BANKID,
+			ACCTNO,
+			ACCTOWNER,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#YEARMONTH#,
+			#INSACODE#,
+			#BRANCHCODE#,
+			#DEPTCODE#,
+			#GRADE#,
+			#DUTY#,
+			#PAYDATE#,
+			#BASICAMT#,
+			#ACTAMT#,
+			#PRIZEAMT#,
+			#DAILYAMT#,
+			#TOTALAMT#,
+			#TAXGUBUN#,
+			#TAXINCOME#,
+			#TAXLOCAL#,
+			#SUPPLYTAX#,
+			#DEDUCTAMT#,
+			#BANKID#,
+			#ACCTNO#,
+			#ACCTOWNER#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+</sqlMap> 

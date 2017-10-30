@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SY011001">
+	<typeAlias alias="SY011001VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO"/>
+
+	<resultMap id="sysMstData" class="SY011001VO">
+		<result property="SYSID" 		column="SYSID"/>
+		<result property="SYSNAME" 		column="SYSNAME"/>
+		<result property="SORTKEY" 		column="SORTKEY"/>
+	</resultMap>
+	
+	<resultMap id="sysDtlData" class="SY011001VO">
+		<result property="MENUID" 		column="MENUID"/>
+		<result property="MENUNAME" 		column="MENUNAME"/>
+		<result property="USEYN" 		column="USEYN"/>
+		<result property="SORTKEY" 		column="SORTKEY"/>
+		<result property="REMARK" 		column="REMARK"/>
+	</resultMap>
+
+	<select id="selectListSysMst" resultMap="sysMstData">
+		SELECT 
+			T1.SYSID, 
+			T1.SYSNAME, 
+			T1.SORTKEY
+		FROM sy_sysmst T1
+		WHERE 1=1
+		ORDER BY T1.SORTKEY ASC
+	</select>
+	
+	<select id="selectListSysDtl" resultMap="sysDtlData">
+		SELECT 
+			T1.MENUID,
+			T1.MENUNAME,
+			T1.USEYN,
+			T1.SORTKEY,
+			T1.REMARK
+		FROM sy_menutb T1
+		WHERE 1=1
+		AND T1.SYSID = #SYSID#
+		ORDER BY T1.SORTKEY ASC
+	</select>
+
+	<update id="updateEnaSysMst">
+		UPDATE sy_sysmst
+		SET
+			SYSNAME = #SYSNAME#,
+			SORTKEY = #SORTKEY#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE SYSID = #SYSID#
+	</update>
+	
+	<insert id="insertEnaSysMst">
+		INSERT INTO sy_sysmst
+		(
+			SYSID,
+			SYSNAME,
+			SORTKEY,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#SYSID#,
+			#SYSNAME#,
+			#SORTKEY#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+	<update id="updateEnaSysMenu">
+		UPDATE sy_sysmenu
+		SET
+			MENUNAME = #MENUNAME#,
+			USEYN = #USEYN#,
+			SORTKEY = #SORTKEY#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE SYSID = #SYSID#
+		AND MENUID = #MENUID#
+	</update>
+	
+	<insert id="insertEnaSysMenu">
+		INSERT INTO SY_SYSMENU
+		(
+			SYSID,
+			MENUID,
+			MENUNAME,
+			USEYN,
+			SORTKEY,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#SYSID#,
+			#MENUID#,
+			#MENUNAME#,
+			#USYN#,
+			#SORTKEY#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+</sqlMap>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SY021001">
+	<typeAlias alias="SY021001VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY021001VO"/>
+
+	<resultMap id="SY021001Data" class="SY021001VO">
+		<result property="COMPANYNO" 		column="COMPANYNO"/>
+		<result property="SANGHO" 			column="SANGHO"/>
+		<result property="OWNERNAME" 		column="OWNERNAME"/>
+		<result property="OPENDATE" 		column="OPENDATE"/>
+		<result property="REGISTNO" 		column="REGISTNO"/>
+		<result property="ADDRESS" 			column="ADDRESS"/>
+		<result property="ADDRESS_HEAD" 	column="ADDRESS_HEAD"/>
+		<result property="UPTAE" 			column="UPTAE"/>
+		<result property="UPJONG" 			column="UPJONG"/>
+		<result property="TELNO" 			column="TELNO"/>
+		<result property="RELEASEDATE" 		column="RELEASEDATE"/>
+		<result property="RELEASEDESC" 		column="RELEASEDESC"/>
+		<result property="TAXOFFICE" 		column="TAXOFFICE"/>
+	</resultMap>
+	
+	<select id="selectListEnaCompanyMst" resultMap="SY021001Data">
+		SELECT 
+			T1.COMPANYNO,
+			T1.SANGHO,
+			T1.OWNERNAME,
+			T1.OPENDATE,
+			T1.REGISTNO,
+			T1.ADDRESS,
+			T1.ADDRESS_HEAD,
+			T1.UPTAE,
+			T1.UPJONG,
+			T1.TELNO,
+			T1.RELEASEDATE,
+			T1.RELEASEDESC,
+			T1.TAXOFFICE
+		FROM ba_companymst T1
+		WHERE 1=1
+		<isNotEmpty property="COMPANYNO">
+			AND T1.COMPANYNO = #COMPANYNO#
+		</isNotEmpty>
+	</select>
+	
+	<update id="updateEnaCompanyMst">
+		UPDATE ba_companymst
+		SET
+			SANGHO 			= #SANGHO#,
+			OWNERNAME 		= #OWNERNAME#,
+			OPENDATE 		= #OPENDATE#,
+			REGISTNO 		= #REGISTNO#,
+			ADDRESS 		= #ADDRESS#,
+			ADDRESS_HEAD 	= #ADDRESS_HEAD#,
+			UPTAE 			= #UPTAE#,
+			UPJONG 			= #UPJONG#,
+			TELNO 			= #TELNO#,
+			RELEASEDATE 	= #RELEASEDATE#,
+			RELEASEDESC 	= #RELEASEDESC#,
+			TAXOFFICE 		= #TAXOFFICE#,
+			UPDATEUSER 		= 'admin',
+			UPDATEDATE 		= NOW()
+		WHERE COMPANYNO =  #COMPANYNO#
+	</update>
+	
+	<insert id="insertEnaCompanyMst">
+		INSERT INTO ba_companymst
+		(
+			COMPANYNO,
+			SANGHO,
+			OWNERNAME,
+			OPENDATE,
+			REGISTNO,
+			ADDRESS,
+			ADDRESS_HEAD,
+			UPTAE,
+			UPJONG,
+			TELNO,
+			RELEASEDATE,
+			RELEASEDESC,
+			TAXOFFICE,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#COMPANYNO#,
+			#SANGHO#,
+			#OWNERNAME#,
+			#OPENDATE#,
+			#REGISTNO#,
+			#ADDRESS#,
+			#ADDRESS_HEAD#,
+			#UPTAE#,
+			#UPJONG#,
+			#TELNO#,
+			#RELEASEDATE#,
+			#RELEASEDESC#,
+			#TAXOFFICE#,
+			'admin',
+			NOW()
+		)
+	</insert>
+</sqlMap>

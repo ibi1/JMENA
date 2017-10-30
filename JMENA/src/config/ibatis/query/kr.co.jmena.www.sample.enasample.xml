@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+  
+<sqlMap namespace="kr.co.jmena.www.web.sample">
+
+	<typeAlias alias="enaSampleVO" type="kr.co.jmena.www.web.sample.Vo.EnaSampleVO"/>
+
+	<resultMap id="enaInfo" class="enaSampleVO">
+		<result property="no" column="NO"/>
+		<result property="data" column="DATA"/>
+	</resultMap>
+
+	<select id="selectEnaSample" resultMap="enaInfo">
+		SELECT NO, DATA
+		FROM   TEST
+	</select>
+</sqlMap>

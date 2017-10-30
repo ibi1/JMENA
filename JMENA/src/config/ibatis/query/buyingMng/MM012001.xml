@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MM012001">
+	<typeAlias alias="MM012001VO" type="kr.co.jmena.www.web.home.buyingMng.Vo.MM012001VO"/>
+
+	<resultMap id="MM012001Data" class="MM012001VO">
+		<result property="CITYCODE"		column="CITYCODE"/>
+		<result property="CITYNAME"		column="CITYNAME"/>
+		<result property="BOROUGHCODE"	column="BOROUGHCODE"/>
+		<result property="BOROUGHNAME"	column="BOROUGHNAME"/>
+		<result property="ADDRESS"		column="ADDRESS"/>
+		<result property="OWNERNAME"	column="OWNERNAME"/>
+		<result property="BUYM2"		column="BUYM2"/>
+		<result property="BUYPY"		column="BUYPY"/>
+		<result property="BUNBUYPY"		column="BUNBUYPY"/>
+		<result property="JANBUYPY"		column="JANBUYPY"/>
+		<result property="BUYAMT"		column="BUYAMT"/>
+		<result property="PAYAMT1"		column="PAYAMT1"/>
+		<result property="PAYDATE1"		column="PAYDATE1"/>
+		<result property="PAYAMT2"		column="PAYAMT2"/>
+		<result property="PAYDATE2"		column="PAYDATE2"/>
+		<result property="PAYAMT3"		column="PAYAMT3"/>
+		<result property="PAYDATE3"		column="PAYDATE3"/>
+		<result property="PAYAMT4"		column="PAYAMT4"/>
+		<result property="PAYDATE4"		column="PAYDATE4"/>
+		<result property="JANPAYAMT"	column="JANPAYAMT"/>
+		<result property="OPENYN"		column="OPENYN"/>
+		<result property="REMARK"		column="REMARK"/>
+	</resultMap>
+
+	<select id="selectListEnaBuyMstP" resultMap="MM012001Data">
+		SELECT
+			T1.CITYCODE,
+			(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
+			T1.BOROUGHCODE,
+			(SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T1.CITYCODE AND BOROUGHCODE = T1.BOROUGHCODE ) AS BOROUGHNAME,
+			T1.ADDRESS,
+			T1.OWNERNAME,
+			T1.BUYM2,
+			T1.BUYPY,
+			'' AS BUNBUYPY,
+			'' AS JANBUYPY,
+			T1.BUYAMT,
+			'' AS PAYAMT1,
+			'' AS PAYDATE1,
+			'' AS PAYAMT2,
+			'' AS PAYDATE2,
+			'' AS PAYAMT3,
+			'' AS PAYDATE3,
+			'' AS PAYAMT4,
+			'' AS PAYDATE4,
+			'' AS JANPAYAMT,
+			'' AS OPENYN,
+			T1.REMARK
+		FROM mm_buymst T1
+		WHERE 1=1
+		<isNotEmpty property="S_CITYCODE">
+			AND T1.CITYCODE = #S_CITYCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_BOROUGHCODE">
+			AND T1.BOROUGHCODE = #S_BOROUGHCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_ADDRESS">
+			AND T1.ADDRESS LIKE '%$S_ADDRESS$%'
+		</isNotEmpty>
+		ORDER BY T1.CITYCODE, T1.BOROUGHCODE
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="HR011001">
+
+	<typeAlias alias="HR011001VO" type="kr.co.jmena.www.web.home.personMng.Vo.HR011001VO"/>
+
+	<resultMap id="selectListEnaInsaMstData" class="HR011001VO">
+		<result property="INSACODE" 		column="INSACODE"/>
+		<result property="KNAME" 			column="KNAME"/>
+		<result property="JUMINID" 			column="JUMINID"/>
+		<result property="MOBILENO" 		column="MOBILENO"/>
+		<result property="BRANCHCODE" 		column="BRANCHCODE"/>
+		<result property="BRANCHNAME" 		column="BRANCHNAME"/>
+		<result property="DEPTCODE" 		column="DEPTCODE"/>
+		<result property="DEPTNAME" 		column="DEPTNAME"/>
+	</resultMap>
+
+	<resultMap id="selectEnaInsaMstData" class="HR011001VO">
+		<result property="INSACODE" 		column="INSACODE"/>
+		<result property="KNAME" 			column="KNAME"/>
+		<result property="JUMINID" 			column="JUMINID"/>
+		<result property="BIRTHDAYGUBUN" 	column="BIRTHDAYGUBUN"/>
+		<result property="SAUPID" 			column="SAUPID"/>
+		<result property="SAUPOWNER" 		column="SAUPOWNER"/>
+		<result property="ADDRESS" 			column="ADDRESS"/>
+		<result property="MOBILENO" 		column="MOBILENO"/>
+		<result property="TELNO" 			column="TELNO"/>
+		<result property="BRANCHCODE" 		column="BRANCHCODE"/>
+		<result property="BRANCHNAME" 		column="BRANCHNAME"/>
+		<result property="DEPTCODE" 		column="DEPTCODE"/>
+		<result property="DEPTNAME" 		column="DEPTNAME"/>
+		<result property="EMPLOYGUBUN" 		column="EMPLOYGUBUN"/>
+		<result property="GRADE" 			column="GRADE"/>
+		<result property="DUTY" 			column="DUTY"/>
+		<result property="JOINDATE"			column="JOINDATE"/>
+		<result property="REJOINYN" 		column="REJOINYN"/>
+		<result property="RETIREDATE" 		column="RETIREDATE"/>
+		<result property="RECOLID" 			column="RECOLID"/>
+	</resultMap>
+
+	<resultMap id="HR011001Data" class="HR011001VO">
+	
+		<result property="INSACODE" 		column="INSACODE"/>
+		<result property="KNAME" 			column="KNAME"/>
+		<result property="JUMINID" 			column="JUMINID"/>
+		<result property="BIRTHDAYGUBUN" 	column="BIRTHDAYGUBUN"/>
+		<result property="SAUPID" 			column="SAUPID"/>
+		<result property="SAUPOWNER" 		column="SAUPOWNER"/>
+		<result property="ADDRESS" 			column="ADDRESS"/>
+		<result property="MOBILENO" 		column="MOBILENO"/>
+		<result property="TELNO" 			column="TELNO"/>
+		<result property="BRANCHCODE" 		column="BRANCHCODE"/>
+		<result property="BRANCHNAME" 		column="BRANCHNAME"/>
+		<result property="DEPTCODE" 		column="DEPTCODE"/>
+		<result property="DEPTNAME" 		column="DEPTNAME"/>
+		<result property="EMPLOYGUBUN" 		column="EMPLOYGUBUN"/>
+		<result property="GRADE" 			column="GRADE"/>
+		<result property="DUTY" 			column="DUTY"/>
+		<result property="JOINDATE"			column="JOINDATE"/>
+		<result property="REJOINYN" 		column="REJOINYN"/>
+		<result property="RETIREDATE" 		column="RETIREDATE"/>
+		<result property="RECOLID" 			column="RECOLID"/>
+
+		
+	
+		<result property="ACCTNO" 			column="ACCTNO"/>
+		<result property="ACCTOWNER" 		column="ACCTOWNER"/>
+		<result property="APPOINTBRANCH" 	column="APPOINTBRANCH"/>
+		<result property="APPOINTDATE" 		column="APPOINTDATE"/>
+		<result property="APPOINTDEPT" 		column="APPOINTDEPT"/>
+		<result property="APPOINTGUBUN" 	column="APPOINTGUBUN"/>
+		<result property="APPOINTSEQ" 		column="APPOINTSEQ"/>
+		<result property="BANKID" 			column="BANKID"/>
+		<result property="BASICPAY" 		column="BASICPAY"/>
+		<result property="ITEMSEQ" 			column="ITEMSEQ"/>
+		<result property="PAYERID" 			column="PAYERID"/>
+		<result property="PAYERNAME" 		column="PAYERNAME"/>
+		<result property="PREBASICPAY" 		column="PREBASICPAY"/>
+		<result property="REMARK"			column="REMARK"/>
+	</resultMap>
+
+	<select id="selectListEnaInsaMst" resultMap="selectListEnaInsaMstData">
+		SELECT 
+			T1.INSACODE,
+			T1.KNAME,
+			T1.JUMINID,
+			T1.MOBILENO,
+			T1.BRANCHCODE,
+			(SELECT BRANCHNAME FROM BA_BRANCHMST WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,
+			T1.DEPTCODE,
+			(SELECT DEPTNAME FROM BA_DEPTMST WHERE BRANCHCODE = T1.BRANCHCODE AND DEPTCODE = T1.DEPTCODE) AS DEPTNAME
+		FROM HR_INSAMST T1
+		WHERE 1=1
+		<isNotEmpty property="S_BRANCHCODE">
+			AND T1.BRANCHCODE = #S_BRANCHCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_DEPTCODE">
+			AND T1.DEPTCODE = #S_DEPTCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_KNAME">
+			AND T1.KNAME LIKE CONCAT(‘%’, #S_KNAME#, ‘%’)
+		</isNotEmpty>
+		<isNotEmpty property="S_JUMINID">
+			AND T1.JUMINID LIKE CONCAT(‘%’, #S_JUMINID#, ‘%’) 
+		</isNotEmpty>
+		ORDER BY T1.INSACODE ASC
+	</select>
+
+
+	<select id="selectEnaInsaMst" resultMap="selectListEnaInsaMstData">
+		SELECT 
+			T1.INSACODE,
+			T1.KNAME,
+			T1.JUMINID,
+			T1.BIRTHDAYGUBUN,
+			T1.SAUPID,
+			T1.SAUPOWNER,
+			T1.ADDRESS,
+			T1.MOBILENO,
+			T1.TELNO,
+			T1.BRANCHCODE,
+			(SELECT BRANCHNAME FROM BA_BRANCHMST WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,
+			T1.DEPTCODE,
+			(SELECT DEPTNAME FROM BA_DEPTMST WHERE BRANCHCODE = T1.BRANCHCODE AND DEPTCODE = T1.DEPTCODE) AS DEPTNAME,
+			T1.BASICPAY,
+			T1.EMPLOYGUBUN,
+			T1.GRADE,
+			T1.DUTY,
+			T1.JOINDATE,
+			T1.REJOINYN,
+			T1.RETIREDATE,
+			T1.RECOLID,
+			T1.REMARK
+		FROM HR_INSAMST T1
+		WHERE 1=1
+		AND T1.INSACODE = #INSACODE#
+		ORDER BY T1.SORTKEY ASC
+	</select>
+
+
+	
+	<update id="updateEnaInsaMst">
+		UPDATE HR_INSAMST
+		SET
+			KNAME = #KNAME#,
+			JUMINID = #JUMINID#,
+			SAUPID = #SAUPID#,
+			ADDRESS = #ADDRESS#,
+			MOBILENO = #MOBILENO#,
+			TELNO = #TELNO#,
+			BRANCHCODE = #BRANCHCODE#,
+			DEPTCODE = #DEPTCODE#,
+			BASICPAY = #BASICPAY#,
+			EMPLOYGUBUN = #EMPLOYGUBUN#,
+			GRADE = #GRADE#,
+			DUTY = #DUTY#,
+			JOINDATE = #JOINDATE#,
+			REJOINYN = #REJOINYN#,
+			RETIREDATE = #RETIREDATE#,
+			RECOLID = #RECOLID#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE CITYCODE = #CITYCODE#
+	</update>
+	
+	<insert id="insertEnaInsaMst">
+		INSERT INTO HR_INSAMST
+		(
+			INSACODE,
+			KNAME,
+			JUMINID,
+			SAUPID,
+			ADDRESS,
+			MOBILENO,
+			TELNO,
+			BRANCHCODE,
+			DEPTCODE,
+			BASICPAY,
+			EMPLOYGUBUN,
+			GRADE,
+			DUTY,
+			JOINDATE,
+			REJOINYN,
+			RETIREDATE,
+			RECOLID,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#INSACODE#,
+			#KNAME#,
+			#JUMINID#,
+			#SAUPID#,
+			#ADDRESS#,
+			#MOBILENO#,
+			#TELNO#,
+			#BRANCHCODE#,
+			#DEPTCODE#,
+			#BASICPAY#,
+			#EMPLOYGUBUN#,
+			#GRADE#,
+			#DUTY#,
+			#JOINDATE#,
+			#REJOINYN#,
+			#RETIREDATE#,
+			#RECOLID#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+	<select id="selectListEnaAppointItem" resultMap="HR011001Data">
+		SELECT 
+			T1.INSACODE,
+			T1.APPOINTSEQ,
+			T1.APPOINTGUBUN,
+			T1.APPOINTDATE,
+			T1.APPOINTBRANCH,
+			(SELECT BRANCHNAME FROM BA_BRANCHMST WHERE BRANCHCODE = T1.APPOINTBRANCH) AS BRANCHNAME,
+			T1.APPOINTDEPT,
+			(SELECT DEPTNAME FROM BA_DEPTMST WHERE BRANCHCODE = T1.APPOINTBRANCH AND DEPTCODE = T1.APPOINTDEPT) AS DEPTNAME,
+			T1.GRADE,
+			T1.DUTY,
+			T1.EMPLOYGUBUN,
+			T1.PREBASICPAY,
+			T1.REMARK
+		FROM HR_APPOINTITEM T1
+		WHERE 1=1
+		AND T1.INSACODE = #INSACODE#
+		ORDER BY T1.APPOINTDATE DESC
+	</select>
+	
+	<update id="updateEnaAppointItem">
+		UPDATE HR_APPOINTITEM
+		SET
+			APPOINTGUBUN = #APPOINTGUBUN#,
+			APPOINTDATE = #APPOINTDATE#,
+			APPOINTBRANCH = #APPOINTBRANCH#,
+			APPOINTDEPT = #APPOINTDEPT#,
+			GRADE = #GRADE#,
+			DUTY = #DUTY#,
+			EMPLOYGUBUN = #EMPLOYGUBUN#,
+			PREBASICPAY = #PREBASICPAY#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = # UPDATEDATE#
+		WHERE CITYCODE = #CITYCODE#
+		AND BOROUGHCODE = #BOROUGHCODE#
+	</update>
+	
+	<insert id="insertEnaAppointItem">
+		INSERT INTO HR_APPOINTITEM
+		(
+			INSACODE,
+			APPOINTSEQ,
+			APPOINTGUBUN,
+			APPOINTDATE,
+			APPOINTBRANCH,
+			APPOINTDEPT,
+			GRADE,
+			DUTY,
+			EMPLOYGUBUN,
+			PREBASICPAY,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#INSACODE#,
+			#APPOINTSEQ#,
+			#APPOINTGUBUN#,
+			#APPOINTDATE#,
+			#APPOINTBRANCH#,
+			#APPOINTDEPT#,
+			#GRADE#,
+			#DUTY#,
+			#EMPLOYGUBUN#,
+			#PREBASICPAY#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+	<select id="selectListEnaTexPayerItem" resultMap="HR011001Data">
+		SELECT 
+			T1.INSACODE,
+			T1.ITEMSEQ,
+			T1.PAYERNAME,
+			T1.PAYERID,
+			T1.BANKID,
+			T1.ACCTNO,
+			T1.ACCTOWNER,
+			T1.REMARK
+		FROM HR_TEXPAYERITEM T1
+		WHERE 1=1
+		AND T1.INSACODE = #INSACODE#
+		ORDER BY T1.APPOINTDATE DESC
+	</select>
+	
+	<update id="updateEnaTexPayerItem">
+		UPDATE HR_TEXPAYERITEM
+		SET
+			PAYERNAME = #PAYERNAME#,
+			PAYERID = #PAYERID#,
+			BANKID = #BANKID#,
+			ACCTNO = #ACCTNO#,
+			ACCTOWNER = #ACCTOWNER#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = # UPDATEDATE#
+		WHERE CITYCODE = #CITYCODE#
+		AND BOROUGHCODE = #BOROUGHCODE#
+	</update>
+	
+	<insert id="insertEnaTexPayerItem">
+		INSERT INTO HR_TEXPAYERITEM
+		(
+			INSACODE,
+			ITEMSEQ,
+			PAYERNAME,
+			PAYERID,
+			BANKID,
+			ACCTNO,
+			ACCTOWNER,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#INSACODE#,
+			#ITEMSEQ#,
+			#PAYERNAME#,
+			#PAYERID#,
+			#BANKID#,
+			#ACCTNO#,
+			#ACCTOWNER#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+</sqlMap>

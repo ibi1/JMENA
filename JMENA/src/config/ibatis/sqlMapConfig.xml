@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+	<settings cacheModelsEnabled="true" 
+		enhancementEnabled="true"
+		lazyLoadingEnabled="true" 
+		maxRequests="512" 
+		maxSessions="128"
+		maxTransactions="64" 
+		useStatementNamespaces="true" />
+
+	<!-- sample -->
+	<!-- sqlMap resource="/config/ibatis/query/kr.co.jmena.www.sample.enasample.xml" /-->
+	
+	<!-- 공통코드 -->
+	<sqlMap resource="/config/ibatis/query/codeCom/CODECOM.xml" />
+	
+	<!-- main -->
+	<sqlMap resource="/config/ibatis/query/main/MAIN.xml" />
+	
+	<!-- 인사관리 -->
+	<sqlMap resource="/config/ibatis/query/personMng/HR011001.xml" />
+	<sqlMap resource="/config/ibatis/query/personMng/HR012001.xml" />
+	<sqlMap resource="/config/ibatis/query/personMng/HR012002.xml" />
+	<sqlMap resource="/config/ibatis/query/personMng/HR012003.xml" />
+
+	<!-- 매입관리 -->
+	<sqlMap resource="/config/ibatis/query/buyingMng/MM011001.xml" />
+	<sqlMap resource="/config/ibatis/query/buyingMng/MM012001.xml" />
+
+	<!-- 수당관리 -->
+	<sqlMap resource="/config/ibatis/query/expayMng/EP011001.xml" />
+	<sqlMap resource="/config/ibatis/query/expayMng/EP011002.xml" />
+	<sqlMap resource="/config/ibatis/query/expayMng/EP012001.xml" />
+	<sqlMap resource="/config/ibatis/query/expayMng/EP012003.xml" />
+
+	<!-- 매출관리 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA011001.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA011002.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA011003.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012001.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012002.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012003.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012004.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012005.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012006.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012007.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012008.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012009.xml" />
+
+	<!-- 시스템관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011001.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011002.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011003.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011004.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011005.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011006.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY021001.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY021002.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY021003.xml" />
+</sqlMapConfig>

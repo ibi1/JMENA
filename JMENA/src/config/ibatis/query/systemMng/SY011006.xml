@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SY011006">
+	<typeAlias alias="SY011006VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY011006VO"/>
+
+	<resultMap id="SY011006Data" class="SY011006VO">
+		<result property="BANKCODE" 		column="BANKCODE"/>
+		<result property="BANKNAME" 		column="BANKNAME"/>
+		<result property="USEYN" 			column="USEYN"/>
+		<result property="AUXCODE" 		column="AUXCODE"/>
+	</resultMap>
+
+	<select id="selectListEnaBankMst" resultMap="SY011006Data">
+		SELECT 
+			T1.BANKCODE, 
+			T1.BANKNAME,
+			T1.USEYN,
+			T1.AUXCODE
+		FROM SY_BANKMST T1
+		WHERE 1=1
+		AND T1.BANKNAME LIKE '%' + #BANKNAME# +'%'
+		ORDER BY T1.BANKCODE ASC
+	</select>
+	
+	<update id="updateEnaBankMst">
+		UPDATE SY_BANKMST
+		SET
+			BANKNAME = #BANKNAME#,
+			USEYN = #USEYN#,
+			AUXCODE = #AUXCODE#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE BANKCODE = #BANKCODE#
+	</update>
+	
+	<insert id="insertEnaBankMst">
+		INSERT INTO SY_BANKMST
+		(
+			BANKCODE,
+			BANKNAME,
+			USEYN,
+			AUXCODE,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#BANKCODE#,
+			#BANKNAME#,
+			#USEYN#,
+			#AUXCODE#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+</sqlMap>

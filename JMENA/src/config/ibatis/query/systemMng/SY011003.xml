@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SY011003">
+	<typeAlias alias="SY011003VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY011003VO"/>
+
+	<resultMap id="userMstData" class="SY011003VO">
+		<result property="USERID" 		column="USERID"/>
+		<result property="PASSWORD" 	column="PASSWORD"/>
+		<result property="USERNAME" 	column="USERNAME"/>
+		<result property="USEYN" 		column="USEYN"/>
+		<result property="USERGUBUN" 	column="USERGUBUN"/>
+		<result property="PHONENO" 		column="PHONENO"/>
+		<result property="MOBILENO" 	column="MOBILENO"/>
+	</resultMap>
+	
+	<resultMap id="userSysTbData" class="SY011003VO">
+		<result property="SYSID" 		column="SYSID"/>
+		<result property="SYSNAME" 	column="SYSNAME"/>
+		<result property="AUTH_YN" 	column="AUTH_YN"/>
+		<result property="REMARK" 		column="REMARK"/>
+	</resultMap>
+
+	<select id="selectListUserMst" resultMap="userMstData">
+		SELECT 
+			T1.USERID,
+			T1.PASSWORD,
+			T1.USERNAME,
+			T1.USEYN,
+			T1.USERGUBUN,
+			T1.PHONENO,
+			T1.MOBILENO
+		FROM sy_usermst T1
+		WHERE 1=1
+		<isNotEqual property="USERNAME" compareValue="">
+			AND USERNAME LIKE '%$USERNAME$%'
+		</isNotEqual>
+		ORDER BY T1.USERID ASC
+	</select>
+	
+	<select id="selectListUserSysTb" resultMap="userSysTbData">
+		SELECT 
+			T1.SYSID,
+			(SELECT SYSNAME FROM sy_sysmst WHERE SYSID = T1.SYSID) AS SYSNAME,
+			T1.AUTH_YN,
+			T1.REMARK
+		FROM sy_usersystb T1
+		WHERE 1=1
+		AND T1.USERID = #USERID#
+		ORDER BY T1.SYSID ASC
+	</select>
+	
+	<update id="updateEnaUserMst">
+		UPDATE SY_USERMST
+		SET
+			PASSWORD = #PASSWORD#,
+			USERNAME = #USERNAME#,
+			USEYN = #USEYN#,
+			USERGUBUN = #USERGUBUN#,
+			PHONENO = #PHONENO#,
+			MOBILENO = #MOBILENO#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE USERID = #USERID#
+	</update>
+	
+	<insert id="insertEnaUserMst">
+		INSERT INTO SY_USERMST
+		(
+			USERID,
+			PASSWORD,
+			USERNAME,
+			USEYN,
+			USERGUBUN,
+			PHONENO,
+			MOBILENO,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#USERID#,
+			#PASSWORD#,
+			#USERNAME#,
+			#USEYN#,
+			#USERGUBUN#,
+			#PHONENO#,
+			#MOBILENO#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+	<update id="updateEnaUserSysTb">
+		UPDATE SY_USERSYSTB
+		SET	
+			AUTH_YN = #AUTH_YN#,
+			REMARK = #REMARK#
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE USERID = #USERID#
+		AND SYSID = #SYSID#
+	</update>
+	
+	<insert id="insertEnaUserSysTb">
+		INSERT INTO SY_USERSYSTB
+		(
+			USERID,
+			SYSID,
+			AUTH_YN,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#USERID#,
+			#SYSID#,
+			#AUTH_YN#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+
+</sqlMap>

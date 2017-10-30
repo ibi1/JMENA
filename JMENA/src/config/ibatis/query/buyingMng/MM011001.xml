@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MM011001">
+	<typeAlias alias="MM011001VO" type="kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO"/>
+
+	<resultMap id="BuyMstData" class="MM011001VO">
+		<result property="BUYID"			column="BUYID"/>
+		<result property="BUYDATE"			column="BUYDATE"/>
+		<result property="BUYGUBUN"			column="BUYGUBUN"/>
+		<result property="MANAGENO"			column="MANAGENO"/>
+		<result property="CITYCODE"			column="CITYCODE"/>
+		<result property="CITYNAME"			column="CITYNAME"/>
+		<result property="BOROUGHCODE"		column="BOROUGHCODE"/>
+		<result property="BOROUGHNAME"		column="BOROUGHNAME"/>
+		<result property="USETYPE"			column="USETYPE"/>
+		<result property="ADDRESS"			column="ADDRESS"/>
+		<result property="OWNERNAME"		column="OWNERNAME"/>
+		<result property="OWNERJUMINID"		column="OWNERJUMINID"/>
+		<result property="BUYM2"			column="BUYM2"/>
+		<result property="BUYPY"			column="BUYPY"/>
+		<result property="BUNJANM2"			column="BUNJANM2"/>
+		<result property="BUNJANPY"			column="BUNJANPY"/>
+		<result property="BUYAMT"			column="BUYAMT"/>
+		<result property="BUYDANGA"			column="BUYDANGA"/>
+		<result property="REGYN"			column="REGYN"/>
+		<result property="REGDATE"			column="REGDATE"/>
+		<result property="REMARK"			column="REMARK"/>
+	</resultMap>
+
+	<resultMap id="PayScheduleTbData" class="MM011001VO">
+		<result property="BUYID"			column="BUYID"/>
+		<result property="BUYSEQ"			column="BUYSEQ"/>
+		<result property="PAYGUBUN"			column="PAYGUBUN"/>
+		<result property="PAYDATE"			column="PAYDATE"/>
+		<result property="PAYAMT"			column="PAYAMT"/>
+		<result property="PAYYN"			column="PAYYN"/>
+		<result property="REMARK"			column="REMARK"/>
+	</resultMap>
+
+	<resultMap id="SalesOpenTbData" class="MM011001VO">
+		<result property="BUYID"			column="BUYID"/>
+		<result property="BRANCHCODE"		column="BRANCHCODE"/>
+		<result property="OPENYN"			column="OPENYN"/>
+		<result property="HOLDINGYN"		column="HOLDINGYN"/>
+		<result property="HOLDINGM2"		column="HOLDINGM2"/>
+		<result property="HOLDINGPY"		column="HOLDINGPY"/>
+		<result property="HOLDINGDATE"		column="HOLDINGDATE"/>
+		<result property="REMARK"			column="REMARK"/>
+	</resultMap>
+
+	<select id="selectListEnaBuyMst" resultMap="BuyMstData">
+		SELECT 
+			T1.BUYID,
+			T1.BUYDATE,
+			T1.BUYGUBUN,
+			T1.MANAGENO,
+			T1.CITYCODE,
+			(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
+			T1.BOROUGHCODE,
+			(SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T1.CITYCODE AND BOROUGHCODE = T1.BOROUGHCODE) AS BOROUGHNAME,
+			T1.USETYPE,
+			T1.ADDRESS,
+			T1.OWNERNAME,
+			T1.OWNERJUMINID,
+			T1.BUYM2,
+			T1.BUYPY,
+			'' BUNJANM2,
+			'' BUNJANPY,
+			T1.BUYAMT,
+			T1.BUYDANGA,
+			T1.REGYN,
+			T1.REGDATE,
+			T1.REMARK
+		FROM mm_buymst T1
+		WHERE 1=1
+		<isNotEmpty property="LS_BUYDATE_FR">
+			<isNotEmpty property="LS_BUYDATE_TO">
+				AND T1.BUYDATE BETWEEN #LS_BUYDATE_FR# AND #LS_BUYDATE_TO#   
+			</isNotEmpty>	
+		</isNotEmpty>
+		<isNotEmpty property="LS_INSERTUSER">
+			AND T1.INSERTUSER LIKE '%$SLS_INSERTUSER$%'   
+		</isNotEmpty>
+		<isNotEmpty property="LS_ADDRESS">
+			AND T1.ADDRESS LIKE '%$LS_ADDRESS$%'   
+		</isNotEmpty>
+		
+	</select>
+	
+	<update id="updateEnaBuyMst">
+		UPDATE mm_buymst
+		SET
+			BUYDATE = #BUYDATE#,
+			BUYGUBUN = #BUYGUBUN#,
+			MANAGENO = #MANAGENO#,
+			CITYCODE = #CITYCODE#,
+			BOROUNGCODE = #BOROUNGCODE#,
+			USETYPE = #USETYPE#,
+			ADDRESS = #ADDRESS#,
+			OWNERNAME = #OWNERNAME#,
+			OWNERJUMINID = #OWNERJUMINID#,
+			BUYM2 = #BUYM2#,
+			BUYPY = #BUYPY#,
+			BUYAMT = #BUYAMT#,
+			BUYDANGA = #BUYDANGA#,
+			REGYN = #REGYN#,
+			REGDATE = #REGDATE#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE BUYID = #BUYID#
+	</update>
+	
+	<insert id="insertEnaBuyMst">
+		INSERT INTO mm_buymst
+		(
+			BUYID,
+			BUYDATE,
+			BUYGUBUN,
+			MANAGENO,
+			CITYCODE,
+			ADDRESS,
+			USETYPE,
+			OWNERNAME,
+			OWNERJUMINID,
+			BUYM2,
+			BUYPY,
+			BUYAMT,
+			BUYDANGA,
+			REGYN,
+			REGDATE,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#BUYID#,
+			#BUYDATE#,
+			#BUYGUBUN#,
+			#MANAGENO#,
+			#CITYCODE#,
+			#ADDRESS#,
+			#USETYPE#,
+			#OWNERNAME#,
+			#OWNERJUMINID#,
+			#BUYM2#,
+			#BUYPY#,
+			#BUYAMT#,
+			#BUYDANGA#,
+			#REGYN#,
+			#REGDATE#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+	<select id="selectListEnaPayScheduleTb" resultMap="PayScheduleTbData">
+		SELECT 
+			T1.BUYID,
+			T1.BUYSEQ,
+			T1.PAYGUBUN,
+			T1.PAYDATE,
+			T1.PAYAMT,
+			T1.PAYYN,
+			T1.REMARK
+		FROM mm_payscheduletb T1
+		WHERE 1=1
+		AND T1.BUYID = #BUYID#
+		ORDER BY T1.BUYSEQ DESC
+	</select>
+	
+	<update id="updateEnaPayScheduleTb">
+		UPDATE mm_payscheduletb
+		SET
+			PAYGUBUN = #PAYGUBUN#,
+			PAYDATE = #PAYDATE#,
+			PAYAMT = #PAYAMT#,
+			PAYYN = #PAYYN#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = # UPDATEDATE#
+		WHERE BUYID = #BUYID#
+		AND BUYSEQ = #BUYSEQ#
+	</update>
+	
+	<insert id="insertEnaPayScheduleTb">
+		INSERT INTO mm_payscheduletb
+		(
+			BUYID,
+			BUYSEQ,
+			PAYGUBUN,
+			PAYDATE,
+			PAYAMT,
+			PAYYN,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#BUYID#,
+			#BUYSEQ#,
+			#PAYGUBUN#,
+			#PAYDATE#,
+			#PAYAMT#,
+			#PAYYN#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+	<select id="selectListEnaSalesOpenTb" resultMap="SalesOpenTbData">
+		SELECT 
+			T1.BUYID,
+			T1.BRANCHCODE,
+			T1.OPENYN,
+			T1.HOLDINGYN,
+			T1.HOLDINGM2,
+			T1.HOLDINGPY,
+			T1.HOLDINGDATE,
+			T1.REMARK
+		FROM mm_salesopentb T1
+		WHERE 1=1
+		AND T1.BUYID = #BUYID#
+	</select>
+	
+	<update id="updateEnaTexSalesOpenTb">
+		UPDATE mm_salesopentb
+		SET
+			OPENYN = #OPENYN#,
+			HOLDINGYN = #HOLDINGYN#,
+			HOLDINGM2 = #HOLDINGM2#,
+			HOLDINGPY = #HOLDINGPY#,
+			HOLDINGDATE = #HOLDINGDATE#,
+			REMARK = #REMARK#
+		WHERE BUYID = #BUYID#
+		AND BRANCHCODE = #BRANCHCODE#
+	</update>
+	
+	<insert id="insertEnaTexSalesOpenTb">
+		INSERT INTO mm_salesopentb
+		(
+			BUYID,
+			BRANCHCODE,
+			OPENYN,
+			HOLDINGYN,
+			HOLDINGM2,
+			HOLDINGPY,
+			HOLDINGDATE,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#BUYID#,
+			#BRANCHCODE#,
+			#OPENYN#,
+			#HOLDINGYN#,
+			#HOLDINGM2#,
+			#HOLDINGPY#,
+			#HOLDINGDATE#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+</sqlMap>

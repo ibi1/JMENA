@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SY011004">
+	<typeAlias alias="SY011004VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY011004VO"/>
+
+	<resultMap id="userMst4Data" class="SY011004VO">
+		<result property="USERID" 				column="USERID"/>
+		<result property="USERNAME" 			column="USERNAME"/>
+	</resultMap>
+	
+	<resultMap id="userPgmAuthTbData" class="SY011004VO">
+		<result property="SYSID" 		column="SYSID"/>
+		<result property="SYSNAME" 		column="SYSNAME"/>
+		<result property="MENUID" 		column="MENUID"/>
+		<result property="MENUNAME" 	column="MENUNAME"/>
+		<result property="PGMID" 		column="PGMID"/>
+		<result property="PGMNAME" 		column="PGMNAME"/>
+		<result property="AUTH_S" 		column="AUTH_S"/>
+		<result property="AUTH_I" 		column="AUTH_I"/>
+		<result property="AUTH_U" 		column="AUTH_U"/>
+		<result property="AUTH_D" 		column="AUTH_D"/>
+		<result property="AUTH_P" 		column="AUTH_P"/>
+	</resultMap>
+
+	<select id="selectListUserMst4" resultMap="userMst4Data">
+		SELECT 
+			T1.USERID,
+			T1.USERNAME
+		FROM sy_usermst T1
+		WHERE 1=1
+		AND T1.USEYN = 'Y'
+		AND T1.USERGUBUN = #USERGUBUN#
+		<isNotEqual property="USERNAME" compareValue="">
+			AND T1.USERNAME LIKE '%$USERNAME$%'
+		</isNotEqual>
+		ORDER BY T1.USERID ASC
+	</select>
+	
+	<select id="selectListUserPgmAuthTb" resultMap="userPgmAuthTbData">
+		SELECT 
+            T1.SYSID,
+			(SELECT SYSNAME FROM sy_sysmst WHERE SYSID = T1.SYSID) AS SYSNAME,
+			T1.MENUID,
+			(SELECT MENUNAME FROM sy_menutb WHERE SYSID = T1.SYSID AND MENUID = T1.MENUID) AS MENUNAME,
+			T1.PGMID,
+			(SELECT PGMNAME FROM sy_menupgmtb WHERE SYSID = T1.SYSID AND MENUID = T1.MENUID AND PGMID = T1.PGMID) AS PGMNAME,
+			T1.AUTH_S,
+			T1.AUTH_I,
+			T1.AUTH_U,
+			T1.AUTH_D,
+			T1.AUTH_P
+		FROM sy_userpgmauthtb T1
+		WHERE 1=1
+		AND T1.USERID = #USERID#
+		<isNotEqual property="SYSID" compareValue="ALL">
+			AND T1.SYSID = #SYSID#
+		</isNotEqual>
+		<isNotEqual property="MENUID" compareValue="ALL">
+			AND T1.MENUID = #MENUID#
+		</isNotEqual>
+		ORDER BY T1.PGMID ASC
+	</select>
+	
+	<update id="updateEnaUserPgmAuthTb">
+		UPDATE SY_USERPGMAUTHTB
+		SET
+			AUTH_S = #AUTH_S#,
+			AUTH_S = #AUTH_I#,
+			AUTH_S = #AUTH_U#,
+			AUTH_S = #AUTH_D#,
+			AUTH_S = #AUTH_P#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATE_DATE = SYSDATE()
+		WHERE USERID = #USERID#
+		AND SYSID = #SYSID#
+		AND MENUID = #MENUID#
+		AND PGMID = #PGMID#
+	</update>
+	
+	<insert id="insertEnaUserPgmAuthTb">
+		INSERT INTO SY_USERPGMAUTHTB
+		(
+			USERID,
+			PGMID,
+			SYSID,
+			MENUID,
+			AUTH_S,
+			AUTH_I,
+			AUTH_U,
+			AUTH_D,
+			AUTH_P,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#USERID#,
+			#PGMID#,
+			#SYSID#,
+			#MENUID#,
+			#AUTH_S#,
+			#AUTH_I#,
+			#AUTH_U#,
+			#AUTH_D#,
+			#AUTH_P#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+</sqlMap>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MAIN">
+	<typeAlias alias="mainVO" type="kr.co.jmena.www.web.home.main.Vo.MainVO"/>
+
+	<resultMap id="mainData" class="mainVO">
+		<result property="USERID" column="USERID"/>
+		<result property="PASSWORD" column="PASSWORD"/>
+		<result property="USERNAME" column="USERNAME"/>
+	</resultMap>
+	
+	<resultMap id="systemMenuData" class="mainVO">
+		<!-- 시스템 메뉴 -->
+		<result property="SYSID" column="SYSID"/>
+		<result property="SYSNAME" column="SYSNAME"/>
+	</resultMap>
+	
+	<resultMap id="treeMenuData" class="mainVO">
+		<!-- 트리 메뉴 -->
+		<result property="MENUID" column="MENUID"/>
+		<result property="MENUNAME" column="MENUNAME"/>
+	</resultMap>
+	
+	<resultMap id="treePgmData" class="mainVO">
+		<!-- 트리 프로그램 메뉴 -->
+		<result property="MENUID" column="MENUID"/>
+		<result property="PGMID" column="PGMID"/>
+		<result property="PGMNAME" column="PGMNAME"/>
+	</resultMap>
+	
+ 	<select id="selectUserInfo" resultMap="mainData">
+		SELECT 
+			USERID,
+			PASSWORD,
+			USERNAME
+		FROM sy_usermst
+		WHERE USERID = #USERID#
+		  AND PASSWORD = #PASSWORD#
+	</select>
+	
+	<select id="selectSystemMenu" resultMap="systemMenuData">
+		SELECT 
+			SYSID, SYSNAME 
+		FROM sy_sysmst 
+		ORDER BY SORTKEY
+	</select>
+	
+	<select id="selectMenuTb" resultMap="treeMenuData">
+		SELECT 
+			MENUID, MENUNAME
+		FROM sy_menutb
+		WHERE SYSID = #SYSID#
+		  AND USEYN = 'Y'
+		ORDER BY SORTKEY
+	</select>
+	
+	<select id="selectPgmTb" resultMap="treePgmData">
+		SELECT 
+			MENUID, PGMID, PGMNAME 
+		FROM sy_menupgmtb
+		WHERE SYSID = #SYSID#
+		   AND USEYN = 'Y'
+		ORDER BY MENUID, SORTKEY
+	</select>
+</sqlMap>

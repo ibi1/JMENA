@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SA012001">
+	<typeAlias alias="SA012001VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA012001VO"/>
+
+	<resultMap id="SA012001Data" class="SA012001VO">
+
+		<result property="BRANCHCODE" 		column="BRANCHCODE"/>
+		<result property="BRANCHNAME" 		column="BRANCHNAME"/>
+		<result property="DEPTCODE" 		column="DEPTCODE"/>
+		<result property="DEPTNAME" 		column="DEPTNAME"/>
+		<result property="GRADE" 			column="GRADE"/>
+		<result property="KNAME" 			column="KNAME"/>
+		<result property="JOINDATE" 		column="JOINDATE"/>
+		<result property="RETIREDATE" 		column="RETIREDATE"/>
+		<result property="O_BRANCHCODE" 	column="O_BRANCHCODE"/>
+		<result property="O_BRANCHNAME" 	column="O_BRANCHNAME"/>
+		<result property="O_JOINDATE" 		column="O_JOINDATE"/>
+		<result property="O_RETIREDATE" 	column="O_RETIREDATE"/>
+		<result property="EMPLOYGUBUN" 		column="EMPLOYGUBUN"/>
+		<result property="AMT1" 			column="AMT1"/>
+		<result property="AMT2" 			column="AMT2"/>
+		<result property="AMT3" 			column="AMT3"/>
+		<result property="AMT4" 			column="AMT4"/>
+		<result property="AMT5" 			column="AMT5"/>
+		<result property="AMT6" 			column="AMT6"/>
+		<result property="TOTAMT" 			column="TOTAMT"/>
+	</resultMap>
+
+	<select id="selectListEnaSaleMstP" resultMap="SA012001Data">
+		SELECT 
+			'' AS BRANCHCODE,
+			'' AS BRANCHNAME,
+			'' AS DEPTCODE,
+			'' AS DEPTNAME,
+			'' AS GRADE,
+			'' AS KNAME,
+			'' AS JOINDATE,
+			'' AS RETIREDATE,
+			'' AS O_BRANCHCODE,
+			'' AS O_BRANCHNAME,
+			'' AS O_JOINDATE,
+			'' AS O_RETIREDATE,
+			'' AS EMPLOYGUBUN,
+			'' AS AMT1,
+			'' AS AMT2,
+			'' AS AMT3,
+			'' AS AMT4,
+			'' AS AMT5,
+			'' AS AMT6,
+			'' AS TOTAMT
+		FROM sa_salemst T1
+		WHERE 1=1
+		<isNotEmpty property="S_SALEDATE">
+			AND T1.SALEDATE = #S_SALEDATE#
+		</isNotEmpty>
+		<isNotEmpty property="S_BOROUGHCODE">
+			AND T1.BOROUGHCODE = #S_BOROUGHCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_KNAME">
+			AND T1.KNAME LIKE '%$S_KNAME$%'
+		</isNotEmpty>
+		
+	</select>
+		
+</sqlMap>

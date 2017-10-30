@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="HR012003">
+
+	<typeAlias alias="HR012003VO" type="kr.co.jmena.www.web.home.personMng.Vo.HR012003VO"/>
+
+	<resultMap id="HR012003Data" class="HR012003VO">
+		<result property="BRANCHCODE" 		column="ACCTNO"/>
+		<result property="BRANCHNAME" 		column="ACCTNO"/>
+		<result property="DEPTCODE" 		column="ACCTNO"/>
+		<result property="DEPTNAME" 		column="ACCTNO"/>
+		<result property="GRADE" 			column="ACCTNO"/>
+		<result property="KNAME" 			column="ACCTNO"/>
+		<result property="RECOID" 			column="ACCTNO"/>
+		<result property="RECONAME" 		column="ACCTNO"/>
+		<result property="JOINDATE" 		column="ACCTNO"/>
+		<result property="O_BRANCHCODE" 	column="ACCTNO"/>
+		<result property="O_JOINDATE" 		column="ACCTNO"/>
+		<result property="O_RETIREDATE" 	column="ACCTNO"/>
+		<result property="O_EMPLOYGUBUN" 	column="ACCTNO"/>
+		<result property="MOBILENO" 		column="ACCTNO"/>
+		<result property="JUMINID" 			column="ACCTNO"/>
+		<result property="BIRTHDAYGUBUN" 	column="ACCTNO"/>
+		<result property="ACCTOWNER" 		column="ACCTNO"/>
+		<result property="BANKID" 			column="ACCTNO"/>
+		<result property="BANKNAME" 		column="ACCTNO"/>
+		<result property="ACCTNO" 			column="ACCTNO"/>
+		<result property="T_ACCTOWNER" 		column="ACCTNO"/>
+		<result property="T_JUMINID" 		column="ACCTNO"/>
+		<result property="ADDRESS" 			column="ACCTNO"/>
+		
+	</resultMap>
+
+
+	<select id="selectListEnaInsaMst" resultMap="HR012003Data">
+		SELECT 
+			T1.BRANCHCODE,
+			(SELECT BRANCHNAME FROM BA_BRANCHMST WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,
+			T1.DEPTCODE,
+			(SELECT DEPTNAME FROM BA_DEPTMST WHERE BRANCHCODE = T1.BRANCHCODE AND DEPTCODE = T1.DEPTCODE) AS DEPTNAME,
+			T1.GRADE,
+			T1.KNAME,
+			T1.RECOLID,
+			(SELECT KNAME FROM HR_INSAMST WHERE INSACODE = T1.RECOID) AS RECONAME,
+			T1.JOINDATE,
+			'' AS O_BRANCHCODE,
+			'' AS O_JOINDATE,
+			'' AS O_RETIREDATE,
+			'' AS O_EMPLOYGUBUN,
+			T1.MOBILENO,
+			T1.JUMINID,
+			T1.BIRTHDAYGUBUN,
+			'' AS ACCTOWNER,
+			'' AS BANKID,
+			'' AS BANKNAME,
+			'' AS ACCTNO,
+			T_ACCTOWNER,
+			T_JUMINID,
+			T1.ADDRESS
+		FROM HR_INSAMST T1
+		WHERE 1=1
+		<isNotEmpty property="S_JOINDATE">
+			AND T1.JOINDATE <![CDATA[ <= ]]>  #S_JOINDATE#
+		</isNotEmpty>
+		<isNotEmpty property="S_BRANCHCODE">
+			AND T1.BRANCHCODE = #S_BRANCHCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_DEPTCODE">
+			AND T1.DEPTCODE = #S_DEPTCODE#
+		</isNotEmpty>
+			AND T1.DEPTCODE IS NULL
+		ORDER BY T1.JOINDATE ASC
+	</select>
+	
+</sqlMap>

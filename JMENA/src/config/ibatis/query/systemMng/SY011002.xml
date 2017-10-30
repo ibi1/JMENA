@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SY011002">
+	<typeAlias alias="SY011002VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY011002VO"/>
+
+	<resultMap id="pgmData" class="SY011002VO">
+		<result property="SYSID" 			column="SYSID"/>
+		<result property="SYSNAME" 			column="SYSNAME"/>
+		<result property="MENUID" 			column="MENUID"/>
+		<result property="MENUNAME" 		column="MENUNAME"/>
+		<result property="PGMID" 			column="PGMID"/>
+		<result property="PGMNAME" 			column="PGMNAME"/>
+		<result property="REMARK" 			column="REMARK"/>
+		<result property="SORTKEY" 			column="SORTKEY"/>
+		<result property="USEYN"			column="USEYN"/>
+	</resultMap>
+
+	<select id="selectListMenuPgmTb" resultMap="pgmData">
+		SELECT 
+			T1.PGMID,
+			T1.SYSID,
+			(SELECT SYSNAME FROM sy_sysmst WHERE SYSID = T1.SYSID) AS SYSNAME,
+			T1.MENUID,
+			(SELECT MENUNAME FROM sy_menutb WHERE SYSID = T1.SYSID AND MENUID = T1.MENUID) AS MENUNAME,
+			T1.PGMNAME,
+			T1.SORTKEY,
+			T1.REMARK,
+			T1.USEYN
+		FROM sy_menupgmtb T1
+		WHERE 1=1
+		<isNotEqual property="SYSID" compareValue="">
+			AND T1.SYSID = #SYSID#
+			<isNotEqual property="MENUID" compareValue="">
+			AND T1.MENUID = #MENUID#	
+			</isNotEqual>
+		</isNotEqual>
+		ORDER BY T1.SYSID, T1.MENUID, T1.SORTKEY ASC
+	</select>
+	
+	<select id="selectOneEnaMenuPgmTb">
+		SELECT 
+			T1.PGMID,
+			T1.SYSID,
+			(SELECT SYSNAME FROM SY_SYSMST WHERE SYSID = T1.SYSID) AS SYSNAME,
+			T1.MENUID,
+			(SELECT MENUNAME FROM SY_MENUTB WHERE SYSID = T1.SYSID AND MENUID = T1.MENUID) AS MENUNAME,
+			T1.PGMNAME,
+			T1.SORTKEY,
+			T1.REMARK,
+			T1.USEYN
+		FROM SY_MENUPGMTB T1
+		WHERE 1=1
+		AND T1.SYSID = #SYSID#
+		AND T1.MENUID = #MENUID#
+		AND T1.PGMID = #PGMID#
+		ORDER BY T1.SORTKEY ASC
+	</select>
+	
+	<update id="updateEnaMenuPgmTb">
+		UPDATE SY_MENUPGMTB
+		SET
+			PGMNAME = #PGMNAME#,
+			SORTKEY = #SORTKEY#,
+			REMARK = #REMARK#,
+			USEYN = #USEYN#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE SYSID = #SYSID#
+		AND MENUID = #MENUID#
+		AND PGMID = #PGMID#
+	</update>
+	
+	<insert id="insertEnaMenuPgmTb">
+		INSERT INTO SY_MENUPGMTB
+		(
+			PGMID,
+			SYSID,
+			MENUID,
+			PGMNAME,
+			SORTKEY,
+			REMARK,
+			USEYN,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#PGMID#,
+			#SYSID#,
+			#MENUID#,
+			#PGMNAME#,
+			#SORTKEY#,
+			#REMARK#,
+			#USEYN#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+</sqlMap>

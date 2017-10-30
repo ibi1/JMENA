@@ -1,0 +1,189 @@
+@charset "UTF-8";
+
+.detail-view .sub-make-ment{display:auto;}
+.detail-view .sub-make-ment img{float:left;}
+.sub-make-ment{ font-size:18px; background:#1fa666; color:#fff;clear:both; overflow:hidden; height:40px; padding:16px 0 0 20px;}
+#sub-car-detail{ margin-top:0px; border:1px solid #c0c0c0; border-top:2px solid #000; overflow:hidden;}
+	#car-detail-image{width:520px;float:left;overflow:hidden;position:relative;}
+		#car-detail-image img.ribbon-promotion{position:absolute;right:0;z-index:3;}
+		#car-detail-image-large{width:502px;height:370px;overflow:hidden;border-bottom:1px solid #ccc;}
+		#car-detail-image-large img{width:502px;display:none;}
+		/* thumbnail */
+		ul.detail-image-thumb{padding:5px;}
+		li.thumb-item{width:155px;height:86px;overflow:hidden;float:left;margin:4px;border:2px solid #ccc;}
+		li.thumb-item:hover{border:2px solid #cd2026;}
+		li.thumb-item img{width:100%;cursor:pointer;height:86px;}
+
+	/*#car-detail-lineup{width:504px;height:448px;float:right;padding-left:40px;padding-top:25px;}*/
+	#car-detail-lineup{width:504px;float:right;padding-left:40px;padding-top:25px;}
+		#car-detail-information{}
+			#car-detail-information-modelName{font-size:19px;font-weight:bold;margin-bottom:9px;}
+			#car-detail-information-lineupName{font-size:13px;margin-bottom:15px;}
+			#car-detail-information-Specifications{font-size:11px;margin-bottom:15px;}
+			#car-detail-information-Specifications span{border-right:1px solid #000;margin-right:18px;margin-left:9px;padding-right:18px;font-weight:bold;}
+				span#car-detail-information-Spec-03{border-right:0;padding-right:0;margin-right:0;}
+		#list-car-lineup-title{padding:17px 38px 9px;border:1px solid #dbdbdb;border-bottom:0;}
+		/*div#list-car-lineup{width:417px;height:204px;}*/
+
+		#list-car-monthly{width:417px;overflow:hidden;margin:20px 0;}
+		#list-car-monthly img{float:left;margin-top:10px;}
+		#list-car-monthly span{float:right;line-height:36px;margin-left:10px;color:#c6c6c6;}
+		#list-car-monthly span#list-car-monthly-value{font-weight:bold;color:#ff4e00;font-size:36px;margin-left:20px;}
+
+		div#list-car-lineup{width:417px;}
+			/*ul.group-list-lineup{display:block;height:163px;overflow-y:auto;border:1px solid #dbdbdb;}*/
+			ul.group-list-lineup{display:block;border:1px solid #dbdbdb;}
+				li.list-lineup-item{cursor:pointer;height:40px;line-height:40px;padding-left:40px;}
+				li.list-lineup-item.active,
+				li.list-lineup-item:hover{background-color:#ececec;}
+				
+.ad_btn{ width:417px; text-align:center; background:#ff4e00; padding:10px 0;}
+.ad_btn a{ color:#fff; font-size:25px;}
+
+.detail-section{margin-top:90px;text-align:center;}
+#detail-section-option{margin-top:45px;}
+	.detail-section-title{font-size:16px;font-weight:bold;padding-bottom:10px;margin-bottom:40px;border-bottom:2px solid #c0c0c0;text-align:left;}
+	.detail-section table{width:100%;border-collapse: collapse;margin:10px 0;}
+	.detail-section table th,
+	.detail-section table td{padding:5px;border:1px solid #ccc;line-height:150%;}
+.detail-section.isPromotion{border:2px solid #d02424;padding:10px 20px;margin-top:10px;}
+	div.promotionDetail{background-color:#d02424;}
+	div.promotionDetail td{border:0;color:#fff;font-weight:normal;font-size:16px;text-align:left;padding:10px 20px;}
+	div.promotionDetail td.pro-th{width:15%;text-align:center;font-weight:bold;}
+	div.promotionDetail td.pro-td *{font-size:16px;}
+
+img#btn-detail-counsel{margin-top:20px;margin-bottom:20px;cursor:pointer;}
+
+/* 가격옵션 */
+#sub-maker-option{background-color:#ececec;padding-bottom:20px;padding-top:20px;}
+	#detail-contents-realPrice{width:978px;margin:0 auto;padding:20px;font-size:14px;letter-spacing:2px;}
+	#detail-contents-realPrice span{font-size:22px;font-weight:bold;}
+	#view-car-real-price{color:#ce1f26;}
+	#detail-contents-option-group{width:978px;margin:0 auto;padding:10px;background-color:#fff;overflow:auto;}
+		span.seletedOption-item{display:block;float:left;width:50%;text-align:left;margin:5px 0;}
+		span.seletedOption-item input{float:left;margin-right:5px;cursor:pointer;}
+		span.seletedOption-item label{float:left;cursor:pointer;width:450px;}
+	#detail-contents-select-group{width:978px;margin:0 auto;padding:0px;}
+
+	#detail-contents-select-group{overflow:hidden;}
+		.item-selector{float:left;margin-right:1px;}
+		.item-selector.end{margin-right:0;}
+			.item-selector-header{padding:17px 0;font-size:14px;font-weight:bold;color:#fff;}
+				#selector-deposit{background-color:#0f5b90;width:163px;}
+				#selector-period{background-color: #1FA666;width:160px;}
+				#selector-monthly{background-color:#555555;width:489px;}
+				#selector-service{background-color:#555555;width:161px;}
+			.item-selector-list{margin:2px;background-color:#fff;overflow:auto;position:relative;}
+				#sign-view-information{position:absolute;left:10px;top:10px;text-align:center;width:460px;}
+				#sign-view-information span{font-size:16px;}
+				#sign-view-information span.info-title{}
+				#sign-view-information span.info-data{font-weight:bold;}
+				#info-deposit{margin-right:10px;}
+				ul.group-deposit-ratio{height:175px;overflow:hidden;}
+					li.item-deposit-ratio{padding:15px 0 15px;cursor:pointer;}
+					li.item-deposit-ratio:hover{background-color:#ececec;}
+					#selector-deposit li.item-deposit-ratio.active{background-color:#cad9ff;font-weight:bold;color:#ce1e28;}
+					#selector-period li.item-deposit-ratio.active{background-color:#ffc1c1;font-weight:bold;color:#ce1e28;}
+
+				#selector-monthly .item-selector-list{padding:20px;height:174px;padding-top:40px;padding-bottom:10px;}
+				div#result-monthly{width:330px;height:100px;float:left;margin-right:10px;}
+					ul#result-monthly-group{display:block;height:33px;margin-left:28px;margin-top:20px;width:300px;margin-bottom:10px;}
+					ul#result-monthly-group li{float:left;height:33px;padding:5px;line-height:150%}
+					ul#result-monthly-group li.right{float:right;}
+					ul#result-monthly-group li span.monthly{font-size:28px;color:#cd1d27;font-weight:bold;}
+					div#result-monthly p strong{font-weight:bold;}
+					div#result-monthly p strong.wine{color:#ce1f26;text-decoration: underline}
+				img#button-print-estimate{float:right;cursor:pointer;width:70px;}
+
+				ul#explain-monthly{position:absolute;text-align:left;left:20px;bottom:10px;}
+				ul#explain-monthly li{padding:2px;font-size:11px;}
+				ul#explain-monthly li span{color:#cf1f29;}
+
+				#selector-service .item-selector-list{padding:10px;}
+				#selector-service .item-selector-list dl{display:block;overflow:hidden;text-align:left;margin:7px 0;}
+				#selector-service .item-selector-list dt{float:left;width:63px;margin-right:5px;line-height:150%;font-weight:bold;}
+				#selector-service .item-selector-list dd{float:left;line-height:150%;}
+				#selector-service .item-selector-list dd input{display:inline-block; *display: inline;/* for IE7*/ zoom:1;/* for IE7*/ vertical-align:middle;}
+				#selector-service .item-selector-list dd label{display:inline-block; *display: inline;/* for IE7*/zoom:1;/* for IE7*/ text-align: right;margin-left:2px}
+
+				input:checked + label,
+				input.checked + label{color: #cf1f29;font-weight:bold;}
+
+/* 보험조건 */
+#sub-maker-option-insurance{background-color:#ececec;}
+	table#detail-insurance-table{margin:0;}
+		table#detail-insurance-table caption{height:26px;line-height:26px;font-size:14px;color:#000;font-weight:bold;}
+		table#detail-insurance-table thead th{background-color: #1FA666;color:#fff;border-color: #166B43;}
+		table#detail-insurance-table tbody td{background-color:#fff;}
+		table#detail-insurance-table tbody td span{font-weight:bold;}
+		table#detail-insurance-table tbody td span.red{color:#cc1f25;}
+		ul.list-left, ul.list-left li{text-align:left;list-style:disc;list-style-position: inside}
+		ul.list-left{margin:10px 35px;}
+		ul.list-left span{font-weight:bold;}
+		ul.list-left span.ul{text-decoration: underline;}
+
+/* acrentcar 장점 */
+div#sub-maker-explainer{background-color:#d5d5d5;padding:14px;position:relative;}
+	div#sub-maker-explain-inner{position:relative;text-align:center;float:right;left:-50%;}
+	ul#sub-maker-explain-group{position:relative;left:50%;overflow:hidden;}
+		ul#sub-maker-explain-group li.explain-item{float:left;padding:20px;position:relative; background-color:#fff;color:#565455;margin-right:10px;font-size:14px; font-weight:bold; border-style:solid; border-width:1px 1px 1px 1px; border-color:#ffffff #9b9b9b #9b9b9b #ffffff; border-radius:4px; }
+		ul#sub-maker-explain-group li.explain-item.sub-content{/*cursor:pointer;*/}
+		/*ul#sub-maker-explain-group li.explain-item.sub-content:hover{background-color:#333;color:#fff;}*/
+		ul#sub-maker-explain-group li.explain-item.end{margin-right:0;}
+	div#sub-maker-explainer p{padding-top:10px;clear:both;font-size:14px;}
+	div#sub-maker-explainer p span{font-weight:bold;font-size:18px;color:#cb1e24;}
+	div#exp-subcontents{
+		position:absolute;left:0px;top:0;background-color:#333;color:#fff;padding:10px;
+		display:none;
+	}
+
+form#frmCarInfo{display:none;}
+
+
+/* 상담신청 */
+body.carDetail{}
+body.carDetail .ui-dialog{padding:0;background-color:#fff;border-radius:0;border:0;position:fixed !important;}
+body.carDetail .ui-dialog *{border-radius:0;border:0;text-align:left;}
+body.carDetail .ui-widget-overlay{opacity:0.5;}
+body.carDetail .ui-dialog-titlebar{background:#cd2026;color:#fff;}
+body.carDetail .ui-dialog .ui-dialog-title{font-size:16px;}
+
+body.carDetail .phone-number{width:60px;}
+body.carDetail .cnl-time{width:50px;}
+body.carDetail .ui-dialog-titlebar-close{border-radius:4px;background:#fff;}
+#container-form-counsel{background-color:#fff; text-align:center;}
+#container-form-counsel dl.container-form-counsel-section{margin-bottom:10px;}
+#container-form-counsel dl.container-form-counsel-section dt{padding:5px;}
+#container-form-counsel dl.container-form-counsel-section dd{padding:5px;border:1px solid #ccc;}
+#form-counsel-title{font-size:20px;text-align:left;}
+#container-form-counsel table{width:100%;}
+#container-form-counsel table td{font-size:14px;text-align:left;padding:5px;}
+#container-form-counsel table td.item-th{font-weight:bold;width:100px;}
+#container-form-counsel table td.item-td{line-height:175%;width:40%;}
+#container-form-counsel-section-car table td.item-th{width:100px;}
+#container-form-counsel-section-car table td.item-td{width:auto;}
+
+#container-form-counsel table td.item-td input,
+#container-form-counsel table td.item-td select,
+#container-form-counsel table td.item-td textarea{border:1px solid #999;font-size:14px;padding:5px;}
+#container-form-counsel table td.item-td label{font-size:14px;}
+#container-form-counsel table td.item-td textarea{width:100%;}
+#container-form-counsel table td.item-td input:focus,
+#container-form-counsel table td.item-td select:focus,
+#container-form-counsel table td.item-td textarea:focus{border:1px solid #cd2026;}
+#container-form-counsel table td.item-td input[type="radio"]{border:0;}
+
+#privacyAgreeDetail{line-height:175%;padding:20px;}
+#privacyAgreeDetail h3{font-weight:bold;font-size:14px;}
+#privacyAgreeDetail p{margin-bottom:10px;}
+#privacyAgreeDetail p.impact{font-weight:bold;}
+#detail-counsel-privacyAgree{margin-right:5px;}
+
+#container-form-counsel .button-group{text-align:center;padding:5px;}
+img#btn-detail-inner-counsel{margin:0 auto;border-radius:4px;cursor:pointer;}
+
+/* 콘텐츠 수정 : 차량제원, 판매가격;  */
+.detail-section-contents{text-align:center;}
+.detail-section-contents .price-table-style{width:880px;margin:0 auto !important;}
+.detail-section-contents .price-table-style .sort{width:100px !important;}
+.detail-section-contents .price-table-style .spec{width:440px !important;}

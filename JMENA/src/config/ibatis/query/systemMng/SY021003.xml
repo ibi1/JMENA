@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SY021003">
+	<typeAlias alias="SY021003VO" type="kr.co.jmena.www.web.home.systemMng.Vo.SY021003VO"/>
+
+	<resultMap id="CityMstData" class="SY021003VO">
+		<result property="CITYCODE" 		column="CITYCODE"/>
+		<result property="CITYNAME" 		column="CITYNAME"/>
+		<result property="SORTKEY" 			column="SORTKEY"/>
+	</resultMap>
+
+	<resultMap id="CityDtlData" class="SY021003VO">
+		<result property="CITYCODE" 		column="CITYCODE"/>
+		<result property="CITYNAME" 		column="CITYNAME"/>
+		<result property="BOROUGHCODE" 		column="BOROUGHCODE"/>
+		<result property="BOROUGHNAME" 		column="BOROUGHNAME"/>
+		<result property="USEYN" 			column="USEYN"/>
+		<result property="SORTKEY" 			column="SORTKEY"/>
+		<result property="REMARK" 			column="REMARK"/>
+	</resultMap>
+
+	<select id="selectListEnaCityMst" resultMap="CityMstData">
+		SELECT 
+			T1.CITYCODE,
+			T1.CITYNAME,
+			T1.SORTKEY
+		FROM ba_citymst T1
+		WHERE 1=1
+		<isNotEmpty property="CITYCODE">
+			AND T1.CITYCODE = #CITYCODE#
+		</isNotEmpty>
+		ORDER BY T1.SORTKEY ASC
+	</select>
+	
+	<update id="updateEnaCityMst">
+		UPDATE ba_citymst
+		SET
+			CITYNAME = #CITYNAME#,
+			SORTKEY = #SORTKEY#,
+			UPDATEUSER = 'admin',
+			UPDATEDATE = NOW()
+		WHERE CITYCODE = #CITYCODE#
+	</update>
+	
+	<insert id="insertEnaCityMst">
+		INSERT INTO ba_citymst
+		(
+			CITYCODE,
+			CITYNAME,
+			SORTKEY,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#CITYCODE#,
+			#CITYNAME#,
+			#SORTKEY#,
+			'admin',
+			NOW()
+		)
+	</insert>
+	
+	<select id="selectListEnaCityDtl" resultMap="CityDtlData">
+		SELECT 
+			T1.CITYCODE,
+			(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
+			T1.BOROUGHCODE,
+			T1.BOROUGHNAME,
+			T1.USEYN,
+			T1.SORTKEY,
+			T1.REMARK
+		FROM ba_citydtl T1
+		WHERE 1=1
+		AND T1.CITYCODE = #CITYCODE#
+		ORDER BY T1.SORTKEY ASC
+	</select>
+	
+	<update id="updateEnaCityDtl">
+		UPDATE ba_citydtl
+		SET
+			BOROUGHNAME = #BOROUGHNAME#,
+			USEYN = #USEYN#,
+			SORTKEY = #SORTKEY#,
+			REMARK = #REMARK#,
+			UPDATEUSER = 'ADMIN',
+			UPDATEDATE = NOW()
+		WHERE CITYCODE = #CITYCODE#
+		AND BOROUGHCODE = #BOROUGHCODE#
+	</update>
+	
+	<insert id="insertEnaCityDtl">
+		INSERT INTO ba_citydtl
+		(
+			CITYCODE,
+			BOROUGHCODE,
+			BOROUGHNAME,
+			USEYN,
+			SORTKEY,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#CITYCODE#,
+			#BOROUGHCODE#,
+			#BOROUGHNAME#,
+			#USEYN#,
+			#SORTKEY#,
+			#REMARK#,
+			'admin',
+			NOW()
+		)
+	</insert>
+</sqlMap>

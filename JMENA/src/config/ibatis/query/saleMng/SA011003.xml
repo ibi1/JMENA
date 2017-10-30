@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SA011003">
+	<typeAlias alias="SA011003VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA011003VO"/>
+
+	<resultMap id="SA011003Data" class="SA011003VO">
+		<result property="BANKGUBUN" 		column="BANKGUBUN"/>
+		<result property="IPGUMAMT" 			column="IPGUMAMT"/>
+		<result property="IPGUMDATE" 		column="IPGUMDATE"/>
+		<result property="IPGUMGUBUN" 		column="IPGUMGUBUN"/>
+		<result property="IPGUMID" 				column="IPGUMID"/>
+		<result property="IPGUMSEQ" 			column="IPGUMSEQ"/>
+		<result property="IPGUMTYPE" 		column="IPGUMTYPE"/>
+		<result property="REMARK" 				column="REMARK"/>
+		<result property="SALEID" 				column="SALEID"/>
+		<result property="SEQ" 					column="SEQ"/>
+		<result property="SUGUMAMT" 		column="SUGUMAMT"/>
+	</resultMap>
+
+	<select id="selectListEnaIpgumMst" resultMap="SA011003Data">
+		SELECT 
+			T1.IPGUMID,
+			T1.IPGUMDATE,
+			T1.IPGUMTYPE,
+			T1.IPGUMGUBUN,
+			T1.BANKGUBUN,
+			T1.IPGUMAMT,
+			T1.REMARK
+		FROM SA_IPGUMMST T1
+		WHERE 1=1
+		ORDER BY T1.IPGUMID ASC
+	</select>
+	
+	<update id="updateEnaIpgumMst">
+		UPDATE SA_IPGUMMST
+		SET
+			IPGUMDATE = #IPGUMDATE#,
+			IPGUMTYPE = #IPGUMTYPE#,
+			IPGUMGUBUN = #IPGUMGUBUN#,
+			BANKGUBUN = #BANKGUBUN#,
+			IPGUMAMT = #IPGUMAMT#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE IPGUMID = #IPGUMID#
+	</update>
+	
+	<insert id="insertEnaIpgumMst">
+		INSERT INTO SA_IPGUMMST
+		(
+			IPGUMID,
+			IPGUMDATE,
+			IPGUMTYPE,
+			IPGUMGUBUN,
+			BANKGUBUN,
+			IPGUMAMT,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#IPGUMID#,
+			#IPGUMDATE#,
+			#IPGUMTYPE#,
+			#IPGUMGUBUN#,
+			#BANKGUBUN#,
+			#IPGUMAMT#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+
+	<select id="selectListEnaIpgumDtl" resultMap="SA011003Data">
+		SELECT 
+			T1.IPGUMID,
+			T1.SEQ,
+			T1.SALEID,
+			T1.IPGUMSEQ,
+			T1.SUGUMAMT,
+			T1.REMARK
+		FROM SA_IPGUMDTL T1
+		WHERE 1=1
+		ORDER BY T1.IPGUMID ASC
+	</select>
+	
+	<update id="updateEnaIpgumDtl">
+		UPDATE SA_IPGUMDTL
+		SET
+			SALEID = #SALEID#,
+			IPGUMSEQ = #IPGUMSEQ#,
+			SUGUMAMT = #SUGUMAMT#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE IPGUMID = #IPGUMID#
+		AND SEQ = #SEQ#
+	</update>
+	
+	<insert id="insertEnaIpgumDtl">
+		INSERT INTO SA_IPGUMDTL
+		(
+			IPGUMID,
+			SEQ,
+			SALEID,
+			IPGUMSEQ,
+			SUGUMAMT,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#IPGUMID#,
+			#SEQ#,
+			#SALEID#,
+			#IPGUMSEQ#,
+			#SUGUMAMT#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+
+</sqlMap>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="EP012002">
+	<typeAlias alias="EP012002VO" type="kr.co.jmena.www.web.home.expayMng.Vo.EP012002VO"/>
+
+	<resultMap id="EP012002Data" class="EP012002VO">
+		<result property="ACCTNO"					column="ACCTNO"/>
+		<result property="ACCTOWNER"			column="ACCTOWNER"	/>
+		<result property="ADDRATE"					column="ADDRATE"/>
+		<result property="BANKID"						column="BANKID"/>
+		<result property="BRANCHCODE"			column="BRANCHCODE"/>
+		<result property="DEDUCTAMT"			column="DEDUCTAMT"/>
+		<result property="DEPTCODE"				column="DEPTCODE"/>
+		<result property="DUTY"						column="DUTY"	/>
+		<result property="GRADE"						column="GRADE"/>
+		<result property="INSACODE"				column="INSACODE"/>
+		<result property="PAYAMT"					column="PAYAMT"/>
+		<result property="PAYDATE"					column="PAYDATE"/>
+		<result property="PAYERID"					column="PAYERID"/>
+		<result property="PAYERNAME"				column="PAYERNAME"/>
+		<result property="PAYSEQ"					column="PAYSEQ"/>
+		<result property="REGISTERSEQ"			column="REGISTERSEQ"/>
+		<result property="REMARK"					column="REMARK"/>
+		<result property="SALEID"						column="SALEID"/>
+		<result property="SUDANGRATE"			column="SUDANGRATE"/>
+		<result property="SUPPLYTAX"				column="SUPPLYTAX"/>
+		<result property="TAXGUBUN"				column="TAXGUBUN"/>
+		<result property="TAXINCOME"				column="TAXINCOME"/>
+		<result property="TAXLOCAL"				column="TAXLOCAL"/>
+	</resultMap>
+
+
+	<select id="selectListEnaSudangMst" resultMap="EP012002Data">
+		SELECT 
+			T1.SALEID,
+			T1.PAYSEQ,
+			T1.INSACODE,
+			T1.BRANCHCODE,
+			T1.DEPTCODE,
+			T1.GRADE,
+			T1.DUTY,
+			T1.PAYDATE,
+			T1.SUDANGRATE,
+			T1.ADDRATE,
+			T1.PAYAMT,
+			T1.TAXGUBUN,
+			T1.TAXINCOME,
+			T1.TAXLOCAL,
+			T1.SUPPLYTAX,
+			T1.DEDUCTAMT,
+			T1.REMARK
+		FROM SA_SUDANGMST T1
+		WHERE 1=1
+		ORDER BY T1.SALEID ASC, T1.PAYSEQ
+	</select>
+	
+	<update id="updateEnaSudangMst">
+		UPDATE SA_SUDANGMST
+		SET
+			INSACODE = #INSACODE#,
+			BRANCHCODE = #BRANCHCODE#,
+			DEPTCODE = #DEPTCODE#,
+			GRADE = #GRADE#,
+			DUTY = #DUTY#,
+			PAYDATE = #PAYDATE#,
+			SUDANGRATE = #SUDANGRATE#,
+			ADDRATE = #ADDRATE#,
+			PAYAMT = #PAYAMT#,
+			TAXGUBUN = #TAXGUBUN#,
+			TAXINCOME = #TAXINCOME#,
+			TAXLOCAL = #TAXLOCAL#,
+			SUPPLYTAX = #SUPPLYTAX#,
+			DEDUCTAMT = #DEDUCTAMT#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = SYSDATE()
+		WHERE SALEID  = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+	</update>
+	
+	<insert id="insertEnaSudangMst">
+		INSERT INTO SA_SUDANGMST
+		(
+			SALEID,
+			PAYSEQ,
+			INSACODE,
+			BRANCHCODE,
+			DEPTCODE,
+			GRADE,
+			DUTY,
+			PAYDATE,
+			SUDANGRATE,
+			ADDRATE,
+			PAYAMT,
+			TAXGUBUN,
+			TAXINCOME,
+			TAXLOCAL,
+			SUPPLYTAX,
+			DEDUCTAMT,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#SALEID#,
+			#PAYSEQ#,
+			#INSACODE#,
+			#BRANCHCODE#,
+			#DEPTCODE#,
+			#GRADE#,
+			#DUTY#,
+			#PAYDATE#,
+			#SUDANGRATE#,
+			#ADDRATE#,
+			#PAYAMT#,
+			#TAXGUBUN#,
+			#TAXINCOME#,
+			#TAXLOCAL#,
+			#SUPPLYTAX#,
+			#DEDUCTAMT#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+	<select id="selectListEnaSudangPTb" resultMap="EP012002Data">
+		SELECT 
+			T1.SALEID,
+			T1.PAYSEQ,
+			T1.REGISTERSEQ,
+			T1.PAYERNAME,
+			T1.PAYERID,
+			T1.PAYAMT,
+			T1.TAXGUBUN,
+			T1.TAXINCOME,
+			T1.TAXLOCAL,
+			T1.SUPPLYTAX,
+			T1.DEDUCTAMT,
+			T1.BANKID,
+			T1.ACCTNO,
+			T1.ACCTOWNER,
+			T1.REMARK
+		FROM SA_SUDANGPAYERTB T1
+		WHERE 1=1
+		AND T1.SALEID = #SALEID#
+		AND T1.PAYSEQ = #PAYSEQ#
+		AND T1.REGISTERSEQ = #REGISTERSEQ#
+		ORDER BY T1.APPOINTDATE DESC
+	</select>
+	
+	<update id="updateEnaSudangPTb">
+		UPDATE SA_SUDANGPAYERTB
+		SET
+			PAYERNAME = #PAYERNAME#,
+			PAYERID = #PAYERID#,
+			PAYAMT = #PAYAMT#,
+			TAXGUBUN = #TAXGUBUN#,
+			TAXINCOME = #TAXINCOME#,
+			TAXLOCAL = #TAXLOCAL#,
+			SUPPLYTAX = #SUPPLYTAX#,
+			DEDUCTAMT = #DEDUCTAMT#,
+			BANKID = #BANKID#,
+			ACCTNO = #ACCTNO#,
+			ACCTOWNER = #ACCTOWNER#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #UPDATEUSER#,
+			UPDATEDATE = # UPDATEDATE#
+		WHERE T1.SALEID = #SALEID#
+		AND T1.PAYSEQ = #PAYSEQ#
+		AND T1.REGISTERSEQ = #REGISTERSEQ#
+	</update>
+	
+	<insert id="insertEnaSudangPTb">
+		INSERT INTO SA_SUDANGPAYERTB
+		(
+			SALEID,
+			PAYSEQ,
+			REGISTERSEQ,
+			PAYERNAME,
+			PAYERID,
+			PAYAMT,
+			TAXGUBUN,
+			TAXINCOME,
+			TAXLOCAL,
+			SUPPLYTAX,
+			DEDUCTAMT,
+			BANKID,
+			ACCTNO,
+			ACCTOWNER,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#SALEID#,
+			#PAYSEQ#,
+			#REGISTERSEQ#,
+			#PAYERNAME#,
+			#PAYERID#,
+			#PAYAMT#,
+			#TAXGUBUN#,
+			#TAXINCOME#,
+			#TAXLOCAL#,
+			#SUPPLYTAX#,
+			#DEDUCTAMT#,
+			#BANKID#,
+			#ACCTNO#,
+			#ACCTOWNER#,
+			#REMARK#,
+			#INSERTUSER#,
+			SYSDATE()
+		)
+	</insert>
+	
+</sqlMap>

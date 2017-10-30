@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="CODECOM">
+	<typeAlias alias="bankVO" type="kr.co.jmena.www.web.codeCom.Vo.BankVO"/>
+	<typeAlias alias="dcodeVO" type="kr.co.jmena.www.web.codeCom.Vo.DcodeVO"/>
+	<typeAlias alias="userVO" type="kr.co.jmena.www.web.codeCom.Vo.UserVO"/>
+	<typeAlias alias="cityVO" type="kr.co.jmena.www.web.codeCom.Vo.CityVO"/>
+
+	<!-- 은행 코드 -->
+	<resultMap id="bankData" class="bankVO">
+		<result property="BANKCODE" column="BANKCODE"/>
+		<result property="BANKNAME" column="BANKNAME"/>
+	</resultMap>
+	
+	<!-- 공통 코드 조회 -->
+	<resultMap id="dcodeData" class="dcodeVO">
+		<result property="DCODE" column="DCODE"/>
+		<result property="DCODENAME" column="DCODENAME"/>
+	</resultMap>
+	
+	<!-- 사용자 조회 -->
+	<resultMap id="userData" class="userVO">
+		<result property="USERID" column="USERID"/>
+		<result property="USERNAME" column="USERNAME"/>
+	</resultMap>
+	
+	<!-- 시/도 코드 조회 -->
+	<resultMap id="cityMstData" class="cityVO">
+		<result property="CITYCODE" column="CITYCODE"/>
+		<result property="CITYNAME" column="CITYNAME"/>
+	</resultMap>
+	
+	<!-- 구/군 코드 조회 -->
+	<resultMap id="cityDtlData" class="cityVO">
+		<result property="BOROUGHCODE" column="BOROUGHCODE"/>
+		<result property="BOROUGHNAME" column="BOROUGHNAME"/>
+	</resultMap>
+	
+ 	<select id="selectBankList" resultMap="bankData">
+		SELECT 
+			BANKCODE, BANKNAME 
+		FROM sy_bankmst
+		WHERE USEYN = 'Y'
+		ORDER BY BANKCODE
+	</select>
+	
+	<select id="selectDcodeList" resultMap="dcodeData">
+		SELECT 
+			DCODE, DCODENAME
+		FROM sy_ccodedtl
+		WHERE USEYN = 'Y' 
+		  AND CCODE = #CCODE#
+		ORDER BY SORTKEY
+	</select>
+	
+	<select id="selectUserList" resultMap="userData">
+		SELECT 
+			USERID, USERNAME
+		FROM sy_usermst
+		WHERE USEYN = 'Y'
+		ORDER BY USERNAME
+	</select>
+	
+	<select id="selectCityMstList" resultMap="cityMstData">
+		SELECT 
+			CITYCODE, CITYNAME 
+		FROM ba_citymst
+		ORDER BY SORTKEY
+	</select>
+	
+	<select id="selectCityDtlList" resultMap="cityDtlData">
+		SELECT 
+			BOROUGHCODE, BOROUGHNAME
+		FROM ba_citydtl
+		WHERE USEYN = 'Y'
+		  AND CITYCODE = #CITYCODE#
+		ORDER BY SORTKEY
+	</select>
+</sqlMap>
