@@ -10,8 +10,6 @@
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
 
 	<script type="text/javascript">
-		var lastId = "";
-		
 		$(document).ready(function(){
 			f_selectSysMst();
 			f_selectSysDtl();
@@ -47,14 +45,7 @@
 				//height: '100%' ,
 				onSelectRow: function(ids){
 					var selRowData = $(this).jqGrid('getRowData', ids);
-					
-					if( lastId != ids ){
-						$(this).jqGrid('saveRow',lastId,false);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
-						$(this).jqGrid('editRow',ids,false);  //해당 row가 수정모드(?)로 변경
-
-						lastId = ids;
-			       	}
-					
+										
 					$("#S_SYSID").val(selRowData.SYSID);
 					$("#S_SYSNAME").val(selRowData.SYSNAME);
 					$("#S_SORTKEY").val(selRowData.SORTKEY);
@@ -81,11 +72,11 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['메뉴코드', '메뉴명', '사용여부', '비고', '정렬순서'] ,
 					colModel:[
-						{name:"MENUID",			index:'MENUID',		width:60,		align:'center', sortable:false, editable:true, edittype:'text'}
+						{name:"MENUID",			index:'MENUID',		width:60,		align:'center', sortable:false}
 						, {name:"MENUNAME",		index:'MENUNAME',	width:60,		align:'center', sortable:false}
-						, {name:"USEYN",		index:'USEYN',		width:60,		align:'center', sortable:false, editable:true, edittype:'text'}
-						, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', sortable:false, editable:true, edittype:'text'}
-						, {name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false, editable:true, edittype:'text'}
+						, {name:"USEYN",		index:'USEYN',		width:60,		align:'center', sortable:false}
+						, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', sortable:false}
+						, {name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false}
 						] ,
 					rowNum:10 ,
 					autowidth: true ,
@@ -132,7 +123,6 @@
 		
 		$(function() {
 			$("#selectButton").click(function() {
-				lastId = "";
 				$("#S_SYSID").val("");
 				$("#S_SYSNAME").val("");
 				$("#S_SORTKEY").val("");
@@ -142,45 +132,15 @@
 			});
 		})
 		
-		
-		var v_rowid = "";
-		
 		$(function() {
 			$("#insertButton").click(function() {
-				 var p = $('#leftList').getGridParam();
-				    console.log("found gridParamData:", p.data);
-				    if (p.data){
-				        var newData = [
-				            {SYSID: '', SYSNAME: "", SORTKEY: ""}
-				        ];
-				        //var rowId = $.jgrid.randId(); // new row ID
-				        v_rowid = $.jgrid.uidPref + (++$.jgrid.guid);
-				        
-				        $("#leftList").jqGrid('addRowData', v_rowid, newData);
-				        $("#leftList").jqGrid('setSelection', v_rowid);
-				        console.log(v_rowid); // print new row id
-				    }    
-
+				 alert("처리 중....");
 			});
 		})
 		
 		$(function() {
 			$("#saveButton").click(function() {		
-				//$("#leftList").jqGrid('saveRow', v_rowid);
- $("#leftList").jqGrid("getGridParam", "savedRow");
-
-
-				    var ids = jQuery("#leftList").jqGrid('getDataIDs');
-					
-					ids.some(function(currentValue, index, array){
-						var cellData = $("#leftList").jqGrid('getCell', ids[index], 'SYSID');
-						alert(cellData);
-						//if (cellData == sysId) {
-			        	//	$("#leftList").jqGrid('setSelection', ids[index]);
-			    		//	return true;
-			        	//}	        
-					});
-
+				alert("처리 중....");
 			});
 		})
 	</script>
