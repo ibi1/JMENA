@@ -42,14 +42,6 @@
 		ORDER BY T1.SORTKEY ASC
 	</select>
 	
-	<select id="selectCheckSysId" resultClass="java.lang.Integer">
-		SELECT
-			COUNT(SYSID) AS CNT
-		FROM sy_sysmst
-		WHERE 1=1
-		AND SYSID = #SYSID#
-	</select>
-	
 	<insert id="insertDataSysMst">
 		INSERT INTO sy_sysmst
 		(
@@ -63,54 +55,23 @@
 			#SYSID#,
 			#SYSNAME#,
 			#SORTKEY#,
-			'admin',
+			#USERID#,
 			NOW()
 		)
 	</insert>
 
-	<update id="updateEnaSysMst">
+	<update id="updateDataSysMst">
 		UPDATE sy_sysmst
 		SET
 			SYSNAME = #SYSNAME#,
 			SORTKEY = #SORTKEY#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
 		WHERE SYSID = #SYSID#
 	</update>
 	
-	<insert id="insertEnaSysMst">
-		INSERT INTO sy_sysmst
-		(
-			SYSID,
-			SYSNAME,
-			SORTKEY,
-			INSERTUSER,
-			INSERTDATE
-		)
-		VALUES(
-			#SYSID#,
-			#SYSNAME#,
-			#SORTKEY#,
-			#INSERTUSER#,
-			SYSDATE()
-		)
-	</insert>
-	
-	<update id="updateEnaSysMenu">
-		UPDATE sy_sysmenu
-		SET
-			MENUNAME = #MENUNAME#,
-			USEYN = #USEYN#,
-			SORTKEY = #SORTKEY#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
-		WHERE SYSID = #SYSID#
-		AND MENUID = #MENUID#
-	</update>
-	
-	<insert id="insertEnaSysMenu">
-		INSERT INTO SY_SYSMENU
+	<insert id="insertDataSysDtl">
+		INSERT INTO sy_menutb
 		(
 			SYSID,
 			MENUID,
@@ -125,11 +86,24 @@
 			#SYSID#,
 			#MENUID#,
 			#MENUNAME#,
-			#USYN#,
+			#USEYN#,
 			#SORTKEY#,
 			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#,
+			NOW()
 		)
 	</insert>
+	
+	<update id="updateDataSysDtl">
+		UPDATE sy_menutb
+		SET
+			MENUNAME = #MENUNAME#,
+			USEYN = #USEYN#,
+			SORTKEY = #SORTKEY#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
+		WHERE SYSID = #SYSID#
+		AND MENUID = #MENUID#
+	</update>
 </sqlMap>

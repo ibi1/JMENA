@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.systemMng.Biz.SY011001Biz;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
@@ -117,6 +118,13 @@ public class SY011001Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
+	/**
+	 * 시스템 코드 수정 및 저장
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/home/insertDataSysMst.do")
 	public ModelAndView insertDataSysMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SY011001VO vo = new SY011001VO();
@@ -125,24 +133,36 @@ public class SY011001Ctr {
 		vo.setSYSNAME(request.getParameter("S_SYSNAME"));
 		vo.setSORTKEY(request.getParameter("S_SORTKEY"));
 		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_L");
+		
 		JSONObject json = new JSONObject();
 		
-		//SYSID Check
-		boolean chkFlag = SY011001Biz.selectCheckSysId(vo);
 		String resultCode = "";
 		String resultMsg = "";
 		
-		//Insert SysMst
-		if (chkFlag == true) { //New
-			 if (SY011001Biz.insertDataSysMst(vo) == true) {
+		if ("I".equals(IU_Flag)) {
+			if (SY011001Biz.insertDataSysMst(vo) == true) {
 				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
 			 } else {
 				 resultCode ="FAILED";
 				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
 			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY011001Biz.updateDataSysMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
 		} else {
-			 resultCode ="FAILED";
-			 resultMsg = "[ERROR]동일한 시스템코드가 있습니다.";
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]시스템 코드처리 중 오류가 발생했습니다.";
 		}
 
 		json.put("resultCode", resultCode);
@@ -153,6 +173,55 @@ public class SY011001Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
-	
+	@RequestMapping("/home/insertDataSysDtl.do")
+	public ModelAndView insertDataSysDtl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SY011001VO vo = new SY011001VO();
+		
+		vo.setSYSID(request.getParameter("SYSID"));
+		vo.setMENUID(request.getParameter("MENUID"));
+		vo.setMENUNAME(request.getParameter("MENUNAME"));
+		vo.setUSEYN(request.getParameter("USEYN"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		vo.setSORTKEY(request.getParameter("SORTKEY"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_R");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SY011001Biz.insertDataSysDtl(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY011001Biz.updateDataSysDtl(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]시스템 코드처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataSysMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
 	
 }

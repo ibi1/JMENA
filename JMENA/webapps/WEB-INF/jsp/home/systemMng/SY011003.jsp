@@ -32,7 +32,7 @@
 					{name:"USERID",			index:'USERID',		width:60,	align:'center', sortable:false}
 					, {name:"PASSWORD",		index:'PASSWORD',	width:60,	align:'center', sortable:false, hidden:true}
 					, {name:"USERNAME",		index:'USERNAME',	width:60,	align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false}
+					, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 					, {name:"USERGUBUN",	index:'USERGUBUN',	width:60,	align:'center', sortable:false, hidden:true}
 					, {name:"PHONENO",		index:'PHONENO',	width:60,	align:'center', sortable:false, hidden:true}
 					, {name:"MOBILENO",		index:'MOBILENO',	width:60,	align:'center', sortable:false, hidden:true}

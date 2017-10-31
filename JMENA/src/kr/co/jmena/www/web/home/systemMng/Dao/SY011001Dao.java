@@ -32,16 +32,6 @@ public class SY011001Dao extends SqlMapClientDaoSupport {
 		return lst;
 	}
 	
-	public boolean selectCheckSysId(SY011001VO vo)  throws DataAccessException {
-		boolean chkFlag = true;
-		
-		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectCheckSysId", vo);
-		
-		if (cnt > 0) chkFlag = false;
-		
-		return chkFlag;
-	}
-	
 	public boolean insertDataSysMst(SY011001VO vo) throws DataAccessException {
 		boolean chkFlag = false;
 		
@@ -50,4 +40,32 @@ public class SY011001Dao extends SqlMapClientDaoSupport {
 		if (cnt > 0) chkFlag = true;
 		return chkFlag;
 	}
+	
+	public boolean updateDataSysMst(SY011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataSysMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean insertDataSysDtl(SY011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataSysDtl", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean updateDataSysDtl(SY011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataSysDtl", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
 }

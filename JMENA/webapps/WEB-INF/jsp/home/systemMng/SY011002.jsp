@@ -158,7 +158,7 @@
 					, {name:"PGMNAME",		index:'PGMNAME',		width:60,		align:'center', sortable:false}
 					, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center', sortable:false}
 					, {name:"REMARK",		index:'REMARK',			width:60,		align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false}
+					, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 				] ,
 				rowNum:100 ,
 				autowidth: true ,

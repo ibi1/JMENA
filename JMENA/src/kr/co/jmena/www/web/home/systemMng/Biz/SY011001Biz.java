@@ -44,11 +44,11 @@ public class SY011001Biz {
 		return lst;
 	}
 	
-	public boolean selectCheckSysId(SY011001VO vo) throws Exception {
-		boolean chkFlag = true;
+	public boolean insertDataSysMst(SY011001VO vo) throws Exception {
+		boolean chkFlag = false;
 		
 		try {
-			chkFlag = SY011001Dao.selectCheckSysId(vo);
+			chkFlag = SY011001Dao.insertDataSysMst(vo);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -56,11 +56,35 @@ public class SY011001Biz {
 		return chkFlag;
 	}
 	
-	public boolean insertDataSysMst(SY011001VO vo) throws Exception {
+	public boolean updateDataSysMst(SY011001VO vo) throws Exception {
 		boolean chkFlag = false;
 		
 		try {
-			chkFlag = SY011001Dao.insertDataSysMst(vo);
+			chkFlag = SY011001Dao.updateDataSysMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean insertDataSysDtl(SY011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011001Dao.insertDataSysDtl(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateDataSysDtl(SY011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011001Dao.updateDataSysDtl(vo);
 		} catch (Exception e) {
 			throw e;
 		}

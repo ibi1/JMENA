@@ -9,6 +9,7 @@ public class SY011001VO {
 	private String SYSID; 
 	private String SYSNAME; 
 	private String USEYN;
+	private String USERID;
 	
 	
 	public String getMENUID() {
@@ -32,7 +33,9 @@ public class SY011001VO {
 	public String getUSEYN() {
 		return  this.USEYN;
 	}
-	
+	public String getUSERID() {
+		return  this.USERID;
+	}
 	
 	public void setMENUID(String MENUID) {
 		this.MENUID = MENUID;
@@ -55,7 +58,9 @@ public class SY011001VO {
 	public void setUSEYN(String USEYN) {
 		this.USEYN = USEYN;
 	}
-
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
+	}
 	
 	
 	
