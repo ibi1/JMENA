@@ -31,4 +31,23 @@ public class SY011001Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}
+	
+	public boolean selectCheckSysId(SY011001VO vo)  throws DataAccessException {
+		boolean chkFlag = true;
+		
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectCheckSysId", vo);
+		
+		if (cnt > 0) chkFlag = false;
+		
+		return chkFlag;
+	}
+	
+	public boolean insertDataSysMst(SY011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataSysMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
 }

@@ -41,6 +41,32 @@
 		AND T1.SYSID = #SYSID#
 		ORDER BY T1.SORTKEY ASC
 	</select>
+	
+	<select id="selectCheckSysId" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(SYSID) AS CNT
+		FROM sy_sysmst
+		WHERE 1=1
+		AND SYSID = #SYSID#
+	</select>
+	
+	<insert id="insertDataSysMst">
+		INSERT INTO sy_sysmst
+		(
+			SYSID,
+			SYSNAME,
+			SORTKEY,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#SYSID#,
+			#SYSNAME#,
+			#SORTKEY#,
+			'admin',
+			NOW()
+		)
+	</insert>
 
 	<update id="updateEnaSysMst">
 		UPDATE sy_sysmst

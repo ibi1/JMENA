@@ -117,4 +117,42 @@ public class SY011001Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
+	@RequestMapping("/home/insertDataSysMst.do")
+	public ModelAndView insertDataSysMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SY011001VO vo = new SY011001VO();
+		
+		vo.setSYSID(request.getParameter("S_SYSID"));
+		vo.setSYSNAME(request.getParameter("S_SYSNAME"));
+		vo.setSORTKEY(request.getParameter("S_SORTKEY"));
+		
+		JSONObject json = new JSONObject();
+		
+		//SYSID Check
+		boolean chkFlag = SY011001Biz.selectCheckSysId(vo);
+		String resultCode = "";
+		String resultMsg = "";
+		
+		//Insert SysMst
+		if (chkFlag == true) { //New
+			 if (SY011001Biz.insertDataSysMst(vo) == true) {
+				resultCode ="SUCCESS";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]동일한 시스템코드가 있습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataSysMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	
+	
 }
