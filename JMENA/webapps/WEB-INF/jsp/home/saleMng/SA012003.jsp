@@ -13,8 +13,12 @@
 
 
 <script type="text/javascript">
-
-	$(function(){
+	$(document).ready(function(){
+		
+		f_selectListSA012003();
+	});
+	
+	function f_selectListSA012003(){
 
 		$('#mainList').jqGrid({
 			//caption: '매출현황 - 소비대차', 
@@ -68,34 +72,24 @@
 			hidegrid: false
 		});
 
-/* 		$("#mainList").jqGrid('setGroupHeaders', {
-		    useColSpanStyle: true, //rowspan자동으로 해줄지 여부.
-		    groupHeaders:[
-		      {
-		        startColumnName: 'O_JUMINID',
-		        numberOfColumns: 4,
-		        titleText: '전근무현황'
-		      }
-		     ]
-	    });
- */		 
-		
-	})	
+	}	
 </script>
 <body>
 
-<!-- <div style="width:100%; border:1px solid red;" align=center>
-     <div style="width:90%;">
-          <div style="width:33%; float:left; border:1px solid #333;">1</div>
-          <div style="width:34%; float:left; border:1px solid #333;">2</div>
-     </div>
-</div>
- -->
-
-
 	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table width="99%">
+				<tr>
+					<td align="right">
+						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
+						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
+						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="98%" class="blueone">
+			<table class="blueone">
 				<tr>
 					<th>매출기간</th>
 					<td colspan="5"><input type="text" id="SALEDATE" name="SALEDATE" /> ~ <input type="text" id="SALEDATE" name="SALEDATE" /></td>

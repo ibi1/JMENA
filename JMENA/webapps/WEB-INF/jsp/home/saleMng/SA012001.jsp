@@ -144,7 +144,7 @@
 			</table>
 		</div>
 		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="98%" class="blueone">
+			<table class="blueone">
 				<tr>
 					<th>기준월</th>
 					<td colspan="3"><input type="text" id="S_SALEDATE" name="S_SALEDATE" /></td>

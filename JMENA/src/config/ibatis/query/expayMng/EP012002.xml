@@ -32,7 +32,7 @@
 	</resultMap>
 
 
-	<select id="selectListEnaSudangMst" resultMap="EP012002Data">
+	<select id="selectListEP012002" resultMap="EP012002Data">
 		SELECT 
 			T1.SALEID,
 			T1.PAYSEQ,

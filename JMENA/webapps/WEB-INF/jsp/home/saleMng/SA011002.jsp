@@ -12,7 +12,15 @@
 </head>
 <script type="text/javascript">
 
-	$(function(){
+	$(document).ready(function(){
+		
+		f_selectListEnaSaleMst();
+		f_selectListEnaSaleBDtl();
+		
+	});
+
+	function f_selectListEnaSaleMst(){
+		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#leftList').jqGrid({
 			//caption: '금전소비차매출관리'
 			url:"/home/selectListSysMst.do" ,
@@ -20,12 +28,12 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['차입일자', '차입자', '차입물건', '차입금액', '차입형식', '차입이자'] ,
 			colModel:[
-				{name:"SALEDATE",				index:'SALEDATE',			width:60,		align:'center'}
-				,{name:"CONNAME",				index:'CONNAME',			width:60,		align:'center'}
-				,{name:"CONADDRESS",		index:'CONADDRESS',		width:60,		align:'center'}
-				,{name:"CONPY",					index:'CONPY',					width:60,		align:'center'}
-				,{name:"CONM2",					index:'CONM2',				width:60,		align:'center'}
-				,{name:"CONM2",					index:'CONM2',				width:60,		align:'center'}
+				{name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center'}
+				,{name:"CONNAME",		index:'CONNAME',		width:100,		align:'center'}
+				,{name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center'}
+				,{name:"CONPY",			index:'CONPY',			width:100,		align:'center'}
+				,{name:"CONM2",			index:'CONM2',			width:100,		align:'center'}
+				,{name:"CONM2",			index:'CONM2',			width:100,		align:'center'}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -44,8 +52,10 @@
 			} ,
 			hidegrid: false
 		});
+	}
 
-		
+	function f_selectListEnaSaleBDtl(){
+		$('#bottomList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#bottomList').jqGrid({
 			//caption: '등기 사항'
 			url:"/home/selectListSysMst.do" ,
@@ -53,18 +63,18 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['명의자', '주민번호', '연락처', '점유면적', '점유평수', '매매대금', '매매단가', 'DC사항', 'DC 율', '실 매매가', '등본제출여부', '비고'] ,
 			colModel:[
-				{name:"SYSID",				index:'SYSID',			width:60,		align:'center'}
-				, {name:"SYSNAME",		index:'SYSNAME',	width:60,		align:'center'}
-				, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
-				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center'}
+				{name:"SYSID",		index:'SYSID',		width:100,		align:'center'}
+				, {name:"SYSNAME",	index:'SYSNAME',	width:100,		align:'center'}
+				, {name:"SORTKEY",	index:'SORTKEY',	width:100,		align:'center'}
+				, {name:"USEYN",	index:'USEYN',		width:100,		align:'center'}
+				, {name:"USEYN",	index:'USEYN',		width:100,		align:'center'}
+				, {name:"USEYN",	index:'USEYN',		width:100,		align:'center'}
+				, {name:"USEYN",	index:'USEYN',		width:100,		align:'center'}
+				, {name:"USEYN",	index:'USEYN',		width:100,		align:'center'}
+				, {name:"USEYN",	index:'USEYN',		width:100,		align:'center'}
+				, {name:"USEYN",	index:'USEYN',		width:100,		align:'center'}
+				, {name:"USEYN",	index:'USEYN',		width:100,		align:'center'}
+				, {name:"REMARK",	index:'REMARK',		width:100,		align:'center'}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -83,14 +93,29 @@
 			} ,
 			hidegrid: false
 		});
-	});
+	}
+
+
+		
 		
 		
 </script>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table width="99%">
+				<tr>
+					<td align="right">
+						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
+						<a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a>
+						<a class="ui-button ui-widget ui-corner-all" id="deleteButton" name="deleteButton">삭제</a>
+						<a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="99%" class="blueone">
+			<table class="blueone">
 				<tr>
 					<td>차입기간</td>
 					<td><input type="text" id="SALEDATE" name="SALEDATE" /> ~ <input type="text" id="SALEDATE" name="SALEDATE" /></td>
@@ -226,6 +251,37 @@
 			</table>
 		</div>
 		<div id="bottomDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table class="blueone" width="100%">
+				<tr>
+					<td width="60%" align="left">
+						<table class="blueone">
+							<tr>
+								<td>등기명의 여부</td>
+								<td colspan="4"><input type="checkbox" id="SYSID" name="SYSID" /></td>
+							</tr>
+							<tr>
+								<td>등기여부</td>
+								<td><input type="radio" id="SYSID" name="SYSID" /> 등기완료  <input type="radio" id="SYSID" name="SYSID" /> 미등기</td>
+								<td>등기일자</td>
+								<td><input type="text" id="SYSID" name="SYSID" /></td>
+							</tr>
+						</table>
+					</td>
+					<td width="40%" align="right">
+						<table class="blueone" width="100%">
+							<tr>
+								<td align="right">
+									<a class="ui-button ui-widget ui-corner-all" id="addButton" name="addButton">추가</a>
+									<a class="ui-button ui-widget ui-corner-all" id="deleteButton2" name="deleteButton2">삭제</a>
+									<a class="ui-button ui-widget ui-corner-all" id="saveButton2" name="saveButton2">저장</a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		
+			
 			<table id="bottomList"></table>
 		</div>
 	</div>	

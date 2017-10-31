@@ -34,7 +34,7 @@
 	</resultMap>
 
 
-	<select id="selectListEnaInsaMst" resultMap="HR012003Data">
+	<select id="selectListHR012003" resultMap="HR012003Data">
 		SELECT 
 			T1.BRANCHCODE,
 			(SELECT BRANCHNAME FROM BA_BRANCHMST WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,

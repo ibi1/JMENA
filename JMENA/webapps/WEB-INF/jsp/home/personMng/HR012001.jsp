@@ -13,9 +13,13 @@
 
 
 <script type="text/javascript">
+	$(document).ready(function(){
+		
+		f_selectListHR012001();
+	});
 
-	$(function(){
-
+	function f_selectListHR012001(){
+		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '입사자현황', 
 			url:"/home/selectListSysMst.do" ,
@@ -60,7 +64,7 @@
 			},
 			hidegrid: false
 		});
-
+		
 		$("#mainList").jqGrid('setGroupHeaders', {
 		    useColSpanStyle: true, //rowspan자동으로 해줄지 여부.
 		    groupHeaders:[
@@ -71,9 +75,9 @@
 		      }
 		     ]
 	    });
-		 
-		
-	})	
+	} 
+
+
 </script>
 <body>
 
@@ -87,8 +91,19 @@
 
 
 	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table width="99%">
+				<tr>
+					<td align="right">
+						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
+						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
+						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="99%" class="blueone">
+			<table class="blueone">
 				<tr>
 					<th>입사기간</th>
 					<td colspan="7"><input type="text" id="S_JOINDATE_FR" name="S_JOINDATE_FR" /> ~ <input type="text" id="S_JOINDATE_TO" name="S_JOINDATE_TO" /></td>

@@ -51,7 +51,7 @@
 		<result property="SELLDANGA" 		column="SELLDANGA"/>
 	</resultMap>
 
-	<select id="selectListEnaSaleMst" resultMap="SA012004Data">
+	<select id="selectListSA012004" resultMap="SA012004Data">
 		SELECT 
 			T1.SALEID,
 			T1.SALEDATE,

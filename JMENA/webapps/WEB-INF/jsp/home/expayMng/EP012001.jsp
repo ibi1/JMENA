@@ -13,9 +13,19 @@
 
 
 <script type="text/javascript">
-
-	$(function(){
-
+	$(document).ready(function(){
+		
+		f_selectListEP012001();
+		f_selectListEP012001_2();
+		
+		$("#mainList1Div").show();
+		$("#mainList2Div").hide();
+		
+		
+	});
+	
+	function f_selectListEP012001(){
+		$('#mainList1').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList1').jqGrid({
 			//caption: '월 소득세신고 내역 - 사업소득세', 
 			url:"/home/selectListSysMst.do" ,
@@ -40,7 +50,7 @@
 						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
 						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
 			],
-			rowNum:10,
+			rowNum:100,
 			autowidth: true,
 			shrinkToFit: false,
 			rowList:[10,20,30],
@@ -57,19 +67,10 @@
 			},
 			hidegrid: false
 		});
-
-/* 		$("#mainList").jqGrid('setGroupHeaders', {
-		    useColSpanStyle: true, //rowspan자동으로 해줄지 여부.
-		    groupHeaders:[
-		      {
-		        startColumnName: 'O_JUMINID',
-		        numberOfColumns: 4,
-		        titleText: '전근무현황'
-		      }
-		     ]
-	    });
- */		 
-
+	
+	}
+	function f_selectListEP012001_2(){
+		$('#mainList2').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList2').jqGrid({
 			//caption: '월 소득세신고 내역 - 부가가치세', 
 			url:"/home/selectListSysMst.do" ,
@@ -94,8 +95,9 @@
 						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
 						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
 			],
-			rowNum:10,
+			rowNum:100,
 			autowidth: true,
+			shrinkToFit: false,
 			rowList:[10,20,30],
 			sortname: 'kName',
 			viewrecords: true,
@@ -110,35 +112,39 @@
 			},
 			hidegrid: false
 		});
+	}
+	
+	$(function(){
+		$("#rightList1B").click(function(){
+			$("#mainList1Div").show();
+			$("#mainList2Div").hide();
+		}) 
+	})
+	
+	$(function(){
+		$("#rightList2B").click(function(){
+			$("#mainList2Div").show();
+			$("#mainList1Div").hide();
+		}) 
+	})
 
-/* 		$("#mainList").jqGrid('setGroupHeaders', {
-		    useColSpanStyle: true, //rowspan자동으로 해줄지 여부.
-		    groupHeaders:[
-		      {
-		        startColumnName: 'O_JUMINID',
-		        numberOfColumns: 4,
-		        titleText: '전근무현황'
-		      }
-		     ]
-	    });
- */		 
- 
-	})	
 </script>
 <body>
 
-<!-- <div style="width:100%; border:1px solid red;" align=center>
-     <div style="width:90%;">
-          <div style="width:33%; float:left; border:1px solid #333;">1</div>
-          <div style="width:34%; float:left; border:1px solid #333;">2</div>
-     </div>
-</div>
- -->
-
-
 	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table width="99%">
+				<tr>
+					<td align="right">
+						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
+						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
+						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="98%" class="blueone">
+			<table class="blueone">
 				<tr>
 					<th>지급년월</th>
 					<td><input type="text" id="SALEDATE" name="SALEDATE" /></td>
@@ -162,13 +168,16 @@
 					<td><input type="text" id="SALEDATE" name="SALEDATE" /></td>
 				</tr>
 				<tr>
-					<th>지급년월</th>
-					<td colspan="7"><input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<th>신고구분</th>
+					<td colspan="7"><input type="radio" id="SALEDATE" name="SALEDATE" /> 사업소득세   <input type="radio" id="SALEDATE" name="SALEDATE" /> 부가가치세 </td>
 				</tr>
-			</table>
-			<br/>
-			<table id="mainList1" width="98%"></table>
-			<table id="mainList2" width="98%"></table>
+			</table><br/>
+			<div id="mainList1Div">
+				<table id="mainList1" width="98%"></table>
+			</div>
+			<div id="mainList2Div">
+				<table id="mainList2" width="98%"></table>
+			</div>
 		</div>
 	</div>
 </body>

@@ -136,7 +136,7 @@
 		</div>
 		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<form name="searchForm" method="POST" action="" class="" >
-				<table width="99%" class="blueone">
+				<table class="blueone">
 					<tr>
 						<th>지역구분</th>
 						<td>

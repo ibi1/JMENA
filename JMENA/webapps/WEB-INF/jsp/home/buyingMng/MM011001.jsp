@@ -229,7 +229,7 @@
 		</div>
 		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 		
-			<table width="99%" class="blueone">
+			<table class="blueone">
 				<tr>
 					<td>매입기간</td>
 					<td><input type="text" id="LS_BUYDATE_FR" name="LS_BUYDATE_FR" /> - <input type="text" id="LS_BUYDATE_TO" name="LS_BUYDATE_TO" /></td>
@@ -253,7 +253,7 @@
 			<table class="blueone">
 				<tr>
 					<td>계약일자 / 번호</td>
-					<td colspan="3"><input type="text" id="BUYDATE" name="BUYDATE" /> - <input type="text" id="BUYID" name="BUYID" /></td>
+					<td colspan="3"><input type="text" id="BUYDATE" name="BUYDATE" /> - <input type="text" id="BUYID" name="BUYID" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">=></a></td>
 				</tr>
 				<tr>
 					<td>매입구분</td>
@@ -353,7 +353,7 @@
 							<table class="blueone">
 								<tr>
 									<td>지급합계</td>
-									<td colspan="3"><input type="text" id="BUYDATE" name="BUYDATE" /> - <input type="text" id="BUYID" name="BUYID" /></td>
+									<td colspan="3"><input type="text" id="BUYDATE" name="BUYDATE" /></td>
 								</tr>
 							</table>
 						</td>

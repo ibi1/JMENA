@@ -12,9 +12,14 @@
 </head>
 
 <script type="text/javascript">
-
-	$(function(){
-
+	$(document).ready(function(){
+		
+		f_selectListHR012003();
+	});
+	
+	
+	function f_selectListHR012003(){
+		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '인원현황', 
 			url:"/home/selectListSysMst.do" ,
@@ -82,10 +87,8 @@
 		      
 		     ]
 		});
-		 
-
-		
-	})	
+	}
+	
 </script>
 <body>
 
@@ -99,12 +102,45 @@
 
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="99%" class="blueone">
+		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table width="99%">
 				<tr>
-					<th>기준일</th>
-					<td colspan="3"><input type="text" id="S_JOINDATE" name="S_JOINDATE" /></td>
-					<td width="60%" rowspan="2" align="right">
+					<td align="right">
+						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
+						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
+						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table class="blueone" style="width:100%;">
+				<tr>
+					<td width="40%" align="left">
+						<table class="blueone">
+							<tr>
+								<th>기준일</th>
+								<td colspan="3"><input type="text" id="S_JOINDATE" name="S_JOINDATE" /></td>
+							</tr>
+							<tr>
+								<th>지사</th>
+								<td>
+									<select id="S_BRANCHCODE" name="S_BRANCHCODE">
+										<option>서울</option>
+										<option>경기</option>
+										<option>부산</option>
+									</select>
+								</td>
+								<th>부서</th>
+								<td>
+									<select id="S_DEPTCODE" name="S_DEPTCODE">
+										<option></option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td align="right">
 						<table style="border:1px solid #333; padding: 10px;">
 							<tr>
 								<td>임원</td>
@@ -123,23 +159,6 @@
 						</table>
 					</td>
 				</tr>
-				<tr>
-					<th>지사</th>
-					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
-						</select>
-					</td>
-					<th>부서</th>
-					<td>
-						<select id="S_DEPTCODE" name="S_DEPTCODE">
-							<option></option>
-						</select>
-					</td>
-				</tr>
-				
 			</table>
 			<br/>
 			<table id="mainList" width="98%"></table>
