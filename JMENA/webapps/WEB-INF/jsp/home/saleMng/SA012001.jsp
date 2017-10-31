@@ -62,7 +62,7 @@
 			          	, {name:"TOTAMT",			index:'TOTAMT',			width:100,	align:'center'}
 			          	
 			],
-			rowNum:10 ,
+			rowNum:100 ,
 			autowidth: true ,
 			rowList:[10,20,30] ,
 			//pager: $('#leftNav') ,

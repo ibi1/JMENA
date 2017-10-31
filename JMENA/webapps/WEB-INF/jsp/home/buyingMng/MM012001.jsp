@@ -19,16 +19,16 @@
 		var S_BOROUGHCODE = "";
 		var S_ADDRESS = "";
 		
-		f_selectListEnaBuyMstP(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 	});
 
 
-	function f_selectListEnaBuyMstP(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
+	function f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 
 		$('#mainList').jqGrid({
 			//caption: '원지주 잔금현황', 
-			url:"/home/selectListEnaBuyMstP.do" ,
+			url:"/home/selectListMM012001.do" ,
 			datatype:"json" ,
 			mtype: 'POST',
 			postData : {

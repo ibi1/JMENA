@@ -30,7 +30,7 @@
 		<result property="REMARK"		column="REMARK"/>
 	</resultMap>
 
-	<select id="selectListEnaBuyMstP" resultMap="MM012001Data">
+	<select id="selectListMM012001" resultMap="MM012001Data">
 		SELECT
 			T1.CITYCODE,
 			(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
@@ -40,19 +40,30 @@
 			T1.OWNERNAME,
 			T1.BUYM2,
 			T1.BUYPY,
-			'' AS BUNBUYPY,
-			'' AS JANBUYPY,
-			T1.BUYAMT,
-			'' AS PAYAMT1,
-			'' AS PAYDATE1,
-			'' AS PAYAMT2,
-			'' AS PAYDATE2,
-			'' AS PAYAMT3,
-			'' AS PAYDATE3,
-			'' AS PAYAMT4,
-			'' AS PAYDATE4,
-			'' AS JANPAYAMT,
-			'' AS OPENYN,
+            (SELECT SUM(CONPY) FROM sa_salemst WHERE BUYID = T1.BUYID) AS BUNBUYPY,
+            (T1.BUYPY - (SELECT SUM(CONPY) FROM sa_salemst WHERE BUYID = T1.BUYID)) AS JANBUYPY,
+            T1.BUYAMT,
+            (SELECT PAYAMT FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='002') AS PAYAMT1,
+            (SELECT PAYDATE FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='002') AS PAYDATE1,
+            (SELECT PAYAMT
+			FROM mm_payscheduletb
+			WHERE 1=1
+			AND BUYID = T1.BUYID
+			AND PAYGUBUN ='003'
+			AND PAYDATE = (SELECT MIN(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003')) AS PAYAMT2,
+            (SELECT MIN(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003') AS PAYDATE2,
+            (SELECT PAYAMT
+			FROM mm_payscheduletb
+			WHERE 1=1
+			AND BUYID = T1.BUYID
+			AND PAYGUBUN ='003'
+			AND PAYDATE = (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003')) AS PAYAMT3,
+            (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003') AS PAYDATE3,
+            (SELECT PAYAMT FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYAMT4,
+            (SELECT PAYDATE FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYDATE4,
+			(SELECT SUM(PAYAMT) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYYN ='Y') AS JANPAYAMT,
+			<!-- (SELECT OPENYN FROM mm_salesopentb WHERE BUYID = T1.BUYID) AS OPENYN, -->
+			'Y' AS OPENYN,
 			T1.REMARK
 		FROM mm_buymst T1
 		WHERE 1=1

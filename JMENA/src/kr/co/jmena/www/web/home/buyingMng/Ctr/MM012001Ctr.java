@@ -68,7 +68,7 @@ public class MM012001Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/home/selectListEnaBuyMstP.do")
+	@RequestMapping("/home/selectListMM012001.do")
 	public ModelAndView selectListEnaBuyMstP(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MM012001VO vo = new MM012001VO();
 		
@@ -77,7 +77,7 @@ public class MM012001Ctr {
 		vo.setS_ADDRESS(request.getParameter("S_ADDRESS"));
 		
 		
-		List<MM012001VO> lst = MM012001Biz.selectListEnaBuyMstP(vo);
+		List<MM012001VO> lst = MM012001Biz.selectListMM012001(vo);
 		
 		System.out.println("******************************************");
 		System.out.println("size()"+lst.size());
@@ -156,7 +156,7 @@ public class MM012001Ctr {
             //sheet.setRandomAccessWindowSize(100); // 메모리 행 100개로 제한, 초과 시 Disk로 flush
            
             // 엑셀에 출력할 List
-            List<MM012001VO> lst = MM012001Biz.selectListEnaBuyMstP(vo);
+            List<MM012001VO> lst = MM012001Biz.selectListMM012001(vo);
             
          // Cell 스타일 값
             sheet.setDefaultColumnWidth(30);
