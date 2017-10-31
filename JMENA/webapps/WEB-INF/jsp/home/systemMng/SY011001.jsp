@@ -134,13 +134,40 @@
 		
 		$(function() {
 			$("#insertButton").click(function() {
-				 alert("처리 중....");
+				$("#S_SYSID").val("");
+				$("#S_SYSNAME").val("");
+				$("#S_SORTKEY").val("");
+				$("#leftList").jqGrid("resetSelection");
+				
+				$("#S_SYSID").focus();
 			});
 		})
 		
 		$(function() {
 			$("#saveButton").click(function() {		
-				alert("처리 중....");
+				if (confirm("저장하시겠습니까?") == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: $("#SY011001").serialize(),
+						url: "/home/insertDataSysMst.do", 
+						dataType : 'json' , 
+						success: function(data){
+							if (data.resultCode == "SUCCESS") {
+								alert("저장하였습니다.");
+								
+								f_selectSysMst();
+							} else {
+								alert(data.resultMsg);
+								$("#SYSID").focus();
+							}
+							
+						},
+						error:function(e){  
+							alert("[ERROR]System Menu 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				
+				}
 			});
 		})
 	</script>
@@ -161,20 +188,22 @@
 			<div id="leftNav"></div>
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
-				<tr>
-					<td>시스템코드</td>
-					<td><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="sysSearchButton" name="sysSearchButton">=></a></td>
-				</tr>
-				<tr>
-					<td>시스템 명</td>
-					<td><input type="text" id="S_SYSNAME" name="S_SYSNAME" /></td>
-				</tr>
-				<tr>
-					<td>정렬순서</td>
-					<td><input type="text" id="S_SORTKEY" name="S_SORTKEY" /></td>
-				</tr>
-			</table>
+			<form id="SY011001">
+				<table class="blueone">
+					<tr>
+						<td>시스템코드</td>
+						<td><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="sysSearchButton" name="sysSearchButton">=></a></td>
+					</tr>
+					<tr>
+						<td>시스템 명</td>
+						<td><input type="text" id="S_SYSNAME" name="S_SYSNAME" /></td>
+					</tr>
+					<tr>
+						<td>정렬순서</td>
+						<td><input type="text" id="S_SORTKEY" name="S_SORTKEY" /></td>
+					</tr>
+				</table>
+				</form>
 			<table class="blueone">
 				<tr>
 					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="rightInsertButton">추가</a></td>
