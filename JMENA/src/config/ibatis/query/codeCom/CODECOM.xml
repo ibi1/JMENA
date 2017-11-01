@@ -7,6 +7,7 @@
 	<typeAlias alias="dcodeVO" type="kr.co.jmena.www.web.codeCom.Vo.DcodeVO"/>
 	<typeAlias alias="userVO" type="kr.co.jmena.www.web.codeCom.Vo.UserVO"/>
 	<typeAlias alias="cityVO" type="kr.co.jmena.www.web.codeCom.Vo.CityVO"/>
+	<typeAlias alias="branchVO" type="kr.co.jmena.www.web.codeCom.Vo.BranchVO"/>
 
 	<!-- 은행 코드 -->
 	<resultMap id="bankData" class="bankVO">
@@ -37,6 +38,14 @@
 		<result property="BOROUGHCODE" column="BOROUGHCODE"/>
 		<result property="BOROUGHNAME" column="BOROUGHNAME"/>
 	</resultMap>
+	
+	
+	<!-- 지사코드 조회 -->
+	<resultMap id="branchMstData" class="branchVO">
+		<result property="BRANCHCODE" column="BRANCHCODE"/>
+		<result property="BRANCHNAME" column="BRANCHNAME"/>
+	</resultMap>
+	
 	
  	<select id="selectBankList" resultMap="bankData">
 		SELECT 
@@ -78,4 +87,12 @@
 		  AND CITYCODE = #CITYCODE#
 		ORDER BY SORTKEY
 	</select>
+	
+	<select id="selectBranchMstList" resultMap="branchMstData">
+		SELECT 
+			BRANCHCODE, BRANCHNAME 
+		FROM ba_branchmst
+		ORDER BY BRANCHCODE
+	</select>
+	
 </sqlMap>

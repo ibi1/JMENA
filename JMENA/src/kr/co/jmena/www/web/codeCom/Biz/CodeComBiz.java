@@ -9,6 +9,8 @@ import kr.co.jmena.www.web.codeCom.Vo.BankVO;
 import kr.co.jmena.www.web.codeCom.Vo.CityVO;
 import kr.co.jmena.www.web.codeCom.Vo.DcodeVO;
 import kr.co.jmena.www.web.codeCom.Vo.UserVO;
+import kr.co.jmena.www.web.codeCom.Vo.BranchVO;
+
 import kr.co.jmena.www.web.home.main.Dao.MainDao;
 import kr.co.jmena.www.web.home.main.Vo.MainVO;
 
@@ -84,4 +86,17 @@ public class CodeComBiz {
 		
 		return lst;
 	}
+	
+	public List<BranchVO> selectBranchMstList() throws Exception {
+		List<BranchVO> lst = null;
+
+		try {
+			lst = codeComDao.selectBranchMstList();
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+	
 }

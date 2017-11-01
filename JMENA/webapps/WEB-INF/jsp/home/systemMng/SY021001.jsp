@@ -88,7 +88,7 @@
 				</tr>
 			</table>
 		<form id="SY021001">
-			<table class="blueone">
+			<table class="blueone" align="left">
 				<tr>
 					<td>사업자번호</td>
 					<td><input type="text" id="COMPANYNO" name="COMPANYNO" /></td>

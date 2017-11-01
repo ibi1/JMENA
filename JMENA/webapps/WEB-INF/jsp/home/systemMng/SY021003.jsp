@@ -73,11 +73,11 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['시/구/군 코드', '시/구/군 명', '사용여부', '비고', '정렬순서'] ,
 			colModel:[
-				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:60,		align:'center'}
-				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:60,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',			width:60,		align:'center'}
-				, {name:"REMARK",		index:'REMARK',			width:60,		align:'center'}
-				, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center'}
+				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:60,	align:'center', editable:true}
+				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:60,	align:'center', editable:true}
+				, {name:"USEYN",		index:'USEYN',			width:60,	align:'center', formatter:f_selectListEnaUseynCode}
+				, {name:"REMARK",		index:'REMARK',			width:60,	align:'center', editable:true}
+				, {name:"SORTKEY",		index:'SORTKEY',		width:60,	align:'center', editable:true}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
@@ -97,6 +97,18 @@
 		});
 	}
 
+	function f_selectListEnaUseynCode(){
+		
+		var UseynCode = "";
+		UseynCode += "<select id='USEYN' name='USEYN' style='width:50px'>";
+		UseynCode += "<option value='Y'>Y</option>\n";
+		UseynCode += "<option value='N'>N</option>\n";
+		UseynCode += "</select>";
+				
+		return UseynCode;
+		
+	}	
+	
 	$(function(){
 		$("#selectButton").click(function(){
 			$("#RS_CITYCODE").val("");

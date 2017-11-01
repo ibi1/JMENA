@@ -11,6 +11,8 @@
 
 </head>
 <script type="text/javascript">
+	var PayGubun = "";
+	var BranchCode = "";
 
 	$(document).ready(function(){
 		
@@ -20,6 +22,14 @@
 		var LS_ADDRESS = "";
 		var BUYID = "";
 		
+		//공통코드 가져오기
+		f_selectListEnaBuyGubnCode();
+		f_selectListEnaCityCode();
+		f_selectListEnaBoroughCode();
+		f_selectListEnaUseTypeCode();
+		
+		//공통코드 가져오기 끝
+		
 		f_selectListEnaBuyMst(LS_BUYDATE_FR, LS_BUYDATE_TO, LS_INSERTUSER, LS_ADDRESS);
 		f_selectListEnaPayScheduleTb(BUYID);
 		f_selectListEnaSalesOpenTb(BUYID);
@@ -27,7 +37,102 @@
 		$("#right2Div").hide();
 		
 	});
+	
+	function f_selectListEnaBuyGubnCode(){
+		var CCODE = "014";
+		$("#BUYGUBUN").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#BUYGUBUN").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	function f_selectListEnaCityCode(){
+		$("#CITYCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/cityMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.cityMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
+				});
+				$("#CITYCODE").append(inHtml);
+				f_selectListEnaBoroughCode();
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
 
+	$(function(){
+		$("#CITYCODE").change(function() {
+			f_selectListEnaBoroughCode();
+		});
+	});
+	
+	
+	function f_selectListEnaBoroughCode(){
+		var CITYCODE = $("#CITYCODE").val();
+		$("#BOROUGHCODE").empty().data('options');
+
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/cityDtlList.do", 
+			dataType : 'json' , 
+			data : {
+				CITYCODE : CITYCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.cityDtlList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BOROUGHCODE + "'>" + currentValue.BOROUGHNAME + "</option>\n";
+				});
+				$("#BOROUGHCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	function f_selectListEnaUseTypeCode(){
+		var CCODE = "006";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#USETYPE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
 	
 	function f_selectListEnaBuyMst(LS_BUYDATE_FR, LS_BUYDATE_TO, LS_INSERTUSER, LS_ADDRESS){
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
@@ -134,7 +239,7 @@
 			loadError:function(){alert("Error~!!");},
 			colNames:['지급구분', '지급일자', '지급금액', '지급여부', '비고'],
 			colModel:[
-				{name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center'}
+				{name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center', formatter:f_selectListEnaPayGubunCode}
 				, {name:"PAYDATE",	index:'PAYDATE',	width:100,	align:'center'}
 				, {name:"PAYAMT",	index:'PAYAMT',		width:100,	align:'center'}
 				, {name:"PAYYN",	index:'PAYYN',		width:100,	align:'center'}
@@ -159,6 +264,34 @@
 		});
 	}
 	
+	function f_selectListEnaPayGubunCode(){
+		var CCODE = "005";
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				inHtml += "<select id='PAYGUBUN' name='PAYGUBUN'>";
+				
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				inHtml += "</select>";
+				
+				PayGubun = inHtml;
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+		return PayGubun; 
+	}
+	
 	function f_selectListEnaSalesOpenTb(BUYID){
 		$('#rightList2').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#rightList2').jqGrid({
@@ -173,7 +306,7 @@
 			loadError:function(){alert("Error~!!");},
 			colNames:['지사', '오픈여부', '홀딩여부', '홀딩면적', '홀딩일자', '비고'],
 			colModel:[
-				{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center'}
+				{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', formatter:f_selectListEnaBranchCode}
 				, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center'}
 				, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center'}
 				, {name:"HOLDINGPY",	index:'HOLDINGPY',		width:100,	align:'center'}
@@ -197,6 +330,32 @@
 			},
 			hidegrid: false
 		});
+	}
+	
+	function f_selectListEnaBranchCode(){
+		BranchCode = "";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/branchMstList.do", 
+			dataType : 'json' ,
+			success: function(data){
+				var inHtml = "";
+				inHtml += "<select id='BRANCHCODE' name='BRANCHCODE'>";
+				
+				data.branchMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+				});
+				inHtml += "</select>";
+				
+				BranchCode = inHtml;
+				
+			},
+			error:function(e){  
+				alert("[ERROR]System 지사코드 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	   	
+		return BranchCode; 
 	}
 	
 	$(function(){
@@ -237,9 +396,7 @@
 				<tr>
 					<td>담당자</td>
 					<td>
-						<select id="LS_INSERTUSER" name="LS_INSERTUSER">
-							<option></option>
-						</select>
+						<input type="text" id="LS_INSERTUSER" name="LS_INSERTUSER" />
 					</td>
 				</tr>
 				<tr>
@@ -259,7 +416,6 @@
 					<td>매입구분</td>
 					<td colspan="3">
 						<select id="BUYGUBUN" name="BUYGUBUN">
-							<option></option>
 						</select>
 					</td>
 				</tr>
@@ -271,13 +427,11 @@
 					<td>지역구분</td>
 					<td>
 						<select id="CITYCODE" name="CITYCODE">
-							<option></option>
 						</select>
 					</td>
 					<td>시/도구분</td>
 					<td>
 						<select id="BOROUGHCODE" name="BOROUGHCODE">
-							<option></option>
 						</select>
 					</td>
 				</tr>
@@ -285,7 +439,6 @@
 					<td>지목</td>
 					<td colspan="3">
 						<select id="USETYPE" name="USETYPE">
-							<option></option>
 						</select>
 					</td>
 				</tr>

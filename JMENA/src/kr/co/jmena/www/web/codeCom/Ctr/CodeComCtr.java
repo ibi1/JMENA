@@ -15,6 +15,8 @@ import kr.co.jmena.www.web.codeCom.Vo.BankVO;
 import kr.co.jmena.www.web.codeCom.Vo.CityVO;
 import kr.co.jmena.www.web.codeCom.Vo.DcodeVO;
 import kr.co.jmena.www.web.codeCom.Vo.UserVO;
+import kr.co.jmena.www.web.codeCom.Vo.BranchVO;
+
 import kr.co.jmena.www.web.home.main.Biz.MainBiz;
 import kr.co.jmena.www.web.home.main.Vo.MainVO;
 
@@ -177,4 +179,35 @@ public class CodeComCtr {
 		
 		return new ModelAndView("jsonView", json);
 	}
+
+	/**
+	 * ba_branchMst 테이블 특정 리스트 가져오기 (지사 리스트)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/codeCom/branchMstList.do")
+	public ModelAndView branchMstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		BranchVO vo = new BranchVO();
+		
+		List<BranchVO> lst = codeComBiz.selectBranchMstList();
+		
+		JSONArray jsonArr = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject jData = new JSONObject();
+			jData.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
+			jData.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
+			
+			jsonArr.add(i, jData);
+		}
+		
+		json.put("branchMstList", jsonArr);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
 }

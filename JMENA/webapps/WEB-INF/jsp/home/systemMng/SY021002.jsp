@@ -11,8 +11,9 @@
 
 </head>
 <script type="text/javascript">
+	var DeptCode = "";
 	$(document).ready(function(){
-	
+
 		f_selectListEnaBranchMst();
 		f_selectListEnaDeptMst();
 	});
@@ -54,6 +55,7 @@
 				$("#RS_BRANCHNAME").val(selRowData.BRANCHNAME);
 				$("#RS_USEYN").val(selRowData.USEYN);
 				
+				f_selectListEnaDeptCode();
 				f_selectListEnaDeptMst();
 			} ,
 			hidegrid: false
@@ -63,7 +65,6 @@
 	
 	function f_selectListEnaDeptMst(){
 		$('#rightList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		
 		$('#rightList').jqGrid({
 			//caption: '지사및부서관리'
 			url:"/home/selectListEnaDeptMst.do" ,
@@ -78,11 +79,13 @@
 			colModel:[
 				{name:"DEPTCODE",		index:'DEPTCODE',	width:60,	align:'center', editable:true}
 				, {name:"DEPTNAME",		index:'DEPTNAME',	width:60,	align:'center', editable:true}
-				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:60,	align:'center', editable:true}
+				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:60,	align:'center', formatter:f_selectListEnaDeptCode}
 				, {name:"SORTKEY",		index:'SORTKEY',	width:60,	align:'center', editable:true}
-				, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', editable:true}
+				, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', formatter:f_selectListEnaUseynCode}
 				, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', editable:true}
 			] ,
+			
+			
 			rowNum:100 ,
 			autowidth: true ,
 			//rowList:[10,20,30] ,
@@ -98,10 +101,52 @@
 			},
 			onSelectRow : function(rowid) {
 				$('#rightList').jqGrid('editRow',rowid,false);
-			},			
+			},
 			hidegrid: false
 		});
 	}
+	
+	function f_selectListEnaDeptCode(){
+		var CCODE = "001";
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				inHtml += "<select id='DEPTGUBUN' name='DEPTGUBUN'>";
+				
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				inHtml += "</select>";
+				
+				DeptCode = inHtml;
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+		return DeptCode; 
+	   	
+	}
+	
+	
+	function f_selectListEnaUseynCode(){
+		
+		var UseynCode = "";
+		UseynCode += "<select id='USEYN' name='USEYN' style='width:50px'>";
+		UseynCode += "<option value='Y'>Y</option>\n";
+		UseynCode += "<option value='N'>N</option>\n";
+		UseynCode += "</select>";
+				
+		return UseynCode;
+		
+	}	
 	
 	$(function(){
 		$("#selectButton").click(function(){
@@ -309,7 +354,7 @@
 					<tr>
 						<td>사용여부</td>
 						<td>
-							<select id="RS_USEYN" name="RS_USEYN">
+							<select id="RS_USEYN" name="RS_USEYN" style="width:50px;">
 								<option value="Y">Y</option>
 								<option value="N">N</option>
 							</select>
