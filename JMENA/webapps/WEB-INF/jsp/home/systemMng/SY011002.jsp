@@ -160,7 +160,7 @@
 					, {name:"PGMNAME",		index:'PGMNAME',		width:60,		align:'center', sortable:false}
 					, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center', sortable:false}
 					, {name:"REMARK",		index:'REMARK',			width:60,		align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false}
 				] ,
 				rowNum:100 ,
 				autowidth: true ,
@@ -201,6 +201,8 @@
 				    			return true;
 				        	} else {
 				        		//없을 경우 신규 데이터 입력으로...
+				        		$("#S_FLAG").val("I");
+				        		
 				        		$("#S_PGMNAME_R").val("").focus();
 				        		$("#S_REMARK").val("");
 				        		$("#S_USEYN").val("Y").attr("selected", "selected");
@@ -295,9 +297,31 @@
 					return false;
 				}
 				
-				//저장 , 수정
-				$("#S_FLAG").val("U");
+				var msg = "";
+				if ($("#S_FLAG").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: $("#SY011002").serialize(),
+						url: "/home/insertDataPgmTb.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$("#S_FLAG").val("U");
+							
+							alert(data.resultMsg);
+							
+							$("#pgmSearchButton").click();
+						},
+						error:function(e){  
+							alert("[ERROR]프로그램 저장  중 오류가 발생하였습니다.");
+						}  
+					});
 				
+				}
 			});
 		})
 		
@@ -376,16 +400,16 @@
 				</tr>
 				<tr>
 					<td>프로그램명</td>
-					<td><input type="text" id="S_PGMNAME_R" name="PGMNAME_R" /></td>
+					<td><input type="text" id="S_PGMNAME_R" name="S_PGMNAME_R" /></td>
 				</tr>
 				<tr>
 					<td>비고</td>
-					<td><input type="text" id="S_REMARK" name="REMARK" /></td>
+					<td><input type="text" id="S_REMARK" name="S_REMARK" /></td>
 				</tr>
 				<tr>
 					<td>사용여부</td>
 					<td>
-						<select id="S_USEYN" name="USEYN">
+						<select id="S_USEYN" name="S_USEYN">
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
@@ -393,7 +417,7 @@
 				</tr>
 				<tr>
 					<td>정렬순서</td>
-					<td><input type="text" id="S_SORTKEY" name="SORTKEY" onkeydown="f_saveKeyDown();" /></td>
+					<td><input type="text" id="S_SORTKEY" name="S_SORTKEY" onkeydown="f_saveKeyDown();" /></td>
 				</tr>
 			</table>
 			</form>

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import kr.co.jmena.www.web.home.systemMng.Dao.SY011002Dao;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011002VO;
 
 import org.apache.log4j.Logger;
@@ -30,5 +31,29 @@ public class SY011002Biz {
 		}
 		
 		return lst;
+	}
+	
+	public boolean insertDataPgmTb(SY011002VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011002Dao.insertDataPgmTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateDataPgmTb(SY011002VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011002Dao.updateDataPgmTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
 	}
 }

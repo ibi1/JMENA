@@ -23,4 +23,22 @@ public class SY011002Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}
+	
+	public boolean insertDataPgmTb(SY011002VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataPgmTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean updateDataPgmTb(SY011002VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataPgmTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
 }
