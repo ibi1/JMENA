@@ -1,5 +1,6 @@
 package kr.co.jmena.www.web.home.systemMng.Ctr;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -111,6 +112,47 @@ public class SY011003Ctr {
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListUserSysTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/selectTest.do")
+	public ModelAndView selectTest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ArrayList<String> list = new ArrayList<String>();
+		
+		
+
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+			JSONObject obj1 = new JSONObject();
+			obj1.put("VALUE", "Y");
+			obj1.put("LABEL", "Y");
+			jCell.add(0, obj1);
+			
+			JSONObject obj2 = new JSONObject();
+			obj2.put("VALUE", "N");
+			obj2.put("LABEL", "N");
+			jCell.add(1, obj2);
+			
+			JSONObject obj3 = new JSONObject();
+			obj3.put("VALUE", "001");
+			obj3.put("LABEL", "OK1");
+			jCell.add(2, obj3);
+			
+			JSONObject obj4 = new JSONObject();
+			obj4.put("VALUE", "002");
+			obj4.put("LABEL", "OK2");
+			jCell.add(3, obj4);
+			
+			JSONObject obj5 = new JSONObject();
+			obj5.put("VALUE", "003");
+			obj5.put("LABEL", "OK3");
+			jCell.add(4, obj5);
+		
+		json.put("rows", jCell);
+		
+		logger.debug("[test]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}

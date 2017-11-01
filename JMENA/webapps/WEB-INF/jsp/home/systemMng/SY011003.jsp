@@ -10,6 +10,8 @@
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
 
 	<script type="text/javascript">
+		var v_rightLastSel = 0;
+		
 		$(document).ready(function(){
 			f_selectUserMst();
 			f_selectUserSysTb();
@@ -32,7 +34,7 @@
 					{name:"USERID",			index:'USERID',		width:60,	align:'center', sortable:false}
 					, {name:"PASSWORD",		index:'PASSWORD',	width:60,	align:'center', sortable:false, hidden:true}
 					, {name:"USERNAME",		index:'USERNAME',	width:60,	align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false}
 					, {name:"USERGUBUN",	index:'USERGUBUN',	width:60,	align:'center', sortable:false, hidden:true}
 					, {name:"PHONENO",		index:'PHONENO',	width:60,	align:'center', sortable:false, hidden:true}
 					, {name:"MOBILENO",		index:'MOBILENO',	width:60,	align:'center', sortable:false, hidden:true}
@@ -95,7 +97,8 @@
 				colModel:[
 					{name:"SYSID",			index:'SYSID',		width:60,	align:'center', sortable:false}
 					, {name:"SYSNAME",		index:'SYSNAME',	width:60,	align:'center', sortable:false}
-					, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+//					, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/home/selectTest.do", buildSelect:setAuth_YNSelectBox}}
+					, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
 					, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', sortable:false}
 				] ,
 				rowNum:100,
@@ -110,14 +113,33 @@
 					repeatitems: false
 				},
 				//height: '100%' ,
-				onSelectRow: function(ids){
+				onSelectRow: function(id){
+					if( v_rightLastSel != id ){
+				        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
 
+				        v_rightLastSel = id;
+					}
 				} ,
 				loadComplete: function() {
 					
 				},
 				hidegrid: false
 			});
+		}
+		
+		function setAuth_YNSelectBox(data){
+			var jsonValue = $.parseJSON(data).rows;
+			
+			var result = "<select>";
+			
+			jsonValue.some(function(currentValue, index, array){
+				result += "<option value='" + currentValue.VALUE + "'>" + currentValue.LABEL + "</option>\n";
+			});
+			
+			result +="</select>";
+
+			return result;
 		}
 		
 		function f_onEncterUserName() {
