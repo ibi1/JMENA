@@ -14,6 +14,8 @@
 		var g_menuId2 = "ALL";
 		
 		$(document).ready(function(){
+			$("#S_FLAG").val("U");
+			
 		   	//시스템 메뉴 호출 (SY011001 데이터 사용)
 		   	$.ajax({ 
 				type: 'POST' ,
@@ -158,7 +160,7 @@
 					, {name:"PGMNAME",		index:'PGMNAME',		width:60,		align:'center', sortable:false}
 					, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center', sortable:false}
 					, {name:"REMARK",		index:'REMARK',			width:60,		align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false}
 				] ,
 				rowNum:100 ,
 				autowidth: true ,
@@ -173,15 +175,17 @@
 				},
 				//height: '100%' ,
 				onSelectRow: function(ids){
+					$("#S_FLAG").val("U");
+					
 					var selRowData = $(this).jqGrid('getRowData', ids);
 					
 					$("#S_SYSIDCOMBO_R").val(selRowData.SYSID).attr("selected", "selected").trigger("change");
 					
 					g_menuId2 = selRowData.MENUID;	//메뉴아이디 무조건 셋팅
 					
-					$("#S_PGMID_L").val(selRowData.PGMID);
+					$("#S_PGMNAME_L").val(selRowData.PGMNAME);
 					$("#S_PGMID_R").val(selRowData.PGMID);
-					$("#S_PGMNAME").val(selRowData.PGMNAME);
+					$("#S_PGMNAME_R").val(selRowData.PGMNAME);
 					$("#S_REMARK").val(selRowData.REMARK);
 					$("#S_USEYN").val(selRowData.USEYN).attr("selected", "selected");
 					$("#S_SORTKEY").val(selRowData.SORTKEY);
@@ -197,7 +201,9 @@
 				    			return true;
 				        	} else {
 				        		//없을 경우 신규 데이터 입력으로...
-				        		$("#S_PGMNAME").val("").focus();
+				        		$("#S_FLAG").val("I");
+				        		
+				        		$("#S_PGMNAME_R").val("").focus();
 				        		$("#S_REMARK").val("");
 				        		$("#S_USEYN").val("Y").attr("selected", "selected");
 				        		$("#S_SORTKEY").val("");
@@ -228,12 +234,103 @@
 			}
 		}
 		
+		function f_clear() {
+			$("#S_SYSIDCOMBO_L").val("ALL").attr("selected", "selected").trigger("change");
+			$("#S_SYSIDCOMBO_R").val("ALL").attr("selected", "selected").trigger("change");
+			$("#S_PGMID_R").val("");
+			$("#S_PGMNAME_L	").val("");
+			$("#S_PGMNAME_R").val("");
+			$("#S_REMARK").val("");
+			$("#S_USEYN").val("Y").attr("selected", "selected");
+			$("#S_SORTKEY").val("");
+		}
+		
 		$(function() {
 			$("#selectButton").click(function() {
+				$("#S_FLAG").val("U");
+				
+				f_clear();
 				
 				f_selectPgmList();
 			});
 		})
+		
+		$(function() {
+			$("#insertButton").click(function() {
+				$("#S_FLAG").val("I");
+				
+				f_clear();
+				
+				$("#S_SYSIDCOMBO_R").focus();
+			});
+		})
+		
+		$(function() {
+			$("#saveButton").click(function() {
+				if ($("#S_SYSIDCOMBO_R").val() == "ALL") {
+					alert("시스템구분을 선택셔야 합니다.");
+					$("#S_SYSIDCOMBO_R").focus();
+					return false;
+				}
+				
+				if ($("#S_MENUIDCOMBO_R").val() == "ALL") {
+					alert("메뉴구분을 선택셔야 합니다.");
+					$("#S_MENUIDCOMBO_R").focus();
+					return false;
+				}
+				
+				if ($("#S_PGMID_R").val() == "") {
+					alert("프로그램ID를 입력하셔야 합니다.");
+					$("#S_PGMID_R").focus();
+					return false;
+				}
+				
+				if ($("#S_PGMNAME_R").val() == "") {
+					alert("프로그램명을 입력하셔야 합니다.");
+					$("#S_PGMNAME_R").focus();
+					return false;
+				}
+				
+				if ($("#S_SORTKEY").val() == "") {
+					alert("정렬순서를 입력하셔야 합니다.");
+					$("#S_SORTKEY").focus();
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: $("#SY011002").serialize(),
+						url: "/home/insertDataPgmTb.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$("#S_FLAG").val("U");
+							
+							alert(data.resultMsg);
+							
+							$("#pgmSearchButton").click();
+						},
+						error:function(e){  
+							alert("[ERROR]프로그램 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				
+				}
+			});
+		})
+		
+		function f_saveKeyDown() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#saveButton").click();
+			}
+		}
 	</script>
 </head>
 <body>
@@ -267,13 +364,15 @@
 				</tr>
 				<tr>
 					<td>프로그램명</td>
-					<td><input type="text" id="S_PGMID_L" name="S_PGMID_L" /></td>
+					<td><input type="text" id="S_PGMNAME_L" name="S_PGMNAME_L" /></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
 			<div id="leftNav"></div>
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<form id="SY011002">
+			<input type="hidden" id="S_FLAG" name="S_FLAG" />
 			<table class="blueone">
 				<tr>
 					<td>시스템구분</td>
@@ -301,16 +400,16 @@
 				</tr>
 				<tr>
 					<td>프로그램명</td>
-					<td><input type="text" id="S_PGMNAME" name="PGMNAME" /></td>
+					<td><input type="text" id="S_PGMNAME_R" name="S_PGMNAME_R" /></td>
 				</tr>
 				<tr>
 					<td>비고</td>
-					<td><input type="text" id="S_REMARK" name="REMARK" /></td>
+					<td><input type="text" id="S_REMARK" name="S_REMARK" /></td>
 				</tr>
 				<tr>
 					<td>사용여부</td>
 					<td>
-						<select id="S_USEYN" name="USEYN">
+						<select id="S_USEYN" name="S_USEYN">
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
@@ -318,9 +417,10 @@
 				</tr>
 				<tr>
 					<td>정렬순서</td>
-					<td><input type="text" id="S_SORTKEY" name="SORTKEY" /></td>
+					<td><input type="text" id="S_SORTKEY" name="S_SORTKEY" onkeydown="f_saveKeyDown();" /></td>
 				</tr>
 			</table>
+			</form>
 		</div>
 	</div>
 

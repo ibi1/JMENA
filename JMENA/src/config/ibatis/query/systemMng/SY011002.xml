@@ -39,41 +39,22 @@
 		ORDER BY T1.SYSID, T1.MENUID, T1.SORTKEY ASC
 	</select>
 	
-	<select id="selectOneEnaMenuPgmTb">
-		SELECT 
-			T1.PGMID,
-			T1.SYSID,
-			(SELECT SYSNAME FROM SY_SYSMST WHERE SYSID = T1.SYSID) AS SYSNAME,
-			T1.MENUID,
-			(SELECT MENUNAME FROM SY_MENUTB WHERE SYSID = T1.SYSID AND MENUID = T1.MENUID) AS MENUNAME,
-			T1.PGMNAME,
-			T1.SORTKEY,
-			T1.REMARK,
-			T1.USEYN
-		FROM SY_MENUPGMTB T1
-		WHERE 1=1
-		AND T1.SYSID = #SYSID#
-		AND T1.MENUID = #MENUID#
-		AND T1.PGMID = #PGMID#
-		ORDER BY T1.SORTKEY ASC
-	</select>
-	
-	<update id="updateEnaMenuPgmTb">
-		UPDATE SY_MENUPGMTB
+	<update id="updateDataPgmTb">
+		UPDATE sy_menupgmtb
 		SET
 			PGMNAME = #PGMNAME#,
 			SORTKEY = #SORTKEY#,
 			REMARK = #REMARK#,
 			USEYN = #USEYN#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
 		WHERE SYSID = #SYSID#
 		AND MENUID = #MENUID#
 		AND PGMID = #PGMID#
 	</update>
 	
-	<insert id="insertEnaMenuPgmTb">
-		INSERT INTO SY_MENUPGMTB
+	<insert id="insertDataPgmTb">
+		INSERT INTO sy_menupgmtb
 		(
 			PGMID,
 			SYSID,
@@ -93,8 +74,8 @@
 			#SORTKEY#,
 			#REMARK#,
 			#USEYN#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#,
+			NOW()
 		)
 	</insert>
 </sqlMap>

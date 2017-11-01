@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.systemMng.Biz.SY011002Biz;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011002VO;
@@ -88,4 +89,57 @@ public class SY011002Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}
+	
+	@RequestMapping("/home/insertDataPgmTb.do")
+	public ModelAndView insertDataPgmTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SY011002VO vo = new SY011002VO();
+		
+		vo.setSYSID(request.getParameter("S_SYSIDCOMBO_R"));
+		vo.setMENUID(request.getParameter("S_MENUIDCOMBO_R"));
+		vo.setPGMID(request.getParameter("S_PGMID_R"));
+		vo.setPGMNAME(request.getParameter("S_PGMNAME_R"));
+		vo.setUSEYN(request.getParameter("S_USEYN"));
+		vo.setREMARK(request.getParameter("S_REMARK"));
+		vo.setSORTKEY(request.getParameter("S_SORTKEY"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SY011002Biz.insertDataPgmTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY011002Biz.updateDataPgmTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]시스템 코드처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataPgmTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
 }

@@ -11,8 +11,15 @@ public class SY011002VO {
 	private String SYSID;
 	private String SYSNAME;
 	private String USEYN;
+	private String USERID;
 	
 	
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
+	}
 	public String getMENUID() {
 		return  this.MENUID;
 	}
