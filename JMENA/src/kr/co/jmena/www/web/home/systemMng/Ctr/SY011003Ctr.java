@@ -6,8 +6,10 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.systemMng.Biz.SY011003Biz;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011002VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011003VO;
 
 import org.apache.log4j.Logger;
@@ -116,43 +118,110 @@ public class SY011003Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
-	@RequestMapping("/home/selectTest.do")
-	public ModelAndView selectTest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ArrayList<String> list = new ArrayList<String>();
+	/**
+	 * 사용자 저장/수정 후 저장일 경우는 권한도 자동 저장
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/insertDataUserMst.do")
+	public ModelAndView insertDataUserMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SY011003VO vo = new SY011003VO();
 		
+		vo.setUSERID(request.getParameter("S_USERID"));
+		vo.setPASSWORD(request.getParameter("S_PASSWORD"));
+		vo.setUSERNAME(request.getParameter("S_USERNAME_R"));
+		vo.setUSEYN(request.getParameter("S_USEYN"));
+		vo.setUSERGUBUN(request.getParameter("S_USERGUBUN"));
+		vo.setPHONENO(request.getParameter("S_PHONENO"));
+		vo.setMOBILENO(request.getParameter("S_MOBILENO"));
 		
-
-		JSONArray jCell = new JSONArray();
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERIDSESSION((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG");
+		
 		JSONObject json = new JSONObject();
 		
-			JSONObject obj1 = new JSONObject();
-			obj1.put("VALUE", "Y");
-			obj1.put("LABEL", "Y");
-			jCell.add(0, obj1);
-			
-			JSONObject obj2 = new JSONObject();
-			obj2.put("VALUE", "N");
-			obj2.put("LABEL", "N");
-			jCell.add(1, obj2);
-			
-			JSONObject obj3 = new JSONObject();
-			obj3.put("VALUE", "001");
-			obj3.put("LABEL", "OK1");
-			jCell.add(2, obj3);
-			
-			JSONObject obj4 = new JSONObject();
-			obj4.put("VALUE", "002");
-			obj4.put("LABEL", "OK2");
-			jCell.add(3, obj4);
-			
-			JSONObject obj5 = new JSONObject();
-			obj5.put("VALUE", "003");
-			obj5.put("LABEL", "OK3");
-			jCell.add(4, obj5);
+		String resultCode = "";
+		String resultMsg = "";
 		
-		json.put("rows", jCell);
+		if ("I".equals(IU_Flag)) {
+			if (SY011003Biz.insertDataUserMst(vo) == true) {
+				resultCode ="SUCCESS";
+				
+				if (SY011003Biz.insertDataUserSysTb(vo) == true) {
+					resultCode ="SUCCESS";
+					resultMsg = "정상적으로 저장하였습니다.";
+				 } else {
+					 resultCode ="FAILED";
+					 resultMsg = "[ERROR]사용자 시스템 권한 저장 중 오류가 발생하였습니다.";
+				 }
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]사용자 저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY011003Biz.updateDataUserMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]사용자 수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]사용자 관리 저장/수정 중 오류가 발생했습니다.";
+		}
 		
-		logger.debug("[test]" + json);
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataUserMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	/**
+	 * 사용자 시스템 권한을 수정한다.
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/updateDataUserSysTb.do")
+	public ModelAndView updateDataUserSysTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SY011003VO vo = new SY011003VO();
+		
+		vo.setSYSID(request.getParameter("SYSID"));
+		vo.setUSERID(request.getParameter("USERID"));
+		vo.setAUTH_YN(request.getParameter("AUTH_YN"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERIDSESSION((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		if (SY011003Biz.updateDataUserSysTb(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 권한을 수정하였습니다.";
+		 } else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]권한 수정 중 오류가 발생하였습니다.";
+		 }
+	
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[updateDataUserSysTb]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}

@@ -13,6 +13,8 @@
 		var v_rightLastSel = 0;
 		
 		$(document).ready(function(){
+			$("#S_FLAG").val("U");
+			
 			f_selectUserMst();
 			f_selectUserSysTb();
 		});
@@ -74,7 +76,7 @@
 						if (cellData == userId) {
 			        		$("#leftList").jqGrid('setSelection', ids[index]);
 			    			return true;
-			        	}	        
+			        	}
 					});
 				},
 				hidegrid: false
@@ -99,7 +101,7 @@
 					, {name:"SYSNAME",		index:'SYSNAME',	width:60,	align:'center', sortable:false}
 //					, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/home/selectTest.do", buildSelect:setAuth_YNSelectBox}}
 					, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', sortable:false}
+					, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', sortable:false, editable:true}
 				] ,
 				rowNum:100,
 				autowidth: true ,
@@ -172,13 +174,115 @@
 			$("#s_userIdSearchButton").click(function() {
 				f_rightClear("Y");
 				f_selectUserMst();
+				$("#S_USERNAME_R").focus();
 			});
 		})
 		
 		$(function() {
 			$("#selectButton").click(function() {
+				$("#S_FLAG").val("U");
+				
 				f_rightClear("N");
+				
 				f_selectUserMst();
+			});
+		})
+		
+		$(function() {
+			$("#insertButton").click(function() {
+				$("#S_FLAG").val("I");
+				
+				f_rightClear("N");
+				
+				$("#S_USERID").focus();
+				
+				$("#leftList").jqGrid("resetSelection");
+			});
+		})
+		
+		$(function() {
+			$("#saveButton").click(function() {
+				if ($("#S_USERID").val() == "") {
+					alert("사용자 아이디를 입력하셔야 합니다.");
+					$("#S_USERID").focus();
+					
+					return false;
+				}
+				
+				if ($("#S_USERNAME_R").val() == "") {
+					alert("사용자 명을 입력하셔야 합니다.");
+					$("#S_USERNAME_R").focus();
+					
+					return false;
+				}
+				
+				if ($("#S_PASSWORD").val() == "") {
+					alert("비밀번호를 입력하셔야 합니다.");
+					$("#S_PASSWORD").focus();
+					
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: $("#SY011003").serialize(),
+						url: "/home/insertDataUserMst.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$("#S_FLAG").val("U");
+							
+							alert(data.resultMsg);
+							
+							$("#s_userIdSearchButton").click();
+						},
+						error:function(e){  
+							alert("[ERROR]프로그램 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
+		
+		function f_saveUser() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#saveButton").click();
+			}
+		}
+		
+		$(function() {
+			$("#rightSaveButton").click(function() {
+				var ids = $("#rightList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				$('#rightList').jqGrid('saveRow', ids, false, 'clientArray'); //선택된 놈 뷰 모드로 변경
+
+				var cellData = $("#rightList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				
+				if (confirm("시스템 " + cellData.SYSID + "코드의 권한을 수정하시겠습니까?") == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: "USERID=" + $("#S_USERID").val() + "&SYSID=" + cellData.SYSID + "&AUTH_YN=" + cellData.AUTH_YN + "&REMARK=" + cellData.REMARK,
+						url: "/home/updateDataUserSysTb.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$("#S_FLAG").val("U");
+							
+							alert(data.resultMsg);
+							
+							f_selectUserSysTb();
+						},
+						error:function(e){  
+							alert("[ERROR]권한 수정  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
 			});
 		})
 	</script>
@@ -204,6 +308,8 @@
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<form id="SY011003">
+			<input type="hidden" id="S_FLAG" name="S_FLAG"/>
 			<table class="blueone">
 				<tr>
 					<td>사용자</td>
@@ -215,7 +321,7 @@
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="text" id="S_PASSWORD" name="S_PASSWORD" /></td>
+					<td><input type="text" id="S_PASSWORD" name="S_PASSWORD" onkeydown="f_saveUser();"/></td>
 				</tr>
 				<tr>
 					<td>사용여부</td>
@@ -239,12 +345,13 @@
 				</tr>
 				<tr>
 					<td>모바일</td>
-					<td><input type="text" id="S_MOBILENO" name="S_MOBILENO" /></td>
+					<td><input type="text" id="S_MOBILENO" name="S_MOBILENO" onkeydown="f_saveUser();"/></td>
 				</tr>
 			</table>
+			</form>
 			<table class="blueone">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="rightSaveButton">저장</a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="rightSaveButton" name="rightSaveButton">저장</a></td>
 				</tr>
 			</table>
 			<table id="rightList"></table>
