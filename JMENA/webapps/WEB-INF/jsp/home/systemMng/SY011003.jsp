@@ -130,7 +130,6 @@
 		
 		function setAuth_YNSelectBox(data){
 			var jsonValue = $.parseJSON(data).rows;
-			
 			var result = "<select>";
 			
 			jsonValue.some(function(currentValue, index, array){
