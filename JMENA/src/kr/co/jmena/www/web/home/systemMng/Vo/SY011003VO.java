@@ -13,8 +13,15 @@ public class SY011003VO {
 	private String USERID;
 	private String USERNAME;
 	private String USEYN;
+	private String USERIDSESSION;
 	
 	
+	public String getUSERIDSESSION() {
+		return USERIDSESSION;
+	}
+	public void setUSERIDSESSION(String USERIDSESSION) {
+		this.USERIDSESSION = USERIDSESSION;
+	}
 	public String getAUTH_YN() {
 		return  this.AUTH_YN;
 	}
