@@ -42,6 +42,7 @@
 	<resultMap id="SalesOpenTbData" class="MM011001VO">
 		<result property="BUYID"			column="BUYID"/>
 		<result property="BRANCHCODE"		column="BRANCHCODE"/>
+		<result property="BRANCHNAME"		column="BRANCHNAME"/>
 		<result property="OPENYN"			column="OPENYN"/>
 		<result property="HOLDINGYN"		column="HOLDINGYN"/>
 		<result property="HOLDINGM2"		column="HOLDINGM2"/>
@@ -216,6 +217,7 @@
 		SELECT 
 			T1.BUYID,
 			T1.BRANCHCODE,
+			(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,
 			T1.OPENYN,
 			T1.HOLDINGYN,
 			T1.HOLDINGM2,

@@ -220,15 +220,15 @@
 			<table class="blueone">
 				<tr>
 					<td>매출기간</td>
-					<td><input type="text" id="SALEDATE" name="SALEDATE" /> ~ <input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td><input type="text" id="S_SALEDATE" name="S_SALEDATE" /> ~ <input type="text" id="S_SALEDATE" name="S_SALEDATE" /></td>
 				</tr>
 				<tr>
 					<td>담당자</td>
-					<td><input type="text" id="SALERCD" name="SALERCD" /></td>
+					<td><input type="text" id="S_SALERCD" name="S_SALERCD" /></td>
 				</tr>
 				<tr>
 					<td>지번(주소)</td>
-					<td><input type="text" id="CONADDRESS" name="CONADDRESS" /></td>
+					<td><input type="text" id="S_CONADDRESS" name="S_CONADDRESS" /></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
@@ -237,105 +237,101 @@
 			<table class="blueone">
 				<tr>
 					<td>계약일자/번호</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /><input type="text" id="SYSID" name="SYSID" /></td>
+					<td colspan="3"><input type="text" id="SALEDATE" name="SALEDATE" /><input type="text" id="SALEID" name="SALEID" /></td>
 				</tr>
 				<tr>
 					<td>매출구분</td>
 					<td colspan="3">
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="SALEGUBUN" name="SALEGUBUN">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>담당자</td>
 					<td>
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="SALERCD" name="SALERCD">
 						</select>
 					</td>
 					<td>계약지사</td>
 					<td>
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="BRANCHCODE" name="BRANCHCODE">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>관리번호</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="BUYID" name="BUYID" /></td>
 					<td>지역구분</td>
 					<td>
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="BOROUGHCODE" name="BOROUGHCODE">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /></td>
+					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
 				</tr>
 				<tr>
 					<td>원지주 성명</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
 					<td>주민번호</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="OWNERJUMINID" name="OWNERJUMINID" /></td>
 				</tr>
 				<tr>
 					<td>분양/잔여면적</td>
-					<td><input type="text" id="SYSID" name="SYSID" /> / <input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="SUMCONM2" name="SUMCONM2" /> / <input type="text" id="REMNM2" name="REMNM2" /></td>
 					<td>분양/잔여평수</td>
-					<td><input type="text" id="SYSID" name="SYSID" /> / <input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="SUMCONPY" name="SUMCONPY" /> / <input type="text" id="REMNPY" name="REMNPY" /></td>
 				</tr>
 				<tr>
 					<td>계약자 성명</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="CONNAME" name="CONNAME" /></td>
 					<td>계약자주민번호</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="CONJUMINID" name="CONJUMINID" /></td>
 				</tr>
 				<tr>
 					<td>계약자 주소</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /></td>
+					<td colspan="3"><input type="text" id="CONJUMINID" name="CONJUMINID" /></td>
 				</tr>
 				<tr>
 					<td>계약자 연락처</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /></td>
+					<td colspan="3"><input type="text" id="CONTELNO" name="CONTELNO" /></td>
 				</tr>
 				<tr>
 					<td>계약면적</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="CONM2" name="CONM2" /></td>
 					<td>계약평수</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="CONPY" name="CONPY" /></td>
 				</tr>
 				<tr>
 					<td>매매대금</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="SALEAMT" name="SALEAMT" /></td>
 					<td>매매단가</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="SALEDANGA" name="SALEDANGA" /></td>
 				</tr>
 				<tr>
 					<td>위탁수수료</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /></td>
+					<td colspan="3"><input type="text" id="AGENCYAMT" name="AGENCYAMT" /></td>
 				</tr>
 				<tr>
 					<td>DC사항</td>
 					<td>
-						<select id="SYSID" name="SYSID">
+						<select id="DCGUBUN" name="DCGUBUN">
 							<option></option>
 						</select>
 					</td>
 					<td>DC율</td>
-					<td><input type="text" id="SYSID" name="SYSID" /> % </td>
+					<td><input type="text" id="DCRATE" name="DCRATE" /> % </td>
 				</tr>
 				<tr>
 					<td>DC금액</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="DCAMT" name="DCAMT" /></td>
 					<td>실 판매가</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<td><input type="text" id="SELLAMT" name="SELLAMT" /></td>
 				</tr>
 				<tr>
 					<td>비고</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /></td>
+					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
 				</tr>
 			</table>
 		</div>
@@ -368,14 +364,14 @@
 			<div id="bottomDiv2">
 				<table class="blueone">
 					<tr>
-						<td>등기명의 여부</td>
-						<td colspan="3"><input type="checkbox" id="SYSID" name="SYSID" /></td>
+						<td>공동명의 여부</td>
+						<td colspan="3"><input type="checkbox" id="REGYN" name="REGYN" /></td>
 					</tr>
 					<tr>
 						<td>등기여부</td>
-						<td><input type="radio" id="SYSID" name="SYSID" /> 등기완료  <input type="radio" id="SYSID" name="SYSID" /> 미등기</td>
+						<td><input type="radio" id="REGYN" name="REGYN" value="Y"/> 등기완료  <input type="radio" id="REGYN" name="REGYN" value="N"/> 미등기</td>
 						<td>등기일자</td>
-						<td><input type="text" id="SYSID" name="SYSID" /></td>
+						<td><input type="text" id="REGDATE" name="REGDATE" /></td>
 					</tr>
 				</table>
 				<table id="bottomList2"></table>

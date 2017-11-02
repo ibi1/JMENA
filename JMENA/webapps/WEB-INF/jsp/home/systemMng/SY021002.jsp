@@ -55,7 +55,6 @@
 				$("#RS_BRANCHNAME").val(selRowData.BRANCHNAME);
 				$("#RS_USEYN").val(selRowData.USEYN);
 				
-				f_selectListEnaDeptCode();
 				f_selectListEnaDeptMst();
 			} ,
 			hidegrid: false
@@ -79,9 +78,9 @@
 			colModel:[
 				{name:"DEPTCODE",		index:'DEPTCODE',	width:60,	align:'center', editable:true}
 				, {name:"DEPTNAME",		index:'DEPTNAME',	width:60,	align:'center', editable:true}
-				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:60,	align:'center', formatter:f_selectListEnaDeptCode}
+				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:60,	align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=001", buildSelect:selectListEnaDeptCode} }
 				, {name:"SORTKEY",		index:'SORTKEY',	width:60,	align:'center', editable:true}
-				, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', formatter:f_selectListEnaUseynCode}
+				, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
 				, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', editable:true}
 			] ,
 			
@@ -94,59 +93,33 @@
 			sortorder:'asc' ,
 			width: "96%" ,
 			//height: '100%' ,
-			//idPrifix: 'g1_',
-			cache: false,
 			jsonReader: {
 				repeatitems: false
 			},
 			onSelectRow : function(rowid) {
 				$('#rightList').jqGrid('editRow',rowid,false);
 			},
+			loadComplete: function() {
+				
+			},			
 			hidegrid: false
 		});
 	}
 	
-	function f_selectListEnaDeptCode(){
-		var CCODE = "001";
+	function selectListEnaDeptCode(data){
+		var jsonValue = $.parseJSON(data).dcodeList;
 		
-	   	$.ajax({ 
-			type: 'POST' ,
-			url: "/codeCom/dcodeList.do", 
-			dataType : 'json' ,
-			data : {
-				CCODE : CCODE,
-			},
-			success: function(data){
-				var inHtml = "";
-				inHtml += "<select id='DEPTGUBUN' name='DEPTGUBUN'>";
-				
-				data.dcodeList.forEach(function(currentValue, index, array){
-					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
-				});
-				inHtml += "</select>";
-				
-				DeptCode = inHtml;
-			},
-			error:function(e){  
-				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
-			}  
+		var result = "<select>";
+		
+		jsonValue.some(function(currentValue, index, array){
+			result += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 		});
-		return DeptCode; 
+		
+		result +="</select>";
+
+		return result;
 	   	
 	}
-	
-	
-	function f_selectListEnaUseynCode(){
-		
-		var UseynCode = "";
-		UseynCode += "<select id='USEYN' name='USEYN' style='width:50px'>";
-		UseynCode += "<option value='Y'>Y</option>\n";
-		UseynCode += "<option value='N'>N</option>\n";
-		UseynCode += "</select>";
-				
-		return UseynCode;
-		
-	}	
 	
 	$(function(){
 		$("#selectButton").click(function(){

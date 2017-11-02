@@ -25,6 +25,7 @@ public class MM011001VO {
 	private String PAYAMT;
 	private String PAYYN;
 	private String BRANCHCODE;
+	private String BRANCHNAME;
 	private String OPENYN;
 	private String HOLDINGYN;
 	private String HOLDINGM2;
@@ -131,6 +132,9 @@ public class MM011001VO {
 	
 	public String getBRANCHCODE(){
 		return this.BRANCHCODE;
+	}
+	public String getBRANCHNAME(){
+		return this.BRANCHNAME;
 	}
 	public String getOPENYN(){
 		return this.OPENYN;
@@ -275,6 +279,9 @@ public class MM011001VO {
 
 	public void setBRANCHCODE(String BRANCHCODE){
 		this.BRANCHCODE = BRANCHCODE;
+	}
+	public void setBRANCHNAME(String BRANCHNAME){
+		this.BRANCHNAME = BRANCHNAME;
 	}
 	public void setOPENYN(String OPENYN){
 		this.OPENYN = OPENYN;

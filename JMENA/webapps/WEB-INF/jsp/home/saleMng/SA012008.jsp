@@ -86,7 +86,7 @@
 				<tr>
 					<th>지역구분</th>
 					<td>
-						<select id="branchCode" name="branchCode">
+						<select id="BRANCHCODE" name="BRANCHCODE">
 							<option>서울</option>
 							<option>경기</option>
 							<option>부산</option>
@@ -94,7 +94,7 @@
 					</td>
 					<th>시/도 구분</th>
 					<td>
-						<select id="branchCode" name="branchCode">
+						<select id="BRANCHCODE" name="BRANCHCODE">
 							<option>서울</option>
 							<option>경기</option>
 							<option>부산</option>

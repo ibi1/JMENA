@@ -16,10 +16,10 @@ import kr.co.jmena.www.web.codeCom.Vo.CityVO;
 import kr.co.jmena.www.web.codeCom.Vo.DcodeVO;
 import kr.co.jmena.www.web.codeCom.Vo.UserVO;
 import kr.co.jmena.www.web.codeCom.Vo.BranchVO;
-
 import kr.co.jmena.www.web.home.main.Biz.MainBiz;
 import kr.co.jmena.www.web.home.main.Vo.MainVO;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -32,6 +32,8 @@ public class CodeComCtr {
 	
 	@Resource(name = "codeComBiz")
 	private CodeComBiz codeComBiz;
+	
+	protected final Logger logger = Logger.getLogger(getClass());
 	
 	public CodeComCtr() {}
 	
@@ -73,6 +75,7 @@ public class CodeComCtr {
 	public ModelAndView dcodeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		DcodeVO vo = new DcodeVO();
+		logger.debug("[test]" + request.getParameter("CCODE"));
 		
 		vo.setCCODE(request.getParameter("CCODE"));
 		
@@ -90,7 +93,7 @@ public class CodeComCtr {
 		}
 		
 		json.put("dcodeList", jsonArr);
-		
+		logger.debug("[test]" + json);
 		return new ModelAndView("jsonView", json);
 	}
 	

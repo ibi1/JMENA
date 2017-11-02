@@ -11,6 +11,7 @@
 
 </head>
 <script type="text/javascript">
+	var BoroughCode = "";
 	$(document).ready(function(){
 		
 		f_selectListEnaCityMst();
@@ -75,7 +76,7 @@
 			colModel:[
 				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:60,	align:'center', editable:true}
 				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:60,	align:'center', editable:true}
-				, {name:"USEYN",		index:'USEYN',			width:60,	align:'center', formatter:f_selectListEnaUseynCode}
+				, {name:"USEYN",		index:'USEYN',			width:60,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
 				, {name:"REMARK",		index:'REMARK',			width:60,	align:'center', editable:true}
 				, {name:"SORTKEY",		index:'SORTKEY',		width:60,	align:'center', editable:true}
 			] ,
@@ -90,24 +91,12 @@
 			jsonReader: {
 				repeatitems: false
 			},
-			onSelectRow: function(id){
-				alert(id);
-			} ,
+			onSelectRow : function(rowid) {
+				$('#rightList').jqGrid('editRow',rowid,false);
+			},
 			hidegrid: false
 		});
 	}
-
-	function f_selectListEnaUseynCode(){
-		
-		var UseynCode = "";
-		UseynCode += "<select id='USEYN' name='USEYN' style='width:50px'>";
-		UseynCode += "<option value='Y'>Y</option>\n";
-		UseynCode += "<option value='N'>N</option>\n";
-		UseynCode += "</select>";
-				
-		return UseynCode;
-		
-	}	
 	
 	$(function(){
 		$("#selectButton").click(function(){

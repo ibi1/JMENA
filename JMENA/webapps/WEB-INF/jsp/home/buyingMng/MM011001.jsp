@@ -21,20 +21,17 @@
 		var LS_INSERTUSER = "";
 		var LS_ADDRESS = "";
 		var BUYID = "";
-		
-		//공통코드 가져오기
-		f_selectListEnaBuyGubnCode();
-		f_selectListEnaCityCode();
-		f_selectListEnaBoroughCode();
-		f_selectListEnaUseTypeCode();
-		
-		//공통코드 가져오기 끝
-		
 		f_selectListEnaBuyMst(LS_BUYDATE_FR, LS_BUYDATE_TO, LS_INSERTUSER, LS_ADDRESS);
 		f_selectListEnaPayScheduleTb(BUYID);
 		f_selectListEnaSalesOpenTb(BUYID);
 		$("#right1Div").show();
 		$("#right2Div").hide();
+		//공통코드 가져오기
+		f_selectListEnaBuyGubnCode();
+		f_selectListEnaCityCode();
+		f_selectListEnaBoroughCode();
+		f_selectListEnaUseTypeCode();
+		//공통코드 가져오기 끝
 		
 	});
 	
@@ -73,12 +70,12 @@
 					inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
 				});
 				$("#CITYCODE").append(inHtml);
-				f_selectListEnaBoroughCode();
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 			}  
 		});
+	   	
 	}
 
 	$(function(){
@@ -210,7 +207,7 @@
 				$("#BUNJANPY").val(selRowData.BUNJANPY);
 				$("#BUYAMT").val(selRowData.BUYAMT);
 				$("#BUYDANGA").val(selRowData.BUYDANGA);
-				$("#REGYN").val(selRowData.REGYN);
+				$("input:radio[name=REGYN]:input[value=" + selRowData.REGYN + "]").attr("checked", true);
 				$("#REGDATE").val(selRowData.REGDATE);
 				$("#REMARK").val(selRowData.REMARK);
 				
@@ -219,7 +216,7 @@
 				
 				$("#right1Div").show();
 				$("#right2Div").hide();
-				
+				f_selectListEnaBoroughCode();
 			} ,
 			hidegrid: false
 		});
@@ -239,11 +236,11 @@
 			loadError:function(){alert("Error~!!");},
 			colNames:['지급구분', '지급일자', '지급금액', '지급여부', '비고'],
 			colModel:[
-				{name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center', formatter:f_selectListEnaPayGubunCode}
-				, {name:"PAYDATE",	index:'PAYDATE',	width:100,	align:'center'}
-				, {name:"PAYAMT",	index:'PAYAMT',		width:100,	align:'center'}
-				, {name:"PAYYN",	index:'PAYYN',		width:100,	align:'center'}
-				, {name:"REMARK",	index:'REMARK',		width:100,	align:'center'}
+				{name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=005", buildSelect:f_selectListEnaPayGubunCode} }
+				, {name:"PAYDATE",	index:'PAYDATE',	width:100,	align:'center', editable:true}
+				, {name:"PAYAMT",	index:'PAYAMT',		width:100,	align:'center', editable:true}
+				, {name:"PAYYN",	index:'PAYYN',		width:100,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+				, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', editable:true}
 			],
 			rowNum:100,
 			autowidth: true,
@@ -256,40 +253,25 @@
 			jsonReader: {
 				repeatitems: false
 			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
+			onSelectRow : function(rowid) {
+				$('#rightList1').jqGrid('editRow',rowid,false);
 			},
 			hidegrid: false
 		});
 	}
 	
-	function f_selectListEnaPayGubunCode(){
-		var CCODE = "005";
+	function f_selectListEnaPayGubunCode(data){
+		var jsonValue = $.parseJSON(data).dcodeList;
 		
-	   	$.ajax({ 
-			type: 'POST' ,
-			url: "/codeCom/dcodeList.do", 
-			dataType : 'json' ,
-			data : {
-				CCODE : CCODE,
-			},
-			success: function(data){
-				var inHtml = "";
-				inHtml += "<select id='PAYGUBUN' name='PAYGUBUN'>";
-				
-				data.dcodeList.forEach(function(currentValue, index, array){
-					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
-				});
-				inHtml += "</select>";
-				
-				PayGubun = inHtml;
-			},
-			error:function(e){  
-				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
-			}  
+		var result = "<select>";
+		
+		jsonValue.some(function(currentValue, index, array){
+			result += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 		});
-		return PayGubun; 
+		
+		result +="</select>";
+		return result;
+				
 	}
 	
 	function f_selectListEnaSalesOpenTb(BUYID){
@@ -306,12 +288,12 @@
 			loadError:function(){alert("Error~!!");},
 			colNames:['지사', '오픈여부', '홀딩여부', '홀딩면적', '홀딩일자', '비고'],
 			colModel:[
-				{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', formatter:f_selectListEnaBranchCode}
-				, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center'}
-				, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center'}
-				, {name:"HOLDINGPY",	index:'HOLDINGPY',		width:100,	align:'center'}
-				, {name:"HOLDINGDATE",	index:'HOLDINGDATE',	width:100,	align:'center'}
-				, {name:"REMARK",		index:'REMARK',			width:100,	align:'center'}
+				{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
+				, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+				, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+				, {name:"HOLDINGPY",	index:'HOLDINGPY',		width:100,	align:'center', editable:true}
+				, {name:"HOLDINGDATE",	index:'HOLDINGDATE',	width:100,	align:'center', editable:true}
+				, {name:"REMARK",		index:'REMARK',			width:100,	align:'center', editable:true}
 			],
 			rowNum:100,
 			autowidth: true,
@@ -325,37 +307,24 @@
 				repeatitems: false
 			},
 			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
+			onSelectRow: function(rowid){
+				$('#rightList2').jqGrid('editRow',rowid,false);
 			},
 			hidegrid: false
 		});
 	}
 	
-	function f_selectListEnaBranchCode(){
-		BranchCode = "";
-	   	$.ajax({ 
-			type: 'POST' ,
-			url: "/codeCom/branchMstList.do", 
-			dataType : 'json' ,
-			success: function(data){
-				var inHtml = "";
-				inHtml += "<select id='BRANCHCODE' name='BRANCHCODE'>";
-				
-				data.branchMstList.forEach(function(currentValue, index, array){
-					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
-				});
-				inHtml += "</select>";
-				
-				BranchCode = inHtml;
-				
-			},
-			error:function(e){  
-				alert("[ERROR]System 지사코드 호출 중 오류가 발생하였습니다.");
-			}  
+	function f_selectListEnaBranchCode(data){
+		var jsonValue = $.parseJSON(data).branchMstList;
+		
+		var result = "<select>";
+		
+		jsonValue.some(function(currentValue, index, array){
+			result += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 		});
-	   	
-		return BranchCode; 
+		
+		result +="</select>";
+		return result;
 	}
 	
 	$(function(){

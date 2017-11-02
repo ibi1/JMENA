@@ -129,17 +129,11 @@
 					<th>지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
 						</select>
 					</td>
 					<th>부서</th>
 					<td>
 						<select id="S_DEPTCODE" name="S_DEPTCODE">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
 						</select>
 					</td>
 				</tr>
@@ -147,9 +141,6 @@
 					<th>매출구분</th>
 					<td>
 						<select id="S_DCODE" name="S_DCODE">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
 						</select>
 					</td>
 					<th>담당자명</th>

@@ -20,12 +20,64 @@
 		var S_ADDRESS = "";
 		
 		f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		f_selectListEnaCityCode();
+		f_selectListEnaBoroughCode();
 	});
 
 
+	function f_selectListEnaCityCode(){
+		$("#S_CITYCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/cityMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.cityMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
+				});
+				$("#S_CITYCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+
+	$(function(){
+		$("#S_CITYCODE").change(function() {
+			f_selectListEnaBoroughCode();
+		});
+	});
+	
+	
+	function f_selectListEnaBoroughCode(){
+		var CITYCODE = $("#S_CITYCODE").val();
+		$("#S_BOROUGHCODE").empty().data('options');
+
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/cityDtlList.do", 
+			dataType : 'json' , 
+			data : {
+				CITYCODE : CITYCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.cityDtlList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BOROUGHCODE + "'>" + currentValue.BOROUGHNAME + "</option>\n";
+				});
+				$("#S_BOROUGHCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	
 	function f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-
 		$('#mainList').jqGrid({
 			//caption: '원지주 잔금현황', 
 			url:"/home/selectListMM012001.do" ,
@@ -66,7 +118,7 @@
 						, {name:"OPENYN",			index:'OPENYN',			width:100,	align:'center'}
 						, {name:"REMARK",			index:'REMARK',			width:150,	align:'center'}
 			],
-			rowNum:10,
+			rowNum:9999,
 			autowidth: true,
 			shrinkToFit: false,
 			rowList:[10,20,30],
@@ -141,17 +193,11 @@
 						<th>지역구분</th>
 						<td>
 							<select id="S_CITYCODE" name="S_CITYCODE">
-								<option>서울</option>
-								<option>경기</option>
-								<option>부산</option>
 							</select>
 						</td>
 						<th>시/도</th>
 						<td>
 							<select id="S_BOROUGHCODE" name="S_BOROUGHCODE">
-								<option>서울</option>
-								<option>경기</option>
-								<option>부산</option>
 							</select>
 						</td>
 						<th>주소 및 지번</th>
