@@ -298,6 +298,7 @@
 						dataType : 'json' , 
 						success: function(data){
 							$("#S_FLAG_R").val("U");
+							
 							v_rightLastSel = 0;
 							
 							alert(data.resultMsg);
