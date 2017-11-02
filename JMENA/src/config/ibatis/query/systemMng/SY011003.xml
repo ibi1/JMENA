@@ -51,22 +51,8 @@
 		ORDER BY T1.SYSID ASC
 	</select>
 	
-	<update id="updateEnaUserMst">
-		UPDATE SY_USERMST
-		SET
-			PASSWORD = #PASSWORD#,
-			USERNAME = #USERNAME#,
-			USEYN = #USEYN#,
-			USERGUBUN = #USERGUBUN#,
-			PHONENO = #PHONENO#,
-			MOBILENO = #MOBILENO#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
-		WHERE USERID = #USERID#
-	</update>
-	
-	<insert id="insertEnaUserMst">
-		INSERT INTO SY_USERMST
+	<insert id="insertDataUserMst">
+		INSERT INTO sy_usermst
 		(
 			USERID,
 			PASSWORD,
@@ -75,8 +61,7 @@
 			USERGUBUN,
 			PHONENO,
 			MOBILENO,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#USERID#,
@@ -86,40 +71,42 @@
 			#USERGUBUN#,
 			#PHONENO#,
 			#MOBILENO#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERIDSESSION#
 		)
 	</insert>
 	
-	<update id="updateEnaUserSysTb">
-		UPDATE SY_USERSYSTB
+	<update id="updateDataUserMst">
+		UPDATE sy_usermst
+		SET
+			PASSWORD = #PASSWORD#,
+			USERNAME = #USERNAME#,
+			USEYN = #USEYN#,
+			USERGUBUN = #USERGUBUN#,
+			PHONENO = #PHONENO#,
+			MOBILENO = #MOBILENO#,
+			UPDATEUSER = #USERIDSESSION#,
+			UPDATEDATE = NOW()
+		WHERE USERID = #USERID#
+	</update>
+	
+	<insert id="insertDataUserSysTb">
+		INSERT INTO sy_usersystb (
+			USERID, 
+			SYSID, 
+			AUTH_YN, 
+			INSERTUSER ) 
+		SELECT #USERID#, SYSID, 'N', #USERIDSESSION# 
+		FROM sy_sysmst
+	</insert>
+	
+	<update id="updateDataUserSysTb">
+		UPDATE sy_usersystb
 		SET	
 			AUTH_YN = #AUTH_YN#,
-			REMARK = #REMARK#
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
+			REMARK = #REMARK#,
+			UPDATEUSER = #USERIDSESSION#,
+			UPDATEDATE = NOW()
 		WHERE USERID = #USERID#
 		AND SYSID = #SYSID#
 	</update>
-	
-	<insert id="insertEnaUserSysTb">
-		INSERT INTO SY_USERSYSTB
-		(
-			USERID,
-			SYSID,
-			AUTH_YN,
-			REMARK,
-			INSERTUSER,
-			INSERTDATE
-		)
-		VALUES(
-			#USERID#,
-			#SYSID#,
-			#AUTH_YN#,
-			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
-		)
-	</insert>
-
 </sqlMap>
