@@ -160,6 +160,7 @@
 		function f_rightClear(delFlag) {
 			if (delFlag == "Y") $("#S_USERNAME_L").val("");
 			if (delFlag == "N") $("#S_USERID").val("");
+			
 			$("#S_USERNAME_R").val("");
 			$("#S_PASSWORD").val("");
 			$("#S_USEYN").val("Y").attr("selected", "selected");
