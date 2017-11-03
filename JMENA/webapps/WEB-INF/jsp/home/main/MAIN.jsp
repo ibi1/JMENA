@@ -5,65 +5,127 @@
 <html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	
-	
- 	
-	
+
 	<title>JMENA</title>
-	<style>
-	    .ui-layout-center{ }
-	    .ui-layout-east{ }
-	    .ui-layout-west{ }
-	    .ui-layout-south{ }
-	    .ui-layout-north{ }
-	</style>
-	
 	</head>
-	<body>
-	    <div id="center" class="ui-layout-center ui-layout-content ui-widget-content ui-corner-all" style="OVERFLOW-Y:auto; OVERFLOW-X:auto;width:1220px; padding: 10px"></div>
-	    <div id="left" class="ui-layout-west ui-layout-content ui-widget-content ui-corner-all">
-	    	<div id="sidetree">
-				<div class="treeheader">&nbsp;</div>
-				<div id="sidetreecontrol"><a href="?#">Collapse All</a> | <a href="?#">Expand All</a></div>
-				<ul id="tree" class="treeview">
-				</ul>
+	<body class="default">
+	    <div id="mainLayout">
+	    	<div>
+	    		<div id="topLayout">
+ 	            	<div>
+ 	            		<span>
+ 	            			<div id="topLeft"><center><h3>JMENA</h3></center></div>
+ 	            		</span>
+ 	            	</div>
+                    <div>
+                    	<span>
+                    		<div id="topright"></div>
+						</span>
+					</div>
+                </div>
 			</div>
-	    </div>
-		<div id="top" class="ui-layout-north">
-			<div id="topleft" class="ui-layout-west ui-layout-content ui-widget-content ui-corner-all">
-				<center><h3>JMENA</h3></center>
-			</div>
-			<div id="topright" style="padding-top: 30px; padding-left: 100px" class="ui-layout-center ui-layout-content ui-widget-content ui-corner-all"></div>
+            <div>
+                <div id="centerLayout">
+                	<div>
+                		<span>
+                			<div id="left">
+						    	<div id="sidetree">
+									<div class="treeheader">&nbsp;</div>
+									<div id="sidetreecontrol"><a href="?#">Collapse All</a> | <a href="?#">Expand All</a></div>
+									<ul id="tree" class="treeview">
+									</ul>
+								</div>
+							</div>
+						</span>
+					</div>
+                	<div>
+                		<span>
+							<div id="center"></div>
+						</span>
+					</div>
+            	</div>
+            </div>
 		</div>
 	</body>
 	
+	<link rel="stylesheet" href="/resource/jqwidgets-ver5.4.0/jqwidgets/styles/jqx.base.css" type="text/css" />
 	<link rel="stylesheet" href="/resource/css/common.css">
 	<link rel="stylesheet" href="/resource/css/jquery.treeview.css" />
-		
+		<style type="text/css">
+.hiddenClass {
+	display : none;
+    height: 0;
+    min-height: 0;
+}
+.moveContentClass { margin-top: -15px; }
+
+    </style>
 	<script type="text/javascript" src="/resource/js/jquery.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery-1.7.2.min.js"></script>	
+ 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxsplitter.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxlayout.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxribbon.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery.treeview.js"></script>
-	<script type="text/javascript" src="/resource/js/jquery.layout.min.js"></script>
+	<!-- script type="text/javascript" src="/resource/js/jquery.layout.min.js"></script-->
 	<script type="text/javascript" src="/resource/js/i18n/grid.locale-kr.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery.jqGrid.min.js"></script>
 	
 	<script type="text/javascript">
 	 	$(document).ready(function(){
 	 		var TreeMenu = "";
-	    	
-	        $('body').layout({
-	            west__size:250,
-	            north__size:100,
-	            closable : false
-	        });
-	        
-	        $("#top").layout({
-	            west__size:250,
-	            north__size:100,
-	            closable : false
-	        });
-	              
-	       	//시스템 메뉴 호출
+	 		
+	 		
+	 	// the 'layout' JSON array defines the internal structure of the layout
+/*
+            var layout = [{
+                type: 'layoutGroup',
+                orientation: 'vertical',
+                width: '100%',
+                items: [{
+					type: 'documentGroup',
+                    height: '10%',
+                    items: [{
+                    	type: 'documentPanel',
+                    	contentContainer: 'topPanel'
+               		}]
+                }, {
+	            	type: 'layoutGroup',
+	            	orientation: 'horizontal',
+	                width: '100%',
+	                height: '90%',
+	                items: [{
+	                    type: 'documentGroup',
+	                    width: '15%',
+	                    height: '90%',
+	                    items: [{
+	                        type: 'documentPanel',
+	                        contentContainer: 'leftPanel'
+	                    }]
+	                }, {
+	                	type: 'documentGroup',
+	                    width: '85%',
+	                    height: '90%',
+	                    pinnedHeight: 30,
+	                    items: [{
+	                        type: 'documentPanel',
+	                        contentContainer: 'centerPanel'
+	                    }] 
+	                }]
+	            }]
+            }];
+	 		
+            $('#jqxLayout').jqxLayout({ width: '100%', height: '100%', layout: layout, resizable : false, contextMenu : false  });
+            //$("#jqxLayout ul.jqx-widget-header").toggleClass('hiddenClass')
+            //$("#jqxLayout .jqx-widget-content").toggleClass('moveContentClass')
+	       	*/
+	       	
+	       	$('#mainLayout').jqxSplitter({ width: '95%', height: '95%', orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '10%', collapsible: false }] });
+            $('#topLayout').jqxSplitter({ orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '15%', collapsible: false}] });
+            $('#centerLayout').jqxSplitter({ orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '15%', collapsible: false}] });
+            
+            //시스템 메뉴 호출
 	       	$.ajax({ 
 				type: 'POST' ,
 				data: $("#loginFrm").serialize(),
