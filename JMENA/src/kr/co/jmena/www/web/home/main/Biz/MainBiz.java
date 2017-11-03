@@ -8,6 +8,8 @@ import kr.co.jmena.www.web.home.main.Dao.MainDao;
 import kr.co.jmena.www.web.home.main.Vo.MainVO;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -62,32 +64,42 @@ public class MainBiz {
 //			
 //			treeHtml.append("<ul id=\"tree\">");
 			//tree html 생성
+			JSONObject jTreeData = new JSONObject();
+			JSONArray jsonArr = new JSONArray();
+			int parentIdCnt = 0;
+			int idCnt = 0;
+			
 			for (int i = 0; i < menulst.size(); i++) {
 				String menuId = menulst.get(i).getMENUID();
 				
-				treeHtml.append("	<li><div></div>");
+				JSONObject objParent = new JSONObject();
 				
-				treeHtml.append("<a><strong>" + menulst.get(i).getMENUNAME() + "</strong></a>");
-				treeHtml.append("	<ul>");
+				objParent.put("id", ++idCnt);
+				objParent.put("parentid", -1);
+				objParent.put("text", menulst.get(i).getMENUNAME());
+				
+				jsonArr.add(objParent);
 				
 				pgmFirst = pgmlst.get(0).getPGMID();	//첫번째 프로그램 목록 무조건 넘겨주기
 				
+				parentIdCnt = idCnt;
 				for (int j = 0; j < pgmlst.size(); j++) {
-					if (pgmlst.get(j).getMENUID().equals(menuId)) {
+					if (menuId.equals(pgmlst.get(j).getMENUID())) {
+						JSONObject objId = new JSONObject();
 						
+						objId.put("parentid", parentIdCnt);
+						objId.put("id", ++idCnt);
+						objId.put("text", pgmlst.get(j).getPGMNAME());
+						objId.put("value", pgmlst.get(j).getPGMID());
 						
-						treeHtml.append("		<li><a onclick=\"pageView('" + pgmlst.get(j).getPGMID()  + "')\" class>" + pgmlst.get(j).getPGMNAME() + "</a></li>");
+						jsonArr.add(objId);
 					}
 				}
-				
-				treeHtml.append("	</ul>");
-				treeHtml.append("	</li>");
 			}
 			
-//			treeHtml.append("</ul>");
-//			treeHtml.append("</div>");
+			jTreeData.put("treeData", jsonArr);
 			
-			strArr[0] = treeHtml.toString();
+			strArr[0] = jTreeData.toJSONString();
 			strArr[1] = pgmFirst;
 			
 		} catch ( Exception e ) {
