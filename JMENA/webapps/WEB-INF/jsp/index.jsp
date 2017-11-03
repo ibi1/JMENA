@@ -5,21 +5,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
-    <link rel="stylesheet" href="/resource/css/common.css">
-
-
-	<script type="text/javascript" src="/resource/js/jquery-3.2.1.min.js"></script>
-
+	<link rel="stylesheet" href="/resource/jqwidgets-ver5.4.0/jqwidgets/styles/jqx.base.css" type="text/css" />
+	
+	<script type="text/javascript" src="/resource/js/jquery-1.11.0.min.js"></script>
+ 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxpasswordinput.js"></script>
+    
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$("#USERID").jqxInput({placeHolder: "Enter a UserID", height: 25, width: 200, minLength: 1});
+			$("#PASSWORD").jqxPasswordInput({  width: 200, height: 25 });
+			$("#loginButton").jqxButton({ width: 120, height: 40 });
+
 			$("#USERID").focus();
 		})
 		
 		$(function(){
-			$("#loginButton").click(function(){
-		        login();
-			}) 
+			  $("#loginButton").on('click', function () {
+				 login(); 
+			  });
+
+			           
+			//$("#loginButton").click(function(){
+		      //  login();
+			//}) 
 		})
 
 		function login() {
@@ -52,7 +63,7 @@
 	</script>
 <title>JMENA</title>
 </head>
-<body>
+<body class='default'>
 	<div id="loginDiv" style="width:100%; padding-top: 100px;" align="center">
 		<form id="loginFrm" method="post">
 			<table>
@@ -68,15 +79,17 @@
 						ID
 					</td>
 					<td>
-						<input type="text" name="USERID" id="USERID" />
+						<input type="text" name="USERID" id="USERID" tabindex="1"/>
 					</td>
 					<td rowspan="2">
-						<a class="ui-button ui-widget ui-corner-all" id="loginButton" name="loginButton">로그인</a>
+					<div>
+       					<input type="button" value="로그인" id="loginButton" tabindex="3"/>
+					</div>
 					</td>
 				</tr>
 				<tr>
 					<td>PASSWORD</td>
-					<td><input type="password" name="PASSWORD" id="PASSWORD" onkeydown="onEnterSubmit();" /></td>
+					<td><input type="password" name="PASSWORD" id="PASSWORD" tabindex="2" onkeydown="onEnterSubmit();" /></td>
 				</tr>
 			</table>
 		</form>
