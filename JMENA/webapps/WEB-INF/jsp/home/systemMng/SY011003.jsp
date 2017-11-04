@@ -264,10 +264,16 @@
 		$(function() {
 			$("#rightSaveButton").click(function() {
 				var ids = $("#rightList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-				
+
 				$('#rightList').jqGrid('saveRow', ids, false, 'clientArray'); //선택된 놈 뷰 모드로 변경
 
 				var cellData = $("#rightList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("그리드를 선택하셔야 합니다.");
+					
+					return false;
+				}
 				
 				if (confirm("시스템 " + cellData.SYSID + "코드의 권한을 수정하시겠습니까?") == true) {
 					$.ajax({ 

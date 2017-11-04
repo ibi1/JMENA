@@ -10,7 +10,11 @@
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
 	
 	<script type="text/javascript">
+		var v_rightLastSel = 0;
+	
 		$(document).ready(function(){
+			$("#S_FLAG").val("U");
+			
 			f_selectBankMst();
 		});
 		
@@ -28,12 +32,12 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['기관코드', '금융기관명', '사용여부', '확장코드'] ,
 				colModel:[
-					{name:"BANKCODE",		index:'BANKCODE',	width:60,	align:'center', sortable:false}
-					, {name:"BANKNAME",		index:'BANKNAME',	width:60,	align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"AUXCODE",		index:'AUXCODE',	width:60,	align:'center', sortable:false}
+					{name:"BANKCODE",		index:'BANKCODE',	width:60,	align:'center', sortable:false, editable:true}
+					, {name:"BANKNAME",		index:'BANKNAME',	width:60,	align:'center', sortable:false, editable:true}
+					, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"AUXCODE",		index:'AUXCODE',	width:60,	align:'center', sortable:false, editable:true}
 				] ,
-				rowNum:100,
+				rowNum:1000,
 				autowidth: true ,
 				rowList:[10,20,30] ,
 				//pager: $('#leftNav') ,
@@ -45,15 +49,15 @@
 					repeatitems: false
 				},
 				//height: '100%' ,
-				onSelectRow: function(ids){
-					var selRowData = $(this).jqGrid('getRowData', ids);
+				onSelectRow: function(id){
+					if (v_rightLastSel != 0) $("#S_FLAG").val("U");
 					
-					v_ccode = selRowData.CCODE;
-					
-					$("#S_CCODE").val(selRowData.CCODE);
-					$("#S_CCODENAME_B").val(selRowData.CCODENAME);
-					
-					f_selectCcodeDtl();
+					if( v_rightLastSel != id ){
+				        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+				        v_rightLastSel = id;
+					}
 				} ,
 				loadComplete: function() {
 					
@@ -64,6 +68,8 @@
 		
 		$(function() {
 			$("#selectButton").click(function() {
+				v_rightLastSel = 0;
+				
 				f_selectBankMst();
 			});
 		})
@@ -74,6 +80,79 @@
 				$("#selectButton").click();
 			}
 		}
+		
+		$(function() {
+			$("#insertButton").click(function() {
+				$("#S_FLAG").val("I");
+				
+				$("#leftList").jqGrid("addRow", 0);
+			});
+		})
+		
+		$(function() {
+			$("#saveButton").click(function() {
+				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				$('#leftList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+				var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("그리드를 선택하셔야 합니다.");
+					
+					return false;
+				}
+				
+				if (cellData.BANKCODE == "") {
+					alert("기관 코드를 입력하셔야 합니다.");
+					
+					$('#leftList').jqGrid('editRow', ids, true);
+					$("#"+ids+"_BANKCODE").focus();
+					
+					return false;
+				}
+				
+				if (cellData.BANKNAME == "") {
+					alert("금융기관명을 입력하셔야 합니다.");
+					
+					$('#leftList').jqGrid('editRow', ids, true);
+					$("#"+ids+"_BANKNAME").focus();
+					
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					var formData = "S_FLAG=" + $("#S_FLAG").val() + "&BANKCODE=" + cellData.BANKCODE + "&BANKNAME=" + cellData.BANKNAME + "&USEYN=" + cellData.USEYN + "&AUXCODE=" + cellData.AUXCODE;
+					
+					$.ajax({ 
+						type: 'POST' ,
+						data: formData,
+						url: "/home/insertDataBankMst.do", 
+						dataType : 'json',
+						success: function(data){
+							$("#S_FLAG_R").val("U");
+							
+							v_rightLastSel = 0;
+							
+							alert(data.resultMsg);
+							
+							$("#selectButton").click();
+						},
+						error:function(e){  
+							alert("[ERROR]Menu 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				} else {
+					$("#selectButton").click();
+				}
+			});
+		})
 	</script>
 </head>
 <body>
@@ -87,6 +166,7 @@
 				</tr>
 			</table>
 		</div>
+		<input type="hidden" id="S_FLAG" name="S_FLAG" />
 		<div id="leftDiv" style="width:96%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<table class="blueone">
 				<tr>

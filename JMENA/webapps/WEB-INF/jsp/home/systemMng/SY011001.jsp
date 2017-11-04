@@ -106,7 +106,9 @@
 					//height: '100%' ,
 					onSelectRow: function(id){
 						$("#rightInsertButton").attr("style", "visibility");
-						$("#S_FLAG_R").val("U");
+						
+						if (v_rightLastSel != 0) $("#S_FLAG_R").val("U");
+						
 						if( v_rightLastSel != id ){
 					        jQuery(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 					        jQuery(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
@@ -240,6 +242,7 @@
 		///////////////RIGHT BUTTON/////////////////////////
 		$(function() {
 			$("#rightInsertButton").click(function() {
+				v_rightLastSel = 0;
 				$("#S_FLAG_R").val("I");
 				
 				$("#rightList").jqGrid("addRow", 0);
@@ -310,6 +313,9 @@
 							alert("[ERROR]Menu 저장  중 오류가 발생하였습니다.");
 						}  
 					});
+				} else {
+					$("#rightInsertButton").attr("style", "visibility");
+					$("#sysSearchButton").click();
 				}
 			});
 		})

@@ -6,7 +6,7 @@ public class SY011006VO {
 	private String BANKNAME;
 	private String USEYN;
 	private String AUXCODE;
-	
+	private String USERID;
 	
 	public String getBANKCODE() {
 		return this.BANKCODE;
@@ -33,6 +33,12 @@ public class SY011006VO {
 	}
 	public void setAUXCODE(String AUXCODE) {
 		this.AUXCODE = AUXCODE;
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
 	}
 	
 	

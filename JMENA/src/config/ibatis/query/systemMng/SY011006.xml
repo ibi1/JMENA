@@ -26,35 +26,39 @@
 		ORDER BY T1.BANKCODE ASC
 	</select>
 	
-	<update id="updateEnaBankMst">
-		UPDATE SY_BANKMST
-		SET
-			BANKNAME = #BANKNAME#,
-			USEYN = #USEYN#,
-			AUXCODE = #AUXCODE#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
+	<select id="selectDataBankMst" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(T1.BANKCODE) AS CNT
+		FROM sy_bankmst T1
 		WHERE BANKCODE = #BANKCODE#
-	</update>
+	</select>
 	
-	<insert id="insertEnaBankMst">
-		INSERT INTO SY_BANKMST
+	<insert id="insertDataBankMst">
+		INSERT INTO sy_bankmst
 		(
 			BANKCODE,
 			BANKNAME,
 			USEYN,
 			AUXCODE,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#BANKCODE#,
 			#BANKNAME#,
 			#USEYN#,
 			#AUXCODE#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#
 		)
 	</insert>
 	
+	<update id="updateDataBankMst">
+		UPDATE sy_bankmst
+		SET
+			BANKNAME = #BANKNAME#,
+			USEYN = #USEYN#,
+			AUXCODE = #AUXCODE#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
+		WHERE BANKCODE = #BANKCODE#
+	</update>
 </sqlMap>
