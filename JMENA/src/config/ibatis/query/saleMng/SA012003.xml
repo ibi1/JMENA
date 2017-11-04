@@ -76,8 +76,22 @@
 			(SELECT DEPTNAME FROM ba_deptmst WHERE BRANCHCODE = T3.BRANCHCODE AND DEPTCODE = T3.DEPTCODE) AS DEPTNAME
 			FROM hr_insamst T3
 			WHERE 1=1
+		<isNotEmpty property="S_BRANCHCODE">
+		    AND BRANCHCODE = #S_BRANCHCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_DEPTCODE">
+		    AND DEPTCODE = #S_DEPTCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_KNAME">
+		    AND KNAME LIKE '%#S_KNAME#%'
+		</isNotEmpty>
 		) T2
 		where 1=1
+		<isNotEmpty property="S_SALEDATE_FR">
+			<isNotEmpty property="S_SALEDATE_TO">
+				AND T1.SALEDATE BETWEEN #S_SALEDATE_FR# AND #S_SALEDATE_TO#
+			</isNotEmpty>
+		</isNotEmpty> 
 		ORDER BY T1.SALEID ASC
 	</select>
 	

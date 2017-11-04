@@ -14,10 +14,125 @@
 
 	$(document).ready(function(){
 		
+		f_selectListEnaIpgumTypeCode();
+		f_selectListEnaIpgumGubunCode();
+		f_selectListEnaBankGubunCode();
+
+		f_selectListEnaSIpgumGubunCode();
+		f_selectListEnaSBankGubunCode();
+		
 		f_selectListEnaIpgumMst();
 		f_selectListEnaIpgumDtl();
 		
 	});
+	
+	function f_selectListEnaIpgumTypeCode(){
+		var CCODE = "012";
+		$("#IPGUMTYPE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#IPGUMTYPE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+
+	function f_selectListEnaIpgumGubunCode(){
+		var CCODE = "009";
+		$("#IPGUMGUBUN").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#IPGUMGUBUN").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+
+	function f_selectListEnaBankGubunCode(){
+		$("#BANKGUBUN").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/bankList.do", 
+			dataType : 'json' ,
+			success: function(data){
+				var inHtml = "";
+				data.bankList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.bankCode + "'>" + currentValue.bankName + "</option>\n";
+				});
+				$("#BANKGUBUN").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+
+	function f_selectListEnaSIpgumGubunCode(){
+		var CCODE = "009";
+		$("#S_IPGUMGUBUN").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#S_IPGUMGUBUN").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+
+	function f_selectListEnaSBankGubunCode(){
+		$("#S_BANKGUBUN").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/bankList.do", 
+			dataType : 'json' ,
+			success: function(data){
+				var inHtml = "";
+				data.bankList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.bankCode + "'>" + currentValue.bankName + "</option>\n";
+				});
+				$("#S_BANKGUBUN").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
 	
 	function f_selectListEnaIpgumMst(){
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
@@ -129,16 +244,14 @@
 					</td>
 					<td>입금구분</td>
 					<td>
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="S_IPGUMGUBUN" name="S_IPGUMGUBUN">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>금융기관</td>
 					<td>
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="S_BANKGUBUN" name="S_BANKGUBUN">
 						</select>
 					</td>
 					<td>입금금액</td>
@@ -156,24 +269,21 @@
 				<tr>
 					<td>입금형태</td>
 					<td colspan="3">
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="IPGUMTYPE" name="IPGUMTYPE">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>입금구분</td>
 					<td colspan="3">
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="IPGUMGUBUN" name="IPGUMGUBUN">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>금융기관</td>
 					<td>
-						<select id="SYSID" name="SYSID">
-							<option></option>
+						<select id="BANKGUBUN" name="BANKGUBUN">
 						</select>
 					</td>
 					<td>입금인</td>

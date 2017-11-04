@@ -2,41 +2,48 @@ package kr.co.jmena.www.web.home.personMng.Vo;
 
 public class HR011001VO {
 	
+	private String INSACODE;
+	private String KNAME;
+	private String JUMINID;
+	private String BIRTHDAYGUBUN;
+	private String SAUPID;
+	private String SAUPOWNER;
+	private String ADDRESS;
+	private String MOBILENO;
+	private String TELNO;
+	private String BRANCHCODE;
+	private String DEPTCODE;
+	private String BASICPAY;
+	private String EMPLOYGUBUN;
+	private String GRADE;
+	private String DUTY;
+	private String JOINDATE;
+	private String REJOINYN;
+	private String RETIREDATE;
+	private String RECOID;
+	private String REMARK;	
+	
+	
 	private String ACCTNO;
 	private String ACCTOWNER;
-	private String ADDRESS;
 	private String APPOINTBRANCH;
 	private String APPOINTDATE;
 	private String APPOINTDEPT;
 	private String APPOINTGUBUN;
 	private String APPOINTSEQ;
 	private String BANKID;
-	private String BASICPAY;
-	private String BRANCHCODE;
 	private String BRANCHNAME;
-	private String DEPTCODE;
 	private String DEPTNAME;
-	private String DUTY;
-	private String EMPLOYGUBUN;
-	private String GRADE;
-	private String INSACODE;
 	private String ITEMSEQ;
-	private String JOINDATE;
-	private String JUMINID;
-	private String KNAME;
-	private String MOBILENO;
 	private String PAYERID;
 	private String PAYERNAME;
 	private String PREBASICPAY;
-	private String RECOLID;
-	private String REJOINYN;
-	private String REMARK;
-	private String RETIREDATE;
-	private String SAUPID;
-	private String TELNO;
-	private String BIRTHDAYGUBUN;
-	private String SAUPOWNER;
 	
+	private String S_BRANCHCODE;
+	private String S_DEPTCODE;
+	private String S_KNAME;
+	private String S_JUMINID;
+		
 
 	public String getACCTNO(){
 		return this.ACCTNO;
@@ -116,8 +123,8 @@ public class HR011001VO {
 	public String getPREBASICPAY(){
 		return this.PREBASICPAY;
 	}
-	public String getRECOLID(){
-		return this.RECOLID;
+	public String getRECOID(){
+		return this.RECOID;
 	}
 	public String getREJOINYN(){
 		return this.REJOINYN;
@@ -221,8 +228,8 @@ public class HR011001VO {
 	public void setPREBASICPAY(String PREBASICPAY) {
 		this.PREBASICPAY = PREBASICPAY;
 	}
-	public void setRECOLID(String RECOLID) {
-		this.RECOLID = RECOLID;
+	public void setRECOID(String RECOID) {
+		this.RECOID = RECOID;
 	}
 	public void setREJOINYN(String REJOINYN) {
 		this.REJOINYN = REJOINYN;
@@ -245,6 +252,28 @@ public class HR011001VO {
 	public void setSAUPOWNER(String SAUPOWNER) {
 		this.SAUPOWNER = SAUPOWNER;
 	}
-
-		
+	public String getS_BRANCHCODE() {
+		return S_BRANCHCODE;
+	}
+	public void setS_BRANCHCODE(String s_BRANCHCODE) {
+		this.S_BRANCHCODE = s_BRANCHCODE;
+	}
+	public String getS_DEPTCODE() {
+		return S_DEPTCODE;
+	}
+	public void setS_DEPTCODE(String s_DEPTCODE) {
+		this.S_DEPTCODE = s_DEPTCODE;
+	}
+	public String getS_KNAME() {
+		return S_KNAME;
+	}
+	public void setS_KNAME(String s_KNAME) {
+		this.S_KNAME = s_KNAME;
+	}
+	public String getS_JUMINID() {
+		return S_JUMINID;
+	}
+	public void setS_JUMINID(String s_JUMINID) {
+		this.S_JUMINID = s_JUMINID;
+	}		
 }

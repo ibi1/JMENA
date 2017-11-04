@@ -14,16 +14,42 @@
 
 	$(document).ready(function(){
 		
+		f_selectListEnaDCode();		
+		
 		f_selectListEnaSaleMst();
 		f_selectListEnaSaleISTb();
 		f_selectListEnaSaleJNTb();
 		f_selectListEnaSaleHisTb();
+		
+		
 		$("#bottomDiv1").show();
 		$("#bottomDiv2").hide();
 		$("#bottomDiv3").hide();
 		
 	});
 
+	function f_selectListEnaDCode(){
+		var CCODE = "007";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#SALEGUBUN").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
 
 	function f_selectListEnaSaleMst(){
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용

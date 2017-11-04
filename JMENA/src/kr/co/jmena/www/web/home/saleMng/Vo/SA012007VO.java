@@ -2,310 +2,124 @@ package kr.co.jmena.www.web.home.saleMng.Vo;
 
 public class SA012007VO {
 	
-	private String BUYID;
-	private String CANCELDATE;
-	private String CANCELYN;
-	private String CHGDATE;
-	private String CHGGUBUN;
-	private String CHGM2;
-	private String CHGPY;
-	private String CONADDRESS;
-	private String CONJUMINID;
-	private String CONM2;
-	private String CONNAME;
-	private String CONPY;
-	private String CONTELNO;
-	private String DCAMT;
-	private String DCGUBUN;
-	private String DCRATE;
-	private String DEPOSITAMT;
-	private String DEPOSITDATE;
-	private String DEPOSITGUBUN;
-	private String DEPOSITYN;
-	private String IPGUMSEQ;
-	private String JOINTJUMINID;
-	private String JOINTNAME;
-	private String JOINTSEQ;
-	private String JOINTTELNO;
-	private String JOINYN;
-	private String OCCUM2;
-	private String OCCUPY;
-	private String PAPERREGYN;
-	private String PREM2;
-	private String PREPY;
-	private String REGDATE;
-	private String REGYN;
-	private String REMARK;
-	private String SALEAMT;
-	private String SALEDANGA;
-	private String SALEDATE;
-	private String SALEGUBUN;
-	private String SALEID;
-	private String SALERCD;
-	private String SALESEQ;
-	private String SELLAMT;
-	private String SELLDANGA;
-
-
-	public String getBUYID(){
-		return this.BUYID;
+	private String DCODENAME; 
+	private String CITYNAME; 
+	private String BOROUGHNAME; 
+	private String ADDRESS; 
+	private String BUYM2; 
+	private String BUYPY; 
+	private String CONM2; 
+	private String CONPY; 
+	private String REMNM2;
+	private String REMNPY; 
+	private String BUYDANGA; 
+	private String OPENBRANCH; 
+	private String HOLDING;
+	
+	private String S_CITYCODE;
+	private String S_BOROUGHCODE;
+	private String S_ADDRESS;
+	
+	
+	public String getDCODENAME() {
+		return this.DCODENAME;
 	}
-	public String getCANCELDATE(){
-		return this.CANCELDATE;
+	public String getCITYNAME() {
+		return this.CITYNAME;
 	}
-	public String getCANCELYN(){
-		return this.CANCELYN;
+	public String getBOROUGHNAME() {
+		return this.BOROUGHNAME;
 	}
-	public String getCHGDATE(){
-		return this.CHGDATE;
+	public String getADDRESS() {
+		return this.ADDRESS;
 	}
-	public String getCHGGUBUN(){
-		return this.CHGGUBUN;
+	public String getBUYM2() {
+		return this.BUYM2;
 	}
-	public String getCHGM2(){
-		return this.CHGM2;
+	public String getBUYPY() {
+		return this.BUYPY;
 	}
-	public String getCHGPY(){
-		return this.CHGPY;
-	}
-	public String getCONADDRESS(){
-		return this.CONADDRESS;
-	}
-	public String getCONJUMINID(){
-		return this.CONJUMINID;
-	}
-	public String getCONM2(){
+	public String getCONM2() {
 		return this.CONM2;
 	}
-	public String getCONNAME(){
-		return this.CONNAME;
-	}
-	public String getCONPY(){
+	public String getCONPY() {
 		return this.CONPY;
 	}
-	public String getCONTELNO(){
-		return this.CONTELNO;
+	public String getREMNM2() {
+		return this.REMNM2;
 	}
-	public String getDCAMT(){
-		return this.DCAMT;
+	public String getREMNPY() {
+		return this.REMNPY;
 	}
-	public String getDCGUBUN(){
-		return this.DCGUBUN;
+	public String getBUYDANGA() {
+		return this.BUYDANGA;
 	}
-	public String getDCRATE(){
-		return this.DCRATE;
+	public String getOPENBRANCH() {
+		return this.OPENBRANCH;
 	}
-	public String getDEPOSITAMT(){
-		return this.DEPOSITAMT;
+	public String getHOLDING() {
+		return this.HOLDING;
 	}
-	public String getDEPOSITDATE(){
-		return this.DEPOSITDATE;
+	public String getS_CITYCODE() {
+		return this.S_CITYCODE;
 	}
-	public String getDEPOSITGUBUN(){
-		return this.DEPOSITGUBUN;
+	public String getS_BOROUGHCODE() {
+		return this.S_BOROUGHCODE;
 	}
-	public String getDEPOSITYN(){
-		return this.DEPOSITYN;
+	public String getS_ADDRESS() {
+		return this.S_ADDRESS;
 	}
-	public String getIPGUMSEQ(){
-		return this.IPGUMSEQ;
+	
+	public void setDCODENAME(String DCODENAME) {
+		this.DCODENAME = DCODENAME;
 	}
-	public String getJOINTJUMINID(){
-		return this.JOINTJUMINID;
+	public void setCITYNAME(String CITYNAME) {
+		this.CITYNAME = CITYNAME;
 	}
-	public String getJOINTNAME(){
-		return this.JOINTNAME;
+	public void setBOROUGHNAME(String BOROUGHNAME) {
+		this.BOROUGHNAME = BOROUGHNAME;
 	}
-	public String getJOINTSEQ(){
-		return this.JOINTSEQ;
+	public void setADDRESS(String ADDRESS) {
+		this.ADDRESS = ADDRESS;
 	}
-	public String getJOINTTELNO(){
-		return this.JOINTTELNO;
+	public void setBUYM2(String BUYM2) {
+		this.BUYM2 = BUYM2;
 	}
-	public String getJOINYN(){
-		return this.JOINYN;
-	}
-	public String getOCCUM2(){
-		return this.OCCUM2;
-	}
-	public String getOCCUPY(){
-		return this.OCCUPY;
-	}
-	public String getPAPERREGYN(){
-		return this.PAPERREGYN;
-	}
-	public String getPREM2(){
-		return this.PREM2;
-	}
-	public String getPREPY(){
-		return this.PREPY;
-	}
-	public String getREGDATE(){
-		return this.REGDATE;
-	}
-	public String getREGYN(){
-		return this.REGYN;
-	}
-	public String getREMARK(){
-		return this.REMARK;
-	}
-	public String getSALEAMT(){
-		return this.SALEAMT;
-	}
-	public String getSALEDANGA(){
-		return this.SALEDANGA;
-	}
-	public String getSALEDATE(){
-		return this.SALEDATE;
-	}
-	public String getSALEGUBUN(){
-		return this.SALEGUBUN;
-	}
-	public String getSALEID(){
-		return this.SALEID;
-	}
-	public String getSALERCD(){
-		return this.SALERCD;
-	}
-	public String getSALESEQ(){
-		return this.SALESEQ;
-	}
-	public String getSELLAMT(){
-		return this.SELLAMT;
-	}
-	public String getSELLDANGA(){
-		return this.SELLDANGA;
-	}
-
-	public void setBUYID(String BUYID) {
-		this.BUYID = BUYID;
-	}
-	public void setCANCELDATE(String CANCELDATE) {
-		this.CANCELDATE = CANCELDATE;
-	}
-	public void setCANCELYN(String CANCELYN) {
-		this.CANCELYN = CANCELYN;
-	}
-	public void setCHGDATE(String CHGDATE) {
-		this.CHGDATE = CHGDATE;
-	}
-	public void setCHGGUBUN(String CHGGUBUN) {
-		this.CHGGUBUN = CHGGUBUN;
-	}
-	public void setCHGM2(String CHGM2) {
-		this.CHGM2 = CHGM2;
-	}
-	public void setCHGPY(String CHGPY) {
-		this.CHGPY = CHGPY;
-	}
-	public void setCONADDRESS(String CONADDRESS) {
-		this.CONADDRESS = CONADDRESS;
-	}
-	public void setCONJUMINID(String CONJUMINID) {
-		this.CONJUMINID = CONJUMINID;
+	public void setBUYPY(String BUYPY) {
+		this.BUYPY = BUYPY;
 	}
 	public void setCONM2(String CONM2) {
 		this.CONM2 = CONM2;
 	}
-	public void setCONNAME(String CONNAME) {
-		this.CONNAME = CONNAME;
-	}
 	public void setCONPY(String CONPY) {
 		this.CONPY = CONPY;
 	}
-	public void setCONTELNO(String CONTELNO) {
-		this.CONTELNO = CONTELNO;
+	public void setREMNM2(String REMNM2) {
+		this.REMNM2 = REMNM2;
 	}
-	public void setDCAMT(String DCAMT) {
-		this.DCAMT = DCAMT;
+	public void setREMNPY(String REMNPY) {
+		this.REMNPY = REMNPY;
 	}
-	public void setDCGUBUN(String DCGUBUN) {
-		this.DCGUBUN = DCGUBUN;
+	public void setBUYDANGA(String BUYDANGA) {
+		this.BUYDANGA = BUYDANGA;
 	}
-	public void setDCRATE(String DCRATE) {
-		this.DCRATE = DCRATE;
+	public void setOPENBRANCH(String OPENBRANCH) {
+		this.OPENBRANCH = OPENBRANCH;
 	}
-	public void setDEPOSITAMT(String DEPOSITAMT) {
-		this.DEPOSITAMT = DEPOSITAMT;
+	public void setHOLDING(String HOLDING) {
+		this.HOLDING = HOLDING;
+	} 
+	public void setS_CITYCODE(String s_CITYCODE) {
+		this.S_CITYCODE = s_CITYCODE;
 	}
-	public void setDEPOSITDATE(String DEPOSITDATE) {
-		this.DEPOSITDATE = DEPOSITDATE;
+	public void setS_BOROUGHCODE(String S_BOROUGHCODE) {
+		this.S_BOROUGHCODE = S_BOROUGHCODE;
 	}
-	public void setDEPOSITGUBUN(String DEPOSITGUBUN) {
-		this.DEPOSITGUBUN = DEPOSITGUBUN;
-	}
-	public void setDEPOSITYN(String DEPOSITYN) {
-		this.DEPOSITYN = DEPOSITYN;
-	}
-	public void setIPGUMSEQ(String IPGUMSEQ) {
-		this.IPGUMSEQ = IPGUMSEQ;
-	}
-	public void setJOINTJUMINID(String JOINTJUMINID) {
-		this.JOINTJUMINID = JOINTJUMINID;
-	}
-	public void setJOINTNAME(String JOINTNAME) {
-		this.JOINTNAME = JOINTNAME;
-	}
-	public void setJOINTSEQ(String JOINTSEQ) {
-		this.JOINTSEQ = JOINTSEQ;
-	}
-	public void setJOINTTELNO(String JOINTTELNO) {
-		this.JOINTTELNO = JOINTTELNO;
-	}
-	public void setJOINYN(String JOINYN) {
-		this.JOINYN = JOINYN;
-	}
-	public void setOCCUM2(String OCCUM2) {
-		this.OCCUM2 = OCCUM2;
-	}
-	public void setOCCUPY(String OCCUPY) {
-		this.OCCUPY = OCCUPY;
-	}
-	public void setPAPERREGYN(String PAPERREGYN) {
-		this.PAPERREGYN = PAPERREGYN;
-	}
-	public void setPREM2(String PREM2) {
-		this.PREM2 = PREM2;
-	}
-	public void setPREPY(String PREPY) {
-		this.PREPY = PREPY;
-	}
-	public void setREGDATE(String REGDATE) {
-		this.REGDATE = REGDATE;
-	}
-	public void setREGYN(String REGYN) {
-		this.REGYN = REGYN;
-	}
-	public void setREMARK(String REMARK) {
-		this.REMARK = REMARK;
-	}
-	public void setSALEAMT(String SALEAMT) {
-		this.SALEAMT = SALEAMT;
-	}
-	public void setSALEDANGA(String SALEDANGA) {
-		this.SALEDANGA = SALEDANGA;
-	}
-	public void setSALEDATE(String SALEDATE) {
-		this.SALEDATE = SALEDATE;
-	}
-	public void setSALEGUBUN(String SALEGUBUN) {
-		this.SALEGUBUN = SALEGUBUN;
-	}
-	public void setSALEID(String SALEID) {
-		this.SALEID = SALEID;
-	}
-	public void setSALERCD(String SALERCD) {
-		this.SALERCD = SALERCD;
-	}
-	public void setSALESEQ(String SALESEQ) {
-		this.SALESEQ = SALESEQ;
-	}
-	public void setSELLAMT(String SELLAMT) {
-		this.SELLAMT = SELLAMT;
-	}
-	public void setSELLDANGA(String SELLDANGA) {
-		this.SELLDANGA = SELLDANGA;
+	public void setS_ADDRESS(String S_ADDRESS) {
+		this.S_ADDRESS = S_ADDRESS;
 	}
 
+
+	
 	
 }
