@@ -204,7 +204,7 @@
 	                    	<span>
 	                    		<div id="topright">
 	                    			<div id="info" style="height: 50px;"></div>
-	                    			<div id="tabs" style="font-size: 28px; !important;"></div>
+	                    			<div id="tabs" style="font-size: 28px; !important; border: none;"></div>
 	                    		</div>
 							</span>
 						</div>
