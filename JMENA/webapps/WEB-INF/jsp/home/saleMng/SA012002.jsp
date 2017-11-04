@@ -27,7 +27,7 @@
 		f_selectListEnaDCode();
 		
 		
-		f_selectListSA012002();
+		f_selectListSA012002(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
 	});
 
 	function f_selectListEnaBranchCode(){
@@ -121,9 +121,12 @@
 			},
 			
 			loadError:function(){alert("Error~!!");},
-			colNames:['지사코드', '지사', '부서코드', '부서', '계약일', '매출구분', '계약번호', '담당자' , '고객명', '주소', '계약면적', '계약평수',
-			          '원 판매가', '할인율(%)',  '실판매가', '평단가', '위탁수수료', '계약금', '중도금', '잔금', '계약입금액',
-			          '중도입금액', '잔금입금액', '입금총액', '입금잔액', '입금율(%)', '비고'],
+			colNames:['지사코드', '지사', '부서코드', '부서', '계약일', 
+			          '매출구분', '계약번호', '담당자' , '고객명', '주소', 
+			          '계약면적', '계약평수', '원 판매가', '할인율(%)',  '실판매가',
+			          '평단가', '위탁수수료', '계약금', '중도금', '잔금', 
+			          '계약입금액', '중도입금액', '잔금입금액', '입금총액', '입금잔액',
+			          '입금율(%)', '비고'],
 			colModel:[
 					{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
 					, {name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,	align:'center'}
@@ -182,6 +185,28 @@
 			var S_KNAME = $("#S_KNAME").val();
 			
 			f_selectListSA012002(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
+		})
+	})
+	
+	$(function(){
+		$("#excelButton").click(function(){
+		    $.ajax({ 
+				type: 'POST' ,
+				data: $("#searchForm").serialize(),
+				url: "/home/SA012002_exportToExcel.do" , 
+				dataType : 'json' , 
+				success: function(data){
+					if(data.rows[0].MSG == "success")
+					{
+						alert("저장이 완료되었습니다.");
+						f_reload();
+					}else{
+						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+					}
+				},
+				error:function(e){  
+				}  
+			}); 
 		})
 	})
 	

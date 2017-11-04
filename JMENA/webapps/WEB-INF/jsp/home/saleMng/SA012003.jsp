@@ -15,9 +15,15 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		var S_SALEDATE_FR = "";
+		var S_SALEDATE_TO = "";
+		var S_BRANCHCODE = "";
+		var S_DEPTCODE = "";
+		var S_KNAME = "";
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
-		f_selectListSA012003();
+		f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 	});
 	
 	function f_selectListEnaBranchCode(){
@@ -72,41 +78,51 @@
 	}
 
 	
-	function f_selectListSA012003(){
-
+	function f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
+		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '매출현황 - 소비대차', 
 			url:"/home/selectListSysMst.do" ,
 			datatype:"json",
+			postData : {
+				S_SALEDATE_FR : S_SALEDATE_FR
+				, S_SALEDATE_TO : S_SALEDATE_TO
+				, S_BRANCHCODE : S_BRANCHCODE
+				, S_DEPTCODE : S_DEPTCODE
+				, S_KNAME : S_KNAME
+			},
+			
 			loadError:function(){alert("Error~!!");},
-			colNames:['지사', '부서', '계약일', '계약번호', '담당자', '고객명', '주민번호', '지급구분', '차용기간', '차입금액',
-			          '지급이율(%)', '지급이자',  '이자소득세', '실 수령액', '만기일', '연장여부', '연장일', '중도해지', '중도해지일',
-			          '담보소재지', '입금은행', '입금계좌', '예금주', '비고'],
+			colNames:['지사', '부서', '계약일', '계약번호', '담당자', 
+			          '고객명', '주민번호', '지급구분', '차용기간', '차입금액',
+			          '지급이율(%)', '지급이자',  '이자소득세', '실 수령액', '만기일',
+			          '연장여부', '연장일', '중도해지', '중도해지일', '담보소재지',
+			          '입금은행', '입금계좌', '예금주', '비고'],
 			colModel:[
-						{name:"KNAME",				index:'kName',		width:100,	align:'center'}
-						, {name:"JUMINID",			index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"DEPTCODE",			index:'deptCode',	width:150,	align:'center'}
-						, {name:"KNAME",			index:'kName',		width:100,	align:'center'}
-						, {name:"O_JUMINID",		index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'deptCode',	width:150,	align:'center'}
-						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"O_EMPLOYGUBUN",	index:'branchCode',	width:100,	align:'center'}
-						, {name:"REMARK",			index:'deptCode',	width:150,	align:'center'}
-						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'deptCode',	width:150,	align:'center'}
-						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"O_EMPLOYGUBUN",	index:'branchCode',	width:100,	align:'center'}
+				{name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
+				,{name:"DEPTNAME",		index:'DEPTNAME',		width:100,	align:'center'}
+				,{name:"SALEDATE",		index:'SALEDATE',		width:100,	align:'center'}
+				,{name:"SALEID",		index:'SALEID',			width:100,	align:'center'}
+				,{name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
+				,{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center'}
+				,{name:"CONJUMINID",	index:'CONJUMINID',		width:100,	align:'center'}
+				,{name:"BRROWTYPE",		index:'BRROWTYPE',		width:100,	align:'center'}
+				,{name:"BRROWTERM",		index:'BRROWTERM',		width:100,	align:'center'}
+				,{name:"BRROWAMT",		index:'BRROWAMT',		width:100,	align:'center'}
+				,{name:"PAYRATE",		index:'PAYRATE',		width:100,	align:'center'}
+				,{name:"PAYAMT",		index:'PAYAMT',			width:100,	align:'center'}
+				,{name:"TAXAMT",		index:'TAXAMT',			width:100,	align:'center'}
+				,{name:"JIGUEBAMT",		index:'JIGUEBAMT',		width:100,	align:'center'}
+				,{name:"EXPIREDATE",	index:'EXPIREDATE',		width:100,	align:'center'}
+				,{name:"EXTENDYN",		index:'EXTENDYN',		width:100,	align:'center'}
+				,{name:"EXTENDDATE",	index:'EXTENDDATE',		width:100,	align:'center'}
+				,{name:"CANCELYN",		index:'CANCELYN',		width:100,	align:'center'}
+				,{name:"CANCELDATE",	index:'CANCELDATE',		width:100,	align:'center'}
+				,{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center'}
+				,{name:"BANKNAME",		index:'BANKNAME',		width:100,	align:'center'}
+				,{name:"PAYACCOUNT",	index:'PAYACCOUNT',		width:100,	align:'center'}
+				,{name:"PAYOWNER",		index:'PAYOWNER',		width:100,	align:'center'}
+				,{name:"REMARK",		index:'REMARK',			width:100,	align:'center'}
 			],
 			rowNum:10,
 			autowidth: true,
@@ -126,7 +142,43 @@
 			hidegrid: false
 		});
 
-	}	
+	}
+	
+	$(function(){
+		$("#selectButton").click(function(){
+			
+			var S_SALEDATE_FR = $("#S_SALEDATE_FR").val();
+			var S_SALEDATE_TO = $("#S_SALEDATE_TO").val();
+			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
+			var S_DEPTCODE = $("#S_DEPTCODE").val();
+			var S_KNAME = $("#S_KNAME").val();
+			
+			f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+		})
+	})
+	
+	$(function(){
+		$("#excelButton").click(function(){
+		    $.ajax({ 
+				type: 'POST' ,
+				data: $("#searchForm").serialize(),
+				url: "/home/SA012003_exportToExcel.do" , 
+				dataType : 'json' , 
+				success: function(data){
+					if(data.rows[0].MSG == "success")
+					{
+						alert("저장이 완료되었습니다.");
+						f_reload();
+					}else{
+						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+					}
+				},
+				error:function(e){  
+				}  
+			}); 
+		})
+	})
+	
 </script>
 <body>
 

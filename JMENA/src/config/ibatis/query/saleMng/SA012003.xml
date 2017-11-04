@@ -6,395 +6,79 @@
 	<typeAlias alias="SA012003VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA012003VO"/>
 
 	<resultMap id="SA012003Data" class="SA012003VO">
-		<result property="BUYID" 					column="BUYID"/>
-		<result property="CANCELDATE" 		column="CANCELDATE"/>
-		<result property="CANCELYN" 			column="CANCELYN"/>
-		<result property="CHGDATE" 			column="CHGDATE"/>
-		<result property="CHGGUBUN" 			column="CHGGUBUN"/>
-		<result property="CHGM2" 				column="CHGM2"/>
-		<result property="CHGPY" 				column="CHGPY"/>
-		<result property="CONADDRESS" 		column="CONADDRESS"/>
-		<result property="CONJUMINID" 		column="CONJUMINID"/>
-		<result property="CONM2" 				column="CONM2"/>
-		<result property="CONNAME" 			column="CONNAME"/>
-		<result property="CONPY" 				column="CONPY"/>
-		<result property="CONTELNO" 			column="CONTELNO"/>
-		<result property="DCAMT" 				column="DCAMT"/>
-		<result property="DCGUBUN" 			column="DCGUBUN"/>
-		<result property="DCRATE" 				column="DCRATE"/>
-		<result property="DEPOSITAMT" 		column="DEPOSITAMT"/>
-		<result property="DEPOSITDATE" 		column="DEPOSITDATE"/>
-		<result property="DEPOSITGUBUN"	column="DEPOSITGUBUN"/>
-		<result property="DEPOSITYN" 			column="DEPOSITYN"/>
-		<result property="IPGUMSEQ" 			column="IPGUMSEQ"/>
-		<result property="JOINTJUMINID" 		column="JOINTJUMINID"/>
-		<result property="JOINTNAME" 			column="JOINTNAME"/>
-		<result property="JOINTSEQ" 			column="JOINTSEQ"/>
-		<result property="JOINTTELNO" 		column="JOINTTELNO"/>
-		<result property="JOINYN" 				column="JOINYN"/>
-		<result property="OCCUM2" 				column="OCCUM2"/>
-		<result property="OCCUPY" 				column="OCCUPY"/>
-		<result property="PAPERREGYN" 		column="PAPERREGYN"/>
-		<result property="PREM2" 				column="PREM2"/>
-		<result property="PREPY" 				column="PREPY"/>
-		<result property="REGDATE" 			column="REGDATE"/>
-		<result property="REGYN" 				column="REGYN"/>
-		<result property="REMARK" 				column="REMARK"/>
-		<result property="SALEAMT" 			column="SALEAMT"/>
-		<result property="SALEDANGA" 		column="SALEDANGA"/>
-		<result property="SALEDATE" 			column="SALEDATE"/>
-		<result property="SALEGUBUN" 		column="SALEGUBUN"/>
-		<result property="SALEID" 				column="SALEID"/>
-		<result property="SALERCD" 			column="SALERCD"/>
-		<result property="SALESEQ" 			column="SALESEQ"/>
-		<result property="SELLAMT" 				column="SELLAMT"/>
-		<result property="SELLDANGA" 		column="SELLDANGA"/>
+		<result property="BRANCHNAME"		column="BRANCHNAME"/>
+		<result property="DEPTNAME"			column="DEPTNAME"/>
+		<result property="SALEDATE"			column="SALEDATE"/>
+		<result property="SALEID"			column="SALEID"/>
+		<result property="KNAME"			column="KNAME"/>
+		<result property="CONNAME"			column="CONNAME"/>
+		<result property="CONJUMINID"		column="CONJUMINID"/>
+		<result property="BRROWTYPE"		column="BRROWTYPE"/>
+		<result property="BRROWTERM"		column="BRROWTERM"/>
+		<result property="BRROWAMT"			column="BRROWAMT"/>
+		<result property="PAYRATE"			column="PAYRATE"/>
+		<result property="PAYAMT"			column="PAYAMT"/>
+		<result property="TAXAMT"			column="TAXAMT"/>
+		<result property="JIGUEBAMT"		column="JIGUEBAMT"/>
+		<result property="EXPIREDATE"		column="EXPIREDATE"/>
+		<result property="EXTENDYN"			column="EXTENDYN"/>
+		<result property="EXTENDDATE"		column="EXTENDDATE"/>
+		<result property="CANCELYN"			column="CANCELYN"/>
+		<result property="CANCELDATE"		column="CANCELDATE"/>
+		<result property="ADDRESS"			column="ADDRESS"/>
+		<result property="BANKNAME"			column="BANKNAME"/>
+		<result property="PAYACCOUNT"		column="PAYACCOUNT"/>
+		<result property="PAYOWNER"			column="PAYOWNER"/>
+		<result property="REMARK"			column="REMARK"/>
+
+		
 	</resultMap>
 
 	<select id="selectListSA012003" resultMap="SA012003Data">
-		SELECT 
-			T1.SALEID,
+		select
+			T2.BRANCHNAME,
+			T2.DEPTNAME,
 			T1.SALEDATE,
-			T1.SALEGUBUN,
-			T1.SALERCD,
-			T1.BUYID,
+			T1.SALEID,
+			T2.KNAME,
 			T1.CONNAME,
 			T1.CONJUMINID,
-			T1.CONADDRESS,
-			T1.CONTELNO,
-			T1.CONM2,
-			T1.CONPY,
-			T1.REMARK
-		FROM SA_SALEMST T1
-		WHERE 1=1
+			(SELECT (
+			          CASE BRROWTYPE
+			          WHEN 'N'  THEN '월지급'
+			          WHEN 'Y'  THEN '년지급'
+			          END
+			       ) AS BRROWTYPE
+			 FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS BRROWTYPE,
+			(SELECT BrrowPeriod FROM sa_salebdtl WHERE SALEID = T1.SALEID) || (SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '011' and dcode = (SELECT PeriodGubun FROM sa_salebdtl WHERE SALEID = T1.SALEID) ) AS BRROWTERM,
+			(SELECT BRROWAMT FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS BRROWAMT,
+			(SELECT PAYRATE FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS PAYRATE,
+			(SELECT PAYAMT FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS PAYAMT,
+			(SELECT (PayAmt - (PayAmt * 0.25) - ((PayAmt * 0.25) * 10)) AS TAXAMT  FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS TAXAMT,
+			(SELECT (PAYAMT - (PayAmt - (PayAmt * 0.25) - ((PayAmt * 0.25) * 10))) AS JIGUEBAMT FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS JIGUEBAMT,
+			(SELECT EXPIREDATE FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS EXPIREDATE,
+			(SELECT EXTENDYN FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS EXTENDYN,
+			(SELECT EXTENDDATE FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS EXTENDDATE,
+			(SELECT CANCELYN FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS CANCELYN,
+			(SELECT CANCELDATE FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS CANCELDATE,
+			(SELECT ADDRESS FROM mm_buymst WHERE BUYID = T1.BUYID) AS ADDRESS,
+			(SELECT BankName FROM sy_bankmst WHERE bankcode = (SELECT paybank FROM sa_salebdtl WHERE SALEID = T1.SALEID)) AS BANKNAME,
+			(SELECT PAYACCOUNT FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS PAYACCOUNT,
+			(SELECT PAYOWNER FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS PAYOWNER,
+			(SELECT REMARK FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS REMARK
+		from sa_salemst T1,
+		(SELECT 
+			INSACODE,
+			KNAME,
+			BRANCHCODE, 
+			(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T3.BRANCHCODE) AS BRANCHNAME, 
+			DEPTCODE,
+			(SELECT DEPTNAME FROM ba_deptmst WHERE BRANCHCODE = T3.BRANCHCODE AND DEPTCODE = T3.DEPTCODE) AS DEPTNAME
+			FROM hr_insamst T3
+			WHERE 1=1
+		) T2
+		where 1=1
 		ORDER BY T1.SALEID ASC
 	</select>
-	
-	<update id="updateEnaSaleMst">
-		UPDATE SA_SALEMST
-		SET
-			SALEDATE = #SALEDATE#,
-			SALEGUBUN = #SALEGUBUN#,
-			SALERCD = #SALERCD#,
-			BUYID = #BUYID#,
-			CONNAME = #CONNAME#,
-			CONJUMINID = #CONJUMINID#,
-			CONADDRESS = #CONADDRESS#,
-			CONTELNO = #CONTELNO#,
-			CONM2 = #CONM2#,
-			CONPY = #CONPY#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
-		WHERE SALEID = #SALEID#
-	</update>
-	
-	<insert id="insertEnaSaleMst">
-		INSERT INTO SA_SALEMST
-		(
-			SALEID,
-			SALEDATE,
-			SALEGUBUN,
-			SALERCD,
-			BUYID,
-			CONNAME,
-			CONJUMINID,
-			CONADDRESS,
-			CONTELNO,
-			CONM2,
-			CONPY,
-			REMARK,
-			INSERTUSER,
-			INSERTDATE
-		)
-		VALUES(
-			#SALEID#,
-			#SALEDATE#,
-			#SALEGUBUN#,
-			#SALERCD#,
-			#BUYID#,
-			#CONNAME#,
-			#CONJUMINID#,
-			#CONADDRESS#,
-			#CONTELNO#,
-			#CONM2#,
-			#CONPY#,
-			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
-		)
-	</insert>
-
-	<select id="selectListEnaSaleDtl" resultMap="SA012003Data">
-		SELECT 
-			T1.SALEID,
-			T1.SALEAMT,
-			T1.SALEDANGA,
-			T1.DCGUBUN,
-			T1.DCRATE,
-			T1.DCAMT,
-			T1.SELLAMT,
-			T1.JOINYN,
-			T1.REGYN,
-			T1.REGDATE,
-			T1.CANCELYN,
-			T1.CANCELDATE
-		FROM SA_SALEDTL T1
-		WHERE 1=1
-		ORDER BY T1.SALEID ASC
-	</select>
-	
-	<update id="updateEnaSaleDtl">
-		UPDATE SA_SALEDTL
-		SET
-			SALEAMT = #SALEAMT#,
-			SALEDANGA = #SALEDANGA#,
-			DCGUBUN = #DCGUBUN#,
-			DCRATE = #DCRATE#,
-			DCAMT = #DCAMT#,
-			SELLAMT = #SELLAMT#,
-			JOINYN = #JOINYN#,
-			REGYN = #REGYN#,
-			REGDATE = #REGDATE#,
-			CANCELYN = #CANCELYN#,
-			CANCELDATE = #CANCELDATE#
-		WHERE SALEID = #SALEID#
-	</update>
-	
-	<insert id="insertEnaSaleDtl">
-		INSERT INTO SA_SALEDTL
-		(
-			SALEID,
-			SALEAMT,
-			SALEDANGA,
-			DCGUBUN,
-			DCRATE,
-			DCAMT,
-			SELLAMT,
-			JOINYN,
-			REGYN,
-			REGDATE,
-			CANCELYN,
-			CANCELDATE
-		)
-		VALUES(
-			#SALEID#,
-			#SALEAMT#,
-			#SALEDANGA#,
-			#DCGUBUN#,
-			#DCRATE#,
-			#DCAMT#,
-			#SELLAMT#,
-			#JOINYN#,
-			#REGYN#,
-			#REGDATE#,
-			#CANCELYN#,
-			#CANCELDATE#
-		)
-	</insert>
-
-	<select id="selectListEnaSaleISTb" resultMap="SA012003Data">
-		SELECT 
-			T1.SALEID,
-			T1.IPGUMSEQ,
-			T1.DEPOSITGUBUN,
-			T1.DEPOSITDATE,
-			T1.DEPOSITAMT,
-			T1.DEPOSITYN,
-			T1.REMARK
-		FROM SA_IPGUMSCHEDULETB T1
-		WHERE 1=1
-		AND T1.SALEID = #SALEID# 
-		AND T1.IPGUMSEQ = #IPGUMSEQ# 
-		ORDER BY T1.SALEID ASC
-	</select>
-	
-	<update id="updateEnaSaleISTb">
-		UPDATE SA_IPGUMSCHEDULETB
-		SET
-			DEPOSITGUBUN = #DEPOSITGUBUN#,
-			DEPOSITDATE = #DEPOSITDATE#,
-			DEPOSITAMT = #DEPOSITAMT#,
-			DEPOSITYN = #DEPOSITYN#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = #UPDATEDATE#
-		WHERE SALEID = #SALEID# 
-		AND IPGUMSEQ = #IPGUMSEQ# 
-	</update>
-	
-	<insert id="insertEnaSaleISTb">
-		INSERT INTO SA_IPGUMSCHEDULETB
-		(
-			SALEID,
-			IPGUMSEQ,
-			DEPOSITGUBUN,
-			DEPOSITDATE,
-			DEPOSITAMT,
-			DEPOSITYN,
-			REMARK,
-			INSERTUSER,
-			INSERTDATE
-		)
-		VALUES(
-			#SALEID#,
-			#IPGUMSEQ#,
-			#DEPOSITGUBUN#,
-			#DEPOSITDATE#,
-			#DEPOSITAMT#,
-			#DEPOSITYN#,
-			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
-		)
-	</insert>
-
-	<select id="selectListEnaSaleJNTb" resultMap="SA012003Data">
-		SELECT 
-			T1.SALEID,
-			T1.JOINTSEQ,
-			T1.JOINTNAME,
-			T1.JOINTJUMINID,
-			T1.JOINTTELNO,
-			T1.OCCUM2,
-			T1.OCCUPY,
-			T1.SALEAMT,
-			T1.SELLDANGA,
-			T1.DCGUBUN,
-			T1.DCRATE,
-			T1.SELLAMT,
-			T1.PAPERREGYN,
-			T1.REMARK
-		FROM SA_JOINTNAMETB T1
-		WHERE 1=1
-		AND T1.SALEID = #SALEID# 
-		AND T1.JOINTSEQ = #JOINTSEQ# 
-		ORDER BY T1.SALEID ASC
-	</select>
-	
-	<update id="updateEnaSaleJNTb">
-		UPDATE SA_JOINTNAMETB
-		SET
-			JOINTNAME = #JOINTNAME#,
-			JOINTJUMINID = #JOINTJUMINID#,
-			JOINTTELNO = #JOINTTELNO#,
-			OCCUM2 = #OCCUM2#,
-			OCCUPY = #OCCUPY#,
-			SALEAMT = #SALEAMT#,
-			SELLDANGA = #SELLDANGA#,
-			DCGUBUN = #DCGUBUN#,
-			DCRATE = #DCRATE#,
-			SELLAMT = #SELLAMT#,
-			PAPERREGYN = #PAPERREGYN#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = #UPDATEDATE#
-		WHERE SALEID = #SALEID# 
-		AND JOINTSEQ = #JOINTSEQ# 
-	</update>
-	
-	<insert id="insertEnaSaleJNTb">
-		INSERT INTO SA_JOINTNAMETB
-		(
-			SALEID,
-			JOINTSEQ,
-			JOINTNAME,
-			JOINTJUMINID,
-			JOINTTELNO,
-			OCCUM2,
-			OCCUPY,
-			SALEAMT,
-			SELLDANGA,
-			DCGUBUN,
-			DCRATE,
-			SELLAMT,
-			PAPERREGYN,
-			REMARK,
-			INSERTUSER,
-			INSERTDATE
-		)
-		VALUES(
-			#SALEID#,
-			#JOINTSEQ#,
-			#JOINTNAME#,
-			#JOINTJUMINID#,
-			#JOINTTELNO#,
-			#OCCUM2#,
-			#OCCUPY#,
-			#SALEAMT#,
-			#SELLDANGA#,
-			#DCGUBUN#,
-			#DCRATE#,
-			#SELLAMT#,
-			#PAPERREGYN#,
-			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
-		)
-	</insert>
-
-	<select id="selectListEnaSaleHisTb" resultMap="SA012003Data">
-		SELECT 
-			T1.SALEID,
-			T1.SALESEQ,
-			T1.CHGGUBUN,
-			T1.CHGDATE,
-			T1.PREM2,
-			T1.PREPY,
-			T1.CHGM2,
-			T1.CHGPY,
-			T1.REMARK
-		FROM SA_SALEHISTORYTB T1
-		WHERE 1=1
-		AND T1.SALEID = #SALEID# 
-		AND T1.SALESEQ = #SALESEQ# 
-		ORDER BY T1.SALEID ASC
-	</select>
-	
-	<update id="updateEnaSaleHisTb">
-		UPDATE SA_SALEHISTORYTB
-		SET
-			CHGGUBUN = #CHGGUBUN#,
-			CHGDATE = #CHGDATE#,
-			PREM2 = #PREM2#,
-			PREPY = #PREPY#,
-			CHGM2 = #CHGM2#,
-			CHGPY = #CHGPY#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = #UPDATEDATE#
-		WHERE SALEID = #SALEID# 
-		AND SALESEQ = #SALESEQ# 
-	</update>
-	
-	<insert id="insertEnaSaleHisTb">
-		INSERT INTO SA_SALEHISTORYTB
-		(
-			SALEID,
-			SALESEQ,
-			CHGGUBUN,
-			CHGDATE,
-			PREM2,
-			PREPY,
-			CHGM2,
-			CHGPY,
-			REMARK,
-			INSERTUSER,
-			INSERTDATE
-		)
-		VALUES(
-			#SALEID#,
-			#SALESEQ#,
-			#CHGGUBUN#,
-			#CHGDATE#,
-			#PREM2#,
-			#PREPY#,
-			#CHGM2#,
-			#CHGPY#,
-			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
-		)
-	</insert>
 	
 </sqlMap>

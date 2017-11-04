@@ -14,9 +14,62 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		f_selectListEnaBranchCode();
+		f_selectListEnaDeptCode();
+		
 		f_selectListHR012003();
 	});
 	
+	function f_selectListEnaBranchCode(){
+		$("#S_BRANCHCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/branchMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.branchMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+				});
+				$("#S_BRANCHCODE").append(inHtml);
+				f_selectListEnaDeptCode();
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	$(function(){
+		$("#S_BRANCHCODE").change(function() {
+			f_selectListEnaDeptCode();
+		});
+	});
+	
+	function f_selectListEnaDeptCode(){
+		
+		var BRANCHCODE = $("#S_BRANCHCODE").val();
+		$("#S_DEPTCODE").empty().data('options');
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/deptMstList.do", 
+			dataType : 'json' , 
+			data : {
+				BRANCHCODE : BRANCHCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.deptMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+				});
+				$("#S_DEPTCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
 	
 	function f_selectListHR012003(){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
@@ -126,15 +179,11 @@
 								<th>지사</th>
 								<td>
 									<select id="S_BRANCHCODE" name="S_BRANCHCODE">
-										<option>서울</option>
-										<option>경기</option>
-										<option>부산</option>
 									</select>
 								</td>
 								<th>부서</th>
 								<td>
 									<select id="S_DEPTCODE" name="S_DEPTCODE">
-										<option></option>
 									</select>
 								</td>
 							</tr>

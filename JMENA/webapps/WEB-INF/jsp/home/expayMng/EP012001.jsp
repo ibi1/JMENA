@@ -18,11 +18,65 @@
 		f_selectListEP012001();
 		f_selectListEP012001_2();
 		
+		f_selectListEnaBranchCode();
+		f_selectListEnaDeptCode();
+		
 		$("#mainList1Div").show();
 		$("#mainList2Div").hide();
-		
+		$("#TAXGUBUN").val("001");
 		
 	});
+
+	function f_selectListEnaBranchCode(){
+		$("#S_BRANCHCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/branchMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.branchMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+				});
+				$("#S_BRANCHCODE").append(inHtml);
+				f_selectListEnaDeptCode();
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	$(function(){
+		$("#S_BRANCHCODE").change(function() {
+			f_selectListEnaDeptCode();
+		});
+	});
+	
+	function f_selectListEnaDeptCode(){
+		
+		var BRANCHCODE = $("#S_BRANCHCODE").val();
+		$("#S_DEPTCODE").empty().data('options');
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/deptMstList.do", 
+			dataType : 'json' , 
+			data : {
+				BRANCHCODE : BRANCHCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.deptMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+				});
+				$("#S_DEPTCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
 	
 	function f_selectListEP012001(){
 		$('#mainList1').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
@@ -147,29 +201,23 @@
 			<table class="blueone">
 				<tr>
 					<th>지급년월</th>
-					<td><input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td><input type="text" id="S_SALEDATE" name="S_SALEDATE" /></td>
 					<th>지사</th>
 					<td>
-						<select id="branchCode" name="branchCode">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
 						</select>
 					</td>
 					<th>부서</th>
 					<td>
-						<select id="branchCode" name="branchCode">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_DEPTCODE" name="S_DEPTCODE">
 						</select>
 					</td>
 					<th>담당자명</th>
-					<td><input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
 				</tr>
 				<tr>
 					<th>신고구분</th>
-					<td colspan="7"><input type="radio" id="SALEDATE" name="SALEDATE" /> 사업소득세   <input type="radio" id="SALEDATE" name="SALEDATE" /> 부가가치세 </td>
+					<td colspan="7"><input type="radio" id="TAXGUBUN" name="TAXGUBUN" value="001"/> 사업소득세   <input type="radio" id="TAXGUBUN" name="TAXGUBUN" value="002"/> 부가가치세 </td>
 				</tr>
 			</table><br/>
 			<div id="mainList1Div">

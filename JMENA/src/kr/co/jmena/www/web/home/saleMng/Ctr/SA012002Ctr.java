@@ -49,7 +49,7 @@ public class SA012002Ctr {
 	}
 	
 	/**
-	 * @name 원지주 잔금현황 화면
+	 * @name 매출관리 화면
 	 * @param request
 	 * @param response
 	 * @return
@@ -118,7 +118,7 @@ public class SA012002Ctr {
 
 	
 	/**
-	 * @name 원지주 잔금현황 화면
+	 * @name 매출관리 화면
 	 * @param request
 	 * @param response
 	 * @return
