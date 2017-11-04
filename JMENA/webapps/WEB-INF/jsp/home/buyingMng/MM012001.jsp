@@ -6,8 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
-	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
+<!-- 	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
+	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" /> -->
 
 </head>
 
@@ -18,7 +18,7 @@
 		var S_CITYCODE = "";
 		var S_BOROUGHCODE = "";
 		var S_ADDRESS = "";
-		
+
 		f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
@@ -76,8 +76,98 @@
 		});
 	}
 	
-	
 	function f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
+		var url = "/home/selectListMM012001.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+                { name: 'CITYCODE', type: 'string' },
+                { name: 'CITYNAME', type: 'string' },
+                { name: 'BOROUGHCODE', type: 'string' },
+                { name: 'BOROUGHNAME', type: 'string' },
+                { name: 'ADDRESS', type: 'string' },
+                { name: 'OWNERNAME', type: 'string' },
+                { name: 'BUYM2', type: 'float' },
+                { name: 'BUYPY', type: 'float' },
+                { name: 'BUNBUYPY', type: 'float' },
+                { name: 'JANBUYPY', type: 'float' },
+                { name: 'BUYAMT', type: 'int' },
+                { name: 'PAYAMT1', type: 'int' },
+                { name: 'PAYDATE1', type: 'string' },
+                { name: 'PAYAMT2', type: 'int' },
+                { name: 'PAYDATE2', type: 'string' },
+                { name: 'PAYAMT3', type: 'int' },
+                { name: 'PAYDATE3', type: 'string' },
+                { name: 'PAYAMT4', type: 'int' },
+                { name: 'PAYDATE4', type: 'string' },
+                { name: 'JANPAYAMT', type: 'int' },
+                { name: 'OPENYN', type: 'string' },
+                { name: 'REMARK', type: 'string' }
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            sortable: true,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+              { text: '지역코드', datafield: 'CITYCODE', width: 100, cellsalign: 'center', hidden: true },
+              { text: '지역', datafield: 'CITYNAME', width: 100, cellsalign: 'center' },
+              { text: '시/도코드', datafield: 'BOROUGHCODE', width: 100, cellsalign: 'center' },
+              { text: '시/도', datafield: 'BOROUGHNAME', width: 100, cellsalign: 'center', hidden: true },
+              { text: '주소/지번', datafield: 'ADDRESS', width: 100, cellsalign: 'center' },
+              { text: '원지주', datafield: 'OWNERNAME', width: 100, cellsalign: 'center' },
+              { text: '면적(m2)', datafield: 'BUYM2', width: 100, cellsalign: 'center' },
+              { text: '평수', datafield: 'BUYPY', width: 100, cellsalign: 'center' },
+              { text: '분양평수', datafield: 'BUNBUYPY', width: 100, cellsalign: 'center' },
+              { text: '잔여평수', datafield: 'JANBUYPY', width: 100, cellsalign: 'center' },
+              { text: '매매대금', datafield: 'BUYAMT', width: 100, cellsalign: 'center' },
+              { text: '계약금', datafield: 'PAYAMT1', width: 100, cellsalign: 'center' },
+              { text: '계약일', datafield: 'PAYDATE1', width: 100, cellsalign: 'center' },
+              { text: '중도금1', datafield: 'PAYAMT2', width: 100, cellsalign: 'center' },
+              { text: '중도일1', datafield: 'PAYDATE2', width: 100, cellsalign: 'center' },
+              { text: '중도금2', datafield: 'PAYAMT3', width: 100, cellsalign: 'center' },
+              { text: '중도일2', datafield: 'PAYDATE3', width: 100, cellsalign: 'center' },
+              { text: '잔금액', datafield: 'PAYAMT4', width: 100, cellsalign: 'center' },
+              { text: '잔금일', datafield: 'PAYDATE4', width: 100, cellsalign: 'center' },
+              { text: '잔금누계', datafield: 'JANPAYAMT', width: 100, cellsalign: 'center' },
+              { text: '오픈여부', datafield: 'OPENYN', width: 100, cellsalign: 'center' },
+              { text: '비고', datafield: 'REMARK', width: 100, cellsalign: 'center' }
+            ]
+        });
+		
+		
+		
+		
+		
+		/*
+		
+		
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '원지주 잔금현황', 
@@ -136,7 +226,7 @@
 // 			},
 			hidegrid: false
 		});
-		
+		*/
 	}
 
 	$(function(){
@@ -172,8 +262,13 @@
 		})
 	})
 	
+	$("#excelExport").jqxButton({ theme: 'light' });
+	
+	$("#excelExport").click(function () {
+        $("#mainList").jqxGrid('exportdata', 'xls', '원지주 잔금현황');           
+    });
 </script>
-<body>
+<body class='default'>
 
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
@@ -207,8 +302,10 @@
 				</table>
 			</form>
 			<br/>
-			<table id="mainList" width="98%"></table>
+			<div id="mainList" width="98%"></div>
 			<div id="mainNav"></div>
+			<input type="button" value="Export to Excel" id='excelExport' />
+			
 		</div>
 	</div>
 </body>

@@ -69,7 +69,7 @@ public class MM012001Ctr {
 	 * @throws Exception
 	 */
 	@RequestMapping("/home/selectListMM012001.do")
-	public ModelAndView selectListEnaBuyMstP(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView selectListMM012001(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MM012001VO vo = new MM012001VO();
 		
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
@@ -88,6 +88,7 @@ public class MM012001Ctr {
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = new JSONObject();
 			
+			obj.put("id", i+1);
 			obj.put("CITYCODE", lst.get(i).getCITYCODE());
 			obj.put("CITYNAME", lst.get(i).getCITYNAME());
 			obj.put("BOROUGHCODE", lst.get(i).getBOROUGHCODE());
@@ -114,10 +115,10 @@ public class MM012001Ctr {
 			jCell.add(obj);
 		}
 		
-		json.put("records", lst.size());
+		//json.put("records", lst.size());
 		json.put("rows", jCell);
 		
-		logger.debug("[selectListSysMst]" + json);
+		logger.debug("[selectListMM012001]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}
