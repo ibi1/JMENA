@@ -20,11 +20,35 @@ public class SA012007Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
-	public List<SA012007VO> selectListEnaInsaMst() throws Exception {
+	public List<SA012007VO> selectListSA012007(SA012007VO vo) throws Exception {
 		List<SA012007VO> lst = null;
 
 		try {
-			//lst = SA012007Dao.selectListEnaInsaMst();
+			lst = SA012007Dao.selectListSA012007(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+
+	public List<SA012007VO> selectListSA012007_1(SA012007VO vo) throws Exception {
+		List<SA012007VO> lst = null;
+
+		try {
+			lst = SA012007Dao.selectListSA012007_1(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+
+	public List<SA012007VO> selectListSA012007_2(SA012007VO vo) throws Exception {
+		List<SA012007VO> lst = null;
+
+		try {
+			lst = SA012007Dao.selectListSA012007_2(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}

@@ -14,11 +14,16 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+
+		var S_CITYCODE = "";
+		var S_BOROUGHCODE = "";
+		var S_ADDRESS = "";
+		
 		
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
 		
-		f_selectListSA012007();
+		f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		
 	});
 
@@ -74,29 +79,34 @@
 		});
 	}
 	
-	function f_selectListSA012007(){
+	function f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '잔여 물건지 현황', 
 			url:"/home/selectListSysMst.do" ,
 			datatype:"json",
+			data : {
+				S_CITYCODE : S_CITYCODE,
+				S_BOROUGHCODE : S_BOROUGHCODE,
+				S_ADDRESS : S_ADDRESS
+			},
 			loadError:function(){alert("Error~!!");},
 			colNames:['매입구분', '지역', '시/도', '주소/지번', '면적(m2)', '평수', '계약면적', '계약평수', '잔여면적', '잔여평수',
 			          '평단가', '오픈지사현황', '비고'],
 			colModel:[
-						{name:"KNAME",				index:'kName',		width:100,	align:'center'}
-						, {name:"JUMINID",			index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"DEPTCODE",			index:'deptCode',	width:150,	align:'center'}
-						, {name:"KNAME",			index:'kName',		width:100,	align:'center'}
-						, {name:"O_JUMINID",		index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'deptCode',	width:150,	align:'center'}
-						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
+				{name:"DCODENAME",		index:'DCODENAME',		width:100,	align:'center'}
+				,{name:"CITYNAME",		index:'CITYNAME',		width:100,	align:'center'}
+				,{name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:100,	align:'center'}
+				,{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center'}
+				,{name:"BUYM2",			index:'BUYM2',			width:100,	align:'center'}
+				,{name:"BUYPY",			index:'BUYPY',			width:100,	align:'center'}
+				,{name:"CONM2",			index:'CONM2',			width:100,	align:'center'}
+				,{name:"CONPY",			index:'CONPY',			width:100,	align:'center'}
+				,{name:"REMNM2",		index:'REMNM2',			width:100,	align:'center'}
+				,{name:"REMNPY",		index:'REMNPY',			width:100,	align:'center'}
+				,{name:"BUYDANGA",		index:'BUYDANGA',		width:100,	align:'center'}
+				,{name:"OPENBRANCH",	index:'OPENBRANCH',		width:100,	align:'center'}
+				,{name:"HOLDING",		index:'HOLDING',		width:100,	align:'center'}
 			],
 			rowNum:10,
 			autowidth: true,
@@ -117,6 +127,17 @@
 		});
 	}
 
+	$(function(){
+		$("#selectButton").click(function(){
+			
+			var S_CITYCODE = $("#S_CITYCODE").val();
+			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
+			var S_ADDRESS = $("#S_ADDRESS").val();
+			
+			f_selectListSA012002(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
+		})
+	})
+	
 </script>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
