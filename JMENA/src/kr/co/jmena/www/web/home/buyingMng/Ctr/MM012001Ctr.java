@@ -79,8 +79,8 @@ public class MM012001Ctr {
 		
 		List<MM012001VO> lst = MM012001Biz.selectListMM012001(vo);
 		
-		System.out.println("******************************************");
-		System.out.println("size()"+lst.size());
+//		System.out.println("******************************************");
+//		System.out.println("size()"+lst.size());
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
