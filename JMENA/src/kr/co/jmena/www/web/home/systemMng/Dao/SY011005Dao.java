@@ -2,6 +2,7 @@ package kr.co.jmena.www.web.home.systemMng.Dao;
 
 import java.util.List;
 
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011005VO;
 
 import org.apache.log4j.Logger;
@@ -30,5 +31,41 @@ public class SY011005Dao extends SqlMapClientDaoSupport {
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListCcodeDtl", vo);
 		
 		return lst;
+	}
+	
+	public boolean insertDataCcodeMst(SY011005VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataCcodeMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean updateDataCcodeMst(SY011005VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataCcodeMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean insertDataCcodeDtl(SY011005VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataCcodeDtl", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean updateDataCcodeDtl(SY011005VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataCcodeDtl", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
 	}
 }

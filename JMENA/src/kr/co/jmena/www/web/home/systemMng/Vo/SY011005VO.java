@@ -17,6 +17,7 @@ public class SY011005VO {
 	private String REMARK;
 	private String SORTKEY;
 	private String USEYN;
+	private String USERID;
 	
 	
 	public String getAUX1() {
@@ -110,6 +111,12 @@ public class SY011005VO {
 	}
 	public void setUSEYN(String USEYN) {
 		this.USEYN = USEYN;
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
 	}
 	
 	

@@ -62,54 +62,31 @@
 	
 	</select>
 	
-	<update id="updateEnaCcodeMst">
-		UPDATE SY_CCODEMST
-		SET
-			CCODENAME = #CCODENAME#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
-		WHERE CCODE = #CCODE#
-	</update>
-	
-	<insert id="insertEnaCcodeMst">
-		INSERT INTO SY_CCODEMST
+	<insert id="insertDataCcodeMst">
+		INSERT INTO sy_ccodemst
 		(
 			CCODE,
 			CCODENAME,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
-			#CCODEID#,
+			#CCODE#,
 			#CCODENAME#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#
 		)
 	</insert>
-
-	<update id="updateEnaCcodeDtl">
-		UPDATE SY_CCODEDTL
+	
+	<update id="updateDataCcodeMst">
+		UPDATE sy_ccodemst
 		SET
-			DCODENAME = #DCODENAME#,
-			USEYN = #USEYN#,
-			SORTKEY = #SORTKEY#,
-			REMARK = #REMARK#,
-			AUX1 = #AUX1#,
-			AUX1DESC = #AUX1DESC#,
-			AUX2 = #AUX2#,
-			AUX2DESC = #AUX2DESC#,
-			AUX3 = #AUX3#,
-			AUX3DESC = #AUX3DESC#,
-			AUX4 = #AUX4#,
-			AUX4DESC = #AUX4DESC#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
+			CCODENAME = #CCODENAME#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
 		WHERE CCODE = #CCODE#
-		AND DCODE = #DCODE#
 	</update>
 	
-	<insert id="insertEnaCcodeDtl">
-		INSERT INTO SY_CCODEDTL
+	<insert id="insertDataCcodeDtl">
+		INSERT INTO sy_ccodedtl
 		(
 			CCODE,
 			DCODE,
@@ -125,8 +102,7 @@
 			AUX3DESC,
 			AUX4,
 			AUX4DESC,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#CCODE#,
@@ -143,8 +119,28 @@
 			#AUX3DESC#,
 			#AUX4#,
 			#AUX4DESC#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#
 		)
 	</insert>
+	
+	<update id="updateDataCcodeDtl">
+		UPDATE sy_ccodedtl
+		SET
+			DCODENAME = #DCODENAME#,
+			USEYN = #USEYN#,
+			SORTKEY = #SORTKEY#,
+			REMARK = #REMARK#,
+			AUX1 = #AUX1#,
+			AUX1DESC = #AUX1DESC#,
+			AUX2 = #AUX2#,
+			AUX2DESC = #AUX2DESC#,
+			AUX3 = #AUX3#,
+			AUX3DESC = #AUX3DESC#,
+			AUX4 = #AUX4#,
+			AUX4DESC = #AUX4DESC#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
+		WHERE CCODE = #CCODE#
+		AND DCODE = #DCODE#
+	</update>
 </sqlMap>

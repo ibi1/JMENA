@@ -11,8 +11,12 @@
 	
 	<script type="text/javascript">
 		var v_ccode = "null";
+		var v_rightLastSel = 0;		//아래 그리드 선택 id
 		
 		$(document).ready(function(){
+			$("#S_FLAG_L").val("I");	//I : 저장, U : 수정
+			$("#S_FLAG_B").val("U");	//I : 저장, U : 수정
+			
 			f_selectCcodeMst();
 			f_selectCcodeDtl();
 		});
@@ -47,17 +51,46 @@
 				},
 				//height: '100%' ,
 				onSelectRow: function(ids){
+					$("#S_FLAG_L").val("U");
+					
 					var selRowData = $(this).jqGrid('getRowData', ids);
 					
 					v_ccode = selRowData.CCODE;
 					
 					$("#S_CCODE").val(selRowData.CCODE);
-					$("#S_CCODENAME_B").val(selRowData.CCODENAME);
+					$("#S_CCODENAME_R").val(selRowData.CCODENAME);
 					
 					f_selectCcodeDtl();
 				} ,
 				loadComplete: function() {
+					var isNew = true;
+					v_rightLastSel = 0;
 					
+					$("#S_CCODENAME_L").val("");
+					
+					var s_ccode = $("#S_CCODE").val();
+					
+					var ids = jQuery("#leftList").jqGrid('getDataIDs');
+					
+					ids.some(function(currentValue, index, array){
+						var cellData = $("#leftList").jqGrid('getCell', ids[index], 'CCODE');
+						if (cellData == s_ccode) {
+							$("#S_FLAG_L").val("U");
+							isNew = false;
+			        		$("#leftList").jqGrid('setSelection', ids[index]);
+			    			return true;
+			        	}	        
+					});
+					
+					if (isNew == true) {
+						$("#S_FLAG_L").val("I");
+						
+						$("#S_CCODENAME_R").val("");
+						$("#S_CCODENAME_R").focus();
+						
+						$("#leftList").jqGrid("resetSelection");
+						$('#bottomList').jqGrid("clearGridData", true);
+					}
 				},
 				hidegrid: false
 			});
@@ -79,19 +112,19 @@
 							'비고', '관리구분1', '관리구분1명', '관리구분2', 
 							'관리구분2명', '관리구분3', '관리구분3명', '관리구분4', '관리구분4명'] ,
 				colModel:[
-					{name:"DCODE",			index:'DCODE',		width:60,		align:'center', sortable:false}
-					, {name:"DCODENAME",	index:'DCODENAME',	width:60,		align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',		width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false}
-					, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', sortable:false}
-					, {name:"AUX1",			index:'AUX1',		width:60,		align:'center', sortable:false}
-					, {name:"AUX1DESC",		index:'AUX1DESC',	width:60,		align:'center', sortable:false}
-					, {name:"AUX2",			index:'AUX2',		width:60,		align:'center', sortable:false}
-					, {name:"AUX2DESC",		index:'AUX2DESC',	width:60,		align:'center', sortable:false}
-					, {name:"AUX3",			index:'AUX3',		width:60,		align:'center', sortable:false}
-					, {name:"AUX3DESC",		index:'AUX3DESC',	width:60,		align:'center', sortable:false}
-					, {name:"AUX4",			index:'aux4',		width:60,		align:'center', sortable:false}
-					, {name:"AUX4DESC",		index:'AUX4DESC',	width:60,		align:'center', sortable:false}
+					{name:"DCODE",			index:'DCODE',		width:60,		align:'center', sortable:false, editable: true}
+					, {name:"DCODENAME",	index:'DCODENAME',	width:60,		align:'center', sortable:false, editable: true}
+					, {name:"USEYN",		index:'USEYN',		width:60,		align:'center', sortable:false, editable: true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false, editable: true}
+					, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', sortable:false, editable: true}
+					, {name:"AUX1",			index:'AUX1',		width:60,		align:'center', sortable:false, editable: true}
+					, {name:"AUX1DESC",		index:'AUX1DESC',	width:60,		align:'center', sortable:false, editable: true}
+					, {name:"AUX2",			index:'AUX2',		width:60,		align:'center', sortable:false, editable: true}
+					, {name:"AUX2DESC",		index:'AUX2DESC',	width:60,		align:'center', sortable:false, editable: true}
+					, {name:"AUX3",			index:'AUX3',		width:60,		align:'center', sortable:false, editable: true}
+					, {name:"AUX3DESC",		index:'AUX3DESC',	width:60,		align:'center', sortable:false, editable: true}
+					, {name:"AUX4",			index:'aux4',		width:60,		align:'center', sortable:false, editable: true}
+					, {name:"AUX4DESC",		index:'AUX4DESC',	width:60,		align:'center', sortable:false, editable: true}
 				] ,
 				rowNum:100,
 				autowidth: true ,
@@ -105,8 +138,19 @@
 					repeatitems: false
 				},
 				//height: '100%' ,
-				onSelectRow: function(ids){
-			
+				onSelectRow: function(id){
+					if (id > 0) {
+						$("#S_FLAG_B").val("U");
+					} else {
+						$("#S_FLAG_B").val("I");
+					}
+					
+					if( v_rightLastSel != id ){
+				        jQuery(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+				        jQuery(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+				        v_rightLastSel = id;
+					}
 				} ,
 				loadComplete: function() {
 					
@@ -118,7 +162,7 @@
 		$(function() {
 			$("#selectButton").click(function() {
 				$("#S_CCODE").val("");
-				$("#S_CCODENAME_B").val("");
+				$("#S_CCODENAME_R").val("");
 				$('#bottomList').jqGrid("clearGridData", true);
 				f_selectCcodeMst();
 			});
@@ -132,18 +176,69 @@
 		}
 		
 		$(function() {
+			$("#insertButton").click(function() {
+				$("#S_FLAG_L").val("I");
+				
+				$("#S_CCODE").val("");
+				$("#S_CCODE").focus();
+				$("#S_CCODENAME_R").val("");
+				
+			});
+		})
+		
+		$(function() {
+			$("#saveButton").click(function() {
+				if ($("#S_CCODE").val() == "") {
+					alert("공통코드를 입력하셔야 합니다.");
+					$("#S_CCODE").focus();
+					return false;
+				}
+				
+				if ($("#S_CCODENAME_R").val() == "") {
+					alert("공통코드명을 입력하셔야 합니다.");
+					$("#S_CCODENAME_R").focus();
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG_L").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: $("#SY011005").serialize(),
+						url: "/home/insertDataCcodeMst.do", 
+						dataType : 'json' , 
+						success: function(data){
+							alert(data.resultMsg);
+							
+							if (data.resultCode == "SUCCESS") {
+								f_selectCcodeMst();
+							} else {
+								$("#S_CCODE").focus();
+							}
+						},
+						error:function(e){  
+							alert("[ERROR]공통코드 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
+		
+		function f_saveCcodeMst() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#saveButton").click();
+			}
+		}
+		
+		$(function() {
 			$("#s_ccodeSearchButton").click(function() {
-				var s_ccode = $("#S_CCODE").val();
-				
-				var ids = jQuery("#leftList").jqGrid('getDataIDs');
-				
-				ids.some(function(currentValue, index, array){
-					var cellData = $("#leftList").jqGrid('getCell', ids[index], 'CCODE');
-					if (cellData == s_ccode) {
-		        		$("#leftList").jqGrid('setSelection', ids[index]);
-		    			return true;
-		        	}	        
-				});
+				f_selectCcodeMst();
 			});
 		})
 		
@@ -153,6 +248,113 @@
 				$("#s_ccodeSearchButton").click();
 			}
 		}
+		
+		/////Bottom Button ///////////
+		$(function() {
+			$("#bottomInsertButton").click(function() {
+				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("선택된 공통코드가 없습니다.");
+					
+					return false;
+				}
+				
+				//v_rightLastSel = 0;
+				$("#S_FLAG_B").val("I");
+				
+				$("#bottomList").jqGrid("addRow", 0);
+			});
+		})
+		
+		$(function() {
+			$("#bottomSaveButton").click(function() {
+				var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+				var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+
+				if (ids == null || ids == "") {
+					alert("선택된 공통코드가 없습니다.");
+					
+					return false;
+				}
+				
+				if (cellData.DCODE == "") {
+					alert("상세 코드를 입력하셔야 합니다.");
+					
+					$('#bottomList').jqGrid('editRow', ids, true);
+					$("#"+ids+"_DCODE").focus();
+					
+					return false;
+				}
+				
+				if (cellData.DCODENAME == "") {
+					alert("상세 코드명을 입력하셔야 합니다.");
+					
+					$('#bottomList').jqGrid('editRow', ids, true);
+					$("#"+ids+"_DCODENAME").focus();
+					
+					return false;
+				}
+				
+				if (cellData.SORTKEY == "") {
+					alert("정렬순서를 입력하셔야 합니다.");
+					
+					$('#bottomList').jqGrid('editRow', ids, true);
+					$("#"+ids+"_SORTKEY").focus();
+					
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG_B").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					var formData = "S_FLAG_B=" + $("#S_FLAG_B").val() + 
+									"&CCODE=" + $("#S_CCODE").val() + 
+									"&DCODE=" + cellData.DCODE + 
+									"&DCODENAME=" + cellData.DCODENAME + 
+									"&USEYN=" + cellData.USEYN + 
+									"&SORTKEY=" + cellData.SORTKEY +
+									"&REMARK=" + cellData.REMARK +
+									"&AUX1=" + cellData.AUX1 +
+									"&AUX1DESC=" + cellData.AUX1DESC +
+									"&AUX2=" + cellData.AUX2 +
+									"&AUX2DESC=" + cellData.AUX2DESC +
+									"&AUX3=" + cellData.AUX3 +
+									"&AUX3DESC=" + cellData.AUX3DESC +
+									"&AUX4=" + cellData.AUX4 +
+									"&AUX4DESC=" + cellData.AUX4DESC;
+									
+					$.ajax({ 
+						type: 'POST' ,
+						data: formData,
+						url: "/home/insertDataCcodeDtl.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$("#S_FLAG_R").val("U");
+							
+							v_rightLastSel = 0;
+							
+							alert(data.resultMsg);
+							
+							f_selectCcodeDtl();
+						},
+						error:function(e){  
+							alert("[ERROR]세부 코드 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				} else {
+					v_rightLastSel = 0;
+					f_selectCcodeDtl();
+				}
+			});
+		})
 	</script>
 </head>
 <body>
@@ -176,18 +378,28 @@
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
-				<tr>
-					<td>공통코드</td>
-					<td><input type="text" id="S_CCODE" name="S_CCODE" onkeydown="f_s_ccodeMstSelection();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="s_ccodeSearchButton" name="s_ccodeSearchButton">=></a></td>
-				</tr>
-				<tr>
-					<td>공통코드명</td>
-					<td><input type="text" id="S_CCODENAME_B" name="S_CCODENAME_B" /></td>
-				</tr>
-			</table>
+			<form id="SY011005">
+				<input type="hidden" id="S_FLAG_L" NAME="S_FLAG_L" />
+				<table class="blueone">
+					<tr>
+						<td>공통코드</td>
+						<td><input type="text" id="S_CCODE" name="S_CCODE" onkeydown="f_s_ccodeMstSelection();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="s_ccodeSearchButton" name="s_ccodeSearchButton">=></a></td>
+					</tr>
+					<tr>
+						<td>공통코드명</td>
+						<td><input type="text" id="S_CCODENAME_R" name="S_CCODENAME_R" onkeydown="f_saveCcodeMst();" /></td>
+					</tr>
+				</table>
+			</form>
 		</div>
 		<div id="bottomDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<input type="hidden" id="S_FLAG_B" NAME="S_FLAG_B" />
+			<table class="blueone">
+				<tr>
+					<td><a class="ui-button ui-widget ui-corner-all" id="bottomInsertButton" name="bottomInsertButton">추가</a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="bottomSaveButton" name="bottomSaveButton">저장</a></td>
+				</tr>
+			</table>
 			<table id="bottomList"></table>
 		</div>
 	</div>

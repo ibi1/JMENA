@@ -5,8 +5,10 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.systemMng.Biz.SY011005Biz;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011005VO;
 
 import org.apache.log4j.Logger;
@@ -115,6 +117,112 @@ public class SY011005Ctr {
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListCcodeDtl]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataCcodeMst.do")
+	public ModelAndView insertDataCcodeMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SY011005VO vo = new SY011005VO();
+		
+		vo.setCCODE(request.getParameter("S_CCODE"));
+		vo.setCCODENAME(request.getParameter("S_CCODENAME_R"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_L");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SY011005Biz.insertDataCcodeMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY011005Biz.updateDataCcodeMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]공통 코드처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataCcodeMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataCcodeDtl.do")
+	public ModelAndView insertDataCcodeDtl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SY011005VO vo = new SY011005VO();
+		
+		vo.setCCODE(request.getParameter("CCODE"));
+		vo.setDCODE(request.getParameter("DCODE"));
+		vo.setDCODENAME(request.getParameter("DCODENAME"));
+		vo.setUSEYN(request.getParameter("USEYN"));
+		vo.setSORTKEY(request.getParameter("SORTKEY"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		vo.setAUX1(request.getParameter("AUX1"));
+		vo.setAUX1DESC(request.getParameter("AUX1DESC"));
+		vo.setAUX2(request.getParameter("AUX2"));
+		vo.setAUX2DESC(request.getParameter("AUX2DESC"));
+		vo.setAUX3(request.getParameter("AUX3"));
+		vo.setAUX3DESC(request.getParameter("AUX3DESC"));
+		vo.setAUX4(request.getParameter("AUX4"));
+		vo.setAUX4DESC(request.getParameter("AUX4DESC"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_B");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SY011005Biz.insertDataCcodeDtl(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY011005Biz.updateDataCcodeDtl(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]상세 코드 처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataCcodeDtl]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}

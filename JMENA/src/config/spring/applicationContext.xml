@@ -32,11 +32,12 @@
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
 	 
 	<!-- Resource Mapping -->
+	<mvc:resources mapping="/resource/**" location="/resource/css/" />
+	<mvc:resources mapping="/resource/**" location="/resource/images/" />
+	<mvc:resources mapping="/resource/**" location="/resource/img/" />
+	<mvc:resources mapping="/resource/**" location="/resource/jqwidgets-ver5.4.0/" />
 	<mvc:resources mapping="/resource/**" location="/resource/js/" />
 	<mvc:resources mapping="/resource/**" location="/resource/src/" />
-	<mvc:resources mapping="/resource/**" location="/resource/css/" />
-	<mvc:resources mapping="/resource/**" location="/resource/img/" />
-	<mvc:resources mapping="/resource/**" location="/resource/images/" />
 	<mvc:annotation-driven />
 	
 	<!-- Interceptor 설정 -->

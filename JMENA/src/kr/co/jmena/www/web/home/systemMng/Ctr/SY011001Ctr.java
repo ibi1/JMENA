@@ -173,6 +173,13 @@ public class SY011001Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
+	/**
+	 * sy_ccodemst 수정/저장 하기
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/home/insertDataSysDtl.do")
 	public ModelAndView insertDataSysDtl(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SY011001VO vo = new SY011001VO();

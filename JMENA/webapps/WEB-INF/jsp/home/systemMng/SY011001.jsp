@@ -57,10 +57,7 @@
 					$("#S_SYSID").val(selRowData.SYSID);
 					$("#S_SYSNAME").val(selRowData.SYSNAME);
 					$("#S_SORTKEY").val(selRowData.SORTKEY);
-					
-					$("#rightInsertButton").attr("style", "visibility");
-					$("#rightSaveButton").attr("style", "visibility");
-					
+						
 					f_selectSysDtl(selRowData.SYSID);
 				} ,
 				loadComplete : function() {
@@ -88,7 +85,7 @@
 					colModel:[
 						{name:"MENUID",			index:'MENUID',		width:60,		align:'center', sortable:false, editable:true}
 						, {name:"MENUNAME",		index:'MENUNAME',	width:60,		align:'center', sortable:false, editable:true}
-						, {name:"USEYN",		index:'USEYN',		width:60,		align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"USEYN",		index:'USEYN',		width:60,		align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
 						, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', sortable:false, editable:true}
 						, {name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false, editable:true}
 						] ,
@@ -105,17 +102,22 @@
 					},
 					//height: '100%' ,
 					onSelectRow: function(id){
-						$("#rightInsertButton").attr("style", "visibility");
-						
-						if (v_rightLastSel != 0) $("#S_FLAG_R").val("U");
+						if (id > 0) {
+							$("#S_FLAG_B").val("U");
+						} else {
+							$("#S_FLAG_B").val("I");
+						}
 						
 						if( v_rightLastSel != id ){
-					        jQuery(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
-					        jQuery(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+					        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+					        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
 
 					        v_rightLastSel = id;
 						}
 					} ,
+					loadComplete: function() {
+						
+					},
 					hidegrid: false
 				});
 			})
@@ -145,6 +147,9 @@
 					$("#S_SYSNAME").val("");
 					$("#S_SYSNAME").focus();
 					$("#S_SORTKEY").val("");
+					
+					$("#leftList").jqGrid("resetSelection");
+					$('#rightList').jqGrid("clearGridData", true);
 				}
 			});
 		})
@@ -162,9 +167,6 @@
 				$("#S_SYSNAME").val("");
 				$("#S_SORTKEY").val("");
 				$('#rightList').jqGrid("clearGridData", true);
-				
-				$("#rightInsertButton").attr("style", "visibility:hidden");
-				$("#rightSaveButton").attr("style", "visibility:hidden");
 				
 				f_selectSysMst();
 			});
@@ -204,7 +206,7 @@
 				}
 				
 				var msg = "";
-				if ($("#S_FLAG_L").val() == "I") {
+				if ($("#S_FLAG_R").val() == "I") {
 					msg = "저장하시겠습니까?";
 				} else {
 					msg = "수정하시겠습니까?"
@@ -242,11 +244,17 @@
 		///////////////RIGHT BUTTON/////////////////////////
 		$(function() {
 			$("#rightInsertButton").click(function() {
-				v_rightLastSel = 0;
+				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("선택된 시스템이 없습니다.");
+					
+					return false;
+				}
+				
 				$("#S_FLAG_R").val("I");
 				
 				$("#rightList").jqGrid("addRow", 0);
-				$(this).attr("style", "visibility:hidden");
 			});
 		})
 		
@@ -257,6 +265,12 @@
 				$('#rightList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
 				var cellData = $("#rightList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("그리드를 선택하셔야 합니다.");
+					
+					return false;
+				}
 				
 				if (cellData.MENUID == "") {
 					alert("메뉴 코드를 입력하셔야 합니다.");
@@ -306,7 +320,6 @@
 							
 							alert(data.resultMsg);
 							
-							$("#rightInsertButton").attr("style", "visibility");
 							$("#sysSearchButton").click();
 						},
 						error:function(e){  
@@ -314,7 +327,7 @@
 						}  
 					});
 				} else {
-					$("#rightInsertButton").attr("style", "visibility");
+					v_rightLastSel = 0;
 					$("#sysSearchButton").click();
 				}
 			});
@@ -357,8 +370,8 @@
 			<input type="hidden" id="S_FLAG_R" NAME="S_FLAG_R" />
 			<table class="blueone">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="rightInsertButton" name="rightInsertButton" style="visibility: hidden;">추가</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="rightSaveButton" name="rightSaveButton" style="visibility: hidden;">저장</a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="rightInsertButton" name="rightInsertButton">추가</a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="rightSaveButton" name="rightSaveButton">저장</a></td>
 				</tr>
 			</table>
 		<table id="rightList"></table>

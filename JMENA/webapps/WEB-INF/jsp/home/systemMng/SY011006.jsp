@@ -50,7 +50,11 @@
 				},
 				//height: '100%' ,
 				onSelectRow: function(id){
-					if (v_rightLastSel != 0) $("#S_FLAG").val("U");
+					if (id > 0) {
+						$("#S_FLAG").val("U");
+					} else {
+						$("#S_FLAG").val("I");
+					}
 					
 					if( v_rightLastSel != id ){
 				        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경

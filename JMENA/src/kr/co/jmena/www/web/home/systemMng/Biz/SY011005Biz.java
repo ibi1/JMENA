@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import kr.co.jmena.www.web.home.systemMng.Dao.SY011005Dao;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011005VO;
 
 import org.apache.log4j.Logger;
@@ -42,5 +43,53 @@ public class SY011005Biz {
 		}
 		
 		return lst;
+	}
+	
+	public boolean insertDataCcodeMst(SY011005VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011005Dao.insertDataCcodeMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateDataCcodeMst(SY011005VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011005Dao.updateDataCcodeMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean insertDataCcodeDtl(SY011005VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011005Dao.insertDataCcodeDtl(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateDataCcodeDtl(SY011005VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011005Dao.updateDataCcodeDtl(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
 	}
 }
