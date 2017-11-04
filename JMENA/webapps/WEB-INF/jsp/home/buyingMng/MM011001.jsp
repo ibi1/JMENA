@@ -70,6 +70,7 @@
 					inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
 				});
 				$("#CITYCODE").append(inHtml);
+				f_selectListEnaBoroughCode();
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");

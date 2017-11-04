@@ -15,8 +15,62 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		f_selectListEnaBranchCode();
+		f_selectListEnaDeptCode();
 		f_selectListSA012003();
 	});
+	
+	function f_selectListEnaBranchCode(){
+		$("#S_BRANCHCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/branchMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.branchMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+				});
+				$("#S_BRANCHCODE").append(inHtml);
+				f_selectListEnaDeptCode();
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	$(function(){
+		$("#S_BRANCHCODE").change(function() {
+			f_selectListEnaDeptCode();
+		});
+	});
+	
+	function f_selectListEnaDeptCode(){
+		
+		var BRANCHCODE = $("#S_BRANCHCODE").val();
+		$("#S_DEPTCODE").empty().data('options');
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/deptMstList.do", 
+			dataType : 'json' , 
+			data : {
+				BRANCHCODE : BRANCHCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.deptMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+				});
+				$("#S_DEPTCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+
 	
 	function f_selectListSA012003(){
 
@@ -92,27 +146,21 @@
 			<table class="blueone">
 				<tr>
 					<th>매출기간</th>
-					<td colspan="5"><input type="text" id="SALEDATE" name="SALEDATE" /> ~ <input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td colspan="5"><input type="text" id="S_SALEDATE_FR" name="S_SALEDATE_FR" /> ~ <input type="text" id="S_SALEDATE_TO" name="S_SALEDATE_TO" /></td>
 				</tr>
 				<tr>
 					<th>지사</th>
 					<td>
-						<select id="branchCode" name="branchCode">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
 						</select>
 					</td>
 					<th>부서</th>
 					<td>
-						<select id="branchCode" name="branchCode">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 						</select>
 					</td>
 					<th>담당자명</th>
-					<td><input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
 				</tr>
 			</table>
 			<br/>

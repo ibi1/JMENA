@@ -80,7 +80,7 @@ input[type="file"]{height:26px;padding:0 5px;font-size:0.929em;border:1px solid 
 input[readonly="readonly"],input[readonly],input[disabled="disabled"],input[disabled]{border:1px solid #adadad;background:#f3f3f3;color:#928881}
 input[type="button"],input[type="reset"],input[type="submit"]{min-width:20px;width:auto;height:28px;padding:4px 16px;margin:0;border:1px solid #575757;background:#575757;font-weight:400;line-height:1em;color:#fff}
 textarea{overflow:auto;padding:0;border:1px solid #adadad;vertical-align:top}
-select{height:16px;padding:0px;margin:0;border:1px solid #adadad;border-top-color:#adadad}
+select{height:18px;padding:0px;margin:0;border:1px solid #adadad;border-top-color:#adadad}
 legend{position:absolute;visibility:hidden;left:0;top:0;width:1px;height:1px;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999px;border:0;white-space:normal}
 
 /* Element Hidden Type */

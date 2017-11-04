@@ -37,6 +37,7 @@
 					inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
 				});
 				$("#S_CITYCODE").append(inHtml);
+				f_selectListEnaBoroughCode();
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -192,12 +193,12 @@
 					<tr>
 						<th>지역구분</th>
 						<td>
-							<select id="S_CITYCODE" name="S_CITYCODE">
+							<select id="S_CITYCODE" name="S_CITYCODE" style="width:120px">
 							</select>
 						</td>
 						<th>시/도</th>
 						<td>
-							<select id="S_BOROUGHCODE" name="S_BOROUGHCODE">
+							<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:120px">
 							</select>
 						</td>
 						<th>주소 및 지번</th>

@@ -22,9 +22,88 @@
 		var S_DCODE = "";
 		var S_KNAME = "";
 		
+		f_selectListEnaBranchCode();
+		f_selectListEnaDeptCode();
+		f_selectListEnaDCode();
+		
+		
 		f_selectListSA012002();
 	});
 
+	function f_selectListEnaBranchCode(){
+		$("#S_BRANCHCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/branchMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.branchMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+				});
+				$("#S_BRANCHCODE").append(inHtml);
+				f_selectListEnaDeptCode();
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	$(function(){
+		$("#S_BRANCHCODE").change(function() {
+			f_selectListEnaDeptCode();
+		});
+	});
+	
+	function f_selectListEnaDeptCode(){
+		
+		var BRANCHCODE = $("#S_BRANCHCODE").val();
+		$("#S_DEPTCODE").empty().data('options');
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/deptMstList.do", 
+			dataType : 'json' , 
+			data : {
+				BRANCHCODE : BRANCHCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.deptMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+				});
+				$("#S_DEPTCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	function f_selectListEnaDCode(){
+		var CCODE = "007";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#S_DCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	
 	function f_selectListSA012002(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
@@ -128,12 +207,12 @@
 					<td><input type="text" id="S_SALEDATE_FR" name="S_SALEDATE_FR" /> ~ <input type="text" id="S_SALEDATE_TO" name="S_SALEDATE_TO" /></td>
 					<th>지사</th>
 					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
 						</select>
 					</td>
 					<th>부서</th>
 					<td>
-						<select id="S_DEPTCODE" name="S_DEPTCODE">
+						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 						</select>
 					</td>
 				</tr>

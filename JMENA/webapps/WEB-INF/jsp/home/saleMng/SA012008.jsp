@@ -15,9 +15,64 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		f_selectListEnaCityCode();
+		f_selectListEnaBoroughCode();
+		
 		f_selectListSA012008();
 		
 	});
+	
+	function f_selectListEnaCityCode(){
+		$("#S_CITYCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/cityMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.cityMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
+				});
+				$("#S_CITYCODE").append(inHtml);
+				f_selectListEnaBoroughCode();
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	   	
+	}
+
+	$(function(){
+		$("#CITYCODE").change(function() {
+			f_selectListEnaBoroughCode();
+		});
+	});
+	
+	
+	function f_selectListEnaBoroughCode(){
+		var CITYCODE = $("#S_CITYCODE").val();
+		$("#S_BOROUGHCODE").empty().data('options');
+
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/cityDtlList.do", 
+			dataType : 'json' , 
+			data : {
+				CITYCODE : CITYCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.cityDtlList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BOROUGHCODE + "'>" + currentValue.BOROUGHNAME + "</option>\n";
+				});
+				$("#S_BOROUGHCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
 	
 	function f_selectListSA012008(){
 
@@ -86,22 +141,16 @@
 				<tr>
 					<th>지역구분</th>
 					<td>
-						<select id="BRANCHCODE" name="BRANCHCODE">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_CITYCODE" name="S_CITYCODE">
 						</select>
 					</td>
 					<th>시/도 구분</th>
 					<td>
-						<select id="BRANCHCODE" name="BRANCHCODE">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_BOROUGHCODE" name="S_BOROUGHCODE">
 						</select>
 					</td>
 					<th>주소 및 지번</th>
-					<td><input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td><input type="text" id="S_ADDRESS" name="S_ADDRESS" /></td>
 				</tr>
 			</table>
 			<br/>

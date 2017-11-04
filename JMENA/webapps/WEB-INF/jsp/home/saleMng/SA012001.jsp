@@ -18,9 +18,32 @@
 		var S_BOROUGHCODE = "";
 		var S_KNAME = "";
 		
+		f_selectListEnaBranchCode();
+		
+		
 		selectListEnaSaleMstP(S_SALEDATE, S_BOROUGHCODE, S_KNAME);
 	});
 
+	
+	function f_selectListEnaBranchCode(){
+		$("#S_BRANCHCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/branchMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.branchMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+				});
+				$("#S_BRANCHCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
 	function selectListEnaSaleMstP(S_SALEDATE, S_BOROUGHCODE, S_KNAME){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
@@ -152,10 +175,7 @@
 				<tr>
 					<th>지사</th>
 					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
 						</select>
 					</td>
 					<th>담당자명</th>
