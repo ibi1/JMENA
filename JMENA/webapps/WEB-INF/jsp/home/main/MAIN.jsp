@@ -95,9 +95,9 @@
             $('#jqxLayout').jqxLayout({ width: '100%', height: '100%', layout: layout, resizable : false, contextMenu : false  });
 	       	*/
 	       	
-	       	$('#mainLayout').jqxSplitter({ theme: 'light',height: '100%', width: '100%', orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '10%', collapsible: false }] });
-            $('#topLayout').jqxSplitter({  theme: 'light',height: '100%', width: '100%', orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '15%', collapsible: false}] });
-            $('#centerLayout').jqxSplitter({ theme: 'light',orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '15%', collapsible: false}] });
+	       	$('#mainLayout').jqxSplitter({ theme: 'light',height: '100%', width: '100%', orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '92px', collapsible: false }] });
+            $('#topLayout').jqxSplitter({  theme: 'light',height: '100%', width: '100%', orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '250px', collapsible: false}] });
+            $('#centerLayout').jqxSplitter({ theme: 'light',orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '250px', collapsible: false}] });
             
             //시스템 메뉴 호출
 	       	$.ajax({ 
@@ -126,7 +126,6 @@
 					
 					$('#tabs').jqxTabs({theme: 'bootstrap', autoHeight: false, width:'100%'});
 		            
-					
 					if (TreeMenu != "") {
 						f_getTreeMenu(TreeMenu);
 			       	}
