@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import kr.co.jmena.www.web.home.expayMng.Dao.EP011001Dao;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
+import kr.co.jmena.www.web.home.expayMng.Dao.EP011001Dao;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -20,11 +20,11 @@ public class EP011001Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
-	public List<EP011001VO> selectListEnaInsaMst() throws Exception {
+	public List<EP011001VO> selectListEnaSudangMst(EP011001VO vo) throws Exception {
 		List<EP011001VO> lst = null;
 
 		try {
-			//lst = EP011001Dao.selectListEnaInsaMst();
+			lst = EP011001Dao.selectListEnaSudangMst(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}

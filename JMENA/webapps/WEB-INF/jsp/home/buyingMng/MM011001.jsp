@@ -410,7 +410,7 @@
 					<td colspan="3">
 						<select id="USETYPE" name="USETYPE">
 						</select>
-					</td>
+					</td>	
 				</tr>
 				<tr>
 					<td>주소</td>
