@@ -38,7 +38,17 @@
 	 	$(document).ready(function(){
 	 		var TreeMenu = "";
 	 		
+	 		//초기 값 선택
 	 		$('#tree').on('select',function (event) {
+ 	 			var args = event.args;
+ 				var item = $('#tree').jqxTree('getItem', args.element);
+ 				var value = item.value; 
+
+ 				$("#center").load("/home/" + value + ".do");
+ 		  	});
+	 		
+	 		//트리 선택 시 마다 수행
+	 		$('#tree').on('itemClick',function (event) {
 	 			var args = event.args;
 				var item = $('#tree').jqxTree('getItem', args.element);
 				var value = item.value; 
