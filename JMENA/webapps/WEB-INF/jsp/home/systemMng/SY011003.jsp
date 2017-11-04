@@ -74,8 +74,11 @@
 					ids.some(function(currentValue, index, array){
 						var cellData = $("#leftList").jqGrid('getCell', ids[index], 'USERID');
 						if (cellData == userId) {
+							$("#S_FLAG").val("U");
 			        		$("#leftList").jqGrid('setSelection', ids[index]);
 			    			return true;
+			        	} else {
+			        		$("#S_FLAG").val("I");
 			        	}
 					});
 				},

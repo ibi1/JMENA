@@ -99,6 +99,28 @@
 		FROM sy_sysmst
 	</insert>
 	
+	<insert id="insertDataUserPgmAuthTb">
+		INSERT INTO sy_userpgmauthtb (
+			USERID, 
+			PGMID, 
+			SYSID, 
+			MENUID, 
+			AUTH_S, 
+			AUTH_I, 
+			AUTH_U, 
+			AUTH_D, 
+			AUTH_P, 
+			INSERTUSER )
+		SELECT 
+			#USERID#, 
+			PGMID, 
+			SYSID, 
+			MENUID, 
+			'N', 'N', 'N', 'N', 'N', 
+			#USERIDSESSION# 
+		FROM sy_menupgmtb
+	</insert>
+	
 	<update id="updateDataUserSysTb">
 		UPDATE sy_usersystb
 		SET	

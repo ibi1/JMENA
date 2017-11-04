@@ -150,11 +150,14 @@ public class SY011003Ctr {
 		
 		if ("I".equals(IU_Flag)) {
 			if (SY011003Biz.insertDataUserMst(vo) == true) {
-				resultCode ="SUCCESS";
-				
 				if (SY011003Biz.insertDataUserSysTb(vo) == true) {
-					resultCode ="SUCCESS";
-					resultMsg = "정상적으로 저장하였습니다.";
+					if (SY011003Biz.insertDataUserPgmAuthTb(vo) == true) {
+						resultCode ="SUCCESS";
+						resultMsg = "정상적으로 저장하였습니다.";
+					} else {
+						resultCode ="FAILED";
+						resultMsg = "[ERROR]사용자 프로그램 권한 저장 중 오류가 발생하였습니다.";
+					}
 				 } else {
 					 resultCode ="FAILED";
 					 resultMsg = "[ERROR]사용자 시스템 권한 저장 중 오류가 발생하였습니다.";

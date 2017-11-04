@@ -81,6 +81,18 @@ public class SY011003Biz {
 		return chkFlag;
 	}
 	
+	public boolean insertDataUserPgmAuthTb(SY011003VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY011003Dao.insertDataUserPgmAuthTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
 	public boolean updateDataUserSysTb(SY011003VO vo) throws Exception {
 		boolean chkFlag = false;
 		

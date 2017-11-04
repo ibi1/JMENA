@@ -60,6 +60,15 @@ public class SY011003Dao extends SqlMapClientDaoSupport {
 		return chkFlag;
 	}
 	
+	public boolean insertDataUserPgmAuthTb(SY011003VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataUserPgmAuthTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
 	public boolean updateDataUserSysTb(SY011003VO vo) throws DataAccessException {
 		boolean chkFlag = false;
 		
