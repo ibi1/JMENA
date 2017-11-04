@@ -7,6 +7,9 @@ import kr.co.jmena.www.web.codeCom.Vo.CityVO;
 import kr.co.jmena.www.web.codeCom.Vo.DcodeVO;
 import kr.co.jmena.www.web.codeCom.Vo.UserVO;
 import kr.co.jmena.www.web.codeCom.Vo.BranchVO;
+import kr.co.jmena.www.web.codeCom.Vo.DeptVO;
+import kr.co.jmena.www.web.codeCom.Vo.InsaVO;
+
 
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
@@ -64,6 +67,21 @@ public class CodeComDao extends SqlMapClientDaoSupport {
 		List<BranchVO> lst = null;
 		
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectBranchMstList");
+		
+		return lst;
+	}
+
+	public List<DeptVO> selectDeptMstList(DeptVO vo) throws DataAccessException {
+		List<DeptVO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectDeptMstList", vo);
+		
+		return lst;
+	}
+	public List<InsaVO> selectInsaMstList(InsaVO vo) throws DataAccessException {
+		List<InsaVO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectInsaMstList", vo);
 		
 		return lst;
 	}

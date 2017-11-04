@@ -16,6 +16,9 @@ import kr.co.jmena.www.web.codeCom.Vo.CityVO;
 import kr.co.jmena.www.web.codeCom.Vo.DcodeVO;
 import kr.co.jmena.www.web.codeCom.Vo.UserVO;
 import kr.co.jmena.www.web.codeCom.Vo.BranchVO;
+import kr.co.jmena.www.web.codeCom.Vo.DeptVO;
+import kr.co.jmena.www.web.codeCom.Vo.InsaVO;
+
 import kr.co.jmena.www.web.home.main.Biz.MainBiz;
 import kr.co.jmena.www.web.home.main.Vo.MainVO;
 
@@ -209,6 +212,70 @@ public class CodeComCtr {
 		}
 		
 		json.put("branchMstList", jsonArr);
+		
+		return new ModelAndView("jsonView", json);
+	}
+
+	/**
+	 * ba_branchMst 테이블 특정 리스트 가져오기 (부서 리스트)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/codeCom/deptMstList.do")
+	public ModelAndView deptMstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		DeptVO vo = new DeptVO();
+		
+		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
+
+		List<DeptVO> lst = codeComBiz.selectDeptMstList(vo);
+		
+		JSONArray jsonArr = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject jData = new JSONObject();
+			jData.put("DEPTCODE", lst.get(i).getDEPTCODE());
+			jData.put("DEPTNAME", lst.get(i).getDEPTNAME());
+			
+			jsonArr.add(i, jData);
+		}
+		
+		json.put("deptMstList", jsonArr);
+		
+		return new ModelAndView("jsonView", json);
+	}
+
+	/**
+	 * ba_branchMst 테이블 특정 리스트 가져오기 (인사 리스트)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/codeCom/insaMstList.do")
+	public ModelAndView insaMstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		InsaVO vo = new InsaVO();
+		
+		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
+
+		List<InsaVO> lst = codeComBiz.selectInsaMstList(vo);
+		
+		JSONArray jsonArr = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject jData = new JSONObject();
+			jData.put("INSACODE", lst.get(i).getINSACODE());
+			jData.put("KNAME", lst.get(i).getKNAME());
+			
+			jsonArr.add(i, jData);
+		}
+		
+		json.put("insaMstList", jsonArr);
 		
 		return new ModelAndView("jsonView", json);
 	}

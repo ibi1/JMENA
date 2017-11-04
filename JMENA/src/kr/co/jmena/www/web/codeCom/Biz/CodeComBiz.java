@@ -10,6 +10,9 @@ import kr.co.jmena.www.web.codeCom.Vo.CityVO;
 import kr.co.jmena.www.web.codeCom.Vo.DcodeVO;
 import kr.co.jmena.www.web.codeCom.Vo.UserVO;
 import kr.co.jmena.www.web.codeCom.Vo.BranchVO;
+import kr.co.jmena.www.web.codeCom.Vo.DeptVO;
+import kr.co.jmena.www.web.codeCom.Vo.InsaVO;
+
 
 import kr.co.jmena.www.web.home.main.Dao.MainDao;
 import kr.co.jmena.www.web.home.main.Vo.MainVO;
@@ -98,5 +101,26 @@ public class CodeComBiz {
 		
 		return lst;
 	}
-	
+	public List<DeptVO> selectDeptMstList(DeptVO vo) throws Exception {
+		List<DeptVO> lst = null;
+
+		try {
+			lst = codeComDao.selectDeptMstList(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+	public List<InsaVO> selectInsaMstList(InsaVO vo) throws Exception {
+		List<InsaVO> lst = null;
+
+		try {
+			lst = codeComDao.selectInsaMstList(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
 }

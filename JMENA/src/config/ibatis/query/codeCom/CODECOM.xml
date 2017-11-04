@@ -8,6 +8,8 @@
 	<typeAlias alias="userVO" type="kr.co.jmena.www.web.codeCom.Vo.UserVO"/>
 	<typeAlias alias="cityVO" type="kr.co.jmena.www.web.codeCom.Vo.CityVO"/>
 	<typeAlias alias="branchVO" type="kr.co.jmena.www.web.codeCom.Vo.BranchVO"/>
+	<typeAlias alias="deptVO" type="kr.co.jmena.www.web.codeCom.Vo.DeptVO"/>
+	<typeAlias alias="insaVO" type="kr.co.jmena.www.web.codeCom.Vo.InsaVO"/>
 
 	<!-- 은행 코드 -->
 	<resultMap id="bankData" class="bankVO">
@@ -46,6 +48,17 @@
 		<result property="BRANCHNAME" column="BRANCHNAME"/>
 	</resultMap>
 	
+	<!-- 부서코드 조회 -->
+	<resultMap id="deptMstData" class="deptVO">
+		<result property="DEPTCODE" column="DEPTCODE"/>
+		<result property="DEPTNAME" column="DEPTNAME"/>
+	</resultMap>
+
+	<!-- 인사코드 조회 -->
+	<resultMap id="insaMstData" class="insaVO">
+		<result property="INSACODE" column="INSACODE"/>
+		<result property="KNAME" column="KNAME"/>
+	</resultMap>
 	
  	<select id="selectBankList" resultMap="bankData">
 		SELECT 
@@ -93,6 +106,24 @@
 			BRANCHCODE, BRANCHNAME 
 		FROM ba_branchmst
 		ORDER BY BRANCHCODE
+	</select>
+
+	<select id="selectDeptMstList" resultMap="deptMstData">
+		SELECT 
+			DEPTCODE, DEPTNAME 
+		FROM ba_deptmst
+		WHERE USEYN = 'Y'
+		  AND BRANCHCODE = #BRANCHCODE#
+		ORDER BY DEPTCODE
+	</select>
+
+	<select id="selectInsaMstList" resultMap="insaMstData">
+		SELECT 
+			INSACODE, KNAME 
+		FROM hr_insamst
+		WHERE 1=1
+		  AND BRANCHCODE = #BRANCHCODE#
+		ORDER BY INSACODE
 	</select>
 	
 </sqlMap>

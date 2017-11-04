@@ -15,9 +15,85 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		f_selectListEnaBranchCode();
+		f_selectListEnaSalerCode();
+		f_selectListEnaIpgumGubunCode();
 		f_selectListSA012004();
 		
 	});
+	
+	function f_selectListEnaBranchCode(){
+		$("#S_BRANCHCODE").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/branchMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.branchMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+				});
+				$("#S_BRANCHCODE").append(inHtml);
+				f_selectListEnaSalerCode();
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	$(function(){
+		$("#S_BRANCHCODE").change(function() {
+			f_selectListEnaSalerCode();
+		});
+	});
+	
+	function f_selectListEnaSalerCode(){
+		
+		var BRANCHCODE = $("#S_BRANCHCODE").val();
+		$("#S_SALERCD").empty().data('options');
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/insaMstList.do", 
+			dataType : 'json' , 
+			data : {
+				BRANCHCODE : BRANCHCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.insaMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
+				});
+				$("#S_SALERCD").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+
+	function f_selectListEnaIpgumGubunCode(){
+		var CCODE = "009";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#S_IPGUMGUBUN").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
 	
 	function f_selectListSA012004(){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
@@ -82,39 +158,30 @@
 			<table class="blueone">
 				<tr>
 					<th>입금기간</th>
-					<td><input type="text" id="SALEDATE" name="SALEDATE" /> ~ <input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td><input type="text" id="S_IPGUMDATE_FR" name="S_IPGUMDATE_FR" /> ~ <input type="text" id="S_IPGUMDATE_TO" name="S_IPGUMDATE_TO" /></td>
 				</tr>
 				<tr>
 					<th>지사</th>
 					<td>
-						<select id="branchCode" name="branchCode">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
 						</select>
 					</td>
 					<th>담당자</th>
 					<td>
-						<select id="branchCode" name="branchCode">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_SALERCD" name="S_SALERCD">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th>입금구분</th>
 					<td>
-						<select id="branchCode" name="branchCode">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
+						<select id="S_IPGUMGUBUN" name="S_IPGUMGUBUN">
 						</select>
 					</td>
 					<th>입금인</th>
-					<td><input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td><input type="text" id="S_IPGUMPERSON" name="S_IPGUMPERSON" /></td>
 					<th>입금금액</th>
-					<td><input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<td><input type="text" id="S_IPGUMAMT" name="S_IPGUMAMT" /></td>
 				</tr>
 			</table>
 			<br/>
