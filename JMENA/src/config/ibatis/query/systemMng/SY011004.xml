@@ -40,27 +40,47 @@
 	
 	<select id="selectListUserPgmAuthTb" resultMap="userPgmAuthTbData">
 		SELECT 
-            T1.SYSID,
-			(SELECT SYSNAME FROM sy_sysmst WHERE SYSID = T1.SYSID) AS SYSNAME,
-			T1.MENUID,
-			(SELECT MENUNAME FROM sy_menutb WHERE SYSID = T1.SYSID AND MENUID = T1.MENUID) AS MENUNAME,
-			T1.PGMID,
-			(SELECT PGMNAME FROM sy_menupgmtb WHERE SYSID = T1.SYSID AND MENUID = T1.MENUID AND PGMID = T1.PGMID) AS PGMNAME,
-			T1.AUTH_S,
-			T1.AUTH_I,
-			T1.AUTH_U,
-			T1.AUTH_D,
-			T1.AUTH_P
-		FROM sy_userpgmauthtb T1
-		WHERE 1=1
-		AND T1.USERID = #USERID#
-		<isNotEqual property="SYSID" compareValue="ALL">
-			AND T1.SYSID = #SYSID#
-		</isNotEqual>
-		<isNotEqual property="MENUID" compareValue="ALL">
-			AND T1.MENUID = #MENUID#
-		</isNotEqual>
-		ORDER BY T1.PGMID ASC
+		    T1.SYSID,
+		    (SELECT 
+		            SYSNAME
+		        FROM
+		            sy_sysmst
+		        WHERE
+		            SYSID = T1.SYSID) AS SYSNAME,
+		    T1.MENUID,
+		     (SELECT 
+		            MENUNAME
+		        FROM
+		            sy_menutb
+		        WHERE
+		            SYSID = T1.SYSID AND MENUID = T1.MENUID) AS MENUNAME,
+		    T1.PGMID,
+		    T1.PGMNAME,
+		    IFNULL(T2.AUTH_S, 'N') AS AUTH_S,
+		    IFNULL(T2.AUTH_I, 'N') AS AUTH_I,
+		    IFNULL(T2.AUTH_U, 'N') AS AUTH_U,
+		    IFNULL(T2.AUTH_D, 'N') AS AUTH_D,
+		    IFNULL(T2.AUTH_P, 'N') AS AUTH_P
+		FROM
+		    sy_menupgmtb T1
+		        LEFT JOIN
+		    (SELECT 
+		        SYSID, MENUID, PGMID, AUTH_S, AUTH_I, AUTH_U, AUTH_D, AUTH_P
+		    FROM
+		        sy_userpgmauthtb
+		    WHERE
+		        USERID = #USERID#) T2 ON T1.SYSID = T2.SYSID
+		        AND T1.MENUID = T2.MENUID
+		        AND T1.PGMID = T2.PGMID
+		WHERE
+		    1 = 1 
+		   		<isNotEqual property="SYSID" compareValue="ALL">
+					AND T1.SYSID = #SYSID#
+				</isNotEqual>
+				<isNotEqual property="MENUID" compareValue="ALL">
+					AND T1.MENUID = #MENUID#
+				</isNotEqual>
+		ORDER BY T1.PGMID
 	</select>
 	
 	<update id="updateEnaUserPgmAuthTb">
