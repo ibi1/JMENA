@@ -8,14 +8,31 @@
 
 	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
-
+	<style>
+	 .ui-jqgrid .ui-jqgrid-htable th div {
+	    height:auto;
+	    overflow:hidden;
+	    padding-right:4px;
+	    padding-top:2px;
+	    position:relative;
+	    vertical-align:text-top;
+	    white-space:normal !important;
+	}
+	</style>
 	<script type="text/javascript">
 		var v_selectUserId = "";	//선택된 사용자
 		
 		$(document).ready(function(){
+			$("#saveButton").jqxButton({ theme: 'light', width: 100, height: 20 });
+			$("#saveButton").on('click', function () {
+				if(confirm("저장하시겠습니까?") == true) {
+					alert("작업중...");
+				}
+			});
+			
 			f_selectSysMst();
 			f_selectUserMst4();
-			f_selectUserPgmAuthTb();
+			f_selectUserPgmAuthTb();			
 		});
 		
 		function f_selectSysMst() {
@@ -57,7 +74,7 @@
 					//메뉴 호출 (SY011001 데이터 사용)
 					$.ajax({ 
 						type: 'POST',
-						data: "SYSID=" + $(this).val(),
+						data: "SYSID=" + $("#SYSIDCOMBO").val(),
 						url: "/home/selectListSysDtl.do", 
 						dataType : 'json' , 
 						success: function(data){
@@ -88,96 +105,131 @@
 		})
 	
 		function f_selectUserMst4() {
-			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-			
-			$('#leftList').jqGrid({
-				url:"/home/selectListUserMst4.do",
-				postData : {
-					USERGUBUN:$("input:radio[name=S_USERGUBUN]:checked").val(),
-					USERNAME:$("#S_USERNAME").val()
-				},
-				datatype:"json" ,
-				mtype: 'POST',
-				loadtext: '로딩중...',
-				loadError:function(){alert("Error~!!");} ,
-				colNames:['사용자ID', '사용자명'] ,
-				colModel:[
-					{name:"USERID",			index:'USERID',		width:60,	align:'center', sortable:false}
-					, {name:"USERNAME",		index:'USERNAME',	width:60,	align:'center', sortable:false}
-				] ,
-				rowNum:100,
-				autowidth: true ,
-				rowList:[10,20,30] ,
-				//pager: $('#leftNav') ,
-				sortname: 'USERID' ,
-				viewrecords: true ,
-				sortorder:'asc' ,
-				width: "96%" ,
-				jsonReader: {
-					repeatitems: false
-				},
-				//height: '100%' ,
-				onSelectRow: function(ids){
-					var selRowData = $(this).jqGrid('getRowData', ids);
-					
-					v_selectUserId = selRowData.USERID;
-					
-					f_selectUserPgmAuthTb();
-				} ,
-				loadComplete: function() {
-					v_selectUserId = "";	//초기화
-					$("#SYSIDCOMBO").val("ALL").attr("selected", "selected").trigger("change");
-					$('#rightList').jqGrid("clearGridData", true);
-				},
-				hidegrid: false
-			});
+			$(function() {
+				$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+				
+				$('#leftList').jqGrid({
+					url:"/home/selectListUserMst4.do",
+					postData : {
+						USERGUBUN:$("input:radio[name=S_USERGUBUN]:checked").val(),
+						USERNAME:$("#S_USERNAME").val()
+					},
+					datatype:"json" ,
+					mtype: 'POST',
+					loadtext: '로딩중...',
+					loadError:function(){alert("Error~!!");} ,
+					colNames:['사용자ID', '사용자명'] ,
+					colModel:[
+						{name:"USERID",			index:'USERID',		width:60,	align:'center', sortable:false}
+						, {name:"USERNAME",		index:'USERNAME',	width:60,	align:'center', sortable:false}
+					] ,
+					rowNum:1000,
+					autowidth: true ,
+					rowList:[10,20,30] ,
+					//pager: $('#leftNav') ,
+					sortname: 'USERID' ,
+					viewrecords: true ,
+					sortorder:'asc' ,
+					width: "96%" ,
+					jsonReader: {
+						repeatitems: false
+					},
+					//height: '100%' ,
+					onSelectRow: function(ids){
+						var selRowData = $(this).jqGrid('getRowData', ids);
+						
+						v_selectUserId = selRowData.USERID;
+						
+						f_selectUserPgmAuthTb();
+					} ,
+					loadComplete: function() {
+						v_selectUserId = "";	//초기화
+						$("#SYSIDCOMBO").val("ALL").attr("selected", "selected").trigger("change");
+						$('#rightList').jqGrid("clearGridData", true);
+					},
+					hidegrid: false
+				});
+			})
 		}
-	
+		
 		function f_selectUserPgmAuthTb() {
-			$('#rightList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-			
-			$('#rightList').jqGrid({
-				url:"/home/selectListUserPgmAuthTb.do",
-				postData : {
-					USERID:v_selectUserId,SYSID:$("#SYSIDCOMBO option:selected").val(),MENUID:$("#MENUIDCOMBO option:selected").val()
-				},
-				datatype:"json" ,
-				mtype: 'POST',
-				loadtext: '로딩중...',
-				loadError:function(){alert("Error~!!");} ,
-				colNames:['시스템코드', '시스템 명', '메뉴코드', '메뉴 명', '프로그램ID', '프로그램 명', '조회', '입력', '수정', '삭제', '출력'] ,
-				colModel:[
-					  {name:"SYSID",		index:'SYSID',		width:60,		align:'center', sortable:false, hidden:true}
-					, {name:"SYSNAME",		index:'SYSNAME',	width:60,		align:'center', sortable:false}
-					, {name:"MENUID",		index:'MENUID',		width:60,		align:'center', sortable:false, hidden:true}
-					, {name:"MENUNAME",		index:'MENUNAME',	width:60,		align:'center', sortable:false}
-					, {name:"PGMID",		index:'PGMID',		width:60,		align:'center', sortable:false}
-					, {name:"PGMNAME",		index:'PGMNAME',	width:60,		align:'center', sortable:false}
-					, {name:"AUTH_S",		index:'AUTH_S',		width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"AUTH_I",		index:'AUTH_I',		width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"AUTH_U",		index:'AUTH_U',		width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"AUTH_D",		index:'AUTH_D',		width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"AUTH_P",		index:'AUTH_P',		width:60,		align:'center', sortable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-				] ,
-				rowNum:100,
-				autowidth: true ,
-				rowList:[10,20,30] ,
-				//pager: $('#leftNav') ,
-				sortname: 'USERID' ,
-				viewrecords: true ,
-				sortorder:'asc' ,
-				width: "96%" ,
-				jsonReader: {
-					repeatitems: false
-				},
-				//height: '100%' ,
-				onSelectRow: function(ids){
-	
-				} ,
-				loadComplete: function() {
+			$(function() {
+				$('#rightList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+				
+				$('#rightList').jqGrid({
+					url:"/home/selectListUserPgmAuthTb.do",
+					postData : {
+						USERID:v_selectUserId,SYSID:$("#SYSIDCOMBO option:selected").val(),MENUID:$("#MENUIDCOMBO option:selected").val()
+					},
+					datatype:"json" ,
+					mtype: 'POST',
+					loadtext: '로딩중...',
+					loadError:function(){alert("Error~!!");} ,
+					colNames:['시스템코드', '시스템 명', '메뉴코드', '메뉴 명', '프로그램ID', '프로그램 명', 
+					          "조회<br/><input type='checkbox' id='chkAllAUTH_S' name='chkAllAUTH_S' onclick='checkBox(event, \"AUTH_S\")' />", 
+					          "입력<br/><input type='checkbox' id='chkAllAUTH_I' name='chkAllAUTH_I' onclick='checkBox(event, \"AUTH_I\")' />", 
+					          "수정<br/><input type='checkbox' id='chkAllAUTH_U' name='chkAllAUTH_U' onclick='checkBox(event, \"AUTH_U\")' />", 
+					          "삭제<br/><input type='checkbox' id='chkAllAUTH_D' name='chkAllAUTH_D' onclick='checkBox(event, \"AUTH_D\")' />", 
+					          "출력<br/><input type='checkbox' id='chkAllAUTH_P' name='chkAllAUTH_P' onclick='checkBox(event, \"AUTH_P\")' />", 
+					          ] ,
+					colModel:[
+						  {name:"SYSID",		index:'SYSID',		width:60,		align:'center', sortable:false, hidden:true}
+						, {name:"SYSNAME",		index:'SYSNAME',	width:60,		align:'center', sortable:false}
+						, {name:"MENUID",		index:'MENUID',		width:60,		align:'center', sortable:false, hidden:true}
+						, {name:"MENUNAME",		index:'MENUNAME',	width:60,		align:'center', sortable:false}
+						, {name:"PGMID",		index:'PGMID',		width:70,		align:'center', sortable:false}
+						, {name:"PGMNAME",		index:'PGMNAME',	width:200,		align:'center', sortable:false}
+						, {name:"AUTH_S",		index:'AUTH_S',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_I",		index:'AUTH_I',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_U",		index:'AUTH_U',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_D",		index:'AUTH_D',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_P",		index:'AUTH_P',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					] ,
+					rowNum:1000,
+					autowidth: true ,
+					rowList:[10,20,30] ,
+					//pager: $('#leftNav') ,
+					sortname: 'PGMID' ,
+					viewrecords: true ,
+					sortorder:'asc' ,
+					width: "96%" ,
+					jsonReader: {
+						repeatitems: false
+					},
+					//height: '100%' ,
+					onSelectRow: function(ids){
+		
+					} ,
+					loadComplete: function() {
 					
-				},
-				hidegrid: false
+					},
+					hidegrid: false
+				});
+				
+				
+			})
+		}
+		
+		//그리드 체크박스
+		function checkBox(e, cell) {
+			var ids = $("#rightList").jqGrid('getDataIDs');
+			var len = ids.length;
+			var chkFlag = "N";
+			
+			if (len == 0) {
+				alert("선택할 데이터가 없습니다.");
+				
+				return false;
+			}
+			
+			$("#chkAll"+cell).is(":checked") ? chkFlag = "Y" : chkFlag = "N";
+			
+		    //debugger;
+		   	e = e || event;/* get IE event ( not passed ) */
+		    e.stopPropagation ? e.stopPropagation() : e.cancelBubble = false;
+
+			ids.some(function(currentValue, index, array){
+				$("#rightList").jqGrid('setCell', array[index], cell, chkFlag);
 			});
 		}
 		
@@ -195,7 +247,7 @@
 		}
 	</script>
 </head>
-<body>
+<body class='default'>
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<table class="blueone">
@@ -236,6 +288,11 @@
 						<select id="MENUIDCOMBO" name="MENUIDCOMBO">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
+					</td>
+					<td width="60%" align="right">
+						<div>
+							<input type="button" value="저장" id='saveButton' />
+						</div>
 					</td>
 				</tr>
 			</table>

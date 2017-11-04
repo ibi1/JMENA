@@ -20,117 +20,121 @@
 		});
 		
 		function f_selectUserMst() {
-			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-			
-			$('#leftList').jqGrid({
-				url:"/home/selectListUserMst.do" ,
-				postData : {
-					USERNAME:$("#S_USERNAME_L").val()
-				},
-				datatype:"json" ,
-				mtype: 'POST',
-				loadtext: '로딩중...',
-				loadError:function(){alert("Error~!!");} ,
-				colNames:['사용자ID', '비밀번호', '사용자명', '사용여부', '사용자구분', '연락처', '모바일'] ,
-				colModel:[
-					{name:"USERID",			index:'USERID',		width:60,	align:'center', sortable:false}
-					, {name:"PASSWORD",		index:'PASSWORD',	width:60,	align:'center', sortable:false, hidden:true}
-					, {name:"USERNAME",		index:'USERNAME',	width:60,	align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false}
-					, {name:"USERGUBUN",	index:'USERGUBUN',	width:60,	align:'center', sortable:false, hidden:true}
-					, {name:"PHONENO",		index:'PHONENO',	width:60,	align:'center', sortable:false, hidden:true}
-					, {name:"MOBILENO",		index:'MOBILENO',	width:60,	align:'center', sortable:false, hidden:true}
-				] ,
-				rowNum:100,
-				autowidth: true ,
-				rowList:[10,20,30] ,
-				//pager: $('#leftNav') ,
-				sortname: 'USERID' ,
-				viewrecords: true ,
-				sortorder:'asc' ,
-				width: "96%" ,
-				jsonReader: {
-					repeatitems: false
-				},
-				//height: '100%' ,
-				onSelectRow: function(ids){
-					var selRowData = $(this).jqGrid('getRowData', ids);
-					
-					$("#S_USERID").val(selRowData.USERID);
-					$("#S_USERNAME_R").val(selRowData.USERNAME);
-					$("#S_PASSWORD").val(selRowData.PASSWORD);
-					$("#S_USEYN").val(selRowData.USEYN).attr("selected", "selected");
-					$("input:radio[name=S_USERGUBUN]:input[value=" + selRowData.USERGUBUN + "]").attr("checked", true);
-					$("#S_PHONENO").val(selRowData.PHONENO);
-					$("#S_MOBILENO").val(selRowData.MOBILENO);
-					
-					f_selectUserSysTb();
-				} ,
-				loadComplete: function() {
-					var userId = $("#S_USERID").val();
-					
-					var ids = jQuery("#leftList").jqGrid('getDataIDs');
-					
-					ids.some(function(currentValue, index, array){
-						var cellData = $("#leftList").jqGrid('getCell', ids[index], 'USERID');
-						if (cellData == userId) {
-							$("#S_FLAG").val("U");
-			        		$("#leftList").jqGrid('setSelection', ids[index]);
-			    			return true;
-			        	} else {
-			        		$("#S_FLAG").val("I");
-			        	}
-					});
-				},
-				hidegrid: false
-			});
+			$(function() {
+				$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+				
+				$('#leftList').jqGrid({
+					url:"/home/selectListUserMst.do" ,
+					postData : {
+						USERNAME:$("#S_USERNAME_L").val()
+					},
+					datatype:"json" ,
+					mtype: 'POST',
+					loadtext: '로딩중...',
+					loadError:function(){alert("Error~!!");} ,
+					colNames:['사용자ID', '비밀번호', '사용자명', '사용여부', '사용자구분', '연락처', '모바일'] ,
+					colModel:[
+						{name:"USERID",			index:'USERID',		width:60,	align:'center', sortable:false}
+						, {name:"PASSWORD",		index:'PASSWORD',	width:60,	align:'center', sortable:false, hidden:true}
+						, {name:"USERNAME",		index:'USERNAME',	width:60,	align:'center', sortable:false}
+						, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false}
+						, {name:"USERGUBUN",	index:'USERGUBUN',	width:60,	align:'center', sortable:false, hidden:true}
+						, {name:"PHONENO",		index:'PHONENO',	width:60,	align:'center', sortable:false, hidden:true}
+						, {name:"MOBILENO",		index:'MOBILENO',	width:60,	align:'center', sortable:false, hidden:true}
+					] ,
+					rowNum:100,
+					autowidth: true ,
+					rowList:[10,20,30] ,
+					//pager: $('#leftNav') ,
+					sortname: 'USERID' ,
+					viewrecords: true ,
+					sortorder:'asc' ,
+					width: "96%" ,
+					jsonReader: {
+						repeatitems: false
+					},
+					//height: '100%' ,
+					onSelectRow: function(ids){
+						var selRowData = $(this).jqGrid('getRowData', ids);
+						
+						$("#S_USERID").val(selRowData.USERID);
+						$("#S_USERNAME_R").val(selRowData.USERNAME);
+						$("#S_PASSWORD").val(selRowData.PASSWORD);
+						$("#S_USEYN").val(selRowData.USEYN).attr("selected", "selected");
+						$("input:radio[name=S_USERGUBUN]:input[value=" + selRowData.USERGUBUN + "]").attr("checked", true);
+						$("#S_PHONENO").val(selRowData.PHONENO);
+						$("#S_MOBILENO").val(selRowData.MOBILENO);
+						
+						f_selectUserSysTb();
+					} ,
+					loadComplete: function() {
+						var userId = $("#S_USERID").val();
+						
+						var ids = jQuery("#leftList").jqGrid('getDataIDs');
+						
+						ids.some(function(currentValue, index, array){
+							var cellData = $("#leftList").jqGrid('getCell', ids[index], 'USERID');
+							if (cellData == userId) {
+								$("#S_FLAG").val("U");
+				        		$("#leftList").jqGrid('setSelection', ids[index]);
+				    			return true;
+				        	} else {
+				        		$("#S_FLAG").val("I");
+				        	}
+						});
+					},
+					hidegrid: false
+				});
+			})
 		}
 		
 		function f_selectUserSysTb() {
-			$('#rightList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-			
-			$('#rightList').jqGrid({
-				url:"/home/selectListUserSysTb.do" ,
-				postData : {
-					USERID:$("#S_USERID").val()
-				},
-				datatype:"json" ,
-				mtype: 'POST',
-				loadtext: '로딩중...',
-				loadError:function(){alert("Error~!!");} ,
-				colNames:['시스템코드', '시스템명', '사용여부', '비고'] ,
-				colModel:[
-					{name:"SYSID",			index:'SYSID',		width:60,	align:'center', sortable:false}
-					, {name:"SYSNAME",		index:'SYSNAME',	width:60,	align:'center', sortable:false}
-					//, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/home/selectTest.do", buildSelect:setAuth_YNSelectBox}}
-					, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', sortable:false, editable:true}
-				] ,
-				rowNum:100,
-				autowidth: true ,
-				rowList:[10,20,30] ,
-				//pager: $('#leftNav') ,
-				sortname: 'SYSID' ,
-				viewrecords: true ,
-				sortorder:'asc' ,
-				width: "96%" ,
-				jsonReader: {
-					repeatitems: false
-				},
-				//height: '100%' ,
-				onSelectRow: function(id){
-					if( v_rightLastSel != id ){
-				        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
-				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
-
-				        v_rightLastSel = id;
-					}
-				} ,
-				loadComplete: function() {
-					
-				},
-				hidegrid: false
-			});
+			$(function() {
+				$('#rightList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+				
+				$('#rightList').jqGrid({
+					url:"/home/selectListUserSysTb.do" ,
+					postData : {
+						USERID:$("#S_USERID").val()
+					},
+					datatype:"json" ,
+					mtype: 'POST',
+					loadtext: '로딩중...',
+					loadError:function(){alert("Error~!!");} ,
+					colNames:['시스템코드', '시스템명', '사용여부', '비고'] ,
+					colModel:[
+						{name:"SYSID",			index:'SYSID',		width:60,	align:'center', sortable:false}
+						, {name:"SYSNAME",		index:'SYSNAME',	width:60,	align:'center', sortable:false}
+						//, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/home/selectTest.do", buildSelect:setAuth_YNSelectBox}}
+						, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+						, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', sortable:false, editable:true}
+					] ,
+					rowNum:100,
+					autowidth: true ,
+					rowList:[10,20,30] ,
+					//pager: $('#leftNav') ,
+					sortname: 'SYSID' ,
+					viewrecords: true ,
+					sortorder:'asc' ,
+					width: "96%" ,
+					jsonReader: {
+						repeatitems: false
+					},
+					//height: '100%' ,
+					onSelectRow: function(id){
+						if( v_rightLastSel != id ){
+					        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+					        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+	
+					        v_rightLastSel = id;
+						}
+					} ,
+					loadComplete: function() {
+						
+					},
+					hidegrid: false
+				});
+			})
 		}
 		
 		function setAuth_YNSelectBox(data){

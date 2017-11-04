@@ -74,12 +74,16 @@
 		        AND T1.PGMID = T2.PGMID
 		WHERE
 		    1 = 1 
-		   		<isNotEqual property="SYSID" compareValue="ALL">
-					AND T1.SYSID = #SYSID#
-				</isNotEqual>
-				<isNotEqual property="MENUID" compareValue="ALL">
-					AND T1.MENUID = #MENUID#
-				</isNotEqual>
+		<isEqual property="USERID" compareValue="">
+			AND T2.SYSID IS NOT NULL
+  			AND T2.MENUID IS NOT NULL
+  		</isEqual>
+  		<isNotEqual property="SYSID" compareValue="ALL">
+			AND T1.SYSID = #SYSID#
+		</isNotEqual>
+		<isNotEqual property="MENUID" compareValue="ALL">
+			AND T1.MENUID = #MENUID#
+		</isNotEqual>
 		ORDER BY T1.PGMID
 	</select>
 	

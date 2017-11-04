@@ -138,81 +138,82 @@
 		})
 		
 		function f_selectPgmList() {
-			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+			$(function() {
+				$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+				
+				$("#leftList").jqGrid({
+					url:"/home/selectListMenuPgmTb.do" ,
+					postData : {
+						SYSID:$("#S_SYSIDCOMBO_L option:selected").val(),MENUID:$("#S_MENUIDCOMBO_L option:selected").val()
+					},
+					datatype:"json" ,
+					mtype: 'POST',
+					loadtext: '로딩중...',
+					loadError:function(){alert("Error~!!");} ,
+					colNames:['시스템ID', '시스템구분', '메뉴ID', '메뉴구분', '프로그램ID', '프로그램명', '메뉴정렬키', '비고', '사용여부'] ,
+					colModel:[
+						{name:"SYSID",			index:'SYSID',			width:60,		align:'center', sortable:false, hidden: true}
+						, {name:"SYSNAME",		index:'SYSNAME',		width:60,		align:'center', sortable:false}
+						, {name:"MENUID",		index:'MENUID',			width:60,		align:'center', sortable:false, hidden: true}
+						, {name:"MENUNAME",		index:'MENUNAME',		width:60,		align:'center', sortable:false}
+						, {name:"PGMID",		index:'PGMID',			width:60,		align:'center', sortable:false}
+						, {name:"PGMNAME",		index:'PGMNAME',		width:150,		align:'center', sortable:false}
+						, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center', sortable:false}
+						, {name:"REMARK",		index:'REMARK',			width:60,		align:'center', sortable:false}
+						, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false}
+					] ,
+					rowNum:1000,
+					autowidth: true ,
+					rowList:[10,20,30] ,
+					//pager: $('#rightNav') ,
+					sortname: 'SORTKEY' ,
+					viewrecords: true ,
+					sortorder:'asc' ,
+					width: "96%" ,
+					jsonReader: {
+						repeatitems: false
+					},
+					//height: '100%' ,
+					onSelectRow: function(id){
+						$("#S_FLAG").val("U");
+						
+						var selRowData = $(this).jqGrid('getRowData', id);
+						
+						$("#S_SYSIDCOMBO_R").val(selRowData.SYSID).attr("selected", "selected").trigger("change");
+						
+						g_menuId2 = selRowData.MENUID;	//메뉴아이디 무조건 셋팅
+						
+						$("#S_PGMNAME_L").val(selRowData.PGMNAME);
+						$("#S_PGMID_R").val(selRowData.PGMID);
+						$("#S_PGMNAME_R").val(selRowData.PGMNAME);
+						$("#S_REMARK").val(selRowData.REMARK);
+						$("#S_USEYN").val(selRowData.USEYN).attr("selected", "selected");
+						$("#S_SORTKEY").val(selRowData.SORTKEY);
+					} ,
+					loadComplete: function() {
+						if($("#S_PGMID_R").val() != "") {
+							var ids = $("#leftList").jqGrid('getDataIDs');
 			
-			$('#leftList').jqGrid({
-				//caption: '시스템 및 메뉴관리' ,
-				url:"/home/selectListMenuPgmTb.do" ,
-				postData : {
-					SYSID:$("#S_SYSIDCOMBO_L option:selected").val(),MENUID:$("#S_MENUIDCOMBO_L option:selected").val()
-				},
-				datatype:"json" ,
-				mtype: 'POST',
-				loadtext: '로딩중...',
-				loadError:function(){alert("Error~!!");} ,
-				colNames:['시스템ID', '시스템구분', '메뉴ID', '메뉴구분', '프로그램ID', '프로그램명', '메뉴정렬키', '비고', '사용여부'] ,
-				colModel:[
-					{name:"SYSID",			index:'SYSID',			width:60,		align:'center', sortable:false, hidden:true}
-					, {name:"SYSNAME",		index:'SYSNAME',		width:60,		align:'center', sortable:false}
-					, {name:"MENUID",		index:'MENUID',			width:60,		align:'center', sortable:false, hidden:true}
-					, {name:"MENUNAME",		index:'MENUNAME',		width:60,		align:'center', sortable:false}
-					, {name:"PGMID",		index:'PGMID',			width:60,		align:'center', sortable:false}
-					, {name:"PGMNAME",		index:'PGMNAME',		width:60,		align:'center', sortable:false}
-					, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center', sortable:false}
-					, {name:"REMARK",		index:'REMARK',			width:60,		align:'center', sortable:false}
-					, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false}
-				] ,
-				rowNum:100 ,
-				autowidth: true ,
-				rowList:[10,20,30] ,
-				//pager: $('#leftNav') ,
-				sortname: 'SORTKEY' ,
-				viewrecords: true ,
-				sortorder:'asc' ,
-				width: "96%" ,
-				jsonReader: {
-					repeatitems: false
-				},
-				//height: '100%' ,
-				onSelectRow: function(ids){
-					$("#S_FLAG").val("U");
-					
-					var selRowData = $(this).jqGrid('getRowData', ids);
-					
-					$("#S_SYSIDCOMBO_R").val(selRowData.SYSID).attr("selected", "selected").trigger("change");
-					
-					g_menuId2 = selRowData.MENUID;	//메뉴아이디 무조건 셋팅
-					
-					$("#S_PGMNAME_L").val(selRowData.PGMNAME);
-					$("#S_PGMID_R").val(selRowData.PGMID);
-					$("#S_PGMNAME_R").val(selRowData.PGMNAME);
-					$("#S_REMARK").val(selRowData.REMARK);
-					$("#S_USEYN").val(selRowData.USEYN).attr("selected", "selected");
-					$("#S_SORTKEY").val(selRowData.SORTKEY);
-				} ,
-				loadComplete: function() {
-					if($("#S_PGMID_R").val() != "") {
-						var ids = jQuery("#leftList").jqGrid('getDataIDs');
-		
-						ids.some(function(currentValue, index, array){
-							var cellData = $("#leftList").jqGrid('getCell', ids[index], 'PGMID');
-							if (cellData == $("#S_PGMID_R").val()) {
-				        		$("#leftList").jqGrid('setSelection', ids[index]);
-				    			return true;
-				        	} else {
-				        		//없을 경우 신규 데이터 입력으로...
-				        		$("#S_FLAG").val("I");
-				        		
-				        		$("#S_PGMNAME_R").val("").focus();
-				        		$("#S_REMARK").val("");
-				        		$("#S_USEYN").val("Y").attr("selected", "selected");
-				        		$("#S_SORTKEY").val("");
-				        	}        
-						});
-					}
-				},
-				hidegrid: false
-			});
+							ids.some(function(currentValue, index, array){
+								var cellData = $("#leftList").jqGrid('getCell', ids[index], 'PGMID');
+								if (cellData == $("#S_PGMID_R").val()) {
+					        		$("#leftList").jqGrid('setSelection', ids[index]);
+					    			return true;
+					        	} else {
+					        		//없을 경우 신규 데이터 입력으로...
+					        		$("#S_FLAG").val("I");
+					        		
+					        		$("#S_PGMNAME_R").val("").focus();
+					        		$("#S_REMARK").val("");
+					        		$("#S_USEYN").val("Y").attr("selected", "selected");
+					        		$("#S_SORTKEY").val("");
+					        	}        
+							});
+						}
+					},
+					hidegrid: false
+				});
+			})
 		}
 		
 		$(function() {
