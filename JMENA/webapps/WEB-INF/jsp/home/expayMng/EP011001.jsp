@@ -13,9 +13,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		//공통코드 가져오기
-//		f_selectListEnaBuyGubnCode();
-		f_selectListEnaCityCode();
-//		f_selectListEnaBoroughCode();
+		f_selectListEnaCityCode();		
 //		f_selectListEnaUseTypeCode();
 		//공통코드 가져오기 끝
 		
@@ -29,14 +27,42 @@
 			url:"/home/selectListEnaSudangMst.do" ,
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['지급일', '담당자', '매출금액', '지급금액', '세액', '차감지급액'] ,
+			colNames:['지급일', '담당자', '매출금액', '지급금액', '세액', '차감지급액','계약일자','번호','매출구분','계약지사','관리자번호',
+			          '지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액','실판매가'] ,			
 			colModel:[
-				{name:"PAYDATE",		index:'PAYDATE',		width:60,		align:'center'}
+				 {name:"PAYDATE",		index:'PAYDATE',		width:60,		align:'center'}
 				,{name:"SALERCD",		index:'SALERCD',		width:60,		align:'center'}
 				,{name:"SELLAMT",		index:'SELLAMT',		width:60,		align:'center'}
 				,{name:"PAYAMT",		index:'PAYAMT',			width:60,		align:'center'}
 				,{name:"TAXAMT",		index:'TAXAMT',			width:60,		align:'center'}
 				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:60,		align:'center'}
+				,{name:"SALEDATE",		index:'SALEDATE',		width:60,		align:'center', hidden:true}
+				,{name:"SALEID",		index:'SALEID',			width:60,		align:'center', hidden:true}
+				,{name:"SALEGUBUN",		index:'SALEGUBUN',		width:60,		align:'center', hidden:true}
+				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:60,		align:'center', hidden:true}
+				,{name:"MANAGENO",		index:'MANAGENO',		width:60,		align:'center', hidden:true}
+				,{name:"CITYCODE",		index:'CITYCODE',		width:60,		align:'center', hidden:true}
+				,{name:"ADDRESS",		index:'ADDRESS',		width:60,		align:'center', hidden:true}
+				,{name:"CONNAME",		index:'CONNAME',		width:60,		align:'center', hidden:true}
+				,{name:"CONM2",			index:'CONM2',			width:60,		align:'center', hidden:true}
+				,{name:"CONPY",			index:'CONPY',			width:60,		align:'center', hidden:true}
+				,{name:"SALEAMT",		index:'SALEAMT',		width:60,		align:'center', hidden:true}
+				,{name:"SALEDANGA",		index:'SALEDANGA',		width:60,		align:'center', hidden:true}
+				,{name:"DCGUBUN",		index:'DCGUBUN',		width:60,		align:'center', hidden:true}
+				,{name:"DCRATE",		index:'DCRATE',			width:60,		align:'center', hidden:true}
+				,{name:"DCAMT",			index:'DCAMT',			width:60,		align:'center', hidden:true}
+				,{name:"SELLAMT",		index:'SELLAMT',		width:60,		align:'center', hidden:true}
+				
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
+// 				,{name:"",		index:'DEDUCTAMT',		width:60,		align:'center', hidden:true}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -52,23 +78,22 @@
 			//height: '100%' ,
 			onSelectRow: function(ids){
 				var selRowData = $(this).jqGrid('getRowData', ids);
-				alert(selRowData.ADDRESS);
-// 				$("#SALEDATE").val(selRowData.SALEDATE);
-// 				$("#SALEID").val(selRowData.SALEID);
-// 				$("#SALEGUBUN").val(selRowData.SALEGUBUN);
-// 				$("#BRANCHCODE").val(selRowData.BRANCHCODE);
-// 				$("#MANAGENO").val(selRowData.MANAGENO);
-// 				$("#CITYCODE").val(selRowData.CITYCODE);
+				$("#SALEDATE").val(selRowData.SALEDATE);
+				$("#SALEID").val(selRowData.SALEID);
+				$("#SALEGUBUN").val(selRowData.SALEGUBUN);
+				$("#BRANCHCODE").val(selRowData.BRANCHCODE);
+				$("#MANAGENO").val(selRowData.MANAGENO);
+				$("#CITYCODE").val(selRowData.CITYCODE);
 				$("#ADDRESS").val(selRowData.ADDRESS);
-// 				$("#CONNAME").val(selRowData.CONNAME);
-// 				$("#CONM2").val(selRowData.CONM2);
-// 				$("#CONPY").val(selRowData.CONPY);
-// 				$("#SALEAMT").val(selRowData.SALEAMT);
-// 				$("#SALEDANGA").val(selRowData.SALEDANGA);
-// 				$("#DCGUBUN").val(selRowData.DCGUBUN);
-// 				$("#DCRATE").val(selRowData.DCRATE);
-// 				$("#DCAMT").val(selRowData.DCAMT);
-// 				$("#SELLAMT").val(selRowData.SELLAMT);
+				$("#CONNAME").val(selRowData.CONNAME);
+				$("#CONM2").val(selRowData.CONM2);
+				$("#CONPY").val(selRowData.CONPY);
+				$("#SALEAMT").val(selRowData.SALEAMT);
+				$("#SALEDANGA").val(selRowData.SALEDANGA);
+				$("#DCGUBUN").val(selRowData.DCGUBUN);
+				$("#DCRATE").val(selRowData.DCRATE);
+				$("#DCAMT").val(selRowData.DCAMT);
+				$("#SELLAMT").val(selRowData.SELLAMT);
 				
 // 				$("#PAYDATE").val(selRowData.PAYDATE);
 // 				$("#SALERCD").val(selRowData.SALERCD);
@@ -141,8 +166,7 @@
 				data.cityMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
 				});
-				$("#CITYCODE").append(inHtml);
-				f_selectListEnaBoroughCode();
+				$("#CITYCODE").append(inHtml);				
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");

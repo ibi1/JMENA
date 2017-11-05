@@ -32,6 +32,8 @@ public class EP011001VO {
 	private String SUDANGRATE;
 	private String ADDRATE;
 	private String PAYAMT;
+	private String TAXAMT;
+	
 	
 	private String TAXGUBUN;
 	private String TAXINCOME;
@@ -215,6 +217,12 @@ public class EP011001VO {
 	}
 	public void setPAYAMT(String pAYAMT) {
 		this.PAYAMT = pAYAMT;
+	}
+	public String getTAXAMT() {
+		return TAXAMT;
+	}
+	public void setTAXAMT(String tAXAMT) {
+		this.TAXAMT = tAXAMT;
 	}
 	public String getTAXGUBUN() {
 		return TAXGUBUN;

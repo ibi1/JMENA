@@ -52,10 +52,11 @@ public class EP011001Ctr {
 	 * @throws Exception
 	 */
 	
-	@SuppressWarnings({ "unused", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	@RequestMapping("/home/selectListEnaSudangMst.do")
 	public ModelAndView selectListEnaSudangMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP011001VO vo = new EP011001VO();
+		System.out.println("/home/selectListEnaSudangMst.do");
 		
 		List<EP011001VO> lst = EP011001Biz.selectListEnaSudangMst(vo);
 		
@@ -69,7 +70,16 @@ public class EP011001Ctr {
 				System.out.println("aaaaaa");
 				System.out.println("ADDRESS       =  "  + lst.get(i).getADDRESS());
 				
-				JSONObject obj = new JSONObject();				
+				JSONObject obj = new JSONObject();			
+				
+				
+				obj.put("PAYDATE", lst.get(i).getPAYDATE());
+				obj.put("SALERCD", lst.get(i).getS_SALERCD());
+				obj.put("SELLAMT", lst.get(i).getSELLAMT());
+				obj.put("PAYAMT", lst.get(i).getPAYAMT());
+				obj.put("TAXAMT", lst.get(i).getTAXAMT());
+				obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());
+				
 				obj.put("SALEDATE", lst.get(i).getSALEDATE());
 				obj.put("SALEID", lst.get(i).getSALEID());
 				obj.put("SALEGUBUN", lst.get(i).getSALEGUBUN());
@@ -87,7 +97,7 @@ public class EP011001Ctr {
 				obj.put("DCAMT", lst.get(i).getDCAMT());
 				obj.put("SELLAMT", lst.get(i).getSELLAMT());
 								
-				obj.put("PAYDATE", lst.get(i).getPAYDATE());
+//				obj.put("PAYDATE", lst.get(i).getPAYDATE());
 				/*				obj.put("SALERCD", lst.get(i).getS_SALERCD());
 				obj.put("SALERNM", lst.get(i).getSALERNM());
 				obj.put("SUDANGRATE", lst.get(i).getSUDANGRATE());
@@ -122,7 +132,7 @@ public class EP011001Ctr {
 			obj.put("DCAMT", "");
 			obj.put("SELLAMT", "");
 			
-			obj.put("PAYDATE", "");
+//			obj.put("PAYDATE", "");
 			/*			obj.put("SALERCD", "");
 			obj.put("SALERNM", "");
 			obj.put("SUDANGRATE", "");

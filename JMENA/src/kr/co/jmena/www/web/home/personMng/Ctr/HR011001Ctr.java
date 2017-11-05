@@ -201,6 +201,7 @@ public class HR011001Ctr {
 			jData.put("BANKID", lst.get(i).getBANKID());
 			jData.put("ACCTNO", lst.get(i).getACCTNO());
 			jData.put("ACCTOWNER", lst.get(i).getACCTOWNER());
+			jData.put("BASICACCT", lst.get(i).getBASICACCT());
 			jData.put("REMARK", lst.get(i).getREMARK());
 			
 			jCell.add(i, jData);

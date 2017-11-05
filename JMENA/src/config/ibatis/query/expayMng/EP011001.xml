@@ -33,25 +33,30 @@
 	
 	
 	<resultMap id="EP011001Datas" class="EP011001VO">
+		<result property="PAYDATE"					column="PAYDATE"/>
+		<result property="SALERCD"					column="SALERCD"/>
+		<result property="SELLAMT"					column="SELLAMT"/>
+		<result property="PAYAMT"					column="PAYAMT"/>
+		<result property="TAXAMT"					column="TAXAMT"/>
+		<result property="DEDUCTAMT"				column="DEDUCTAMT"/>
+	
 		<result property="SALEDATE"					column="SALEDATE"/>
-		<result property="SALEID"			column="SALEID"	/>
-		<result property="SALEGUBUN"					column="SALEGUBUN"/>
-		<result property="BRANCHCODE"						column="BRANCHCODE"/>
-		
-		<result property="MANAGENO"			column="MANAGENO"/>
-		<result property="CITYCODE"			column="CITYCODE"/>
-		<result property="ADDRESS"				column="ADDRESS"/>
-		<result property="CONNAME"						column="CONNAME"	/>
-		<result property="CONM2"						column="CONM2"/>
-		<result property="CONPY"				column="CONPY"/>
+		<result property="SALEID"					column="SALEID"	/>
+		<result property="SALEGUBUN"				column="SALEGUBUN"/>
+		<result property="BRANCHCODE"				column="BRANCHCODE"/>		
+		<result property="MANAGENO"					column="MANAGENO"/>
+		<result property="CITYCODE"					column="CITYCODE"/>
+		<result property="ADDRESS"					column="ADDRESS"/>
+		<result property="CONNAME"					column="CONNAME"	/>
+		<result property="CONM2"					column="CONM2"/>
+		<result property="CONPY"					column="CONPY"/>
 		<result property="SALEAMT"					column="SALEAMT"/>
-		<result property="SALEDANGA"					column="SALEDANGA"/>
+		<result property="SALEDANGA"				column="SALEDANGA"/>
 		<result property="DCGUBUN"					column="DCGUBUN"/>
-		<result property="DCRATE"				column="DCRATE"/>
+		<result property="DCRATE"					column="DCRATE"/>
 		<result property="DCAMT"					column="DCAMT"/>
 		<result property="SELLAMT"					column="SELLAMT"/>
-		<result property="REMARK"			column="REMARK"/>
-		<result property="PAYDATE"			column="PAYDATE"/>
+		<result property="REMARK"					column="REMARK"/>
 		
 	</resultMap>
 
@@ -81,7 +86,13 @@
 		 AND T3.SALEID = T4.SALEID
 	ORDER BY T1.SALEID ASC, T1.PAYSEQ -->
 	
-	  SELECT (SELECT SALEDATE FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEDATE,
+	  SELECT PAYDATE,
+	  		 (SELECT SALERCD FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALERCD,
+	  		 (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
+	  		 T1.PAYAMT,
+	  		 '1' AS TAXAMT,
+	  		 T1.DEDUCTAMT,
+	  		 (SELECT SALEDATE FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEDATE,
 	         T1.SALEID,
 	         (SELECT SALEGUBUN FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEGUBUN,         
 			 BRANCHCODE,
@@ -97,8 +108,7 @@
 	         (SELECT DCRATE FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCRATE,
 	         (SELECT DCAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCAMT,
 	         (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
-	         T1.REMARK,
-	         PAYDATE
+	         T1.REMARK
 	    FROM sa_sudangmst T1, sa_sudangpayertb T2
 	   WHERE 1 = 1
 	     AND T1.SALEID = T2.SALEID

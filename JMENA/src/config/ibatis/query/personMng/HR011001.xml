@@ -77,6 +77,7 @@
 		<result property="BANKID" 		column="BANKID"/>
 		<result property="ACCTNO" 		column="ACCTNO"/>
 		<result property="ACCTOWNER" 	column="ACCTOWNER"/>
+		<result property="BASICACCT" 	column="BASICACCT"/>
 		<result property="REMARK"		column="REMARK"/>
 		
 	</resultMap>	
@@ -311,6 +312,7 @@
 			T1.BANKID,
 			T1.ACCTNO,
 			T1.ACCTOWNER,
+			'1' AS BASICACCT,
 			T1.REMARK
 		FROM hr_taxpayeritem T1
 		WHERE 1=1

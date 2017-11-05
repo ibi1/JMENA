@@ -38,6 +38,8 @@ public class HR011001VO {
 	private String PAYERID;
 	private String PAYERNAME;
 	private String PREBASICPAY;
+	private String BASICACCT;
+	
 	
 	private String S_BRANCHCODE;
 	private String S_DEPTCODE;
@@ -150,6 +152,9 @@ public class HR011001VO {
 	
 		
 	
+	public String getBASICACCT() {
+		return BASICACCT;
+	}
 	public void setACCTNO(String ACCTNO) {
 		this.ACCTNO = ACCTNO;
 	}
@@ -275,5 +280,8 @@ public class HR011001VO {
 	}
 	public void setS_JUMINID(String s_JUMINID) {
 		this.S_JUMINID = s_JUMINID;
+	}
+	public void setBASICACCT(String bASICACCT) {
+		this.BASICACCT = bASICACCT;
 	}		
 }

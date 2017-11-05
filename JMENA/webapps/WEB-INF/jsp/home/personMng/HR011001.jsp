@@ -21,6 +21,10 @@
 		selectListInsaMst();
 		selectListEnaAppointItem(INSACODE);
 		selectListEnaTexPayerItem(INSACODE);
+		f_selectListEnaBranchCode();
+		f_selectListEnaDeptcodeCode();
+		f_selectListEnaGradeCode();
+		f_selectListEnaDutyCode();		
 	})
 
 
@@ -82,7 +86,7 @@
 				$("#INSACODE").val(selRowData.INSACODE);
 	 			$("#KNAME").val(selRowData.KNAME);
 				$("#JUMINID").val(selRowData.JUMINID);
-				$("#BIRTHDAYGUBUN").val(selRowData.BIRTHDAYGUBUN);
+				$("input:radio[name=BIRTHDAYGUBUN]:input[value=" + selRowData.BIRTHDAYGUBUN + "]").attr("checked", true);
 				$("#SAUPID").val(selRowData.SAUPID);
 				$("#SAUPOWNER").val(selRowData.SAUPOWNER);
 				$("#ADDRESS").val(selRowData.ADDRESS);
@@ -91,14 +95,14 @@
 				$("#BRANCHCODE").val(selRowData.BRANCHCODE);
 				$("#DEPTCODE").val(selRowData.DEPTCODE);
 				$("#BASICPAY").val(selRowData.BASICPAY);
-				$("#EMPLOYGUBUN").val(selRowData.EMPLOYGUBUN);
+				$("input:radio[name=EMPLOYGUBUN]:input[value=" + selRowData.EMPLOYGUBUN + "]").attr("checked", true);
 				$("#GRADE").val(selRowData.GRADE);
 				$("#DUTY").val(selRowData.DUTY);
 				$("#JOINDATE").val(selRowData.JOINDATE);
 				$("#REJOINYN").val(selRowData.REJOINYN);
 				$("#RETIREDATE").val(selRowData.RETIREDATE);
 				$("#RECOID").val(selRowData.RECOID);
-				$("#REMARK").val(selRowData.REMARK);		 
+				$("#REMARK").val(selRowData.REMARK);
 				selectListEnaAppointItem(selRowData.INSACODE);				
 				selectListEnaTexPayerItem(selRowData.INSACODE);
 			} ,
@@ -152,7 +156,8 @@
 	
 	
 	
-	function selectListEnaTexPayerItem(INSACODE){		
+	function selectListEnaTexPayerItem(INSACODE){
+		$('#bottomList2').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#bottomList2').jqGrid({
 			//caption: '신고인관리'
 			url:"/home/selectListEnaTexPayerItem.do" ,
@@ -170,7 +175,7 @@
 				,{name:"BANKID",		index:'BANKID',			width:60,		align:'center'}
 				,{name:"ACCTNO",		index:'ACCTNO',			width:60,		align:'center'}
 				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:60,		align:'center'}
-				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:60,		align:'center'}
+				,{name:"BASICACCT",		index:'BASICACCT',		width:60,		align:'center'}
 				,{name:"REMARK",		index:'REMARK',			width:60,		align:'center'}
 			] ,
 			rowNum:10 ,
@@ -244,8 +249,115 @@
 	})	
 	
 
+	function f_selectListEnaBranchCode(){		
+		var CCODE = "001";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#BRANCHCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});		
+	}
+	
+	
+	function f_selectListEnaDeptcodeCode(){
+		var CCODE = "001";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#DEPTCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	
+	function f_selectListEnaGradeCode(){
+		var CCODE = "003";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#GRADE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
 		
-
+	
+	function f_selectListEnaDutyCode(){
+		var CCODE = "004";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#DUTY").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+			
+	
+	$(function() {
+		$("#insertButton").click(function() {
+			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("선택된 사원이 없습니다.");
+				
+				return false;
+			}
+			
+//			$("#S_FLAG_R").val("I");
+			$("#bottomList1").jqGrid("addRow", 0);
+		});
+	})
+	
+	
+	
 </script>
 <body>
 
@@ -304,7 +416,7 @@
 					<th>주민번호</th>
 					<td><input type="text" id="JUMINID" name="JUMINID" /> - <input type="text" id="juminId" name="juminId" /></td>
 					<th>생일구분</th>
-					<td><input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" value="R" />양력 <input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" value="F" />음력</td>
+					<td><input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" value="S" />양력 <input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" value="M" />음력</td>
 				</tr>
 				<tr>
 					<th>사업자번호</th>
@@ -326,7 +438,6 @@
 					<th>소속지사</th>
 					<td colspan="3">
 						<select id="BRANCHCODE" name="BRANCHCODE">
-							<option value="1">정무 남경12</option>
 						</select>
 					</td>
 				</tr>
@@ -334,7 +445,6 @@
 					<th>소속부서</th>
 					<td>
 						<select id="DEPTCODE" name="DEPTCODE">
-							<option value="1">개발1팀</option>
 						</select>
 					</td>
 					<th>월정지급액</th>
@@ -347,22 +457,18 @@
 				<tr>
 					<th>직급</th>
 					<td>
-						<select id="GRADE" name="GRADE">
-							<option value="1">사원</option>
-						</select>
+						<select id="GRADE" name="GRADE"></select>
 					</td>
 					<th>직책</th>
 					<td>
-						<select id="DUTY" name="DUTY">
-							<option value="1">팀원</option>
-						</select>
+						<select id="DUTY" name="DUTY"></select>
 					</td>
 				</tr>
 				<tr>
 					<th>입사일</th>
 					<td><input type="text" id="JOINDATE" name="JOINDATE" /></td>
 					<th>재입사여부</th>
-					<td><input type="checkbox" id="REJOINYN" name="REJOINYN" value="N"/></td>
+					<td><input type="checkbox" id="REJOINYN" name="REJOINYN" value="Y"/></td>
 				</tr>
 				<tr>
 					<th>퇴사일</th>
@@ -389,9 +495,11 @@
 	<tr >
 		<td><a class="ui-button ui-widget ui-corner-all" id="bottomDiv1"   name="bottomDiv1">발령사항 </a>
 		<a class="ui-button ui-widget ui-corner-all" id="bottomDiv2"   name="bottomDiv2">신고인 관리 </a></td>
-		<td align="right"><a class="ui-button ui-widget ui-corner-all" id="balAdd"   name="bottomDiv2">추가</a> 
-		<a class="ui-button ui-widget ui-corner-all" id="balAdd"   name="bottomDiv2">삭제 </a>
-		<a class="ui-button ui-widget ui-corner-all" id="balAdd"   name="bottomDiv2">저장 </a></td>
+		<td align="right">
+			<a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a>
+			<a class="ui-button ui-widget ui-corner-all" id="deleteButton"   name="deleteButton">삭제 </a>
+			<a class="ui-button ui-widget ui-corner-all" id="saveButton"   name="saveButton">저장 </a>
+		</td>
 	</tr>
 </table>	
 		<div id="bottomDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
