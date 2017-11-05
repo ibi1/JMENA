@@ -87,24 +87,32 @@
 		ORDER BY T1.PGMID
 	</select>
 	
-	<update id="updateEnaUserPgmAuthTb">
-		UPDATE SY_USERPGMAUTHTB
-		SET
-			AUTH_S = #AUTH_S#,
-			AUTH_S = #AUTH_I#,
-			AUTH_S = #AUTH_U#,
-			AUTH_S = #AUTH_D#,
-			AUTH_S = #AUTH_P#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATE_DATE = SYSDATE()
-		WHERE USERID = #USERID#
-		AND SYSID = #SYSID#
-		AND MENUID = #MENUID#
-		AND PGMID = #PGMID#
-	</update>
+	<select id="selectIsExistDataUserPgmAuthTb" resultClass="java.lang.Integer">
+		SELECT COUNT(USERID) AS CNT
+		FROM sy_userpgmauthtb
+		WHERE 1 = 1
+		AND USERID = #USERID#
+		<isNotEqual property="SYSID" compareValue="ALL">
+			AND SYSID = #SYSID#
+			<isNotEqual property="MENUID" compareValue="ALL">
+				AND MENUID = #MENUID#
+			</isNotEqual>
+		</isNotEqual>
+	</select>
 	
-	<insert id="insertEnaUserPgmAuthTb">
-		INSERT INTO SY_USERPGMAUTHTB
+	<delete id="deleteDataUserPgmAuthTb">
+		DELETE FROM sy_userpgmauthtb
+		WHERE USERID = #USERID#
+		<isNotEqual property="SYSID" compareValue="ALL">
+			AND SYSID = #SYSID#
+			<isNotEqual property="MENUID" compareValue="ALL">
+				AND MENUID = #MENUID#
+			</isNotEqual>
+		</isNotEqual>
+	</delete>
+	
+	<insert id="insertDataUserPgmAuthTb">
+		INSERT INTO sy_userpgmauthtb
 		(
 			USERID,
 			PGMID,
@@ -115,8 +123,7 @@
 			AUTH_U,
 			AUTH_D,
 			AUTH_P,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#USERID#,
@@ -128,8 +135,7 @@
 			#AUTH_U#,
 			#AUTH_D#,
 			#AUTH_P#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERIDSESSION#
 		)
 	</insert>
 </sqlMap>

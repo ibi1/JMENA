@@ -2,6 +2,7 @@ package kr.co.jmena.www.web.home.systemMng.Dao;
 
 import java.util.List;
 
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011003VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011004VO;
 
 import org.apache.log4j.Logger;
@@ -30,5 +31,26 @@ public class SY011004Dao extends SqlMapClientDaoSupport {
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListUserPgmAuthTb", vo);
 		
 		return lst;
+	}
+	
+	public int selectIsExistDataUserPgmAuthTb(SY011004VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectIsExistDataUserPgmAuthTb", vo);
+		
+		return cnt;
+	}
+	
+	public int deleteDataUserPgmAuthTb(SY011004VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteDataUserPgmAuthTb", vo);
+		
+		return cnt;
+	}
+	
+	public boolean insertDataUserPgmAuthTb(SY011004VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataUserPgmAuthTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
 	}
 }

@@ -20,6 +20,7 @@ public class SY011004VO {
 	private String USERID;
 	private String USERNAME;
 	private String USEYN;
+	private String USERIDSESSION;
 	
 	public String getMENUNAME() {
 		return MENUNAME;
@@ -130,6 +131,12 @@ public class SY011004VO {
 	}
 	public void setUSEYN(String USEYN) {
 		this.USEYN = USEYN;
+	}
+	public String getUSERIDSESSION() {
+		return USERIDSESSION;
+	}
+	public void setUSERIDSESSION(String USERIDSESSION) {
+		this.USERIDSESSION = USERIDSESSION;
 	}
 	
 

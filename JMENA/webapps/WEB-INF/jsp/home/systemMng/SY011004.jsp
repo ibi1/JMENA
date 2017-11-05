@@ -25,8 +25,69 @@
 		$(document).ready(function(){
 			$("#saveButton").jqxButton({ theme: 'light', width: 100, height: 20 });
 			$("#saveButton").on('click', function () {
+				var ids = $("#rightList").jqGrid('getDataIDs');
+				var len = ids.length;
+			
+				if (len == 0) {
+					alert("저장할 데이터가 없습니다.");
+				
+					return false;
+				}
+				
+				//그리드 데이터를 배열에 저장
+				//userid, pgmid, sysid, menuid, auth_s, auth_i, auth_u, auth_d, auth__p
+				var userIdArr = [];
+				var pgmIdArr = [];
+				var sysIdArr = [];
+				var menuIdArr = [];
+				var authSArr = [];
+				var authIArr = [];
+				var authUArr = [];
+				var authDArr = [];
+				var authPArr = [];
+				
+				var leftIds = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				var cellData = $("#leftList").jqGrid('getRowData', leftIds); //셀 전체 데이터 가져오기
+				var userId = cellData.USERID;
+				var sysId = $("#SYSIDCOMBO").val();				
+				var menuId = $("#MENUIDCOMBO").val();
+				
+				ids.some(function(currentValue, index, array){
+					pgmIdArr.push($("#rightList").jqGrid('getCell', array[index], 'PGMID'));
+					sysIdArr.push($("#rightList").jqGrid('getCell', array[index], 'SYSID'));
+					menuIdArr.push($("#rightList").jqGrid('getCell', array[index], 'MENUID'));
+					authSArr.push($("#rightList").jqGrid('getCell', array[index], 'AUTH_S'));
+					authIArr.push($("#rightList").jqGrid('getCell', array[index], 'AUTH_I'));
+					authUArr.push($("#rightList").jqGrid('getCell', array[index], 'AUTH_U'));
+					authDArr.push($("#rightList").jqGrid('getCell', array[index], 'AUTH_D'));
+					authPArr.push($("#rightList").jqGrid('getCell', array[index], 'AUTH_P'));
+				});
+				
 				if(confirm("저장하시겠습니까?") == true) {
-					alert("작업중...");
+				 	$.ajax({ 
+						type: 'POST' ,
+						url: "/home/insertDataUserPgmAuthTb.do", 
+						data: {
+							'USERID':userId, 
+							'SYSID':sysId,
+							'MENUID':menuId,
+							'pgmIdArr':pgmIdArr, 
+							'sysIdArr':sysIdArr, 
+							'menuIdArr':menuIdArr,
+							'authSArr':authSArr,
+							'authIArr':authIArr,
+							'authUArr':authUArr,
+							'authDArr':authDArr,
+							'authPArr':authPArr
+						},
+						dataType : 'json' , 
+						success: function(data){
+							alert(data.resultMsg);
+						},
+						error:function(e){  
+							alert("[ERROR]사용자 별 권한 설정 중 오류가 발생하였습니다.");
+						}  
+					});
 				}
 			});
 			

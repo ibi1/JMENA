@@ -1,5 +1,6 @@
 package kr.co.jmena.www.web.home.systemMng.Ctr;
 
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -109,6 +110,29 @@ public class SY011004Ctr {
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListUserMst4]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataUserPgmAuthTb.do")
+	public ModelAndView insertDataUserPgmAuthTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (SY011004Biz.insertDataUserPgmAuthTb(request) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 저장하였습니다.";
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]사용자 별 권한 저장 중 오류가 발생하였습니다.";
+		}
+		
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataUserMst]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}
