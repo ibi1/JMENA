@@ -26,6 +26,7 @@
 	<script type="text/javascript" src="/resource/js/jquery.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery-1.7.2.min.js"></script>	
  	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxcore.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxnotification.js"></script>
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxdata.js"></script>
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxtabs.js"></script>
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxsplitter.js"></script>
@@ -41,12 +42,17 @@
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.edit.js"></script> 
 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxdata.export.js"></script> 
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.export.js"></script> 
-
+	
 	<script type="text/javascript" src="/resource/js/i18n/grid.locale-kr.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery.jqGrid.min.js"></script>
 	
 	<script type="text/javascript">
 	 	$(document).ready(function(){
+	 		$("#messageNotification").jqxNotification({ theme: 'light',
+                width: 400, position: "top-right", opacity: 0.9,
+                autoOpen: true, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 10000, template: "info"
+            });
+	 		
 	 		var TreeMenu = "";
 
 			//트리 선택 시 마다 수행
@@ -244,5 +250,14 @@
 	            </div>
 	    	</div>
 		</div>
+		<!--Notifications-->
+		<div id="messageNotification">
+	        <div>
+            	현재 작업 중에 있습니다. <br/>
+            	빠른 시일 내에 모든 페이지가 오픈될 예정입니다.<br/>
+            	감사합니다.<br/>
+            	* 이 메시지는 10초 뒤 자동으로 사라집니다.
+        	</div>
+    	</div>
 	</body>
 </html>
