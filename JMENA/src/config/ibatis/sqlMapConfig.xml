@@ -35,6 +35,7 @@
 	<sqlMap resource="/config/ibatis/query/expayMng/EP011001.xml" />
 	<sqlMap resource="/config/ibatis/query/expayMng/EP011002.xml" />
 	<sqlMap resource="/config/ibatis/query/expayMng/EP012001.xml" />
+	<sqlMap resource="/config/ibatis/query/expayMng/EP012002.xml" />
 	<sqlMap resource="/config/ibatis/query/expayMng/EP012003.xml" />
 
 	<!-- 매출관리 -->

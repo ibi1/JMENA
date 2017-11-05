@@ -15,10 +15,15 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		var S_PAYDATE = "";
+		var S_BRANCHCODE = "";
+		var S_DEPTCODE = "";
+		var S_KNAME = "";
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
-		f_selectListEP012002();
+		f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 		
 	});
 
@@ -73,32 +78,40 @@
 		});
 	}
 	
-	function f_selectListEP012002(){
+	function f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '월 수령액 확인서', 
-			url:"/home/selectListSysMst.do" ,
+			url:"/home/selectListEP012002.do" ,
 			datatype:"json",
+			postData : {
+				S_PAYDATE : S_PAYDATE
+				,S_BRANCHCODE : S_BRANCHCODE
+				,S_DEPTCODE : S_DEPTCODE
+				,S_KNAME : S_KNAME
+			},
 			loadError:function(){alert("Error~!!");},
-			colNames:['지사', '부서', '직위', '직급', '사번', '성명', '기본급', '활동비', '일비', '시상금',
-			          '수당금액', '총지급액', '소득세', '지방세', '부가가치세', '차감지급액'],
+			colNames:['지사', '부서', '직위', '직급', '사번',
+			          '성명', '기본급', '활동비', '일비', '시상금',
+			          '수당금액', '총지급액', '소득세', '지방세', '부가가치세',
+			          '차감지급액'],
 			colModel:[
-						{name:"KNAME",				index:'kName',		width:100,	align:'center'}
-						, {name:"JUMINID",			index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"DEPTCODE",			index:'deptCode',	width:150,	align:'center'}
-						, {name:"KNAME",			index:'kName',		width:100,	align:'center'}
-						, {name:"O_JUMINID",		index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'deptCode',	width:150,	align:'center'}
-						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
+				{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,	align:'center'}
+				,{name:"DEPTNAME",	index:'DEPTNAME',		width:100,	align:'center'}
+				,{name:"GRADENAME",	index:'GRADENAME',		width:100,	align:'center'}
+				,{name:"DUTYNAME",	index:'DUTYNAME',		width:100,	align:'center'}
+				,{name:"INSACODE",	index:'INSACODE',		width:100,	align:'center'}
+				,{name:"KNAME",		index:'KNAME',			width:100,	align:'center'}
+				,{name:"BASICAMT",	index:'BASICAMT',		width:100,	align:'center'}
+				,{name:"ACTAMT",	index:'ACTAMT',			width:100,	align:'center'}
+				,{name:"DAILYAMT",	index:'DAILYAMT',		width:100,	align:'center'}
+				,{name:"PRIZEAMT",	index:'PRIZEAMT',		width:100,	align:'center'}
+				,{name:"PAYAMT",	index:'PAYAMT',			width:100,	align:'center'}
+				,{name:"TOTAMT",	index:'TOTAMT',			width:100,	align:'center'}
+				,{name:"TAXINCOME",	index:'TAXINCOME',		width:100,	align:'center'}
+				,{name:"TAXLOCAL",	index:'TAXLOCAL',		width:100,	align:'center'}
+				,{name:"SUPPLYTAX",	index:'SUPPLYTAX',		width:100,	align:'center'}
+				,{name:"DEDUCTAMT",	index:'DEDUCTAMT',		width:100,	align:'center'}
 			],
 			rowNum:100,
 			autowidth: true,
@@ -118,6 +131,20 @@
 			hidegrid: false
 		});
 	}
+	
+	$(function(){
+		$("#selectButton").click(function(){
+			
+			var S_PAYDATE = $("#S_PAYDATE").val();
+			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
+			var S_DEPTCODE = $("#S_DEPTCODE").val();
+			var S_KNAME = $("#S_KNAME").val();
+			
+			f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+		})
+	})
+	
+		
 </script>
 <body>
 
@@ -137,7 +164,7 @@
 			<table class="blueone">
 				<tr>
 					<th>지급년월</th>
-					<td><input type="text" id="S_SALEDATE" name="S_SALEDATE" /></td>
+					<td><input type="text" id="S_PAYDATE" name="S_PAYDATE" /></td>
 					<th>지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE">

@@ -15,10 +15,18 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		var S_IPGUMDATE_FR = "";
+		var S_IPGUMDATE_TO = "";
+		var S_BRANCHCODE = "";
+		var S_SALERCD = "";
+		var S_IPGUMGUBUN = "";
+		var S_IPGUMPERSON = "";
+		var S_IPGUMAMT = "";
+
 		f_selectListEnaBranchCode();
 		f_selectListEnaSalerCode();
 		f_selectListEnaIpgumGubunCode();
-		f_selectListSA012005();
+		f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
 		
 	});
 	
@@ -95,32 +103,46 @@
 		});
 	}
 	
-	function f_selectListSA012005(){
+	function f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '입금처리 현황', 
-			url:"/home/selectListSysMst.do" ,
+			url:"/home/selectListSA012005.do" ,
 			datatype:"json",
+			postData : {
+				S_IPGUMDATE_FR : S_IPGUMDATE_FR
+				,S_IPGUMDATE_TO : S_IPGUMDATE_TO
+				,S_BRANCHCODE : S_BRANCHCODE
+				,S_SALERCD : S_SALERCD
+				,S_IPGUMGUBUN : S_IPGUMGUBUN
+				,S_IPGUMPERSON : S_IPGUMPERSON
+				,S_IPGUMAMT : S_IPGUMAMT
+			},
 			loadError:function(){alert("Error~!!");},
-			colNames:['입금일자', '입금번호', '입금구분', '입금인', '수금처리금액', '처리잔액', '처리순번', '계약일자', '계약번호', '계약자',
-			          '계약면적', '계약평수', '입금구분', '수금금액', '담당자', '소재지'],
+			colNames:['입금일자', '입금번호', '입금구분', '입금인', '입금금액',
+			          '수금처리금액', '처리잔액', '처리순번', '계약일자', '계약번호',
+			          '계약자', '계약면적', '계약평수', '입금 구분', '수금금액',
+			          '담당자', '소재지'],
 			colModel:[
-						{name:"KNAME",				index:'kName',		width:100,	align:'center'}
-						, {name:"JUMINID",			index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"DEPTCODE",			index:'deptCode',	width:150,	align:'center'}
-						, {name:"KNAME",			index:'kName',		width:100,	align:'center'}
-						, {name:"O_JUMINID",		index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'deptCode',	width:150,	align:'center'}
-						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
+						{name:"IPGUMDATE",			index:'IPGUMDATE',		width:100,	align:'center'}
+						,{name:"IPGUMID",			index:'IPGUMID',		width:100,	align:'center'}
+						,{name:"IPGUMGUBUN",		index:'IPGUMGUBUN',		width:100,	align:'center'}
+						,{name:"IPGUMPERSON",		index:'IPGUMPERSON',	width:100,	align:'center'}
+						,{name:"IPGUMAMT",			index:'IPGUMAMT',		width:100,	align:'center'}
+						,{name:"SUMSUGUMAMT",		index:'SUMSUGUMAMT',	width:100,	align:'center'}
+						,{name:"JANGUMAMT",			index:'JANGUMAMT',		width:100,	align:'center'}
+						,{name:"SEQ",				index:'SEQ',			width:100,	align:'center'}
+						,{name:"SALEDATE",			index:'SALEDATE',		width:100,	align:'center'}
+						,{name:"SALEID",			index:'SALEID',			width:100,	align:'center'}
+						,{name:"CONNAME",			index:'CONNAME',		width:100,	align:'center'}
+						,{name:"CONM2",				index:'CONM2',			width:100,	align:'center'}
+						,{name:"CONPY",				index:'CONPY',			width:100,	align:'center'}
+						,{name:"DEPOSITGUBUN",		index:'DEPOSITGUBUN',	width:100,	align:'center'}
+						,{name:"SUGUMAMT",			index:'SUGUMAMT',		width:100,	align:'center'}
+						,{name:"KNAME",				index:'KNAME',			width:100,	align:'center'}
+						,{name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center'}
+
+						
 			],
 			rowNum:10,
 			autowidth: true,
@@ -140,7 +162,24 @@
 			hidegrid: false
 		});
 
-	}	
+	}
+	
+	$(function(){
+		$("#selectButton").click(function(){
+			
+			var S_IPGUMDATE_FR = $("#S_IPGUMDATE_FR").val();
+			var S_IPGUMDATE_TO = $("#S_IPGUMDATE_TO").val();
+			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
+			var S_SALERCD = $("#S_SALERCD").val();
+			var S_IPGUMGUBUN = $("#S_IPGUMGUBUN").val();
+			var S_IPGUMPERSON = $("#S_IPGUMPERSON").val();
+			var S_IPGUMAMT = $("#S_IPGUMAMT").val();
+			
+			f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
+		})
+	})
+	
+	
 </script>
 <body>
 

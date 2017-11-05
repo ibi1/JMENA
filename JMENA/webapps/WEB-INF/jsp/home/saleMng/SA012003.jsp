@@ -124,7 +124,7 @@
 				,{name:"PAYOWNER",		index:'PAYOWNER',		width:100,	align:'center'}
 				,{name:"REMARK",		index:'REMARK',			width:100,	align:'center'}
 			],
-			rowNum:10,
+			rowNum:100,
 			autowidth: true,
 			shrinkToFit: false,
 			rowList:[10,20,30],
