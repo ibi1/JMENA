@@ -15,10 +15,14 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		var S_CITYCODE = "";
+		var S_BOROUGHCODE = "";
+		var S_ADDRESS = "";
+		
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
 		
-		f_selectListSA012008();
+		f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		
 	});
 	
@@ -74,32 +78,39 @@
 		});
 	}
 	
-	function f_selectListSA012008(){
+	function f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
 
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '재고장', 
-			url:"/home/selectListSysMst.do" ,
+			url:"/home/selectListSA012008.do" ,
 			datatype:"json",
+			postdata : {
+				S_CITYCODE : S_CITYCODE,
+				S_BOROUGHCODE : S_BOROUGHCODE,
+				S_ADDRESS : S_ADDRESS
+			},
 			loadError:function(){alert("Error~!!");},
-			colNames:['매입구분', '매도자', '주민번호', '주소/지번', '면적(m2)', '등기이전일', '매입금액', '매출순번', '매수자', '주민번호',
+			colNames:['매입구분', '매도자', '주민번호', '주소/지번', '면적(m2)',
+			          '등기이전일', '매입금액', '매출순번', '매수자', '주민번호',
 			          '계약면적', '이전일', '매도금액', '재고면적', '재고금액'],
 			colModel:[
-						{name:"KNAME",				index:'kName',		width:100,	align:'center'}
-						, {name:"JUMINID",			index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"DEPTCODE",			index:'deptCode',	width:150,	align:'center'}
-						, {name:"KNAME",			index:'kName',		width:100,	align:'center'}
-						, {name:"O_JUMINID",		index:'juminId',	width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'mobileNo',	width:100,	align:'center'}
-						, {name:"BRANCHCODE",		index:'branchCode',	width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'deptCode',	width:150,	align:'center'}
-						, {name:"O_JOINDATE",		index:'kName',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'juminId',	width:100,	align:'center'}
-						, {name:"O_TOTAMT",			index:'mobileNo',	width:100,	align:'center'}
+						{name:"BUYGUBUN",		index:'BUYGUBUN',		width:100,	align:'center'}
+						,{name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center'}
+						,{name:"OWNERJUMINID",	index:'OWNERJUMINID',	width:100,	align:'center'}
+						,{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center'}
+						,{name:"BUYM2",			index:'BUYM2',			width:100,	align:'center'}
+						,{name:"REGDATE1",		index:'REGDATE1',		width:100,	align:'center'}
+						,{name:"BUYAMT",		index:'BUYAMT',			width:100,	align:'center'}
+						,{name:"SELLSEQ",		index:'SELLSEQ',		width:100,	align:'center'}
+						,{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center'}
+						,{name:"CONJUMINID",	index:'CONJUMINID',		width:100,	align:'center'}
+						,{name:"CONM2",			index:'CONM2',			width:100,	align:'center'}
+						,{name:"REGDATE2",		index:'REGDATE2',		width:100,	align:'center'}
+						,{name:"SALEAMT",		index:'SALEAMT',		width:100,	align:'center'}
+						,{name:"REMNM2",		index:'REMNM2',			width:100,	align:'center'}
+						,{name:"REMNAMT",		index:'REMNAMT',		width:100,	align:'center'}
+						
 			],
 			rowNum:10,
 			autowidth: true,
@@ -118,9 +129,18 @@
 			},
 			hidegrid: false
 		});
-
-		
 	}
+	
+	$(function(){
+		$("#selectButton").click(function(){
+			
+			var S_CITYCODE = $("#S_CITYCODE").val();
+			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
+			var S_ADDRESS = $("#S_ADDRESS").val();
+			
+			f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		})
+	})
 </script>
 <body>
 

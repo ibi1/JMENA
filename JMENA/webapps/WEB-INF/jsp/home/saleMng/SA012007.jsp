@@ -85,7 +85,7 @@
 			//caption: '잔여 물건지 현황', 
 			url:"/home/selectListSysMst.do" ,
 			datatype:"json",
-			data : {
+			postdata : {
 				S_CITYCODE : S_CITYCODE,
 				S_BOROUGHCODE : S_BOROUGHCODE,
 				S_ADDRESS : S_ADDRESS
@@ -134,7 +134,7 @@
 			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
 			var S_ADDRESS = $("#S_ADDRESS").val();
 			
-			f_selectListSA012002(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
+			f_selectListSA012007(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
 		})
 	})
 	

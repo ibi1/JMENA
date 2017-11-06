@@ -2,163 +2,138 @@ package kr.co.jmena.www.web.home.expayMng.Vo;
 
 public class EP012001VO {
 	
-	private String ACCTNO;
-	private String ACCTOWNER;
-	private String ADDRATE;
-	private String BANKID;
-	private String BRANCHCODE;
-	private String DEDUCTAMT;
-	private String DEPTCODE;
-	private String DUTY;
-	private String GRADE;
-	private String INSACODE;
-	private String PAYAMT;
+	private String BRANCHNAME;
+	private String DEPTNAME;
 	private String PAYDATE;
-	private String PAYERID;
+	private String CONNAME;
+	private String ADDRESS;
+	private String CONM2;
+	private String CONPY;
+	private String KNAME;
 	private String PAYERNAME;
-	private String PAYSEQ;
-	private String REGISTERSEQ;
-	private String REMARK;
-	private String SALEID;
-	private String SUDANGRATE;
-	private String SUPPLYTAX;
-	private String TAXGUBUN;
+	private String PAYERID;
+	private String PAYAMT;
 	private String TAXINCOME;
 	private String TAXLOCAL;
+	private String TOTTAX;
+	private String DEDUCTAMT;
+	
+	private String S_PAYDATE;
+	private String S_BRANCHCODE;
+	private String S_DEPTCODE;
+	private String S_KNAME;
 
-
-	public String getACCTNO(){
-		return this.ACCTNO;
+	
+	private String SAUPOWNER;
+	private String SUPPLYAMT;
+	private String SUPPLYTAX;
+	private String SUPPLYTAX2;
+	
+	
+	public String getBRANCHNAME() {
+		return this.BRANCHNAME;
 	}
-	public String getACCTOWNER(){
-		return this.ACCTOWNER;
+	public String getDEPTNAME() {
+		return this.DEPTNAME;
 	}
-	public String getADDRATE(){
-		return this.ADDRATE;
-	}
-	public String getBANKID(){
-		return this.BANKID;
-	}
-	public String getBRANCHCODE(){
-		return this.BRANCHCODE;
-	}
-	public String getDEDUCTAMT(){
-		return this.DEDUCTAMT;
-	}
-	public String getDEPTCODE(){
-		return this.DEPTCODE;
-	}
-	public String getDUTY(){
-		return this.DUTY;
-	}
-	public String getGRADE(){
-		return this.GRADE;
-	}
-	public String getINSACODE(){
-		return this.INSACODE;
-	}
-	public String getPAYAMT(){
-		return this.PAYAMT;
-	}
-	public String getPAYDATE(){
+	public String getPAYDATE() {
 		return this.PAYDATE;
 	}
-	public String getPAYERID(){
-		return this.PAYERID;
+	public String getCONNAME() {
+		return this.CONNAME;
 	}
-	public String getPAYERNAME(){
+	public String getADDRESS() {
+		return this.ADDRESS;
+	}
+	public String getCONM2() {
+		return this.CONM2;
+	}
+	public String getCONPY() {
+		return this.CONPY;
+	}
+	public String getKNAME() {
+		return this.KNAME;
+	}
+	public String getPAYERNAME() {
 		return this.PAYERNAME;
 	}
-	public String getPAYSEQ(){
-		return this.PAYSEQ;
+	public String getPAYERID() {
+		return this.PAYERID;
 	}
-	public String getREGISTERSEQ(){
-		return this.REGISTERSEQ;
+	public String getPAYAMT() {
+		return this.PAYAMT;
 	}
-	public String getREMARK(){
-		return this.REMARK;
-	}
-	public String getSALEID(){
-		return this.SALEID;
-	}
-	public String getSUDANGRATE(){
-		return this.SUDANGRATE;
-	}
-	public String getSUPPLYTAX(){
-		return this.SUPPLYTAX;
-	}
-	public String getTAXGUBUN(){
-		return this.TAXGUBUN;
-	}
-	public String getTAXINCOME(){
+	public String getTAXINCOME() {
 		return this.TAXINCOME;
 	}
-	public String getTAXLOCAL(){
+	public String getTAXLOCAL() {
 		return this.TAXLOCAL;
 	}
+	public String getTOTTAX() {
+		return this.TOTTAX;
+	}
+	public String getDEDUCTAMT() {
+		return this.DEDUCTAMT;
+	}
 	
-	public void setACCTNO(String ACCTNO) {
-		this.ACCTNO = ACCTNO;
+	public String getS_PAYDATE() {
+		return this.S_PAYDATE;
 	}
-	public void setACCTOWNER(String ACCTOWNER) {
-		this.ACCTOWNER = ACCTOWNER;
+	public String getS_BRANCHCODE() {
+		return this.S_BRANCHCODE;
 	}
-	public void setADDRATE(String ADDRATE) {
-		this.ADDRATE = ADDRATE;
+	public String getS_DEPTCODE() {
+		return this.S_DEPTCODE;
 	}
-	public void setBANKID(String BANKID) {
-		this.BANKID = BANKID;
+	public String getS_KNAME() {
+		return this.S_KNAME;
 	}
-	public void setBRANCHCODE(String BRANCHCODE) {
-		this.BRANCHCODE = BRANCHCODE;
+
+	public String getSAUPOWNER() {
+		return this.SAUPOWNER;
 	}
-	public void setDEDUCTAMT(String DEDUCTAMT) {
-		this.DEDUCTAMT = DEDUCTAMT;
+	public String getSUPPLYAMT() {
+		return this.SUPPLYAMT;
 	}
-	public void setDEPTCODE(String DEPTCODE) {
-		this.DEPTCODE = DEPTCODE;
+	public String getSUPPLYTAX() {
+		return this.SUPPLYTAX;
 	}
-	public void setDUTY(String DUTY) {
-		this.DUTY = DUTY;
+	public String getSUPPLYTAX2() {
+		return this.SUPPLYTAX2;
 	}
-	public void setGRADE(String GRADE) {
-		this.GRADE = GRADE;
+	
+	public void setBRANCHNAME(String BRANCHNAME) {
+		this.BRANCHNAME = BRANCHNAME;
 	}
-	public void setINSACODE(String INSACODE) {
-		this.INSACODE = INSACODE;
-	}
-	public void setPAYAMT(String PAYAMT) {
-		this.PAYAMT = PAYAMT;
+	public void setDEPTNAME(String DEPTNAME) {
+		this.DEPTNAME = DEPTNAME;
 	}
 	public void setPAYDATE(String PAYDATE) {
 		this.PAYDATE = PAYDATE;
 	}
-	public void setPAYERID(String PAYERID) {
-		this.PAYERID = PAYERID;
+	public void setCONNAME(String CONNAME) {
+		this.CONNAME = CONNAME;
+	}
+	public void setADDRESS(String ADDRESS) {
+		this.ADDRESS = ADDRESS;
+	}
+	public void setCONM2(String CONM2) {
+		this.CONM2 = CONM2;
+	}
+	public void setCONPY(String CONPY) {
+		this.CONPY = CONPY;
+	}
+	public void setKNAME(String KNAME) {
+		this.KNAME = KNAME;
 	}
 	public void setPAYERNAME(String PAYERNAME) {
 		this.PAYERNAME = PAYERNAME;
 	}
-	public void setPAYSEQ(String PAYSEQ) {
-		this.PAYSEQ = PAYSEQ;
+	public void setPAYERID(String PAYERID) {
+		this.PAYERID = PAYERID;
 	}
-	public void setREGISTERSEQ(String REGISTERSEQ) {
-		this.REGISTERSEQ = REGISTERSEQ;
-	}
-	public void setREMARK(String REMARK) {
-		this.REMARK = REMARK;
-	}
-	public void setSALEID(String SALEID) {
-		this.SALEID = SALEID;
-	}
-	public void setSUDANGRATE(String SUDANGRATE) {
-		this.SUDANGRATE = SUDANGRATE;
-	}
-	public void setSUPPLYTAX(String SUPPLYTAX) {
-		this.SUPPLYTAX = SUPPLYTAX;
-	}
-	public void setTAXGUBUN(String TAXGUBUN) {
-		this.TAXGUBUN = TAXGUBUN;
+	public void setPAYAMT(String PAYAMT) {
+		this.PAYAMT = PAYAMT;
 	}
 	public void setTAXINCOME(String TAXINCOME) {
 		this.TAXINCOME = TAXINCOME;
@@ -166,5 +141,38 @@ public class EP012001VO {
 	public void setTAXLOCAL(String TAXLOCAL) {
 		this.TAXLOCAL = TAXLOCAL;
 	}
+	public void setTOTTAX(String TOTTAX) {
+		this.TOTTAX = TOTTAX;
+	}
+	public void setDEDUCTAMT(String DEDUCTAMT) {
+		this.DEDUCTAMT = DEDUCTAMT;
+	}
+
+	public void setS_PAYDATE(String S_PAYDATE) {
+		this.S_PAYDATE = S_PAYDATE;
+	}
+	public void setS_BRANCHCODE(String S_BRANCHCODE) {
+		this.S_BRANCHCODE = S_BRANCHCODE;
+	}
+	public void setS_DEPTCODE(String S_DEPTCODE) {
+		this.S_DEPTCODE = S_DEPTCODE;
+	}
+	public void setS_KNAME(String S_KNAME) {
+		this.S_KNAME = S_KNAME;
+	}
+	
+	public void setSAUPOWNER(String SAUPOWNER) {
+		this.SAUPOWNER = SAUPOWNER;
+	}
+	public void setSUPPLYAMT(String SUPPLYAMT) {
+		this.SUPPLYAMT = SUPPLYAMT;
+	}
+	public void setSUPPLYTAX(String SUPPLYTAX) {
+		this.SUPPLYTAX = SUPPLYTAX;
+	}
+	public void setSUPPLYTAX2(String SUPPLYTAX2) {
+		this.SUPPLYTAX2 = SUPPLYTAX2;
+	}
+	
 	
 }
