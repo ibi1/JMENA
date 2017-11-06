@@ -18,7 +18,7 @@
 		$(document).ready(function(){
 			$("#USERID").jqxInput({theme: 'light', placeHolder: "Enter a UserID", height: 25, width: 200, minLength: 1});
 			$("#PASSWORD").jqxPasswordInput({theme: 'light', width: 200, height: 25 });
-			$("#loginButton").jqxButton({theme: 'light', width: 120, height: 40 });
+			$("#loginButton").jqxButton({theme: 'light', width: 120, height: 60 });
 
 			$("#USERID").focus();
 		})
@@ -70,7 +70,7 @@
 			<table>
 				<tr>
 					<td>
-						<img alt="CI" src="/resource/images/ci.jpg">
+						<img alt="CI" src="/resource/img/ci/JMCI.jpg">
 					</td>
 			</table>
 			<br />

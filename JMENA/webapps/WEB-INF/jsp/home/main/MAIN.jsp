@@ -218,7 +218,7 @@
 	 	            	<div>
 	 	            		<span>
 	 	            			<div id="topLeft">
-	 	            				<center><h3>JMENA</h3></center>
+	 	            				<img alt="CI" src="/resource/img/ci/JMCI.jpg" width="250" height="101">
 	 	            			</div>
 	 	            		</span>
 	 	            	</div>
