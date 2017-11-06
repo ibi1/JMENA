@@ -16,9 +16,9 @@
     
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#USERID").jqxInput({theme: 'light', placeHolder: "Enter a UserID", height: 25, width: 200, minLength: 1});
-			$("#PASSWORD").jqxPasswordInput({theme: 'light', width: 200, height: 25 });
-			$("#loginButton").jqxButton({theme: 'light', width: 120, height: 60 });
+			$("#USERID").jqxInput({theme: 'energyblue', placeHolder: "Enter a UserID", height: 25, width: 200, minLength: 1});
+			$("#PASSWORD").jqxPasswordInput({theme: 'energyblue', width: 200, height: 25 });
+			$("#loginButton").jqxButton({theme: 'energyblue', width: 120, height: 60 });
 
 			$("#USERID").focus();
 		})

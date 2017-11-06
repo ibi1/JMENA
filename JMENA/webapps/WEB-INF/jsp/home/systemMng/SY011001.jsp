@@ -13,6 +13,18 @@
 		var v_rightLastSel = 0;		//오른쪽 그리드 선택 id
 	
 		$(document).ready(function(){
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			
+			$("#sysSearchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			   
+			$("#S_SYSID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#S_SYSNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#S_SORTKEY").jqxFormattedInput({theme: 'energyblue', height: 23, width: 94, radix: 'decimal', value: ''});
+			
 			
 			$("#S_FLAG_L").val("I");	//I : 저장, U : 수정
 			$("#S_FLAG_R").val("U");	//I : 저장, U : 수정
@@ -125,6 +137,13 @@
 		
 		$(function() {
 			$("#sysSearchButton").click(function(){
+				if( $("#S_SYSID").val() == "") {
+					alert("시스템 코드를 입력하셔야 합니다."); 
+					$("#S_SYSID").focus();
+					 
+					 return false;
+				}
+				
 				var isNew = true;
 				v_rightLastSel = 0;
 				
@@ -336,26 +355,27 @@
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a></td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table id="leftList"></table>
 			<div id="leftNav"></div>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<form id="SY011001">
 				<input type="hidden" id="S_FLAG_L" NAME="S_FLAG_L" />
-				<table class="blueone">
+				<table>
 					<tr>
 						<td>시스템코드</td>
-						<td><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="sysSearchButton" name="sysSearchButton">=></a></td>
+						<td><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" /></td>
+						<td><input type="button" id='sysSearchButton' /></td>
 					</tr>
 					<tr>
 						<td>시스템 명</td>
@@ -366,16 +386,24 @@
 						<td><input type="text" id="S_SORTKEY" name="S_SORTKEY" onkeydown="f_sysMstSave();"/></td>
 					</tr>
 				</table>
-				</form>
+			</form>
+			
 			<input type="hidden" id="S_FLAG_R" NAME="S_FLAG_R" />
-			<table class="blueone">
-				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="rightInsertButton" name="rightInsertButton">추가</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="rightSaveButton" name="rightSaveButton">저장</a></td>
-				</tr>
-			</table>
-		<table id="rightList"></table>
-			<div id="rightNav"></div>
+			
+			<div style="width:96%; float:left; padding: 10px" align="left">
+			<caption>시스템 메뉴관리</caption>
+				<table align="right">
+					
+					<tr>
+						<td><input type="button" value="추기" id='rightInsertButton' /></td>
+						<td><input type="button" value="저장" id='rightSaveButton' /></td>
+					</tr>
+				</table>
+			</div>
+			<div id="rightDiv2" style="width:96%; float:left; padding: 10px" align="left">
+				<table id="rightList"></table>
+				<div id="rightNav"></div>
+			</div>
 		</div>
 	</div>
 </body>

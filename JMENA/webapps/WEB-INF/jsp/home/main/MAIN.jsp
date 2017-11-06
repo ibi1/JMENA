@@ -32,6 +32,8 @@
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxsplitter.js"></script>
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxbuttons.js"></script>
 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxbuttongroup.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxinput.js"></script>
+ 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxformattedinput.js"></script>
 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxtree.js"></script>
 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxscrollbar.js"></script>
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxmenu.js"></script>
@@ -48,7 +50,7 @@
 	
 	<script type="text/javascript">
 	 	$(document).ready(function(){
-	 		$("#messageNotification").jqxNotification({ theme: 'light',
+	 		$("#messageNotification").jqxNotification({ theme: 'bootstrap',
                 width: 400, position: "top-right", opacity: 0.9,
                 autoOpen: true, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 10000, template: "info"
             });
@@ -113,9 +115,9 @@
             $('#jqxLayout').jqxLayout({ width: '100%', height: '100%', layout: layout, resizable : false, contextMenu : false  });
 	       	*/
 	       	
-	       	$('#mainLayout').jqxSplitter({ theme: 'light',height: '100%', width: '100%', orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '101px', collapsible: false }] });
-            $('#topLayout').jqxSplitter({  theme: 'light',height: '100%', width: '100%', orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '250px', collapsible: false}] });
-            $('#centerLayout').jqxSplitter({ theme: 'light',orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '250px', collapsible: false}] });
+	       	$('#mainLayout').jqxSplitter({ theme: 'bootstrap',height: '100%', width: '100%', orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '101px', collapsible: false }] });
+            $('#topLayout').jqxSplitter({  theme: 'bootstrap',height: '100%', width: '100%', orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '250px', collapsible: false}] });
+            $('#centerLayout').jqxSplitter({ theme: 'bootstrap',orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '250px', collapsible: false}] });
             
             //시스템 메뉴 호출
 	       	$.ajax({ 
@@ -194,7 +196,7 @@
     	                // specifies the mapping between the 'text' and 'label' fields.  
     	                var records = dataAdapter.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label'}]);
     	                
-    	                $('#tree').jqxTree({ theme: 'light', source: records });
+    	                $('#tree').jqxTree({ theme: 'bootstrap', source: records });
     	                $("#tree").jqxTree('expandAll');
     	                $('#tree').jqxTree('selectItem', $("#2")[0]);
     	                
