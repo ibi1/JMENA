@@ -21,7 +21,7 @@
 			
 			$("#sysSearchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			   
-			$("#S_SYSID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#S_SYSID").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 2, minLength: 1});
 			$("#S_SYSNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#S_SORTKEY").jqxFormattedInput({theme: 'energyblue', height: 23, width: 94, radix: 'decimal', value: ''});
 			
