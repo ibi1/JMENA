@@ -13,11 +13,6 @@
 		var v_rightLastSel = 0;		//오른쪽 그리드 선택 id
 	
 		$(document).ready(function(){
-			$("#messageNotification").jqxNotification({ theme: 'bootstrap',
-                width: 400, position: "top-right", opacity: 0.9,
-                autoOpen: true, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 10000, template: 'success',
-            });
-			
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 			$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 			$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
@@ -411,10 +406,5 @@
 			</div>
 		</div>
 	</div>
-	<div id="messageNotification">
-	        <div>
-            	완료 페이지
-        	</div>
-    	</div>
 </body>
 </html>
