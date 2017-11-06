@@ -395,7 +395,7 @@
 				<table align="right">
 					
 					<tr>
-						<td><input type="button" value="추기" id='rightInsertButton' /></td>
+						<td><input type="button" value="추가" id='rightInsertButton' /></td>
 						<td><input type="button" value="저장" id='rightSaveButton' /></td>
 					</tr>
 				</table>
