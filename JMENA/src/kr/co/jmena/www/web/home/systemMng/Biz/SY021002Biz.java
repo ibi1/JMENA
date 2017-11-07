@@ -58,6 +58,18 @@ public class SY021002Biz {
 		return lst;
 	}
 	
+	public boolean insertEnaBranchMst(SY021002VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY021002Dao.insertEnaBranchMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
 	public boolean updateEnaBranchMst(SY021002VO vo) throws Exception {
 		boolean chkFlag = false;
 		
@@ -70,28 +82,39 @@ public class SY021002Biz {
 		return chkFlag;
 	}
 	
-	public boolean insertEnaBranchMst(SY021002VO vo) throws Exception {
+	public int selectDataDeptMst(SY021002VO vo) throws Exception {
+		int cnt = 0;
+		try {
+			cnt = SY021002Dao.selectDataDeptMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return cnt;
+	}
+	
+	public boolean insertEnaDeptMst(SY021002VO vo) throws Exception {
 		boolean chkFlag = false;
 		
 		try {
-			chkFlag = SY021002Dao.insertEnaBranchMst(vo);
+			chkFlag = SY021002Dao.insertEnaDeptMst(vo);
 		} catch (Exception e) {
 			throw e;
 		}
 		
 		return chkFlag;
 	}
-
-	public int saveEnaDeptMst(SY021002VO vo) throws Exception {
-		int insertCnt = 0;
-
+	
+	public boolean updateEnaDeptMst(SY021002VO vo) throws Exception {
+		boolean chkFlag = false;
+		
 		try {
-			insertCnt = SY021002Dao.saveEnaDeptMst(vo);
-		} catch ( Exception e ) {
+			chkFlag = SY021002Dao.updateEnaDeptMst(vo);
+		} catch (Exception e) {
 			throw e;
 		}
 		
-		return insertCnt;
+		return chkFlag;
 	}
 	
 }

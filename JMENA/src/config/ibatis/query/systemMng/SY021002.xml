@@ -90,6 +90,14 @@
 		ORDER BY T1.SORTKEY ASC
 	</select>
 	
+	<select id="selectDataDeptMst" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(T1.DEPTCODE) AS CNT
+		FROM ba_deptmst T1
+		WHERE 1=1
+		AND T1.DEPTCODE = #DEPTCODE#
+	</select>
+	
 	<update id="updateEnaDeptMst">
 		UPDATE ba_deptmst
 		SET
@@ -98,13 +106,13 @@
 			SORTKEY = #SORTKEY#,
 			USEYN = #USEYN#,
 			REMARK = #REMARK#,
-			UPDATEUSER = 'admin',
+			UPDATEUSER = #USERID#,
 			UPDATEDATE = NOW()
 		WHERE BRANCHCODE = #BRANCHCODE#
 		AND DEPTCODE = #DEPTCODE#
 	</update>
 	
-	<insert id="saveEnaDeptMst">
+	<insert id="insertEnaDeptMst">
 		INSERT INTO ba_deptmst
 		(
 			DEPTCODE,
@@ -114,8 +122,7 @@
 			SORTKEY,
 			USEYN,
 			REMARK,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#DEPTCODE#,
@@ -125,8 +132,7 @@
 			#SORTKEY#,
 			#USEYN#,
 			#REMARK#,
-			'admin',
-			NOW()
+			#USERID#
 		)
 	</insert>
 </sqlMap>

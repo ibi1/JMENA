@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.systemMng.Biz.SY021002Biz;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011005VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
 
 import org.apache.log4j.Logger;
@@ -179,59 +180,60 @@ public class SY021002Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/home/saveEnaDeptMst.do")
-	public ModelAndView saveEnaDeptMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping("/home/insertEnaDeptMst.do")
+	public ModelAndView insertEnaDeptMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SY021002VO vo = new SY021002VO();
 		
-		System.out.println(request.getParameter("DEPTCODE"));
-		System.out.println(request.getParameter("DEPTNAME"));
-		System.out.println(request.getParameter("BRANCHCODE"));
-		System.out.println(request.getParameter("DEPTGUBUN"));
-		System.out.println(request.getParameter("SORTKEY"));
-		System.out.println(request.getParameter("USEYN"));
-		System.out.println(request.getParameter("REMARK"));
-		
+		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
 		vo.setDEPTCODE(request.getParameter("DEPTCODE"));
 		vo.setDEPTNAME(request.getParameter("DEPTNAME"));
-		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
 		vo.setDEPTGUBUN(request.getParameter("DEPTGUBUN"));
 		vo.setSORTKEY(request.getParameter("SORTKEY"));
 		vo.setUSEYN(request.getParameter("USEYN"));
 		vo.setREMARK(request.getParameter("REMARK"));
 		
-		int insertCnt = 0;
-
-		List<SY021002VO> lst = SY021002Biz.chkEnaDeptMst(vo);
-		System.out.println("lst.size()==>"+lst.size());
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
 		
-		JSONArray jCell = new JSONArray();
+		String IU_Flag = request.getParameter("S_FLAG_R");
+		
 		JSONObject json = new JSONObject();
-		JSONObject obj = new JSONObject();
 		
-		if(lst.size() > 0){
-			obj.put("MSGCODE", "0000");
-			obj.put("MSG", "error");
-			jCell.add(obj);
-			json.put("rows", jCell);
-		}else{
-			insertCnt = SY021002Biz.saveEnaDeptMst(vo);
-			
-			obj.put("insertCnt", insertCnt);
-			json.put("rows", jCell);
-			if(insertCnt > 0){
-				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SY021002Biz.selectDataDeptMst(vo) == 0) {
+				if (SY021002Biz.insertEnaDeptMst(vo) == true) {
+					resultCode ="SUCCESS";
+					resultMsg = "정상적으로 저장하였습니다.";
+				 } else {
+					 resultCode ="FAILED";
+					 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+				 }
+			} else {
+				resultCode ="FAILED";
+				 resultMsg = "[ERROR]이미 다른 지사에 소속되어 있는 부서코드입니다.";
 			}
-			jCell.add(obj);
-			json.put("rows", jCell);
+		} else if ("U".equals(IU_Flag)) {
+			if (SY021002Biz.updateEnaDeptMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]부서 코드 처리 중 오류가 발생했습니다.";
 		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertEnaDeptMst]" + json);
 		
-		System.out.println("insertCnt==>"+insertCnt);
-		
-		System.out.println("json==>"+json);
-		
-		return new ModelAndView("jsonView", json);	
+		return new ModelAndView("jsonView", json);
 	}
-	
 }

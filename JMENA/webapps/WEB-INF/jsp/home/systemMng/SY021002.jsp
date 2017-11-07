@@ -67,6 +67,8 @@
 				f_selectListEnaDeptMst();
 			},
 			loadComplete: function() {
+				v_rightLastSel = 0;
+				
 				var branchCode = $("#RS_BRANCHCODE").val();
 				
 				var ids = jQuery("#leftList").jqGrid('getDataIDs');
@@ -122,8 +124,19 @@
 			jsonReader: {
 				repeatitems: false
 			},
-			onSelectRow : function(rowid) {
-				//$('#rightList').jqGrid('editRow',rowid,false);
+			onSelectRow : function(id) {
+				if (id > 0) {
+					$("#S_FLAG_R").val("U");
+				} else {
+					$("#S_FLAG_R").val("I");
+				}
+				
+				if( v_rightLastSel != id ){
+			        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+			        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+			        v_rightLastSel = id;
+				}
 			},
 			loadComplete: function() {
 				
@@ -262,90 +275,106 @@
 	}
 
 	$(function() {
-		$("#addButton").click(function() {
-			$("#rightList").jqGrid('addRow',0);
+		$("#rightInsertButton").click(function() {
+			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("선택된 지사가 없습니다.");
+				
+				return false;
+			}
+			
+			$("#S_FLAG_R").val("I");
+			
+			$("#rightList").jqGrid("addRow", 0);
 		});
 	})
 
 	$(function() {
-		$("#saveButton2").click(function() {
-			$('#rightList').jqGrid('restoreRow',0, true);
+		$("#rightSaveButton").click(function() {
+			var ids = $("#rightList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("그리드를 선택하셔야 합니다.");
+				
+				return false;
+			}
+			
+			//jqGrid SelectBox 는 뷰 모드 전에 값을 가져옴.
+			var deptGubun = $("#rightList [name=DEPTGUBUN] option:selected").val();
+			
+			 
+			$('#rightList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
-			
-			var cellData = $("#rightList").jqGrid('getCell', 0, 'DEPTCODE');
-			alert(cellData);
-			
-			var cellData2 = $("#rightList").jqGrid('getCell', 2, 'DEPTCODE');
-			alert(cellData2);
-			
-			var DEPTCODE = $("#jqg1_DEPTCODE").val();
-			alert(DEPTCODE);
-			
-			f_selectListEnaDeptMst();
-			$('#addButton').attr('style','visibility:visible');
-			
-/* 			var DEPTCODE = $("#jqg1_DEPTCODE").val();
-			var DEPTNAME = $("#jqg1_DEPTNAME").val();
-			var BRANCHCODE = $("#RS_BRANCHCODE").val();
-			var DEPTGUBUN = $("#jqg1_DEPTGUBUN").val();
-			var SORTKEY = $("#jqg1_SORTKEY").val();
-			var USEYN = $("#jqg1_USEYN").val();
-			var REMARK = $("#jqg1_REMARK").val();
-			
-			if(DEPTCODE==''){
-				alert("부서 코드값을 입력하세요.");
-				return false;
-			}
-			if(DEPTNAME==''){
-				alert("부서이름을 입력하세요.");
-				return false;
-			}
-			if(BRANCHCODE==''){
-				alert("지사코드를 입력하세요.");
-				return false;
-			}
-			if(DEPTGUBUN==''){
-				alert("부서 구분을 입력하세요.");
-				return false;
-			}
-			if(USEYN==''){
-				alert("사용여부를 입력하세요.");
+			var cellData = $("#rightList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+
+			if (cellData.DEPTCODE == "") {
+				alert("부서 코드를 입력하셔야 합니다.");
+				
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"_DEPTCODE").focus();
+				
 				return false;
 			}
 			
- 		   	$.ajax({ 
-				type: 'POST' ,
-				url: "/home/saveEnaDeptMst.do", 
-				data : {
-					DEPTCODE : DEPTCODE,
-					DEPTNAME : DEPTNAME,
-					BRANCHCODE : BRANCHCODE,
-					DEPTGUBUN : DEPTGUBUN,
-					SORTKEY : SORTKEY,
-					USEYN : USEYN,
-					REMARK : REMARK
-				},
-				datatype:"json" ,
-				success: function(data){
-					if(data.rows[0].MSGCODE == "0000")
-					{
-						alert("부서 구분이 중복되어 저장되지 않습니다.\n\n부서구분을 확인하세요.");
-						f_selectListEnaDeptMst();
-					}else{
-						if(data.rows[0].MSG == "success"){
-							alert("저장이 완료되었습니다.");
-							$('#addButton').attr('style','visibility:visible');
-							f_selectListEnaDeptMst();
-						}else{
-							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-						}
-					}
-				},
-				error:function(e){  
-					alert("부서정보를 저장중 오류가 발생하였습니다.");
-				}  
-			});
- */			
+			if (cellData.DEPTNAME == "") {
+				alert("부서 명을 입력하셔야 합니다.");
+				
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"_DEPTNAME").focus();
+				
+				return false;
+			}
+			
+			if (cellData.SORTKEY == "") {
+				alert("정렬 순서를 입력하셔야 합니다.");
+				
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"_SORTKEY").focus();
+				
+				return false;
+			}
+			
+			var msg = "";
+			if ($("#S_FLAG_R").val() == "I") {
+				msg = "저장하시겠습니까?";
+			} else {
+				msg = "수정하시겠습니까?"
+			}
+
+			if (confirm(msg) == true) {
+				var formData = "S_FLAG_R=" + $("#S_FLAG_R").val() + 
+				               "&BRANCHCODE=" + $("#RS_BRANCHCODE").val() + 
+				               "&DEPTCODE=" + cellData.DEPTCODE + 
+				               "&DEPTNAME=" + cellData.DEPTNAME + 
+				               "&DEPTGUBUN=" + deptGubun + 
+				               "&SORTKEY=" + cellData.SORTKEY +
+				               "&USEYN=" + cellData.USEYN + 
+				               "&REMARK=" + cellData.REMARK;
+				               
+				
+				$.ajax({ 
+					type: 'POST' ,
+					data: formData,
+					url: "/home/insertEnaDeptMst.do", 
+					dataType : 'json' , 
+					success: function(data){
+						$("#S_FLAG_R").val("U");
+						
+						v_rightLastSel = 0;
+						
+						alert(data.resultMsg);
+						
+						$("#searchButton").click();
+					},
+					error:function(e){  
+						alert("[ERROR]부서 정보 처리  중 오류가 발생하였습니다.");
+					}  
+				});
+			} else {
+				v_rightLastSel = 0;
+				$("#searchButton").click();
+			}
 		});
 	})
 	
@@ -353,6 +382,7 @@
 </script>
 </head>
 <body>
+	<div id="TEST"></div>
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table align="right">
@@ -396,6 +426,7 @@
 					</tr>
 				</table>
 			</form>
+			<input type="hidden" id="S_FLAG_R" name="S_FLAG_R" />
 			<div style="width:96%; float:left; padding: 10px" align="left">
 				<table align="right">
 					<tr>
