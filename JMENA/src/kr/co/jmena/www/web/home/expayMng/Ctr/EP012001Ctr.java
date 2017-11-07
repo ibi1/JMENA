@@ -69,11 +69,23 @@ public class EP012001Ctr {
 			
 			obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
 			obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
+			obj.put("PAYDATE",lst.get(i).getPAYDATE());
+			obj.put("CONNAME",lst.get(i).getCONNAME());
+			obj.put("ADDRESS",lst.get(i).getADDRESS());
+			obj.put("CONM2",lst.get(i).getCONM2());
+			obj.put("CONPY",lst.get(i).getCONPY());
+			obj.put("KNAME",lst.get(i).getKNAME());
+			obj.put("PAYERNAME",lst.get(i).getPAYERNAME());
+			obj.put("PAYERID",lst.get(i).getPAYERID());
+			obj.put("PAYAMT",lst.get(i).getPAYAMT());
+			obj.put("TAXINCOME",lst.get(i).getTAXINCOME());
+			obj.put("TAXLOCAL",lst.get(i).getTAXLOCAL());
+			obj.put("TOTTAX",lst.get(i).getTOTTAX());
+			obj.put("DEDUCTAMT",lst.get(i).getDEDUCTAMT());
 			
 			jCell.add(obj);
 		}
 		
-		json.put("records", lst.size());
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);
@@ -110,11 +122,23 @@ public class EP012001Ctr {
 			
 			obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
 			obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
+			obj.put("PAYDATE",lst.get(i).getPAYDATE());
+			obj.put("CONNAME",lst.get(i).getCONNAME());
+			obj.put("ADDRESS",lst.get(i).getADDRESS());
+			obj.put("CONM2",lst.get(i).getCONM2());
+			obj.put("CONPY",lst.get(i).getCONPY());
+			obj.put("KNAME",lst.get(i).getKNAME());
+			obj.put("SAUPOWNER",lst.get(i).getSAUPOWNER());
+			obj.put("PAYERID",lst.get(i).getPAYERID());
+			obj.put("PAYAMT",lst.get(i).getPAYAMT());
+			obj.put("SUPPLYAMT",lst.get(i).getSUPPLYAMT());
+			obj.put("SUPPLYTAX",lst.get(i).getSUPPLYTAX());
+			obj.put("SUPPLYTAX2",lst.get(i).getSUPPLYTAX2());
+			obj.put("DEDUCTAMT",lst.get(i).getDEDUCTAMT());
 			
 			jCell.add(obj);
 		}
 		
-		json.put("records", lst.size());
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);

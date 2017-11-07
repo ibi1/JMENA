@@ -6,14 +6,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
-	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
-
 </head>
 
 
 <script type="text/javascript">
 	$(document).ready(function(){
+
+		var S_PAYDATE = "";
+		var S_BRANCHCODE = "";
+		var S_DEPTCODE = "";
+		var S_KNAME = "";
+
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
 		f_selectListEP012001();
 		f_selectListEP012001_2();
@@ -21,17 +27,14 @@
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
-		$("#mainList1Div").show();
-		$("#mainList2Div").hide();
 		
 		$('input:radio[name=TAXGUBUN]:input[value=001]').attr("checked", true);
-
-		var S_PAYDATE = "";
-		var S_BRANCHCODE = "";
-		var S_DEPTCODE = "";
-		var S_KNAME = "";
 		
 		f_selectListEP012001(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+		
+		$("#mainList1").show();
+		$("#mainList2").hide();
+		
 		
 	});
 
@@ -87,108 +90,146 @@
 	}
 	
 	function f_selectListEP012001(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
-		$('#mainList1').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList1').jqGrid({
-			//caption: '월 소득세신고 내역 - 사업소득세', 
-			url:"/home/selectListEP012001.do" ,
-			datatype:"json",
-			postData : {
-				S_PAYDATE : S_PAYDATE
-				,S_BRANCHCODE : S_BRANCHCODE
-				,S_DEPTCODE : S_DEPTCODE
-				,S_KNAME : S_KNAME
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['지사', '부서', '지급일', '고객', '물건지',
-			          '계약면적', '계약평수', '담당자', '소득신고', '주민번호',
-			          '총지금액', '소득세', '지방세', '세금 계', '실 지급액'],
-			colModel:[
-						{name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-						,{name:"DEPTNAME",		index:'DEPTNAME',		width:100,	align:'center'}
-						,{name:"PAYDATE",		index:'PAYDATE',		width:100,	align:'center'}
-						,{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center'}
-						,{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center'}
-						,{name:"CONM2",			index:'CONM2',			width:100,	align:'center'}
-						,{name:"CONPY",			index:'CONPY',			width:100,	align:'center'}
-						,{name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
-						,{name:"PAYERNAME",		index:'PAYERNAME',		width:100,	align:'center'}
-						,{name:"PAYERID",		index:'PAYERID',		width:100,	align:'center'}
-						,{name:"PAYAMT",		index:'PAYAMT',			width:100,	align:'center'}
-						,{name:"TAXINCOME",		index:'TAXINCOME',		width:100,	align:'center'}
-						,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:100,	align:'center'}
-						,{name:"TOTTAX",		index:'TOTTAX',			width:100,	align:'center'}
-						,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:100,	align:'center'}
-			],
-			rowNum:100,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+		var url = "/home/selectListEP012001.do?S_PAYDATE=" + S_PAYDATE + "S_BRANCHCODE=" + S_BRANCHCODE + "S_DEPTCODE=" + S_DEPTCODE + "S_KNAME=" + S_KNAME;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{ name:"BRANCHNAME", type: 'string' },
+				{ name:"DEPTNAME", type: 'string' },
+				{ name:"PAYDATE", type: 'string' },
+				{ name:"CONNAME", type: 'string' },
+				{ name:"ADDRESS", type: 'string' },
+				{ name:"CONM2", type: 'string' },
+				{ name:"CONPY", type: 'string' },
+				{ name:"KNAME", type: 'string' },
+				{ name:"PAYERNAME", type: 'string' },
+				{ name:"PAYERID", type: 'string' },
+				{ name:"PAYAMT", type: 'string' },
+				{ name:"TAXINCOME", type: 'string' },
+				{ name:"TAXLOCAL", type: 'string' },
+				{ name:"TOTTAX", type: 'string' },
+				{ name:"DEDUCTAMT", type: 'string' }
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'KNAME',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList1").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+              { text: '지사', datafield: 'BRANCHNAME', width: 100, cellsalign: 'center' },
+              { text: '부서', datafield: 'DEPTNAME', width: 100, cellsalign: 'center' },
+              { text: '지급일', datafield: 'PAYDATE', width: 100, cellsalign: 'center' },
+              { text: '고객', datafield: 'CONNAME', width: 100, cellsalign: 'center' },
+              { text: '물건지', datafield: 'ADDRESS', width: 100, cellsalign: 'center' },
+              { text: '계약면적', datafield: 'CONM2', width: 100, cellsalign: 'center' },
+              { text: '계약평수', datafield: 'CONPY', width: 100, cellsalign: 'center' },
+              { text: '담당자', datafield: 'KNAME', width: 100, cellsalign: 'center' },
+              { text: '소득신고', datafield: 'PAYERNAME', width: 100, cellsalign: 'center' },
+              { text: '주민번호', datafield: 'PAYERID', width: 100, cellsalign: 'center' },
+              { text: '총지금액', datafield: 'PAYAMT', width: 100, cellsalign: 'center' },
+              { text: '소득세', datafield: 'TAXINCOME', width: 100, cellsalign: 'center' },
+              { text: '지방세', datafield: 'TAXLOCAL', width: 100, cellsalign: 'center' },
+              { text: '세금 계', datafield: 'TOTTAX', width: 100, cellsalign: 'center' },
+              { text: '실 지급액', datafield: 'DEDUCTAMT', width: 100, cellsalign: 'center' }
+            ]
+        });
 	
 	}
 	function f_selectListEP012001_2(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
-		$('#mainList2').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList2').jqGrid({
-			//caption: '월 소득세신고 내역 - 부가가치세', 
-			url:"/home/selectListEP012001_2.do" ,
-			datatype:"json",
-			postData : {
-				S_PAYDATE : S_PAYDATE
-				,S_BRANCHCODE : S_BRANCHCODE
-				,S_DEPTCODE : S_DEPTCODE
-				,S_KNAME : S_KNAME
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['지사', '부서', '지급일', '고객', '물건지',
-			          '계약면적', '계약평수', '담당자', '회사명', '사업자번호',
-			          '총지급액', '공급가', '부가세', '미지급금', '실 지급액'],
-			colModel:[
-						{name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-						,{name:"DEPTNAME",		index:'DEPTNAME',		width:100,	align:'center'}
-						,{name:"PAYDATE",		index:'PAYDATE',		width:100,	align:'center'}
-						,{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center'}
-						,{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center'}
-						,{name:"CONM2",			index:'CONM2',			width:100,	align:'center'}
-						,{name:"CONPY",			index:'CONPY',			width:100,	align:'center'}
-						,{name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
-						,{name:"SAUPOWNER",		index:'SAUPOWNER',		width:100,	align:'center'}
-						,{name:"PAYERID",		index:'PAYERID',		width:100,	align:'center'}
-						,{name:"PAYAMT",		index:'PAYAMT',			width:100,	align:'center'}
-						,{name:"SUPPLYAMT",		index:'SUPPLYAMT',		width:100,	align:'center'}
-						,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:100,	align:'center'}
-						,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:100,	align:'center'}
-						,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:100,	align:'center'}
-						
-			],
-			rowNum:100,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+		var url = "/home/selectListEP012001_2.do?S_PAYDATE=" + S_PAYDATE + "S_BRANCHCODE=" + S_BRANCHCODE + "S_DEPTCODE=" + S_DEPTCODE + "S_KNAME=" + S_KNAME;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"BRANCHNAME",		type: 'string' },
+				{name:"DEPTNAME",		type: 'string' },
+				{name:"PAYDATE",		type: 'string' },
+				{name:"CONNAME",		type: 'string' },
+				{name:"ADDRESS",		type: 'string' },
+				{name:"CONM2",			type: 'string' },
+				{name:"CONPY",			type: 'string' },
+				{name:"KNAME",			type: 'string' },
+				{name:"SAUPOWNER",		type: 'string' },
+				{name:"PAYERID",		type: 'string' },
+				{name:"PAYAMT",			type: 'string' },
+				{name:"SUPPLYAMT",		type: 'string' },
+				{name:"SUPPLYTAX",		type: 'string' },
+				{name:"SUPPLYTAX2",		type: 'string' },
+				{name:"DEDUCTAMT",		type: 'string' }
+
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'KNAME',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList2").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+				{ text: '지사', 		datafield: 'BRANCHNAME',	width: 100, cellsalign: 'center'},
+				{ text: '부서', 		datafield: 'DEPTNAME',		width: 100, cellsalign: 'center'},
+				{ text: '지급일', 		datafield: 'PAYDATE',		width: 100, cellsalign: 'center'},
+				{ text: '고객', 		datafield: 'CONNAME',		width: 100, cellsalign: 'center'},
+				{ text: '물건지', 		datafield: 'ADDRESS',		width: 100, cellsalign: 'center'},
+				{ text: '계약면적',		datafield: 'CONM2',			width: 100, cellsalign: 'center'},
+				{ text: '계약평수',		datafield: 'CONPY',			width: 100, cellsalign: 'center'},
+				{ text: '담당자', 		datafield: 'KNAME',			width: 100, cellsalign: 'center'},
+				{ text: '회사명', 		datafield: 'SAUPOWNER',		width: 100, cellsalign: 'center'},
+				{ text: '사업자번호',	datafield: 'PAYERID',		width: 100, cellsalign: 'center'},
+				{ text: '총지급액',		datafield: 'PAYAMT',		width: 100, cellsalign: 'center'},
+				{ text: '공급가',		datafield: 'SUPPLYAMT',		width: 100, cellsalign: 'center'},
+				{ text: '부가세',		datafield: 'SUPPLYTAX',		width: 100, cellsalign: 'center'},
+				{ text: '미지급금',		datafield: 'SUPPLYTAX2',	width: 100, cellsalign: 'center'},
+				{ text: '실 지급액',	datafield: 'DEDUCTAMT',		width: 100, cellsalign: 'center'}
+            ]
+        });
 	}
 	
 	$(function(){
@@ -208,11 +249,9 @@
 				f_selectListEP012001_2(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 			}
 			
-		})
-	})
-
-	
-	$(function(){
+		});
+		
+		
 		$("input[name=TAXGUBUN]").change(function() {
 			var S_PAYDATE = $("#S_PAYDATE").val();
 			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
@@ -221,18 +260,28 @@
 			
 			var radioValue = $(this).val();
 			
-			alert(radioValue);
-			
 			if (radioValue == "001") {
-				$("#mainList1Div").show();
-				$("#mainList2Div").hide();
 				f_selectListEP012001(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+				$("#mainList1").show();
+				$("#mainList2").hide();
 			} else{
-				$("#mainList2Div").show();
-				$("#mainList1Div").hide();
 				f_selectListEP012001_2(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+				$("#mainList2").show();
+				$("#mainList1").hide();
 			}
-		});		
+		});
+		
+		$("#excelButton").click(function () {
+			var temp = $(':radio[name="TAXGUBUN"]:checked').val();
+			
+			if(temp == '001'){
+		        $("#mainList1").jqxGrid('exportdata', 'xls', 'EnglishFileName1', true, null, true, null, 'utf-8');           
+				
+			}else{
+		        $("#mainList2").jqxGrid('exportdata', 'xls', 'EnglishFileName2', true, null, true, null, 'utf-8');           
+			}
+	    });
+		
 	})
 	
 	
@@ -245,9 +294,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -275,12 +324,8 @@
 					<td colspan="7"><input type="radio" id="TAXGUBUN" name="TAXGUBUN" value="001"/> 사업소득세   <input type="radio" id="TAXGUBUN" name="TAXGUBUN" value="002"/> 부가가치세 </td>
 				</tr>
 			</table><br/>
-			<div id="mainList1Div" style="width:98%;">
-				<table id="mainList1" style="width:98%;"></table>
-			</div>
-			<div id="mainList2Div" style="width:98%;">
-				<table id="mainList2" style="width:98%;"></table>
-			</div>
+			<div id="mainList1" width="98%"></div>
+			<div id="mainList2" width="98%"></div>
 		</div>
 	</div>
 </body>
