@@ -128,7 +128,6 @@
 	            source: dataAdapter,                
 	            pageable: false,
 	            autoheight: false,
-	            sortable: true,
 	            altrows: true,
 	            enabletooltips: true,
 	            editable: false,
@@ -159,29 +158,6 @@
 	            ]
 	        });
 		}
-/*	
-		$(function(){
-			$("#excelButton").click(function(){
-			    $.ajax({ 
-					type: 'POST' ,
-					data: $("#searchForm").serialize(),
-					url: "/home/MM012001_exportToExcel.do" , 
-					dataType : 'json' , 
-					success: function(data){
-						if(data.rows[0].MSG == "success")
-						{
-							alert("저장이 완료되었습니다.");
-							f_reload();
-						}else{
-							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-						}
-					},
-					error:function(e){  
-					}  
-				}); 
-			})
-		})
-	*/
 	
 		$(function(){
 			$("#selectButton").click(function(){
@@ -193,7 +169,8 @@
 			});
 				
 			$("#excelButton").click(function () {
-		        $("#mainList").jqxGrid('exportdata', 'xls', '원지주 잔금현황');           
+				//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+		        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
 		    });
 		})
 	</script>
