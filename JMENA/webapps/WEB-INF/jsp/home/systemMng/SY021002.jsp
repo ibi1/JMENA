@@ -9,11 +9,9 @@
 	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
 
-</head>
 <script type="text/javascript">
 	var DeptCode = "";
 	$(document).ready(function(){
-
 		f_selectListEnaBranchMst();
 		f_selectListEnaDeptMst();
 	});
@@ -123,7 +121,6 @@
 	
 	$(function(){
 		$("#selectButton").click(function(){
-			$("#LS_BRANCHNAME").val("");
 			$("#RS_BRANCHCODE").val("");
 			$("#RS_BRANCHNAME").val("");
 			$("#RS_USEYN").val("Y");
@@ -134,12 +131,26 @@
 		}) 
 	})
 	
+	function f_selectBranchMst() {
+		var keyCode = window.event.keyCode;
+		if(keyCode==13) {
+			$("#selectButton").click();
+		}
+	}
+	
 	$(function() {
 		$("#searchButton").click(function() {
 			$("#LS_BRANCHNAME").val("");
 			f_selectListEnaBranchMst();
 		});
 	})
+	
+	function f_searchBranchCode() {
+		var keyCode = window.event.keyCode;
+		if(keyCode==13) {
+			$("#searchButton").click();
+		}
+	}
 
 	$(function() {
 		$("#insertButton").click(function() {
@@ -291,6 +302,7 @@
 	
 	
 </script>
+</head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
@@ -308,7 +320,7 @@
 			<table class="blueone">
 				<tr>
 					<td>지사명</td>
-					<td><input type="text" id="LS_BRANCHNAME" name="LS_BRANCHNAME" /></td>
+					<td><input type="text" id="LS_BRANCHNAME" name="LS_BRANCHNAME" onkeydown="f_selectBranchMst();"/></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
@@ -318,7 +330,7 @@
 				<table class="blueone">
 					<tr>
 						<td>지사코드</td>
-						<td><input type="text" id="RS_BRANCHCODE" name="RS_BRANCHCODE" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">=></a></td>
+						<td><input type="text" id="RS_BRANCHCODE" name="RS_BRANCHCODE" onkeydown="f_searchBranchCode();"/>&nbsp;<a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">=></a></td>
 					</tr>
 					<tr>
 						<td>지사명</td>
