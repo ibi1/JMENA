@@ -31,11 +31,7 @@
 		WHERE 1=1
 		<isNotEmpty property="BRANCHNAME">
 		AND T1.BRANCHNAME LIKE '%$BRANCHNAME$%'  
-		</isNotEmpty>
-		<isNotEmpty property="BRANCHCODE">
-		AND T1.BRANCHCODE = #BRANCHCODE#
-		</isNotEmpty>
-		
+		</isNotEmpty>		
 	</select>
 	
 	<update id="updateEnaBranchMst">
@@ -43,7 +39,7 @@
 		SET
 			BRANCHNAME = #BRANCHNAME#,
 			USEYN = #USEYN#,
-			UPDATEUSER = 'admin',
+			UPDATEUSER = #USERID#,
 			UPDATEDATE = NOW()
 		WHERE BRANCHCODE = #BRANCHCODE#
 	</update>
@@ -54,15 +50,13 @@
 			BRANCHCODE,
 			BRANCHNAME,
 			USEYN,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#BRANCHCODE#,
 			#BRANCHNAME#,
 			#USEYN#,
-			'admin',
-			NOW()
+			#USERID#
 		)
 	</insert>
 	

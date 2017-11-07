@@ -43,20 +43,24 @@ public class SY021002Dao extends SqlMapClientDaoSupport {
 		return lst;
 	}
 	
-	public int updateEnaBranchMst(SY021002VO vo) throws DataAccessException {
-		int updateCnt = 0;
+	public boolean updateEnaBranchMst(SY021002VO vo) throws DataAccessException {
+		boolean chkFlag = false;
 		
-		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaBranchMst", vo);
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaBranchMst", vo);
 		
-		return updateCnt;
+		if (cnt > 0) chkFlag = true;
+		
+		return chkFlag;
 	}
 	
-	public int insertEnaBranchMst(SY021002VO vo) throws DataAccessException {
-		int insertCnt = 0;
+	public boolean insertEnaBranchMst(SY021002VO vo) throws DataAccessException {
+		boolean chkFlag = false;
 		
-		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaBranchMst", vo);
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaBranchMst", vo);
 		
-		return insertCnt;
+		if (cnt > 0) chkFlag = true;
+		
+		return chkFlag;
 	}
 
 	public int saveEnaDeptMst(SY021002VO vo) throws DataAccessException {

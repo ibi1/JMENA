@@ -58,28 +58,28 @@ public class SY021002Biz {
 		return lst;
 	}
 	
-	public int updateEnaBranchMst(SY021002VO vo) throws Exception {
-		int updateCnt = 0;
-
+	public boolean updateEnaBranchMst(SY021002VO vo) throws Exception {
+		boolean chkFlag = false;
+		
 		try {
-			updateCnt = SY021002Dao.updateEnaBranchMst(vo);
-		} catch ( Exception e ) {
+			chkFlag = SY021002Dao.updateEnaBranchMst(vo);
+		} catch (Exception e) {
 			throw e;
 		}
 		
-		return updateCnt;
+		return chkFlag;
 	}
 	
-	public int insertEnaBranchMst(SY021002VO vo) throws Exception {
-		int insertCnt = 0;
-
+	public boolean insertEnaBranchMst(SY021002VO vo) throws Exception {
+		boolean chkFlag = false;
+		
 		try {
-			insertCnt = SY021002Dao.insertEnaBranchMst(vo);
-		} catch ( Exception e ) {
+			chkFlag = SY021002Dao.insertEnaBranchMst(vo);
+		} catch (Exception e) {
 			throw e;
 		}
 		
-		return insertCnt;
+		return chkFlag;
 	}
 
 	public int saveEnaDeptMst(SY021002VO vo) throws Exception {

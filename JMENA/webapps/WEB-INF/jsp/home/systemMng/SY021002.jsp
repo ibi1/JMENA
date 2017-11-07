@@ -11,7 +11,17 @@
 
 <script type="text/javascript">
 	var DeptCode = "";
+	var v_rightLastSel = 0;
+	
 	$(document).ready(function(){
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
+		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+		
 		f_selectListEnaBranchMst();
 		f_selectListEnaDeptMst();
 	});
@@ -26,8 +36,7 @@
 			datatype:"json" ,
 			mtype: 'POST',
 			postData : {
-				BRANCHNAME : $("#LS_BRANCHNAME").val(),
-				BRANCHCODE : $("#RS_BRANCHCODE").val()
+				BRANCHNAME : $("#LS_BRANCHNAME").val()
 			},
 			loadtext: '로딩중...',
 			loadError:function(){alert("Error~!!");} ,
@@ -47,14 +56,33 @@
 				repeatitems: false
 			},
 			onSelectRow: function(ids){
+				$("#S_FLAG_L").val("U");
+				
 				var selRowData = $(this).jqGrid('getRowData', ids);
-		        
+									
 				$("#RS_BRANCHCODE").val(selRowData.BRANCHCODE);
 				$("#RS_BRANCHNAME").val(selRowData.BRANCHNAME);
 				$("#RS_USEYN").val(selRowData.USEYN);
-				
+					
 				f_selectListEnaDeptMst();
-			} ,
+			},
+			loadComplete: function() {
+				var branchCode = $("#RS_BRANCHCODE").val();
+				
+				var ids = jQuery("#leftList").jqGrid('getDataIDs');
+				
+				ids.some(function(currentValue, index, array){
+					var cellData = $("#leftList").jqGrid('getCell', ids[index], 'BRANCHCODE');
+					if (cellData == branchCode) {
+						$("#S_FLAG_L").val("U");
+						$("#RS_BRANCHCODE").prop("disabled", true);
+		        		$("#leftList").jqGrid('setSelection', ids[index]);
+		    			return true;
+		        	} else {
+		        		$("#S_FLAG_L").val("I");
+		        	}	        
+				});
+			},
 			hidegrid: false
 		});
 
@@ -95,7 +123,7 @@
 				repeatitems: false
 			},
 			onSelectRow : function(rowid) {
-				$('#rightList').jqGrid('editRow',rowid,false);
+				//$('#rightList').jqGrid('editRow',rowid,false);
 			},
 			loadComplete: function() {
 				
@@ -121,6 +149,7 @@
 	
 	$(function(){
 		$("#selectButton").click(function(){
+			$("#RS_BRANCHCODE").prop("disabled", false);
 			$("#RS_BRANCHCODE").val("");
 			$("#RS_BRANCHNAME").val("");
 			$("#RS_USEYN").val("Y");
@@ -140,7 +169,21 @@
 	
 	$(function() {
 		$("#searchButton").click(function() {
+			if( $("#RS_BRANCHCODE").val() == "") {
+				alert("지사코드를 입력하셔야 합니다."); 
+				$("#RS_BRANCHCODE").focus();
+				 
+				 return false;
+			}
+			
 			$("#LS_BRANCHNAME").val("");
+			$("#RS_BRANCHCODE").prop("disabled", false);
+			$("#RS_BRANCHNAME").val("");
+			$("#RS_BRANCHNAME").focus();
+			$("#RS_USEYN").val("Y");
+			
+			$('#rightList').jqGrid('clearGridData');
+			
 			f_selectListEnaBranchMst();
 		});
 	})
@@ -155,6 +198,7 @@
 	$(function() {
 		$("#insertButton").click(function() {
 			$("#LS_BRANCHNAME").val("");
+			$("#RS_BRANCHCODE").prop("disabled", false);
 			$("#RS_BRANCHCODE").val("");
 			$("#RS_BRANCHNAME").val("");
 			$("#RS_USEYN").val("Y");
@@ -162,59 +206,64 @@
 			$("#RS_BRANCHCODE").focus();
 			
 			$('#rightList').jqGrid('clearGridData');
+			
+			f_selectListEnaBranchMst();
 		});
 	})
 	
 	$(function() {
 		$("#saveButton").click(function() {
-			var formData = $("#SY021002").serialize();
-			var BRANCHCODE = $("#RS_BRANCHCODE").val();
-			var BRANCHNAME = $("#RS_BRANCHNAME").val();
-			var USEYN = $("#RS_USEYN").val();
-			
-			if(BRANCHCODE == ""){
+			if($("#RS_BRANCHCODE").val() == ""){
 				alert("지사코드를 입력하세요.");
 				$("#RS_BRANCHCODE").focus();
 				return false;
 			}
 			
-			if(BRANCHNAME == ""){
+			if($("#RS_BRANCHNAME").val() == ""){
 				alert("지사명을 입력하세요.");
 				$("#RS_BRANCHNAME").focus();
 				return false;
 			}
 			
-		   	$.ajax({ 
-				type: 'POST' ,
-				url: "/home/saveEnaBranchMst.do", 
-				data : formData,
-				datatype:"json" ,
-				success: function(data){
-					if(data.rows[0].MSG == "success")
-					{
-						alert("저장이 완료되었습니다.");
-						f_selectListEnaBranchMst();
-					}else{
-						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-					}
-					
-				},
-				error:function(e){  
-					alert("지사정보를 저장중 오류가 발생하였습니다.");
-				}  
-			});
-			
+			var msg = "";
+			if ($("#S_FLAG_L").val() == "I") {
+				msg = "저장하시겠습니까?";
+			} else {
+				msg = "수정하시겠습니까?"
+			}
+			if (confirm(msg) == true) {
+				$("#RS_BRANCHCODE").prop("disabled", false);
+				
+				$.ajax({ 
+					type: 'POST' ,
+					data: $("#SY021002").serialize(),
+					url: "/home/insertEnaBranchMst.do", 
+					dataType : 'json' , 
+					success: function(data){
+						$("#S_FLAG_L").val("U");
+						
+						alert(data.resultMsg);
+						
+						$("#searchButton").click();
+					},
+					error:function(e){  
+						alert("[ERROR]프로그램 저장  중 오류가 발생하였습니다.");
+					}  
+				});
+			}
 		});
 	})
+	
+	function f_saveBranchCode() {
+		var keyCode = window.event.keyCode;
+		if(keyCode==13) {
+			$("#saveButton").click();
+		}
+	}
 
 	$(function() {
 		$("#addButton").click(function() {
-			
-			
-			$('#addButton').attr('style','visibility:hidden');
 			$("#rightList").jqGrid('addRow',0);
-			$('#rightList').jqGrid('editRow',0,false);
-			
 		});
 	})
 
@@ -305,14 +354,12 @@
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="99%">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a>
-						<a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a>
-					</td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
@@ -327,14 +374,16 @@
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<form id="SY021002">
+				<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
 				<table class="blueone">
 					<tr>
 						<td>지사코드</td>
-						<td><input type="text" id="RS_BRANCHCODE" name="RS_BRANCHCODE" onkeydown="f_searchBranchCode();"/>&nbsp;<a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">=></a></td>
+						<td><input type="text" id="RS_BRANCHCODE" name="RS_BRANCHCODE" onkeydown="f_searchBranchCode();"/></td>
+						<td><input type="button" id='searchButton' /></td>
 					</tr>
 					<tr>
 						<td>지사명</td>
-						<td><input type="text" id="RS_BRANCHNAME" name="RS_BRANCHNAME" /></td>
+						<td><input type="text" id="RS_BRANCHNAME" name="RS_BRANCHNAME" onkeydown="f_saveBranchCode();" /></td>
 					</tr>
 					<tr>
 						<td>사용여부</td>
@@ -347,21 +396,17 @@
 					</tr>
 				</table>
 			</form>
-			<br/>
-			<div id="topDiv2" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-				<table width="99%">
+			<div style="width:96%; float:left; padding: 10px" align="left">
+				<table align="right">
 					<tr>
-						<td align="right">
-							<a class="ui-button ui-widget ui-corner-all" id="addButton" name="addButton">추가</a>
-							<a class="ui-button ui-widget ui-corner-all" id="saveButton2" name="saveButton2">저장</a>
-						</td>
+						<td><input type="button" value="추가" id='rightInsertButton' /></td>
+						<td><input type="button" value="저장" id='rightSaveButton' /></td>
 					</tr>
 				</table>
 			</div>
-			<br/>			
-			<br/>
-			<br/>
-			<table id="rightList"></table>
+			<div id="rightDiv2" style="width:96%; float:left; padding: 10px" align="left">
+				<table id="rightList"></table>
+			</div>
 		</div>
 	</div>
 </body>

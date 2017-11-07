@@ -10,6 +10,7 @@ public class SY021002VO {
 	private String DEPTGUBUN;
 	private String SORTKEY;
 	private String REMARK;
+	private String USERID;
 	
 	
 	public String getBRANCHCODE() {
@@ -61,6 +62,12 @@ public class SY021002VO {
 	}
 	public void setREMARK(String REMARK) {
 		this.REMARK = REMARK;
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
 	}
 	
 

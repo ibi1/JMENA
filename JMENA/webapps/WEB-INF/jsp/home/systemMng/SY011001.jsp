@@ -233,7 +233,7 @@
 				if (confirm(msg) == true) {
 					$.ajax({ 
 						type: 'POST' ,
-						data: $("#SY011001").serialize(),
+						data: $("#SY021002").serialize(),
 						url: "/home/insertDataSysMst.do", 
 						dataType : 'json' , 
 						success: function(data){

@@ -5,8 +5,10 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.systemMng.Biz.SY021002Biz;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
 
 import org.apache.log4j.Logger;
@@ -52,7 +54,6 @@ public class SY021002Ctr {
 		SY021002VO vo = new SY021002VO();
 		
 		vo.setBRANCHNAME(request.getParameter("BRANCHNAME"));
-		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
 		
 		List<SY021002VO> lst = SY021002Biz.selectListEnaBranchMst(vo);
 		
@@ -123,63 +124,54 @@ public class SY021002Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/home/saveEnaBranchMst.do")
-	public ModelAndView saveEnaBranchMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping("/home/insertEnaBranchMst.do")
+	public ModelAndView insertEnaBranchMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SY021002VO vo = new SY021002VO();
-		
-		System.out.println("BRANCHCODE==>"+request.getParameter("RS_BRANCHCODE"));
-		System.out.println("BRANCHNAME==>"+request.getParameter("RS_BRANCHNAME"));
-		System.out.println("USEYN==>"+request.getParameter("RS_USEYN"));
 		
 		vo.setBRANCHCODE(request.getParameter("RS_BRANCHCODE"));
 		vo.setBRANCHNAME(request.getParameter("RS_BRANCHNAME"));
 		vo.setUSEYN(request.getParameter("RS_USEYN"));
 		
-		int updateCnt = 0;
-		int insertCnt = 0;
-
-		List<SY021002VO> lst = SY021002Biz.selectListEnaBranchMst(vo);
-		System.out.println("lst.size()==>"+lst.size());
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
 		
-		JSONArray jCell = new JSONArray();
+		String IU_Flag = request.getParameter("S_FLAG_L");
+		
 		JSONObject json = new JSONObject();
 		
-		if(lst.size() > 0){
-			updateCnt = SY021002Biz.updateEnaBranchMst(vo);
-			
-			
-			JSONObject obj = new JSONObject();
-			if(updateCnt > 0){
-				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
-			}
-			jCell.add(obj);
-			json.put("rows", jCell);
-			
-		}else{
-			insertCnt = SY021002Biz.insertEnaBranchMst(vo);
-			
-			JSONObject obj = new JSONObject();
-			obj.put("insertCnt", insertCnt);
-			json.put("rows", jCell);
-			if(insertCnt > 0){
-				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
-			}
-			jCell.add(obj);
-			json.put("rows", jCell);
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SY021002Biz.insertEnaBranchMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY021002Biz.updateEnaBranchMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]지사 코드 처리 중 오류가 발생했습니다.";
 		}
-		
-		System.out.println("updateCnt==>"+updateCnt);
-		System.out.println("insertCnt==>"+insertCnt);
-		
-		System.out.println("json==>"+json);
-		
-		return new ModelAndView("jsonView", json);	
-	}
 
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertEnaBranchMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
 	/**
 	 * @name 지사및부서관리 화면
 	 * @param request
