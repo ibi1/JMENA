@@ -191,27 +191,10 @@
 				
 				f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 			});
-			
-		$("#excelButton").click(function () {
-	        $("#mainList").jqxGrid('exportdata', 'xls', '원지주 잔금현황');           
-	    });
-	    
-			$("#printButton").click(function () {
-	            var gridContent = $("#mainList").jqxGrid('exportdata', 'html');
-	            var newWindow = window.open('', '', 'width=1200, height=500'),
-	            document = newWindow.document.open(),
-	            pageContent =
-	                '<!DOCTYPE html>\n' +
-	                '<html>\n' +
-	                '<head>\n' +
-	                '<meta charset="utf-8" />\n' +
-	                '<title>원지주 잔금현황</title>\n' +
-	                '</head>\n' +
-	                '<body>\n' + gridContent + '\n</body>\n</html>';
-	            document.write(pageContent);
-	            document.close();
-	            newWindow.print();
-	        });
+				
+			$("#excelButton").click(function () {
+		        $("#mainList").jqxGrid('exportdata', 'xls', '원지주 잔금현황');           
+		    });
 		})
 	</script>
 </head>
