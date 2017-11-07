@@ -21,7 +21,7 @@
 		f_selectListEnaBranchCode();
 		
 		
-		selectListEnaSaleMstP(S_SALEDATE, S_BOROUGHCODE, S_KNAME);
+		f_selectListSA012001(S_SALEDATE, S_BOROUGHCODE, S_KNAME);
 	});
 
 	
@@ -44,11 +44,11 @@
 		});
 	}
 	
-	function selectListEnaSaleMstP(S_SALEDATE, S_BOROUGHCODE, S_KNAME){
+	function f_selectListSA012001(S_SALEDATE, S_BOROUGHCODE, S_KNAME){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '시스템 및 메뉴관리' ,
-			url:"/home/selectListEnaSaleMstP.do" ,
+			url:"/home/selectListSA012001.do" ,
 			datatype:"json" ,
 			mtype: 'POST',
 			postData : {
@@ -58,10 +58,10 @@
 			},
 			loadtext: '로딩중...',
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['지사코드', '지사', '부서코드', '부서', '직급', '성명', '입사일', 
-			          '퇴사일' , '전근무지코드', '전근무지', '입사', '퇴사', '고용구분',
-			          'DATE1', 'DATE2', 'DATE3', 'DATE4', 'DATE5', 'DATE6',
-			          '합계'],
+			colNames:['지사코드', '지사', '부서코드', '부서', '직급',
+			          '성명', '입사일', '퇴사일' , '전근무지코드', '전근무지',
+			          '입사', '퇴사', '고용구분', 'M-6', 'M-5',
+			          'M-4', 'M-3', 'M-2', 'M-1', '합계'],
 			colModel:[
 						{name:"BRANCHCODE",			index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
 						, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
@@ -71,17 +71,17 @@
 			          	, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
 			          	, {name:"JOINDATE",			index:'JOINDATE',		width:100,	align:'center'}
 			          	, {name:"RETIREDATE",		index:'RETIREDATE',		width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center'}
+						, {name:"O_BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
 						, {name:"O_BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
 			          	, {name:"O_JOINDATE",		index:'O_JOINDATE',		width:100,	align:'center'}
 			          	, {name:"O_RETIREDATE",		index:'O_RETIREDATE',	width:100,	align:'center'}
-			          	, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',	width:100,	align:'center'}
-			          	, {name:"AMT1",				index:'AMT1',			width:100,	align:'center'}
-			          	, {name:"AMT2",				index:'AMT2',			width:100,	align:'center'}
-			          	, {name:"AMT3",				index:'AMT3',			width:100,	align:'center'}
-			          	, {name:"AMT4",				index:'AMT4',			width:100,	align:'center'}
-			          	, {name:"AMT5",				index:'AMT5',			width:100,	align:'center'}
+			          	, {name:"O_EMPLOYGUBUN",	index:'O_EMPLOYGUBUN',	width:100,	align:'center'}
 			          	, {name:"AMT6",				index:'AMT6',			width:100,	align:'center'}
+			          	, {name:"AMT5",				index:'AMT5',			width:100,	align:'center'}
+			          	, {name:"AMT4",				index:'AMT4',			width:100,	align:'center'}
+			          	, {name:"AMT3",				index:'AMT3',			width:100,	align:'center'}
+			          	, {name:"AMT2",				index:'AMT2',			width:100,	align:'center'}
+			          	, {name:"AMT1",				index:'AMT1',			width:100,	align:'center'}
 			          	, {name:"TOTAMT",			index:'TOTAMT',			width:100,	align:'center'}
 			          	
 			],
@@ -109,7 +109,7 @@
 		    groupHeaders:[
 		      {
 		        startColumnName: 'O_BRANCHCODE',
-		        numberOfColumns: 4,
+		        numberOfColumns: 5,
 		        titleText: '전근무현황'
 		      }
 		     ]
@@ -119,35 +119,13 @@
 	}
 	
 	$(function(){
-		$("#excelButton").click(function(){
-		    $.ajax({ 
-				type: 'POST' ,
-				data: $("#searchForm").serialize(),
-				url: "/home/SA012001_exportToExcel.do" , 
-				dataType : 'json' , 
-				success: function(data){
-					if(data.rows[0].MSG == "success")
-					{
-						alert("저장이 완료되었습니다.");
-						f_reload();
-					}else{
-						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-					}
-				},
-				error:function(e){  
-				}  
-			}); 
-		})
-	})
-	
-	$(function(){
 		$("#selectButton").click(function(){
 			
 			var S_SALEDATE = $("#S_SALEDATE").val();
 			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
 			var S_KNAME = $("#S_ADDRESS").val();
 			
-			selectListEnaSaleMstP(S_SALEDATE, S_BOROUGHCODE, S_KNAME);
+			f_selectListSA012001(S_SALEDATE, S_BOROUGHCODE, S_KNAME);
 		})
 	})
 	

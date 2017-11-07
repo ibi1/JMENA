@@ -23,10 +23,26 @@ public class HR012001Dao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<HR012001VO> selectListEnaInsaMst() throws DataAccessException {
+	public List<HR012001VO> selectListHR012001(HR012001VO vo) throws DataAccessException {
 		List<HR012001VO> lst = null;
 		
-		//lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaInsaMst");
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListHR012001", vo);
+		
+		return lst;
+	}
+
+	public List<HR012001VO> selectListHR012001_2(HR012001VO vo) throws DataAccessException {
+		List<HR012001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListHR012001_2", vo);
+		
+		return lst;
+	}
+
+	public List<HR012001VO> selectListHR012001_3(HR012001VO vo) throws DataAccessException {
+		List<HR012001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListHR012001_3", vo);
 		
 		return lst;
 	}

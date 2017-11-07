@@ -20,11 +20,47 @@ public class SA012001Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
-	public List<SA012001VO> selectListEnaSaleMstP(SA012001VO vo) throws Exception {
+	public List<SA012001VO> selectListSA012001_1(SA012001VO vo) throws Exception {
 		List<SA012001VO> lst = null;
 
 		try {
-			lst = SA012001Dao.selectListEnaSaleMstP(vo);
+			lst = SA012001Dao.selectListSA012001_1(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+
+	public List<SA012001VO> selectListSA012001_2(SA012001VO vo) throws Exception {
+		List<SA012001VO> lst = null;
+
+		try {
+			lst = SA012001Dao.selectListSA012001_2(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+
+	public List<SA012001VO> selectListSA012001_3(SA012001VO vo) throws Exception {
+		List<SA012001VO> lst = null;
+
+		try {
+			lst = SA012001Dao.selectListSA012001_3(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+
+	public List<SA012001VO> selectListSA012001_4(SA012001VO vo) throws Exception {
+		List<SA012001VO> lst = null;
+
+		try {
+			lst = SA012001Dao.selectListSA012001_4(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}

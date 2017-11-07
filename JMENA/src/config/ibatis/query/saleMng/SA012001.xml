@@ -5,21 +5,43 @@
 <sqlMap namespace="SA012001">
 	<typeAlias alias="SA012001VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA012001VO"/>
 
-	<resultMap id="SA012001Data" class="SA012001VO">
+	<resultMap id="SA012001Data1" class="SA012001VO">
 
 		<result property="BRANCHCODE" 		column="BRANCHCODE"/>
 		<result property="BRANCHNAME" 		column="BRANCHNAME"/>
 		<result property="DEPTCODE" 		column="DEPTCODE"/>
 		<result property="DEPTNAME" 		column="DEPTNAME"/>
-		<result property="GRADE" 			column="GRADE"/>
+		<result property="DUTY" 			column="DUTY"/>
+		<result property="INSACODE" 		column="INSACODE"/>
 		<result property="KNAME" 			column="KNAME"/>
 		<result property="JOINDATE" 		column="JOINDATE"/>
 		<result property="RETIREDATE" 		column="RETIREDATE"/>
+	</resultMap>
+
+	<resultMap id="SA012001Data2" class="SA012001VO">
 		<result property="O_BRANCHCODE" 	column="O_BRANCHCODE"/>
 		<result property="O_BRANCHNAME" 	column="O_BRANCHNAME"/>
 		<result property="O_JOINDATE" 		column="O_JOINDATE"/>
 		<result property="O_RETIREDATE" 	column="O_RETIREDATE"/>
-		<result property="EMPLOYGUBUN" 		column="EMPLOYGUBUN"/>
+		<result property="O_EMPLOYGUBUN" 	column="O_EMPLOYGUBUN"/>
+	</resultMap>
+
+	<resultMap id="SA012001Data3" class="SA012001VO">
+		<result property="M1_FR" 			column="M1_FR"/>
+		<result property="M1_TO" 			column="M1_TO"/>
+		<result property="M2_FR" 			column="M2_FR"/>
+		<result property="M2_TO" 			column="M2_TO"/>
+		<result property="M3_FR" 			column="M3_FR"/>
+		<result property="M3_TO" 			column="M3_TO"/>
+		<result property="M4_FR" 			column="M4_FR"/>
+		<result property="M4_TO" 			column="M4_TO"/>
+		<result property="M5_FR" 			column="M5_FR"/>
+		<result property="M5_TO" 			column="M5_TO"/>
+		<result property="M6_FR" 			column="M6_FR"/>
+		<result property="M6_TO" 			column="M6_TO"/>
+	</resultMap>
+
+	<resultMap id="SA012001Data4" class="SA012001VO">
 		<result property="AMT1" 			column="AMT1"/>
 		<result property="AMT2" 			column="AMT2"/>
 		<result property="AMT3" 			column="AMT3"/>
@@ -29,40 +51,115 @@
 		<result property="TOTAMT" 			column="TOTAMT"/>
 	</resultMap>
 
-	<select id="selectListEnaSaleMstP" resultMap="SA012001Data">
-		SELECT 
-			'' AS BRANCHCODE,
-			'' AS BRANCHNAME,
-			'' AS DEPTCODE,
-			'' AS DEPTNAME,
-			'' AS GRADE,
-			'' AS KNAME,
-			'' AS JOINDATE,
-			'' AS RETIREDATE,
-			'' AS O_BRANCHCODE,
-			'' AS O_BRANCHNAME,
-			'' AS O_JOINDATE,
-			'' AS O_RETIREDATE,
-			'' AS EMPLOYGUBUN,
-			'' AS AMT1,
-			'' AS AMT2,
-			'' AS AMT3,
-			'' AS AMT4,
-			'' AS AMT5,
-			'' AS AMT6,
-			'' AS TOTAMT
-		FROM sa_salemst T1
-		WHERE 1=1
-		<isNotEmpty property="S_SALEDATE">
-			AND T1.SALEDATE = #S_SALEDATE#
-		</isNotEmpty>
+	<select id="selectListSA012001_1" resultMap="SA012001Data1">
+		select 
+			t1.branchcode,
+			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname,
+			t1.deptcode,
+			(select deptname from ba_deptmst where branchcode = t1.branchcode and deptcode = t1.deptcode) as deptname,
+			(select dcodename from sy_ccodedtl where ccode = '004' and dcode = t1.duty) as duty,
+			t1.insacode,
+			t1.kname,
+		    t1.joindate,
+		    t1.retiredate
+		from hr_insamst t1
+		where 1=1
 		<isNotEmpty property="S_BOROUGHCODE">
-			AND T1.BOROUGHCODE = #S_BOROUGHCODE#
+			and t1.boroughcode = #S_BOROUGHCODE#
 		</isNotEmpty>
 		<isNotEmpty property="S_KNAME">
-			AND T1.KNAME LIKE '%$S_KNAME$%'
+			and t1.kname like '%$S_KNAME$%'
 		</isNotEmpty>
-		
+		and t1.retiredate is null
+	</select>
+
+
+	<select id="selectListSA012001_2" resultMap="SA012001Data2">
+		select 
+			t1.branchcode,
+			(select branchname from ba_branchmst where branchcode = t1.branchcode) as o_branchname,
+			t1.joindate as o_joindate,
+			t1.retiredate as o_retiredate,
+			(case t1.employgubun 
+				when 'R'  then '정규' 
+				when 'F'  then '프리'
+			end) as o_employgubun
+		from hr_insamst t1
+		where 1=1
+		<isNotEmpty property="INSACODE">
+			and t1.insacode = #INSACODE#
+		</isNotEmpty>
+		and t1.retiredate is not null
+		order by t1.joindate asc
+	</select>
+
+	<select id="selectListSA012001_3" resultMap="SA012001Data3">
+		select 
+			concat(t1.a, '01') M1_FR,
+			concat(t1.a, '31') M1_TO,
+			concat(t1.b, '01') M2_FR,
+			concat(t1.b, '31') M2_TO,
+			concat(t1.c, '01') M3_FR,
+			concat(t1.c, '31') M3_TO,
+			concat(t1.d, '01') M4_FR,
+			concat(t1.d, '31') M4_TO,
+			concat(t1.e, '01') M5_FR,
+			concat(t1.e, '31') M5_TO,
+			concat(t1.f, '01') M6_FR,
+			concat(t1.f, '31') M6_TO
+		from (
+			select 
+			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -1 month) as char)),'-', ''),1, 6) from dual) as a,
+			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -2 month) as char)),'-', ''),1, 6) from dual) as b,
+			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -3 month) as char)),'-', ''),1, 6) from dual) as c,
+			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -4 month) as char)),'-', ''),1, 6) from dual) as d,
+			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -5 month) as char)),'-', ''),1, 6) from dual) as e,
+			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -6 month) as char)),'-', ''),1, 6) from dual) as f
+			from dual
+		)t1
+	</select>
+
+
+	<select id="selectListSA012001_4" resultMap="SA012001Data4">
+		select 
+			(select sum(t2.sellamt) AMT6 from sa_salemst t1, sa_saledtl t2
+			where 1=1
+			and t1.salercd = #INSACODE#
+			and saledate between #M6_FR# and #M6_TO#
+			and t1.saleid = t2.saleid) as AMT6, 
+			(select  sum(t2.sellamt) AMT5 from sa_salemst t1, sa_saledtl t2
+			where 1=1
+			and t1.salercd = #INSACODE#
+			and saledate between #M5_FR# and #M5_TO#
+			and t1.saleid = t2.saleid) as AMT5, 
+			(select sum(t2.sellamt) AMT4 from sa_salemst t1, sa_saledtl t2
+			where 1=1
+			and t1.salercd = #INSACODE#
+			and saledate between #M4_FR# and #M4_TO#
+			and t1.saleid = t2.saleid) as AMT4, 
+			(select sum(t2.sellamt) AMT3 from sa_salemst t1, sa_saledtl t2
+			where 1=1
+			and t1.salercd = #INSACODE#
+			and saledate between #M3_FR# and #M3_TO#
+			and t1.saleid = t2.saleid) as AMT3, 
+			(select sum(t2.sellamt) AMT2 from sa_salemst t1, sa_saledtl t2
+			where 1=1
+			and t1.salercd = #INSACODE#
+			and saledate between #M2_FR# and #M2_TO#
+			and t1.saleid = t2.saleid) as AMT2, 
+			(select sum(t2.sellamt) AMT1 from sa_salemst t1, sa_saledtl t2
+			where 1=1
+			and t1.salercd = #INSACODE#
+			and saledate between #M1_FR# and #M1_TO#
+			and t1.saleid = t2.saleid) as AMT1, 
+			(select sum(t2.sellamt) TOTAMT from sa_salemst t1, sa_saledtl t2
+			where 1=1
+			and t1.salercd = #INSACODE#
+			and saledate between #S_SALEDATE_FR# and #S_SALEDATE_TO#
+			and t1.saleid = t2.saleid) as TOTAMT
+		from dual
+
+
 	</select>
 		
 </sqlMap>

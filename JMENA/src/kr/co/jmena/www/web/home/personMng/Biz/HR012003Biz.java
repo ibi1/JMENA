@@ -20,11 +20,23 @@ public class HR012003Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
-	public List<HR012003VO> selectListEnaInsaMst() throws Exception {
+	public List<HR012003VO> selectListHR012003(HR012003VO vo) throws Exception {
 		List<HR012003VO> lst = null;
 
 		try {
-			//lst = HR012003Dao.selectListEnaInsaMst();
+			lst = HR012003Dao.selectListHR012003(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+
+	public List<HR012003VO> selectListHR012003_2(HR012003VO vo) throws Exception {
+		List<HR012003VO> lst = null;
+
+		try {
+			lst = HR012003Dao.selectListHR012003_2(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}

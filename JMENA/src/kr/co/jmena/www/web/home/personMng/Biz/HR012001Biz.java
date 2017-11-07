@@ -27,11 +27,35 @@ public class HR012001Biz {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<HR012001VO> selectListHR012001() throws Exception {
+	public List<HR012001VO> selectListHR012001(HR012001VO vo) throws Exception {
 		List<HR012001VO> lst = null;
 
 		try {
-			//lst = HR012001Dao.selectListHR012001();
+			lst = HR012001Dao.selectListHR012001(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+
+	public List<HR012001VO> selectListHR012001_2(HR012001VO vo) throws Exception {
+		List<HR012001VO> lst = null;
+
+		try {
+			lst = HR012001Dao.selectListHR012001_2(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+
+	public List<HR012001VO> selectListHR012001_3(HR012001VO vo) throws Exception {
+		List<HR012001VO> lst = null;
+
+		try {
+			lst = HR012001Dao.selectListHR012001_3(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}

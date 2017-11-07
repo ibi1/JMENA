@@ -11,66 +11,94 @@
 		<result property="BRANCHNAME"		column="BRANCHNAME"/>
 		<result property="DEPTCODE"			column="DEPTCODE"/>
 		<result property="DEPTNAME"			column="DEPTNAME"/>
-		<result property="DUTY"				column="DUTY"/>
 		<result property="GRADE"			column="GRADE"/>
+		<result property="DUTY"				column="DUTY"/>
 		<result property="EMPLOYGUBUN"		column="EMPLOYGUBUN"/>
 		<result property="INSACODE"			column="INSACODE"/>
 		<result property="KNAME"			column="KNAME"/>
-		<result property="RECOID"			column="RECOID"/>
 		<result property="RECONAME"			column="RECONAME"/>
 		<result property="JOINDATE"			column="JOINDATE"/>
-		<result property="O_BRANCHCODE"		column="O_BRANCHCODE"/>
+		<result property="REMARK"			column="REMARK"/>
+	</resultMap>
+
+	<resultMap id="HR012001Data2" class="HR012001VO">
+		<result property="O_BRANCHNAME"		column="O_BRANCHNAME"/>
 		<result property="O_JOINDATE"		column="O_JOINDATE"/>
 		<result property="O_RETIREDATE"		column="O_RETIREDATE"/>
-		<result property="O_SELLAMT"		column="O_SELLAMT"/>
 		<result property="O_EMPLOYGUBUN"	column="O_EMPLOYGUBUN"/>
-		<result property="REMARK"			column="REMARK"/>
-		
+	</resultMap>
+
+	<resultMap id="HR012001Data3" class="HR012001VO">
+		<result property="O_SELLAMT"		column="O_SELLAMT"/>
 	</resultMap>
 
 
 	<select id="selectListHR012001" resultMap="HR012001Data">
-		SELECT 
-			T1.BRANCHCODE,
-			(SELECT BRANCHNAME FROM BA_BRANCHMST WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,
-			T1.BRANCHNAME,
-			T1.DEPTCODE,
-			(SELECT DEPTNAME FROM BA_DEPTMST WHERE BRANCHCODE = T1.BRANCHCODE AND DEPTCODE = T1.DEPTCODE) AS DEPTNAME,
-			T1.DUTY,
-			T1.GRADE,
-			T1.EMPLOYGUBUN,
-			T1.INSACODE,
-			T1.KNAME,
-			T1.RECOID,
-			(SELECT KNAME FROM HR_INSAMST WHERE INSACODE = T1.RECOID) AS RECONAME,
-			T1.JOINDATE,
-			'' AS O_BRANCHCODE,
-			'' AS O_JOINDATE,
-			'' AS O_RETIREDATE,
-			'' AS O_SELLAMT,
-			'' AS O_EMPLOYGUBUN,
-			T1.REMARK
-		FROM HR_INSAMST T1
-		WHERE 1=1
+		select 
+			t1.branchcode,
+			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname,
+			t1.deptcode,
+			(select deptname from ba_deptmst where branchcode = t1.branchcode and deptcode = t1.deptcode) as deptname,
+			(select dcodename from sy_ccodedtl where ccode = '003' and dcode = t1.grade) as grade,
+			(select dcodename from sy_ccodedtl where ccode = '004' and dcode = t1.duty) as duty,
+			(case t1.employgubun 
+				when 'R'  then '정규' 
+				when 'F'  then '프리'
+			end) as employgubun,
+			t1.insacode,
+			t1.kname,
+			(select kname from hr_insamst where insacode = t1.recoid) as reconame,
+			t1.joindate,
+			t1.remark
+		from hr_insamst t1
+		where 1=1
 		<isNotEmpty property="S_JOINDATE_FR">
 			<isNotEmpty property="S_JOINDATE_TO">
-				AND T1.BRANCHCODE BETWEEN #S_JOINDATE_FR# AND #S_JOINDATE_TO#
+				and t1.joindate between #S_JOINDATE_FR# and #S_JOINDATE_TO#
 			</isNotEmpty>
 		</isNotEmpty>
 		<isNotEmpty property="S_BRANCHCODE">
-			AND T1.BRANCHCODE = #S_BRANCHCODE#
+			and t1.branchcode = #S_BRANCHCODE#
 		</isNotEmpty>
 		<isNotEmpty property="S_DEPTCODE">
-			AND T1.DEPTCODE = #S_DEPTCODE#
+			and t1.deptcode = #S_DEPTCODE#
 		</isNotEmpty>
 		<isNotEmpty property="S_KNAME">
-			AND T1.KNAME LIKE CONCAT(‘%’, #S_KNAME#, ‘%’)
+			and t1.kname like '%#S_KNAME#%'
 		</isNotEmpty>
 		<isNotEmpty property="S_JUMINID">
-			AND T1.JUMINID LIKE CONCAT(‘%’, #S_JUMINID#, ‘%’) 
+			and t1.juminid '%#S_JUMINID#%' 
 		</isNotEmpty>
-		
-		ORDER BY T1.SORTKEY ASC
+		and t1.retiredate is NULL
+		order by t1.branchcode, t1.deptcode, t1.kname
+	</select>
+
+	<select id="selectListHR012001_2" resultMap="HR012001Data2">
+		select 
+			(select branchname from ba_branchmst where branchcode = t1.branchcode) as o_branchname,
+			t1.joindate as o_joindate,
+			t1.retiredate as o_retiredate,
+			(case t1.employgubun 
+				when 'R'  then '정규' 
+				when 'F'  then '프리'
+			end) as o_employgubun
+		from hr_insamst t1
+		where 1=1
+		<isNotEmpty property="INSACODE">
+			and t1.insacode = #INSACODE#
+		</isNotEmpty>
+		and t1.retiredate is not NULL
+		order by t1.joindate asc
+	</select>
+
+	<select id="selectListHR012001_3" resultMap="HR012001Data3">
+		select 
+			sum(t2.sellamt) as o_sellamt
+		from sa_salemst t1, sa_saledtl t2
+		where 1=1
+		and t1.salercd = #INSACODE#
+		and t1.saledate between #O_JOINDATE# and #O_RETIREDATE#
+		and t1.saleid = t2.saleid	
 	</select>
 	
 </sqlMap>

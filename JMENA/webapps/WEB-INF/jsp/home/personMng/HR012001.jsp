@@ -15,10 +15,17 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		var S_JOINDATE_FR = "";
+		var S_JOINDATE_TO = "";
+		var S_BRANCHCODE = "";
+		var S_DEPTCODE = "";
+		var S_KNAME = "";
+		var S_JUMINID = "";
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
-		f_selectListHR012001();
+		f_selectListHR012001(S_JOINDATE_FR, S_JOINDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
 	});
 	function f_selectListEnaBranchCode(){
 		$("#S_BRANCHCODE").empty().data('options');
@@ -71,29 +78,39 @@
 		});
 	}
 
-	function f_selectListHR012001(){
+	function f_selectListHR012001(S_JOINDATE_FR, S_JOINDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '입사자현황', 
-			url:"/home/selectListSysMst.do" ,
+			url:"/home/selectListHR012001.do" ,
 			datatype:"json",
+			postdata : {
+				S_JOINDATE_FR : S_JOINDATE_FR,
+				S_JOINDATE_TO : S_JOINDATE_TO,
+				S_BRANCHCODE : S_BRANCHCODE,
+				S_DEPTCODE : S_DEPTCODE,
+				S_KNAME : S_KNAME,
+				S_JUMINID : S_JUMINID,
+				
+			},
 			loadError:function(){alert("Error~!!");},
-			colNames:['지사코드', '지사', '부서코드', '부서', '직위', '직급',
-			          '고용구분', '사번' , '성명', '추천인', '입사일',
-			          '지사', '입사', '퇴사', '실적', '고용구분', '비고'],
+			colNames:['지사코드', '지사', '부서코드', '부서', '직위',
+			          '직급', '고용구분', '사번' , '성명', '추천인',
+			          '입사일', '지사', '입사', '퇴사', '실적',
+			          '고용구분', '비고'],
 			colModel:[
 						{name:"BRANCHCODE",			index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
 						, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
 						, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true}
 						, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center'}
-						, {name:"DUTY",				index:'DUTY',			width:100,	align:'center'}
 						, {name:"GRADE",			index:'GRADE',			width:100,	align:'center'}
+						, {name:"DUTY",				index:'DUTY',			width:100,	align:'center'}
 						, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',	width:150,	align:'center'}
 						, {name:"INSACODE",			index:'INSACODE',		width:100,	align:'center'}
 						, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
 						, {name:"RECONAME",			index:'RECONAME',		width:100,	align:'center'}
 						, {name:"JOINDATE",			index:'JOINDATE',		width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'O_BRANCHCODE',	width:150,	align:'center'}
+						, {name:"O_BRANCHNAME",		index:'O_BRANCHNAME',	width:150,	align:'center'}
 						, {name:"O_JOINDATE",		index:'O_JOINDATE',		width:100,	align:'center'}
 						, {name:"O_RETIREDATE",		index:'O_RETIREDATE',	width:100,	align:'center'}
 						, {name:"O_SELLAMT",		index:'O_SELLAMT',		width:100,	align:'center'}
@@ -122,7 +139,7 @@
 		    useColSpanStyle: true, //rowspan자동으로 해줄지 여부.
 		    groupHeaders:[
 		      {
-		        startColumnName: 'O_BRANCHCODE',
+		        startColumnName: 'O_BRANCHNAME',
 		        numberOfColumns: 5,
 		        titleText: '전근무현황'
 		      }
@@ -130,18 +147,23 @@
 	    });
 	} 
 
+	$(function(){
+		$("#selectButton").click(function(){
+			
+			var S_JOINDATE_FR = $("#S_JOINDATE_FR").val();
+			var S_JOINDATE_TO = $("#S_JOINDATE_TO").val();
+			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
+			var S_DEPTCODE = $("#S_DEPTCODE").val();
+			var S_KNAME = $("#S_KNAME").val();
+			var S_JUMINID = $("#S_JUMINID").val();
+			
+			f_selectListHR012001(S_JOINDATE_FR, S_JOINDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
+		})
+	})
+
 
 </script>
 <body>
-
-<!-- <div style="width:100%; border:1px solid red;" align=center>
-     <div style="width:90%;">
-          <div style="width:33%; float:left; border:1px solid #333;">1</div>
-          <div style="width:34%; float:left; border:1px solid #333;">2</div>
-     </div>
-</div>
- -->
-
 
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">

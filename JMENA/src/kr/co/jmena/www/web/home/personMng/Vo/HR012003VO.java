@@ -6,12 +6,13 @@ public class HR012003VO {
 	private String BRANCHNAME;
 	private String DEPTCODE;
 	private String DEPTNAME;
-	private String GRADE;
+	private String DUTY;
+	private String INSACODE;
 	private String KNAME;
 	private String RECOID;
 	private String RECONAME;
 	private String JOINDATE;
-	private String O_BRANCHCODE;
+	private String O_BRANCHNAME;
 	private String O_JOINDATE;
 	private String O_RETIREDATE;
 	private String O_EMPLOYGUBUN;
@@ -22,9 +23,14 @@ public class HR012003VO {
 	private String BANKID;
 	private String BANKNAME;
 	private String ACCTNO;
-	private String T_ACCTOWNER;
-	private String T_JUMINID;
+	private String PAYERNAME;
+	private String PAYERID;
 	private String ADDRESS;
+	
+	private String S_JOINDATE;
+	private String S_BRANCHCODE;
+	private String S_DEPTCODE;
+	
 	
 	public String getBRANCHCODE() {
 		return this.BRANCHCODE;
@@ -38,8 +44,11 @@ public class HR012003VO {
 	public String getDEPTNAME() {
 		return this.DEPTNAME;
 	}
-	public String getGRADE() {
-		return this.GRADE;
+	public String getDUTY() {
+		return this.DUTY;
+	}
+	public String getINSACODE() {
+		return this.INSACODE;
 	}
 	public String getKNAME() {
 		return this.KNAME;
@@ -53,8 +62,8 @@ public class HR012003VO {
 	public String getJOINDATE() {
 		return this.JOINDATE;
 	}
-	public String getO_BRANCHCODE() {
-		return this.O_BRANCHCODE;
+	public String getO_BRANCHNAME() {
+		return this.O_BRANCHNAME;
 	}
 	public String getO_JOINDATE() {
 		return this.O_JOINDATE;
@@ -86,15 +95,26 @@ public class HR012003VO {
 	public String getACCTNO() {
 		return this.ACCTNO;
 	}
-	public String getT_ACCTOWNER() {
-		return this.T_ACCTOWNER;
+	public String getPAYERNAME() {
+		return this.PAYERNAME;
 	}
-	public String getT_JUMINID() {
-		return this.T_JUMINID;
+	public String getPAYERID() {
+		return this.PAYERID;
 	}
 	public String getADDRESS() {
 		return this.ADDRESS;
 	}
+	public String getS_JOINDATE() {
+		return this.S_JOINDATE;
+	}
+	public String getS_BRANCHCODE() {
+		return this.S_BRANCHCODE;
+	}
+	public String getS_DEPTCODE() {
+		return this.S_DEPTCODE;
+	}
+	
+	
 	public void setBRANCHCODE(String BRANCHCODE) {
 		this.BRANCHCODE = BRANCHCODE;
 	}
@@ -107,8 +127,11 @@ public class HR012003VO {
 	public void setDEPTNAME(String DEPTNAME) {
 		this.DEPTNAME = DEPTNAME;
 	}
-	public void setGRADE(String GRADE) {
-		this.GRADE = GRADE;
+	public void setDUTY(String DUTY) {
+		this.DUTY = DUTY;
+	}
+	public void setINSACODE(String INSACODE) {
+		this.INSACODE = INSACODE;
 	}
 	public void setKNAME(String KNAME) {
 		this.KNAME = KNAME;
@@ -122,8 +145,8 @@ public class HR012003VO {
 	public void setJOINDATE(String JOINDATE) {
 		this.JOINDATE = JOINDATE;
 	}
-	public void setO_BRANCHCODE(String O_BRANCHCODE) {
-		this.O_BRANCHCODE = O_BRANCHCODE;
+	public void setO_BRANCHNAME(String O_BRANCHNAME) {
+		this.O_BRANCHNAME = O_BRANCHNAME;
 	}
 	public void setO_JOINDATE(String O_JOINDATE) {
 		this.O_JOINDATE = O_JOINDATE;
@@ -155,15 +178,25 @@ public class HR012003VO {
 	public void setACCTNO(String ACCTNO) {
 		this.ACCTNO = ACCTNO;
 	}
-	public void setT_ACCTOWNER(String T_ACCTOWNER) {
-		this.T_ACCTOWNER = T_ACCTOWNER;
+	public void setPAYERNAME(String PAYERNAME) {
+		this.PAYERNAME = PAYERNAME;
 	}
-	public void setT_JUMINID(String T_JUMINID) {
-		this.T_JUMINID = T_JUMINID;
+	public void setPAYERID(String PAYERID) {
+		this.PAYERID = PAYERID;
 	}
 	public void setADDRESS(String ADDRESS) {
 		this.ADDRESS = ADDRESS;
 	}
+	public void setS_JOINDATE(String S_JOINDATE) {
+		this.S_JOINDATE = S_JOINDATE;
+	}
+	public void setS_BRANCHCODE(String S_BRANCHCODE) {
+		this.S_BRANCHCODE = S_BRANCHCODE;
+	}
+	public void setS_DEPTCODE(String S_DEPTCODE) {
+		this.S_DEPTCODE = S_DEPTCODE;
+	}
+	
 	
 	
 	

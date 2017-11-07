@@ -12,7 +12,6 @@ public class HR012002VO {
 	private String EMPLOYGUBUN;
 	private String INSACODE;
 	private String KNAME;
-	private String RECOID;
 	private String RECONAME;
 	private String JOINDATE;
 	private String RETIREDATE;
@@ -22,8 +21,17 @@ public class HR012002VO {
 	private String O_JOINDATE;
 	private String O_RETIREDATE;
 	private String O_SELLAMT;
+	private String O_EMPLOYGUBUN;
 	private String O_REMARK;
 	private String REMARK;
+	
+	private String S_RETIREDATE_FR;
+	private String S_RETIREDATE_TO;
+	private String S_BRANCHCODE;
+	private String S_DEPTCODE;
+	private String S_KNAME;
+	private String S_JUMINID;
+	
 	
 	
 	public String getBRANCHCODE() {
@@ -53,9 +61,6 @@ public class HR012002VO {
 	public String getKNAME() {
 		return this.KNAME;
 	}
-	public String getRECOID() {
-		return this.RECOID;
-	}
 	public String getRECONAME() {
 		return this.RECONAME;
 	}
@@ -83,12 +88,35 @@ public class HR012002VO {
 	public String getO_SELLAMT() {
 		return this.O_SELLAMT;
 	}
+	public String getO_EMPLOYGUBUN() {
+		return this.O_EMPLOYGUBUN;
+	}
 	public String getO_REMARK() {
 		return this.O_REMARK;
 	}
 	public String getREMARK() {
 		return this.REMARK;
 	}
+
+	public String getS_RETIREDATE_FR() {
+		return this.S_RETIREDATE_FR;
+	}
+	public String getS_RETIREDATE_TO() {
+		return this.S_RETIREDATE_TO;
+	}
+	public String getS_BRANCHCODE() {
+		return this.S_BRANCHCODE;
+	}
+	public String getS_DEPTCODE() {
+		return this.S_DEPTCODE;
+	}
+	public String getS_KNAME() {
+		return this.S_KNAME;
+	}
+	public String getS_JUMINID() {
+		return this.S_JUMINID;
+	}
+
 	public void setBRANCHCODE(String BRANCHCODE) {
 		this.BRANCHCODE = BRANCHCODE;
 	}
@@ -115,9 +143,6 @@ public class HR012002VO {
 	}
 	public void setKNAME(String KNAME) {
 		this.KNAME = KNAME;
-	}
-	public void setRECOID(String RECOID) {
-		this.RECOID = RECOID;
 	}
 	public void setRECONAME(String RECONAME) {
 		this.RECONAME = RECONAME;
@@ -146,11 +171,33 @@ public class HR012002VO {
 	public void setO_SELLAMT(String O_SELLAMT) {
 		this.O_SELLAMT = O_SELLAMT;
 	}
+	public void setO_EMPLOYGUBUN(String O_EMPLOYGUBUN) {
+		this.O_EMPLOYGUBUN = O_EMPLOYGUBUN;
+	}
 	public void setO_REMARK(String O_REMARK) {
 		this.O_REMARK = O_REMARK;
 	}
 	public void setREMARK(String REMARK) {
 		this.REMARK = REMARK;
+	}
+	
+	public void setS_RETIREDATE_FR(String S_RETIREDATE_FR) {
+		this.S_RETIREDATE_FR = S_RETIREDATE_FR;
+	}
+	public void setS_RETIREDATE_TO(String S_RETIREDATE_TO) {
+		this.S_RETIREDATE_TO = S_RETIREDATE_TO;
+	}
+	public void setS_BRANCHCODE(String S_BRANCHCODE) {
+		this.S_BRANCHCODE = S_BRANCHCODE;
+	}
+	public void setS_DEPTCODE(String S_DEPTCODE) {
+		this.S_DEPTCODE = S_DEPTCODE;
+	}
+	public void setS_KNAME(String S_KNAME) {
+		this.S_KNAME = S_KNAME;
+	}
+	public void setS_JUMINID(String S_JUMINID) {
+		this.S_JUMINID = S_JUMINID;
 	}
 	
 	

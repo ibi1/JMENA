@@ -21,7 +21,15 @@
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
-		f_selectListHR012002();
+		var S_RETIREDATE_FR = "";
+		var S_RETIREDATE_TO = "";
+		var S_BRANCHCODE = "";
+		var S_DEPTCODE = "";
+		var S_KNAME = "";
+		var S_JUMINID = "";
+		
+		f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
+		
 	});
 	
 	function f_selectListEnaBranchCode(){
@@ -75,16 +83,25 @@
 		});
 	}
 
-	function f_selectListHR012002(){
+	function f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID){
 		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#mainList').jqGrid({
 			//caption: '퇴사자현황', 
-			url:"/home/selectListSysMst.do" ,
+			url:"/home/selectListHR012002.do" ,
 			datatype:"json",
+			postdata : {
+				S_RETIREDATE_FR : S_RETIREDATE_FR,
+				S_RETIREDATE_TO : S_RETIREDATE_TO,
+				S_BRANCHCODE : S_BRANCHCODE,
+				S_DEPTCODE : S_DEPTCODE,
+				S_KNAME : S_KNAME,
+				S_JUMINID : S_JUMINID,
+			},
 			loadError:function(){alert("Error~!!");},
-			colNames:['지사코드', '지사', '부서코드', '부서', '직위', '직급', '고용구분', 
-			          '사번' , '성명', '추천인', '입사일', '퇴사일',
-			          '직전지사실적', '지사코드', '지사', '입사', '퇴사', '실적', '비고', '비고'],
+			colNames:['지사코드', '지사', '부서코드', '부서', '직위',
+			          '직급', '고용구분', '사번' , '성명', '추천인',
+			          '입사일', '퇴사일', '직전지사실적', '지사코드', '지사',
+			          '입사', '퇴사', '실적', '비고', '비고'],
 			colModel:[
 						{name:"BRANCHCODE",			index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
 						, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
@@ -107,7 +124,7 @@
 						, {name:"O_REMARK",			index:'O_REMARK',		width:100,	align:'center'}
 						, {name:"REMARK",			index:'REMARK',			width:150,	align:'center'}
 			],
-			rowNum:10,
+			rowNum:100,
 			autowidth: true,
 			shrinkToFit: false,
 			rowList:[10,20,30],
@@ -137,18 +154,24 @@
 		});
 		
 	}
+	
+	$(function(){
+		$("#selectButton").click(function(){
+			
+			var S_RETIREDATE_FR = $("#S_RETIREDATE_FR").val();
+			var S_RETIREDATE_TO = $("#S_RETIREDATE_TO").val();
+			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
+			var S_DEPTCODE = $("#S_DEPTCODE").val();
+			var S_KNAME = $("#S_KNAME").val();
+			var S_JUMINID = $("#S_JUMINID").val();
+			
+			f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
+		})
+	})
+
 
 </script>
 <body>
-
-<!-- <div style="width:100%; border:1px solid red;" align=center>
-     <div style="width:90%;">
-          <div style="width:33%; float:left; border:1px solid #333;">1</div>
-          <div style="width:34%; float:left; border:1px solid #333;">2</div>
-     </div>
-</div>
- -->
-
 
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
