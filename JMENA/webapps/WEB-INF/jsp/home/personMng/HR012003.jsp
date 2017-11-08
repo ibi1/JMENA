@@ -14,14 +14,18 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		f_selectListEnaBranchCode();
-		f_selectListEnaDeptCode();
-
 		var S_JOINDATE = "";
 		var S_BRANCHCODE = "";
 		var S_DEPTCODE = "";
 		
-		f_selectListHR012003(S_JOINDATE, S_BRANCHCODE, S_DEPTCODE);
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
+		f_selectListEnaBranchCode();
+		f_selectListEnaDeptCode();
+
+		//f_selectListHR012003(S_JOINDATE, S_BRANCHCODE, S_DEPTCODE);
 		
 	});
 	
@@ -77,80 +81,95 @@
 	}
 	
 	function f_selectListHR012003(S_JOINDATE, S_BRANCHCODE, S_DEPTCODE){
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '인원현황', 
-			url:"/home/selectListHR012003.do" ,
-			datatype:"json",
-			postdata : {
-				S_JOINDATE : S_JOINDATE,
-				S_BRANCHCODE : S_BRANCHCODE,
-				S_DEPTCODE : S_DEPTCODE,
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['지사코드', '지사', '부서코드', '부서', '직급',
-			          '사번', '성명', '추천인사번','추천인', '입사일',
-			          '전근무지', '입사', '퇴사', '고용구분', '연락처',
-			          '주민번호', '생일구분', '입금자명', '은행명', '계좌번호',
-			          '성명', '주민번호', '주소'],
-			colModel:[
-						{name:"BRANCHCODE",			index:'BRANCHCODE',			width:100,	align:'center', hidden:true}
-						, {name:"BRANCHNAME",		index:'BRANCHNAME',			width:100,	align:'center'}
-						, {name:"DEPTCODE",			index:'DEPTCODE',			width:100,	align:'center', hidden:true}
-						, {name:"DEPTNAME",			index:'DEPTNAME',			width:100,	align:'center'}
-						, {name:"DUTY",				index:'DUTY',				width:100,	align:'center'}
-						, {name:"INSACODE",			index:'INSACODE',			width:100,	align:'center', hidden:true}
-						, {name:"KNAME",			index:'KNAME',				width:100,	align:'center'}
-						, {name:"RECOID",			index:'RECOID',				width:100,	align:'center', hidden:true}
-						, {name:"RECONAME",			index:'RECONAME',			width:100,	align:'center'}
-						, {name:"JOINDATE",			index:'JOINDATE',			width:150,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'O_BRANCHCODE',		width:100,	align:'center'}
-						, {name:"O_JOINDATE",		index:'O_JOINDATE',			width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'O_RETIREDATE',		width:100,	align:'center'}
-						, {name:"O_EMPLOYGUBUN",	index:'O_EMPLOYGUBUN',		width:100,	align:'center'}
-						, {name:"MOBILENO",			index:'MOBILENO',			width:100,	align:'center'}
-						, {name:"JUMINID",			index:'JUMINID',			width:150,	align:'center'}
-						, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',		width:100,	align:'center'}
-						, {name:"ACCTOWNER",		index:'ACCTOWNER',			width:100,	align:'center'}
-						, {name:"BANKNAME",			index:'BANKNAME',			width:100,	align:'center'}
-						, {name:"ACCTNO",			index:'ACCTNO',				width:150,	align:'center'}
-						, {name:"PAYERNAME",		index:'PAYERNAME',			width:150,	align:'center'}
-						, {name:"PAYERID",			index:'PAYERID',			width:150,	align:'center'}
-						, {name:"ADDRESS",			index:'ADDRESS',			width:150,	align:'center'}
-			],
-			rowNum:100,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+		var url = "/home/selectListHR012003.do?S_JOINDATE=" + S_JOINDATE + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"BRANCHCODE",			type: 'string' },
+				{name:"BRANCHNAME",			type: 'string' },
+				{name:"DEPTCODE",			type: 'string' },
+				{name:"DEPTNAME",			type: 'string' },
+				{name:"DUTY",				type: 'string' },
+				{name:"INSACODE",			type: 'string' },
+				{name:"KNAME",				type: 'string' },
+				{name:"RECOID",				type: 'string' },
+				{name:"RECONAME",			type: 'string' },
+				{name:"JOINDATE",			type: 'string' },
+				{name:"O_BRANCHNAME",		type: 'string' },
+				{name:"O_JOINDATE",			type: 'string' },
+				{name:"O_RETIREDATE",		type: 'string' },
+				{name:"O_EMPLOYGUBUN",		type: 'string' },
+				{name:"MOBILENO",			type: 'string' },
+				{name:"JUMINID",			type: 'string' },
+				{name:"BIRTHDAYGUBUN",		type: 'string' },
+				{name:"ACCTOWNER",			type: 'string' },
+				{name:"BANKNAME",			type: 'string' },
+				{name:"ACCTNO",				type: 'string' },
+				{name:"PAYERNAME",			type: 'string' },
+				{name:"PAYERID",			type: 'string' },
+				{name:"ADDRESS",			type: 'string' }
 
-		$("#mainList").jqGrid('setGroupHeaders', {
-		    useColSpanStyle: true, //rowspan자동으로 해줄지 여부.
-		    groupHeaders:[
-				{
-					startColumnName: 'O_BRANCHCODE',
-					numberOfColumns: 4,
-					titleText: '전근무현황'
-				},
-				{
-					startColumnName: 'PAYERNAME',
-					numberOfColumns: 2,
-					titleText: '소득신고'
-				}
-		      
-		     ]
-		});
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+				{ text: '지사코드', 	datafield: 'BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
+				{ text: '지사', 		datafield: 'BRANCHNAME',		width: 100, cellsalign: 'center'},
+				{ text: '부서코드', 	datafield: 'DEPTCODE',			width: 100, cellsalign: 'center', hidden:true},
+				{ text: '부서', 		datafield: 'DEPTNAME',			width: 100, cellsalign: 'center'},
+				{ text: '직급', 		datafield: 'DUTY',				width: 100, cellsalign: 'center'},
+				{ text: '사번', 		datafield: 'INSACODE',			width: 100, cellsalign: 'center'},
+				{ text: '성명', 		datafield: 'KNAME',				width: 100, cellsalign: 'center'},
+				{ text: '추천인사번',	datafield: 'RECOID',			width: 100, cellsalign: 'center', hidden:true},
+				{ text: '추천인', 		datafield: 'RECONAME',			width: 100, cellsalign: 'center'},
+				{ text: '입사일', 		datafield: 'JOINDATE',			width: 100, cellsalign: 'center'},
+				{ text: '전근무지', 	columngroup: '전근무현황',		datafield: 'O_BRANCHNAME',		width: 100, cellsalign: 'center'},
+				{ text: '입사', 		columngroup: '전근무현황',		datafield: 'O_JOINDATE',		width: 100, cellsalign: 'center'},
+				{ text: '퇴사', 		columngroup: '전근무현황',		datafield: 'O_RETIREDATE',		width: 100, cellsalign: 'center'},
+				{ text: '고용구분', 	columngroup: '전근무현황',		datafield: 'O_EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
+				{ text: '연락처', 		datafield: 'MOBILENO',			width: 100, cellsalign: 'center'},
+				{ text: '주민번호', 	datafield: 'JUMINID',			width: 100, cellsalign: 'center'},
+				{ text: '생일구분', 	datafield: 'BIRTHDAYGUBUN',		width: 100, cellsalign: 'center'},
+				{ text: '입금자명', 	datafield: 'ACCTOWNER',			width: 100, cellsalign: 'center'},
+				{ text: '은행명', 		datafield: 'BANKNAME',			width: 100, cellsalign: 'center'},
+				{ text: '계좌번호', 	datafield: 'ACCTNO',			width: 100, cellsalign: 'center'},
+				{ text: '성명', 		columngroup: '소득신고',		datafield: 'PAYERNAME',			width: 100, cellsalign: 'center'},
+				{ text: '주민번호', 	columngroup: '소득신고',		datafield: 'PAYERID',			width: 100, cellsalign: 'center'},
+				{ text: '주소', 		datafield: 'ADDRESS',			width: 100, cellsalign: 'center'}
+			],
+            columngroups: [
+         		{ text: '전근무현황', align: 'center', name: '전근무현황' },
+				{ text: '소득신고', align: 'center', name: '소득신고' }
+			]            
+        });
 	}
 
 
@@ -162,7 +181,13 @@
 			var S_DEPTCODE = $("#S_DEPTCODE").val();
 			
 			f_selectListHR012003(S_JOINDATE, S_BRANCHCODE, S_DEPTCODE);
-		})
+		});
+
+		$("#excelButton").click(function () {
+			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	    });
+		
 	})
 	
 </script>
@@ -173,9 +198,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -224,8 +249,7 @@
 				</tr>
 			</table>
 			<br/>
-			<table id="mainList" width="98%"></table>
-			<div id="mainNav"></div>
+			<div id="mainList" width="98%"></div>
 		</div>
 	</div>
 </body>

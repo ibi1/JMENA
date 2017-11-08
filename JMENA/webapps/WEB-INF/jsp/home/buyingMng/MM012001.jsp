@@ -17,7 +17,7 @@
 			$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 			$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 			
-			f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+			//f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 			f_selectListEnaCityCode();
 			f_selectListEnaBoroughCode();
 		});
@@ -210,7 +210,6 @@
 			</form>
 			<br/>
 			<div id="mainList" width="98%"></div>
-			<div id="mainNav"></div>
 		</div>
 	</div>
 </body>

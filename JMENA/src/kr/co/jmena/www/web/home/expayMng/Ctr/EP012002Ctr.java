@@ -87,7 +87,7 @@ public class EP012002Ctr {
 			jCell.add(obj);
 		}
 		
-		json.put("records", lst.size());
+		
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);

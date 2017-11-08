@@ -27,7 +27,7 @@ public class SA012001VO {
 	
 	private String S_SALEDATE_FR;
 	private String S_SALEDATE_TO;
-	private String S_BOROUGHCODE;
+	private String S_BRANCHCODE;
 	private String S_KNAME;
 	
 	private String M1_FR;
@@ -112,8 +112,8 @@ public class SA012001VO {
 	public String getS_SALEDATE_TO() {
 		return this.S_SALEDATE_TO;
 	}
-	public String getS_BOROUGHCODE() {
-		return this.S_BOROUGHCODE;
+	public String getS_BRANCHCODE() {
+		return this.S_BRANCHCODE;
 	}
 	public String getS_KNAME() {
 		return this.S_KNAME;
@@ -224,8 +224,8 @@ public class SA012001VO {
 	public void setS_SALEDATE_TO(String S_SALEDATE_TO) {
 		this.S_SALEDATE_TO = S_SALEDATE_TO;
 	}
-	public void setS_BOROUGHCODE(String S_BOROUGHCODE) {
-		this.S_BOROUGHCODE = S_BOROUGHCODE;
+	public void setS_BRANCHCODE(String S_BRANCHCODE) {
+		this.S_BRANCHCODE = S_BRANCHCODE;
 	}
 	public void setS_KNAME(String S_KNAME) {
 		this.S_KNAME = S_KNAME;

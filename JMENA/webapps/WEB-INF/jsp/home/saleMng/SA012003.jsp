@@ -21,9 +21,13 @@
 		var S_DEPTCODE = "";
 		var S_KNAME = "";
 		
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
-		f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+		//f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 	});
 	
 	function f_selectListEnaBranchCode(){
@@ -79,68 +83,99 @@
 
 	
 	function f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '매출현황 - 소비대차', 
-			url:"/home/selectListSysMst.do" ,
-			datatype:"json",
-			postData : {
-				S_SALEDATE_FR : S_SALEDATE_FR
-				, S_SALEDATE_TO : S_SALEDATE_TO
-				, S_BRANCHCODE : S_BRANCHCODE
-				, S_DEPTCODE : S_DEPTCODE
-				, S_KNAME : S_KNAME
-			},
-			
-			loadError:function(){alert("Error~!!");},
-			colNames:['지사', '부서', '계약일', '계약번호', '담당자', 
-			          '고객명', '주민번호', '지급구분', '차용기간', '차입금액',
-			          '지급이율(%)', '지급이자',  '이자소득세', '실 수령액', '만기일',
-			          '연장여부', '연장일', '중도해지', '중도해지일', '담보소재지',
-			          '입금은행', '입금계좌', '예금주', '비고'],
-			colModel:[
-				{name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-				,{name:"DEPTNAME",		index:'DEPTNAME',		width:100,	align:'center'}
-				,{name:"SALEDATE",		index:'SALEDATE',		width:100,	align:'center'}
-				,{name:"SALEID",		index:'SALEID',			width:100,	align:'center'}
-				,{name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
-				,{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center'}
-				,{name:"CONJUMINID",	index:'CONJUMINID',		width:100,	align:'center'}
-				,{name:"BRROWTYPE",		index:'BRROWTYPE',		width:100,	align:'center'}
-				,{name:"BRROWTERM",		index:'BRROWTERM',		width:100,	align:'center'}
-				,{name:"BRROWAMT",		index:'BRROWAMT',		width:100,	align:'center'}
-				,{name:"PAYRATE",		index:'PAYRATE',		width:100,	align:'center'}
-				,{name:"PAYAMT",		index:'PAYAMT',			width:100,	align:'center'}
-				,{name:"TAXAMT",		index:'TAXAMT',			width:100,	align:'center'}
-				,{name:"JIGUEBAMT",		index:'JIGUEBAMT',		width:100,	align:'center'}
-				,{name:"EXPIREDATE",	index:'EXPIREDATE',		width:100,	align:'center'}
-				,{name:"EXTENDYN",		index:'EXTENDYN',		width:100,	align:'center'}
-				,{name:"EXTENDDATE",	index:'EXTENDDATE',		width:100,	align:'center'}
-				,{name:"CANCELYN",		index:'CANCELYN',		width:100,	align:'center'}
-				,{name:"CANCELDATE",	index:'CANCELDATE',		width:100,	align:'center'}
-				,{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center'}
-				,{name:"BANKNAME",		index:'BANKNAME',		width:100,	align:'center'}
-				,{name:"PAYACCOUNT",	index:'PAYACCOUNT',		width:100,	align:'center'}
-				,{name:"PAYOWNER",		index:'PAYOWNER',		width:100,	align:'center'}
-				,{name:"REMARK",		index:'REMARK',			width:100,	align:'center'}
-			],
-			rowNum:100,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+		var url = "/home/selectListSA012003.do?S_SALEDATE_FR=" + S_SALEDATE_FR + "&S_SALEDATE_TO=" + S_SALEDATE_TO 
+		+ "&S_BRANCHCODE=" + S_BRANCHCODE
+		+ "&S_DEPTCODE=" + S_DEPTCODE
+		+ "&S_KNAME=" + S_KNAME;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"BRANCHNAME",	type: 'string' },
+				{name:"DEPTNAME",	type: 'string' },
+				{name:"SALEDATE",	type: 'string' },
+				{name:"SALEID",		type: 'string' },
+				{name:"KNAME",		type: 'string' },
+				{name:"CONNAME",	type: 'string' },
+				{name:"CONJUMINID",	type: 'string' },
+				{name:"BRROWTYPE",	type: 'string' },
+				{name:"BRROWTERM",	type: 'string' },
+				{name:"BRROWAMT",	type: 'string' },
+				{name:"PAYRATE",	type: 'string' },
+				{name:"PAYAMT",		type: 'string' },
+				{name:"TAXAMT",		type: 'string' },
+				{name:"JIGUEBAMT",	type: 'string' },
+				{name:"EXPIREDATE",	type: 'string' },
+				{name:"EXTENDYN",	type: 'string' },
+				{name:"EXTENDDATE",	type: 'string' },
+				{name:"CANCELYN",	type: 'string' },
+				{name:"CANCELDATE",	type: 'string' },
+				{name:"ADDRESS",	type: 'string' },
+				{name:"BANKNAME",	type: 'string' },
+				{name:"PAYACCOUNT",	type: 'string' },
+				{name:"PAYOWNER",	type: 'string' },
+				{name:"REMARK",		type: 'string' }
+
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+                      
+				{ text: '지사', 		datafield: "BRANCHNAME",	width: 100, cellsalign: 'center'},
+				{ text: '부서', 		datafield: "DEPTNAME",		width: 100, cellsalign: 'center'},
+				{ text: '계약일', 		datafield: "SALEDATE",		width: 100, cellsalign: 'center'},
+				{ text: '계약번호', 	datafield: "SALEID",		width: 100, cellsalign: 'center'},
+				{ text: '담당자', 		datafield: "KNAME",			width: 100, cellsalign: 'center'},
+				{ text: '고객명', 		datafield: "CONNAME",		width: 100, cellsalign: 'center'},
+				{ text: '주민번호', 	datafield: "CONJUMINID",	width: 100, cellsalign: 'center'},
+				{ text: '지급구분', 	datafield: "BRROWTYPE",		width: 100, cellsalign: 'center'},
+				{ text: '차용기간', 	datafield: "BRROWTERM",		width: 100, cellsalign: 'center'},
+				{ text: '차입금액', 	datafield: "BRROWAMT",		width: 100, cellsalign: 'center'},
+				{ text: '지급이율(%)', 	datafield: "PAYRATE",		width: 100, cellsalign: 'center'},
+				{ text: '지급이자', 	datafield: "PAYAMT",		width: 100, cellsalign: 'center'},
+				{ text: '이자소득세', 	datafield: "TAXAMT",		width: 100, cellsalign: 'center'},
+				{ text: '실 수령액', 	datafield: "JIGUEBAMT",		width: 100, cellsalign: 'center'},
+				{ text: '만기일', 		datafield: "EXPIREDATE",	width: 100, cellsalign: 'center'},
+				{ text: '연장여부', 	datafield: "EXTENDYN",		width: 100, cellsalign: 'center'},
+				{ text: '연장일', 		datafield: "EXTENDDATE",	width: 100, cellsalign: 'center'},
+				{ text: '중도해지', 	datafield: "CANCELYN",		width: 100, cellsalign: 'center'},
+				{ text: '중도해지일', 	datafield: "CANCELDATE",	width: 100, cellsalign: 'center'},
+				{ text: '담보소재지', 	datafield: "ADDRESS",		width: 100, cellsalign: 'center'},
+				{ text: '입금은행', 	datafield: "BANKNAME",		width: 100, cellsalign: 'center'},
+				{ text: '입금계좌', 	datafield: "PAYACCOUNT",	width: 100, cellsalign: 'center'},
+				{ text: '예금주', 		datafield: "PAYOWNER",		width: 100, cellsalign: 'center'},
+				{ text: '비고', 		datafield: "REMARK",		width: 100, cellsalign: 'center'}
+
+            ]
+          
+        });
 
 	}
 	
@@ -154,30 +189,15 @@
 			var S_KNAME = $("#S_KNAME").val();
 			
 			f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
-		})
+		});
+		
+		$("#excelButton").click(function () {
+			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	    });
+		
 	})
 	
-	$(function(){
-		$("#excelButton").click(function(){
-		    $.ajax({ 
-				type: 'POST' ,
-				data: $("#searchForm").serialize(),
-				url: "/home/SA012003_exportToExcel.do" , 
-				dataType : 'json' , 
-				success: function(data){
-					if(data.rows[0].MSG == "success")
-					{
-						alert("저장이 완료되었습니다.");
-						f_reload();
-					}else{
-						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-					}
-				},
-				error:function(e){  
-				}  
-			}); 
-		})
-	})
 	
 </script>
 <body>
@@ -187,9 +207,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -216,8 +236,7 @@
 				</tr>
 			</table>
 			<br/>
-			<table id="mainList" width="98%"></table>
-			<div id="mainNav"></div>
+			<div id="mainList" width="98%"></div>
 		</div>
 	</div>
 </body>

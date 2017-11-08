@@ -23,11 +23,15 @@
 		var S_IPGUMPERSON = "";
 		var S_IPGUMAMT = "";
 		
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaSalerCode();
 		f_selectListEnaIpgumGubunCode();
 		
-		f_selectListSA012004(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
+		//f_selectListSA012004(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
 		
 	});
 	
@@ -105,56 +109,74 @@
 	}
 	
 	function f_selectListSA012004(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT){
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '은행입금 현황', 
-			url:"/home/selectListSA012004.do" ,
-			datatype:"json",
-			postData : {
-				S_IPGUMDATE_FR : S_IPGUMDATE_FR
-				,S_IPGUMDATE_TO : S_IPGUMDATE_TO
-				,S_BRANCHCODE : S_BRANCHCODE
-				,S_SALERCD : S_SALERCD
-				,S_IPGUMGUBUN : S_IPGUMGUBUN
-				,S_IPGUMPERSON : S_IPGUMPERSON
-				,S_IPGUMAMT : S_IPGUMAMT
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['입금일자', '지사', '담당자', '계약자', '입금구분',
-			          '입금금액', '수금처리금액', '처리잔액', '입금은행', '입금형태',
-			          '소재지', '평수', '비고'],
-			colModel:[
-				{name:"IPGUMDATE",		index:'IPGUMDATE',	width:100,	align:'center'}
-				,{name:"BRANCHNAME",	index:'BRANCHNAME',	width:100,	align:'center'}
-				,{name:"KNAME",			index:'KNAME',		width:100,	align:'center'}
-				,{name:"CONNAME",		index:'CONNAME',	width:100,	align:'center'}
-				,{name:"IPGUMGUBUN",	index:'IPGUMGUBUN',	width:100,	align:'center'}
-				,{name:"IPGUMAMT",		index:'IPGUMAMT',	width:100,	align:'center'}
-				,{name:"SUGUMAMT",		index:'SUGUMAMT',	width:100,	align:'center'}
-				,{name:"JANGUMAMT",		index:'JANGUMAMT',	width:100,	align:'center'}
-				,{name:"BANKNAME",		index:'BANKNAME',	width:100,	align:'center'}
-				,{name:"IPGUMTYPE",		index:'IPGUMTYPE',	width:100,	align:'center'}
-				,{name:"ADDRESS",		index:'ADDRESS',	width:100,	align:'center'}
-				,{name:"CONPY",			index:'CONPY',		width:100,	align:'center'}
-				,{name:"REMARK",		index:'REMARK',		width:100,	align:'center'}
-			],
-			rowNum:100,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+		var url = "/home/selectListSA012004.do?S_IPGUMDATE_FR=" + S_IPGUMDATE_FR + "&S_IPGUMDATE_TO=" + S_IPGUMDATE_TO + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_SALERCD=" + S_SALERCD + "&S_IPGUMGUBUN=" + S_IPGUMGUBUN + "&S_IPGUMPERSON=" + S_IPGUMPERSON + "&S_IPGUMAMT=" + S_IPGUMAMT;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"IPGUMDATE",	type: 'string' },
+				{name:"BRANCHNAME",	type: 'string' },
+				{name:"KNAME",		type: 'string' },
+				{name:"CONNAME",	type: 'string' },
+				{name:"IPGUMGUBUN",	type: 'string' },
+				{name:"IPGUMAMT",	type: 'string' },
+				{name:"SUGUMAMT",	type: 'string' },
+				{name:"JANGUMAMT",	type: 'string' },
+				{name:"BANKNAME",	type: 'string' },
+				{name:"IPGUMTYPE",	type: 'string' },
+				{name:"ADDRESS",	type: 'string' },
+				{name:"CONPY",		type: 'string' },
+				{name:"REMARK",		type: 'string' }
+
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+                      
+				{ text: '입금일자', 		datafield: "IPGUMDATE",		width: 100, cellsalign: 'center'},
+				{ text: '지사', 			datafield: "BRANCHNAME",	width: 100, cellsalign: 'center'},
+				{ text: '담당자', 			datafield: "KNAME",			width: 100, cellsalign: 'center'},
+				{ text: '계약자', 			datafield: "CONNAME",		width: 100, cellsalign: 'center'},
+				{ text: '입금구분', 		datafield: "IPGUMGUBUN",	width: 100, cellsalign: 'center'},
+				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 100, cellsalign: 'center'},
+				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 100, cellsalign: 'center'},
+				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 100, cellsalign: 'center'},
+				{ text: '입금은행', 		datafield: "BANKNAME",		width: 100, cellsalign: 'center'},
+				{ text: '입금형태', 		datafield: "IPGUMTYPE",		width: 100, cellsalign: 'center'},
+				{ text: '소재지', 			datafield: "ADDRESS",		width: 100, cellsalign: 'center'},
+				{ text: '평수', 			datafield: "CONPY",			width: 100, cellsalign: 'center'},
+				{ text: '비고', 			datafield: "REMARK",		width: 100, cellsalign: 'center'}
+				
+			]
+
+        });
 	
 	}
 
@@ -170,7 +192,13 @@
 			var S_IPGUMAMT = $("#S_IPGUMAMT").val();
 			
 			f_selectListSA012004(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
-		})
+		});
+		
+		$("#excelButton").click(function () {
+			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	    });
+		
 	})
 	
 </script>
@@ -181,9 +209,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -219,8 +247,7 @@
 				</tr>
 			</table>
 			<br/>
-			<table id="mainList" width="98%"></table>
-			<div id="mainNav"></div>
+			<div id="mainList" width="98%"></div>
 		</div>
 	</div>
 </body>

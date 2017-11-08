@@ -6,22 +6,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
-	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
-
 </head>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		
 		var S_SALEDATE = "";
-		var S_BOROUGHCODE = "";
+		var S_BRANCHCODE = "";
 		var S_KNAME = "";
+		
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
 		f_selectListEnaBranchCode();
 		
-		
-		f_selectListSA012001(S_SALEDATE, S_BOROUGHCODE, S_KNAME);
+		//f_selectListSA012001(S_SALEDATE, S_BRANCHCODE, S_KNAME);
 	});
 
 	
@@ -44,77 +44,91 @@
 		});
 	}
 	
-	function f_selectListSA012001(S_SALEDATE, S_BOROUGHCODE, S_KNAME){
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '시스템 및 메뉴관리' ,
-			url:"/home/selectListSA012001.do" ,
-			datatype:"json" ,
-			mtype: 'POST',
-			postData : {
-				S_SALEDATE : S_SALEDATE,
-				S_BOROUGHCODE : S_BOROUGHCODE,
-				S_KNAME : S_KNAME
-			},
-			loadtext: '로딩중...',
-			loadError:function(){alert("Error~!!");} ,
-			colNames:['지사코드', '지사', '부서코드', '부서', '직급',
-			          '성명', '입사일', '퇴사일' , '전근무지코드', '전근무지',
-			          '입사', '퇴사', '고용구분', 'M-6', 'M-5',
-			          'M-4', 'M-3', 'M-2', 'M-1', '합계'],
-			colModel:[
-						{name:"BRANCHCODE",			index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
-						, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-						, {name:"DEPTCODE",			index:'DEPTCODE',		width:150,	align:'center', hidden:true}
-						, {name:"DEPTNAME",			index:'DEPTNAME',		width:150,	align:'center'}
-						, {name:"GRADE",			index:'GRADE',			width:100,	align:'center'}
-			          	, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
-			          	, {name:"JOINDATE",			index:'JOINDATE',		width:100,	align:'center'}
-			          	, {name:"RETIREDATE",		index:'RETIREDATE',		width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
-						, {name:"O_BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-			          	, {name:"O_JOINDATE",		index:'O_JOINDATE',		width:100,	align:'center'}
-			          	, {name:"O_RETIREDATE",		index:'O_RETIREDATE',	width:100,	align:'center'}
-			          	, {name:"O_EMPLOYGUBUN",	index:'O_EMPLOYGUBUN',	width:100,	align:'center'}
-			          	, {name:"AMT6",				index:'AMT6',			width:100,	align:'center'}
-			          	, {name:"AMT5",				index:'AMT5',			width:100,	align:'center'}
-			          	, {name:"AMT4",				index:'AMT4',			width:100,	align:'center'}
-			          	, {name:"AMT3",				index:'AMT3',			width:100,	align:'center'}
-			          	, {name:"AMT2",				index:'AMT2',			width:100,	align:'center'}
-			          	, {name:"AMT1",				index:'AMT1',			width:100,	align:'center'}
-			          	, {name:"TOTAMT",			index:'TOTAMT',			width:100,	align:'center'}
-			          	
-			],
-			rowNum:100 ,
-			autowidth: true ,
-			rowList:[10,20,30] ,
-			//pager: $('#leftNav') ,
-			sortname: 'SORTKEY' ,
-			viewrecords: true ,
-			sortorder:'asc' ,
-			width: "96%" ,
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%' ,
-			onSelectRow: function(ids){
-				
-			} ,
-			hidegrid: false ,
-		});
+	function f_selectListSA012001(S_SALEDATE, S_BRANCHCODE, S_KNAME){
+		var url = "/home/selectListSA012001.do?S_SALEDATE=" + S_SALEDATE + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_KNAME=" + S_KNAME;
 		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"BRANCHCODE",			type: 'string' },
+				{name:"BRANCHNAME",			type: 'string' },
+				{name:"DEPTCODE",			type: 'string' },
+				{name:"DEPTNAME",			type: 'string' },
+				{name:"GRADE",				type: 'string' },
+				{name:"KNAME",				type: 'string' },
+				{name:"JOINDATE",			type: 'string' },
+				{name:"RETIREDATE",			type: 'string' },
+				{name:"O_BRANCHCODE",		type: 'string' },
+				{name:"O_BRANCHNAME",		type: 'string' },
+				{name:"O_JOINDATE",			type: 'string' },
+				{name:"O_RETIREDATE",		type: 'string' },
+				{name:"O_EMPLOYGUBUN",		type: 'string' },
+				{name:"AMT6",				type: 'string' },
+				{name:"AMT5",				type: 'string' },
+				{name:"AMT4",				type: 'string' },
+				{name:"AMT3",				type: 'string' },
+				{name:"AMT2",				type: 'string' },
+				{name:"AMT1",				type: 'string' },
+				{name:"TOTAMT",				type: 'string' }
+				
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
 
-		$("#mainList").jqGrid('setGroupHeaders', {
-		    useColSpanStyle: true, //rowspan자동으로 해줄지 여부.
-		    groupHeaders:[
-		      {
-		        startColumnName: 'O_BRANCHCODE',
-		        numberOfColumns: 5,
-		        titleText: '전근무현황'
-		      }
-		     ]
-	    });
-		 
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+                      
+				{ text: '지사코드', 		datafield: 'BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
+				{ text: '지사', 			datafield: 'BRANCHNAME',		width: 100, cellsalign: 'center'},
+				{ text: '부서코드', 		datafield: 'DEPTCODE',			width: 100, cellsalign: 'center', hidden:true},
+				{ text: '부서', 			datafield: 'DEPTNAME',			width: 100, cellsalign: 'center'},
+				{ text: '직급', 			datafield: 'GRADE',				width: 100, cellsalign: 'center'},
+				{ text: '성명', 			datafield: 'KNAME',				width: 100, cellsalign: 'center'},
+				{ text: '입사일', 			datafield: 'JOINDATE',			width: 100, cellsalign: 'center'},
+				{ text: '퇴사일', 			datafield: 'RETIREDATE',		width: 100, cellsalign: 'center'},
+				{ text: '전근무지코드', 	columngroup: '전근무현황',		datafield: 'O_BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
+				{ text: '전근무지', 		columngroup: '전근무현황',		datafield: 'O_BRANCHNAME',		width: 100, cellsalign: 'center'},
+				{ text: '입사', 			columngroup: '전근무현황',		datafield: 'O_JOINDATE',		width: 100, cellsalign: 'center'},
+				{ text: '퇴사', 			columngroup: '전근무현황',		datafield: 'O_RETIREDATE',		width: 100, cellsalign: 'center'},
+				{ text: '고용구분', 		columngroup: '전근무현황',		datafield: 'O_EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
+				{ text: 'M-6', 				datafield: 'AMT6',				width: 100, cellsalign: 'center'},
+				{ text: 'M-5', 				datafield: 'AMT5',				width: 100, cellsalign: 'center'},
+				{ text: 'M-4', 				datafield: 'AMT4',				width: 100, cellsalign: 'center'},
+				{ text: 'M-3', 				datafield: 'AMT3',				width: 100, cellsalign: 'center'},
+				{ text: 'M-2', 				datafield: 'AMT2',				width: 100, cellsalign: 'center'},
+				{ text: 'M-1', 				datafield: 'AMT1',				width: 100, cellsalign: 'center'},
+				{ text: '합계', 			datafield: 'TOTAMT',			width: 100, cellsalign: 'center'}				
+				
+			],
+            columngroups: [
+				{ text: '전근무현황', align: 'center', name: '전근무현황' }
+			]            
+        });
 		
 	}
 	
@@ -122,11 +136,17 @@
 		$("#selectButton").click(function(){
 			
 			var S_SALEDATE = $("#S_SALEDATE").val();
-			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
+			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
 			var S_KNAME = $("#S_ADDRESS").val();
 			
-			f_selectListSA012001(S_SALEDATE, S_BOROUGHCODE, S_KNAME);
-		})
+			f_selectListSA012001(S_SALEDATE, S_BRANCHCODE, S_KNAME);
+		});
+		
+		$("#excelButton").click(function () {
+			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	    });
+		
 	})
 	
 </script>
@@ -137,9 +157,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -161,8 +181,7 @@
 				</tr>
 			</table>
 			<br/>
-			<table id="mainList" width="98%"></table>
-			<div id="mainNav"></div>
+			<div id="mainList" width="98%"></div>
 		</div>
 	</div>
 </body>

@@ -97,7 +97,6 @@ public class SA012007Ctr {
 			jCell.add(obj);
 		}
 		
-		json.put("records", lst.size());
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);

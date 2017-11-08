@@ -19,11 +19,14 @@
 		var S_BOROUGHCODE = "";
 		var S_ADDRESS = "";
 		
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
 		
-		f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		//f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		
 	});
 
@@ -80,51 +83,73 @@
 	}
 	
 	function f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '잔여 물건지 현황', 
-			url:"/home/selectListSysMst.do" ,
-			datatype:"json",
-			postdata : {
-				S_CITYCODE : S_CITYCODE,
-				S_BOROUGHCODE : S_BOROUGHCODE,
-				S_ADDRESS : S_ADDRESS
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['매입구분', '지역', '시/도', '주소/지번', '면적(m2)', '평수', '계약면적', '계약평수', '잔여면적', '잔여평수',
-			          '평단가', '오픈지사현황', '비고'],
-			colModel:[
-				{name:"DCODENAME",		index:'DCODENAME',		width:100,	align:'center'}
-				,{name:"CITYNAME",		index:'CITYNAME',		width:100,	align:'center'}
-				,{name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:100,	align:'center'}
-				,{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center'}
-				,{name:"BUYM2",			index:'BUYM2',			width:100,	align:'center'}
-				,{name:"BUYPY",			index:'BUYPY',			width:100,	align:'center'}
-				,{name:"CONM2",			index:'CONM2',			width:100,	align:'center'}
-				,{name:"CONPY",			index:'CONPY',			width:100,	align:'center'}
-				,{name:"REMNM2",		index:'REMNM2',			width:100,	align:'center'}
-				,{name:"REMNPY",		index:'REMNPY',			width:100,	align:'center'}
-				,{name:"BUYDANGA",		index:'BUYDANGA',		width:100,	align:'center'}
-				,{name:"OPENBRANCH",	index:'OPENBRANCH',		width:100,	align:'center'}
-				,{name:"HOLDING",		index:'HOLDING',		width:100,	align:'center'}
-			],
-			rowNum:10,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+		var url = "/home/selectListSA012007.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"DCODENAME",		type: 'string' },
+				{name:"CITYNAME",		type: 'string' },
+				{name:"BOROUGHNAME",	type: 'string' },
+				{name:"ADDRESS",		type: 'string' },
+				{name:"BUYM2",			type: 'string' },
+				{name:"BUYPY",			type: 'string' },
+				{name:"CONM2",			type: 'string' },
+				{name:"CONPY",			type: 'string' },
+				{name:"REMNM2",			type: 'string' },
+				{name:"REMNPY",			type: 'string' },
+				{name:"BUYDANGA",		type: 'string' },
+				{name:"OPENBRANCH",		type: 'string' },
+				{name:"HOLDING",		type: 'string' }
+				
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+                      
+				{ text: '매입구분',			datafield: "DCODENAME",			width: 100, cellsalign: 'center'},
+				{ text: '지역',				datafield: "CITYNAME",			width: 100, cellsalign: 'center'},
+				{ text: '시/도',			datafield: "BOROUGHNAME",		width: 100, cellsalign: 'center'},
+				{ text: '주소/지번',		datafield: "ADDRESS",			width: 100, cellsalign: 'center'},
+				{ text: '면적(m2)',			datafield: "BUYM2",				width: 100, cellsalign: 'center'},
+				{ text: '평수',				datafield: "BUYPY",				width: 100, cellsalign: 'center'},
+				{ text: '계약면적',			datafield: "CONM2",				width: 100, cellsalign: 'center'},
+				{ text: '계약평수',			datafield: "CONPY",				width: 100, cellsalign: 'center'},
+				{ text: '잔여면적',			datafield: "REMNM2",			width: 100, cellsalign: 'center'},
+				{ text: '잔여평수',			datafield: "REMNPY",			width: 100, cellsalign: 'center'},
+				{ text: '평단가',			datafield: "BUYDANGA",			width: 100, cellsalign: 'center'},
+				{ text: '오픈지사현황',		datafield: "OPENBRANCH",		width: 100, cellsalign: 'center'},
+				{ text: '비고',				datafield: "HOLDING",			width: 100, cellsalign: 'center'}
+				
+			]            
+        });
 	}
 
 	$(function(){
@@ -134,8 +159,14 @@
 			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
 			var S_ADDRESS = $("#S_ADDRESS").val();
 			
-			f_selectListSA012007(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
-		})
+			f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		});
+
+		$("#excelButton").click(function () {
+			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	    });
+		
 	})
 	
 </script>
@@ -145,9 +176,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>

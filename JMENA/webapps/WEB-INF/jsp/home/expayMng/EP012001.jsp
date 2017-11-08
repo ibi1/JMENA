@@ -21,8 +21,11 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
-		f_selectListEP012001();
-		f_selectListEP012001_2();
+		//f_selectListEP012001(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+		//f_selectListEP012001_2(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+		
+		$('#mainList1').jqxGrid('clear');
+		$('#mainList2').jqxGrid('clear');
 		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
@@ -30,7 +33,6 @@
 		
 		$('input:radio[name=TAXGUBUN]:input[value=001]').attr("checked", true);
 		
-		f_selectListEP012001(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 		
 		$("#mainList1").show();
 		$("#mainList2").hide();
@@ -90,7 +92,7 @@
 	}
 	
 	function f_selectListEP012001(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
-		var url = "/home/selectListEP012001.do?S_PAYDATE=" + S_PAYDATE + "S_BRANCHCODE=" + S_BRANCHCODE + "S_DEPTCODE=" + S_DEPTCODE + "S_KNAME=" + S_KNAME;
+		var url = "/home/selectListEP012001.do?S_PAYDATE=" + S_PAYDATE + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE + "&S_KNAME=" + S_KNAME;
 		
         // prepare the data
         var source = {
@@ -161,7 +163,7 @@
 	
 	}
 	function f_selectListEP012001_2(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
-		var url = "/home/selectListEP012001_2.do?S_PAYDATE=" + S_PAYDATE + "S_BRANCHCODE=" + S_BRANCHCODE + "S_DEPTCODE=" + S_DEPTCODE + "S_KNAME=" + S_KNAME;
+		var url = "/home/selectListEP012001_2.do?S_PAYDATE=" + S_PAYDATE + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE + "&S_KNAME=" + S_KNAME;
 		
         // prepare the data
         var source = {

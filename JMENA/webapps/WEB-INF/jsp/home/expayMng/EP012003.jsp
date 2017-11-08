@@ -6,9 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
-	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
-
 </head>
 
 
@@ -21,7 +18,7 @@
 		<table width="99%">
 			<tr>
 				<td>
-					화면없음
+					화면 설계서 화면 없음
 				</td>
 			</tr>
 		</table>

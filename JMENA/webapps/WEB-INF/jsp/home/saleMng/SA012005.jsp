@@ -6,9 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
-	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
-
 </head>
 
 
@@ -23,10 +20,14 @@
 		var S_IPGUMPERSON = "";
 		var S_IPGUMAMT = "";
 
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaSalerCode();
 		f_selectListEnaIpgumGubunCode();
-		f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
+		//f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
 		
 	});
 	
@@ -104,63 +105,81 @@
 	}
 	
 	function f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT){
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '입금처리 현황', 
-			url:"/home/selectListSA012005.do" ,
-			datatype:"json",
-			postData : {
-				S_IPGUMDATE_FR : S_IPGUMDATE_FR
-				,S_IPGUMDATE_TO : S_IPGUMDATE_TO
-				,S_BRANCHCODE : S_BRANCHCODE
-				,S_SALERCD : S_SALERCD
-				,S_IPGUMGUBUN : S_IPGUMGUBUN
-				,S_IPGUMPERSON : S_IPGUMPERSON
-				,S_IPGUMAMT : S_IPGUMAMT
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['입금일자', '입금번호', '입금구분', '입금인', '입금금액',
-			          '수금처리금액', '처리잔액', '처리순번', '계약일자', '계약번호',
-			          '계약자', '계약면적', '계약평수', '입금 구분', '수금금액',
-			          '담당자', '소재지'],
-			colModel:[
-						{name:"IPGUMDATE",			index:'IPGUMDATE',		width:100,	align:'center'}
-						,{name:"IPGUMID",			index:'IPGUMID',		width:100,	align:'center'}
-						,{name:"IPGUMGUBUN",		index:'IPGUMGUBUN',		width:100,	align:'center'}
-						,{name:"IPGUMPERSON",		index:'IPGUMPERSON',	width:100,	align:'center'}
-						,{name:"IPGUMAMT",			index:'IPGUMAMT',		width:100,	align:'center'}
-						,{name:"SUMSUGUMAMT",		index:'SUMSUGUMAMT',	width:100,	align:'center'}
-						,{name:"JANGUMAMT",			index:'JANGUMAMT',		width:100,	align:'center'}
-						,{name:"SEQ",				index:'SEQ',			width:100,	align:'center'}
-						,{name:"SALEDATE",			index:'SALEDATE',		width:100,	align:'center'}
-						,{name:"SALEID",			index:'SALEID',			width:100,	align:'center'}
-						,{name:"CONNAME",			index:'CONNAME',		width:100,	align:'center'}
-						,{name:"CONM2",				index:'CONM2',			width:100,	align:'center'}
-						,{name:"CONPY",				index:'CONPY',			width:100,	align:'center'}
-						,{name:"DEPOSITGUBUN",		index:'DEPOSITGUBUN',	width:100,	align:'center'}
-						,{name:"SUGUMAMT",			index:'SUGUMAMT',		width:100,	align:'center'}
-						,{name:"KNAME",				index:'KNAME',			width:100,	align:'center'}
-						,{name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center'}
+		var url = "/home/selectListSA012005.do?S_IPGUMDATE_FR=" + S_IPGUMDATE_FR + "&S_IPGUMDATE_TO=" + S_IPGUMDATE_TO + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_SALERCD=" + S_SALERCD + "&S_IPGUMGUBUN=" + S_IPGUMGUBUN + "&S_IPGUMPERSON=" + S_IPGUMPERSON + "&S_IPGUMAMT=" + S_IPGUMAMT;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"IPGUMDATE",		type: 'string' },
+				{name:"IPGUMID",		type: 'string' },
+				{name:"IPGUMGUBUN",		type: 'string' },
+				{name:"IPGUMPERSON",	type: 'string' },
+				{name:"IPGUMAMT",		type: 'string' },
+				{name:"SUMSUGUMAMT",	type: 'string' },
+				{name:"JANGUMAMT",		type: 'string' },
+				{name:"SEQ",			type: 'string' },
+				{name:"SALEDATE",		type: 'string' },
+				{name:"SALEID",			type: 'string' },
+				{name:"CONNAME",		type: 'string' },
+				{name:"CONM2",			type: 'string' },
+				{name:"CONPY",			type: 'string' },
+				{name:"DEPOSITGUBUN",	type: 'string' },
+				{name:"SUGUMAMT",		type: 'string' },
+				{name:"KNAME",			type: 'string' },
+				{name:"ADDRESS",		type: 'string' }
+				
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
 
-						
-			],
-			rowNum:10,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+                      
+				{ text: '입금일자',			datafield: "IPGUMDATE",			width: 100, cellsalign: 'center'},
+				{ text: '입금번호',			datafield: "IPGUMID",			width: 100, cellsalign: 'center'},
+				{ text: '입금구분',			datafield: "IPGUMGUBUN",		width: 100, cellsalign: 'center'},
+				{ text: '입금인',			datafield: "IPGUMPERSON",		width: 100, cellsalign: 'center'},
+				{ text: '입금금액',			datafield: "IPGUMAMT",			width: 100, cellsalign: 'center'},
+				{ text: '수금처리금액',		datafield: "SUMSUGUMAMT",		width: 100, cellsalign: 'center'},
+				{ text: '처리잔액',			datafield: "JANGUMAMT",			width: 100, cellsalign: 'center'},
+				{ text: '처리순번',			datafield: "SEQ",				width: 100, cellsalign: 'center'},
+				{ text: '계약일자',			datafield: "SALEDATE",			width: 100, cellsalign: 'center'},
+				{ text: '계약번호',			datafield: "SALEID",			width: 100, cellsalign: 'center'},
+				{ text: '계약자',			datafield: "CONNAME",			width: 100, cellsalign: 'center'},
+				{ text: '계약면적',			datafield: "CONM2",				width: 100, cellsalign: 'center'},
+				{ text: '계약평수',			datafield: "CONPY",				width: 100, cellsalign: 'center'},
+				{ text: '입금 구분',		datafield: "DEPOSITGUBUN",		width: 100, cellsalign: 'center'},
+				{ text: '수금금액',			datafield: "SUGUMAMT",			width: 100, cellsalign: 'center'},
+				{ text: '담당자',			datafield: "KNAME",				width: 100, cellsalign: 'center'},
+				{ text: '소재지',			datafield: "ADDRESS",			width: 100, cellsalign: 'center'}
+				
+			]            
+        });
 
 	}
 	
@@ -176,7 +195,13 @@
 			var S_IPGUMAMT = $("#S_IPGUMAMT").val();
 			
 			f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
-		})
+		});
+		
+		$("#excelButton").click(function () {
+			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');
+	    });
+		
 	})
 	
 	
@@ -188,9 +213,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -226,8 +251,7 @@
 				</tr>
 			</table>
 			<br/>
-			<table id="mainList" width="98%"></table>
-			<div id="mainNav"></div>
+			<div id="mainList" width="98%"></div>
 		</div>
 	</div>
 </body>

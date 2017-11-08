@@ -82,7 +82,7 @@ public class SA012001Ctr {
 		}
 
 		
-		vo1.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
+		vo1.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
 		vo1.setS_KNAME(request.getParameter("S_KNAME"));
 		
 		

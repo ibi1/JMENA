@@ -29,9 +29,9 @@
 
 	<select id="selectListSA012007" resultMap="SA012007Data">
 		select
-		(select dcodename from sy_ccodedtl where ccode = '014' and dcode = t1.bygubun) as dcodename,
+		(select dcodename from sy_ccodedtl where ccode = '014' and dcode = t1.buygubun) as dcodename,
 		(select cityname from ba_citymst where citycode = t1.citycode) as cityname,
-		(select boroughname from ba_citymst where citycode = t1.citycode and boroughcode = t1.boroughcode) as boroughname,
+		(select boroughname from ba_citydtl where citycode = t1.citycode and boroughcode = t1.boroughcode) as boroughname,
 		t1.address,
 		t1.buym2,
 		t1.buypy,

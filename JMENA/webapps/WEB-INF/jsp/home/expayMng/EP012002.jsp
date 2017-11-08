@@ -6,9 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
-	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
-
 </head>
 
 
@@ -20,10 +17,14 @@
 		var S_DEPTCODE = "";
 		var S_KNAME = "";
 		
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
-		f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+		//f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 		
 	});
 
@@ -79,57 +80,76 @@
 	}
 	
 	function f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '월 수령액 확인서', 
-			url:"/home/selectListEP012002.do" ,
-			datatype:"json",
-			postData : {
-				S_PAYDATE : S_PAYDATE
-				,S_BRANCHCODE : S_BRANCHCODE
-				,S_DEPTCODE : S_DEPTCODE
-				,S_KNAME : S_KNAME
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['지사', '부서', '직위', '직급', '사번',
-			          '성명', '기본급', '활동비', '일비', '시상금',
-			          '수당금액', '총지급액', '소득세', '지방세', '부가가치세',
-			          '차감지급액'],
-			colModel:[
-				{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,	align:'center'}
-				,{name:"DEPTNAME",	index:'DEPTNAME',		width:100,	align:'center'}
-				,{name:"GRADENAME",	index:'GRADENAME',		width:100,	align:'center'}
-				,{name:"DUTYNAME",	index:'DUTYNAME',		width:100,	align:'center'}
-				,{name:"INSACODE",	index:'INSACODE',		width:100,	align:'center'}
-				,{name:"KNAME",		index:'KNAME',			width:100,	align:'center'}
-				,{name:"BASICAMT",	index:'BASICAMT',		width:100,	align:'center'}
-				,{name:"ACTAMT",	index:'ACTAMT',			width:100,	align:'center'}
-				,{name:"DAILYAMT",	index:'DAILYAMT',		width:100,	align:'center'}
-				,{name:"PRIZEAMT",	index:'PRIZEAMT',		width:100,	align:'center'}
-				,{name:"PAYAMT",	index:'PAYAMT',			width:100,	align:'center'}
-				,{name:"TOTAMT",	index:'TOTAMT',			width:100,	align:'center'}
-				,{name:"TAXINCOME",	index:'TAXINCOME',		width:100,	align:'center'}
-				,{name:"TAXLOCAL",	index:'TAXLOCAL',		width:100,	align:'center'}
-				,{name:"SUPPLYTAX",	index:'SUPPLYTAX',		width:100,	align:'center'}
-				,{name:"DEDUCTAMT",	index:'DEDUCTAMT',		width:100,	align:'center'}
+		var url = "/home/selectListEP012002.do?S_PAYDATE=" + S_PAYDATE + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE + "&S_KNAME=" + S_KNAME;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"BRANCHNAME",		type: 'string' },
+				{name:"DEPTNAME",		type: 'string' },
+				{name:"GRADENAME",		type: 'string' },
+				{name:"DUTYNAME",		type: 'string' },
+				{name:"INSACODE",		type: 'string' },
+				{name:"KNAME",			type: 'string' },
+				{name:"BASICAMT",		type: 'string' },
+				{name:"ACTAMT",			type: 'string' },
+				{name:"DAILYAMT",		type: 'string' },
+				{name:"PRIZEAMT",		type: 'string' },
+				{name:"PAYAMT",			type: 'string' },
+				{name:"TOTAMT",			type: 'string' },
+				{name:"TAXINCOME",		type: 'string' },
+				{name:"TAXLOCAL",		type: 'string' },
+				{name:"SUPPLYTAX",		type: 'string' },
+				{name:"DEDUCTAMT",		type: 'string' }
 			],
-			rowNum:100,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+            root: "rows",
+            //record: "records",
+            id: 'KNAME',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+				{ text: '지사', 		datafield: 'BRANCHNAME',	width: 100, cellsalign: 'center'},
+				{ text: '부서', 		datafield: 'DEPTNAME',		width: 100, cellsalign: 'center'},
+				{ text: '직위', 		datafield: 'GRADENAME',		width: 100, cellsalign: 'center'},
+				{ text: '직급', 		datafield: 'DUTYNAME',		width: 100, cellsalign: 'center'},
+				{ text: '사번', 		datafield: 'INSACODE',		width: 100, cellsalign: 'center'},
+				{ text: '성명', 		datafield: 'KNAME',			width: 100, cellsalign: 'center'},
+				{ text: '기본급', 		datafield: 'BASICAMT',		width: 100, cellsalign: 'center'},
+				{ text: '활동비', 		datafield: 'ACTAMT',		width: 100, cellsalign: 'center'},
+				{ text: '일비', 		datafield: 'DAILYAMT',		width: 100, cellsalign: 'center'},
+				{ text: '시상금', 		datafield: 'PRIZEAMT',		width: 100, cellsalign: 'center'},
+				{ text: '수당금액', 	datafield: 'PAYAMT',		width: 100, cellsalign: 'center'},
+				{ text: '총지급액', 	datafield: 'TOTAMT',		width: 100, cellsalign: 'center'},
+				{ text: '소득세', 		datafield: 'TAXINCOME',		width: 100, cellsalign: 'center'},
+				{ text: '지방세', 		datafield: 'TAXLOCAL',		width: 100, cellsalign: 'center'},
+				{ text: '부가가치세',	datafield: 'SUPPLYTAX',		width: 100, cellsalign: 'center'},
+				{ text: '차감지급액',	datafield: 'DEDUCTAMT',		width: 100, cellsalign: 'center'}
+            ]
+        });
 	}
 	
 	$(function(){
@@ -141,7 +161,15 @@
 			var S_KNAME = $("#S_KNAME").val();
 			
 			f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
-		})
+		});
+		
+		
+		$("#excelButton").click(function () {
+			
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName1', true, null, true, null, 'utf-8');
+	        
+	    });
+		
 	})
 	
 		
@@ -153,9 +181,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -180,8 +208,7 @@
 				</tr>
 			</table>
 			<br/>
-			<table id="mainList" width="98%"></table>
-			<div id="mainNav"></div>
+			<div id="mainList" width="98%"></div>
 		</div>
 	</div>
 </body>

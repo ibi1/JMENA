@@ -19,10 +19,14 @@
 		var S_BOROUGHCODE = "";
 		var S_ADDRESS = "";
 		
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
 		
-		f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		//f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		
 	});
 	
@@ -80,55 +84,77 @@
 	
 	function f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
 
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '재고장', 
-			url:"/home/selectListSA012008.do" ,
-			datatype:"json",
-			postdata : {
-				S_CITYCODE : S_CITYCODE,
-				S_BOROUGHCODE : S_BOROUGHCODE,
-				S_ADDRESS : S_ADDRESS
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['매입구분', '매도자', '주민번호', '주소/지번', '면적(m2)',
-			          '등기이전일', '매입금액', '매출순번', '매수자', '주민번호',
-			          '계약면적', '이전일', '매도금액', '재고면적', '재고금액'],
-			colModel:[
-						{name:"BUYGUBUN",		index:'BUYGUBUN',		width:100,	align:'center'}
-						,{name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center'}
-						,{name:"OWNERJUMINID",	index:'OWNERJUMINID',	width:100,	align:'center'}
-						,{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center'}
-						,{name:"BUYM2",			index:'BUYM2',			width:100,	align:'center'}
-						,{name:"REGDATE1",		index:'REGDATE1',		width:100,	align:'center'}
-						,{name:"BUYAMT",		index:'BUYAMT',			width:100,	align:'center'}
-						,{name:"SELLSEQ",		index:'SELLSEQ',		width:100,	align:'center'}
-						,{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center'}
-						,{name:"CONJUMINID",	index:'CONJUMINID',		width:100,	align:'center'}
-						,{name:"CONM2",			index:'CONM2',			width:100,	align:'center'}
-						,{name:"REGDATE2",		index:'REGDATE2',		width:100,	align:'center'}
-						,{name:"SALEAMT",		index:'SALEAMT',		width:100,	align:'center'}
-						,{name:"REMNM2",		index:'REMNM2',			width:100,	align:'center'}
-						,{name:"REMNAMT",		index:'REMNAMT',		width:100,	align:'center'}
-						
-			],
-			rowNum:10,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+		var url = "/home/selectListSA012008.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"BUYGUBUN",		type: 'string' },
+				{name:"OWNERNAME",		type: 'string' },
+				{name:"OWNERJUMINID",	type: 'string' },
+				{name:"ADDRESS",		type: 'string' },
+				{name:"BUYM2",			type: 'string' },
+				{name:"REGDATE1",		type: 'string' },
+				{name:"BUYAMT",			type: 'string' },
+				{name:"SELLSEQ",		type: 'string' },
+				{name:"CONNAME",		type: 'string' },
+				{name:"CONJUMINID",		type: 'string' },
+				{name:"CONM2",			type: 'string' },
+				{name:"REGDATE2",		type: 'string' },
+				{name:"SALEAMT",		type: 'string' },
+				{name:"REMNM2",			type: 'string' },
+				{name:"REMNAMT",		type: 'string' }
+				
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+                      
+				{ text: '매입구분',		datafield: "BUYGUBUN",			width: 100, cellsalign: 'center'},
+				{ text: '매도자',		datafield: "OWNERNAME",			width: 100, cellsalign: 'center'},
+				{ text: '주민번호',		datafield: "OWNERJUMINID",		width: 100, cellsalign: 'center'},
+				{ text: '주소/지번',	datafield: "ADDRESS",			width: 100, cellsalign: 'center'},
+				{ text: '면적(m2)',		datafield: "BUYM2",				width: 100, cellsalign: 'center'},
+				{ text: '등기이전일',	datafield: "REGDATE1",			width: 100, cellsalign: 'center'},
+				{ text: '매입금액',		datafield: "BUYAMT",			width: 100, cellsalign: 'center'},
+				{ text: '매출순번',		datafield: "SELLSEQ",			width: 100, cellsalign: 'center'},
+				{ text: '매수자',		datafield: "CONNAME",			width: 100, cellsalign: 'center'},
+				{ text: '주민번호',		datafield: "CONJUMINID",		width: 100, cellsalign: 'center'},
+				{ text: '계약면적',		datafield: "CONM2",				width: 100, cellsalign: 'center'},
+				{ text: '이전일',		datafield: "REGDATE2",			width: 100, cellsalign: 'center'},
+				{ text: '매도금액',		datafield: "SALEAMT",			width: 100, cellsalign: 'center'},
+				{ text: '재고면적',		datafield: "REMNM2",			width: 100, cellsalign: 'center'},
+				{ text: '재고금액',		datafield: "REMNAMT",			width: 100, cellsalign: 'center'}
+				
+			]            
+        });
 	}
 	
 	$(function(){
@@ -139,7 +165,13 @@
 			var S_ADDRESS = $("#S_ADDRESS").val();
 			
 			f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
-		})
+		});
+		
+		$("#excelButton").click(function () {
+			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	    });
+		
 	})
 </script>
 <body>
@@ -149,9 +181,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>

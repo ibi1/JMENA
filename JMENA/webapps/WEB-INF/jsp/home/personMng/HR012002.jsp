@@ -6,9 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
-	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
-
 </head>
 <style type="text/css">
 .ui-jqgrid .ui-jqgrid-bdiv{ overflow-x:auto; }
@@ -18,9 +15,6 @@
 
 	$(document).ready(function(){
 
-		f_selectListEnaBranchCode();
-		f_selectListEnaDeptCode();
-		
 		var S_RETIREDATE_FR = "";
 		var S_RETIREDATE_TO = "";
 		var S_BRANCHCODE = "";
@@ -28,7 +22,14 @@
 		var S_KNAME = "";
 		var S_JUMINID = "";
 		
-		f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
+		f_selectListEnaBranchCode();
+		f_selectListEnaDeptCode();
+		
+		//f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
 		
 	});
 	
@@ -84,74 +85,88 @@
 	}
 
 	function f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID){
-		$('#mainList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		$('#mainList').jqGrid({
-			//caption: '퇴사자현황', 
-			url:"/home/selectListHR012002.do" ,
-			datatype:"json",
-			postdata : {
-				S_RETIREDATE_FR : S_RETIREDATE_FR,
-				S_RETIREDATE_TO : S_RETIREDATE_TO,
-				S_BRANCHCODE : S_BRANCHCODE,
-				S_DEPTCODE : S_DEPTCODE,
-				S_KNAME : S_KNAME,
-				S_JUMINID : S_JUMINID,
-			},
-			loadError:function(){alert("Error~!!");},
-			colNames:['지사코드', '지사', '부서코드', '부서', '직위',
-			          '직급', '고용구분', '사번' , '성명', '추천인',
-			          '입사일', '퇴사일', '직전지사실적', '지사코드', '지사',
-			          '입사', '퇴사', '실적', '비고', '비고'],
-			colModel:[
-						{name:"BRANCHCODE",			index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
-						, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-						, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true}
-						, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center'}
-						, {name:"DUTY",				index:'DUTY',			width:100,	align:'center'}
-						, {name:"GRADE",			index:'GRADE',			width:100,	align:'center'}
-						, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',	width:150,	align:'center'}
-						, {name:"INSACODE",			index:'INSACODE',		width:100,	align:'center'}
-						, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
-						, {name:"RECONAME",			index:'RECONAME',		width:100,	align:'center'}
-						, {name:"JOINDATE",			index:'JOINDATE',		width:100,	align:'center'}
-						, {name:"RETIREDATE",		index:'RETIREDATE',		width:100,	align:'center'}
-						, {name:"SELLAMT",			index:'SELLAMT',		width:100,	align:'center'}
-						, {name:"O_BRANCHCODE",		index:'O_BRANCHCODE',	width:150,	align:'center', hidden:true}
-						, {name:"O_BRANCHNAME",		index:'O_BRANCHNAME',	width:150,	align:'center'}
-						, {name:"O_JOINDATE",		index:'O_JOINDATE',		width:100,	align:'center'}
-						, {name:"O_RETIREDATE",		index:'O_RETIREDATE',	width:100,	align:'center'}
-						, {name:"O_SELLAMT",		index:'O_SELLAMT',		width:100,	align:'center'}
-						, {name:"O_REMARK",			index:'O_REMARK',		width:100,	align:'center'}
-						, {name:"REMARK",			index:'REMARK',			width:150,	align:'center'}
-			],
-			rowNum:100,
-			autowidth: true,
-			shrinkToFit: false,
-			rowList:[10,20,30],
-			sortname: 'kName',
-			viewrecords: true,
-			sortorder:'asc',
-			width: '96%',
-			jsonReader: {
-				repeatitems: false
-			},
-			//height: '100%',
-			onSelectRow: function(id){
-				alert(id);
-			},
-			hidegrid: false
-		});
+		var url = "/home/selectListHR012002.do?S_RETIREDATE_FR=" + S_RETIREDATE_FR + "&S_RETIREDATE_TO=" + S_RETIREDATE_TO + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE + "&S_KNAME=" + S_KNAME + "&S_JUMINID=" + S_JUMINID;
+		
+        // prepare the data
+        var source = {
+            datatype: "json",
+            datafields: [
+                         
+				{name:"BRANCHCODE",			type: 'string' },
+				{name:"BRANCHNAME",			type: 'string' },
+				{name:"DEPTCODE",			type: 'string' },
+				{name:"DEPTNAME",			type: 'string' },
+				{name:"DUTY",				type: 'string' },
+				{name:"GRADE",				type: 'string' },
+				{name:"EMPLOYGUBUN",		type: 'string' },
+				{name:"INSACODE",			type: 'string' },
+				{name:"KNAME",				type: 'string' },
+				{name:"RECONAME",			type: 'string' },
+				{name:"JOINDATE",			type: 'string' },
+				{name:"RETIREDATE",			type: 'string' },
+				{name:"SELLAMT",			type: 'string' },
+				{name:"O_BRANCHCODE",		type: 'string' },
+				{name:"O_BRANCHNAME",		type: 'string' },
+				{name:"O_JOINDATE",			type: 'string' },
+				{name:"O_RETIREDATE",		type: 'string' },
+				{name:"O_SELLAMT",			type: 'string' },
+				{name:"O_REMARK",			type: 'string' },
+				{name:"REMARK",				type: 'string' }
+            ],
+            root: "rows",
+            //record: "records",
+            id: 'CITYCODE',
+            url: url
+        };
 
-		$("#mainList").jqGrid('setGroupHeaders', {
-		    useColSpanStyle: true, //rowspan자동으로 해줄지 여부.
-		    groupHeaders:[
-		      {
-		        startColumnName: 'O_BRANCHCODE',
-		        numberOfColumns: 5,
-		        titleText: '전근무현황'
-		      }
-		     ]
-		});
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data, status, xhr) {
+            },
+            loadComplete: function (data) {
+            },
+            loadError: function (xhr, status, error) { alert("Error~~!"); }
+        });
+        
+		// initialize jqxGrid
+        $("#mainList").jqxGrid({
+        	theme: 'energyblue',
+        	sorttogglestates: 0,
+        	sortable: false,
+            width: '98%',
+            source: dataAdapter,                
+            pageable: false,
+            autoheight: false,
+            altrows: true,
+            enabletooltips: true,
+            editable: false,
+            selectionmode: 'singlerow',
+            columns: [
+				{ text: '지사코드', 		datafield: 'BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
+				{ text: '지사', 			datafield: 'BRANCHNAME',		width: 100, cellsalign: 'center'},
+				{ text: '부서코드', 		datafield: 'DEPTCODE',			width: 100, cellsalign: 'center', hidden:true},
+				{ text: '부서', 			datafield: 'DEPTNAME',			width: 100, cellsalign: 'center'},
+				{ text: '직위', 			datafield: 'DUTY',				width: 100, cellsalign: 'center'},
+				{ text: '직급', 			datafield: 'GRADE',				width: 100, cellsalign: 'center'},
+				{ text: '고용구분', 		datafield: 'EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
+				{ text: '사번', 			datafield: 'INSACODE',			width: 100, cellsalign: 'center'},
+				{ text: '성명', 			datafield: 'KNAME',				width: 100, cellsalign: 'center'},
+				{ text: '추천인', 			datafield: 'RECONAME',			width: 100, cellsalign: 'center'},
+				{ text: '입사일', 			datafield: 'JOINDATE',			width: 100, cellsalign: 'center'},
+				{ text: '퇴사일', 			datafield: 'RETIREDATE',		width: 100, cellsalign: 'center'},
+				{ text: '직전지사실적', 	datafield: 'SELLAMT',			width: 100, cellsalign: 'center'},
+				{ text: '지사코드', 		columngroup: '전근무현황',	datafield: 'O_BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
+				{ text: '지사', 			columngroup: '전근무현황',	datafield: 'O_BRANCHNAME',		width: 100, cellsalign: 'center'},
+				{ text: '입사', 			columngroup: '전근무현황',	datafield: 'O_JOINDATE',		width: 100, cellsalign: 'center'},
+				{ text: '퇴사', 			columngroup: '전근무현황',	datafield: 'O_RETIREDATE',		width: 100, cellsalign: 'center'},
+				{ text: '실적', 			columngroup: '전근무현황',	datafield: 'O_SELLAMT',			width: 100, cellsalign: 'center'},
+				{ text: '비고', 			columngroup: '전근무현황',	datafield: 'O_REMARK',			width: 100, cellsalign: 'center'},
+				{ text: '비고', 			datafield: 'REMARK',			width: 100, cellsalign: 'center'}
+            ],
+            columngroups: [
+				{ text: '전근무현황', align: 'center', name: '전근무현황' }
+			]            
+        });
+
 		
 	}
 	
@@ -166,7 +181,13 @@
 			var S_JUMINID = $("#S_JUMINID").val();
 			
 			f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
-		})
+		});
+		
+		$("#excelButton").click(function () {
+			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	    });
+		
 	})
 
 
@@ -178,9 +199,9 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="excelButton" name="excelButton">엑셀</a>
-						<a class="ui-button ui-widget ui-corner-all" id="printButton" name="printButton">출력</a>
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -209,7 +230,7 @@
 				</tr>
 			</table>
 			<br/>
-			<table id="mainList" width="98%"></table>
+			<div id="mainList" width="98%"></div>
 		</div>
 	</div>
 </body>

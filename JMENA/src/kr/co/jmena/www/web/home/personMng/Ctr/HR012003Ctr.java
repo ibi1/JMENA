@@ -162,7 +162,6 @@ public class HR012003Ctr {
 			
 		}
 		
-		json.put("records", lst.size());
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);
