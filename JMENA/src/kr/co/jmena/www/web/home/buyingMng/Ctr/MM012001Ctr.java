@@ -75,44 +75,41 @@ public class MM012001Ctr {
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
 		vo.setS_ADDRESS(request.getParameter("S_ADDRESS"));
-		
-		
-		List<MM012001VO> lst = MM012001Biz.selectListMM012001(vo);
-		
-//		System.out.println("******************************************");
-//		System.out.println("size()"+lst.size());
-		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		
-		for (int i = 0; i < lst.size(); i++) {
-			JSONObject obj = new JSONObject();
+		if(!(request.getParameter("S_CITYCODE").equals("") && request.getParameter("S_BOROUGHCODE").equals("") && request.getParameter("S_ADDRESS").equals(""))){
+			List<MM012001VO> lst = MM012001Biz.selectListMM012001(vo);
 			
-			obj.put("id", i+1);
-			obj.put("CITYCODE", lst.get(i).getCITYCODE());
-			obj.put("CITYNAME", lst.get(i).getCITYNAME());
-			obj.put("BOROUGHCODE", lst.get(i).getBOROUGHCODE());
-			obj.put("BOROUGHNAME", lst.get(i).getBOROUGHNAME());
-			obj.put("ADDRESS", lst.get(i).getADDRESS());
-			obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
-			obj.put("BUYM2", lst.get(i).getBUYM2());
-			obj.put("BUYPY", lst.get(i).getBUYPY());
-			obj.put("BUNBUYPY", lst.get(i).getBUNBUYPY());
-			obj.put("JANBUYPY", lst.get(i).getJANBUYPY());
-			obj.put("BUYAMT", lst.get(i).getBUYAMT());
-			obj.put("PAYAMT1", lst.get(i).getPAYAMT1());
-			obj.put("PAYDATE1", lst.get(i).getPAYDATE1());
-			obj.put("PAYAMT2", lst.get(i).getPAYAMT2());
-			obj.put("PAYDATE2", lst.get(i).getPAYDATE2());
-			obj.put("PAYAMT3", lst.get(i).getPAYAMT3());
-			obj.put("PAYDATE3", lst.get(i).getPAYDATE3());
-			obj.put("PAYAMT4", lst.get(i).getPAYAMT4());
-			obj.put("PAYDATE4", lst.get(i).getPAYDATE4());
-			obj.put("JANPAYAMT", lst.get(i).getJANPAYAMT());
-			obj.put("OPENYN", lst.get(i).getOPENYN());
-			obj.put("REMARK", lst.get(i).getREMARK());
-
-			jCell.add(obj);
+			for (int i = 0; i < lst.size(); i++) {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("id", i+1);
+				obj.put("CITYCODE", lst.get(i).getCITYCODE());
+				obj.put("CITYNAME", lst.get(i).getCITYNAME());
+				obj.put("BOROUGHCODE", lst.get(i).getBOROUGHCODE());
+				obj.put("BOROUGHNAME", lst.get(i).getBOROUGHNAME());
+				obj.put("ADDRESS", lst.get(i).getADDRESS());
+				obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
+				obj.put("BUYM2", lst.get(i).getBUYM2());
+				obj.put("BUYPY", lst.get(i).getBUYPY());
+				obj.put("BUNBUYPY", lst.get(i).getBUNBUYPY());
+				obj.put("JANBUYPY", lst.get(i).getJANBUYPY());
+				obj.put("BUYAMT", lst.get(i).getBUYAMT());
+				obj.put("PAYAMT1", lst.get(i).getPAYAMT1());
+				obj.put("PAYDATE1", lst.get(i).getPAYDATE1());
+				obj.put("PAYAMT2", lst.get(i).getPAYAMT2());
+				obj.put("PAYDATE2", lst.get(i).getPAYDATE2());
+				obj.put("PAYAMT3", lst.get(i).getPAYAMT3());
+				obj.put("PAYDATE3", lst.get(i).getPAYDATE3());
+				obj.put("PAYAMT4", lst.get(i).getPAYAMT4());
+				obj.put("PAYDATE4", lst.get(i).getPAYDATE4());
+				obj.put("JANPAYAMT", lst.get(i).getJANPAYAMT());
+				obj.put("OPENYN", lst.get(i).getOPENYN());
+				obj.put("REMARK", lst.get(i).getREMARK());
+	
+				jCell.add(obj);
+			}
 		}
 		
 		//json.put("records", lst.size());

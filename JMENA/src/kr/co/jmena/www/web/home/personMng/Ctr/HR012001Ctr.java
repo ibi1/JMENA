@@ -62,96 +62,103 @@ public class HR012001Ctr {
 		vo.setS_KNAME(request.getParameter("S_KNAME"));
 		vo.setS_JUMINID(request.getParameter("S_JUMINID"));
 		
-		
-		List<HR012001VO> lst = HR012001Biz.selectListHR012001(vo);
-		
-		System.out.println("******************************************");
-		System.out.println("size()"+lst.size());
-		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
+
+		if(!(request.getParameter("S_JOINDATE_FR").equals("") && 
+				request.getParameter("S_JOINDATE_TO").equals("") && 
+				request.getParameter("S_BRANCHCODE").equals("") && 
+				request.getParameter("S_DEPTCODE").equals("") && 
+				request.getParameter("S_KNAME").equals("") && 
+				request.getParameter("S_JUMINID").equals(""))){
 		
-		for (int i = 0; i < lst.size(); i++) {
-			JSONObject obj = new JSONObject();
+			List<HR012001VO> lst = HR012001Biz.selectListHR012001(vo);
 			
-			vo1.setINSACODE(request.getParameter(lst.get(i).getINSACODE()));
+			System.out.println("******************************************");
+			System.out.println("size()"+lst.size());
 			
-			List<HR012001VO> lst2 = HR012001Biz.selectListHR012001_2(vo1);
-			if(lst2.size() > 0){
-				for (int j = 0; j < lst.size(); j++) {
-					if(j == 0){
-						obj.put("BRANCHCODE",lst.get(i).getBRANCHCODE());
-						obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
-						obj.put("DEPTCODE",lst.get(i).getDEPTCODE());
-						obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
-						obj.put("GRADE",lst.get(i).getGRADE());
-						obj.put("DUTY",lst.get(i).getDUTY());
-						obj.put("EMPLOYGUBUN",lst.get(i).getEMPLOYGUBUN());
-						obj.put("INSACODE",lst.get(i).getINSACODE());
-						obj.put("KNAME",lst.get(i).getKNAME());
-						obj.put("RECONAME",lst.get(i).getRECONAME());
-						obj.put("JOINDATE",lst.get(i).getJOINDATE());
-						obj.put("REMARK",lst.get(i).getREMARK());
-					}else{
-						obj.put("BRANCHCODE","");
-						obj.put("BRANCHNAME","");
-						obj.put("DEPTCODE","");
-						obj.put("DEPTNAME","");
-						obj.put("GRADE","");
-						obj.put("DUTY","");
-						obj.put("EMPLOYGUBUN","");
-						obj.put("INSACODE","");
-						obj.put("KNAME","");
-						obj.put("RECONAME","");
-						obj.put("JOINDATE","");
-						obj.put("REMARK","");
+			
+			for (int i = 0; i < lst.size(); i++) {
+				JSONObject obj = new JSONObject();
+				
+				vo1.setINSACODE(request.getParameter(lst.get(i).getINSACODE()));
+				
+				List<HR012001VO> lst2 = HR012001Biz.selectListHR012001_2(vo1);
+				if(lst2.size() > 0){
+					for (int j = 0; j < lst.size(); j++) {
+						if(j == 0){
+							obj.put("BRANCHCODE",lst.get(i).getBRANCHCODE());
+							obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
+							obj.put("DEPTCODE",lst.get(i).getDEPTCODE());
+							obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
+							obj.put("GRADE",lst.get(i).getGRADE());
+							obj.put("DUTY",lst.get(i).getDUTY());
+							obj.put("EMPLOYGUBUN",lst.get(i).getEMPLOYGUBUN());
+							obj.put("INSACODE",lst.get(i).getINSACODE());
+							obj.put("KNAME",lst.get(i).getKNAME());
+							obj.put("RECONAME",lst.get(i).getRECONAME());
+							obj.put("JOINDATE",lst.get(i).getJOINDATE());
+							obj.put("REMARK",lst.get(i).getREMARK());
+						}else{
+							obj.put("BRANCHCODE","");
+							obj.put("BRANCHNAME","");
+							obj.put("DEPTCODE","");
+							obj.put("DEPTNAME","");
+							obj.put("GRADE","");
+							obj.put("DUTY","");
+							obj.put("EMPLOYGUBUN","");
+							obj.put("INSACODE","");
+							obj.put("KNAME","");
+							obj.put("RECONAME","");
+							obj.put("JOINDATE","");
+							obj.put("REMARK","");
+							
+						}
+						obj.put("O_BRANCHNAME",lst2.get(j).getO_BRANCHNAME());
+						obj.put("O_JOINDATE",lst2.get(j).getO_JOINDATE());
+						obj.put("O_RETIREDATE",lst2.get(j).getO_RETIREDATE());
+						obj.put("O_EMPLOYGUBUN",lst2.get(j).getO_EMPLOYGUBUN());
 						
+						vo2.setINSACODE(request.getParameter(lst.get(i).getINSACODE()));
+						vo2.setO_JOINDATE(request.getParameter(lst2.get(j).getO_JOINDATE()));
+						vo2.setO_RETIREDATE(request.getParameter(lst2.get(j).getO_RETIREDATE()));
+						
+						List<HR012001VO> lst3 = HR012001Biz.selectListHR012001_3(vo2);
+						if(lst2.size() > 0){
+							
+							obj.put("O_SELLAMT",lst3.get(j).getO_SELLAMT());
+							
+						}else{
+							obj.put("O_SELLAMT","");
+						}
+						
+						jCell.add(obj);
 					}
-					obj.put("O_BRANCHNAME",lst2.get(j).getO_BRANCHNAME());
-					obj.put("O_JOINDATE",lst2.get(j).getO_JOINDATE());
-					obj.put("O_RETIREDATE",lst2.get(j).getO_RETIREDATE());
-					obj.put("O_EMPLOYGUBUN",lst2.get(j).getO_EMPLOYGUBUN());
-					
-					vo2.setINSACODE(request.getParameter(lst.get(i).getINSACODE()));
-					vo2.setO_JOINDATE(request.getParameter(lst2.get(j).getO_JOINDATE()));
-					vo2.setO_RETIREDATE(request.getParameter(lst2.get(j).getO_RETIREDATE()));
-					
-					List<HR012001VO> lst3 = HR012001Biz.selectListHR012001_3(vo2);
-					if(lst2.size() > 0){
-						
-						obj.put("O_SELLAMT",lst3.get(j).getO_SELLAMT());
-						
-					}else{
-						obj.put("O_SELLAMT","");
-					}
+				}else{
+					obj.put("BRANCHCODE",lst.get(i).getBRANCHCODE());
+					obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
+					obj.put("DEPTCODE",lst.get(i).getDEPTCODE());
+					obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
+					obj.put("GRADE",lst.get(i).getGRADE());
+					obj.put("DUTY",lst.get(i).getDUTY());
+					obj.put("EMPLOYGUBUN",lst.get(i).getEMPLOYGUBUN());
+					obj.put("INSACODE",lst.get(i).getINSACODE());
+					obj.put("KNAME",lst.get(i).getKNAME());
+					obj.put("RECONAME",lst.get(i).getRECONAME());
+					obj.put("JOINDATE",lst.get(i).getJOINDATE());
+					obj.put("REMARK",lst.get(i).getREMARK());
+	
+					obj.put("O_BRANCHNAME","");
+					obj.put("O_JOINDATE","");
+					obj.put("O_RETIREDATE","");
+					obj.put("O_EMPLOYGUBUN","");
+					obj.put("O_SELLAMT","");
 					
 					jCell.add(obj);
 				}
-			}else{
-				obj.put("BRANCHCODE",lst.get(i).getBRANCHCODE());
-				obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
-				obj.put("DEPTCODE",lst.get(i).getDEPTCODE());
-				obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
-				obj.put("GRADE",lst.get(i).getGRADE());
-				obj.put("DUTY",lst.get(i).getDUTY());
-				obj.put("EMPLOYGUBUN",lst.get(i).getEMPLOYGUBUN());
-				obj.put("INSACODE",lst.get(i).getINSACODE());
-				obj.put("KNAME",lst.get(i).getKNAME());
-				obj.put("RECONAME",lst.get(i).getRECONAME());
-				obj.put("JOINDATE",lst.get(i).getJOINDATE());
-				obj.put("REMARK",lst.get(i).getREMARK());
-
-				obj.put("O_BRANCHNAME","");
-				obj.put("O_JOINDATE","");
-				obj.put("O_RETIREDATE","");
-				obj.put("O_EMPLOYGUBUN","");
-				obj.put("O_SELLAMT","");
 				
-				jCell.add(obj);
 			}
-			
 		}
-		
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);

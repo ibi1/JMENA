@@ -67,23 +67,45 @@ public class SA012004Ctr {
 		vo.setS_IPGUMPERSON(request.getParameter("S_IPGUMPERSON"));
 		vo.setS_IPGUMAMT(request.getParameter("S_IPGUMAMT"));
 
-		List<SA012004VO> lst = SA012004Biz.selectListSA012004(vo);
-		
-		System.out.println("******************************************");
-		System.out.println("size()"+lst.size());
-		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
-		
-		for (int i = 0; i < lst.size(); i++) {
-			JSONObject obj = new JSONObject();
-			
-			obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
 
-			jCell.add(obj);
+		if(!(request.getParameter("S_IPGUMDATE_FR").equals("") && 
+				request.getParameter("S_IPGUMDATE_TO").equals("") && 
+				request.getParameter("S_BRANCHCODE").equals("") && 
+				request.getParameter("S_SALERCD").equals("") && 
+				request.getParameter("S_IPGUMGUBUN").equals("") && 
+				request.getParameter("S_IPGUMPERSON").equals("") && 
+				request.getParameter("S_IPGUMAMT").equals(""))){
+		
+			List<SA012004VO> lst = SA012004Biz.selectListSA012004(vo);
+			
+			System.out.println("******************************************");
+			System.out.println("size()"+lst.size());
+			
+			
+			for (int i = 0; i < lst.size(); i++) {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("IPGUMDATE",lst.get(i).getIPGUMDATE());
+				obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
+				obj.put("KNAME",lst.get(i).getKNAME());
+				obj.put("CONNAME",lst.get(i).getCONNAME());
+				obj.put("IPGUMGUBUN",lst.get(i).getIPGUMGUBUN());
+				obj.put("IPGUMAMT",lst.get(i).getIPGUMAMT());
+				obj.put("SUGUMAMT",lst.get(i).getSUGUMAMT());
+				obj.put("JANGUMAMT",lst.get(i).getJANGUMAMT());
+				obj.put("BANKNAME",lst.get(i).getBANKNAME());
+				obj.put("IPGUMTYPE",lst.get(i).getIPGUMTYPE());
+				obj.put("ADDRESS",lst.get(i).getADDRESS());
+				obj.put("CONPY",lst.get(i).getCONPY());
+				obj.put("REMARK",lst.get(i).getREMARK());
+				
+				
+				jCell.add(obj);
+			}
 		}
 		
-		json.put("records", lst.size());
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);

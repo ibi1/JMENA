@@ -25,7 +25,7 @@
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 
-		//f_selectListHR012003(S_JOINDATE, S_BRANCHCODE, S_DEPTCODE);
+		f_selectListHR012003(S_JOINDATE, S_BRANCHCODE, S_DEPTCODE);
 		
 	});
 	

@@ -26,7 +26,7 @@
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
 		
-		//f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		
 	});
 	

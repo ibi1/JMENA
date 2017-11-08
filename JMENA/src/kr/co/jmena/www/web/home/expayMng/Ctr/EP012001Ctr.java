@@ -56,36 +56,43 @@ public class EP012001Ctr {
 		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
 		vo.setS_KNAME(request.getParameter("S_KNAME"));
 
-		List<EP012001VO> lst = EP012001Biz.selectListEP012001(vo);
-		
-		System.out.println("******************************************");
-		System.out.println("size()"+lst.size());
-		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		
-		for (int i = 0; i < lst.size(); i++) {
-			JSONObject obj = new JSONObject();
-			
-			obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
-			obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
-			obj.put("PAYDATE",lst.get(i).getPAYDATE());
-			obj.put("CONNAME",lst.get(i).getCONNAME());
-			obj.put("ADDRESS",lst.get(i).getADDRESS());
-			obj.put("CONM2",lst.get(i).getCONM2());
-			obj.put("CONPY",lst.get(i).getCONPY());
-			obj.put("KNAME",lst.get(i).getKNAME());
-			obj.put("PAYERNAME",lst.get(i).getPAYERNAME());
-			obj.put("PAYERID",lst.get(i).getPAYERID());
-			obj.put("PAYAMT",lst.get(i).getPAYAMT());
-			obj.put("TAXINCOME",lst.get(i).getTAXINCOME());
-			obj.put("TAXLOCAL",lst.get(i).getTAXLOCAL());
-			obj.put("TOTTAX",lst.get(i).getTOTTAX());
-			obj.put("DEDUCTAMT",lst.get(i).getDEDUCTAMT());
-			
-			jCell.add(obj);
-		}
+		if(!(request.getParameter("S_PAYDATE").equals("") && 
+				request.getParameter("S_BRANCHCODE").equals("") && 
+				request.getParameter("S_DEPTCODE").equals("") && 
+				request.getParameter("S_KNAME").equals(""))){
 		
+		
+			List<EP012001VO> lst = EP012001Biz.selectListEP012001(vo);
+			
+			System.out.println("******************************************");
+			System.out.println("size()"+lst.size());
+			
+			
+			for (int i = 0; i < lst.size(); i++) {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
+				obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
+				obj.put("PAYDATE",lst.get(i).getPAYDATE());
+				obj.put("CONNAME",lst.get(i).getCONNAME());
+				obj.put("ADDRESS",lst.get(i).getADDRESS());
+				obj.put("CONM2",lst.get(i).getCONM2());
+				obj.put("CONPY",lst.get(i).getCONPY());
+				obj.put("KNAME",lst.get(i).getKNAME());
+				obj.put("PAYERNAME",lst.get(i).getPAYERNAME());
+				obj.put("PAYERID",lst.get(i).getPAYERID());
+				obj.put("PAYAMT",lst.get(i).getPAYAMT());
+				obj.put("TAXINCOME",lst.get(i).getTAXINCOME());
+				obj.put("TAXLOCAL",lst.get(i).getTAXLOCAL());
+				obj.put("TOTTAX",lst.get(i).getTOTTAX());
+				obj.put("DEDUCTAMT",lst.get(i).getDEDUCTAMT());
+				
+				jCell.add(obj);
+			}
+		}
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);

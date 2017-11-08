@@ -54,47 +54,54 @@ public class SA012007Ctr {
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
 		vo.setS_ADDRESS(request.getParameter("S_ADDRESS"));
-		
-		List<SA012007VO> lst = SA012007Biz.selectListSA012007(vo);
-		
-		System.out.println("******************************************");
-		System.out.println("size()"+lst.size());
-		
+
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
-		
-		for (int i = 0; i < lst.size(); i++) {
-			JSONObject obj = new JSONObject();
-			
-			obj.put("DCODENAME",lst.get(i).getDCODENAME());
-			obj.put("CITYNAME",lst.get(i).getCITYNAME());
-			obj.put("BOROUGHNAME",lst.get(i).getBOROUGHNAME());
-			obj.put("ADDRESS",lst.get(i).getADDRESS());
-			obj.put("BUYM2",lst.get(i).getBUYM2());
-			obj.put("BUYPY",lst.get(i).getBUYPY());
-			obj.put("CONM2",lst.get(i).getCONM2());
-			obj.put("CONPY",lst.get(i).getCONPY());
-			obj.put("REMNM2",lst.get(i).getREMNM2());
-			obj.put("REMNPY",lst.get(i).getREMNPY());
-			obj.put("BUYDANGA",lst.get(i).getBUYDANGA());
 
-			SA012007VO vo2 = new SA012007VO();
-			List<SA012007VO> lst2 = SA012007Biz.selectListSA012007(vo2);
-			String OPENBRANCH = "";
-			for (int j = 0; j < lst.size(); j++) {
-				OPENBRANCH = OPENBRANCH+lst.get(j).getOPENBRANCH() + ",";
-			}
-			obj.put("OPENBRANCH", OPENBRANCH);
+		if(!(request.getParameter("S_CITYCODE").equals("") && 
+				request.getParameter("S_BOROUGHCODE").equals("") && 
+				request.getParameter("S_ADDRESS").equals(""))){
+
 			
-			SA012007VO vo3 = new SA012007VO();
-			List<SA012007VO> lst3 = SA012007Biz.selectListSA012007(vo3);
-			String HOLDING = "";
-			for (int k = 0; k < lst.size(); k++) {
-				HOLDING = HOLDING+lst.get(k).getHOLDING() + ",";
-			}
-			obj.put("HOLDING", HOLDING);
+			List<SA012007VO> lst = SA012007Biz.selectListSA012007(vo);
 			
-			jCell.add(obj);
+			System.out.println("******************************************");
+			System.out.println("size()"+lst.size());
+			
+			
+			for (int i = 0; i < lst.size(); i++) {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("DCODENAME",lst.get(i).getDCODENAME());
+				obj.put("CITYNAME",lst.get(i).getCITYNAME());
+				obj.put("BOROUGHNAME",lst.get(i).getBOROUGHNAME());
+				obj.put("ADDRESS",lst.get(i).getADDRESS());
+				obj.put("BUYM2",lst.get(i).getBUYM2());
+				obj.put("BUYPY",lst.get(i).getBUYPY());
+				obj.put("CONM2",lst.get(i).getCONM2());
+				obj.put("CONPY",lst.get(i).getCONPY());
+				obj.put("REMNM2",lst.get(i).getREMNM2());
+				obj.put("REMNPY",lst.get(i).getREMNPY());
+				obj.put("BUYDANGA",lst.get(i).getBUYDANGA());
+	
+				SA012007VO vo2 = new SA012007VO();
+				List<SA012007VO> lst2 = SA012007Biz.selectListSA012007(vo2);
+				String OPENBRANCH = "";
+				for (int j = 0; j < lst.size(); j++) {
+					OPENBRANCH = OPENBRANCH+lst.get(j).getOPENBRANCH() + ",";
+				}
+				obj.put("OPENBRANCH", OPENBRANCH);
+				
+				SA012007VO vo3 = new SA012007VO();
+				List<SA012007VO> lst3 = SA012007Biz.selectListSA012007(vo3);
+				String HOLDING = "";
+				for (int k = 0; k < lst.size(); k++) {
+					HOLDING = HOLDING+lst.get(k).getHOLDING() + ",";
+				}
+				obj.put("HOLDING", HOLDING);
+				
+				jCell.add(obj);
+			}
 		}
 		
 		json.put("rows", jCell);

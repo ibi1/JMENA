@@ -27,7 +27,8 @@
 		f_selectListEnaBranchCode();
 		f_selectListEnaSalerCode();
 		f_selectListEnaIpgumGubunCode();
-		//f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
+		
+		f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
 		
 	});
 	

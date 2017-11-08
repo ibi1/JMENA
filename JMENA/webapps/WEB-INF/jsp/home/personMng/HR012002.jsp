@@ -29,7 +29,7 @@
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
-		//f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
+		f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
 		
 	});
 	

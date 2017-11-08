@@ -31,7 +31,7 @@
 		f_selectListEnaDCode();
 		
 		
-		//f_selectListSA012002(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
+		f_selectListSA012002(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
 	});
 
 	function f_selectListEnaBranchCode(){
