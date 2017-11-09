@@ -51,7 +51,17 @@ public class HR011001Ctr {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/selectListEnaInsaMst.do")
 	public ModelAndView selectListEnaInsaMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HR011001VO vo = new HR011001VO();
+		HR011001VO vo = new HR011001VO();			
+		
+//		String s_branchcode = request.getParameter("S_BRANCHCODE") != null ? request.getParameter("S_BRANCHCODE") : ""; 
+//		String s_deptcode = request.getParameter("S_DEPTCODE") != null ? request.getParameter("S_DEPTCODE") : ""; 
+		String s_kname = request.getParameter("S_KNAME") != null ? request.getParameter("S_KNAME") : ""; 
+		String s_juminid = request.getParameter("S_JUMINID") != null ? request.getParameter("S_JUMINID") : ""; 
+		
+//		vo.setS_BRANCHCODE(s_branchcode);
+//		vo.setS_DEPTCODE(s_deptcode);
+		vo.setS_KNAME(s_kname);
+		vo.setS_JUMINID(s_juminid);
 		
 		List<HR011001VO> lst = HR011001Biz.selectListEnaInsaMst(vo);
 		
@@ -143,7 +153,7 @@ public class HR011001Ctr {
 		vo.setINSACODE(request.getParameter("INSACODE"));
 		
 		System.out.println("selectListEnaAppointItem     INSACODE==>"+ request.getParameter("INSACODE"));
-		List<HR011001VO> lst = HR011001Biz.selectListEnaAppointItem(vo);
+		List<HR011001VO> lst = HR011001Biz.selectListEnaAppointItem(vo);	
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
@@ -151,6 +161,9 @@ public class HR011001Ctr {
 		for (int i = 0; i < lst.size(); i++) {
 			//System.out.println(lst.get(i).getSYSID());
 			JSONObject jData = new JSONObject();
+			
+			
+			
 			jData.put("APPOINTGUBUN", lst.get(i).getAPPOINTGUBUN());
 			jData.put("APPOINTDATE", lst.get(i).getAPPOINTDATE());
 			jData.put("APPOINTBRANCH", lst.get(i).getAPPOINTBRANCH());
@@ -227,11 +240,17 @@ public class HR011001Ctr {
 
 		HR011001VO vo = new HR011001VO();
 		
+		
+		
 		List<HR011001VO> list = HR011001Biz.selectListEnaInsaMst(vo);
 
 		int updateCnt = 0;
 		int insertCnt = 0;
 
+		String juminId = request.getParameter("JUMINID1") + request.getParameter("JUMINID2");		
+		vo.setJUMINID(juminId);
+		
+		
 		vo.setINSACODE(request.getParameter("INSACODE"));
 		vo.setKNAME(request.getParameter("KNAME"));
 		vo.setJUMINID(request.getParameter("JUMINID"));

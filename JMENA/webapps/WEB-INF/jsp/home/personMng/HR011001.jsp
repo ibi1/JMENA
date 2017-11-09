@@ -42,17 +42,15 @@
 			},			
 			datatype:"json",		
 			loadError:function(){alert("Error~!!");},
-			colNames:['사번', '성명', '주민번호', '연락처', '소속지사코드', '소속지사', '소속부서코드', '소속부서','생일구분'
+			colNames:['사번', '성명', '주민번호', '연락처', '소속지사',  '소속부서','생일구분'
 			          ,'사업자번호','대표자명','주소','기타연락처','월정지급액','고용구분','직급','직책','입사일','재입사여부','퇴사일','추천인사번','비고'],
 			colModel:[
 				{name:"INSACODE",			index:'INSACODE',		width:100,	align:'center'}
 				, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
 				, {name:"JUMINID",			index:'JUMINID',		width:100,	align:'center'}
 				, {name:"MOBILENO",			index:'MOBILENO',		width:100,	align:'center'}
-				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
-				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-				, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true}
-	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center'} 		
+				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center'}
+	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=001", buildSelect:selectListEnaDeptCode}} 		
 				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center', hidden:true}
 				, {name:"SAUPID",			index:'SAUPID',			width:100,	align:'center', hidden:true}
 				, {name:"SAUPOWNER",		index:'SAUPOWNER',		width:100,	align:'center', hidden:true}
@@ -85,9 +83,12 @@
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#INSACODE").val(selRowData.INSACODE);
 	 			$("#KNAME").val(selRowData.KNAME);
-				$("#JUMINID").val(selRowData.JUMINID);
+				$("#JUMINID1").val(selRowData.JUMINID.substr(0,6));
+				$("#JUMINID2").val(selRowData.JUMINID.substr(6,selRowData.JUMINID.length));
 				$("input:radio[name=BIRTHDAYGUBUN]:input[value=" + selRowData.BIRTHDAYGUBUN + "]").attr("checked", true);
-				$("#SAUPID").val(selRowData.SAUPID);
+				$("#SAUPID1").val(selRowData.SAUPID.substr(0,3));
+				$("#SAUPID2").val(selRowData.SAUPID.substr(3,2));
+				$("#SAUPID3").val(selRowData.SAUPID.substr(5,5));
 				$("#SAUPOWNER").val(selRowData.SAUPOWNER);
 				$("#ADDRESS").val(selRowData.ADDRESS);
 				$("#MOBILENO").val(selRowData.MOBILENO);
@@ -263,6 +264,7 @@
 				data.dcodeList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 				});
+				$("#S_BRANCHCODE").append(inHtml);
 				$("#BRANCHCODE").append(inHtml);
 			},
 			error:function(e){  
@@ -287,12 +289,28 @@
 					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 				});
 				$("#DEPTCODE").append(inHtml);
+				$("#S_DEPTCODE").append(inHtml);
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 			}  
 		});
 	}
+	
+	function selectListEnaDeptCode(data){
+		var jsonValue = $.parseJSON(data).dcodeList;
+		
+		var result = "<select>";
+		
+		jsonValue.some(function(currentValue, index, array){
+			result += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+		});
+		
+		result +="</select>";
+
+		return result;
+	   	
+	}	
 	
 	
 	function f_selectListEnaGradeCode(){
@@ -381,15 +399,11 @@
 					<th>지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
-							<option>서울</option>
-							<option>경기</option>
-							<option>부산</option>
 						</select>
 					</td>
 					<th>부서</th>
 					<td>
 						<select id="S_DEPTCODE" name="S_DEPTCODE">
-							<option value="1">개발 1팀</option>
 						</select>
 					</td>
 				</tr>
@@ -405,77 +419,85 @@
 			<br/>
 			<table id="leftList" width="98%"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="rightDiv" style="width:48%;  float:left; border:1px solid #333; padding: 10px" align="left">
 			<form id="HR011001">
-			<table width="99%" class="blueone">
+			<table width="99%" class="blueone" border="0" cellspacing="10" cellpadding="0">
+				<col width="17%"><col width="17%"><col width="15%"><col width="5%"><col width="30%"><col>
 				<tr>
-					<th>성명 / 사번</th>
-					<td colspan="3"><input type="text" id="KNAME" name="KNAME" /><input type="text" id="INSACODE" name="INSACODE" /></td>
+					<th align="left">성명 / 사번</th>
+					<td colspan="3"><input type="text" id="KNAME" name="KNAME" style="width:18%;" />        
+					<input type="text" id="INSACODE" style="width:18%;"  name="INSACODE" maxlength="8" /></td>
 				</tr>
 				<tr>
-					<th>주민번호</th>
-					<td><input type="text" id="JUMINID" name="JUMINID" /> - <input type="text" id="juminId" name="juminId" /></td>
-					<th>생일구분</th>
-					<td><input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" value="S" />양력 <input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" value="M" />음력</td>
+					<th align="left">주민번호</th>
+					<td><input type="text" id="JUMINID1" name="JUMINID1" style="width:40%;"  maxlength="6"  /> - 
+					<input type="text" id="JUMINID2" name="JUMINID2" style="width:47%;" maxlength="7"  /></td>
+					<th align="left">생일구분</th>
+					<td><input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" style="width:10%;" value="S" />양력 
+					<input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" style="width:10%;" value="M" />음력</td>
 				</tr>
 				<tr>
-					<th>사업자번호</th>
-					<td><input type="text" id="SAUPID" name="SAUPID" /> - <input type="text" id="SAUPID" name="SAUPID" /> - <input type="text" id="SAUPID" name="SAUPID" /></td>
-					<th>대표자명</th>
+					<th align="left">사업자번호</th>
+					<td><input type="text" style="width:15%;" id="SAUPID1" name="SAUPID1" maxlength="3" /> - 
+						<input type="text" style="width:15%;" id="SAUPID2" name="SAUPID2" maxlength="2" /> -
+						<input type="text" style="width:48%;" id="SAUPID3" name="SAUPID3" maxlength="5" /></td>
+					<th align="left">대표자명</th>
 					<td><input type="text" id="SAUPOWNER" name="SAUPOWNER" /></td>
 				</tr>
 				<tr>
-					<th>주소</th>
-					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
+					<th align="left">주소</th>
+					<td colspan="3"><input  type="text" id="ADDRESS" name="ADDRESS" style="width:100%;"/></td>
 				</tr>
 				<tr>
-					<th>핸드폰번호</th>
-					<td><input type="text" id="MOBILENO" name="MOBILENO" /></td>
-					<th>기타연락처</th>
+					<th align="left">핸드폰번호</th>
+					<td><input type="text" id="MOBILENO" name="MOBILENO"/></td>
+					<th align="left">기타연락처</th>
 					<td><input type="text" id="TELNO" name="TELNO" /></td>
 				</tr>
 				<tr>
-					<th>소속지사</th>
-					<td colspan="3">
+					<th align="left">소속지사</th>
+					<td>
 						<select id="BRANCHCODE" name="BRANCHCODE">
 						</select>
 					</td>
-				</tr>
-				<tr>
-					<th>소속부서</th>
+					<th align="left">소속부서</th>
 					<td>
 						<select id="DEPTCODE" name="DEPTCODE">
 						</select>
 					</td>
-					<th>월정지급액</th>
-					<td><input type="text" id="BASICPAY" name="BASICPAY" /></td>
 				</tr>
 				<tr>
-					<th>고용구분</th>
+					
+					<th align="left">월정지급액</th>
+					<td><input type="text" id="BASICPAY" name="BASICPAY" /></td>
+					
+					<th align="left">고용구분</th>
 					<td colspan="3"><input type="radio" id="EMPLOYGUBUN" name="EMPLOYGUBUN" value="R" />정규 <input type="radio" id="EMPLOYGUBUN" name="EMPLOYGUBUN" value="F" />프리</td>
 				</tr>
 				<tr>
-					<th>직급</th>
+				</tr>
+				<tr>
+					<th align="left">직급</th>
 					<td>
 						<select id="GRADE" name="GRADE"></select>
 					</td>
-					<th>직책</th>
+					<th align="left">직책</th>
 					<td>
 						<select id="DUTY" name="DUTY"></select>
 					</td>
 				</tr>
 				<tr>
-					<th>입사일</th>
+					<th align="left">입사일</th>
 					<td><input type="text" id="JOINDATE" name="JOINDATE" /></td>
-					<th>재입사여부</th>
-					<td><input type="checkbox" id="REJOINYN" name="REJOINYN" value="Y"/></td>
+					<th align="left">재입사여부</th>
+					<td><input type="checkbox" id="REJOINYN" name="REJOINYN"/></td>
 				</tr>
 				<tr>
-					<th>퇴사일</th>
+					<th align="left">퇴사일</th>
 					<td colspan="3"><input type="text" id="RETIREDATE" name="RETIREDATE" /></td>
 				</tr>
 				<tr>
-					<th>추천인</th>
+					<th align="left">추천인</th>
 					<td colspan="3">
 						<select id="RECOID" name="RECOID">
 							<option value="recoId">insaCode</option>
@@ -483,7 +505,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>비고</th>
+					<th align="left">비고</th>
 					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
 				</tr>			
 			</table>

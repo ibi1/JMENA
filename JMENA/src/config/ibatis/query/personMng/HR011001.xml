@@ -115,10 +115,10 @@
 			AND T1.DEPTCODE = #S_DEPTCODE#
 		</isNotEmpty>
 		<isNotEmpty property="S_KNAME">
-			AND T1.KNAME LIKE CONCAT(‘%’, #S_KNAME#, ‘%’)
+			AND T1.KNAME LIKE CONCAT('%', #S_KNAME#, '%')
 		</isNotEmpty>
 		<isNotEmpty property="S_JUMINID">
-			AND T1.JUMINID LIKE CONCAT(‘%’, #S_JUMINID#, ‘%’) 
+			AND T1.JUMINID LIKE CONCAT('%', #S_JUMINID#, '%') 
 		</isNotEmpty>
 		ORDER BY T1.INSACODE ASC
 	</select>
