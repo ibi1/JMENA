@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.systemMng.Biz.SY021003Biz;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
@@ -126,61 +127,51 @@ public class SY021003Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/home/saveEnaCityMst.do")
-	public ModelAndView saveEnaBranchMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping("/home/insertEnaCityMst.do")
+	public ModelAndView insertEnaCityMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SY021003VO vo = new SY021003VO();
-		
-		System.out.println("BRANCHCODE==>"+request.getParameter("RS_CITYCODE"));
-		System.out.println("BRANCHNAME==>"+request.getParameter("RS_CITYNAME"));
-		System.out.println("USEYN==>"+request.getParameter("RS_SORTKEY"));
 		
 		vo.setCITYCODE(request.getParameter("RS_CITYCODE"));
 		vo.setCITYNAME(request.getParameter("RS_CITYNAME"));
 		vo.setSORTKEY(request.getParameter("RS_SORTKEY"));
 		
-		int updateCnt = 0;
-		int insertCnt = 0;
-
-		List<SY021003VO> lst = SY021003Biz.selectListEnaCityMst(vo);
-		System.out.println("lst.size()==>"+lst.size());
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
 		
-		JSONArray jCell = new JSONArray();
+		String IU_Flag = request.getParameter("S_FLAG_L");
+		
 		JSONObject json = new JSONObject();
 		
-		if(lst.size() > 0){
-			updateCnt = SY021003Biz.updateEnaCityMst(vo);
-			
-			
-			JSONObject obj = new JSONObject();
-			if(updateCnt > 0){
-				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
-			}
-			jCell.add(obj);
-			json.put("rows", jCell);
-			
-		}else{
-			insertCnt = SY021003Biz.insertEnaCityMst(vo);
-			
-			JSONObject obj = new JSONObject();
-			obj.put("insertCnt", insertCnt);
-			json.put("rows", jCell);
-			if(insertCnt > 0){
-				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
-			}
-			jCell.add(obj);
-			json.put("rows", jCell);
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SY021003Biz.insertEnaCityMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY021003Biz.updateEnaCityMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]시/도 코드 처리 중 오류가 발생했습니다.";
 		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertEnaCityMst]" + json);
 		
-		System.out.println("updateCnt==>"+updateCnt);
-		System.out.println("insertCnt==>"+insertCnt);
-		
-		System.out.println("json==>"+json);
-		
-		return new ModelAndView("jsonView", json);	
+		return new ModelAndView("jsonView", json);
 	}
-	
 }

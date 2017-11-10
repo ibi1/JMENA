@@ -25,7 +25,6 @@
 			$("#S_SYSNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#S_SORTKEY").jqxFormattedInput({theme: 'energyblue', height: 23, width: 94, radix: 'decimal', value: ''});
 			
-			
 			$("#S_FLAG_L").val("I");	//I : 저장, U : 수정
 			$("#S_FLAG_R").val("U");	//I : 저장, U : 수정
 			
@@ -45,9 +44,9 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['시스템코드', '시스템 명', '정렬순서'] ,
 				colModel:[
-					{name:"SYSID",			index:'SYSID',		width:60,		align:'center', sortable:false, editable:true, edittype:'text'}
-					,{name:"SYSNAME",		index:'SYSNAME',	width:60,		align:'center', sortable:false, editable:true, edittype:'text'}
-					,{name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false, editable:true, edittype:'text'}
+					{name:"SYSID",			index:'SYSID',		width:60,		align:'center', sortable:false}
+					,{name:"SYSNAME",		index:'SYSNAME',	width:60,		align:'center', sortable:false}
+					,{name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false}
 					] ,
 				rowNum:10 ,
 				autowidth: true ,
@@ -74,6 +73,21 @@
 				} ,
 				loadComplete : function() {
 					v_rightLastSel = 0;
+					
+					var sysId = $("#S_SYSID").val();
+					
+					var ids = jQuery("#leftList").jqGrid('getDataIDs');
+					
+					ids.some(function(currentValue, index, array){
+						var cellData = $("#leftList").jqGrid('getCell', ids[index], 'SYSID');
+						if (cellData == sysId) {
+							$("#S_FLAG_L").val("U");
+			        		$("#leftList").jqGrid('setSelection', ids[index]);
+			    			return true;
+			        	} else {
+			        		$("#S_FLAG_L").val("I");
+			        	}	        
+					});
 				},
 				hidegrid: false
 			});
@@ -115,9 +129,9 @@
 					//height: '100%' ,
 					onSelectRow: function(id){
 						if (id > 0) {
-							$("#S_FLAG_B").val("U");
+							$("#S_FLAG_R").val("U");
 						} else {
-							$("#S_FLAG_B").val("I");
+							$("#S_FLAG_R").val("I");
 						}
 						
 						if( v_rightLastSel != id ){
@@ -144,32 +158,13 @@
 					 return false;
 				}
 				
-				var isNew = true;
-				v_rightLastSel = 0;
+				$("#S_SYSNAME").val("");
+				$("#S_SYSNAME").focus();
+				$("#S_SORTKEY").val("");
 				
-				var sysId = $("#S_SYSID").val();
+				$('#rightList').jqGrid('clearGridData');
 				
-				var ids = jQuery("#leftList").jqGrid('getDataIDs');
-				
-				ids.some(function(currentValue, index, array){
-					var cellData = $("#leftList").jqGrid('getCell', ids[index], 'SYSID');
-					if (cellData == sysId) {
-						isNew = false;
-		        		$("#leftList").jqGrid('setSelection', ids[index]);
-		    			return true;
-		        	}	        
-				});
-				
-				if (isNew == true) {
-					$("#S_FLAG_L").val("I");
-					
-					$("#S_SYSNAME").val("");
-					$("#S_SYSNAME").focus();
-					$("#S_SORTKEY").val("");
-					
-					$("#leftList").jqGrid("resetSelection");
-					$('#rightList').jqGrid("clearGridData", true);
-				}
+				f_selectSysMst();
 			});
 		})
 		
@@ -199,6 +194,7 @@
 				$("#S_SYSNAME").val("");
 				$("#S_SORTKEY").val("");
 				$("#leftList").jqGrid("resetSelection");
+				$('#rightList').jqGrid('clearGridData');
 				
 				$("#S_SYSID").focus();
 			});
@@ -225,7 +221,7 @@
 				}
 				
 				var msg = "";
-				if ($("#S_FLAG_R").val() == "I") {
+				if ($("#S_FLAG_L").val() == "I") {
 					msg = "저장하시겠습니까?";
 				} else {
 					msg = "수정하시겠습니까?"
@@ -233,7 +229,7 @@
 				if (confirm(msg) == true) {
 					$.ajax({ 
 						type: 'POST' ,
-						data: $("#SY021002").serialize(),
+						data: $("#SY011001").serialize(),
 						url: "/home/insertDataSysMst.do", 
 						dataType : 'json' , 
 						success: function(data){

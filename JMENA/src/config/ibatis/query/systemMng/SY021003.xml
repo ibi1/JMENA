@@ -39,7 +39,7 @@
 		SET
 			CITYNAME = #CITYNAME#,
 			SORTKEY = #SORTKEY#,
-			UPDATEUSER = 'admin',
+			UPDATEUSER = #USERID#,
 			UPDATEDATE = NOW()
 		WHERE CITYCODE = #CITYCODE#
 	</update>
@@ -50,15 +50,13 @@
 			CITYCODE,
 			CITYNAME,
 			SORTKEY,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#CITYCODE#,
 			#CITYNAME#,
 			#SORTKEY#,
-			'admin',
-			NOW()
+			#USERID#
 		)
 	</insert>
 	

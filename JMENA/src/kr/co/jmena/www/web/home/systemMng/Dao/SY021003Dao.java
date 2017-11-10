@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY021003VO;
 
 import org.apache.log4j.Logger;
@@ -36,20 +37,24 @@ public class SY021003Dao extends SqlMapClientDaoSupport {
 	}
 	
 	
-	public int updateEnaCityMst(SY021003VO vo) throws DataAccessException {
-		int updateCnt = 0;
+	public boolean insertEnaCityMst(SY021003VO vo) throws DataAccessException {
+		boolean chkFlag = false;
 		
-		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaCityMst", vo);
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaCityMst", vo);
 		
-		return updateCnt;
+		if (cnt > 0) chkFlag = true;
+		
+		return chkFlag;
 	}
 	
-	public int insertEnaCityMst(SY021003VO vo) throws DataAccessException {
-		int insertCnt = 0;
+	public boolean updateEnaCityMst(SY021003VO vo) throws DataAccessException {
+		boolean chkFlag = false;
 		
-		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaCityMst", vo);
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaCityMst", vo);
 		
-		return insertCnt;
+		if (cnt > 0) chkFlag = true;
+		
+		return chkFlag;
 	}
 	
 }

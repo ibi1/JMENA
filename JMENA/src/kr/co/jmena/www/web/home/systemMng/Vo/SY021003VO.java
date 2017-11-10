@@ -9,7 +9,7 @@ public class SY021003VO {
 	private String USEYN;
 	private String SORTKEY;
 	private String REMARK;
-	
+	private String USERID;
 	
 	public String getCITYCODE() {
 		return this.CITYCODE;
@@ -54,6 +54,12 @@ public class SY021003VO {
 	}
 	public void setREMARK(String REMARK) {
 		this.REMARK = REMARK;
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
 	}
 	
 	

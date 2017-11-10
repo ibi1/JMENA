@@ -20,6 +20,12 @@
 		$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#LS_BRANCHNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		
+		$("#RS_BRANCHCODE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 5, minLength: 1});
+		$("#RS_BRANCHNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#RS_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true, height: 25, width: 98});
+		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 		
 		f_selectListEnaBranchMst();
@@ -42,9 +48,9 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['지사코드', '지사 명', '사용여부'] ,
 			colModel:[
-				{name:"BRANCHCODE",			index:'BRANCHCODE',		width:60,		align:'center'}
-				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:60,		align:'center'}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center'}
+				{name:"BRANCHCODE",			index:'BRANCHCODE',		width:60,		align:'center', sortable:false}
+				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:60,		align:'center', sortable:false}
+				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center', sortable:false}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
@@ -104,12 +110,12 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['부서코드', '부서명', '부서구분', '정렬순서', '사용여부', '비고'] ,
 			colModel:[
-				{name:"DEPTCODE",		index:'DEPTCODE',	width:60,	align:'center', editable:true}
-				, {name:"DEPTNAME",		index:'DEPTNAME',	width:60,	align:'center', editable:true}
-				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:60,	align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=001", buildSelect:selectListEnaDeptCode} }
-				, {name:"SORTKEY",		index:'SORTKEY',	width:60,	align:'center', editable:true}
-				, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
-				, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', editable:true}
+				{name:"DEPTCODE",		index:'DEPTCODE',	width:60,	align:'center', sortable:false, editable:true}
+				, {name:"DEPTNAME",		index:'DEPTNAME',	width:60,	align:'center', sortable:false, editable:true}
+				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=001", buildSelect:selectListEnaDeptCode} }
+				, {name:"SORTKEY",		index:'SORTKEY',	width:60,	align:'center', sortable:false, editable:true}
+				, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
+				, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', sortable:false, editable:true}
 			] ,
 			
 			

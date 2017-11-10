@@ -12,7 +12,20 @@
 </head>
 <script type="text/javascript">
 	var BoroughCode = "";
+	var v_rightLastSel = 0;		//오른쪽 그리드 선택 id
+	
 	$(document).ready(function(){
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		
+		$("#RS_CITYCODE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 3, minLength: 1});
+		$("#RS_CITYNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#RS_SORTKEY").jqxFormattedInput({theme: 'energyblue', height: 23, width: 94, radix: 'decimal', value: ''});
+		
+		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 		
 		f_selectListEnaCityMst();
 		f_selectListEnaCityDtl();		
@@ -26,15 +39,13 @@
 			url:"/home/selectListEnaCityMst.do" ,
 			datatype:"json" ,
 			mtype: 'POST',
-			postData : {
-				CITYCODE : $("#RS_CITYCODE").val()
-			},
+			loadtext: '로딩중...',
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['시/도 코드', '시/도 명', '정렬순서'] ,
 			colModel:[
-				{name:"CITYCODE",		index:'CITYCODE',		width:60,		align:'center'}
-				, {name:"CITYNAME",		index:'CITYNAME',		width:60,		align:'center'}
-				, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center'}
+				{name:"CITYCODE",		index:'CITYCODE',		width:60,		align:'center', sortable:false}
+				, {name:"CITYNAME",		index:'CITYNAME',		width:60,		align:'center', sortable:false}
+				, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center', sortable:false}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
@@ -48,6 +59,8 @@
 				repeatitems: false
 			},
 			onSelectRow: function(ids){
+				$("#S_FLAG_L").val("U");
+				
 				var selRowData = $(this).jqGrid('getRowData', ids);
 		        
 				$("#RS_CITYCODE").val(selRowData.CITYCODE);
@@ -55,7 +68,25 @@
 				$("#RS_SORTKEY").val(selRowData.SORTKEY);
 				
 				f_selectListEnaCityDtl(selRowData.CITYCODE);
-			} ,
+			},
+			loadComplete : function() {
+				v_rightLastSel = 0;
+				
+				var cityCode = $("#RS_CITYCODE").val();
+				
+				var ids = jQuery("#leftList").jqGrid('getDataIDs');
+				
+				ids.some(function(currentValue, index, array){
+					var cellData = $("#leftList").jqGrid('getCell', ids[index], 'CITYCODE');
+					if (cellData == cityCode) {
+						$("#S_FLAG_L").val("U");
+		        		$("#leftList").jqGrid('setSelection', ids[index]);
+		    			return true;
+		        	} else {
+		        		$("#S_FLAG_L").val("I");
+		        	}        
+				});
+			},
 			hidegrid: false
 		});
 	}
@@ -74,11 +105,11 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['시/구/군 코드', '시/구/군 명', '사용여부', '비고', '정렬순서'] ,
 			colModel:[
-				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:60,	align:'center', editable:true}
-				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:60,	align:'center', editable:true}
-				, {name:"USEYN",		index:'USEYN',			width:60,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
-				, {name:"REMARK",		index:'REMARK',			width:60,	align:'center', editable:true}
-				, {name:"SORTKEY",		index:'SORTKEY',		width:60,	align:'center', editable:true}
+				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:60,	align:'center', sortable:false, editable:true}
+				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:60,	align:'center', sortable:false, editable:true}
+				, {name:"USEYN",		index:'USEYN',			width:60,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"} }
+				, {name:"REMARK",		index:'REMARK',			width:60,	align:'center', sortable:false, editable:true}
+				, {name:"SORTKEY",		index:'SORTKEY',		width:60,	align:'center', sortable:false, editable:true}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
@@ -91,11 +122,48 @@
 			jsonReader: {
 				repeatitems: false
 			},
-			onSelectRow : function(rowid) {
-				$('#rightList').jqGrid('editRow',rowid,false);
+			onSelectRow : function(id) {
+				if (id > 0) {
+					$("#S_FLAG_R").val("U");
+				} else {
+					$("#S_FLAG_R").val("I");
+				}
+				
+				if( v_rightLastSel != id ){
+			        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+			        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+			        v_rightLastSel = id;
+				}
 			},
 			hidegrid: false
 		});
+	}
+	
+	$(function() {
+		$("#searchButton").click(function() {
+			if( $("#RS_CITYCODE").val() == "") {
+				alert("시/도 코드를 입력하셔야 합니다."); 
+				$("#RS_CITYCODE").focus();
+				 
+				 return false;
+			}
+			
+			$("#RS_CITYNAME").val("");
+			$("#RS_CITYNAME").focus();
+			$("#RS_SORTKEY").val("");
+
+			$('#rightList').jqGrid("clearGridData", true);
+			
+			f_selectListEnaCityMst();
+		});
+	})
+	
+	function f_searchCityCode() {
+		var keyCode = window.event.keyCode;
+		if(keyCode==13) {
+			$("#searchButton").click();
+		}
 	}
 	
 	$(function(){
@@ -111,169 +179,174 @@
 	})
 	
 	$(function() {
-		$("#searchButton").click(function() {
-			f_selectListEnaCityMst();
-		});
-	})
-	
-	$(function() {
 		$("#insertButton").click(function() {
+			$("#S_FLAG_L").val("I");
+			
 			$("#RS_CITYCODE").val("");
 			$("#RS_CITYNAME").val("");
 			$("#RS_SORTKEY").val("");
+			$("#leftList").jqGrid("resetSelection");
+			$('#rightList').jqGrid('clearGridData');
 			
 			$("#RS_CITYCODE").focus();
-			
-			$('#rightList').jqGrid('clearGridData');
 		});
 	})
 
 	$(function() {
 		$("#saveButton").click(function() {
-			var formData = $("#SY021003").serialize();
-			var CITYCODE = $("#RS_CITYCODE").val();
-			var CITYNAME = $("#RS_CITYNAME").val();
-			var SORTKEY = $("#RS_SORTKEY").val();
-			
-			if(CITYCODE == ""){
-				alert("시/도코드를 입력하세요.");
+			if ($("#RS_CITYCODE").val() == "") {
+				alert("시/도 코드를 입력하셔야 합니다.");
 				$("#RS_CITYCODE").focus();
 				return false;
 			}
 			
-			if(CITYNAME == ""){
-				alert("시도 명을 입력하세요.");
+			if ($("#RS_CITYNAME").val() == "") {
+				alert("시/도 명을 입력하셔야 합니다.");
 				$("#RS_CITYNAME").focus();
 				return false;
 			}
 			
-		   	$.ajax({ 
-				type: 'POST' ,
-				url: "/home/saveEnaCityMst.do", 
-				data : formData,
-				datatype:"json" ,
-				success: function(data){
-					if(data.rows[0].MSG == "success")
-					{
-						alert("저장이 완료되었습니다.");
-						f_selectListEnaCityMst();
-					}else{
-						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-					}
-					
-				},
-				error:function(e){  
-					alert("지사정보를 저장중 오류가 발생하였습니다.");
-				}  
-			});
-			
-		});
-	})
-
-	$(function() {
-		$("#addButton").click(function() {
-			
-			
-			$('#addButton').attr('style','visibility:hidden');
-			$("#rightList").jqGrid('addRow',0);
-			$('#rightList').jqGrid('editRow',0,false);
-			
-		});
-	})
-
-	$(function() {
-		$("#saveButton2").click(function() {
-			$('#rightList').jqGrid('restoreRow',0, true);
-
-			
-			var cellData = $("#rightList").jqGrid('getCell', 0, 'BOROUGHCODE');
-			alert(cellData);
-			
-			var cellData2 = $("#rightList").jqGrid('getCell', 2, 'BOROUGHCODE');
-			alert(cellData2);
-			
-			var DEPTCODE = $("#jqg1_BOROUGHCODE").val();
-			alert(DEPTCODE);
-			
-			f_selectListEnaDeptMst();
-			$('#addButton').attr('style','visibility:visible');
-			
-/* 			var DEPTCODE = $("#jqg1_DEPTCODE").val();
-			var DEPTNAME = $("#jqg1_DEPTNAME").val();
-			var BRANCHCODE = $("#RS_BRANCHCODE").val();
-			var DEPTGUBUN = $("#jqg1_DEPTGUBUN").val();
-			var SORTKEY = $("#jqg1_SORTKEY").val();
-			var USEYN = $("#jqg1_USEYN").val();
-			var REMARK = $("#jqg1_REMARK").val();
-			
-			if(DEPTCODE==''){
-				alert("부서 코드값을 입력하세요.");
-				return false;
-			}
-			if(DEPTNAME==''){
-				alert("부서이름을 입력하세요.");
-				return false;
-			}
-			if(BRANCHCODE==''){
-				alert("지사코드를 입력하세요.");
-				return false;
-			}
-			if(DEPTGUBUN==''){
-				alert("부서 구분을 입력하세요.");
-				return false;
-			}
-			if(USEYN==''){
-				alert("사용여부를 입력하세요.");
+			if ($("#RS_SORTKEY").val() == "") {
+				alert("정렬순서를 입력하셔야 합니다.");
+				$("#RS_SORTKEY").focus();
 				return false;
 			}
 			
- 		   	$.ajax({ 
-				type: 'POST' ,
-				url: "/home/saveEnaDeptMst.do", 
-				data : {
-					DEPTCODE : DEPTCODE,
-					DEPTNAME : DEPTNAME,
-					BRANCHCODE : BRANCHCODE,
-					DEPTGUBUN : DEPTGUBUN,
-					SORTKEY : SORTKEY,
-					USEYN : USEYN,
-					REMARK : REMARK
-				},
-				datatype:"json" ,
-				success: function(data){
-					if(data.rows[0].MSGCODE == "0000")
-					{
-						alert("부서 구분이 중복되어 저장되지 않습니다.\n\n부서구분을 확인하세요.");
-						f_selectListEnaDeptMst();
-					}else{
-						if(data.rows[0].MSG == "success"){
-							alert("저장이 완료되었습니다.");
-							$('#addButton').attr('style','visibility:visible');
-							f_selectListEnaDeptMst();
-						}else{
-							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+			var msg = "";
+			if ($("#S_FLAG_L").val() == "I") {
+				msg = "저장하시겠습니까?";
+			} else {
+				msg = "수정하시겠습니까?"
+			}
+			if (confirm(msg) == true) {
+				$.ajax({ 
+					type: 'POST' ,
+					data: $("#SY021003").serialize(),
+					url: "/home/insertEnaCityMst.do", 
+					dataType : 'json' , 
+					success: function(data){
+						alert(data.resultMsg);
+						
+						if (data.resultCode == "SUCCESS") {
+							f_selectListEnaCityMst();
+						} else {
+							$("#RS_CITYCODE").focus();
 						}
-					}
-				},
-				error:function(e){  
-					alert("부서정보를 저장중 오류가 발생하였습니다.");
-				}  
-			});
- */			
+					},
+					error:function(e){  
+						alert("[ERROR]시/도 처리  중 오류가 발생하였습니다.");
+					}  
+				});
+			}
 		});
 	})
 	
+	function f_cityCodeSave() {
+		var keyCode = window.event.keyCode;
+		if(keyCode==13) {
+			$("#saveButton").click();
+		}
+	}
+	
+	$(function() {
+		$("#rightInsertButton").click(function() {
+			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("선택된 시/도 구분이 없습니다.");
+				
+				return false;
+			}
+			
+			$("#S_FLAG_R").val("I");
+			
+			$("#rightList").jqGrid("addRow", 0);
+		});
+	})
+	
+	$(function() {
+		$("#rightSaveButton").click(function() {
+			var ids = $("#rightList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			$('#rightList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+			var cellData = $("#rightList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("그리드를 선택하셔야 합니다.");
+				
+				return false;
+			}
+			
+			if (cellData.BOROUGHCODE == "") {
+				alert("시/구/군 코드를 입력하셔야 합니다.");
+				
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"_BOROUGHCODE").focus();
+				
+				return false;
+			}
+			
+			if (cellData.BOROUGHNAME == "") {
+				alert("시/구/군 명을 입력하셔야 합니다.");
+				
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"_BOROUGHNAME").focus();
+				
+				return false;
+			}
+			
+			if (cellData.SORTKEY == "") {
+				alert("정렬 순서를 입력하셔야 합니다.");
+				
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"_SORTKEY").focus();
+				
+				return false;
+			}
+			
+			var msg = "";
+			if ($("#S_FLAG_R").val() == "I") {
+				msg = "저장하시겠습니까?";
+			} else {
+				msg = "수정하시겠습니까?"
+			}
+			if (confirm(msg) == true) {
+				var formData = "S_FLAG_R=" + $("#S_FLAG_R").val() + "&CITYCODE=" + $("#RS_CITYCODE").val() + "&BOROUGHCODE=" + cellData.BOROUGHCODE + "&BOROUGHNAME=" + cellData.BOROUGHNAME + "&USEYN=" + cellData.USEYN + "&REMARK=" + cellData.REMARK + "&SORTKEY=" + cellData.SORTKEY;
+				
+				$.ajax({ 
+					type: 'POST' ,
+					data: formData,
+					url: "/home/insertEnaCityDtl.do", 
+					dataType : 'json' , 
+					success: function(data){
+						$("#S_FLAG_R").val("U");
+						
+						v_rightLastSel = 0;
+						
+						alert(data.resultMsg);
+						
+						$("#searchButton").click();
+					},
+					error:function(e){  
+						alert("[ERROR]시/도/군 정보 처리  중 오류가 발생하였습니다.");
+					}  
+				});
+			} else {
+				v_rightLastSel = 0;
+				$("#searchButton").click();
+			}
+		});
+	})
 </script>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="99%">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a>
-						<a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a>
-					</td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
@@ -282,10 +355,12 @@
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<form id="SY021003">
-				<table class="blueone">
+				<input type="hidden" id="S_FLAG_L", name="S_FLAG_L" />
+ 				<table class="blueone">
 					<tr>
 						<td>시/도 코드</td>
-						<td><input type="text" id="RS_CITYCODE" name="RS_CITYCODE" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">=></a></td>
+						<td><input type="text" id="RS_CITYCODE" name="RS_CITYCODE" onkeydown="f_searchCityCode();"/></td>
+						<td><input type="button" id='searchButton' /></td>
 					</tr>
 					<tr>
 						<td>시도 명</td>
@@ -293,25 +368,22 @@
 					</tr>
 					<tr>
 						<td>정렬순서</td>
-						<td><input type="text" id="RS_SORTKEY" name="RS_SORTKEY" /></td>
+						<td><input type="text" id="RS_SORTKEY" name="RS_SORTKEY" onkeydown="f_cityCodeSave();"/></td>
 					</tr>
 				</table>
 			</form>
-			<br/>
-			<div id="topDiv2" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-				<table width="99%">
+			<input type="hidden" id="S_FLAG_R" name="S_FLAG_R" />
+			<div style="width:96%; float:left; padding: 10px" align="left">
+				<table align="right">
 					<tr>
-						<td align="right">
-							<a class="ui-button ui-widget ui-corner-all" id="addButton" name="addButton">추가</a>
-							<a class="ui-button ui-widget ui-corner-all" id="saveButton2" name="saveButton2">저장</a>
-						</td>
+						<td><input type="button" value="추가" id='rightInsertButton' /></td>
+						<td><input type="button" value="저장" id='rightSaveButton' /></td>
 					</tr>
 				</table>
 			</div>
-			<br/>
-			<br/>
-			<br/>
-			<table id="rightList"></table>
+			<div id="rightDiv2" style="width:96%; float:left; padding: 10px" align="left">
+				<table id="rightList"></table>
+			</div>
 		</div>
 	</div>
 </body>

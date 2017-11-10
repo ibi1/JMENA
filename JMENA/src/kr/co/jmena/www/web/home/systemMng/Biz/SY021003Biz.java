@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.jmena.www.web.home.systemMng.Dao.SY021003Dao;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY021003VO;
 
 import org.apache.log4j.Logger;
@@ -46,28 +47,28 @@ public class SY021003Biz {
 		return lst;
 	}
 	
-	public int updateEnaCityMst(SY021003VO vo) throws Exception {
-		int updateCnt = 0;
-
+	public boolean insertEnaCityMst(SY021003VO vo) throws Exception {
+		boolean chkFlag = false;
+		
 		try {
-			updateCnt = SY021003Dao.updateEnaCityMst(vo);
-		} catch ( Exception e ) {
+			chkFlag = SY021003Dao.insertEnaCityMst(vo);
+		} catch (Exception e) {
 			throw e;
 		}
 		
-		return updateCnt;
+		return chkFlag;
 	}
 	
-	public int insertEnaCityMst(SY021003VO vo) throws Exception {
-		int insertCnt = 0;
-
+	public boolean updateEnaCityMst(SY021003VO vo) throws Exception {
+		boolean chkFlag = false;
+		
 		try {
-			insertCnt = SY021003Dao.insertEnaCityMst(vo);
-		} catch ( Exception e ) {
+			chkFlag = SY021003Dao.updateEnaCityMst(vo);
+		} catch (Exception e) {
 			throw e;
 		}
 		
-		return insertCnt;
+		return chkFlag;
 	}
 	
 }
