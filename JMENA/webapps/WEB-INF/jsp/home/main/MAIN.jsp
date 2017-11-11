@@ -238,14 +238,14 @@
 				</div>
 	            <div>
 	                <div id="centerLayout">
-	                	<div>
+	                	<div style="border-top: 1px solid #ccc;">
 	                		<span>
 	                			<div id="left">
 							    	<div id="tree" style="border: none;"></div>
 								</div>
 							</span>
 						</div>
-	                	<div style="overflow: auto;">
+	                	<div style="border-left: 1px solid #ccc; overflow: auto;">
 	                		<span>
 								<div id="center"></div>
 							</span>
