@@ -117,7 +117,7 @@
             $('#jqxLayout').jqxLayout({ width: '100%', height: '100%', layout: layout, resizable : false, contextMenu : false  });
 	       	*/
 	       	
-	       	$('#mainLayout').jqxSplitter({ theme: 'bootstrap',height: '100%', width: '100%', orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '101px', collapsible: false }] });
+	       	$('#mainLayout').jqxSplitter({ theme: 'bootstrap',height: '100%', width: '100%', orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '103px', collapsible: false }] });
             $('#topLayout').jqxSplitter({  theme: 'bootstrap',height: '100%', width: '100%', orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '250px', collapsible: false}] });
             $('#centerLayout').jqxSplitter({ theme: 'bootstrap',orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: '250px', collapsible: false}] });
             
