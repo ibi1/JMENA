@@ -11,10 +11,18 @@
 
 
 	<script type="text/javascript">
-		var PayGubun = "";
-		var BranchCode = "";
-	
 		$(document).ready(function(){
+			var dt = new Date();
+
+			// Display the month, day, and year. getMonth() returns a 0-based number.
+			var month = dt.getMonth()+1;
+			var day = dt.getDate();
+			var year = dt.getFullYear();
+			var today = year + "-" + month + "-" + day;
+			
+			$("#LS_BUYDATE_FR").val(year + "-01-01");
+			$("#LS_BUYDATE_TO").val(today);
+			
 			$('#contents').jqxSplitter({ theme: 'bootstrap', width: 1330, height: 800,  orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: 40, collapsible: false }] });
 			$('#middleLayout').jqxSplitter({ theme: 'bootstrap',orientation: 'vertical', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: 632, collapsible: false}] });  
 			$('#bottomDiv').jqxSplitter({ theme: 'bootstrap', width: 990, height: 650, orientation: 'horizontal', resizable: false, splitBarSize: 0, showSplitBar: false, panels: [{ size: 400, collapsible: false}] });  
@@ -35,8 +43,6 @@
 			$("#tab2InsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 			$("#tab2DeleteButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 			$("#tab2SaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			
-			
 			
 			$("#LS_BUYDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#LS_BUYDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -60,21 +66,16 @@
 			
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-			
-			var LS_BUYDATE_FR = "";
-			var LS_BUYDATE_TO = "";
-			var LS_INSERTUSER = "";
-			var LS_ADDRESS = "";
-			var BUYID = "";
-			f_selectListEnaBuyMst(LS_BUYDATE_FR, LS_BUYDATE_TO, LS_INSERTUSER, LS_ADDRESS);
-			f_selectListEnaPayScheduleTb(BUYID);
-			f_selectListEnaSalesOpenTb(BUYID);
+	
+			f_selectListEnaBuyMst();
+			f_selectListEnaPayScheduleTb();
+			f_selectListEnaSalesOpenTb();
 	
 			//공통코드 가져오기
 			f_selectListEnaBuyGubnCode();	//매입구분
-			f_selectListEnaCityCode();	//시/도코드
+			f_selectListEnaCityCode();		//시/도코드
 			f_selectListEnaBoroughCode();	//구/군코드
-			f_selectListEnaUseTypeCode(); //지목
+			f_selectListEnaUseTypeCode(); 	//지목
 			//공통코드 가져오기 끝
 			
 		});
@@ -176,18 +177,19 @@
 			});
 		}
 		
-		function f_selectListEnaBuyMst(LS_BUYDATE_FR, LS_BUYDATE_TO, LS_INSERTUSER, LS_ADDRESS){
+		function f_selectListEnaBuyMst(){
 			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+			
 			$('#leftList').jqGrid({
 				//caption: '매입관리'
 				url:"/home/selectListEnaBuyMst.do" ,
 				datatype:"json",
 				mtype: 'POST',
 				postData : {
-					LS_BUYDATE_FR : LS_BUYDATE_FR,
-					LS_BUYDATE_TO : LS_BUYDATE_TO,
+					LS_BUYDATE_FR : $("#LS_BUYDATE_FR").val(),
+					LS_BUYDATE_TO : $("#LS_BUYDATE_FR").val(),
 					LS_INSERTUSER : LS_INSERTUSER,
-					LS_ADDRESS : LS_ADDRESS
+					LS_ADDRESS : $("#LS_ADDRESS").val()
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
@@ -197,34 +199,34 @@
 				          '잔여평수', '매매대금', '매매단가', '등기여부', '등기일자',
 				          '비고'],
 				colModel:[
-					{name:"BUYID",				index:'BUYID',			width:100,	align:'center', hidden:true}
-					, {name:"BUYDATE",			index:'BUYDATE',		width:100,	align:'center'}
-					, {name:"BUYGUBUN",			index:'BUYGUBUN',		width:100,	align:'center', hidden:true}
-					, {name:"MANAGENO",			index:'MANAGENO',		width:100,	align:'center', hidden:true}
-					, {name:"CITYCODE",			index:'CITYCODE',		width:100,	align:'center', hidden:true}
-					, {name:"CITYNAME",			index:'CITYNAME',		width:100,	align:'center', hidden:true}
-					, {name:"BOROUGHCODE",		index:'BOROUGHCODE',	width:100,	align:'center', hidden:true}
-					, {name:"BOROUGHNAME",		index:'BOROUGHNAME',	width:100,	align:'center', hidden:true}
-					, {name:"USETYPE",			index:'USETYPE',		width:100,	align:'center', hidden:true}
-					, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center'}
-					, {name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center'}
-					, {name:"OWNERJUMINID",		index:'OWNERJUMINID',	width:100,	align:'center', hidden:true}
-					, {name:"BUYM2",			index:'BUYM2',			width:100,	align:'center'}
-					, {name:"BUYPY",			index:'BUYPY',			width:100,	align:'center'}
-					, {name:"BUNJANM2",			index:'BUNJANM2',		width:100,	align:'center', hidden:true}
-					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', hidden:true}
-					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'center'}
-					, {name:"BUYDANGA",			index:'BUYDANGA',		width:100,	align:'center', hidden:true}
-					, {name:"REGYN",			index:'REGYN',			width:100,	align:'center', hidden:true}
-					, {name:"REGDATE",			index:'REGDATE',		width:100,	align:'center', hidden:true}
-					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', hidden:true}
+					{name:"BUYID",				index:'BUYID',			width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"BUYDATE",			index:'BUYDATE',		width:100,	align:'center', sortable:false}
+					, {name:"BUYGUBUN",			index:'BUYGUBUN',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"MANAGENO",			index:'MANAGENO',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"CITYCODE",			index:'CITYCODE',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"CITYNAME",			index:'CITYNAME',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"BOROUGHCODE",		index:'BOROUGHCODE',	width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"BOROUGHNAME",		index:'BOROUGHNAME',	width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"USETYPE",			index:'USETYPE',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center', sortable:false}
+					, {name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center', sortable:false}
+					, {name:"OWNERJUMINID",		index:'OWNERJUMINID',	width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"BUYM2",			index:'BUYM2',			width:100,	align:'center', sortable:false}
+					, {name:"BUYPY",			index:'BUYPY',			width:100,	align:'center', sortable:false}
+					, {name:"BUNJANM2",			index:'BUNJANM2',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'center', sortable:false}
+					, {name:"BUYDANGA",			index:'BUYDANGA',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"REGYN",			index:'REGYN',			width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"REGDATE",			index:'REGDATE',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', sortable:false, hidden:true}
 					
 				],
 				rowNum:1000,
 				autowidth: true,
 				shrinkToFit: false,
 				rowList:[10,20,30],
-				sortname: 'buyDate',
+				sortname: 'BUYDATE',
 				viewrecords: true,
 				sortorder:'asc',
 				width: "96%",
@@ -279,11 +281,11 @@
 				loadError:function(){alert("Error~!!");},
 				colNames:['지급구분', '지급일자', '지급금액', '지급여부', '비고'],
 				colModel:[
-					{name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=005", buildSelect:f_selectListEnaPayGubunCode} }
-					, {name:"PAYDATE",	index:'PAYDATE',	width:100,	align:'center', editable:true}
-					, {name:"PAYAMT",	index:'PAYAMT',		width:100,	align:'center', editable:true}
-					, {name:"PAYYN",	index:'PAYYN',		width:100,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', editable:true}
+					{name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=005", buildSelect:f_selectListEnaPayGubunCode} }
+					, {name:"PAYDATE",	index:'PAYDATE',	width:100,	align:'center', sortable:false, editable:true}
+					, {name:"PAYAMT",	index:'PAYAMT',		width:100,	align:'center', sortable:false, editable:true}
+					, {name:"PAYYN",	index:'PAYYN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', sortable:false, editable:true}
 				],
 				rowNum:1000,
 				autowidth: true,
@@ -331,12 +333,12 @@
 				loadError:function(){alert("Error~!!");},
 				colNames:['지사', '오픈여부', '홀딩여부', '홀딩면적', '홀딩일자', '비고'],
 				colModel:[
-					{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
-					, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center', editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"HOLDINGPY",	index:'HOLDINGPY',		width:100,	align:'center', editable:true}
-					, {name:"HOLDINGDATE",	index:'HOLDINGDATE',	width:100,	align:'center', editable:true}
-					, {name:"REMARK",		index:'REMARK',			width:100,	align:'center', editable:true}
+					{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
+					, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"HOLDINGPY",	index:'HOLDINGPY',		width:100,	align:'center', sortable:false, editable:true}
+					, {name:"HOLDINGDATE",	index:'HOLDINGDATE',	width:100,	align:'center', sortable:false, editable:true}
+					, {name:"REMARK",		index:'REMARK',			width:100,	align:'center', sortable:false, editable:true}
 				],
 				rowNum:100,
 				autowidth: true,
