@@ -13,11 +13,11 @@
 		var v_rightLastSel = 0;		//오른쪽 그리드 선택 id
 	
 		$(document).ready(function(){
-			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			$("#sysSearchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			   
@@ -369,20 +369,19 @@
 		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<form id="SY011001">
 				<input type="hidden" id="S_FLAG_L" NAME="S_FLAG_L" />
-				<table width="100%" border="2">
+				<table width="600">
 					<tr>
-						<td>시스템코드</td>
-						<td><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" /><input type="button" id='sysSearchButton' />
-						
-						</td>
+						<th width="120">시스템코드</th>
+						<td width="110"><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" /></td>
+						<td><input type="button" id='sysSearchButton' /></td>
 					</tr>
 					<tr>
-						<td>시스템 명</td>
-						<td><input type="text" id="S_SYSNAME" name="S_SYSNAME" /></td>
+						<th>시스템 명</th>
+						<td colspan="2"><input type="text" id="S_SYSNAME" name="S_SYSNAME" /></td>
 					</tr>
 					<tr>
-						<td>정렬순서</td>
-						<td><input type="text" id="S_SORTKEY" name="S_SORTKEY" onkeydown="f_sysMstSave();"/></td>
+						<th>정렬순서</th>
+						<td colspan="2"><input type="text" id="S_SORTKEY" name="S_SORTKEY" onkeydown="f_sysMstSave();"/></td>
 					</tr>
 				</table>
 			</form>

@@ -22,6 +22,28 @@
             box-sizing: border-box;
             margin: 0;
         }
+        th
+        {
+        	height : 25px;
+			text-align: center;
+			font-weight: bold;
+			border: 1px solid #CCC;
+        }
+        select
+        {
+		    min-height: 25px;
+		    min-width: 16px;
+		    margin: 0px;
+		    border-width: 1px;
+		    border-style: solid;
+		    font-size: 13px;
+		    padding: 0px;
+		    padding-left: 3px;
+		    padding-right: 3px;
+		    border-color: #a4bed4;
+		    -webkit-border-radius: 3px;
+		}
+        
     </style>
 	<script type="text/javascript" src="/resource/js/jquery.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery-1.7.2.min.js"></script>	

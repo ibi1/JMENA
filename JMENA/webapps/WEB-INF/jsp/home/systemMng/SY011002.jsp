@@ -14,9 +14,23 @@
 		var g_menuId2 = "ALL";
 		
 		$(document).ready(function(){
-			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			
+			$("#sysSearchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			
+			//$("#S_SYSIDCOMBO_L").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true,  height: 25, width: 120});
+			//$("#S_MENUIDCOMBO_L").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true,  height: 25, width: 120});
+			$("#S_PGMNAME_L").jqxInput({theme: 'energyblue', height: 25, width: 250});
+			//$("#S_SYSIDCOMBO_R").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true,  height: 25, width: 120});
+			//$("#S_MENUIDCOMBO_R").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true,  height: 25, width: 120});
+			$("#S_PGMID_R").jqxInput({theme: 'energyblue', height: 25, width: 100});
+			$("#S_PGMNAME_R").jqxInput({theme: 'energyblue', height: 25, width: 250});
+			$("#S_REMARK").jqxInput({theme: 'energyblue', height: 25, width: 100});
+			//s$("#S_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true,  height: 25, width: 100});
+			$("#S_SORTKEY").jqxInput({theme: 'energyblue', height: 25, width: 100});
+			
 			
 			$("#S_FLAG").val("U");
 			
@@ -41,7 +55,8 @@
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 				}  
 			});
-		
+
+		   	
 		});
 		
 		$(function(){
@@ -156,18 +171,19 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['시스템ID', '시스템구분', '메뉴ID', '메뉴구분', '프로그램ID', '프로그램명', '메뉴정렬키', '비고', '사용여부'] ,
 					colModel:[
-						{name:"SYSID",			index:'SYSID',			width:60,		align:'center', sortable:false, hidden: true}
-						, {name:"SYSNAME",		index:'SYSNAME',		width:60,		align:'center', sortable:false}
-						, {name:"MENUID",		index:'MENUID',			width:60,		align:'center', sortable:false, hidden: true}
-						, {name:"MENUNAME",		index:'MENUNAME',		width:60,		align:'center', sortable:false}
+						{name:"SYSID",			index:'SYSID',			width:70,		align:'center', sortable:false, hidden: true}
+						, {name:"SYSNAME",		index:'SYSNAME',		width:150,		align:'center', sortable:false}
+						, {name:"MENUID",		index:'MENUID',			width:70,		align:'center', sortable:false, hidden: true}
+						, {name:"MENUNAME",		index:'MENUNAME',		width:150,		align:'center', sortable:false}
 						, {name:"PGMID",		index:'PGMID',			width:60,		align:'center', sortable:false}
 						, {name:"PGMNAME",		index:'PGMNAME',		width:150,		align:'center', sortable:false}
-						, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center', sortable:false}
-						, {name:"REMARK",		index:'REMARK',			width:60,		align:'center', sortable:false}
-						, {name:"USEYN",		index:'USEYN',			width:60,		align:'center', sortable:false}
+						, {name:"SORTKEY",		index:'SORTKEY',		width:70,		align:'center', sortable:false}
+						, {name:"REMARK",		index:'REMARK',			width:250,		align:'center', sortable:false}
+						, {name:"USEYN",		index:'USEYN',			width:70,		align:'center', sortable:false}
 					] ,
-					rowNum:1000,
+					rowNum:100,
 					autowidth: true ,
+					shrinkToFit: false,
 					rowList:[10,20,30] ,
 					//pager: $('#rightNav') ,
 					sortname: 'SORTKEY' ,
@@ -352,7 +368,7 @@
 		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<table class="blueone">
 				<tr>
-					<td>시스템구분</td>
+					<th width="120">시스템구분</th>
 					<td>
 						<select id="S_SYSIDCOMBO_L" name="S_SYSIDCOMBO_L">
 							<option value="ALL" selected="selected">전체</option>
@@ -360,7 +376,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>메뉴구분</td>
+					<th>메뉴구분</th>
 					<td>
 						<select id="S_MENUIDCOMBO_L" name="S_MENUIDCOMBO_L">
 							<option value="ALL" selected="selected">전체</option>
@@ -368,7 +384,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>프로그램명</td>
+					<th>프로그램명</th>
 					<td><input type="text" id="S_PGMNAME_L" name="S_PGMNAME_L" /></td>
 				</tr>
 			</table>
@@ -380,42 +396,42 @@
 			<input type="hidden" id="S_FLAG" name="S_FLAG" />
 			<table>
 				<tr>
-					<td>시스템구분</td>
-					<td>
+					<th width="120">시스템구분</tH>
+					<td colspan="2">
 						<select id="S_SYSIDCOMBO_R" name="S_SYSIDCOMBO_R">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>메뉴구분</td>
-					<td>
+					<th>메뉴구분</th>
+					<td colspan="2">
 						<select id="S_MENUIDCOMBO_R" name="S_MENUIDCOMBO_R">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>프로그램ID</td>
-					<td><input type="text" id="S_PGMID_R" name="S_PGMID_R" onkeydown="f_s_pgmIdSelection();" /></td>
+					<th>프로그램ID</th>
+					<td width="120"><input type="text" id="S_PGMID_R" name="S_PGMID_R" onkeydown="f_s_pgmIdSelection();" /></td>
 					<td><input type="button" id='sysSearchButton' /></td>
 					
 				</tr>
 				<tr>
 					<td></td>
-					<td></td>
+					<td colspan="2"></td>
 				</tr>
 				<tr>
-					<td>프로그램명</td>
-					<td><input type="text" id="S_PGMNAME_R" name="S_PGMNAME_R" /></td>
+					<th>프로그램명</th>
+					<td colspan="2"><input type="text" id="S_PGMNAME_R" name="S_PGMNAME_R" /></td>
 				</tr>
 				<tr>
-					<td>비고</td>
-					<td><input type="text" id="S_REMARK" name="S_REMARK" /></td>
+					<th>비고</th>
+					<td colspan="2"><input type="text" id="S_REMARK" name="S_REMARK" /></td>
 				</tr>
 				<tr>
-					<td>사용여부</td>
-					<td>
+					<th>사용여부</th>
+					<td colspan="2">
 						<select id="S_USEYN" name="S_USEYN">
 							<option value="Y">Y</option>
 							<option value="N">N</option>
@@ -423,8 +439,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>정렬순서</td>
-					<td><input type="text" id="S_SORTKEY" name="S_SORTKEY" onkeydown="f_saveKeyDown();" /></td>
+					<th>정렬순서</th>
+					<td colspan="2"><input type="text" id="S_SORTKEY" name="S_SORTKEY" onkeydown="f_saveKeyDown();" /></td>
 				</tr>
 			</table>
 			</form>

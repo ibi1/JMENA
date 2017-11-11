@@ -13,6 +13,23 @@
 		var v_rightLastSel = 0;
 		
 		$(document).ready(function(){
+
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			
+			$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#sysSearchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			
+			$("#S_USERNAME_L").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			$("#S_USERID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#S_USERNAME_R").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			$("#S_PASSWORD").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			//$("#S_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true,  height: 25, width: 100});
+			$("#S_PHONENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#S_MOBILENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			
+			
 			$("#S_FLAG").val("U");
 			
 			f_selectUserMst();
@@ -34,16 +51,17 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['사용자ID', '비밀번호', '사용자명', '사용여부', '사용자구분', '연락처', '모바일'] ,
 					colModel:[
-						{name:"USERID",			index:'USERID',		width:60,	align:'center', sortable:false}
-						, {name:"PASSWORD",		index:'PASSWORD',	width:60,	align:'center', sortable:false, hidden:true}
-						, {name:"USERNAME",		index:'USERNAME',	width:60,	align:'center', sortable:false}
-						, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false}
-						, {name:"USERGUBUN",	index:'USERGUBUN',	width:60,	align:'center', sortable:false, hidden:true}
-						, {name:"PHONENO",		index:'PHONENO',	width:60,	align:'center', sortable:false, hidden:true}
-						, {name:"MOBILENO",		index:'MOBILENO',	width:60,	align:'center', sortable:false, hidden:true}
+						{name:"USERID",			index:'USERID',		width:100,	align:'center', sortable:false}
+						, {name:"PASSWORD",		index:'PASSWORD',	width:100,	align:'center', sortable:false, hidden:true}
+						, {name:"USERNAME",		index:'USERNAME',	width:150,	align:'center', sortable:false}
+						, {name:"USEYN",		index:'USEYN',		width:70,	align:'center', sortable:false}
+						, {name:"USERGUBUN",	index:'USERGUBUN',	width:70,	align:'center', sortable:false, hidden:true}
+						, {name:"PHONENO",		index:'PHONENO',	width:90,	align:'center', sortable:false, hidden:true}
+						, {name:"MOBILENO",		index:'MOBILENO',	width:90,	align:'center', sortable:false, hidden:true}
 					] ,
 					rowNum:100,
 					autowidth: true ,
+					shrinkToFit: false,
 					rowList:[10,20,30] ,
 					//pager: $('#leftNav') ,
 					sortname: 'USERID' ,
@@ -103,14 +121,15 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['시스템코드', '시스템명', '사용여부', '비고'] ,
 					colModel:[
-						{name:"SYSID",			index:'SYSID',		width:60,	align:'center', sortable:false}
-						, {name:"SYSNAME",		index:'SYSNAME',	width:60,	align:'center', sortable:false}
+						{name:"SYSID",			index:'SYSID',		width:100,	align:'center', sortable:false}
+						, {name:"SYSNAME",		index:'SYSNAME',	width:150,	align:'center', sortable:false}
 						//, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/home/selectTest.do", buildSelect:setAuth_YNSelectBox}}
-						, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-						, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', sortable:false, editable:true}
+						, {name:"AUTH_YN",		index:'AUTH_YN',	width:70,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+						, {name:"REMARK",		index:'REMARK',		width:250,	align:'center', sortable:false, editable:true}
 					] ,
 					rowNum:100,
 					autowidth: true ,
+					shrinkToFit: false,
 					rowList:[10,20,30] ,
 					//pager: $('#leftNav') ,
 					sortname: 'SYSID' ,
@@ -304,18 +323,18 @@
 <body>
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a></td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
 		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+			<table>
 				<tr>
-					<td>사용자명</td>
+					<th width="120">사용자명</th>
 					<td><input type="text" id="S_USERNAME_L" name="S_USERNAME_L" onkeydown="f_onEncterUserName();" /></td>
 				</tr>
 			</table>
@@ -324,22 +343,24 @@
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<form id="SY011003">
 			<input type="hidden" id="S_FLAG" name="S_FLAG"/>
-			<table class="blueone">
+			<table>
 				<tr>
-					<td>사용자</td>
-					<td><input type="text" id="S_USERID" name="S_USERID" onkeydown="f_onEncterUserId();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="s_userIdSearchButton" name="s_userIdSearchButton">=></a></td>
+					<th width="120">사용자</th>
+					<td width="110"><input type="text" id="S_USERID" name="S_USERID" onkeydown="f_onEncterUserId();" />
+					<td><input type="button" id='sysSearchButton' /></td>
+					</td>
 				</tr>
 				<tr>
-					<td>사용자명</td>
-					<td><input type="text" id="S_USERNAME_R" name="S_USERNAME_R" /></td>
+					<th width="120">사용자명</th>
+					<td colspan="2"><input type="text" id="S_USERNAME_R" name="S_USERNAME_R" /></td>
 				</tr>
 				<tr>
-					<td>비밀번호</td>
-					<td><input type="text" id="S_PASSWORD" name="S_PASSWORD" onkeydown="f_saveUser();"/></td>
+					<th width="120">비밀번호</th>
+					<td colspan="2"><input type="text" id="S_PASSWORD" name="S_PASSWORD" onkeydown="f_saveUser();"/></td>
 				</tr>
 				<tr>
-					<td>사용여부</td>
-					<td>
+					<th width="120">사용여부</th>
+					<td colspan="2">
 						<select id="S_USEYN" name="S_USEYN">
 							<option value="Y">Y</option>
 							<option value="N">N</option>
@@ -347,27 +368,29 @@
 					</td>
 				</tr>
 				<tr>
-					<td>사용자구분</td>
-					<td>
+					<th width="120">사용자구분</th>
+					<td colspan="2">
 						<input type="radio" id="S_USERGUBUN" name="S_USERGUBUN" value="B" checked="checked" />일반사용자
 						<input type="radio" id="S_USERGUBUN" name="S_USERGUBUN" value="A" />관리자
 					</td>
 				</tr>
 				<tr>
-					<td>연락처</td>
-					<td><input type="text" id="S_PHONENO" name="S_PHONENO" /></td>
+					<th width="120">연락처</th>
+					<td colspan="2"><input type="text" id="S_PHONENO" name="S_PHONENO" /></td>
 				</tr>
 				<tr>
-					<td>모바일</td>
-					<td><input type="text" id="S_MOBILENO" name="S_MOBILENO" onkeydown="f_saveUser();"/></td>
+					<th width="120">모바일</th>
+					<td colspan="2"><input type="text" id="S_MOBILENO" name="S_MOBILENO" onkeydown="f_saveUser();"/></td>
 				</tr>
 			</table>
 			</form>
-			<table class="blueone">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="rightSaveButton" name="rightSaveButton">저장</a></td>
+					<td><input type="button" value="저장" id='rightSaveButton' /></td>
 				</tr>
 			</table>
+			<br />
+			<br />
 			<table id="rightList"></table>
 		</div>
 	</div>

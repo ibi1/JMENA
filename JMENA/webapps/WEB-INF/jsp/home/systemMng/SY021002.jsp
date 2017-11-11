@@ -24,7 +24,7 @@
 		
 		$("#RS_BRANCHCODE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 5, minLength: 1});
 		$("#RS_BRANCHNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-		$("#RS_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true, height: 25, width: 98});
+		//$("#RS_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true, height: 25, width: 98});
 		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 		

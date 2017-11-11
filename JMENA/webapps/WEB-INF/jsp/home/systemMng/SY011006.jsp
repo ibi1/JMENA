@@ -13,6 +13,13 @@
 		var v_rightLastSel = 0;
 	
 		$(document).ready(function(){
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+
+			$("#S_BANKNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			
+			
 			$("#S_FLAG").val("U");
 			
 			f_selectBankMst();
@@ -32,10 +39,10 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['기관코드', '금융기관명', '사용여부', '확장코드'] ,
 				colModel:[
-					{name:"BANKCODE",		index:'BANKCODE',	width:60,	align:'center', sortable:false, editable:true}
-					, {name:"BANKNAME",		index:'BANKNAME',	width:60,	align:'center', sortable:false, editable:true}
-					, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"AUXCODE",		index:'AUXCODE',	width:60,	align:'center', sortable:false, editable:true}
+					{name:"BANKCODE",		index:'BANKCODE',	width:80,	align:'center', sortable:false, editable:true}
+					, {name:"BANKNAME",		index:'BANKNAME',	width:150,	align:'center', sortable:false, editable:true}
+					, {name:"USEYN",		index:'USEYN',		width:70,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"AUXCODE",		index:'AUXCODE',	width:70,	align:'center', sortable:false, editable:true}
 				] ,
 				rowNum:1000,
 				autowidth: true ,
@@ -162,19 +169,19 @@
 <body>
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a></td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
 		<input type="hidden" id="S_FLAG" name="S_FLAG" />
-		<div id="leftDiv" style="width:96%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+			<table>
 				<tr>
-					<td>금융기관</td>
+					<th width="120">금융기관</th>
 					<td><input type="text" id="S_BANKNAME" name="S_BANKNAME" onkeydown="f_selectKeyBankMst();"/></td>
 				</tr>
 			</table>

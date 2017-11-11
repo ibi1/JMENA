@@ -23,7 +23,11 @@
 		var v_selectUserId = "";	//선택된 사용자
 		
 		$(document).ready(function(){
-			$("#saveButton").jqxButton({ theme: 'light', width: 100, height: 20 });
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			
+			$("#S_USERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			
 			$("#saveButton").on('click', function () {
 				var ids = $("#rightList").jqGrid('getDataIDs');
 				var len = ids.length;
@@ -181,11 +185,12 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['사용자ID', '사용자명'] ,
 					colModel:[
-						{name:"USERID",			index:'USERID',		width:60,	align:'center', sortable:false}
-						, {name:"USERNAME",		index:'USERNAME',	width:60,	align:'center', sortable:false}
+						{name:"USERID",			index:'USERID',		width:120,	align:'center', sortable:false}
+						, {name:"USERNAME",		index:'USERNAME',	width:180,	align:'center', sortable:false}
 					] ,
 					rowNum:1000,
 					autowidth: true ,
+					shrinkToFit: false,
 					rowList:[10,20,30] ,
 					//pager: $('#leftNav') ,
 					sortname: 'USERID' ,
@@ -234,20 +239,21 @@
 					          "출력<br/><input type='checkbox' id='chkAllAUTH_P' name='chkAllAUTH_P' onclick='checkBox(event, \"AUTH_P\")' />", 
 					          ] ,
 					colModel:[
-						  {name:"SYSID",		index:'SYSID',		width:60,		align:'center', sortable:false, hidden:true}
-						, {name:"SYSNAME",		index:'SYSNAME',	width:60,		align:'center', sortable:false}
-						, {name:"MENUID",		index:'MENUID',		width:60,		align:'center', sortable:false, hidden:true}
-						, {name:"MENUNAME",		index:'MENUNAME',	width:60,		align:'center', sortable:false}
-						, {name:"PGMID",		index:'PGMID',		width:70,		align:'center', sortable:false}
+						  {name:"SYSID",		index:'SYSID',		width:120,		align:'center', sortable:false, hidden:true}
+						, {name:"SYSNAME",		index:'SYSNAME',	width:150,		align:'center', sortable:false}
+						, {name:"MENUID",		index:'MENUID',		width:120,		align:'center', sortable:false, hidden:true}
+						, {name:"MENUNAME",		index:'MENUNAME',	width:150,		align:'center', sortable:false}
+						, {name:"PGMID",		index:'PGMID',		width:120,		align:'center', sortable:false}
 						, {name:"PGMNAME",		index:'PGMNAME',	width:200,		align:'center', sortable:false}
-						, {name:"AUTH_S",		index:'AUTH_S',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-						, {name:"AUTH_I",		index:'AUTH_I',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-						, {name:"AUTH_U",		index:'AUTH_U',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-						, {name:"AUTH_D",		index:'AUTH_D',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-						, {name:"AUTH_P",		index:'AUTH_P',		width:40,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_S",		index:'AUTH_S',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_I",		index:'AUTH_I',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_U",		index:'AUTH_U',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_D",		index:'AUTH_D',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						, {name:"AUTH_P",		index:'AUTH_P',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 					] ,
 					rowNum:1000,
 					autowidth: true ,
+					shrinkToFit: false,
 					rowList:[10,20,30] ,
 					//pager: $('#leftNav') ,
 					sortname: 'PGMID' ,
@@ -311,32 +317,32 @@
 <body class='default'>
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
 				</tr>
 			</table>
 		</div>
 		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+			<table>
 				<tr>
-					<td>사용자구분</td>
+					<th width="120">사용자구분</th>
 					<td>
 						<input type="radio" id="S_USERGUBUN" name="S_USERGUBUN" value="B" checked="checked" />일반사용자
 						<input type="radio" id="S_USERGUBUN" name="S_USERGUBUN" value="A" />관리자
 					</td>
 				</tr>
 				<tr>
-					<td>사용자 명</td>
+					<th>사용자 명</th>
 					<td><input type="text" id="S_USERNAME" name="S_USERNAME" onkeydown="f_selectUserList();"/></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+			<table>
 				<tr>
-					<td>시스템구분</td>
+					<th width="120">시스템구분</th>
 					<td>
 						<select id="SYSIDCOMBO" name="SYSIDCOMBO">
 							<option value="ALL" selected="selected">전체</option>
@@ -344,16 +350,18 @@
 					</td>
 				</tr>
 				<tr>
-					<td>메뉴구분</td>
+					<th>메뉴구분</th>
 					<td>
 						<select id="MENUIDCOMBO" name="MENUIDCOMBO">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
-					<td width="60%" align="right">
-						<div>
-							<input type="button" value="저장" id='saveButton' />
-						</div>
+				</tr>
+			</table>
+			<table width="100%">
+				<tr>
+					<td align="right">
+						<input type="button" value="저장" id='saveButton' />
 					</td>
 				</tr>
 			</table>
