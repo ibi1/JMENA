@@ -14,6 +14,10 @@
 		var g_menuId2 = "ALL";
 		
 		$(document).ready(function(){
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			
 			$("#S_FLAG").val("U");
 			
 		   	//시스템 메뉴 호출 (SY011001 데이터 사용)
@@ -337,11 +341,11 @@
 <body>
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a></td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
@@ -374,7 +378,7 @@
 		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<form id="SY011002">
 			<input type="hidden" id="S_FLAG" name="S_FLAG" />
-			<table class="blueone">
+			<table>
 				<tr>
 					<td>시스템구분</td>
 					<td>
@@ -393,7 +397,9 @@
 				</tr>
 				<tr>
 					<td>프로그램ID</td>
-					<td><input type="text" id="S_PGMID_R" name="S_PGMID_R" onkeydown="f_s_pgmIdSelection();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="pgmSearchButton" name="pgmSearchButton">=></a></td>
+					<td><input type="text" id="S_PGMID_R" name="S_PGMID_R" onkeydown="f_s_pgmIdSelection();" /></td>
+					<td><input type="button" id='sysSearchButton' /></td>
+					
 				</tr>
 				<tr>
 					<td></td>

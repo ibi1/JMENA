@@ -22,7 +22,7 @@
 			$("#sysSearchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			   
 			$("#S_SYSID").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 2, minLength: 1});
-			$("#S_SYSNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#S_SYSNAME").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 			$("#S_SORTKEY").jqxFormattedInput({theme: 'energyblue', height: 23, width: 94, radix: 'decimal', value: ''});
 			
 			$("#S_FLAG_L").val("I");	//I : 저장, U : 수정
@@ -44,18 +44,19 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['시스템코드', '시스템 명', '정렬순서'] ,
 				colModel:[
-					{name:"SYSID",			index:'SYSID',		width:60,		align:'center', sortable:false}
-					,{name:"SYSNAME",		index:'SYSNAME',	width:60,		align:'center', sortable:false}
-					,{name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false}
+					{name:"SYSID",			index:'SYSID',		width:70,		align:'center', sortable:false}
+					,{name:"SYSNAME",		index:'SYSNAME',	width:200,		align:'center', sortable:false}
+					,{name:"SORTKEY",		index:'SORTKEY',	width:70,		align:'center', sortable:false}
 					] ,
-				rowNum:10 ,
+				rowNum:100 ,
 				autowidth: true ,
+				shrinkToFit: false,
 				rowList:[10,20,30] ,
 				//pager: $('#leftNav') ,
 				sortname: 'SORTKEY' ,
 				viewrecords: true ,
 				sortorder:'asc' ,
-				width: "96%" ,
+				width: "340px" ,
 				jsonReader: {
 					repeatitems: false
 				},
@@ -98,7 +99,7 @@
 				$('#rightList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 				
 				$('#rightList').jqGrid({
-					//caption: '시스템 및 메뉴관리' ,
+					caption: '시스템 메뉴관리' ,
 					url:"/home/selectListSysDtl.do" ,
 					postData : {
 						SYSID : sysId
@@ -109,20 +110,21 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['메뉴코드', '메뉴명', '사용여부', '비고', '정렬순서'] ,
 					colModel:[
-						{name:"MENUID",			index:'MENUID',		width:60,		align:'center', sortable:false, editable:true}
-						, {name:"MENUNAME",		index:'MENUNAME',	width:60,		align:'center', sortable:false, editable:true}
-						, {name:"USEYN",		index:'USEYN',		width:60,		align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-						, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', sortable:false, editable:true}
-						, {name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false, editable:true}
+						{name:"MENUID",			index:'MENUID',		width:70,		align:'center', sortable:false, editable:true}
+						, {name:"MENUNAME",		index:'MENUNAME',	width:200,		align:'center', sortable:false, editable:true}
+						, {name:"USEYN",		index:'USEYN',		width:70,		align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+						, {name:"REMARK",		index:'REMARK',		width:150,		align:'center', sortable:false, editable:true}
+						, {name:"SORTKEY",		index:'SORTKEY',	width:70,		align:'center', sortable:false, editable:true}
 						] ,
-					rowNum:10 ,
+					rowNum:100 ,
 					autowidth: true ,
+					shrinkToFit: false,
 					rowList:[10,20,30] ,
 					//pager: $('#rightNav') ,
 					sortname: 'SORTKEY' ,
 					viewrecords: true ,
 					sortorder:'asc' ,
-					width: "96%" ,
+					width: "560px" ,
 					jsonReader: {
 						repeatitems: false
 					},
@@ -367,11 +369,12 @@
 		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<form id="SY011001">
 				<input type="hidden" id="S_FLAG_L" NAME="S_FLAG_L" />
-				<table>
+				<table width="100%" border="2">
 					<tr>
 						<td>시스템코드</td>
-						<td><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" /></td>
-						<td><input type="button" id='sysSearchButton' /></td>
+						<td><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" /><input type="button" id='sysSearchButton' />
+						
+						</td>
 					</tr>
 					<tr>
 						<td>시스템 명</td>
@@ -386,17 +389,15 @@
 			
 			<input type="hidden" id="S_FLAG_R" NAME="S_FLAG_R" />
 			
-			<div style="width:96%; float:left; padding: 10px" align="left">
-			<caption>시스템 메뉴관리</caption>
+			<div style="width:100%; float:left; padding: 10px" align="left">
 				<table align="right">
-					
 					<tr>
 						<td><input type="button" value="추가" id='rightInsertButton' /></td>
 						<td><input type="button" value="저장" id='rightSaveButton' /></td>
 					</tr>
 				</table>
 			</div>
-			<div id="rightDiv2" style="width:96%; float:left; padding: 10px" align="left">
+			<div id="rightDiv2" style="width:100%; float:left; padding: 10px" align="left">
 				<table id="rightList"></table>
 				<div id="rightNav"></div>
 			</div>
