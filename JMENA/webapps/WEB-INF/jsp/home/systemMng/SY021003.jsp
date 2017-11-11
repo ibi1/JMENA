@@ -22,7 +22,7 @@
 		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
 		$("#RS_CITYCODE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 3, minLength: 1});
-		$("#RS_CITYNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#RS_CITYNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		$("#RS_SORTKEY").jqxFormattedInput({theme: 'energyblue', height: 23, width: 94, radix: 'decimal', value: ''});
 		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
@@ -43,12 +43,13 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['시/도 코드', '시/도 명', '정렬순서'] ,
 			colModel:[
-				{name:"CITYCODE",		index:'CITYCODE',		width:60,		align:'center', sortable:false}
-				, {name:"CITYNAME",		index:'CITYNAME',		width:60,		align:'center', sortable:false}
-				, {name:"SORTKEY",		index:'SORTKEY',		width:60,		align:'center', sortable:false}
+				{name:"CITYCODE",		index:'CITYCODE',		width:100,		align:'center', sortable:false}
+				, {name:"CITYNAME",		index:'CITYNAME',		width:150,		align:'center', sortable:false}
+				, {name:"SORTKEY",		index:'SORTKEY',		width:70,		align:'center', sortable:false}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
+			shrinkToFit: false,
 			rowList:[10,20,30] ,
 			sortname: 'SORTKEY' ,
 			viewrecords: true ,
@@ -105,14 +106,15 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['시/구/군 코드', '시/구/군 명', '사용여부', '비고', '정렬순서'] ,
 			colModel:[
-				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:60,	align:'center', sortable:false, editable:true}
-				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:60,	align:'center', sortable:false, editable:true}
-				, {name:"USEYN",		index:'USEYN',			width:60,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"} }
-				, {name:"REMARK",		index:'REMARK',			width:60,	align:'center', sortable:false, editable:true}
-				, {name:"SORTKEY",		index:'SORTKEY',		width:60,	align:'center', sortable:false, editable:true}
+				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:100,	align:'center', sortable:false, editable:true}
+				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:150,	align:'center', sortable:false, editable:true}
+				, {name:"USEYN",		index:'USEYN',			width:70,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"} }
+				, {name:"REMARK",		index:'REMARK',			width:250,	align:'center', sortable:false, editable:true}
+				, {name:"SORTKEY",		index:'SORTKEY',		width:70,	align:'center', sortable:false, editable:true}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
+			shrinkToFit: false,
 			rowList:[10,20,30] ,
 			sortname: 'BOROUGHCODE' ,
 			viewrecords: true ,
@@ -350,25 +352,25 @@
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<form id="SY021003">
 				<input type="hidden" id="S_FLAG_L", name="S_FLAG_L" />
- 				<table class="blueone">
+ 				<table>
 					<tr>
-						<td>시/도 코드</td>
-						<td><input type="text" id="RS_CITYCODE" name="RS_CITYCODE" onkeydown="f_searchCityCode();"/></td>
+						<th width="120">시/도 코드</th>
+						<td width="110"><input type="text" id="RS_CITYCODE" name="RS_CITYCODE" onkeydown="f_searchCityCode();"/></td>
 						<td><input type="button" id='searchButton' /></td>
 					</tr>
 					<tr>
-						<td>시도 명</td>
-						<td><input type="text" id="RS_CITYNAME" name="RS_CITYNAME" /></td>
+						<th width="120">시도 명</th>
+						<td colspan="2"><input type="text" id="RS_CITYNAME" name="RS_CITYNAME" /></td>
 					</tr>
 					<tr>
-						<td>정렬순서</td>
-						<td><input type="text" id="RS_SORTKEY" name="RS_SORTKEY" onkeydown="f_cityCodeSave();"/></td>
+						<th width="120">정렬순서</th>
+						<td colspan="2"><input type="text" id="RS_SORTKEY" name="RS_SORTKEY" onkeydown="f_cityCodeSave();"/></td>
 					</tr>
 				</table>
 			</form>

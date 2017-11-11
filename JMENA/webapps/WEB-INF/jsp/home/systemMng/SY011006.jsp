@@ -46,6 +46,7 @@
 				] ,
 				rowNum:1000,
 				autowidth: true ,
+				shrinkToFit: false,
 				rowList:[10,20,30] ,
 				//pager: $('#leftNav') ,
 				sortname: 'BANKCODE' ,
@@ -168,7 +169,7 @@
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table align="right">
 				<tr>
 					<td><input type="button" value="조회" id='selectButton' /></td>
@@ -178,7 +179,7 @@
 			</table>
 		</div>
 		<input type="hidden" id="S_FLAG" name="S_FLAG" />
-		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
 					<th width="120">금융기관</th>

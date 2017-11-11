@@ -12,6 +12,24 @@
 </head>
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		$("#COMPANYNO").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#SANGHO").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+		$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#OPENDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#REGISTNO").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 300, minLength: 1});
+		$("#ADDRESS_HEAD").jqxInput({theme: 'energyblue', height: 25, width: 300, minLength: 1});
+		$("#UPTAE").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
+		$("#UPJONG").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
+		$("#TELNO").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#RELEASEDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#RELEASEDESC").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#TAXOFFICE").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
+		
+		
 		f_reload();
 	});
 
@@ -82,63 +100,69 @@
 
 <body>
 	<div id="contents" style="width:1200px;" align="center">
-			<table class="blueone">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
-		<form id="SY021001">
-			<table class="blueone" align="left">
-				<tr>
-					<td>사업자번호</td>
-					<td><input type="text" id="COMPANYNO" name="COMPANYNO" /></td>
-				</tr>
-				<tr>
-					<td>법인명(상호)</td>
-					<td><input type="text" id="SANGHO" name="SANGHO" /></td>
-				</tr>
-				<tr>
-					<td>대표자명</td>
-					<td><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
-				</tr>
-				<tr>
-					<td>개업(설립)일</td>
-					<td><input type="text" id="OPENDATE" name="OPENDATE" /></td>
-				</tr>
-				<tr>
-					<td>법인등록번호</td>
-					<td><input type="text" id="REGISTNO" name="REGISTNO" /></td>
-				</tr>
-				<tr>
-					<td>사업장 소재지</td>
-					<td><input type="text" id="ADDRESS" name="ADDRESS" /></td>
-				</tr>
-				<tr>
-					<td>본점 소재지</td>
-					<td><input type="text" id="ADDRESS_HEAD" name="ADDRESS_HEAD" /></td>
-				</tr>
-				<tr>
-					<td>업태</td>
-					<td><input type="text" id="UPTAE" name="UPTAE" /></td>
-				</tr>
-				<tr>
-					<td>업종</td>
-					<td><input type="text" id="UPJONG" name="UPJONG" /></td>
-				</tr>
-				<tr>
-					<td>대표전화</td>
-					<td><input type="text" id="TELNO" name="TELNO" /></td>
-				</tr>
-				<tr>
-					<td>교부일자/사유</td>
-					<td><input type="text" id="RELEASEDATE" name="RELEASEDATE" /> / <input type="text" id="RELEASEDESC" name="RELEASEDESC" /></td>
-				</tr>
-				<tr>
-					<td>관할세무서</td>
-					<td><input type="text" id="TAXOFFICE" name="TAXOFFICE" /></td>
-				</tr>
-			</table>
-		</form>
+		</div>
+	
+		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+	
+			<form id="SY021001">
+				<table align="left" style="border-spacing:5px; ">
+					<tr>
+						<th width="120">사업자번호</th>
+						<td><input type="text" id="COMPANYNO" name="COMPANYNO" /></td>
+					</tr>
+					<tr>
+						<th>법인명(상호)</th>
+						<td><input type="text" id="SANGHO" name="SANGHO" /></td>
+					</tr>
+					<tr>
+						<th>대표자명</th>
+						<td><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
+					</tr>
+					<tr>
+						<th>개업(설립)일</th>
+						<td><input type="text" id="OPENDATE" name="OPENDATE" /></td>
+					</tr>
+					<tr>
+						<th>법인등록번호</th>
+						<td><input type="text" id="REGISTNO" name="REGISTNO" /></td>
+					</tr>
+					<tr>
+						<th>사업장 소재지</th>
+						<td><input type="text" id="ADDRESS" name="ADDRESS" /></td>
+					</tr>
+					<tr>
+						<th>본점 소재지</th>
+						<td><input type="text" id="ADDRESS_HEAD" name="ADDRESS_HEAD" /></td>
+					</tr>
+					<tr>
+						<th>업태</th>
+						<td><input type="text" id="UPTAE" name="UPTAE" /></td>
+					</tr>
+					<tr>
+						<th>업종</th>
+						<td><input type="text" id="UPJONG" name="UPJONG" /></td>
+					</tr>
+					<tr>
+						<th>대표전화</th>
+						<td><input type="text" id="TELNO" name="TELNO" /></td>
+					</tr>
+					<tr>
+						<th>교부일자/사유</th>
+						<td><input type="text" id="RELEASEDATE" name="RELEASEDATE" /> / <input type="text" id="RELEASEDESC" name="RELEASEDESC" /></td>
+					</tr>
+					<tr>
+						<th>관할세무서</th>
+						<td><input type="text" id="TAXOFFICE" name="TAXOFFICE" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

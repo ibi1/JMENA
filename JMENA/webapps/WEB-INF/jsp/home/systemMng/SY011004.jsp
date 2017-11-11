@@ -316,14 +316,14 @@
 </head>
 <body class='default'>
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table align="right">
 				<tr>
 					<td><input type="button" value="조회" id='selectButton' /></td>
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
 					<th width="120">사용자구분</th>
@@ -339,7 +339,7 @@
 			</table>
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
 					<th width="120">시스템구분</th>
