@@ -14,6 +14,19 @@
 		var v_rightLastSel = 0;		//아래 그리드 선택 id
 		
 		$(document).ready(function(){
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#bottomInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#bottomSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			
+			$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			
+			$("#S_CCODE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 3, minLength: 1});
+			$("#S_CCODENAME_R").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			
+			$("#S_CCODENAME_L").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			
 			$("#S_FLAG_L").val("I");	//I : 저장, U : 수정
 			$("#S_FLAG_B").val("U");	//I : 저장, U : 수정
 			
@@ -63,7 +76,6 @@
 					f_selectCcodeDtl();
 				} ,
 				loadComplete: function() {
-					var isNew = true;
 					v_rightLastSel = 0;
 					
 					$("#S_CCODENAME_L").val("");
@@ -76,21 +88,12 @@
 						var cellData = $("#leftList").jqGrid('getCell', ids[index], 'CCODE');
 						if (cellData == s_ccode) {
 							$("#S_FLAG_L").val("U");
-							isNew = false;
-			        		$("#leftList").jqGrid('setSelection', ids[index]);
+							$("#leftList").jqGrid('setSelection', ids[index]);
 			    			return true;
+			        	} else {
+			        		$("#S_FLAG_L").val("I");
 			        	}	        
 					});
-					
-					if (isNew == true) {
-						$("#S_FLAG_L").val("I");
-						
-						$("#S_CCODENAME_R").val("");
-						$("#S_CCODENAME_R").focus();
-						
-						$("#leftList").jqGrid("resetSelection");
-						$('#bottomList').jqGrid("clearGridData", true);
-					}
 				},
 				hidegrid: false
 			});
@@ -164,6 +167,7 @@
 				$("#S_CCODE").val("");
 				$("#S_CCODENAME_R").val("");
 				$('#bottomList').jqGrid("clearGridData", true);
+				
 				f_selectCcodeMst();
 			});
 		})
@@ -183,6 +187,8 @@
 				$("#S_CCODE").focus();
 				$("#S_CCODENAME_R").val("");
 				
+				$("#leftList").jqGrid("resetSelection");
+				$('#bottomList').jqGrid('clearGridData');
 			});
 		})
 		
@@ -237,7 +243,19 @@
 		}
 		
 		$(function() {
-			$("#s_ccodeSearchButton").click(function() {
+			$("#searchButton").click(function() {
+				if( $("#S_CCODE").val() == "") {
+					alert("공통 코드를 입력하셔야 합니다."); 
+					$("#S_CCODE").focus();
+					 
+					 return false;
+				}
+				
+				$("#S_CCODENAME_R").val("");
+				$("#S_CCODENAME_R").focus();
+					
+				$('#bottomList').jqGrid("clearGridData", true);	
+				
 				f_selectCcodeMst();
 			});
 		})
@@ -245,7 +263,7 @@
 		function f_s_ccodeMstSelection() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				$("#s_ccodeSearchButton").click();
+				$("#searchButton").click();
 			}
 		}
 		
@@ -351,7 +369,7 @@
 					});
 				} else {
 					v_rightLastSel = 0;
-					f_selectCcodeDtl();
+					$("#searchButton").click();
 				}
 			});
 		})
@@ -359,12 +377,12 @@
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a></td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
@@ -383,7 +401,8 @@
 				<table class="blueone">
 					<tr>
 						<td>공통코드</td>
-						<td><input type="text" id="S_CCODE" name="S_CCODE" onkeydown="f_s_ccodeMstSelection();" />&nbsp;<a class="ui-button ui-widget ui-corner-all" id="s_ccodeSearchButton" name="s_ccodeSearchButton">=></a></td>
+						<td><input type="text" id="S_CCODE" name="S_CCODE" onkeydown="f_s_ccodeMstSelection();" /></td>
+						<td><input type="button" id='searchButton' /></td>
 					</tr>
 					<tr>
 						<td>공통코드명</td>
@@ -394,13 +413,17 @@
 		</div>
 		<div id="bottomDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<input type="hidden" id="S_FLAG_B" NAME="S_FLAG_B" />
-			<table class="blueone">
-				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="bottomInsertButton" name="bottomInsertButton">추가</a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="bottomSaveButton" name="bottomSaveButton">저장</a></td>
-				</tr>
-			</table>
-			<table id="bottomList"></table>
+			<div style="width:96%; float:left; padding: 10px" align="left">
+				<table align="right">
+					<tr>
+						<td><input type="button" value="추가" id='bottomInsertButton' /></td>
+						<td><input type="button" value="저장" id='bottomSaveButton' /></td>
+					</tr>
+				</table>
+			</div>
+			<div id="rightDiv2" style="width:96%; float:left; padding: 10px" align="left">
+				<table id="bottomList"></table>
+			</div>
 		</div>
 	</div>
 </body>
