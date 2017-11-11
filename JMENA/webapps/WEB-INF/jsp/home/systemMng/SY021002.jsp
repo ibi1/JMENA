@@ -84,7 +84,7 @@
 					var cellData = $("#leftList").jqGrid('getCell', ids[index], 'BRANCHCODE');
 					if (cellData == branchCode) {
 						$("#S_FLAG_L").val("U");
-						$("#RS_BRANCHCODE").prop("disabled", true);
+						$('#RS_BRANCHCODE').jqxInput({disabled: true });
 		        		$("#leftList").jqGrid('setSelection', ids[index]);
 		    			return true;
 		        	} else {
@@ -170,7 +170,7 @@
 	
 	$(function(){
 		$("#selectButton").click(function(){
-			$("#RS_BRANCHCODE").prop("disabled", false);
+			$('#RS_BRANCHCODE').jqxInput({disabled: false });
 			$("#RS_BRANCHCODE").val("");
 			$("#RS_BRANCHNAME").val("");
 			$("#RS_USEYN").val("Y");
@@ -198,7 +198,7 @@
 			}
 			
 			$("#LS_BRANCHNAME").val("");
-			$("#RS_BRANCHCODE").prop("disabled", false);
+			$('#RS_BRANCHCODE').jqxInput({disabled: false });
 			$("#RS_BRANCHNAME").val("");
 			$("#RS_BRANCHNAME").focus();
 			$("#RS_USEYN").val("Y");
@@ -219,7 +219,7 @@
 	$(function() {
 		$("#insertButton").click(function() {
 			$("#LS_BRANCHNAME").val("");
-			$("#RS_BRANCHCODE").prop("disabled", false);
+			$('#RS_BRANCHCODE').jqxInput({disabled: false });
 			$("#RS_BRANCHCODE").val("");
 			$("#RS_BRANCHNAME").val("");
 			$("#RS_USEYN").val("Y");
@@ -253,7 +253,7 @@
 				msg = "수정하시겠습니까?"
 			}
 			if (confirm(msg) == true) {
-				$("#RS_BRANCHCODE").prop("disabled", false);
+				$('#RS_BRANCHCODE').jqxInput({disabled: false });
 				
 				$.ajax({ 
 					type: 'POST' ,
@@ -390,7 +390,6 @@
 </script>
 </head>
 <body>
-	<div id="TEST"></div>
 	<div id="contents" style="width:1200px;" align="center">
 		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table align="right">
