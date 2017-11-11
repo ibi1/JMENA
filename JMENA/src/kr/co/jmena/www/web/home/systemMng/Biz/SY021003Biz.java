@@ -71,4 +71,28 @@ public class SY021003Biz {
 		return chkFlag;
 	}
 	
+	public boolean insertEnaCityDtl(SY021003VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY021003Dao.insertEnaCityDtl(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateEnaCityDtl(SY021003VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SY021003Dao.updateEnaCityDtl(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
 }

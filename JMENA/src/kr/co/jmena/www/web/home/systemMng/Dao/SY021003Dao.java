@@ -57,4 +57,23 @@ public class SY021003Dao extends SqlMapClientDaoSupport {
 		return chkFlag;
 	}
 	
+	public boolean insertEnaCityDtl(SY021003VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaCityDtl", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		
+		return chkFlag;
+	}
+	
+	public boolean updateEnaCityDtl(SY021003VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaCityDtl", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		
+		return chkFlag;
+	}
 }

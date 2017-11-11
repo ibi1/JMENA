@@ -82,7 +82,7 @@
 			USEYN = #USEYN#,
 			SORTKEY = #SORTKEY#,
 			REMARK = #REMARK#,
-			UPDATEUSER = 'ADMIN',
+			UPDATEUSER = #USERID#,
 			UPDATEDATE = NOW()
 		WHERE CITYCODE = #CITYCODE#
 		AND BOROUGHCODE = #BOROUGHCODE#
@@ -97,8 +97,7 @@
 			USEYN,
 			SORTKEY,
 			REMARK,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#CITYCODE#,
@@ -107,8 +106,7 @@
 			#USEYN#,
 			#SORTKEY#,
 			#REMARK#,
-			'admin',
-			NOW()
+			#USERID#
 		)
 	</insert>
 </sqlMap>

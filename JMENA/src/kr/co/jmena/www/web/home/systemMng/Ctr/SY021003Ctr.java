@@ -174,4 +174,55 @@ public class SY021003Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}
+	
+	@RequestMapping("/home/insertEnaCityDtl.do")
+	public ModelAndView insertEnaCityDtl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SY021003VO vo = new SY021003VO();
+		
+		vo.setCITYCODE(request.getParameter("CITYCODE"));
+		vo.setBOROUGHCODE(request.getParameter("BOROUGHCODE"));
+		vo.setBOROUGHNAME(request.getParameter("BOROUGHNAME"));
+		vo.setUSEYN(request.getParameter("USEYN"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		vo.setSORTKEY(request.getParameter("SORTKEY"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_R");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SY021003Biz.insertEnaCityDtl(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SY021003Biz.updateEnaCityDtl(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]시/도/군 코드 처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertEnaCityDtl]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
 }
