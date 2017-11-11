@@ -45,6 +45,8 @@ public class HR011001VO {
 	private String S_DEPTCODE;
 	private String S_KNAME;
 	private String S_JUMINID;
+	
+	private String USERID;
 		
 
 	public String getACCTNO(){
@@ -283,5 +285,11 @@ public class HR011001VO {
 	}
 	public void setBASICACCT(String bASICACCT) {
 		this.BASICACCT = bASICACCT;
-	}		
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setUSERID(String uSERID) {
+		this.USERID = uSERID;
+	}	
 }

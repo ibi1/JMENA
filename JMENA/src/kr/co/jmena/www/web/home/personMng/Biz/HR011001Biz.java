@@ -32,6 +32,19 @@ public class HR011001Biz {
 		return lst;
 	}
 	
+	public int insertEnaInsaMst(HR011001VO vo) throws Exception {
+		int insertCnt = 0;
+		
+		try {
+			insertCnt = HR011001Dao.insertEnaInsaMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return insertCnt;
+	}
+	
+	
 	public int updateEnaInsaMst(HR011001VO vo) throws Exception {
 		int updateCnt = 0;
 
@@ -44,17 +57,6 @@ public class HR011001Biz {
 		return updateCnt;
 	}
 	
-	public int insertEnaInsaMst(HR011001VO vo) throws Exception {
-		int insertCnt = 0;
-
-		try {
-			insertCnt = HR011001Dao.insertEnaInsaMst(vo);
-		} catch ( Exception e ) {
-			throw e;
-		}
-		
-		return insertCnt;
-	}	
 	
 	
 	public List<HR011001VO> selectListEnaAppointItem(HR011001VO vo) throws Exception {
@@ -67,8 +69,36 @@ public class HR011001Biz {
 		}
 		
 		return lst;
-	}
+	}	
+	
+	
+	public int insertEnaAppointItem(HR011001VO vo) throws Exception {
+		int insertCnt = 0;
 		
+		try {
+			insertCnt = HR011001Dao.insertEnaAppointItem(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return insertCnt;
+	}
+	
+	
+	public int updateEnaAppointItem(HR011001VO vo) throws Exception {
+		int updateCnt = 0;
+
+		try {
+			updateCnt = HR011001Dao.updateEnaAppointItem(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return updateCnt;
+	}
+	
+	
+	
 	
 	public List<HR011001VO> selectListEnaTexPayerItem(HR011001VO vo) throws Exception {
 		List<HR011001VO> lst = null;
@@ -80,6 +110,31 @@ public class HR011001Biz {
 		}
 		
 		return lst;
+	}
+	
+	public int insertEnaTexPayerItem(HR011001VO vo) throws Exception {
+		int insertCnt = 0;
+		
+		try {
+			insertCnt = HR011001Dao.insertEnaTexPayerItem(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return insertCnt;
+	}
+	
+	
+	public int updateEnaTexPayerItem(HR011001VO vo) throws Exception {
+		int updateCnt = 0;
+
+		try {
+			updateCnt = HR011001Dao.updateEnaTexPayerItem(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return updateCnt;
 	}
 	
 	

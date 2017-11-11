@@ -5,9 +5,12 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.personMng.Biz.HR011001Biz;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -152,7 +155,6 @@ public class HR011001Ctr {
 		
 		vo.setINSACODE(request.getParameter("INSACODE"));
 		
-		System.out.println("selectListEnaAppointItem     INSACODE==>"+ request.getParameter("INSACODE"));
 		List<HR011001VO> lst = HR011001Biz.selectListEnaAppointItem(vo);	
 		
 		JSONArray jCell = new JSONArray();
@@ -162,8 +164,8 @@ public class HR011001Ctr {
 			//System.out.println(lst.get(i).getSYSID());
 			JSONObject jData = new JSONObject();
 			
-			
-			
+			jData.put("INSACODE", lst.get(i).getINSACODE());
+			jData.put("APPOINTSEQ", lst.get(i).getAPPOINTSEQ());
 			jData.put("APPOINTGUBUN", lst.get(i).getAPPOINTGUBUN());
 			jData.put("APPOINTDATE", lst.get(i).getAPPOINTDATE());
 			jData.put("APPOINTBRANCH", lst.get(i).getAPPOINTBRANCH());
@@ -171,7 +173,7 @@ public class HR011001Ctr {
 			jData.put("GRADE", lst.get(i).getGRADE());
 			jData.put("DUTY", lst.get(i).getDUTY());
 			jData.put("EMPLOYGUBUN", lst.get(i).getEMPLOYGUBUN());
-			jData.put("PREBASICPAY", lst.get(i).getBASICPAY());
+			jData.put("PREBASICPAY", lst.get(i).getPREBASICPAY());
 			jData.put("REMARK", lst.get(i).getREMARK());
 			
 			
@@ -192,8 +194,6 @@ public class HR011001Ctr {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/selectListEnaTexPayerItem.do")
 	public ModelAndView selectListEnaTexPayerItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
-		System.out.println("selectListEnaTexPayerItem     INSACODE==>"+ request.getParameter("INSACODE"));
 		HR011001VO vo = new HR011001VO();
 		
 		vo.setINSACODE(request.getParameter("INSACODE"));
@@ -235,27 +235,24 @@ public class HR011001Ctr {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping("/home/updateHR011001.do")
-	public ModelAndView updateHR011001(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping("/home/updateEnaInsaMst.do")
+	public ModelAndView updateEnaInsaMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HR011001VO vo = new HR011001VO();
+		HR011001VO vo = new HR011001VO();		
 		
-		
-		
-		List<HR011001VO> list = HR011001Biz.selectListEnaInsaMst(vo);
-
 		int updateCnt = 0;
 		int insertCnt = 0;
-
-		String juminId = request.getParameter("JUMINID1") + request.getParameter("JUMINID2");		
-		vo.setJUMINID(juminId);
 		
+		String insacode = request.getParameter("INSACODE");		
+		String juminId = request.getParameter("JUMINID1") + request.getParameter("JUMINID2");
+		String saupId = request.getParameter("SAUPID1") + request.getParameter("SAUPID2") + request.getParameter("SAUPID3");
+		String retiredate = request.getParameter("RETIREDATE") == null ? "" : request.getParameter("RETIREDATE");
 		
-		vo.setINSACODE(request.getParameter("INSACODE"));
+		vo.setINSACODE(insacode);
 		vo.setKNAME(request.getParameter("KNAME"));
-		vo.setJUMINID(request.getParameter("JUMINID"));
+		vo.setJUMINID(juminId);
 		vo.setBIRTHDAYGUBUN(request.getParameter("BIRTHDAYGUBUN"));
-		vo.setSAUPID(request.getParameter("SAUPID"));
+		vo.setSAUPID(saupId);
 		vo.setSAUPOWNER(request.getParameter("SAUPOWNER"));
 		vo.setADDRESS(request.getParameter("ADDRESS"));
 		vo.setMOBILENO(request.getParameter("MOBILENO"));
@@ -268,42 +265,38 @@ public class HR011001Ctr {
 		vo.setDUTY(request.getParameter("DUTY"));
 		vo.setJOINDATE(request.getParameter("JOINDATE"));
 		vo.setREJOINYN(request.getParameter("REJOINYN"));
-		vo.setRETIREDATE(request.getParameter("RETIREDATE"));
+		vo.setREJOINYN(retiredate);
 		vo.setRECOID(request.getParameter("RECOID"));
 		vo.setREMARK(request.getParameter("REMARK"));
+
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
 		
 		JSONArray jCell = new JSONArray();
-		JSONObject json = new JSONObject();
+		JSONObject json = new JSONObject();		
+
+		JSONObject obj = new JSONObject();
 		
 		
-		
-		if(list.size() > 0){
+		if(insacode == null || insacode == ""){
+			insertCnt = HR011001Biz.insertEnaInsaMst(vo);
+			if(insertCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}			
+		}else{
 			updateCnt = HR011001Biz.updateEnaInsaMst(vo);
-			
-			
-			JSONObject obj = new JSONObject();
 			if(updateCnt > 0){
 				obj.put("MSG", "success");
 			}else{
 				obj.put("MSG", "error");
 			}
-			jCell.add(obj);
-			json.put("rows", jCell);
-			
-		}else{
-			insertCnt = HR011001Biz.insertEnaInsaMst(vo);
-			
-			JSONObject obj = new JSONObject();
-			obj.put("insertCnt", insertCnt);
-			json.put("rows", jCell);
-			if(insertCnt > 0){
-				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
-			}
-			jCell.add(obj);
-			json.put("rows", jCell);
 		}
+
+		jCell.add(obj);
+		json.put("rows", jCell);
 		
 		System.out.println("updateCnt==>"+updateCnt);
 		System.out.println("insertCnt==>"+insertCnt);
@@ -312,5 +305,140 @@ public class HR011001Ctr {
 		
 		return new ModelAndView("jsonView", json);	
 	}
+	
+	
+	/**
+	 * @name 발령사항 저장
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/updateEnaAppointItem.do")
+	public ModelAndView updateEnaAppointItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		HR011001VO vo = new HR011001VO();		
+		
+		int updateCnt = 0;
+		int insertCnt = 0;
+		System.out.println("APPOINTSEQ      =              "   + request.getParameter("APPOINTSEQ"));
+		vo.setINSACODE(request.getParameter("INSACODE"));		
+		vo.setAPPOINTSEQ(request.getParameter("APPOINTSEQ"));
+		vo.setAPPOINTGUBUN(request.getParameter("APPOINTGUBUN"));
+		vo.setAPPOINTDATE(request.getParameter("APPOINTDATE"));
+		vo.setAPPOINTBRANCH(request.getParameter("APPOINTBRANCH"));
+		vo.setAPPOINTDEPT(request.getParameter("APPOINTDEPT"));
+		vo.setGRADE(request.getParameter("GRADE"));
+		vo.setDUTY(request.getParameter("DUTY"));
+		vo.setEMPLOYGUBUN(request.getParameter("EMPLOYGUBUN"));
+		vo.setPREBASICPAY(request.getParameter("PREBASICPAY"));
+		vo.setREMARK(request.getParameter("REMARK"));
+
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));		
+		
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();		
+		
+		JSONObject obj = new JSONObject();
+		
+		String IU_Flag = request.getParameter("S_FLAG_B1");
+		
+		if ("I".equals(IU_Flag)) {
+			insertCnt = HR011001Biz.insertEnaAppointItem(vo);
+			if(insertCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}	
+		} else if ("U".equals(IU_Flag)) {
+			updateCnt = HR011001Biz.updateEnaAppointItem(vo);
+			if(updateCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}
+		}
+		
+
+		jCell.add(obj);
+		json.put("rows", jCell);
+		
+		System.out.println("updateCnt==>"+updateCnt);
+		System.out.println("insertCnt==>"+insertCnt);
+		
+		System.out.println("json==>"+json);
+		
+		return new ModelAndView("jsonView", json);	
+	}	
+	
+	
+	/**
+	 * @name 신고인 관리 저장
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/updateEnaTexPayerItem.do")
+	public ModelAndView updateEnaTexPayerItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		HR011001VO vo = new HR011001VO();		
+		
+		int updateCnt = 0;
+		int insertCnt = 0;
+
+		vo.setINSACODE(request.getParameter("INSACODE"));		
+		vo.setITEMSEQ(request.getParameter("ITEMSEQ"));
+		vo.setPAYERNAME(request.getParameter("PAYERNAME"));
+		vo.setPAYERID(request.getParameter("PAYERID"));
+		vo.setBANKID(request.getParameter("BANKID"));
+		vo.setACCTNO(request.getParameter("ACCTNO"));
+		vo.setACCTOWNER(request.getParameter("ACCTOWNER"));
+		vo.setREMARK(request.getParameter("REMARK"));
+				
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));		
+		
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();		
+		
+		JSONObject obj = new JSONObject();
+		
+		String IU_Flag = request.getParameter("S_FLAG_B2");
+		
+		if ("I".equals(IU_Flag)) {
+			insertCnt = HR011001Biz.insertEnaTexPayerItem(vo);
+			if(insertCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}	
+		} else if ("U".equals(IU_Flag)) {
+			updateCnt = HR011001Biz.updateEnaTexPayerItem(vo);
+			if(updateCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}
+		}
+		
+
+		jCell.add(obj);
+		json.put("rows", jCell);
+		
+		System.out.println("updateCnt==>"+updateCnt);
+		System.out.println("insertCnt==>"+insertCnt);
+		
+		System.out.println("json==>"+json);
+		
+		return new ModelAndView("jsonView", json);	
+	}	
 }

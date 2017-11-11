@@ -56,6 +56,8 @@
 	
 
 	<resultMap id="HR011001AppointData" class="HR011001VO">	
+		<result property="INSACODE" 		column="INSACODE"/>
+		<result property="APPOINTSEQ" 		column="APPOINTSEQ"/>
 		<result property="APPOINTGUBUN" 	column="APPOINTGUBUN"/>
 		<result property="APPOINTDATE" 		column="APPOINTDATE"/>
 		<result property="APPOINTBRANCH" 	column="APPOINTBRANCH"/>
@@ -162,6 +164,7 @@
 			KNAME = #KNAME#,
 			JUMINID = #JUMINID#,
 			SAUPID = #SAUPID#,
+			SAUPOWNER = #SAUPOWNER#,
 			ADDRESS = #ADDRESS#,
 			MOBILENO = #MOBILENO#,
 			TELNO = #TELNO#,
@@ -188,6 +191,7 @@
 			KNAME,
 			JUMINID,
 			SAUPID,
+			SAUPOWNER,
 			ADDRESS,
 			MOBILENO,
 			TELNO,
@@ -206,10 +210,13 @@
 			INSERTDATE
 		)
 		VALUES(
-			#INSACODE#,
+			(select concat(date_format(curdate( ), '%y%m'), LPAD(right(ifnull(max(INSACODE), 0),4) + 1, 4, '0'))
+  			   from hr_insamst b
+ 			  where left(INSACODE,4) =  date_format(curdate( ),'%y%m')),
 			#KNAME#,
-			'1111111111111',
+			#JUMINID#,
 			#SAUPID#,
+			#SAUPOWNER#,
 			#ADDRESS#,
 			#MOBILENO#,
 			#TELNO#,
@@ -220,7 +227,7 @@
 			#GRADE#,
 			#DUTY#,
 			#JOINDATE#,
-			'N',
+			#REJOINYN#,
 			#RETIREDATE#,
 			#RECOID#,
 			#REMARK#,
@@ -251,24 +258,6 @@
 		ORDER BY T1.APPOINTDATE DESC
 	</select>
 	
-	<update id="updateEnaAppointItem">
-		UPDATE hr_appointitem
-		SET
-			APPOINTGUBUN = #APPOINTGUBUN#,
-			APPOINTDATE = #APPOINTDATE#,
-			APPOINTBRANCH = #APPOINTBRANCH#,
-			APPOINTDEPT = #APPOINTDEPT#,
-			GRADE = #GRADE#,
-			DUTY = #DUTY#,
-			EMPLOYGUBUN = #EMPLOYGUBUN#,
-			PREBASICPAY = #PREBASICPAY#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = # UPDATEDATE#
-		WHERE CITYCODE = #CITYCODE#
-		AND BOROUGHCODE = #BOROUGHCODE#
-	</update>
-	
 	<insert id="insertEnaAppointItem">
 		INSERT INTO hr_appointitem
 		(
@@ -288,7 +277,7 @@
 		)
 		VALUES(
 			#INSACODE#,
-			#APPOINTSEQ#,
+			(SELECT IFNULL(MAX(APPOINTSEQ),0) +1 FROM hr_appointitem h WHERE INSACODE = #INSACODE#),
 			#APPOINTGUBUN#,
 			#APPOINTDATE#,
 			#APPOINTBRANCH#,
@@ -298,10 +287,30 @@
 			#EMPLOYGUBUN#,
 			#PREBASICPAY#,
 			#REMARK#,
-			#INSERTUSER#,
+			'admin',
 			SYSDATE()
 		)
-	</insert>
+	</insert>	
+	
+	<update id="updateEnaAppointItem">
+		UPDATE hr_appointitem
+		SET
+			APPOINTGUBUN = #APPOINTGUBUN#,
+			APPOINTDATE = #APPOINTDATE#,
+			APPOINTBRANCH = #APPOINTBRANCH#,
+			APPOINTDEPT = #APPOINTDEPT#,
+			GRADE = #GRADE#,
+			DUTY = #DUTY#,
+			EMPLOYGUBUN = #EMPLOYGUBUN#,
+			PREBASICPAY = #PREBASICPAY#,
+			REMARK = #REMARK#,
+			UPDATEUSER = 'admin',
+			UPDATEDATE = SYSDATE()
+		WHERE INSACODE = #INSACODE#
+		AND APPOINTSEQ = #APPOINTSEQ#
+	</update>
+	
+
 	
 	<select id="selectListEnaTexPayerItem" resultMap="HR011001EnaTexData">
 		SELECT 
@@ -320,20 +329,6 @@
 		ORDER BY T1.ITEMSEQ DESC
 	</select>
 	
-	<update id="updateEnaTexPayerItem">
-		UPDATE hr_taxpayeritem
-		SET
-			PAYERNAME = #PAYERNAME#,
-			PAYERID = #PAYERID#,
-			BANKID = #BANKID#,
-			ACCTNO = #ACCTNO#,
-			ACCTOWNER = #ACCTOWNER#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = # UPDATEDATE#
-		WHERE CITYCODE = #CITYCODE#
-		AND BOROUGHCODE = #BOROUGHCODE#
-	</update>
 	
 	<insert id="insertEnaTexPayerItem">
 		INSERT INTO hr_taxpayeritem
@@ -351,15 +346,32 @@
 		)
 		VALUES(
 			#INSACODE#,
-			#ITEMSEQ#,
+			(SELECT IFNULL(MAX(ITEMSEQ),0) +1 FROM hr_taxpayeritem h WHERE INSACODE = #INSACODE#),
 			#PAYERNAME#,
 			#PAYERID#,
 			#BANKID#,
 			#ACCTNO#,
 			#ACCTOWNER#,
 			#REMARK#,
-			#INSERTUSER#,
+			'admin',
 			SYSDATE()
 		)
-	</insert>
+	</insert>	
+	
+	<update id="updateEnaTexPayerItem">
+		UPDATE hr_taxpayeritem
+		SET
+			PAYERNAME = #PAYERNAME#,
+			PAYERID = #PAYERID#,
+			BANKID = #BANKID#,
+			ACCTNO = #ACCTNO#,
+			ACCTOWNER = #ACCTOWNER#,
+			REMARK = #REMARK#,
+			UPDATEUSER = 'admin',
+			UPDATEDATE = SYSDATE()
+		WHERE INSACODE = #INSACODE#
+		AND ITEMSEQ = #ITEMSEQ#
+	</update>
+	
+
 </sqlMap>

@@ -31,6 +31,13 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		return lst;
 	}	
 	
+	public int insertEnaInsaMst(HR011001VO vo) throws DataAccessException {
+		int insertCnt = 0;
+		
+		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaInsaMst", vo);
+		
+		return insertCnt;
+	}	
 	
 	public int updateEnaInsaMst(HR011001VO vo) throws DataAccessException {
 		int updateCnt = 0;
@@ -40,13 +47,7 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		return updateCnt;
 	}
 	
-	public int insertEnaInsaMst(HR011001VO vo) throws DataAccessException {
-		int insertCnt = 0;
-		
-		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaInsaMst", vo);
-		
-		return insertCnt;
-	}	
+
 	
 	
 	@SuppressWarnings("unchecked")
@@ -58,6 +59,25 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		return lst;
 	}	
 	
+	
+	public int insertEnaAppointItem(HR011001VO vo) throws DataAccessException {
+		int insertCnt = 0;
+		
+		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaAppointItem", vo);
+		
+		return insertCnt;
+	}	
+	
+	public int updateEnaAppointItem(HR011001VO vo) throws DataAccessException {
+		int updateCnt = 0;
+		
+		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaAppointItem", vo);
+		
+		return updateCnt;
+	}	
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<HR011001VO> selectListEnaTexPayerItem(HR011001VO vo) throws DataAccessException {
 		List<HR011001VO> lst = null;
@@ -66,5 +86,21 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}	
+	
+	public int insertEnaTexPayerItem(HR011001VO vo) throws DataAccessException {
+		int insertCnt = 0;
+		
+		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaTexPayerItem", vo);
+		
+		return insertCnt;
+	}	
+	
+	public int updateEnaTexPayerItem(HR011001VO vo) throws DataAccessException {
+		int updateCnt = 0;
+		
+		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaTexPayerItem", vo);
+		
+		return updateCnt;
+	}		
 		
 }
