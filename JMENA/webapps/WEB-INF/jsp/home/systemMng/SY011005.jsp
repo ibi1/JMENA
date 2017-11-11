@@ -28,9 +28,9 @@
 			$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			
 			$("#S_CCODE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 3, minLength: 1});
-			$("#S_CCODENAME_R").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#S_CCODENAME_R").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			
-			$("#S_CCODENAME_L").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#S_CCODENAME_L").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			
 			$("#S_FLAG_L").val("I");	//I : 저장, U : 수정
 			$("#S_FLAG_B").val("U");	//I : 저장, U : 수정
@@ -58,6 +58,7 @@
 				] ,
 				rowNum:100,
 				autowidth: true ,
+				shrinkToFit: false,
 				rowList:[10,20,30] ,
 				//pager: $('#leftNav') ,
 				sortname: 'CCODE' ,
@@ -136,6 +137,7 @@
 				] ,
 				rowNum:100,
 				autowidth: true ,
+				shrinkToFit: false,
 				rowList:[10,20,30] ,
 				//pager: $('#leftNav') ,
 				sortname: 'DCODE' ,
@@ -407,7 +409,7 @@
 							<div id="leftDiv">
 								<table>
 									<tr>
-										<td>공통코드명</td>
+										<th width="120">공통코드명</th>
 										<td><input type="text" id="S_CCODENAME_L" name="S_CCODENAME_L" onkeydown="f_selectKeyCcodeMst();"/></td>
 									</tr>
 								</table>
@@ -422,13 +424,13 @@
 									<input type="hidden" id="S_FLAG_L" NAME="S_FLAG_L" />
 									<table>
 										<tr>
-											<td>공통코드</td>
-											<td><input type="text" id="S_CCODE" name="S_CCODE" onkeydown="f_s_ccodeMstSelection();" /></td>
+											<th width="120">공통코드</th>
+											<td width="110"><input type="text" id="S_CCODE" name="S_CCODE" onkeydown="f_s_ccodeMstSelection();" /></td>
 											<td><input type="button" id='searchButton' /></td>
 										</tr>
 										<tr>
-											<td>공통코드명</td>
-											<td><input type="text" id="S_CCODENAME_R" name="S_CCODENAME_R" onkeydown="f_saveCcodeMst();" /></td>
+											<th width="120">공통코드명</th>
+											<td colspan="2"><input type="text" id="S_CCODENAME_R" name="S_CCODENAME_R" onkeydown="f_saveCcodeMst();" /></td>
 										</tr>
 									</table>
 								</form>

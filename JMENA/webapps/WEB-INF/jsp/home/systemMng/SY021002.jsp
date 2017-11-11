@@ -20,10 +20,10 @@
 		$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
-		$("#LS_BRANCHNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#LS_BRANCHNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		
-		$("#RS_BRANCHCODE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 5, minLength: 1});
-		$("#RS_BRANCHNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#RS_BRANCHCODE").jqxInput({theme: 'energyblue', height: 25, width: 120, maxLength: 5, minLength: 1});
+		$("#RS_BRANCHNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		//$("#RS_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true, height: 25, width: 98});
 		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
@@ -48,12 +48,13 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['지사코드', '지사 명', '사용여부'] ,
 			colModel:[
-				{name:"BRANCHCODE",			index:'BRANCHCODE',		width:60,		align:'center', sortable:false}
-				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:60,		align:'center', sortable:false}
-				, {name:"USEYN",			index:'USEYN',			width:60,		align:'center', sortable:false}
+				{name:"BRANCHCODE",			index:'BRANCHCODE',		width:100,		align:'center', sortable:false}
+				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:150,		align:'center', sortable:false}
+				, {name:"USEYN",			index:'USEYN',			width:70,		align:'center', sortable:false}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
+			shrinkToFit: false,
 			viewrecords: true ,
 			sortorder:'asc' ,
 			width: "96%" ,
@@ -110,17 +111,18 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['부서코드', '부서명', '부서구분', '정렬순서', '사용여부', '비고'] ,
 			colModel:[
-				{name:"DEPTCODE",		index:'DEPTCODE',	width:60,	align:'center', sortable:false, editable:true}
-				, {name:"DEPTNAME",		index:'DEPTNAME',	width:60,	align:'center', sortable:false, editable:true}
-				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=001", buildSelect:selectListEnaDeptCode} }
-				, {name:"SORTKEY",		index:'SORTKEY',	width:60,	align:'center', sortable:false, editable:true}
-				, {name:"USEYN",		index:'USEYN',		width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
-				, {name:"REMARK",		index:'REMARK',		width:60,	align:'center', sortable:false, editable:true}
+				{name:"DEPTCODE",		index:'DEPTCODE',	width:100,	align:'center', sortable:false, editable:true}
+				, {name:"DEPTNAME",		index:'DEPTNAME',	width:150,	align:'center', sortable:false, editable:true}
+				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=001", buildSelect:selectListEnaDeptCode} }
+				, {name:"SORTKEY",		index:'SORTKEY',	width:70,	align:'center', sortable:false, editable:true}
+				, {name:"USEYN",		index:'USEYN',		width:70,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
+				, {name:"REMARK",		index:'REMARK',		width:250,	align:'center', sortable:false, editable:true}
 			] ,
 			
 			
 			rowNum:100 ,
 			autowidth: true ,
+			shrinkToFit: false,
 			//rowList:[10,20,30] ,
 			sortname: 'DEPTCODE' ,
 			viewrecords: true ,
@@ -399,31 +401,31 @@
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<td>지사명</td>
+					<th width="120">지사명</th>
 					<td><input type="text" id="LS_BRANCHNAME" name="LS_BRANCHNAME" onkeydown="f_selectBranchMst();"/></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<form id="SY021002">
 				<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
-				<table class="blueone">
+				<table>
 					<tr>
-						<td>지사코드</td>
+						<th width="120">지사코드</th>
 						<td><input type="text" id="RS_BRANCHCODE" name="RS_BRANCHCODE" onkeydown="f_searchBranchCode();"/></td>
 						<td><input type="button" id='searchButton' /></td>
 					</tr>
 					<tr>
-						<td>지사명</td>
-						<td><input type="text" id="RS_BRANCHNAME" name="RS_BRANCHNAME" onkeydown="f_saveBranchCode();" /></td>
+						<th width="120">지사명</th>
+						<td colspan="2"><input type="text" id="RS_BRANCHNAME" name="RS_BRANCHNAME" onkeydown="f_saveBranchCode();" /></td>
 					</tr>
 					<tr>
-						<td>사용여부</td>
-						<td>
+						<th width="120">사용여부</th>
+						<td colspan="2">
 							<select id="RS_USEYN" name="RS_USEYN" style="width:50px;">
 								<option value="Y">Y</option>
 								<option value="N">N</option>
