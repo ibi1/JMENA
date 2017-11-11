@@ -23,6 +23,8 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#S_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
+		
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
 		
@@ -52,7 +54,7 @@
 	}
 
 	$(function(){
-		$("#CITYCODE").change(function() {
+		$("#S_CITYCODE").change(function() {
 			f_selectListEnaBoroughCode();
 		});
 	});
@@ -137,21 +139,21 @@
             selectionmode: 'singlerow',
             columns: [
                       
-				{ text: '매입구분',		datafield: "BUYGUBUN",			width: 100, cellsalign: 'center'},
-				{ text: '매도자',		datafield: "OWNERNAME",			width: 100, cellsalign: 'center'},
-				{ text: '주민번호',		datafield: "OWNERJUMINID",		width: 100, cellsalign: 'center'},
-				{ text: '주소/지번',	datafield: "ADDRESS",			width: 100, cellsalign: 'center'},
-				{ text: '면적(m2)',		datafield: "BUYM2",				width: 100, cellsalign: 'center'},
-				{ text: '등기이전일',	datafield: "REGDATE1",			width: 100, cellsalign: 'center'},
-				{ text: '매입금액',		datafield: "BUYAMT",			width: 100, cellsalign: 'center'},
-				{ text: '매출순번',		datafield: "SELLSEQ",			width: 100, cellsalign: 'center'},
-				{ text: '매수자',		datafield: "CONNAME",			width: 100, cellsalign: 'center'},
-				{ text: '주민번호',		datafield: "CONJUMINID",		width: 100, cellsalign: 'center'},
-				{ text: '계약면적',		datafield: "CONM2",				width: 100, cellsalign: 'center'},
-				{ text: '이전일',		datafield: "REGDATE2",			width: 100, cellsalign: 'center'},
-				{ text: '매도금액',		datafield: "SALEAMT",			width: 100, cellsalign: 'center'},
-				{ text: '재고면적',		datafield: "REMNM2",			width: 100, cellsalign: 'center'},
-				{ text: '재고금액',		datafield: "REMNAMT",			width: 100, cellsalign: 'center'}
+				{ text: '매입구분',		datafield: "BUYGUBUN",			width: 80, cellsalign: 'center', align: 'center'},
+				{ text: '매도자',		datafield: "OWNERNAME",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '주민번호',		datafield: "OWNERJUMINID",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '주소/지번',	datafield: "ADDRESS",			width: 200, cellsalign: 'center', align: 'center'},
+				{ text: '면적(m2)',		datafield: "BUYM2",				width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '등기이전일',	datafield: "REGDATE1",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '매입금액',		datafield: "BUYAMT",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '매출순번',		datafield: "SELLSEQ",			width: 80, cellsalign: 'center', align: 'center'},
+				{ text: '매수자',		datafield: "CONNAME",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '주민번호',		datafield: "CONJUMINID",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '계약면적',		datafield: "CONM2",				width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '이전일',		datafield: "REGDATE2",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '매도금액',		datafield: "SALEAMT",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '재고면적',		datafield: "REMNM2",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '재고금액',		datafield: "REMNAMT",			width: 150, cellsalign: 'center', align: 'center'}
 				
 			]            
         });
@@ -177,7 +179,7 @@
 <body>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -188,20 +190,20 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<th>지역구분</th>
+					<th width="120">지역구분</th>
 					<td>
-						<select id="S_CITYCODE" name="S_CITYCODE">
+						<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">
 						</select>
 					</td>
-					<th>시/도 구분</th>
+					<th width="120">시/도 구분</th>
 					<td>
-						<select id="S_BOROUGHCODE" name="S_BOROUGHCODE">
+						<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:130px">
 						</select>
 					</td>
-					<th>주소 및 지번</th>
+					<th width="120">주소 및 지번</th>
 					<td><input type="text" id="S_ADDRESS" name="S_ADDRESS" /></td>
 				</tr>
 			</table>

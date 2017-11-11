@@ -25,6 +25,10 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#S_SALEDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_SALEDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
@@ -149,30 +153,30 @@
             selectionmode: 'singlerow',
             columns: [
                       
-				{ text: '지사', 		datafield: "BRANCHNAME",	width: 100, cellsalign: 'center'},
-				{ text: '부서', 		datafield: "DEPTNAME",		width: 100, cellsalign: 'center'},
-				{ text: '계약일', 		datafield: "SALEDATE",		width: 100, cellsalign: 'center'},
-				{ text: '계약번호', 	datafield: "SALEID",		width: 100, cellsalign: 'center'},
-				{ text: '담당자', 		datafield: "KNAME",			width: 100, cellsalign: 'center'},
-				{ text: '고객명', 		datafield: "CONNAME",		width: 100, cellsalign: 'center'},
-				{ text: '주민번호', 	datafield: "CONJUMINID",	width: 100, cellsalign: 'center'},
-				{ text: '지급구분', 	datafield: "BRROWTYPE",		width: 100, cellsalign: 'center'},
-				{ text: '차용기간', 	datafield: "BRROWTERM",		width: 100, cellsalign: 'center'},
-				{ text: '차입금액', 	datafield: "BRROWAMT",		width: 100, cellsalign: 'center'},
-				{ text: '지급이율(%)', 	datafield: "PAYRATE",		width: 100, cellsalign: 'center'},
-				{ text: '지급이자', 	datafield: "PAYAMT",		width: 100, cellsalign: 'center'},
-				{ text: '이자소득세', 	datafield: "TAXAMT",		width: 100, cellsalign: 'center'},
-				{ text: '실 수령액', 	datafield: "JIGUEBAMT",		width: 100, cellsalign: 'center'},
-				{ text: '만기일', 		datafield: "EXPIREDATE",	width: 100, cellsalign: 'center'},
-				{ text: '연장여부', 	datafield: "EXTENDYN",		width: 100, cellsalign: 'center'},
-				{ text: '연장일', 		datafield: "EXTENDDATE",	width: 100, cellsalign: 'center'},
-				{ text: '중도해지', 	datafield: "CANCELYN",		width: 100, cellsalign: 'center'},
-				{ text: '중도해지일', 	datafield: "CANCELDATE",	width: 100, cellsalign: 'center'},
-				{ text: '담보소재지', 	datafield: "ADDRESS",		width: 100, cellsalign: 'center'},
-				{ text: '입금은행', 	datafield: "BANKNAME",		width: 100, cellsalign: 'center'},
-				{ text: '입금계좌', 	datafield: "PAYACCOUNT",	width: 100, cellsalign: 'center'},
-				{ text: '예금주', 		datafield: "PAYOWNER",		width: 100, cellsalign: 'center'},
-				{ text: '비고', 		datafield: "REMARK",		width: 100, cellsalign: 'center'}
+				{ text: '지사', 		datafield: "BRANCHNAME",	width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '부서', 		datafield: "DEPTNAME",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '계약일', 		datafield: "SALEDATE",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '계약번호', 	datafield: "SALEID",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '담당자', 		datafield: "KNAME",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '고객명', 		datafield: "CONNAME",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '주민번호', 	datafield: "CONJUMINID",	width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '지급구분', 	datafield: "BRROWTYPE",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '차용기간', 	datafield: "BRROWTERM",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '차입금액', 	datafield: "BRROWAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '지급이율(%)', 	datafield: "PAYRATE",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '지급이자', 	datafield: "PAYAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '이자소득세', 	datafield: "TAXAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '실 수령액', 	datafield: "JIGUEBAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '만기일', 		datafield: "EXPIREDATE",	width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '연장여부', 	datafield: "EXTENDYN",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '연장일', 		datafield: "EXTENDDATE",	width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '중도해지', 	datafield: "CANCELYN",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '중도해지일', 	datafield: "CANCELDATE",	width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '담보소재지', 	datafield: "ADDRESS",		width: 200, cellsalign: 'center', align: 'center'},
+				{ text: '입금은행', 	datafield: "BANKNAME",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '입금계좌', 	datafield: "PAYACCOUNT",	width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '예금주', 		datafield: "PAYOWNER",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '비고', 		datafield: "REMARK",		width: 250, cellsalign: 'center', align: 'center'}
 
             ]
           
@@ -204,7 +208,7 @@
 <body>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -215,24 +219,24 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<th>매출기간</th>
+					<th width="120">매출기간</th>
 					<td colspan="5"><input type="text" id="S_SALEDATE_FR" name="S_SALEDATE_FR" /> ~ <input type="text" id="S_SALEDATE_TO" name="S_SALEDATE_TO" /></td>
 				</tr>
 				<tr>
-					<th>지사</th>
+					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
 						</select>
 					</td>
-					<th>부서</th>
+					<th width="120">부서</th>
 					<td>
 						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 						</select>
 					</td>
-					<th>담당자명</th>
+					<th width="120">담당자명</th>
 					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
 				</tr>
 			</table>

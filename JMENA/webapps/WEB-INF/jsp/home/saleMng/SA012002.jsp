@@ -25,7 +25,11 @@
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-				
+		
+		$("#S_SALEDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_SALEDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		f_selectListEnaDCode();
@@ -176,32 +180,32 @@
             columns: [
                       
 				{ text: '지사코드', 		datafield: "BRANCHCODE",	width: 100, cellsalign: 'center', hidden:true},
-				{ text: '지사', 			datafield: "BRANCHNAME",	width: 100, cellsalign: 'center'},
+				{ text: '지사', 			datafield: "BRANCHNAME",	width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '부서코드', 		datafield: "DEPTCODE",		width: 100, cellsalign: 'center', hidden:true},
-				{ text: '부서', 			datafield: "DEPTNAME",		width: 100, cellsalign: 'center'},
-				{ text: '계약일', 			datafield: "SALEDATE",		width: 100, cellsalign: 'center'},
-				{ text: '매출구분', 		datafield: "DCODENAME",		width: 100, cellsalign: 'center'},
-				{ text: '계약번호', 		datafield: "SALEID",		width: 100, cellsalign: 'center'},
-				{ text: '담당자', 			datafield: "KNAME",			width: 100, cellsalign: 'center'},
-				{ text: '고객명', 			datafield: "CONNAME",		width: 100, cellsalign: 'center'},
-				{ text: '주소', 			datafield: "ADDRESS",		width: 100, cellsalign: 'center'},
-				{ text: '계약면적', 		datafield: "CONM2",			width: 100, cellsalign: 'center'},
-				{ text: '계약평수', 		datafield: "CONPY",			width: 100, cellsalign: 'center'},
-				{ text: '원 판매가', 		datafield: "SALEAMT",		width: 100, cellsalign: 'center'},
-				{ text: '할인율(%)', 		datafield: "DCRATE",		width: 100, cellsalign: 'center'},
-				{ text: '실판매가', 		datafield: "SELLAMT",		width: 100, cellsalign: 'center'},
-				{ text: '평단가', 			datafield: "SALEDANGA",		width: 100, cellsalign: 'center'},
-				{ text: '위탁수수료', 		datafield: "AGENCYAMT",		width: 100, cellsalign: 'center'},
-				{ text: '계약금', 			datafield: "DEPOSITAMT1",	width: 100, cellsalign: 'center'},
-				{ text: '중도금', 			datafield: "DEPOSITAMT2",	width: 100, cellsalign: 'center'},
-				{ text: '잔금', 			datafield: "DEPOSITAMT3",	width: 100, cellsalign: 'center'},
-				{ text: '계약입금액', 		datafield: "SUGUMAMT1",		width: 100, cellsalign: 'center'},
-				{ text: '중도입금액', 		datafield: "SUGUMAMT2",		width: 100, cellsalign: 'center'},
-				{ text: '잔금입금액', 		datafield: "SUGUMAMT3",		width: 100, cellsalign: 'center'},
-				{ text: '입금총액', 		datafield: "SUGUMAMT",		width: 100, cellsalign: 'center'},
-				{ text: '입금잔액', 		datafield: "REMNAMT",		width: 100, cellsalign: 'center'},
-				{ text: '입금율(%)', 		datafield: "IPGUMRATE",		width: 100, cellsalign: 'center'},
-				{ text: '비고', 			datafield: "REMARK",		width: 100, cellsalign: 'center'}
+				{ text: '부서', 			datafield: "DEPTNAME",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '계약일', 			datafield: "SALEDATE",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '매출구분', 		datafield: "DCODENAME",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '계약번호', 		datafield: "SALEID",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '담당자', 			datafield: "KNAME",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '고객명', 			datafield: "CONNAME",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '주소', 			datafield: "ADDRESS",		width: 250, cellsalign: 'center', align: 'center'},
+				{ text: '계약면적', 		datafield: "CONM2",			width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '계약평수', 		datafield: "CONPY",			width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '원 판매가', 		datafield: "SALEAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '할인율(%)', 		datafield: "DCRATE",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '실판매가', 		datafield: "SELLAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '평단가', 			datafield: "SALEDANGA",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '위탁수수료', 		datafield: "AGENCYAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '계약금', 			datafield: "DEPOSITAMT1",	width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '중도금', 			datafield: "DEPOSITAMT2",	width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '잔금', 			datafield: "DEPOSITAMT3",	width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '계약입금액', 		datafield: "SUGUMAMT1",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '중도입금액', 		datafield: "SUGUMAMT2",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '잔금입금액', 		datafield: "SUGUMAMT3",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '입금총액', 		datafield: "SUGUMAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '입금잔액', 		datafield: "REMNAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '입금율(%)', 		datafield: "IPGUMRATE",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '비고', 			datafield: "REMARK",		width: 250, cellsalign: 'center', align: 'center'}
 				
 			]
         
@@ -236,7 +240,7 @@
 <body>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -247,29 +251,29 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<th>매출기간</th>
+					<th width="120">매출기간</th>
 					<td><input type="text" id="S_SALEDATE_FR" name="S_SALEDATE_FR" /> ~ <input type="text" id="S_SALEDATE_TO" name="S_SALEDATE_TO" /></td>
-					<th>지사</th>
+					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
 						</select>
 					</td>
-					<th>부서</th>
+					<th width="120">부서</th>
 					<td>
 						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th>매출구분</th>
+					<th width="120">매출구분</th>
 					<td>
 						<select id="S_DCODE" name="S_DCODE">
 						</select>
 					</td>
-					<th>담당자명</th>
+					<th width="120">담당자명</th>
 					<td colspan="3"><input type="text" id="S_KNAME" name="S_KNAME" /></td>
 				</tr>
 			</table>

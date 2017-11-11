@@ -24,7 +24,7 @@
         }
         th
         {
-        	height : 25px;
+        	height : 22px;
 			text-align: center;
 			font-weight: bold;
 			border: 1px solid #CCC;

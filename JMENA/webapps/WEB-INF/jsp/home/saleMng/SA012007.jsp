@@ -23,6 +23,8 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#S_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
+		
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
 		
@@ -52,7 +54,7 @@
 	}
 
 	$(function(){
-		$("#CITYCODE").change(function() {
+		$("#S_CITYCODE").change(function() {
 			f_selectListEnaBoroughCode();
 		});
 	});
@@ -134,19 +136,19 @@
             selectionmode: 'singlerow',
             columns: [
                       
-				{ text: '매입구분',			datafield: "DCODENAME",			width: 100, cellsalign: 'center'},
-				{ text: '지역',				datafield: "CITYNAME",			width: 100, cellsalign: 'center'},
-				{ text: '시/도',			datafield: "BOROUGHNAME",		width: 100, cellsalign: 'center'},
-				{ text: '주소/지번',		datafield: "ADDRESS",			width: 100, cellsalign: 'center'},
-				{ text: '면적(m2)',			datafield: "BUYM2",				width: 100, cellsalign: 'center'},
-				{ text: '평수',				datafield: "BUYPY",				width: 100, cellsalign: 'center'},
-				{ text: '계약면적',			datafield: "CONM2",				width: 100, cellsalign: 'center'},
-				{ text: '계약평수',			datafield: "CONPY",				width: 100, cellsalign: 'center'},
-				{ text: '잔여면적',			datafield: "REMNM2",			width: 100, cellsalign: 'center'},
-				{ text: '잔여평수',			datafield: "REMNPY",			width: 100, cellsalign: 'center'},
-				{ text: '평단가',			datafield: "BUYDANGA",			width: 100, cellsalign: 'center'},
-				{ text: '오픈지사현황',		datafield: "OPENBRANCH",		width: 100, cellsalign: 'center'},
-				{ text: '비고',				datafield: "HOLDING",			width: 100, cellsalign: 'center'}
+				{ text: '매입구분',			datafield: "DCODENAME",			width: 80, cellsalign: 'center', align: 'center'},
+				{ text: '지역',				datafield: "CITYNAME",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '시/도',			datafield: "BOROUGHNAME",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '주소/지번',		datafield: "ADDRESS",			width: 200, cellsalign: 'center', align: 'center'},
+				{ text: '면적(m2)',			datafield: "BUYM2",				width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '평수',				datafield: "BUYPY",				width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '계약면적',			datafield: "CONM2",				width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '계약평수',			datafield: "CONPY",				width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '잔여면적',			datafield: "REMNM2",			width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '잔여평수',			datafield: "REMNPY",			width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '평단가',			datafield: "BUYDANGA",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '오픈지사현황',		datafield: "OPENBRANCH",		width: 200, cellsalign: 'center', align: 'center'},
+				{ text: '비고',				datafield: "HOLDING",			width: 250, cellsalign: 'center', align: 'center'}
 				
 			]            
         });
@@ -172,7 +174,7 @@
 </script>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -183,20 +185,20 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<th>지역구분</th>
+					<th width="120">지역구분</th>
 					<td>
-						<select id="S_CITYCODE" name="S_CITYCODE">
+						<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">
 						</select>
 					</td>
-					<th>시/도 구분</th>
+					<th width="120">시/도 구분</th>
 					<td>
-						<select id="S_BOROUGHCODE" name="S_BOROUGHCODE">
+						<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:130px">
 						</select>
 					</td>
-					<th>주소 및 지번</th>
+					<th width="120">주소 및 지번</th>
 					<td><input type="text" id="S_ADDRESS" name="S_ADDRESS" /></td>
 				</tr>
 			</table>

@@ -372,7 +372,7 @@
 				<table width="600">
 					<tr>
 						<th width="120">시스템코드</th>
-						<td width="110"><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" /></td>
+						<td width="100"><input type="text" id="S_SYSID" name="S_SYSID" onkeydown="f_s_sysMstSelection();" /></td>
 						<td><input type="button" id='sysSearchButton' /></td>
 					</tr>
 					<tr>

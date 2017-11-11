@@ -21,6 +21,9 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
@@ -132,22 +135,22 @@
             editable: false,
             selectionmode: 'singlerow',
             columns: [
-				{ text: '지사', 		datafield: 'BRANCHNAME',	width: 100, cellsalign: 'center'},
-				{ text: '부서', 		datafield: 'DEPTNAME',		width: 100, cellsalign: 'center'},
-				{ text: '직위', 		datafield: 'GRADENAME',		width: 100, cellsalign: 'center'},
-				{ text: '직급', 		datafield: 'DUTYNAME',		width: 100, cellsalign: 'center'},
-				{ text: '사번', 		datafield: 'INSACODE',		width: 100, cellsalign: 'center'},
-				{ text: '성명', 		datafield: 'KNAME',			width: 100, cellsalign: 'center'},
-				{ text: '기본급', 		datafield: 'BASICAMT',		width: 100, cellsalign: 'center'},
-				{ text: '활동비', 		datafield: 'ACTAMT',		width: 100, cellsalign: 'center'},
-				{ text: '일비', 		datafield: 'DAILYAMT',		width: 100, cellsalign: 'center'},
-				{ text: '시상금', 		datafield: 'PRIZEAMT',		width: 100, cellsalign: 'center'},
-				{ text: '수당금액', 	datafield: 'PAYAMT',		width: 100, cellsalign: 'center'},
-				{ text: '총지급액', 	datafield: 'TOTAMT',		width: 100, cellsalign: 'center'},
-				{ text: '소득세', 		datafield: 'TAXINCOME',		width: 100, cellsalign: 'center'},
-				{ text: '지방세', 		datafield: 'TAXLOCAL',		width: 100, cellsalign: 'center'},
-				{ text: '부가가치세',	datafield: 'SUPPLYTAX',		width: 100, cellsalign: 'center'},
-				{ text: '차감지급액',	datafield: 'DEDUCTAMT',		width: 100, cellsalign: 'center'}
+				{ text: '지사', 		datafield: 'BRANCHNAME',	width: 100, cellsalign: 'center', align: 'center' },
+				{ text: '부서', 		datafield: 'DEPTNAME',		width: 100, cellsalign: 'center', align: 'center' },
+				{ text: '직위', 		datafield: 'GRADENAME',		width: 100, cellsalign: 'center', align: 'center' },
+				{ text: '직급', 		datafield: 'DUTYNAME',		width: 100, cellsalign: 'center', align: 'center' },
+				{ text: '사번', 		datafield: 'INSACODE',		width: 100, cellsalign: 'center', align: 'center' },
+				{ text: '성명', 		datafield: 'KNAME',			width: 120, cellsalign: 'center', align: 'center' },
+				{ text: '기본급', 		datafield: 'BASICAMT',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '활동비', 		datafield: 'ACTAMT',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '일비', 		datafield: 'DAILYAMT',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '시상금', 		datafield: 'PRIZEAMT',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '수당금액', 	datafield: 'PAYAMT',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '총지급액', 	datafield: 'TOTAMT',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '소득세', 		datafield: 'TAXINCOME',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '지방세', 		datafield: 'TAXLOCAL',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '부가가치세',	datafield: 'SUPPLYTAX',		width: 150, cellsalign: 'center', align: 'center' },
+				{ text: '차감지급액',	datafield: 'DEDUCTAMT',		width: 150, cellsalign: 'center', align: 'center' }
             ]
         });
 	}
@@ -177,7 +180,7 @@
 <body>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -188,22 +191,22 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<th>지급년월</th>
+					<th width="120">지급년월</th>
 					<td><input type="text" id="S_PAYDATE" name="S_PAYDATE" /></td>
-					<th>지사</th>
+					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
 						</select>
 					</td>
-					<th>부서</th>
+					<th width="120">부서</th>
 					<td>
 						<select id="S_DEPTCODE" name="S_DEPTCODE">
 						</select>
 					</td>
-					<th>담당자명</th>
+					<th width="120">담당자명</th>
 					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
 				</tr>
 			</table>

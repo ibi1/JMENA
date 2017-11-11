@@ -413,7 +413,7 @@
 				</tr>
 				<tr>
 					<th>프로그램ID</th>
-					<td width="120"><input type="text" id="S_PGMID_R" name="S_PGMID_R" onkeydown="f_s_pgmIdSelection();" /></td>
+					<td width="100"><input type="text" id="S_PGMID_R" name="S_PGMID_R" onkeydown="f_s_pgmIdSelection();" /></td>
 					<td><input type="button" id='sysSearchButton' /></td>
 					
 				</tr>

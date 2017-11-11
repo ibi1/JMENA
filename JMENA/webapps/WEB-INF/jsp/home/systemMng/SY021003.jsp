@@ -361,7 +361,7 @@
  				<table>
 					<tr>
 						<th width="120">시/도 코드</th>
-						<td width="110"><input type="text" id="RS_CITYCODE" name="RS_CITYCODE" onkeydown="f_searchCityCode();"/></td>
+						<td width="100"><input type="text" id="RS_CITYCODE" name="RS_CITYCODE" onkeydown="f_searchCityCode();"/></td>
 						<td><input type="button" id='searchButton' /></td>
 					</tr>
 					<tr>

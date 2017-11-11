@@ -22,6 +22,9 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#S_JOINDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 
@@ -142,28 +145,28 @@
             selectionmode: 'singlerow',
             columns: [
 				{ text: '지사코드', 	datafield: 'BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
-				{ text: '지사', 		datafield: 'BRANCHNAME',		width: 100, cellsalign: 'center'},
+				{ text: '지사', 		datafield: 'BRANCHNAME',		width: 100, cellsalign: 'center', align:"center"},
 				{ text: '부서코드', 	datafield: 'DEPTCODE',			width: 100, cellsalign: 'center', hidden:true},
-				{ text: '부서', 		datafield: 'DEPTNAME',			width: 100, cellsalign: 'center'},
-				{ text: '직급', 		datafield: 'DUTY',				width: 100, cellsalign: 'center'},
-				{ text: '사번', 		datafield: 'INSACODE',			width: 100, cellsalign: 'center'},
-				{ text: '성명', 		datafield: 'KNAME',				width: 100, cellsalign: 'center'},
-				{ text: '추천인사번',	datafield: 'RECOID',			width: 100, cellsalign: 'center', hidden:true},
-				{ text: '추천인', 		datafield: 'RECONAME',			width: 100, cellsalign: 'center'},
-				{ text: '입사일', 		datafield: 'JOINDATE',			width: 100, cellsalign: 'center'},
-				{ text: '전근무지', 	columngroup: '전근무현황',		datafield: 'O_BRANCHNAME',		width: 100, cellsalign: 'center'},
-				{ text: '입사', 		columngroup: '전근무현황',		datafield: 'O_JOINDATE',		width: 100, cellsalign: 'center'},
-				{ text: '퇴사', 		columngroup: '전근무현황',		datafield: 'O_RETIREDATE',		width: 100, cellsalign: 'center'},
-				{ text: '고용구분', 	columngroup: '전근무현황',		datafield: 'O_EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
-				{ text: '연락처', 		datafield: 'MOBILENO',			width: 100, cellsalign: 'center'},
-				{ text: '주민번호', 	datafield: 'JUMINID',			width: 100, cellsalign: 'center'},
-				{ text: '생일구분', 	datafield: 'BIRTHDAYGUBUN',		width: 100, cellsalign: 'center'},
-				{ text: '입금자명', 	datafield: 'ACCTOWNER',			width: 100, cellsalign: 'center'},
-				{ text: '은행명', 		datafield: 'BANKNAME',			width: 100, cellsalign: 'center'},
-				{ text: '계좌번호', 	datafield: 'ACCTNO',			width: 100, cellsalign: 'center'},
-				{ text: '성명', 		columngroup: '소득신고',		datafield: 'PAYERNAME',			width: 100, cellsalign: 'center'},
-				{ text: '주민번호', 	columngroup: '소득신고',		datafield: 'PAYERID',			width: 100, cellsalign: 'center'},
-				{ text: '주소', 		datafield: 'ADDRESS',			width: 100, cellsalign: 'center'}
+				{ text: '부서', 		datafield: 'DEPTNAME',			width: 100, cellsalign: 'center', align:"center"},
+				{ text: '직급', 		datafield: 'DUTY',				width: 100, cellsalign: 'center', align:"center"},
+				{ text: '사번', 		datafield: 'INSACODE',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '성명', 		datafield: 'KNAME',				width: 150, cellsalign: 'center', align:"center"},
+				{ text: '추천인사번',	datafield: 'RECOID',			width: 150, cellsalign: 'center', hidden:true},
+				{ text: '추천인', 		datafield: 'RECONAME',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '입사일', 		datafield: 'JOINDATE',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '전근무지', 	columngroup: '전근무현황',		datafield: 'O_BRANCHNAME',		width: 150, cellsalign: 'center', align:"center"},
+				{ text: '입사', 		columngroup: '전근무현황',		datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center', align:"center"},
+				{ text: '퇴사', 		columngroup: '전근무현황',		datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center', align:"center"},
+				{ text: '고용구분', 	columngroup: '전근무현황',		datafield: 'O_EMPLOYGUBUN',		width: 80, cellsalign: 'center', align:"center"},
+				{ text: '연락처', 		datafield: 'MOBILENO',			width: 100, cellsalign: 'center', align:"center"},
+				{ text: '주민번호', 	datafield: 'JUMINID',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '생일구분', 	datafield: 'BIRTHDAYGUBUN',		width: 80, cellsalign: 'center', align:"center"},
+				{ text: '입금자명', 	datafield: 'ACCTOWNER',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '은행명', 		datafield: 'BANKNAME',			width: 100, cellsalign: 'center', align:"center"},
+				{ text: '계좌번호', 	datafield: 'ACCTNO',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '성명', 		columngroup: '소득신고',		datafield: 'PAYERNAME',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '주민번호', 	columngroup: '소득신고',		datafield: 'PAYERID',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '주소', 		datafield: 'ADDRESS',			width: 250, cellsalign: 'center', align:"center"}
 			],
             columngroups: [
          		{ text: '전근무현황', align: 'center', name: '전근무현황' },
@@ -194,7 +197,7 @@
 <body>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -205,22 +208,22 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone" style="width:100%;">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table style="width:100%;">
 				<tr>
 					<td width="40%" align="left">
-						<table class="blueone">
+						<table>
 							<tr>
-								<th>기준일</th>
+								<th width="120">기준일</th>
 								<td colspan="3"><input type="text" id="S_JOINDATE" name="S_JOINDATE" /></td>
 							</tr>
 							<tr>
-								<th>지사</th>
+								<th width="120">지사</th>
 								<td>
 									<select id="S_BRANCHCODE" name="S_BRANCHCODE">
 									</select>
 								</td>
-								<th>부서</th>
+								<th width="120">부서</th>
 								<td>
 									<select id="S_DEPTCODE" name="S_DEPTCODE">
 									</select>

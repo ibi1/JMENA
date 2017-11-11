@@ -346,7 +346,7 @@
 			<table>
 				<tr>
 					<th width="120">사용자</th>
-					<td width="110"><input type="text" id="S_USERID" name="S_USERID" onkeydown="f_onEncterUserId();" />
+					<td width="100"><input type="text" id="S_USERID" name="S_USERID" onkeydown="f_onEncterUserId();" />
 					<td><input type="button" id='sysSearchButton' /></td>
 					</td>
 				</tr>

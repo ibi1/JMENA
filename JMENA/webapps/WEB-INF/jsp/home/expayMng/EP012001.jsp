@@ -21,6 +21,9 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		
 		f_selectListEP012001(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 		f_selectListEP012001_2(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 		
@@ -140,21 +143,21 @@
             editable: false,
             selectionmode: 'singlerow',
             columns: [
-              { text: '지사', datafield: 'BRANCHNAME', width: 100, cellsalign: 'center' },
-              { text: '부서', datafield: 'DEPTNAME', width: 100, cellsalign: 'center' },
-              { text: '지급일', datafield: 'PAYDATE', width: 100, cellsalign: 'center' },
-              { text: '고객', datafield: 'CONNAME', width: 100, cellsalign: 'center' },
-              { text: '물건지', datafield: 'ADDRESS', width: 100, cellsalign: 'center' },
-              { text: '계약면적', datafield: 'CONM2', width: 100, cellsalign: 'center' },
-              { text: '계약평수', datafield: 'CONPY', width: 100, cellsalign: 'center' },
-              { text: '담당자', datafield: 'KNAME', width: 100, cellsalign: 'center' },
-              { text: '소득신고', datafield: 'PAYERNAME', width: 100, cellsalign: 'center' },
-              { text: '주민번호', datafield: 'PAYERID', width: 100, cellsalign: 'center' },
-              { text: '총지금액', datafield: 'PAYAMT', width: 100, cellsalign: 'center' },
-              { text: '소득세', datafield: 'TAXINCOME', width: 100, cellsalign: 'center' },
-              { text: '지방세', datafield: 'TAXLOCAL', width: 100, cellsalign: 'center' },
-              { text: '세금 계', datafield: 'TOTTAX', width: 100, cellsalign: 'center' },
-              { text: '실 지급액', datafield: 'DEDUCTAMT', width: 100, cellsalign: 'center' }
+              { text: '지사', datafield: 'BRANCHNAME', width: 100, cellsalign: 'center', align: 'center' },
+              { text: '부서', datafield: 'DEPTNAME', width: 150, cellsalign: 'center', align: 'center' },
+              { text: '지급일', datafield: 'PAYDATE', width: 160, cellsalign: 'center', align: 'center' },
+              { text: '고객', datafield: 'CONNAME', width: 120, cellsalign: 'center', align: 'center' },
+              { text: '물건지', datafield: 'ADDRESS', width: 200, cellsalign: 'center', align: 'center' },
+              { text: '계약면적', datafield: 'CONM2', width: 100, cellsalign: 'center', align: 'center' },
+              { text: '계약평수', datafield: 'CONPY', width: 100, cellsalign: 'center', align: 'center' },
+              { text: '담당자', datafield: 'KNAME', width: 120, cellsalign: 'center', align: 'center' },
+              { text: '소득신고', datafield: 'PAYERNAME', width: 120, cellsalign: 'center', align: 'center' },
+              { text: '주민번호', datafield: 'PAYERID', width: 120, cellsalign: 'center', align: 'center' },
+              { text: '총지금액', datafield: 'PAYAMT', width: 150, cellsalign: 'center', align: 'center' },
+              { text: '소득세', datafield: 'TAXINCOME', width: 150, cellsalign: 'center', align: 'center' },
+              { text: '지방세', datafield: 'TAXLOCAL', width: 150, cellsalign: 'center', align: 'center' },
+              { text: '세금 계', datafield: 'TOTTAX', width: 150, cellsalign: 'center', align: 'center' },
+              { text: '실 지급액', datafield: 'DEDUCTAMT', width: 150, cellsalign: 'center', align: 'center' }
             ]
         });
 	
@@ -289,7 +292,7 @@
 <body>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -300,26 +303,26 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<th>지급년월</th>
+					<th width="120">지급년월</th>
 					<td><input type="text" id="S_PAYDATE" name="S_PAYDATE" /></td>
-					<th>지사</th>
+					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
 						</select>
 					</td>
-					<th>부서</th>
+					<th width="120">부서</th>
 					<td>
 						<select id="S_DEPTCODE" name="S_DEPTCODE">
 						</select>
 					</td>
-					<th>담당자명</th>
+					<th width="120">담당자명</th>
 					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
 				</tr>
 				<tr>
-					<th>신고구분</th>
+					<th width="120">신고구분</th>
 					<td colspan="7"><input type="radio" id="TAXGUBUN" name="TAXGUBUN" value="001"/> 사업소득세   <input type="radio" id="TAXGUBUN" name="TAXGUBUN" value="002"/> 부가가치세 </td>
 				</tr>
 			</table><br/>

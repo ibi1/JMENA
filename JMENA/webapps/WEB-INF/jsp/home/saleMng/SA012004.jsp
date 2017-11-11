@@ -27,6 +27,11 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#S_IPGUMDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_IPGUMDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_IPGUMPERSON").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#S_IPGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		
 		f_selectListEnaBranchCode();
 		f_selectListEnaSalerCode();
 		f_selectListEnaIpgumGubunCode();
@@ -160,19 +165,19 @@
             selectionmode: 'singlerow',
             columns: [
                       
-				{ text: '입금일자', 		datafield: "IPGUMDATE",		width: 100, cellsalign: 'center'},
-				{ text: '지사', 			datafield: "BRANCHNAME",	width: 100, cellsalign: 'center'},
-				{ text: '담당자', 			datafield: "KNAME",			width: 100, cellsalign: 'center'},
-				{ text: '계약자', 			datafield: "CONNAME",		width: 100, cellsalign: 'center'},
-				{ text: '입금구분', 		datafield: "IPGUMGUBUN",	width: 100, cellsalign: 'center'},
-				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 100, cellsalign: 'center'},
-				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 100, cellsalign: 'center'},
-				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 100, cellsalign: 'center'},
-				{ text: '입금은행', 		datafield: "BANKNAME",		width: 100, cellsalign: 'center'},
-				{ text: '입금형태', 		datafield: "IPGUMTYPE",		width: 100, cellsalign: 'center'},
-				{ text: '소재지', 			datafield: "ADDRESS",		width: 100, cellsalign: 'center'},
-				{ text: '평수', 			datafield: "CONPY",			width: 100, cellsalign: 'center'},
-				{ text: '비고', 			datafield: "REMARK",		width: 100, cellsalign: 'center'}
+				{ text: '입금일자', 		datafield: "IPGUMDATE",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '지사', 			datafield: "BRANCHNAME",	width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '담당자', 			datafield: "KNAME",			width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '계약자', 			datafield: "CONNAME",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '입금구분', 		datafield: "IPGUMGUBUN",	width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '입금은행', 		datafield: "BANKNAME",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '입금형태', 		datafield: "IPGUMTYPE",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '소재지', 			datafield: "ADDRESS",		width: 200, cellsalign: 'center', align: 'center'},
+				{ text: '평수', 			datafield: "CONPY",			width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '비고', 			datafield: "REMARK",		width: 250, cellsalign: 'center', align: 'center'}
 				
 			]
 
@@ -205,7 +210,7 @@
 <body>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -216,33 +221,33 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<th>입금기간</th>
+					<th width="120">입금기간</th>
 					<td><input type="text" id="S_IPGUMDATE_FR" name="S_IPGUMDATE_FR" /> ~ <input type="text" id="S_IPGUMDATE_TO" name="S_IPGUMDATE_TO" /></td>
 				</tr>
 				<tr>
-					<th>지사</th>
+					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
 						</select>
 					</td>
-					<th>담당자</th>
+					<th width="120">담당자</th>
 					<td>
 						<select id="S_SALERCD" name="S_SALERCD">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th>입금구분</th>
+					<th width="120">입금구분</th>
 					<td>
 						<select id="S_IPGUMGUBUN" name="S_IPGUMGUBUN">
 						</select>
 					</td>
-					<th>입금인</th>
+					<th width="120">입금인</th>
 					<td><input type="text" id="S_IPGUMPERSON" name="S_IPGUMPERSON" /></td>
-					<th>입금금액</th>
+					<th width="120">입금금액</th>
 					<td><input type="text" id="S_IPGUMAMT" name="S_IPGUMAMT" /></td>
 				</tr>
 			</table>

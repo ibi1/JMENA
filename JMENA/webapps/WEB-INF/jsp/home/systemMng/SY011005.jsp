@@ -53,8 +53,8 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['공통코드', '공통코드 명'] ,
 				colModel:[
-					{name:"CCODE",			index:'CCODE',			width:60,		align:'center', sortable:false}
-					, {name:"CCODENAME",	index:'CCODENAME',		width:60,		align:'center', sortable:false}
+					{name:"CCODE",			index:'CCODE',			width:70,		align:'center', sortable:false}
+					, {name:"CCODENAME",	index:'CCODENAME',		width:200,		align:'center', sortable:false}
 				] ,
 				rowNum:100,
 				autowidth: true ,
@@ -121,19 +121,19 @@
 							'비고', '관리구분1', '관리구분1명', '관리구분2', 
 							'관리구분2명', '관리구분3', '관리구분3명', '관리구분4', '관리구분4명'] ,
 				colModel:[
-					{name:"DCODE",			index:'DCODE',		width:60,		align:'center', sortable:false, editable: true}
-					, {name:"DCODENAME",	index:'DCODENAME',	width:60,		align:'center', sortable:false, editable: true}
-					, {name:"USEYN",		index:'USEYN',		width:60,		align:'center', sortable:false, editable: true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"SORTKEY",		index:'SORTKEY',	width:60,		align:'center', sortable:false, editable: true}
-					, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', sortable:false, editable: true}
-					, {name:"AUX1",			index:'AUX1',		width:60,		align:'center', sortable:false, editable: true}
-					, {name:"AUX1DESC",		index:'AUX1DESC',	width:60,		align:'center', sortable:false, editable: true}
-					, {name:"AUX2",			index:'AUX2',		width:60,		align:'center', sortable:false, editable: true}
-					, {name:"AUX2DESC",		index:'AUX2DESC',	width:60,		align:'center', sortable:false, editable: true}
-					, {name:"AUX3",			index:'AUX3',		width:60,		align:'center', sortable:false, editable: true}
-					, {name:"AUX3DESC",		index:'AUX3DESC',	width:60,		align:'center', sortable:false, editable: true}
-					, {name:"AUX4",			index:'aux4',		width:60,		align:'center', sortable:false, editable: true}
-					, {name:"AUX4DESC",		index:'AUX4DESC',	width:60,		align:'center', sortable:false, editable: true}
+					{name:"DCODE",			index:'DCODE',		width:70,		align:'center', sortable:false, editable: true}
+					, {name:"DCODENAME",	index:'DCODENAME',	width:200,		align:'center', sortable:false, editable: true}
+					, {name:"USEYN",		index:'USEYN',		width:70,		align:'center', sortable:false, editable: true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"SORTKEY",		index:'SORTKEY',	width:70,		align:'center', sortable:false, editable: true}
+					, {name:"REMARK",		index:'REMARK',		width:250,		align:'center', sortable:false, editable: true}
+					, {name:"AUX1",			index:'AUX1',		width:100,		align:'center', sortable:false, editable: true}
+					, {name:"AUX1DESC",		index:'AUX1DESC',	width:100,		align:'center', sortable:false, editable: true}
+					, {name:"AUX2",			index:'AUX2',		width:100,		align:'center', sortable:false, editable: true}
+					, {name:"AUX2DESC",		index:'AUX2DESC',	width:100,		align:'center', sortable:false, editable: true}
+					, {name:"AUX3",			index:'AUX3',		width:100,		align:'center', sortable:false, editable: true}
+					, {name:"AUX3DESC",		index:'AUX3DESC',	width:100,		align:'center', sortable:false, editable: true}
+					, {name:"AUX4",			index:'aux4',		width:100,		align:'center', sortable:false, editable: true}
+					, {name:"AUX4DESC",		index:'AUX4DESC',	width:100,		align:'center', sortable:false, editable: true}
 				] ,
 				rowNum:100,
 				autowidth: true ,

@@ -12,10 +12,13 @@
 			var S_CITYCODE = "";
 			var S_BOROUGHCODE = "";
 			var S_ADDRESS = "";
-	
+			
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 			$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 			$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			
+			$("#S_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+			
 			
 			f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 			f_selectListEnaCityCode();
@@ -133,28 +136,28 @@
 	            editable: false,
 	            selectionmode: 'singlerow',
 	            columns: [
-	              { text: '지역코드', datafield: 'CITYCODE', width: 100, cellsalign: 'center', hidden: true },
-	              { text: '지역', datafield: 'CITYNAME', width: 100, cellsalign: 'center' },
-	              { text: '시/도코드', datafield: 'BOROUGHCODE', width: 100, cellsalign: 'center' },
-	              { text: '시/도', datafield: 'BOROUGHNAME', width: 100, cellsalign: 'center', hidden: true },
-	              { text: '주소/지번', datafield: 'ADDRESS', width: 100, cellsalign: 'center' },
-	              { text: '원지주', datafield: 'OWNERNAME', width: 100, cellsalign: 'center' },
-	              { text: '면적(m2)', datafield: 'BUYM2', width: 100, cellsalign: 'center' },
-	              { text: '평수', datafield: 'BUYPY', width: 100, cellsalign: 'center' },
-	              { text: '분양평수', datafield: 'BUNBUYPY', width: 100, cellsalign: 'center' },
-	              { text: '잔여평수', datafield: 'JANBUYPY', width: 100, cellsalign: 'center' },
-	              { text: '매매대금', datafield: 'BUYAMT', width: 100, cellsalign: 'center' },
-	              { text: '계약금', datafield: 'PAYAMT1', width: 100, cellsalign: 'center' },
-	              { text: '계약일', datafield: 'PAYDATE1', width: 100, cellsalign: 'center' },
-	              { text: '중도금1', datafield: 'PAYAMT2', width: 100, cellsalign: 'center' },
-	              { text: '중도일1', datafield: 'PAYDATE2', width: 100, cellsalign: 'center' },
-	              { text: '중도금2', datafield: 'PAYAMT3', width: 100, cellsalign: 'center' },
-	              { text: '중도일2', datafield: 'PAYDATE3', width: 100, cellsalign: 'center' },
-	              { text: '잔금액', datafield: 'PAYAMT4', width: 100, cellsalign: 'center' },
-	              { text: '잔금일', datafield: 'PAYDATE4', width: 100, cellsalign: 'center' },
-	              { text: '잔금누계', datafield: 'JANPAYAMT', width: 100, cellsalign: 'center' },
-	              { text: '오픈여부', datafield: 'OPENYN', width: 100, cellsalign: 'center' },
-	              { text: '비고', datafield: 'REMARK', width: 100, cellsalign: 'center' }
+	              { text: '지역코드', datafield: 'CITYCODE', width: 100, cellsalign: 'center', hidden: true, align: 'center' },
+	              { text: '지역', datafield: 'CITYNAME', width: 130, cellsalign: 'center', align: 'center' },
+	              { text: '시/도코드', datafield: 'BOROUGHCODE', width: 100, cellsalign: 'center', hidden: true, align: 'center' },
+	              { text: '시/도', datafield: 'BOROUGHNAME', width: 130, cellsalign: 'center', align: 'center' },
+	              { text: '주소/지번', datafield: 'ADDRESS', width: 200, cellsalign: 'center', align: 'center' },
+	              { text: '원지주', datafield: 'OWNERNAME', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '면적(m2)', datafield: 'BUYM2', width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '평수', datafield: 'BUYPY', width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '분양평수', datafield: 'BUNBUYPY', width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '잔여평수', datafield: 'JANBUYPY', width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '매매대금', datafield: 'BUYAMT', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '계약금', datafield: 'PAYAMT1', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '계약일', datafield: 'PAYDATE1', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '중도금1', datafield: 'PAYAMT2', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '중도일1', datafield: 'PAYDATE2', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '중도금2', datafield: 'PAYAMT3', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '중도일2', datafield: 'PAYDATE3', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '잔금액', datafield: 'PAYAMT4', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '잔금일', datafield: 'PAYDATE4', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '잔금누계', datafield: 'JANPAYAMT', width: 150, cellsalign: 'center', align: 'center' },
+	              { text: '오픈여부', datafield: 'OPENYN', width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '비고', datafield: 'REMARK', width: 250, cellsalign: 'center', align: 'center' }
 	            ]
 	        });
 		}
@@ -178,7 +181,7 @@
 <body class='default'>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -189,21 +192,21 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<form name="searchForm" method="POST" action="" class="" >
-				<table class="blueone">
+				<table>
 					<tr>
-						<th>지역구분</th>
+						<th width="120">지역구분</th>
 						<td>
-							<select id="S_CITYCODE" name="S_CITYCODE" style="width:120px">
+							<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">
 							</select>
 						</td>
-						<th>시/도</th>
+						<th width="120">시/도</th>
 						<td>
-							<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:120px">
+							<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:130px">
 							</select>
 						</td>
-						<th>주소 및 지번</th>
+						<th width="120">주소 및 지번</th>
 						<td><input type="text" id="S_ADDRESS" name="S_ADDRESS" /></td>
 					</tr>
 				</table>

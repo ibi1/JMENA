@@ -19,6 +19,9 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
 		
+		$("#S_SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		
 		f_selectListEnaBranchCode();
 		
 		f_selectListSA012001(S_SALEDATE, S_BRANCHCODE, S_KNAME);
@@ -103,26 +106,26 @@
             selectionmode: 'singlerow',
             columns: [
                       
-				{ text: '지사코드', 		datafield: 'BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
-				{ text: '지사', 			datafield: 'BRANCHNAME',		width: 100, cellsalign: 'center'},
-				{ text: '부서코드', 		datafield: 'DEPTCODE',			width: 100, cellsalign: 'center', hidden:true},
-				{ text: '부서', 			datafield: 'DEPTNAME',			width: 100, cellsalign: 'center'},
-				{ text: '직급', 			datafield: 'GRADE',				width: 100, cellsalign: 'center'},
-				{ text: '성명', 			datafield: 'KNAME',				width: 100, cellsalign: 'center'},
-				{ text: '입사일', 			datafield: 'JOINDATE',			width: 100, cellsalign: 'center'},
-				{ text: '퇴사일', 			datafield: 'RETIREDATE',		width: 100, cellsalign: 'center'},
-				{ text: '전근무지코드', 	columngroup: '전근무현황',		datafield: 'O_BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
-				{ text: '전근무지', 		columngroup: '전근무현황',		datafield: 'O_BRANCHNAME',		width: 100, cellsalign: 'center'},
-				{ text: '입사', 			columngroup: '전근무현황',		datafield: 'O_JOINDATE',		width: 100, cellsalign: 'center'},
-				{ text: '퇴사', 			columngroup: '전근무현황',		datafield: 'O_RETIREDATE',		width: 100, cellsalign: 'center'},
-				{ text: '고용구분', 		columngroup: '전근무현황',		datafield: 'O_EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
-				{ text: 'M-6', 				datafield: 'AMT6',				width: 100, cellsalign: 'center'},
-				{ text: 'M-5', 				datafield: 'AMT5',				width: 100, cellsalign: 'center'},
-				{ text: 'M-4', 				datafield: 'AMT4',				width: 100, cellsalign: 'center'},
-				{ text: 'M-3', 				datafield: 'AMT3',				width: 100, cellsalign: 'center'},
-				{ text: 'M-2', 				datafield: 'AMT2',				width: 100, cellsalign: 'center'},
-				{ text: 'M-1', 				datafield: 'AMT1',				width: 100, cellsalign: 'center'},
-				{ text: '합계', 			datafield: 'TOTAMT',			width: 100, cellsalign: 'center'}				
+				{ text: '지사코드', 		datafield: 'BRANCHCODE',	align: 'center',	width: 100, cellsalign: 'center', hidden:true},
+				{ text: '지사', 			datafield: 'BRANCHNAME',	align: 'center',	width: 100, cellsalign: 'center'},
+				{ text: '부서코드', 		datafield: 'DEPTCODE',		align: 'center',	width: 100, cellsalign: 'center', hidden:true},
+				{ text: '부서', 			datafield: 'DEPTNAME',		align: 'center',	width: 100, cellsalign: 'center'},
+				{ text: '직급', 			datafield: 'GRADE',			align: 'center',	width: 100, cellsalign: 'center'},
+				{ text: '성명', 			datafield: 'KNAME',			align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: '입사일', 			datafield: 'JOINDATE',		align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: '퇴사일', 			datafield: 'RETIREDATE',	align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: '전근무지코드', 	columngroup: '전근무현황',	align: 'center',	datafield: 'O_BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
+				{ text: '전근무지', 		columngroup: '전근무현황',	align: 'center',	datafield: 'O_BRANCHNAME',		width: 150, cellsalign: 'center'},
+				{ text: '입사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center'},
+				{ text: '퇴사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center'},
+				{ text: '고용구분', 		columngroup: '전근무현황',	align: 'center',	datafield: 'O_EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
+				{ text: 'M-6', 				datafield: 'AMT6',			align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: 'M-5', 				datafield: 'AMT5',			align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: 'M-4', 				datafield: 'AMT4',			align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: 'M-3', 				datafield: 'AMT3',			align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: 'M-2', 				datafield: 'AMT2',			align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: 'M-1', 				datafield: 'AMT1',			align: 'center',	width: 150, cellsalign: 'center'},
+				{ text: '합계', 			datafield: 'TOTAMT',		align: 'center',	width: 150, cellsalign: 'center'}				
 				
 			],
             columngroups: [
@@ -153,7 +156,7 @@
 <body>
 
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<td align="right">
@@ -164,19 +167,19 @@
 				</tr>
 			</table>
 		</div>
-		<div id="mainDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<th>기준월</th>
+					<th width="120">기준월</th>
 					<td colspan="3"><input type="text" id="S_SALEDATE" name="S_SALEDATE" /></td>
 				</tr>
 				<tr>
-					<th>지사</th>
+					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
 						</select>
 					</td>
-					<th>담당자명</th>
+					<th width="120">담당자명</th>
 					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
 				</tr>
 			</table>
