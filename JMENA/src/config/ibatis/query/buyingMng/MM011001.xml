@@ -81,9 +81,6 @@
 				AND T1.BUYDATE BETWEEN #LS_BUYDATE_FR# AND #LS_BUYDATE_TO#   
 			</isNotEmpty>	
 		</isNotEmpty>
-		<isNotEmpty property="LS_INSERTUSER">
-			AND T1.INSERTUSER LIKE '%$SLS_INSERTUSER$%'   
-		</isNotEmpty>
 		<isNotEmpty property="LS_ADDRESS">
 			AND T1.ADDRESS LIKE '%$LS_ADDRESS$%'   
 		</isNotEmpty>
@@ -162,7 +159,7 @@
 		SELECT 
 			T1.BUYID,
 			T1.BUYSEQ,
-			T1.PAYGUBUN,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '005' AND DCODE = T1.PAYGUBUN) AS PAYGUBUN,
 			T1.PAYDATE,
 			T1.PAYAMT,
 			T1.PAYYN,
