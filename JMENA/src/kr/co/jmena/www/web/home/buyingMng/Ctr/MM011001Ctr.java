@@ -1,6 +1,7 @@
 package kr.co.jmena.www.web.home.buyingMng.Ctr;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -447,5 +448,26 @@ public class MM011001Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
+	@RequestMapping("/home/selectSumSaleMst.do")
+	public ModelAndView selectSumSaleMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYID(request.getParameter("BUYID"));
+		
+		List<MM011001VO> lst = MM011001Biz.selectSumSaleMst(vo);
+		
+		JSONObject json = new JSONObject();
+		
+		JSONObject obj = new JSONObject();
+		
+		obj.put("CONM2", lst.get(0).getCONM2());
+		obj.put("CONPY", lst.get(0).getCONPY());
+		
+		json.put("rows", obj);
+		
+		logger.debug("[selectSumSaleMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
 	
 }

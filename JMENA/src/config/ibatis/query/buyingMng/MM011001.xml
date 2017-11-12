@@ -49,6 +49,11 @@
 		<result property="HOLDINGDATE"		column="HOLDINGDATE"/>
 		<result property="REMARK"			column="REMARK"/>
 	</resultMap>
+	
+	<resultMap id="sumSaleMst" class="MM011001VO">
+		<result property="CONM2"	column="CONM2"/>
+		<result property="CONPY"	column="CONPY"/>
+	</resultMap>
 
 	<select id="selectListEnaBuyMst" resultMap="BuyMstData">
 		SELECT 
@@ -322,4 +327,11 @@
 		DELETE FROM mm_buymst
 		WHERE BUYID = #BUYID#
 	</delete>
+	
+	<select id="selectSumSaleMst" resultMap="sumSaleMst">
+		SELECT 
+			IFNULL(CAST(SUM(ROUND(CONM2, 2)) AS CHAR), 0) AS CONM2, IFNULL(CAST(SUM(ROUND(CONPY, 2)) AS CHAR), 0) AS CONPY 
+		FROM sa_salemst 
+		WHERE BUYID = #BUYID#
+	</select>
 </sqlMap>

@@ -1,6 +1,7 @@
 package kr.co.jmena.www.web.home.buyingMng.Biz;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -197,4 +198,15 @@ public class MM011001Biz {
 		return chkFlag;
 	}
 	
+	public List<MM011001VO> selectSumSaleMst(MM011001VO vo) throws Exception {
+		List<MM011001VO> lst = null;
+
+		try {
+			lst = MM011001Dao.selectSumSaleMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
 }

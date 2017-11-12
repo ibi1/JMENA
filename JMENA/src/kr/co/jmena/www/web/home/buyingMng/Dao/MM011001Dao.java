@@ -1,6 +1,7 @@
 package kr.co.jmena.www.web.home.buyingMng.Dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011002VO;
@@ -167,6 +168,11 @@ public class MM011001Dao extends SqlMapClientDaoSupport {
 		return chkFlag;
 	}
 	
-	
-	
+	public List<MM011001VO> selectSumSaleMst(MM011001VO vo) throws DataAccessException {
+		List<MM011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectSumSaleMst", vo);
+		
+		return lst;
+	}
 }

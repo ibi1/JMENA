@@ -42,6 +42,9 @@ public class MM011001VO {
 	private String BOROUGHNAME;
 	private String BUNJANM2;
 	private String BUNJANPY;
+	
+	private String CONM2;
+	private String CONPY;
 
 	public String getBUYID() {
 		return this.BUYID;
@@ -342,6 +345,22 @@ public class MM011001VO {
 
 	public void setUSERID(String USERID) {
 		this.USERID = USERID;
+	}
+
+	public String getCONM2() {
+		return CONM2;
+	}
+
+	public String getCONPY() {
+		return CONPY;
+	}
+
+	public void setCONM2(String CONM2) {
+		this.CONM2 = CONM2;
+	}
+
+	public void setCONPY(String CONPY) {
+		this.CONPY = CONPY;
 	}
 	
 }

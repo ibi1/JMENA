@@ -62,10 +62,10 @@
 		
 			$("#BUYM2").jqxInput({theme: 'energyblue', height: 23, width: 50});
 			$("#BUYPY").jqxInput({theme: 'energyblue', height: 23, width: 50});
-			$("#BUNYM2").jqxInput({theme: 'energyblue', height: 23, width: 50});
-			$("#BUNJANM2").jqxInput({theme: 'energyblue', height: 23, width: 50});
-			$("#BUNYPY").jqxInput({theme: 'energyblue', height: 23, width: 50});
-			$("#BUNJANPY").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUNYM2").jqxInput({theme: 'energyblue', height: 23, width: 50, disabled: true});
+			$("#BUNJANM2").jqxInput({theme: 'energyblue', height: 23, width: 50, disabled: true});
+			$("#BUNYPY").jqxInput({theme: 'energyblue', height: 23, width: 50, disabled: true});
+			$("#BUNJANPY").jqxInput({theme: 'energyblue', height: 23, width: 50, disabled: true});
 			$("#BUYAMT").jqxInput({theme: 'energyblue', height: 23, width: 50});
 			$("#BUYDANGA").jqxInput({theme: 'energyblue', height: 23, width: 50});
 			
@@ -440,6 +440,46 @@
 
 				        v_rightLastSel_2 = id;
 					}
+				},
+				loadComplete: function() {
+					var hm2_tot = 0;	//홀딩 분양면적
+					var hpy_tot = 0;	//홀딩 분양평수
+					var sale_m2_tot = 0;	//매출 분양면적
+					var sale_py_tot = 0;	//매출 분양평수
+					
+					var ids = $(this).jqGrid('getDataIDs');
+					
+					ids.some(function(currentValue, index, array){
+						var holdingYn = $("#rightList2").jqGrid('getCell', ids[index], 'HOLDINGYN');
+						
+						if (holdingYn == "Y") {
+							hm2_tot += eval($("#rightList2").jqGrid('getCell', ids[index], 'HOLDINGM2'));
+							hpy_tot += eval($("#rightList2").jqGrid('getCell', ids[index], 'HOLDINGPY'));
+			        	}        
+					});
+					
+					//매출 데이터 가져오기
+					$.ajax({ 
+						type: 'POST' ,
+						url: "/home/selectSumSaleMst.do", 
+						dataType : 'json' ,
+						data : {
+							BUYID : $("#BUYID").val(),
+						},
+						success: function(data){
+							sale_m2_tot = data.rows.CONM2;
+							sale_py_tot = data.rows.CONPY;
+
+							$("#BUNYM2").val(parseFloat(sale_m2_tot) + parseFloat(hm2_tot));
+							$("#BUNYPY").val(parseFloat(sale_py_tot) + parseFloat(hpy_tot));
+							
+							$("#BUNJANM2").val(eval($("#BUYM2").val() - $("#BUNYM2").val()));
+							$("#BUNJANPY").val(eval($("#BUYPY").val() - $("#BUNYPY").val()));
+						},
+						error:function(e){  
+							alert("[ERROR]매출 합계 데이터 호출 중 오류가 발생하였습니다.");
+						}  
+					});
 				},
 				hidegrid: false
 			});
