@@ -122,6 +122,9 @@
 		<isNotEmpty property="S_JUMINID">
 			AND T1.JUMINID LIKE CONCAT('%', #S_JUMINID#, '%') 
 		</isNotEmpty>
+		<isNotEmpty property="S_INSACODE">
+			AND T1.INSACODE = #S_INSACODE#
+		</isNotEmpty>
 		ORDER BY T1.INSACODE ASC
 	</select>
 

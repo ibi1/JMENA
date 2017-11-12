@@ -110,14 +110,19 @@
 				$("#PAYAMT").val(selRowData.PAYAMT);
 				$("#DEDUCTAMT").val(selRowData.DEDUCTAMT);
 				$("#REMARK").val(selRowData.REMARK);
+				searchbottomList();
 			} ,
 			hidegrid: false
 		});
-
-		
+	
+	});
+	
+	
+	
+	function searchbottomList(){
 		$('#bottomList').jqGrid({
 			//caption: '수당지급관리'
-			url:"/home/selectListSysMst.do" ,
+			url:"/home/selectEnaSudangMstList.do" ,
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고'] ,
@@ -154,7 +159,8 @@
 			} ,
 			hidegrid: false
 		});
-	});
+	}
+	
 	
 	
 	function f_selectListEnaCityCode(){
@@ -251,6 +257,17 @@
 			}  
 		});
 	}	
+	
+	$(function(){
+		$("#popupButton").click(function(){
+			var popUrl = "/home/EP011001_1.do";	//팝업창에 출력될 페이지 UR
+			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			window.open(popUrl,"인사정보 관리",popOption);
+		}); 
+	});
+	
+	
+	
 		
 </script>
 <body>
@@ -303,7 +320,7 @@
 				<tr>
 					<td>계약일자/번호</td>
 					<td colspan="3"><input type="text" id="SALEDATE" name="SALEDATE" />
-					<input type="text" id="SALEID" name="SALEID" /><input type="button" id='saleButton'/></td>
+					<input type="text" id="SALEID" name="SALEID" /><input type="button" id='popupButton'/></td>
 				</tr>
 				<tr>
 					<td>매출구분</td>

@@ -43,6 +43,20 @@ public class EP011001Ctr {
 	
 	
 	
+	/**
+	 * @name 수당관리 팝업 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/EP011001_1.do")
+	public ModelAndView EP011001_1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		return new ModelAndView("home/expayMng/EP011001_1");
+	}
+		
+	
 	
 	/**
 	 * @name 수당관리 화면 - 수당관리 그리드

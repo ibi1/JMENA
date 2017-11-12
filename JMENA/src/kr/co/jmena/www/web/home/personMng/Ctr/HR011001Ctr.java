@@ -75,11 +75,13 @@ public class HR011001Ctr {
 //		String s_deptcode = request.getParameter("S_DEPTCODE") != null ? request.getParameter("S_DEPTCODE") : ""; 
 		String s_kname = request.getParameter("S_KNAME") != null ? request.getParameter("S_KNAME") : ""; 
 		String s_juminid = request.getParameter("S_JUMINID") != null ? request.getParameter("S_JUMINID") : ""; 
+		String s_insacode = request.getParameter("S_INSACODE") != null ? request.getParameter("S_INSACODE") : ""; 
 		
 //		vo.setS_BRANCHCODE(s_branchcode);
 //		vo.setS_DEPTCODE(s_deptcode);
 		vo.setS_KNAME(s_kname);
 		vo.setS_JUMINID(s_juminid);
+		vo.setS_INSACODE(s_insacode);
 		
 		List<HR011001VO> lst = HR011001Biz.selectListEnaInsaMst(vo);
 		

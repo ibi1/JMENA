@@ -257,12 +257,9 @@
 		}); 		
 		
 		$("#insaButton").click(function(){
-			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 URL
-			var param = "";
+			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
 			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-			window.open(popUrl+param,"인사정보 관리",popOption);
-			
-
+			window.open(popUrl,"인사정보 관리",popOption);
 		}); 	
 	
 		$("#S_BRANCHCODE").change(function() {
@@ -468,7 +465,7 @@
  			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 			
  			if (ids == null || ids == "") {
- 				alert("선택된 지사가 없습니다.");
+ 				alert("선택된 사원이 없습니다.");
 				
  				return false;
  			}
@@ -629,7 +626,7 @@
 				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 			
 				if (ids == null || ids == "") {
-					alert("선택된 지사가 없습니다.");
+					alert("선택된 사원이 없습니다.");
 				
 					return false;
 				}

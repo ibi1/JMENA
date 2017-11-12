@@ -45,6 +45,7 @@ public class HR011001VO {
 	private String S_DEPTCODE;
 	private String S_KNAME;
 	private String S_JUMINID;
+	private String S_INSACODE;
 	
 	private String USERID;
 		
@@ -285,6 +286,12 @@ public class HR011001VO {
 	}
 	public void setBASICACCT(String bASICACCT) {
 		this.BASICACCT = bASICACCT;
+	}
+	public String getS_INSACODE() {
+		return S_INSACODE;
+	}
+	public void setS_INSACODE(String s_INSACODE) {
+		this.S_INSACODE = s_INSACODE;
 	}
 	public String getUSERID() {
 		return USERID;
