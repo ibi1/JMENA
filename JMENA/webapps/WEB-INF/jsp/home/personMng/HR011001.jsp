@@ -257,7 +257,12 @@
 		}); 		
 		
 		$("#insaButton").click(function(){
+			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 URL
+			var param = "";
+			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			window.open(popUrl+param,"인사정보 관리",popOption);
 			
+
 		}); 	
 	
 		$("#S_BRANCHCODE").change(function() {
@@ -397,7 +402,7 @@
 		
 	
 	$(function() {
-		$("#addButton").click(function() {
+		$("#insertButton").click(function() {
 			$("#INSACODE").val("");
 			$("#KNAME").val("");
 			$("#JUMINID1").val("");
@@ -779,7 +784,7 @@
 			<table>
 				<tr>
 					<td><a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">조회 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="addButton"    name="addButton">추가 </a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가 </a></td>
 					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton"   name="saveButton">저장 </a></td>
 				</tr>
 			</table>

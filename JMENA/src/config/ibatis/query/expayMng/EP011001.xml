@@ -35,6 +35,7 @@
 	<resultMap id="EP011001Datas" class="EP011001VO">
 		<result property="PAYDATE"					column="PAYDATE"/>
 		<result property="SALERCD"					column="SALERCD"/>
+		<result property="SALERNM"					column="SALERNM"/>
 		<result property="SELLAMT"					column="SELLAMT"/>
 		<result property="PAYAMT"					column="PAYAMT"/>
 		<result property="TAXAMT"					column="TAXAMT"/>
@@ -56,6 +57,12 @@
 		<result property="DCRATE"					column="DCRATE"/>
 		<result property="DCAMT"					column="DCAMT"/>
 		<result property="SELLAMT"					column="SELLAMT"/>
+		<result property="SUDANGRATE"				column="SUDANGRATE"/>
+		<result property="ADDRATE"					column="ADDRATE"/>
+		<result property="TAXGUBUN"					column="TAXGUBUN"/>
+		<result property="TAXINCOME"				column="TAXINCOME"/>
+		<result property="TAXLOCAL"					column="TAXLOCAL"/>
+		<result property="SUPPLYTAX"				column="SUPPLYTAX"/>
 		<result property="REMARK"					column="REMARK"/>
 		
 	</resultMap>
@@ -87,12 +94,16 @@
 	ORDER BY T1.SALEID ASC, T1.PAYSEQ -->
 	
 	  SELECT PAYDATE,
-	  		 (SELECT SALERCD FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALERCD,
+	  		 '00000001' AS SALERCD, 
+	  		 '홍길동' AS SALERNM,
 	  		 (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
+<!--  	  		 (SELECT SALERCD FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALERCD, 
+	  		 (SELECT KNAME FROM sa_salemst s, hr_insamst i WHERE s.SALEID = T1.SALEID AND s.SALERCD = i.INSACODE) AS SALERNM, -->
 	  		 T1.PAYAMT,
 	  		 '1' AS TAXAMT,
 	  		 T1.DEDUCTAMT,
-	  		 (SELECT SALEDATE FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEDATE,
+	  		 <!-- (SELECT SALEDATE FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEDATE, -->
+	  		 '2017-11-11' AS SALEDATE,
 	         T1.SALEID,
 	         (SELECT SALEGUBUN FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEGUBUN,         
 			 BRANCHCODE,
@@ -108,12 +119,20 @@
 	         (SELECT DCRATE FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCRATE,
 	         (SELECT DCAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCAMT,
 	         (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
+	         T1.SUDANGRATE,
+	         T1.ADDRATE,
+	         T1.TAXGUBUN,
+	         T1.TAXINCOME,
+	         T1.TAXLOCAL,
+	         T1.SUPPLYTAX,
 	         T1.REMARK
 	    FROM sa_sudangmst T1, sa_sudangpayertb T2
 	   WHERE 1 = 1
 	     AND T1.SALEID = T2.SALEID
 	ORDER BY T1.SALEID ASC, T1.PAYSEQ
-		</select>
+		</select>		
+		
+		
 	
 	<update id="updateEnaSudangMst">
 		UPDATE SA_SUDANGMST

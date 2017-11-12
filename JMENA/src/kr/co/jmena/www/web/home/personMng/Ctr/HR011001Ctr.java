@@ -43,6 +43,21 @@ public class HR011001Ctr {
 		return new ModelAndView("home/personMng/HR011001");
 	}
 	
+	
+	/**
+	 * @name 사원검색 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/HR011001_1.do")
+	public ModelAndView HR011001_1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		return new ModelAndView("home/personMng/HR011001_1");
+	}
+		
+	
 	/**
 	 * @name 인사관리 화면 - 인사관리 그리드
 	 * @param request

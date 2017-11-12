@@ -74,7 +74,8 @@ public class EP011001Ctr {
 				
 				
 				obj.put("PAYDATE", lst.get(i).getPAYDATE());
-				obj.put("SALERCD", lst.get(i).getS_SALERCD());
+				obj.put("SALERCD", lst.get(i).getSALERCD());
+				obj.put("SALERNM", lst.get(i).getSALERNM());
 				obj.put("SELLAMT", lst.get(i).getSELLAMT());
 				obj.put("PAYAMT", lst.get(i).getPAYAMT());
 				obj.put("TAXAMT", lst.get(i).getTAXAMT());
@@ -97,24 +98,25 @@ public class EP011001Ctr {
 				obj.put("DCAMT", lst.get(i).getDCAMT());
 				obj.put("SELLAMT", lst.get(i).getSELLAMT());
 								
-//				obj.put("PAYDATE", lst.get(i).getPAYDATE());
-				/*				obj.put("SALERCD", lst.get(i).getS_SALERCD());
-				obj.put("SALERNM", lst.get(i).getSALERNM());
 				obj.put("SUDANGRATE", lst.get(i).getSUDANGRATE());
 				obj.put("ADDRATE", lst.get(i).getADDRATE());
-				obj.put("PAYAMT", lst.get(i).getPAYAMT());
 				obj.put("TAXGUBUN", lst.get(i).getTAXGUBUN());
 				obj.put("TAXINCOME", lst.get(i).getTAXINCOME());
 				obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
 				obj.put("SUPPLYTAX", lst.get(i).getSUPPLYTAX());
-				obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());*/
 				obj.put("REMARK", lst.get(i).getREMARK());
 				
 				jCell.add(obj);
 			}
 		}else{
 			JSONObject obj = new JSONObject();
-			
+			obj.put("PAYDATE", "");
+			obj.put("SALERCD", "");
+			obj.put("SALERNM", "");
+			obj.put("SELLAMT", "");
+			obj.put("PAYAMT", "");
+			obj.put("TAXAMT", "");
+			obj.put("DEDUCTAMT", "");
 			obj.put("SALEDATE", "");
 			obj.put("SALEID", "");
 			obj.put("SALEGUBUN", "");
@@ -131,19 +133,15 @@ public class EP011001Ctr {
 			obj.put("DCRATE", "");
 			obj.put("DCAMT", "");
 			obj.put("SELLAMT", "");
-			
-//			obj.put("PAYDATE", "");
-			/*			obj.put("SALERCD", "");
-			obj.put("SALERNM", "");
 			obj.put("SUDANGRATE", "");
 			obj.put("ADDRATE", "");
-			obj.put("PAYAMT", "");
 			obj.put("TAXGUBUN", "");
 			obj.put("TAXINCOME", "");
 			obj.put("TAXLOCAL", "");
 			obj.put("SUPPLYTAX", "");
-			obj.put("DEDUCTAMT", "");*/
-			obj.put("REMARK", "");			
+			obj.put("REMARK", "");		
+			
+
 			
 			jCell.add(obj);
 			
