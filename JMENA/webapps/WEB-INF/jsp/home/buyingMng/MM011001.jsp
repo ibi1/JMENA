@@ -242,6 +242,9 @@
 				},
 				height: '500px',
 				onSelectRow: function(ids){
+					v_rightLastSel_1 = 0;
+					v_rightLastSel_2 = 0;
+					
 					$("#S_FLAG_L").val("U");
 					
 					var selRowData = $(this).jqGrid('getRowData', ids);

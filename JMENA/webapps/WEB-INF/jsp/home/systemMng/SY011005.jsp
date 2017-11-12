@@ -70,6 +70,8 @@
 				},
 				height: '550px' ,
 				onSelectRow: function(ids){
+					v_rightLastSel = 0;
+					
 					$("#S_FLAG_L").val("U");
 					
 					var selRowData = $(this).jqGrid('getRowData', ids);
@@ -294,13 +296,11 @@
 		
 		$(function() {
 			$("#bottomSaveButton").click(function() {
-				var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-				
-				$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+				$('#bottomList').jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
-				var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				var cellData = $("#bottomList").jqGrid('getRowData', v_rightLastSel); //셀 전체 데이터 가져오기
 
-				if (ids == null || ids == "") {
+				if (v_rightLastSel == 0 || v_rightLastSel == "") {
 					alert("선택된 공통코드가 없습니다.");
 					
 					return false;
@@ -309,7 +309,7 @@
 				if (cellData.DCODE == "") {
 					alert("상세 코드를 입력하셔야 합니다.");
 					
-					$('#bottomList').jqGrid('editRow', ids, true);
+					$('#bottomList').jqGrid('editRow', v_rightLastSel, true);
 					$("#"+ids+"_DCODE").focus();
 					
 					return false;
@@ -318,7 +318,7 @@
 				if (cellData.DCODENAME == "") {
 					alert("상세 코드명을 입력하셔야 합니다.");
 					
-					$('#bottomList').jqGrid('editRow', ids, true);
+					$('#bottomList').jqGrid('editRow', v_rightLastSel, true);
 					$("#"+ids+"_DCODENAME").focus();
 					
 					return false;
@@ -327,7 +327,7 @@
 				if (cellData.SORTKEY == "") {
 					alert("정렬순서를 입력하셔야 합니다.");
 					
-					$('#bottomList').jqGrid('editRow', ids, true);
+					$('#bottomList').jqGrid('editRow', v_rightLastSel, true);
 					$("#"+ids+"_SORTKEY").focus();
 					
 					return false;

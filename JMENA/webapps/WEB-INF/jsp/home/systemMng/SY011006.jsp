@@ -103,13 +103,11 @@
 		
 		$(function() {
 			$("#saveButton").click(function() {
-				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-				
-				$('#leftList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+				$('#leftList').jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
-				var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				var cellData = $("#leftList").jqGrid('getRowData', v_rightLastSel); //셀 전체 데이터 가져오기
 				
-				if (ids == null || ids == "") {
+				if (v_rightLastSel == 0 || v_rightLastSel == "") {
 					alert("그리드를 선택하셔야 합니다.");
 					
 					return false;
@@ -118,7 +116,7 @@
 				if (cellData.BANKCODE == "") {
 					alert("기관 코드를 입력하셔야 합니다.");
 					
-					$('#leftList').jqGrid('editRow', ids, true);
+					$('#leftList').jqGrid('editRow', v_rightLastSel, true);
 					$("#"+ids+"_BANKCODE").focus();
 					
 					return false;
@@ -127,7 +125,7 @@
 				if (cellData.BANKNAME == "") {
 					alert("금융기관명을 입력하셔야 합니다.");
 					
-					$('#leftList').jqGrid('editRow', ids, true);
+					$('#leftList').jqGrid('editRow', v_rightLastSel, true);
 					$("#"+ids+"_BANKNAME").focus();
 					
 					return false;

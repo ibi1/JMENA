@@ -62,6 +62,7 @@
 				},
 				//height: '100%' ,
 				onSelectRow: function(ids){
+					v_rightLastSel = 0;
 					$("#S_FLAG_L").val("U");
 					
 					var selRowData = $(this).jqGrid('getRowData', ids);
@@ -277,13 +278,11 @@
 		
 		$(function() {
 			$("#rightSaveButton").click(function() {
-				var ids = $("#rightList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-				
-				$('#rightList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+				$('#rightList').jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
-				var cellData = $("#rightList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				var cellData = $("#rightList").jqGrid('getRowData', v_rightLastSel); //셀 전체 데이터 가져오기
 				
-				if (ids == null || ids == "") {
+				if (v_rightLastSel == 0 || v_rightLastSel == "") {
 					alert("그리드를 선택하셔야 합니다.");
 					
 					return false;
@@ -292,7 +291,7 @@
 				if (cellData.MENUID == "") {
 					alert("메뉴 코드를 입력하셔야 합니다.");
 					
-					$('#rightList').jqGrid('editRow', ids, true);
+					$('#rightList').jqGrid('editRow', v_rightLastSel, true);
 					$("#"+ids+"_MENUID").focus();
 					
 					return false;
@@ -301,7 +300,7 @@
 				if (cellData.MENUNAME == "") {
 					alert("메뉴 명을 입력하셔야 합니다.");
 					
-					$('#rightList').jqGrid('editRow', ids, true);
+					$('#rightList').jqGrid('editRow', v_rightLastSel, true);
 					$("#"+ids+"_MENUNAME").focus();
 					
 					return false;
@@ -310,7 +309,7 @@
 				if (cellData.SORTKEY == "") {
 					alert("정렬 순서를 입력하셔야 합니다.");
 					
-					$('#rightList').jqGrid('editRow', ids, true);
+					$('#rightList').jqGrid('editRow', v_rightLastSel, true);
 					$("#"+ids+"_SORTKEY").focus();
 					
 					return false;
