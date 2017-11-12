@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import kr.co.jmena.www.web.home.buyingMng.Dao.MM011001Dao;
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,102 @@ public class MM011001Biz {
 		}
 		
 		return lst;
+	}
+	
+	public boolean insertDataBuyMst(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.insertDataBuyMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateDataBuyMst(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.updateDataBuyMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteDataPayScheduleTb(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.deleteDataPayScheduleTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteDataSalesopenTb(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.deleteDataSalesopenTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean insertDataPayScheduleTb(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.insertDataPayScheduleTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateDataPayScheduleTb(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.updateDataPayScheduleTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean insertDataSalesopenTb(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.insertDataSalesopenTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateDataSalesopenTb(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.updateDataSalesopenTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
 	}
 	
 }

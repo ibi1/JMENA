@@ -35,6 +35,7 @@ public class MM011001VO {
 	private String LS_BUYDATE_TO;
 	private String LS_INSERTUSER;
 	private String LS_ADDRESS;
+	private String USERID;
 
 	private String CITYNAME;
 	private String BOROUGHCODE;
@@ -333,6 +334,14 @@ public class MM011001VO {
 
 	public void setBUNJANPY(String BUNJANPY) {
 		this.BUNJANPY = BUNJANPY;
+	}
+
+	public String getUSERID() {
+		return USERID;
+	}
+
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
 	}
 	
 }

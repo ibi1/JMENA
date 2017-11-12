@@ -3,6 +3,7 @@ package kr.co.jmena.www.web.home.buyingMng.Dao;
 import java.util.List;
 
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011002VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
@@ -54,5 +55,79 @@ public class MM011001Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}
+	
+	public boolean insertDataBuyMst(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataBuyMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean updateDataBuyMst(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataBuyMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean deleteDataPayScheduleTb(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteDataPayScheduleTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean deleteDataSalesopenTb(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteDataSalesopenTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean insertDataPayScheduleTb(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataPayScheduleTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean updateDataPayScheduleTb(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataPayScheduleTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean insertDataSalesopenTb(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataSalesopenTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean updateDataSalesopenTb(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataSalesopenTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	
 	
 }

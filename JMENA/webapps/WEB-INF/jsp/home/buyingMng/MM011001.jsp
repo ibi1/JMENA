@@ -11,7 +11,12 @@
 
 
 	<script type="text/javascript">
+		var v_rightLastSel_1 = 0;		//오른쪽 그리드 선택 tab1
+		var v_rightLastSel_2 = 0;		//오른쪽 그리드 선택 tab2
+	
 		$(document).ready(function(){
+			$("#S_FLAG_L").val("I");
+			
 			var dt = new Date();
 
 			// Display the month, day, and year. getMonth() returns a 0-based number.
@@ -55,14 +60,14 @@
 			$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		
-			$("#BUYM2").jqxNumberInput({theme: 'energyblue', height: 23, width: 50, decimalDigits: 0, inputMode: 'simple'});
-			$("#BUYPY").jqxNumberInput({theme: 'energyblue', height: 23, width: 50, decimalDigits: 0, inputMode: 'simple'});
-			$("#BUNYM2").jqxNumberInput({theme: 'energyblue', height: 23, width: 50, decimalDigits: 0, inputMode: 'simple'});
-			$("#BUNJANM2").jqxNumberInput({theme: 'energyblue', height: 23, width: 50, decimalDigits: 0, inputMode: 'simple'});
-			$("#BUNYPY").jqxNumberInput({theme: 'energyblue', height: 23, width: 50, decimalDigits: 0, inputMode: 'simple' });
-			$("#BUNJANPY").jqxNumberInput({theme: 'energyblue', height: 23, width: 50, decimalDigits: 0, inputMode: 'simple' });
-			$("#BUYAMT").jqxNumberInput({theme: 'energyblue', height: 23, width: 50, decimalDigits: 0, inputMode: 'simple' });
-			$("#BUYDANGA").jqxNumberInput({theme: 'energyblue', height: 23, width: 50, decimalDigits: 0, inputMode: 'simple'});
+			$("#BUYM2").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUYPY").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUNYM2").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUNJANM2").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUNYPY").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUNJANPY").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUYAMT").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUYDANGA").jqxInput({theme: 'energyblue', height: 23, width: 50});
 			
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -187,8 +192,8 @@
 				mtype: 'POST',
 				postData : {
 					LS_BUYDATE_FR : $("#LS_BUYDATE_FR").val(),
-					LS_BUYDATE_TO : $("#LS_BUYDATE_FR").val(),
-					LS_INSERTUSER : LS_INSERTUSER,
+					LS_BUYDATE_TO : $("#LS_BUYDATE_TO").val(),
+					//LS_INSERTUSER : LS_INSERTUSER,
 					LS_ADDRESS : $("#LS_ADDRESS").val()
 				},
 				loadtext: '로딩중...',
@@ -235,6 +240,8 @@
 				},
 				height: '500px',
 				onSelectRow: function(ids){
+					$("#S_FLAG_L").val("U");
+					
 					var selRowData = $(this).jqGrid('getRowData', ids);
 					$("#BUYDATE").val(selRowData.BUYDATE);
 					$("#BUYID").val(selRowData.BUYID);
@@ -263,6 +270,22 @@
 	
 					f_selectListEnaBoroughCode();
 				} ,
+				loadComplete: function(ids) {
+					var buyId = $("#BUYID").val();
+					
+					var ids = jQuery("#leftList").jqGrid('getDataIDs');
+					
+					ids.some(function(currentValue, index, array){
+						var cellData = $("#leftList").jqGrid('getCell', ids[index], 'BUYID');
+						if (cellData == buyId) {
+							$("#S_FLAG_L").val("U");
+			        		$("#leftList").jqGrid('setSelection', ids[index]);
+			    			return true;
+			        	} else {
+			        		$("#S_FLAG_L").val("I");
+			        	}	        
+					});
+				},
 				hidegrid: false
 			});
 		}
@@ -279,27 +302,40 @@
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
-				colNames:['지급구분', '지급일자', '지급금액', '지급여부', '비고'],
+				colNames:['구매번호', '지급순번', '지급구분', '지급일자', '지급금액', '지급여부', '비고'],
 				colModel:[
-					{name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=005", buildSelect:f_selectListEnaPayGubunCode} }
+					{name:"BUYID",	index:'BUYID',		width:100,	align:'center', sortable:false, editable:true, hidden: true}
+					, {name:"BUYSEQ",	index:'BUYSEQ',		width:100,	align:'center', sortable:false, editable:true, hidden: true}
+					, {name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=005", buildSelect:f_selectListEnaPayGubunCode} }
 					, {name:"PAYDATE",	index:'PAYDATE',	width:100,	align:'center', sortable:false, editable:true}
 					, {name:"PAYAMT",	index:'PAYAMT',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"PAYYN",	index:'PAYYN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"PAYYN",	index:'PAYYN',		width:100,	align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', sortable:false, editable:true}
 				],
 				rowNum:1000,
 				autowidth: true,
 				shrinkToFit: false,
 				rowList:[10,20,30],
-				sortname: 'payGubun',
+				sortname: 'PAYDATE',
 				viewrecords: true,
 				sortorder:'desc',
 				width: "96%",
 				jsonReader: {
 					repeatitems: false
 				},
-				onSelectRow : function(rowid) {
-					$('#rightList1').jqGrid('editRow',rowid,false);
+				onSelectRow : function(id) {
+					if (id > 0) {
+						$("#S_FLAG_R_1").val("U");
+					} else {
+						$("#S_FLAG_R_1").val("I");
+					}
+					
+					if( v_rightLastSel_1 != id ){
+				        $(this).jqGrid('restoreRow',v_rightLastSel_1,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+				        v_rightLastSel_1 = id;
+					}
 				},
 				hidegrid: false
 			});
@@ -331,11 +367,13 @@
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
-				colNames:['지사', '오픈여부', '홀딩여부', '홀딩면적', '홀딩일자', '비고'],
+				colNames:['구매번호', '지사', '오픈여부', '홀딩여부', '홀딩면적', '홀딩평수', '홀딩일자', '비고'],
 				colModel:[
-					{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
-					, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					{name:"BUYID",	index:'BUYID',		width:100,	align:'center', sortable:false, editable:true, hidden: true}
+					, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
+					, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"HOLDINGM2",	index:'HOLDINGPY',		width:100,	align:'center', sortable:false, editable:true}
 					, {name:"HOLDINGPY",	index:'HOLDINGPY',		width:100,	align:'center', sortable:false, editable:true}
 					, {name:"HOLDINGDATE",	index:'HOLDINGDATE',	width:100,	align:'center', sortable:false, editable:true}
 					, {name:"REMARK",		index:'REMARK',			width:100,	align:'center', sortable:false, editable:true}
@@ -352,8 +390,19 @@
 					repeatitems: false
 				},
 				//height: '100%',
-				onSelectRow: function(rowid){
-					$('#rightList2').jqGrid('editRow',rowid,false);
+				onSelectRow: function(id){
+					if (id > 0) {
+						$("#S_FLAG_R_2").val("U");
+					} else {
+						$("#S_FLAG_R_2").val("I");
+					}
+					
+					if( v_rightLastSel_2 != id ){
+				        $(this).jqGrid('restoreRow',v_rightLastSel_2,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+				        v_rightLastSel_2 = id;
+					}
 				},
 				hidegrid: false
 			});
@@ -371,6 +420,442 @@
 			result +="</select>";
 			return result;
 		}
+		
+		function f_clear(dF) {
+			if (dF == "Y") $("#BUYDATE").val("");
+			$("#BUYID").val("");
+			$("#BUYGUBUN").val("");
+			$("#MANAGENO").val("");
+			$("#CITYCODE").val("");
+			$("#CITYCODE").change();
+			$("#BOROUGHCODE").val("");
+			$("#USETYPE").val("");
+			$("#ADDRESS").val("");
+			$("#OWNERNAME").val("");
+			$("#OWNERJUMINID").val("");
+			$("#BUYM2").val("");
+			$("#BUYPY").val("");
+			$("#BUNYM2").val("");
+			$("#BUNJANM2").val("");
+			$("#BUNYPY").val("");
+			$("#BUNJANPY").val("");
+			$("#BUYAMT").val("");
+			$("#BUYDANGA").val("");
+			$("input:radio[name=REGYN]:input[value=Y]").attr("checked", true);
+			$("#REGDATE").val("");
+			$("#REMARK").val("");
+			
+			$('#rightList1').jqGrid('clearGridData');
+			$('#rightList2').jqGrid('clearGridData');
+		}
+		
+		$(function() {
+			$("#selectButton").click(function(){
+				$("#S_FLAG_L").val("U");
+				
+				f_clear("Y");
+				
+				f_selectListEnaBuyMst();
+			});
+		})
+		
+		function f_selectButton() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#selectButton").click();
+			}
+		}
+		
+		$(function() {
+			$("#insertButton").click(function() {
+				$("#S_FLAG_L").val("I");
+				
+				f_clear("Y");
+				
+				f_selectListEnaBuyMst();
+				
+				$("#BUYDATE").focus();
+			});
+		})
+		
+		$(function() {
+			$("#deleteButton").click(function() {
+				alert("작업중...");
+			});
+		})
+		
+		$(function() {
+			$("#saveButton").click(function() {
+				if ($("#BUYDATE").val() == "") {
+					alert("계약일자를 입력하셔야 합니다.");
+					
+					$("#BUYDATE").focus();
+					return false;
+				}
+
+				if ($("#ADDRESS").val() == "") {
+					alert("주소를 입력하셔야 합니다.");
+					
+					$("#ADDRESS").focus();
+					return false;
+				}
+				
+				if ($("#OWNERNAME").val() == "") {
+					alert("원지주 성명을 입력하셔야 합니다.");
+					
+					$("#OWNERNAME").focus();
+					return false;
+				}
+				
+				if ($("#OWNERJUMINID").val() == "") {
+					alert("주민번호를 입력하셔야 합니다.");
+					
+					$("#OWNERJUMINID").focus();
+					return false;
+				}
+				
+				if ($("#BUYM2").val() == "") {
+					alert("계약면적을 입력하셔야 합니다.");
+					$('#BUYM2').focus();
+					return false;
+				}
+				
+				if ($("#BUYPY").val() == "") {
+					alert("계약면적을 입력하셔야 합니다.");
+					
+					$("#BUYPY").focus();
+					return false;
+				}
+				
+				if ($("#BUYAMT").val() == "") {
+					alert("매매대금을 입력하셔야 합니다.");
+					
+					$("#BUYAMT").focus();
+					return false;
+				}
+				
+				if ($("#BUYDANGA").val() == "") {
+					alert("매매단가를 입력하셔야 합니다.");
+					
+					$("#BUYDANGA").focus();
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG_L").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					$('#BUYID').jqxInput({disabled: false });
+					
+					$.ajax({ 
+						type: 'POST' ,
+						data: $("#MM011001").serialize(),
+						url: "/home/insertDataBuyMst.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$('#BUYID').jqxInput({disabled: true });
+							alert(data.resultMsg);
+							
+							if (data.resultCode == "SUCCESS") {
+								f_selectListEnaBuyMst();
+							} else {
+								$("#BUYDATE").focus();
+							}
+						},
+						error:function(e){  
+							alert("[ERROR]매입관리 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
+		
+		$(function() {
+			$("#searchButton").click(function() {
+				var buyDate = $("#BUYDATE").val();
+				
+				if (buyDate == "") {
+					alert("계약일자를 입력하셔야 합니다.");
+					
+					$("#BUYDATE").focus();
+					return false;
+				}
+				
+				var buyDate = $("#BUYDATE").val();
+				$("#LS_BUYDATE_FR").val(buyDate);
+				$("#LS_BUYDATE_TO").val(buyDate);
+				
+				f_selectListEnaBuyMst();
+			});
+		})
+		
+		function f_getBuyId() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				var buyDate = $("#BUYDATE").val();
+				
+				if (buyDate == "") {
+					alert("계약일자를 입력하셔야 합니다.");
+					
+					$("#BUYDATE").focus();
+					return false;
+				}
+				
+				f_clear("N");
+				
+				f_selectListEnaBuyMst();
+				
+				$("#MANAGENO").focus();
+			}
+		}
+		
+		$(function() {
+			$('#bottomTabs').on('tabclick', function (event) { 
+				$("#rightList1").trigger("reloadGrid");
+				$("#rightList2").trigger("reloadGrid");
+			}); 
+		}) 
+		
+		$(function() {
+			$("#tab1InsertButton").click(function() {
+				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("선택된 매입정보가 없습니다.");
+					
+					return false;
+				}
+				
+				$("#S_FLAG_R_1").val("I");
+				
+				$("#rightList1").jqGrid("addRow", 0);
+			});
+		})
+		
+		$(function() {
+			$("#tab1DeleteButton").click(function() {
+				var ids = $("#rightList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("그리드를 선택하셔야 합니다.");
+					
+					return false;
+				}
+				
+				$('#rightList1').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+				var cellData = $("#rightList1").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+
+				if (confirm("삭제하시겠습니까?") == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: "BUYID=" + cellData.BUYID + "&BUYSEQ=" + cellData.BUYSEQ,
+						url: "/home/deleteDataPayScheduleTb.do", 
+						dataType : 'json' , 
+						success: function(data){
+							alert(data.resultMsg);
+							
+							v_rightLastSel_1 = 0;
+							
+							f_selectListEnaPayScheduleTb(cellData.BUYID);
+						},
+						error:function(e){  
+							alert("[ERROR]지급스케줄관리 삭제  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
+		
+		$(function() {
+			$("#tab1SaveButton").click(function() {
+				var ids = $("#rightList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				var payGubun =  $("#rightList1 [name=PAYGUBUN] option:selected").val();
+				
+				$('#rightList1').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+				var cellData = $("#rightList1").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("그리드를 선택하셔야 합니다.");
+					
+					return false;
+				}
+				
+				if (cellData.PAYDATE == "") {
+					alert("지급일을 입력하셔야 합니다.");
+					
+					$('#rightList1').jqGrid('editRow', ids, true);
+					$("#"+ids+"_PAYDATE").focus();
+					
+					return false;
+				}
+				
+				if (cellData.PAYAMT == "") {
+					alert("지급금액를 입력하셔야 합니다.");
+					
+					$('#rightList1').jqGrid('editRow', ids, true);
+					$("#"+ids+"_PAYAMT").focus();
+					
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG_R_1").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					var formData = "S_FLAG_R_1=" + $("#S_FLAG_R_1").val() + 
+					"&BUYID=" + $("#BUYID").val() + 
+					"&BUYSEQ=" + cellData.BUYSEQ + 
+					"&PAYGUBUN=" + payGubun + 
+					"&PAYDATE=" + cellData.PAYDATE + 
+					"&PAYAMT=" + cellData.PAYAMT + 
+					"&PAYYN=" + cellData.PAYYN + 
+					"&REMARK=" + cellData.REMARK;
+					
+					$.ajax({ 
+						type: 'POST' ,
+						data: formData,
+						url: "/home/insertDataPayScheduleTb.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$("#S_FLAG_R_1").val("U");
+							
+							v_rightLastSel_1 = 0;
+							
+							alert(data.resultMsg);
+							
+							f_selectListEnaPayScheduleTb($("#BUYID").val());
+						},
+						error:function(e){  
+							alert("[ERROR]지급 스케줄 관리 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				} else {
+					v_rightLastSel_1 = 0;
+					f_selectListEnaPayScheduleTb($("#BUYID").val());
+				}
+			});
+		})
+		
+		$(function() {
+			$("#tab2InsertButton").click(function() {
+				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("선택된 매입정보가 없습니다.");
+					
+					return false;
+				}
+				
+				$("#S_FLAG_R_2").val("I");
+				
+				$("#rightList2").jqGrid("addRow", 0);
+			});
+		})
+		
+		$(function() {
+			$("#tab2DeleteButton").click(function() {
+				var ids = $("#rightList2").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				//jqGrid SelectBox 는 뷰 모드 전에 값을 가져옴.
+				var branchCode = $("#rightList2 [name=BRANCHCODE] option:selected").val();
+				
+				if (ids == null || ids == "") {
+					alert("그리드를 선택하셔야 합니다.");
+					
+					return false;
+				}
+				
+				$('#rightList2').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+				var cellData = $("#rightList2").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				
+				if (confirm("삭제하시겠습니까?") == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: "BUYID=" + cellData.BUYID + "&BRANCHCODE=" + branchCode,
+						url: "/home/deleteDataSalesopenTb.do", 
+						dataType : 'json' , 
+						success: function(data){
+							alert(data.resultMsg);
+							
+							v_rightLastSel_2 = 0;
+							
+							f_selectListEnaSalesOpenTb(cellData.BUYID);
+						},
+						error:function(e){  
+							alert("[ERROR]지사오픈관리 삭제  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
+		
+		$(function() {
+			$("#tab2SaveButton").click(function() {
+				var ids = $("#rightList2").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				var branchCode =  $("#rightList2 [name=BRANCHCODE] option:selected").val();
+				
+				$('#rightList2').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+				var cellData = $("#rightList2").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				
+				if (ids == null || ids == "") {
+					alert("그리드를 선택하셔야 합니다.");
+					
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG_R_2").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					var formData = "S_FLAG_R_2=" + $("#S_FLAG_R_2").val() + 
+					"&BUYID=" + $("#BUYID").val() + 
+					"&BRANCHCODE=" + branchCode + 
+					"&OPENYN=" + cellData.OPENYN + 
+					"&HOLDINGYN=" + cellData.HOLDINGYN + 
+					"&HOLDINGM2=" + cellData.HOLDINGM2 + 
+					"&HOLDINGPY=" + cellData.HOLDINGPY + 
+					"&HOLDINGDATE=" + cellData.HOLDINGDATE +
+					"&REMARK=" + cellData.REMARK;
+					
+					$.ajax({ 
+						type: 'POST' ,
+						data: formData,
+						url: "/home/insertDataSalesopenTb.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$("#S_FLAG_R_2").val("U");
+							
+							v_rightLastSel_2 = 0;
+							
+							alert(data.resultMsg);
+							
+							f_selectListEnaSalesOpenTb($("#BUYID").val());
+						},
+						error:function(e){  
+							alert("[ERROR]지사 오픈관리 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				} else {
+					v_rightLastSel_2 = 0;
+					f_selectListEnaSalesOpenTb($("#BUYID").val());
+				}
+			});
+		})
 	</script>
 </head>
 <body>
@@ -411,7 +896,7 @@
 									</tr>
 									<tr>
 										<th>지번(주소)</th>
-										<td><input type="text" id="LS_ADDRESS" name="LS_ADDRESS" /></td>
+										<td><input type="text" id="LS_ADDRESS" name="LS_ADDRESS" onkeydown="f_selectButton();" /></td>
 									</tr>
 								</table>
 								<table id="leftList"></table>
@@ -424,10 +909,12 @@
 								<div>
 									<sapn>
 										<div>
+											<form id="MM011001">
+											<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
 											<table width="680px">
 												<tr>
 													<th width="100">* 계약일자 / 번호</th>
-													<td colspan="6"><input type="text" id="BUYDATE" name="BUYDATE" />&nbsp;<input type="text" id="BUYID" name="BUYID" /></td>
+													<td colspan="6"><input type="text" id="BUYDATE" name="BUYDATE" onkeydown="f_getBuyId();" />&nbsp;<input type="text" id="BUYID" name="BUYID" /></td>
 													<td><input type="button" id="searchButton"/></td>
 												</tr>
 												<tr>
@@ -510,12 +997,15 @@
 													<td colspan="7"><input type="text" id="REMARK" name="REMARK" /></td>
 												</tr>
 											</table>
+											</form>
 										</div>
 									</sapn>
 								</div>
 								<div>
 									<span>
 										<div id="rightDiv2">
+											<input type="hidden" id="S_FLAG_R_1" name="S_FLAG_R_1" />
+											<input type="hidden" id="S_FLAG_R_2" name="S_FLAG_R_2" />
 											<div id="bottomTabs">
 												<ul>
                										<li>지급 스케줄 관리</li>

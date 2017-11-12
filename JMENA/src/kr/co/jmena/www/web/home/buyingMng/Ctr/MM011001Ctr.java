@@ -5,9 +5,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.buyingMng.Biz.MM011001Biz;
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
+import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -54,7 +56,7 @@ public class MM011001Ctr {
 		
 		vo.setLS_BUYDATE_FR(request.getParameter("LS_BUYDATE_FR"));
 		vo.setLS_BUYDATE_TO(request.getParameter("LS_BUYDATE_TO"));
-		vo.setLS_INSERTUSER(request.getParameter("LS_INSERTUSER"));
+		//vo.setLS_INSERTUSER(request.getParameter("LS_INSERTUSER"));
 		vo.setLS_ADDRESS(request.getParameter("LS_ADDRESS"));
 		
 		List<MM011001VO> lst = MM011001Biz.selectListEnaBuyMst(vo);
@@ -180,6 +182,229 @@ public class MM011001Ctr {
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataBuyMst.do")
+	public ModelAndView insertDataBuyMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYID(request.getParameter("BUYID"));
+		vo.setBUYDATE(request.getParameter("BUYDATE"));
+		vo.setBUYGUBUN(request.getParameter("BUYGUBUN"));
+		vo.setMANAGENO(request.getParameter("MANAGENO"));
+		vo.setCITYCODE(request.getParameter("CITYCODE"));
+		vo.setBOROUGHCODE(request.getParameter("BOROUGHCODE"));
+		vo.setUSETYPE(request.getParameter("USETYPE"));
+		vo.setADDRESS(request.getParameter("ADDRESS"));
+		vo.setOWNERNAME(request.getParameter("OWNERNAME"));
+		vo.setOWNERJUMINID(request.getParameter("OWNERJUMINID"));
+		vo.setBUYM2(request.getParameter("BUYM2"));
+		vo.setBUYPY(request.getParameter("BUYPY"));
+		vo.setBUYAMT(request.getParameter("BUYAMT"));
+		vo.setBUYDANGA(request.getParameter("BUYDANGA"));
+		vo.setREGYN(request.getParameter("REGYN"));
+		vo.setREGDATE(request.getParameter("REGDATE"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_L");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (MM011001Biz.insertDataBuyMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (MM011001Biz.updateDataBuyMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]매입관리 처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataBuyMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/deleteDataPayScheduleTb.do")
+	public ModelAndView deleteDataPayScheduleTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYID(request.getParameter("BUYID"));
+		vo.setBUYSEQ(request.getParameter("BUYSEQ"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (MM011001Biz.deleteDataPayScheduleTb(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataPayScheduleTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/deleteDataSalesopenTb.do")
+	public ModelAndView deleteDataSalesopenTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYID(request.getParameter("BUYID"));
+		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (MM011001Biz.deleteDataSalesopenTb(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataSalesopenTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataPayScheduleTb.do")
+	public ModelAndView insertDataPayScheduleTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYID(request.getParameter("BUYID"));
+		vo.setBUYSEQ(request.getParameter("BUYSEQ"));
+		vo.setBUYID(request.getParameter("BUYID"));
+		vo.setPAYDATE(request.getParameter("PAYDATE"));
+		vo.setPAYAMT(request.getParameter("PAYAMT"));
+		vo.setPAYYN(request.getParameter("PAYYN"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_R_1");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (MM011001Biz.insertDataPayScheduleTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (MM011001Biz.updateDataPayScheduleTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]지급 스케줄 관리 처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataPayScheduleTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataSalesopenTb.do")
+	public ModelAndView insertDataSalesopenTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYID(request.getParameter("BUYID"));
+		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
+		vo.setOPENYN(request.getParameter("OPENYN"));
+		vo.setHOLDINGYN(request.getParameter("HOLDINGYN"));
+		vo.setHOLDINGM2(request.getParameter("HOLDINGM2"));
+		vo.setHOLDINGPY(request.getParameter("HOLDINGPY"));
+		vo.setHOLDINGDATE(request.getParameter("HOLDINGDATE"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_R_2");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (MM011001Biz.insertDataSalesopenTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (MM011001Biz.updateDataSalesopenTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]지사 오픈관리 처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataSalesopenTb]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}
