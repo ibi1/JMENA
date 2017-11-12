@@ -21,10 +21,10 @@ public class SA011003Dao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws DataAccessException
 	 */
-	public List<SA011003VO> selectListEnaInsaMst() throws DataAccessException {
+	public List<SA011003VO> selectListEnaIpgumMst(SA011003VO vo) throws DataAccessException {
 		List<SA011003VO> lst = null;
 		
-		//lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaInsaMst");
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaIpgumMst", vo);
 		
 		return lst;
 	}

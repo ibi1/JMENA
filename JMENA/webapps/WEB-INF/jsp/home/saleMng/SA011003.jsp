@@ -14,10 +14,41 @@
 
 	$(document).ready(function(){
 		
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+
+		$("#addButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#deleteButton2").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveButton2").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		$("#SL_IPGUMDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SL_IPGUMDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SL_IPGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		
+		$("#IPGUMDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#IPGUMID").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#IPGUMPERSON").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#IPGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#SUGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#JANAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+		$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#CONPY").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
+		
+		$("#IPGUMID").attr("readonly","readonly");		
+		
 		f_selectListEnaIpgumTypeCode();
 		f_selectListEnaIpgumGubunCode();
 		f_selectListEnaBankGubunCode();
+		
+		f_selectListEnaSalerCode();
 
+		f_selectListEnaBranchCode();
+		f_selectListEnaKnameCode();
+		
 		f_selectListEnaSIpgumGubunCode();
 		f_selectListEnaSBankGubunCode();
 		
@@ -25,6 +56,84 @@
 		f_selectListEnaIpgumDtl();
 		
 	});
+	
+	function f_selectListEnaBranchCode(){
+		$("#BRANCHNAME").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/branchMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "";
+				data.branchMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+				});
+				$("#BRANCHNAME").append(inHtml);
+				f_selectListEnaKnameCode();
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	$(function(){
+		$("#BRANCHNAME").change(function() {
+			f_selectListEnaKnameCode();
+		});
+	});
+	
+	function f_selectListEnaKnameCode(){
+		
+		var BRANCHCODE = $("#BRANCHNAME").val();
+		$("#KNAME").empty().data('options');
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/insaMstList.do", 
+			dataType : 'json' , 
+			data : {
+				BRANCHCODE : BRANCHCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.insaMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
+				});
+				$("#KNAME").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	
+	function f_selectListEnaSalerCode(){
+		var BRANCHCODE = "";
+		
+		$("#SL_KNAME").empty().data('options');
+		
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/insaMstList.do", 
+			dataType : 'json' , 
+			data : {
+				BRANCHCODE : BRANCHCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				data.insaMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
+				});
+				$("#SL_KNAME").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
 	
 	function f_selectListEnaIpgumTypeCode(){
 		var CCODE = "012";
@@ -93,7 +202,7 @@
 
 	function f_selectListEnaSIpgumGubunCode(){
 		var CCODE = "009";
-		$("#S_IPGUMGUBUN").empty().data('options');
+		$("#SL_IPGUMGUBUN").empty().data('options');
 	   	$.ajax({ 
 			type: 'POST' ,
 			url: "/codeCom/dcodeList.do", 
@@ -106,7 +215,7 @@
 				data.dcodeList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 				});
-				$("#S_IPGUMGUBUN").append(inHtml);
+				$("#SL_IPGUMGUBUN").append(inHtml);
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -115,7 +224,7 @@
 	}
 
 	function f_selectListEnaSBankGubunCode(){
-		$("#S_BANKGUBUN").empty().data('options');
+		$("#SL_BANKGUBUN").empty().data('options');
 	   	$.ajax({ 
 			type: 'POST' ,
 			url: "/codeCom/bankList.do", 
@@ -125,7 +234,7 @@
 				data.bankList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.bankCode + "'>" + currentValue.bankName + "</option>\n";
 				});
-				$("#S_BANKGUBUN").append(inHtml);
+				$("#SL_BANKGUBUN").append(inHtml);
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -138,19 +247,29 @@
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#leftList').jqGrid({
 			//caption: '입금관리'
-			url:"/home/selectListSysMst.do" ,
+			url:"/home/selectListEnaIpgumMst.do" ,
 			datatype:"json" ,
+			postData : {
+				
+				SL_IPGUMDATE_FR : $("#SL_IPGUMDATE_FR").val(),
+				SL_IPGUMDATE_TO : $("#SL_IPGUMDATE_TO").val(),
+				SL_KNAME : $("#SL_KNAME").val(),
+				SL_IPGUMGUBUN : $("#SL_IPGUMGUBUN").val(),
+				SL_BANKGUBUN : $("#SL_BANKGUBUN").val(),
+				SL_IPGUMAMT : $("#SL_IPGUMAMT").val()
+			},
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['입금일자', '입금인', '입금금액', '입금구분', '입금처리금액', '미처리잔액'] ,
+			colNames:['입금번호', '입금일자', '입금인', '입금금액', '입금구분', '입금처리금액', '미처리잔액'] ,
 			colModel:[
-				{name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center'}
-				,{name:"CONNAME",		index:'CONNAME',		width:100,		align:'center'}
-				,{name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center'}
-				,{name:"CONPY",			index:'CONPY',			width:100,		align:'center'}
-				,{name:"CONM2",			index:'CONM2',			width:100,		align:'center'}
-				,{name:"CONM2",			index:'CONM2',			width:100,		align:'center'}
+				{name:"IPGUMID",		index:'IPGUMID',		width:100,		align:'center', hidden:true}
+				,{name:"IPGUMDATE",		index:'IPGUMDATE',		width:100,		align:'center'}
+				,{name:"IPGUMPERSON",	index:'IPGUMPERSON',	width:100,		align:'center'}
+				,{name:"IPGUMAMT",		index:'IPGUMAMT',		width:100,		align:'center'}
+				,{name:"IPGUMGUBUN",	index:'IPGUMGUBUN',		width:100,		align:'center'}
+				,{name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center'}
+				,{name:"JANAMT",		index:'JANAMT',			width:100,		align:'center'}
 			] ,
-			rowNum:10 ,
+			rowNum:100,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,
@@ -162,8 +281,11 @@
 				repeatitems: false
 			},
 			//height: '100%' ,
-			onSelectRow: function(id){
-				alert(id);
+			onSelectRow: function(ids){
+				var selRowData = $(this).jqGrid('getRowData', ids);
+				var IPGUMID = selRowData.IPGUMID;
+				f_selectListEnaIpgumRDtl(IPGUMID);
+		        
 			} ,
 			hidegrid: false
 		});
@@ -211,134 +333,171 @@
 		});
 	}
 
+	$(function() {
+		$("#selectButton").click(function() {
+			f_selectListEnaIpgumMst();
+		});
+	})
 
-		
+	function f_selectListEnaIpgumRDtl(IPGUMID){
+		$("#SL_IPGUMGUBUN").empty().data('options');
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/home/selectListEnaIpgumMst.do", 
+			dataType : 'json' ,
+			data : {
+				SL_IPGUMID : IPGUMID,
+			},
+			success: function(data){
+				data.rows.forEach(function(currentValue, index, array){
+					$("#IPGUMDATE").val(currentValue.IPGUMDATE);
+					$("#IPGUMID").val(currentValue.IPGUMID);
+					$("#IPGUMTYPE").val(currentValue.IPGUMTYPE);
+					$("#IPGUMGUBUN").val(currentValue.IPGUMGUBUN);
+					$("#BANKGUBUN").val(currentValue.BANKGUBUN);
+					$("#IPGUMPERSON").val(currentValue.IPGUMPERSON);
+					$("#IPGUMAMT").val(currentValue.IPGUMAMT);
+					$("#SUGUMAMT").val(currentValue.SUGUMAMT);
+					$("#JANAMT").val(currentValue.JANAMT);
+					$("#BRANCHNAME").val(currentValue.BRANCHNAME);
+					$("#KNAME").val(currentValue.KNAME);
+					$("#ADDRESS").val(currentValue.ADDRESS);
+					$("#CONNAME").val(currentValue.CONNAME);
+					$("#CONPY").val(currentValue.CONPY);
+					$("#REMARK").val(currentValue.REMARK);
+
+				});
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+
 		
 </script>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table width="99%">
+		<div id="topDiv" style="width:98%; float:left;padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="selectButton" name="selectButton">조회</a>
-						<a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가</a>
-						<a class="ui-button ui-widget ui-corner-all" id="deleteButton" name="deleteButton">삭제</a>
-						<a class="ui-button ui-widget ui-corner-all" id="saveButton" name="saveButton">저장</a>
-					</td>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="삭제" id='deleteButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<td>입금기간</td>
-					<td colspan="3"><input type="text" id="SALEDATE" name="SALEDATE" /> ~ <input type="text" id="SALEDATE" name="SALEDATE" /></td>
+					<th width="120">입금기간</th>
+					<td colspan="3"><input type="text" id="SL_IPGUMDATE_FR" name="SL_IPGUMDATE_FR" /> ~ <input type="text" id="SL_IPGUMDATE_TO" name="SL_IPGUMDATE_TO" /></td>
 				</tr>
 				<tr>
-					<td>담당자</td>
+					<th width="120">담당자</th>
 					<td>
-						<select id="SYSID" name="SYSID">
+						<select id="SL_KNAME" name="SL_KNAME">
 							<option></option>
 						</select>
 					</td>
-					<td>입금구분</td>
+					<th width="120">입금구분</th>
 					<td>
-						<select id="S_IPGUMGUBUN" name="S_IPGUMGUBUN">
+						<select id="SL_IPGUMGUBUN" name="SL_IPGUMGUBUN">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>금융기관</td>
+					<th width="120">금융기관</th>
 					<td>
-						<select id="S_BANKGUBUN" name="S_BANKGUBUN">
+						<select id="SL_BANKGUBUN" name="SL_BANKGUBUN">
 						</select>
 					</td>
-					<td>입금금액</td>
-					<td><input type="text" id="SALERCD" name="SALERCD" /></td>
+					<th width="120">입금금액</th>
+					<td><input type="text" id="SL_IPGUMAMT" name="SL_IPGUMAMT" /></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone">
+		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
+			<table>
 				<tr>
-					<td>입금일자/번호</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /><input type="text" id="SYSID" name="SYSID" /></td>
+					<th width="120">입금일자/번호</th>
+					<td colspan="3"><input type="text" id="IPGUMDATE" name="IPGUMDATE" /><input type="text" id="IPGUMID" name="IPGUMID" /></td>
 				</tr>
 				<tr>
-					<td>입금형태</td>
+					<th width="120">입금형태</th>
 					<td colspan="3">
 						<select id="IPGUMTYPE" name="IPGUMTYPE">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>입금구분</td>
+					<th width="120">입금구분</th>
 					<td colspan="3">
 						<select id="IPGUMGUBUN" name="IPGUMGUBUN">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>금융기관</td>
+					<th width="120">금융기관</th>
 					<td>
 						<select id="BANKGUBUN" name="BANKGUBUN">
 						</select>
 					</td>
-					<td>입금인</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<th width="120">입금인</th>
+					<td><input type="text" id="IPGUMPERSON" name="IPGUMPERSON" /></td>
 				</tr>
 				<tr>
-					<td>입금금액</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /></td>
+					<th width="120">입금금액</th>
+					<td colspan="3"><input type="text" id="IPGUMAMT" name="IPGUMAMT" /></td>
 				</tr>
 				<tr>
-					<td>처리금액</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
-					<td>미처리금액</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<th width="120">처리금액</th>
+					<td><input type="text" id="SUGUMAMT" name="SUGUMAMT" /></td>
+					<th width="120">미처리금액</th>
+					<td><input type="text" id="JANAMT" name="JANAMT" /></td>
 				</tr>
 				<tr>
-					<td>담당지사</td>
+					<th width="120">담당지사</th>
 					<td>
-						<select id="SYSID" name="SYSID">
+						<select id="BRANCHNAME" name="BRANCHNAME">
 							<option></option>
 						</select>
 					</td>
-					<td>담당자</td>
+					<th width="120">담당자</th>
 					<td>
-						<select id="SYSID" name="SYSID">
+						<select id="KNAME" name="KNAME">
 							<option></option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>소재지</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /></td>
+					<th width="120">소재지</th>
+					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
 				</tr>
 				<tr>
-					<td>계약자</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
-					<td>평수</td>
-					<td><input type="text" id="SYSID" name="SYSID" /></td>
+					<th width="120">계약자</th>
+					<td><input type="text" id="CONNAME" name="CONNAME" /></td>
+					<th width="120">평수</th>
+					<td><input type="text" id="CONPY" name="CONPY" /></td>
 				</tr>
 				<tr>
-					<td>비고</td>
-					<td colspan="3"><input type="text" id="SYSID" name="SYSID" /></td>
+					<th width="120">비고</th>
+					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
 				</tr>
 			</table>
 		</div>
-		<div id="bottomDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table class="blueone" width="100%">
+		<div id="bottomDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="addButton" name="addButton">추가</a>
-						<a class="ui-button ui-widget ui-corner-all" id="deleteButton2" name="deleteButton2">삭제</a>
-						<a class="ui-button ui-widget ui-corner-all" id="saveButton2" name="saveButton2">저장</a>
-					</td>
+					<td><input type="button" value="추가" id='addButton' /></td>
+					<td><input type="button" value="삭제" id='deleteButton2' /></td>
+					<td><input type="button" value="저장" id='saveButton2' /></td>
 				</tr>
 			</table>
+			<br />
+			<br />
 			<table id="bottomList"></table>
 		</div>
 	</div>

@@ -122,7 +122,10 @@
 			INSACODE, KNAME 
 		FROM hr_insamst
 		WHERE 1=1
+		<isNotEmpty property="BRANCHCODE">
 		  AND BRANCHCODE = #BRANCHCODE#
+		</isNotEmpty>
+		
 		ORDER BY INSACODE
 	</select>
 	
