@@ -110,6 +110,45 @@ public class MM011001Dao extends SqlMapClientDaoSupport {
 		return chkFlag;
 	}
 	
+	public int selectAllSalesopenTb(MM011001VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectAllSalesopenTb", vo);
+
+		return cnt;
+	}
+	
+	public boolean deleteAllSalesopenTb(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteAllSalesopenTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public int selectAllPayScheduleTb(MM011001VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectAllPayScheduleTb", vo);
+
+		return cnt;
+	}
+	
+	public boolean deleteAllPayScheduleTb(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteAllPayScheduleTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean deleteDataBuyMst(MM011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteDataBuyMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
 	public boolean insertDataSalesopenTb(MM011001VO vo) throws DataAccessException {
 		boolean chkFlag = false;
 		

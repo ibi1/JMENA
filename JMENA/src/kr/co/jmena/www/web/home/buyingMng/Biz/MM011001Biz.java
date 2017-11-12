@@ -81,6 +81,50 @@ public class MM011001Biz {
 		return chkFlag;
 	}
 	
+	public boolean deleteAllSalesopenTb(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			if (MM011001Dao.selectAllSalesopenTb(vo) > 0) {
+				chkFlag = MM011001Dao.deleteAllSalesopenTb(vo);
+			} else {
+				chkFlag = true;
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteAllPayScheduleTb(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			if (MM011001Dao.selectAllPayScheduleTb(vo) > 0) {
+				chkFlag = MM011001Dao.deleteAllPayScheduleTb(vo);
+			} else {
+				chkFlag = true;
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteDataBuyMst(MM011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = MM011001Dao.deleteDataBuyMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+
 	public boolean deleteDataPayScheduleTb(MM011001VO vo) throws Exception {
 		boolean chkFlag = false;
 		

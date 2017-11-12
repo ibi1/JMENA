@@ -242,9 +242,15 @@
 		SET
 			OPENYN = #OPENYN#,
 			HOLDINGYN = #HOLDINGYN#,
+			<isNotEmpty property="HOLDINGM2">
 			HOLDINGM2 = #HOLDINGM2#,
+			</isNotEmpty>
+			<isNotEmpty property="HOLDINGPY">
 			HOLDINGPY = #HOLDINGPY#,
+			</isNotEmpty>
+			<isNotEmpty property="HOLDINGDATE">
 			HOLDINGDATE = #HOLDINGDATE#,
+			</isNotEmpty>
 			REMARK = #REMARK#,
 			UPDATEUSER = #USERID#,
 			UPDATEDATE = NOW()
@@ -259,9 +265,15 @@
 			BRANCHCODE,
 			OPENYN,
 			HOLDINGYN,
+			<isNotEmpty property="HOLDINGM2">
 			HOLDINGM2,
+			</isNotEmpty>
+			<isNotEmpty property="HOLDINGPY">
 			HOLDINGPY,
+			</isNotEmpty>
+			<isNotEmpty property="HOLDINGDATE">
 			HOLDINGDATE,
+			</isNotEmpty>
 			REMARK,
 			INSERTUSER
 		)
@@ -270,11 +282,44 @@
 			#BRANCHCODE#,
 			#OPENYN#,
 			#HOLDINGYN#,
+			<isNotEmpty property="HOLDINGM2">
 			#HOLDINGM2#,
+			</isNotEmpty>
+			<isNotEmpty property="HOLDINGPY">
 			#HOLDINGPY#,
+			</isNotEmpty>
+			<isNotEmpty property="HOLDINGDATE">
 			#HOLDINGDATE#,
+			</isNotEmpty>
 			#REMARK#,
 			#USERID#
 		)
 	</insert>
+	
+	<select id="selectAllSalesopenTb" resultClass="java.lang.Integer">
+		SELECT COUNT(BUYID) AS CNT 
+		FROM mm_salesopentb
+		WHERE BUYID = #BUYID#
+	</select>
+	
+	<delete id="deleteAllSalesopenTb">
+		DELETE FROM mm_salesopentb
+		WHERE BUYID = #BUYID#
+	</delete>
+	
+	<select id="selectAllPayScheduleTb" resultClass="java.lang.Integer">
+		SELECT COUNT(BUYID) AS CNT 
+		FROM mm_payscheduletb
+		WHERE BUYID = #BUYID#
+	</select>
+	
+	<delete id="deleteAllPayScheduleTb">
+		DELETE FROM mm_payscheduletb
+		WHERE BUYID = #BUYID#
+	</delete>
+	
+	<delete id="deleteDataBuyMst">
+		DELETE FROM mm_buymst
+		WHERE BUYID = #BUYID#
+	</delete>
 </sqlMap>

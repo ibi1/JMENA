@@ -248,6 +248,44 @@ public class MM011001Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
+	@RequestMapping("/home/deleteDataBuyMst.do")
+	public ModelAndView deleteDataBuyMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYID(request.getParameter("BUYID"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (MM011001Biz.deleteAllSalesopenTb(vo) == true) {
+			if (MM011001Biz.deleteAllPayScheduleTb(vo) == true) {
+				if (MM011001Biz.deleteDataBuyMst(vo) == true) {
+					resultCode ="SUCCESS";
+					resultMsg = "정상적으로 삭제하였습니다.";
+				} else {
+					 resultCode ="FAILED";
+					 resultMsg = "[ERROR]선택된 매입 삭제 중 오류가 발생하였습니다.";
+				}
+			} else {
+				resultCode ="FAILED";
+				resultMsg = "[ERROR]선택된 지급 스케줄 관리 전체 삭제 중 오류가 발생하였습니다.";
+			}
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]선택된 지사 오픈 관리 전체 삭제 중 오류가 발생하였습니다.";
+		}
+		
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataBuyMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
 	@RequestMapping("/home/deleteDataPayScheduleTb.do")
 	public ModelAndView deleteDataPayScheduleTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MM011001VO vo = new MM011001VO();
@@ -310,7 +348,7 @@ public class MM011001Ctr {
 		
 		vo.setBUYID(request.getParameter("BUYID"));
 		vo.setBUYSEQ(request.getParameter("BUYSEQ"));
-		vo.setBUYID(request.getParameter("BUYID"));
+		vo.setPAYGUBUN(request.getParameter("PAYGUBUN"));
 		vo.setPAYDATE(request.getParameter("PAYDATE"));
 		vo.setPAYAMT(request.getParameter("PAYAMT"));
 		vo.setPAYYN(request.getParameter("PAYYN"));
@@ -394,7 +432,7 @@ public class MM011001Ctr {
 				resultMsg = "정상적으로 수정하였습니다.";
 			 } else {
 				 resultCode ="FAILED";
-				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+				 resultMsg = "[ERROR]지사를 변경하였거나 수정 중 오류가 발생하였습니다.";
 			 }
 		} else {
 			resultCode ="FAILED";
