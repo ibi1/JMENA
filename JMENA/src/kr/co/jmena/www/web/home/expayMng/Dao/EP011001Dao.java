@@ -17,7 +17,7 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 	private final String NAME_SPACE = "EP011001.";
 
 	/**
-	 * 시스템 메뉴
+	 * 수당관리
 	 * @return
 	 * @throws DataAccessException
 	 */
@@ -29,4 +29,35 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}	
+	
+	/**
+	 * 신고인 관리
+	 * @return
+	 * @throws DataAccessException
+	 */
+	@SuppressWarnings("unchecked")
+	public List<EP011001VO> selectListEnaSudangPTb(EP011001VO vo) throws DataAccessException {
+		List<EP011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaSudangPTb", vo);
+		
+		return lst;
+	}		
+	
+	
+	/**
+	 * 수당관리 팝업
+	 * @return
+	 * @throws DataAccessException
+	 */
+	@SuppressWarnings("unchecked")
+	public List<EP011001VO> selectListEnaSaleSudangList(EP011001VO vo) throws DataAccessException {
+		List<EP011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaSaleSudangList", vo);
+		
+		return lst;
+	}			
+	
+		
 }

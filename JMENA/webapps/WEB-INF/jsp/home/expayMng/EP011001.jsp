@@ -122,15 +122,15 @@
 	function searchbottomList(){
 		$('#bottomList').jqGrid({
 			//caption: '수당지급관리'
-			url:"/home/selectEnaSudangMstList.do" ,
+			url:"/home/selectListEnaSudangPTb.do" ,
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고'] ,
-			colModel:[  			          
-				  {name:"GRADE",			index:'GRADE',		width:60,		align:'center'}
-//				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
+			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고',
+			          '판매번호','순번','신고인순번','신고인주민번호'] ,
+			colModel:[  	
+				  {name:"GRADE",		index:'GRADE',		width:60,		align:'center'}
 				, {name:"DUTY",			index:'DUTY',		width:60,		align:'center'}
-				, {name:"SALERNM",		index:'SALERNM',	width:60,		align:'center'}
+				, {name:"PAYERNAME",	index:'PAYERNAME',	width:60,		align:'center'}
 				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:60,		align:'center'}
 				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center'}
 				, {name:"PAYAMT",		index:'PAYAMT',		width:60,		align:'center'}
@@ -139,8 +139,13 @@
 				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:60,		align:'center'}
 				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:60,		align:'center'}
 				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:60,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:60,		align:'center'}
+				, {name:"PAYNUM",		index:'PAYNUM',		width:60,		align:'center'}
 				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center'}
+				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center', hidden:true}
+				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center', hidden:true}
+				, {name:"REGISTERSEQ",	index:'REGISTERSEQ',width:60,		align:'center', hidden:true}
+				, {name:"PAYERID",		index:'PAYERID',	width:60,		align:'center', hidden:true}
+//				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -295,7 +300,7 @@
 				<tr>
 					<td>지사</td>
 					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" >
 							<option></option>
 						</select>
 					</td>
@@ -325,62 +330,62 @@
 				<tr>
 					<td>매출구분</td>
 					<td colspan="3">
-						<select id="SALEGUBUN" name="SALEGUBUN">
+						<select id="SALEGUBUN" name="SALEGUBUN" disabled >
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>담당자</td>
-					<td><input type="text" id="SALERCD1" name="SALERCD1"/></td>
+					<td><input type="text" id="SALERCD1" name="SALERCD1" disabled/></td>
 					<td>계약지사</td>
 					<td>
-						<select id="BRANCHCODE" name="BRANCHCODE">
+						<select id="BRANCHCODE" name="BRANCHCODE" disabled>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>관리번호</td>
-					<td ><input type="text" id="MANAGENO" name="MANAGENO" /></td>
+					<td ><input type="text" id="MANAGENO" name="MANAGENO" disabled/></td>
 					<td>지역구분</td>
 					<td>
-						<select id="CITYCODE" name="CITYCODE">
+						<select id="CITYCODE" name="CITYCODE" disabled>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
+					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" disabled/></td>
 				</tr>
 				<tr>
 					<td>계약자 성명</td>
-					<td colspan="3"><input type="text" id="CONNAME" name="CONNAME" /></td>
+					<td colspan="3"><input type="text" id="CONNAME" name="CONNAME" disabled/></td>
 				</tr>
 				<tr>
 					<td>계약면적</td>
-					<td><input type="text" id="CONM2" name="CONM2" /></td>
+					<td><input type="text" id="CONM2" name="CONM2" disabled/></td>
 					<td>계약평수</td>
-					<td><input type="text" id="CONPY" name="CONPY" /></td>
+					<td><input type="text" id="CONPY" name="CONPY" disabled/></td>
 				</tr>
 				<tr>
 					<td>매매대금</td>
-					<td><input type="text" id="SALEAMT" name="SALEAMT" /></td>
+					<td><input type="text" id="SALEAMT" name="SALEAMT" disabled/></td>
 					<td>매매단가</td>
-					<td><input type="text" id="SALEDANGA" name="SALEDANGA" /></td>
+					<td><input type="text" id="SALEDANGA" name="SALEDANGA" disabled/></td>
 				</tr>
 				<tr>
 					<td>DC사항</td>
 					<td>
-						<select id="DCGUBUN" name="DCGUBUN">
+						<select id="DCGUBUN" name="DCGUBUN" disabled>
 						</select>
 					</td>
 					<td>DC 율</td>
-					<td><input type="text" id="DCRATE" name="DCRATE" /> % </td>
+					<td><input type="text" id="DCRATE" name="DCRATE" disabled/> % </td>
 				</tr>
 				<tr>
 					<td>DC금액</td>
-					<td><input type="text" id="DCAMT" name="DCAMT" /></td>
+					<td><input type="text" id="DCAMT" name="DCAMT" disabled/></td>
 					<td>실 판매가</td>
-					<td><input type="text" id="SELLAMT" name="SELLAMT" /></td>
+					<td><input type="text" id="SELLAMT" name="SELLAMT" disabled/></td>
 				</tr>
 			</table>
 		</div>

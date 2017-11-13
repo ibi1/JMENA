@@ -55,6 +55,8 @@ public class EP011001VO {
 	private String PAYSEQ;
 	private String REGISTERSEQ;
 	
+	private String PAYNUM;
+	
 	
 	public String getS_SALERCD() {
 		return S_SALERCD;
@@ -325,6 +327,12 @@ public class EP011001VO {
 	}
 	public void setREGISTERSEQ(String rEGISTERSEQ) {
 		this.REGISTERSEQ = rEGISTERSEQ;
+	}
+	public String getPAYNUM() {
+		return PAYNUM;
+	}
+	public void setPAYNUM(String pAYNUM) {
+		this.PAYNUM = pAYNUM;
 	}
 
 }

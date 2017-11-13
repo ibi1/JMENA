@@ -32,4 +32,29 @@ public class EP011001Biz {
 		return lst;
 	}
 	
+	public List<EP011001VO> selectListEnaSudangPTb(EP011001VO vo) throws Exception {
+		List<EP011001VO> lst = null;
+
+		try {
+			lst = EP011001Dao.selectListEnaSudangPTb(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}	
+	
+	public List<EP011001VO> selectListEnaSaleSudangList(EP011001VO vo) throws Exception {
+		List<EP011001VO> lst = null;
+
+		try {
+			lst = EP011001Dao.selectListEnaSaleSudangList(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}		
+	
+	
 }
