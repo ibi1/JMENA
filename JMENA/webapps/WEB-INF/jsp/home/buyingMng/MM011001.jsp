@@ -51,28 +51,28 @@
 			
 			$("#LS_BUYDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#LS_BUYDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-			$("#LS_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#LS_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 			
 			$("#BUYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#BUYID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});
-			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
-			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 500, minLength: 1});
-			$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+			$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		
-			$("#BUYM2").jqxInput({theme: 'energyblue', height: 23, width: 50});
-			$("#BUYPY").jqxInput({theme: 'energyblue', height: 23, width: 50});
-			$("#BUNYM2").jqxInput({theme: 'energyblue', height: 23, width: 50, disabled: true});
-			$("#BUNJANM2").jqxInput({theme: 'energyblue', height: 23, width: 50, disabled: true});
-			$("#BUNYPY").jqxInput({theme: 'energyblue', height: 23, width: 50, disabled: true});
-			$("#BUNJANPY").jqxInput({theme: 'energyblue', height: 23, width: 50, disabled: true});
-			$("#BUYAMT").jqxInput({theme: 'energyblue', height: 23, width: 50});
-			$("#BUYDANGA").jqxInput({theme: 'energyblue', height: 23, width: 50});
+			$("#BUYM2").jqxInput({theme: 'energyblue', height: 23, width: 70});
+			$("#BUYPY").jqxInput({theme: 'energyblue', height: 23, width: 70});
+			$("#BUNYM2").jqxInput({theme: 'energyblue', height: 23, width: 70, disabled: true});
+			$("#BUNJANM2").jqxInput({theme: 'energyblue', height: 23, width: 70, disabled: true});
+			$("#BUNYPY").jqxInput({theme: 'energyblue', height: 23, width: 70, disabled: true});
+			$("#BUNJANPY").jqxInput({theme: 'energyblue', height: 23, width: 70, disabled: true});
+			$("#BUYAMT").jqxInput({theme: 'energyblue', height: 23, width: 150});
+			$("#BUYDANGA").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			
-			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 	
-			$("#PAYTOTAL").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1, disabled: true});
+			$("#PAYTOTAL").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
 	
 			f_selectListEnaBuyMst();
 			f_selectListEnaPayScheduleTb();
@@ -1023,16 +1023,11 @@
 							<div id="leftDiv">
 								<table>
 									<tr>
-										<th>매입기간</th>
+										<th width="120">매입기간</th>
 										<td><input type="text" id="LS_BUYDATE_FR" name="LS_BUYDATE_FR" /> - <input type="text" id="LS_BUYDATE_TO" name="LS_BUYDATE_TO" /></td>
 									</tr>
 									<tr>
-										<th>담당자 (필드에 없는 내용)</th>
-										<td>
-										</td>
-									</tr>
-									<tr>
-										<th>지번(주소)</th>
+										<th width="120">지번(주소)</th>
 										<td><input type="text" id="LS_ADDRESS" name="LS_ADDRESS" onkeydown="f_selectButton();" /></td>
 									</tr>
 								</table>
@@ -1048,90 +1043,86 @@
 										<div>
 											<form id="MM011001">
 											<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
-											<table width="680px">
+											<table>
 												<tr>
-													<th width="100">* 계약일자 / 번호</th>
-													<td colspan="6"><input type="text" id="BUYDATE" name="BUYDATE" onkeydown="f_getBuyId();" />&nbsp;<input type="text" id="BUYID" name="BUYID" /></td>
-													<td><input type="button" id="searchButton"/></td>
+													<th width="120">* 계약일자 / 번호</th>
+													<td><input type="text" id="BUYDATE" name="BUYDATE" onkeydown="f_getBuyId();" />&nbsp;<input type="text" id="BUYID" name="BUYID" /></td>
+													<td colspan="2"><input type="button" id="searchButton"/></td>
 												</tr>
 												<tr>
-													<th>* 매입구분</th>
-													<td colspan="7">
+													<th width="120">* 매입구분</th>
+													<td colspan="3">
 														<select id="BUYGUBUN" name="BUYGUBUN">
 														</select>
 													</td>
 												</tr>
 												<tr>
-													<th>* 관리번호</th>
-													<td colspan="7"><input type="text" id="MANAGENO" name="MANAGENO" /></td>
+													<th width="120">* 관리번호</th>
+													<td colspan="3"><input type="text" id="MANAGENO" name="MANAGENO" /></td>
 												</tr>
 												<tr height="10px">
 												</tr>
 												<tr>
-													<th>지역구분</th>
-													<td colspan="3">
+													<th width="120">지역구분</th>
+													<td>
 														<select id="CITYCODE" name="CITYCODE">
 														</select>
 													</td>
-													<th width="100">시/도구분</th>
-													<td colspan="3">
+													<th width="120">시/도구분</th>
+													<td>
 														<select id="BOROUGHCODE" name="BOROUGHCODE">
 														</select>
 													</td>
 												</tr>
 												<tr>
-													<th>지목</th>
-													<td colspan="7">
+													<th width="120">지목</th>
+													<td colspan="3">
 														<select id="USETYPE" name="USETYPE">
 														</select>
 													</td>	
 												</tr>
 												<tr>
-													<th>주소</th>
-													<td colspan="7"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
+													<th width="120">주소</th>
+													<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
 												</tr>
 												<tr>
-													<th>원지주성명</th>
-													<td colspan="3"><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
-													<th>주민번호</th>
-													<td colspan="3"><input type="text" id="OWNERJUMINID" name="OWNERJUMINID" /></td>
+													<th width="120">원지주성명</th>
+													<td><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
+													<th width="120">주민번호</th>
+													<td><input type="text" id="OWNERJUMINID" name="OWNERJUMINID" /></td>
 												</tr>
 												<tr>
-													<th>계약면적</th>
-													<td colspan="3"><input type="text" id="BUYM2" name="BUYM2" /></td>
-													<th>계약평수</th>
-													<td colspan="3"><input type="text" id="BUYPY" name="BUYPY" /></td>
+													<th width="120">계약면적</th>
+													<td><input type="text" id="BUYM2" name="BUYM2" /></td>
+													<th width="120">계약평수</th>
+													<td><input type="text" id="BUYPY" name="BUYPY" /></td>
 												</tr>
 												<tr>
-													<th>분양/잔여면적</th>
-													<td><input type="text" id="BUNYM2" name="BUNYM2" /></td>
-													<td> / </td>
-													<td><input type="text" id="BUNJANM2" name="BUNJANM2" /></td>
-													<th>분양/잔여평수</th>
-													<td><input type="text" id="BUNYPY" name="BUNYPY" /></td>
-													<td> / </td>
-													<td><input type="text" id="BUNJANPY" name="BUNJANPY" /></td>
+													<th width="120">분양/잔여면적</th>
+													<td><input type="text" id="BUNYM2" name="BUNYM2" /> / <input type="text" id="BUNJANM2" name="BUNJANM2" /></td>
+													<th width="120">분양/잔여평수</th>
+													<td><input type="text" id="BUNYPY" name="BUNYPY" /> / <input type="text" id="BUNJANPY" name="BUNJANPY" /></td>
 												</tr>
 												<tr>
-													<th><div id="mm_div1">매매대금</div></th>
-													<td colspan="3"><input type="text" id="BUYAMT" name="BUYAMT" /></td>
-													<th><div id="mm_div2">매매단가</div></th>
-													<td colspan="3"><input type="text" id="BUYDANGA" name="BUYDANGA" /></td>
+													<th width="120"><div id="mm_div1">매매대금</div></th>
+													<td><input type="text" id="BUYAMT" name="BUYAMT" /></td>
+													<th width="120"><div id="mm_div2">매매단가</div></th>
+													<td><input type="text" id="BUYDANGA" name="BUYDANGA" /></td>
 												</tr>
 												<tr>
-													<th>등기여부</th>
-													<td colspan="7">
+													<th width="120">등기여부</th>
+													<td colspan="3">
 														<input type="radio" id="REGYN" name="REGYN" value="Y">등기완료
 														<input type="radio" id="REGYN" name="REGYN" value="N">미등기
 													</td>
 												</tr>
 												<tr>
-													<th>등기일자</th>
-													<td colspan="7"><input type="text" id="REGDATE" name="REGDATE" /></td>
+													<th width="120">등기일자</th>
+													<td colspan="3"><input type="text" id="REGDATE" name="REGDATE" /></td>
 												</tr>
 												<tr>
-													<th>비고</th>
-													<td colspan="7"><input type="text" id="REMARK" name="REMARK" /></td>
+													<th width="120">비고</th>
+													<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
 												</tr>
 											</table>
 											</form>
