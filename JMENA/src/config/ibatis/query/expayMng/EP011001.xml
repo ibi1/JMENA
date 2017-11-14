@@ -71,6 +71,21 @@
 		<result property="SALERNM"					column="SALERNM"/>		
 		<result property="SALEAMT"					column="SALEAMT"/>
 		<result property="CONNAME"					column="CONNAME"/>
+		<result property="SALEGUBUN"				column="SALEGUBUN"/>
+		<result property="CONNAME"					column="CONNAME"/>
+		<result property="SALERCD"					column="SALERCD"/>
+		<result property="BRANCHCODE"				column="BRANCHCODE"/>
+		<result property="MANAGENO"					column="MANAGENO"/>
+		<result property="CITYCODE"					column="CITYCODE"/>
+		<result property="ADDRESS"					column="ADDRESS"/>
+		<result property="CONM2"					column="CONM2"/>
+		<result property="CONPY"					column="CONPY"/>
+		<result property="SALEAMT"					column="SALEAMT"/>
+		<result property="SALEDANGA"				column="SALEDANGA"/>
+		<result property="DCGUBUN"					column="DCGUBUN"/>
+		<result property="DCRATE"					column="DCRATE"/>
+		<result property="DCAMT"					column="DCAMT"/>
+		<result property="SELLAMT"					column="SELLAMT"/>
 	</resultMap>
 	
 
@@ -191,12 +206,13 @@
 		)
 		VALUES(
 			#SALEID#,
-			#PAYSEQ#,
+			(SELECT IFNULL(MAX(PAYSEQ),0) +1 FROM sa_sudangmst s WHERE SALEID = #SALEID#),
 			#INSACODE#,
-			#BRANCHCODE#,
-			#DEPTCODE#,
-			#GRADE#,
-			#DUTY#,
+			(SELECT BRANCHCODE FROM hr_insamst WHERE INSACODE = #INSACODE#) AS BRANCHCODE,
+			(SELECT DEPTCODE FROM hr_insamst WHERE INSACODE = #INSACODE#) AS DEPTCODE,
+			(SELECT GRADE FROM hr_insamst WHERE INSACODE = #INSACODE#) AS GRADE,
+			(SELECT DUTY FROM hr_insamst WHERE INSACODE = #INSACODE#) AS DUTY,
+			(SELECT BRANCHCODE FROM hr_insamst WHERE INSACODE = #INSACODE#) AS BRANCHCODE,
 			#PAYDATE#,
 			#SUDANGRATE#,
 			#ADDRATE#,
@@ -207,7 +223,7 @@
 			#SUPPLYTAX#,
 			#DEDUCTAMT#,
 			#REMARK#,
-			#INSERTUSER#,
+			'admin',
 			SYSDATE()
 		)
 	</insert>
@@ -312,8 +328,23 @@
 			T1.SALEID,
 			(SELECT KNAME FROM hr_insamst WHERE INSACODE = T1.SALERCD) AS SALERNM,
 			(SELECT SALEAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SALEAMT,
-			T1.CONNAME
-		FROM sa_salemst T1
+			T1.CONNAME,
+			T1.SALEGUBUN,
+			SALERCD,
+			'001' AS BRANCHCODE, <!-- 계약지사 -->
+			'1' AS MANAGENO,
+			'1' AS CITYCODE,
+			'1' AS ADDRESS,
+			T1.CONNAME,
+			T1.CONM2,
+			T1.CONPY,
+			(SELECT SALEAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SALEAMT,
+			(SELECT SALEDANGA FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SALEDANGA,
+        	(SELECT DCGUBUN FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCGUBUN,
+         	(SELECT DCRATE FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCRATE,
+       	  	(SELECT DCAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCAMT,
+       	  	(SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT
+   		FROM sa_salemst T1
 		WHERE 1=1
 <!-- 		AND T1.SALEID = #SALEID#
 		AND T1.PAYSEQ = #PAYSEQ#

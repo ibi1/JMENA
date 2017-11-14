@@ -22,10 +22,12 @@
 		f_selectEnaCode("013");
 		//공통코드 가져오기 끝
 		
+		
+		selectListEnaSudangMst();
+		
 	});
 
-
-	$(function(){
+	function selectListEnaSudangMst(){
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#leftList').jqGrid({
 			//caption: '수당관리'
@@ -115,7 +117,7 @@
 			hidegrid: false
 		});
 	
-	});
+	}
 	
 	
 	
@@ -263,6 +265,8 @@
 		});
 	}	
 	
+
+
 	$(function(){
 		$("#popupButton").click(function(){
 			var popUrl = "/home/EP011001_1.do";	//팝업창에 출력될 페이지 UR
@@ -271,6 +275,50 @@
 		}); 
 	});
 	
+	$(function(){
+		$("#insertButton").click(function() {
+			$("#PAYDATE").val("");
+			$("#SALERCD").val("");
+			$("#SALERNM").val("");
+			$("#SUDANGRATE").val("");
+			$("#ADDRATE").val("");
+			$("#TAXGUBUN").val("");
+			$("#TAXINCOME").val("");
+			$("#TAXLOCAL").val("");
+			$("#SUPPLYTAX").val("");
+			$("#PAYAMT").val("");
+			$("#DEDUCTAMT").val("");
+			$("#REMARK").val("");
+		}); 
+	});	
+	
+	
+	
+	$(function(){
+		$("#saveButton").click(function(){
+			var formData = $("#EP011001").serialize();
+		   	$.ajax({ 
+				type: 'POST' ,
+				url: "/home/updateEnaInsaMst.do", 
+				//dataType : 'json' , 
+				data : formData,
+				//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
+				success: function(data){
+					if(data.rows[0].MSG == "success")
+					{
+						alert("저장이 완료되었습니다.");
+						selectListInsaMst();
+					}else{
+						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+					}
+					
+				},
+				error:function(e){  
+					alert("인사 정보를 저장하는 중 오류가 발생하였습니다.");
+				}  
+			});
+		}) 
+	})			
 	
 	
 		
@@ -282,8 +330,8 @@
 			<table>
 				<tr>
 					<td><a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">조회 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="addButton"    name="insertButton">추가 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="addButton"    name="deleteButton">삭제 </a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가 </a></td>
+					<td><a class="ui-button ui-widget ui-corner-all" id="deleteButton" name="deleteButton">삭제 </a></td>
 					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton"   name="saveButton">저장 </a></td>
 				</tr>
 			</table>
@@ -390,7 +438,8 @@
 			</table>
 		</div>
 		<div id="bottomDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-			<table >
+			<form id="EP011001">
+			<table>
 				<tr>
 					<th width="120">지급일자</th>
 					<td><input type="text" id="PAYDATE" name="PAYDATE"> </td>
@@ -424,6 +473,7 @@
 					<td colspan="9"><input type="text" id="REMARK" name="REMARK"/></td>
 				</tr>
 			</table>
+			</form>
 			<table id="bottomList"></table>
 		</div>
 	</div>

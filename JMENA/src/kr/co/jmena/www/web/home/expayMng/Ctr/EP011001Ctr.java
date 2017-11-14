@@ -281,11 +281,28 @@ public class EP011001Ctr {
 				
 				JSONObject obj = new JSONObject();			
 				
+				
+				System.out.println("getCONM2                     ====                   "     + lst.get(i).getCONM2());
+				
 				obj.put("SALEDATE", lst.get(i).getSALEDATE());
 				obj.put("SALEID", lst.get(i).getSALEID());
 				obj.put("SALERNM", lst.get(i).getSALERNM());
 				obj.put("SALEAMT", lst.get(i).getSALEAMT());
 				obj.put("CONNAME", lst.get(i).getCONNAME());
+				obj.put("SALEGUBUN", lst.get(i).getSALEGUBUN());
+				obj.put("SALERCD", lst.get(i).getSALERCD());
+				obj.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
+				obj.put("MANAGENO", lst.get(i).getMANAGENO());
+				obj.put("CITYCODE", lst.get(i).getCITYCODE());
+				obj.put("ADDRESS", lst.get(i).getADDRESS());
+				obj.put("CONM2", lst.get(i).getCONM2());
+				obj.put("CONPY", lst.get(i).getCONPY());
+				obj.put("SALEAMT", lst.get(i).getSALEAMT());
+				obj.put("SALEDANGA", lst.get(i).getSALEDANGA());
+				obj.put("DCGUBUN", lst.get(i).getDCGUBUN());
+				obj.put("DCRATE", lst.get(i).getDCRATE());
+				obj.put("DCAMT", lst.get(i).getDCAMT());
+				obj.put("SELLAMT", lst.get(i).getSELLAMT());
 				
 				jCell.add(obj);			
 			}
@@ -296,6 +313,20 @@ public class EP011001Ctr {
 			obj.put("SALERNM", "");
 			obj.put("SALEAMT", "");
 			obj.put("CONNAME", "");
+			obj.put("SALEGUBUN", "");
+			obj.put("SALERCD", "");
+			obj.put("BRANCHCODE", "");
+			obj.put("MANAGENO", "");
+			obj.put("CITYCODE", "");
+			obj.put("ADDRESS", "");
+			obj.put("CONM2", "");
+			obj.put("CONPY", "");
+			obj.put("SALEAMT", "");
+			obj.put("SALEDANGA", "");
+			obj.put("DCGUBUN", "");
+			obj.put("DCRATE", "");
+			obj.put("DCAMT", "");
+			obj.put("SELLAMT", "");
 			
 			jCell.add(obj);
 			
