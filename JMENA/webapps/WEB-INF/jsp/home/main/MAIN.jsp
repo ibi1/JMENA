@@ -75,6 +75,8 @@
 	
 	<script type="text/javascript">
 	 	$(document).ready(function(){
+	 		$("#logoutButton").jqxButton({theme: 'energyblue', width: 60, height: 25 });
+	 		
 	 		$("#messageNotification").jqxNotification({ theme: 'bootstrap',
                 width: 400, position: "top-right", opacity: 0.9,
                 autoOpen: true, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 10000, template: "info"
@@ -235,6 +237,16 @@
     			});
 	    	})
 	  	}
+	  	
+		$(function() {
+			$("#logoutButton").click(function() {
+				if (confirm("로그아웃 하시겠습니까?") == true) {
+					alert("안전하게 로그아웃되었습니다.\n감사합니다.");
+					
+					location.href = "/";
+				}
+			});
+		})
 	</script>
 	</head>
 	<body class="default">
@@ -252,7 +264,9 @@
 	                    <div>
 	                    	<span>
 	                    		<div id="topright">
-	                    			<div id="info" style="height: 50px;"></div>
+	                    			<div id="info" style="height: 40px; padding: 5px;" align="right">
+	                    				<strong><%=session.getAttribute("userName")%></strong> 님! 환영합니다. <input type="button" value="로그아웃" id="logoutButton" />
+	                    			</div>
 	                    			<div id="tabs" style="font-size: 28px; !important; border: none;"></div>
 	                    		</div>
 							</span>
