@@ -363,7 +363,9 @@
 					<td>담당자</td>
 					<td colspan="3">
 						<input type="text" id="S_SALERCD" name="S_SALERCD" />
+						<input type="text" id="S_SALEID" name="S_SALEID"/> 
 					</td>
+						
 				</tr>
 			</table>
 			<table id="leftList"></table>

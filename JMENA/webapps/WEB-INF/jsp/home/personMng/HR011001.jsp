@@ -14,7 +14,6 @@
 
 <script type="text/javascript">
 	var v_rightLastSel = 0;
-	var idx = 0;
 	$(function(){
 		var INSACODE = "";
 		var BRANCHCODE = "";
@@ -433,7 +432,8 @@
 	})
 	
 	$(function(){
-		$("#saveButton").click(function(){
+		$("#saveButton").click(function(){		
+			$("#REJOINYN").is(":checked") ? $("#REJOINYN").val("Y") : $("#REJOINYN").val("N");
 			var formData = $("#HR011001").serialize();
 		   	$.ajax({ 
 				type: 'POST' ,
@@ -888,7 +888,7 @@
 					<th align="left">입사일</th>
 					<td><input type="text" id="JOINDATE" name="JOINDATE" /></td>
 					<th align="left">재입사여부</th>
-					<td><input type="checkbox" id="REJOINYN" name="REJOINYN" value="Y" /></td>
+					<td><input type="checkbox" id="REJOINYN" name="REJOINYN" /></td>
 				</tr>
 				<tr>
 					<th align="left">퇴사일</th>

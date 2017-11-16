@@ -98,7 +98,7 @@
 				$("#DCRATE", parent.opener.document).val(selRowData.DCRATE);
 				$("#DCAMT", parent.opener.document).val(selRowData.DCAMT);
 				$("#SELLAMT").val(selRowData.SELLAMT);
-				$("#S_SALERCD", parent.opener.document).val(selRowData.SALERCD);
+				$("#S_SALEID", parent.opener.document).val(selRowData.SALEID);
 				window.self.close();
 				selectListEnaSudangMst();
 			} ,

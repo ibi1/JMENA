@@ -14,6 +14,7 @@
 		<result property="DEPTCODE"			column="DEPTCODE"/>
 		<result property="GRADE"					column="GRADE"/>
 		<result property="DUTY"					column="DUTY"/>
+		<result property="KNAME"					column="KNAME"/>
 		<result property="PAYDATE"				column="PAYDATE"/>
 		<result property="BASICAMT"			column="BASICAMT"/>
 		<result property="ACTAMT"				column="ACTAMT"/>
@@ -32,11 +33,12 @@
 	<select id="selectListEnaMonthPayMst" resultMap="EP011002Data">
 		SELECT 
 			T1.YEARMONTH,
-			T1.INSACODE,
 			T1.BRANCHCODE,
 			T1.DEPTCODE,
 			T1.GRADE,
 			T1.DUTY,
+			T1.INSACODE,
+			(SELECT KNAME FROM hr_insamst WHERE INSACODE = T1.INSACODE) AS KNAME,
 			T1.PAYDATE,
 			T1.BASICAMT,
 			T1.ACTAMT,
@@ -51,41 +53,14 @@
 			T1.BANKID,
 			T1.ACCTNO,
 			T1.ACCTOWNER
-		FROM SA_MONTHPAYTB T1
+		FROM sa_monthpaytb T1
 		WHERE 1=1
-		ORDER BY T1.SALEID ASC, T1.PAYSEQ
+		<!-- ORDER BY T1.SALEID ASC, T1.PAYSEQ -->
 	</select>
-	
-	<update id="updateEnaMonthPayMst">
-		UPDATE SA_MONTHPAYTB
-		SET
-			BRANCHCODE = #BRANCHCODE#,
-			DEPTCODE = #DEPTCODE#,
-			GRADE = #GRADE#,
-			DUTY = #DUTY#,
-			PAYDATE = #PAYDATE#,
-			BASICAMT = #BASICAMT#,
-			ACTAMT = #ACTAMT#,
-			PRIZEAMT = #PRIZEAMT#,
-			DAILYAMT = #DAILYAMT#,
-			TOTALAMT = #TOTALAMT#,
-			TAXGUBUN = #TAXGUBUN#,
-			TAXINCOME = #TAXINCOME#,
-			TAXLOCAL = #TAXLOCAL#,
-			SUPPLYTAX = #SUPPLYTAX#,
-			DEDUCTAMT = #DEDUCTAMT#,
-			BANKID = #BANKID#,
-			ACCTNO = #ACCTNO#,
-			ACCTOWNER = #ACCTOWNER#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
-		WHERE YEARMONTH = #YEARMONTH#
-		AND INSACODE = #INSACODE#
 
-	</update>
 	
 	<insert id="insertEnaMonthPayMst">
-		INSERT INTO SA_MONTHPAYTB
+		INSERT INTO sa_monthpaytb
 		(
 			YEARMONTH,
 			INSACODE,
@@ -131,9 +106,36 @@
 			#BANKID#,
 			#ACCTNO#,
 			#ACCTOWNER#,
-			#INSERTUSER#,
+			'admin',
 			SYSDATE()
 		)
 	</insert>
 	
+	<update id="updateEnaMonthPayMst">
+		UPDATE sa_monthpaytb
+		SET
+			BRANCHCODE = #BRANCHCODE#,
+			DEPTCODE = #DEPTCODE#,
+			GRADE = #GRADE#,
+			DUTY = #DUTY#,
+			PAYDATE = #PAYDATE#,
+			BASICAMT = #BASICAMT#,
+			ACTAMT = #ACTAMT#,
+			PRIZEAMT = #PRIZEAMT#,
+			DAILYAMT = #DAILYAMT#,
+			TOTALAMT = #TOTALAMT#,
+			TAXGUBUN = #TAXGUBUN#,
+			TAXINCOME = #TAXINCOME#,
+			TAXLOCAL = #TAXLOCAL#,
+			SUPPLYTAX = #SUPPLYTAX#,
+			DEDUCTAMT = #DEDUCTAMT#,
+			BANKID = #BANKID#,
+			ACCTNO = #ACCTNO#,
+			ACCTOWNER = #ACCTOWNER#,
+			UPDATEUSER = 'admin',
+			UPDATEDATE = SYSDATE()
+		WHERE YEARMONTH = #YEARMONTH#
+		AND INSACODE = #INSACODE#
+
+	</update>	
 </sqlMap> 

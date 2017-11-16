@@ -23,6 +23,10 @@ public class EP011002VO {
 	private String BANKID;
 	private String ACCTOWNER;
 	
+	private String KNAME;
+	
+	private String USERID;
+	
 	
 	public String getACCTNO() {
 		return this.ACCTNO;
@@ -145,6 +149,18 @@ public class EP011002VO {
 	}
 	public void setACCTOWNER(String ACCTOWNER) {
 		this.ACCTOWNER = ACCTOWNER;
+	}
+	public String getKNAME() {
+		return KNAME;
+	}
+	public void setKNAME(String kNAME) {
+		this.KNAME = kNAME;
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setUSERID(String uSERID) {
+		this.USERID = uSERID;
 	}
 	
 	

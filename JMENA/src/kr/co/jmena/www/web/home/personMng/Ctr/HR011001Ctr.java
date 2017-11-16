@@ -263,7 +263,6 @@ public class HR011001Ctr {
 		String insacode = request.getParameter("INSACODE");		
 		String juminId = request.getParameter("JUMINID1") + request.getParameter("JUMINID2");
 		String saupId = request.getParameter("SAUPID1") + request.getParameter("SAUPID2") + request.getParameter("SAUPID3");
-		String retiredate = request.getParameter("RETIREDATE") == null ? "" : request.getParameter("RETIREDATE");
 		
 		vo.setINSACODE(insacode);
 		vo.setKNAME(request.getParameter("KNAME"));
@@ -282,7 +281,6 @@ public class HR011001Ctr {
 		vo.setDUTY(request.getParameter("DUTY"));
 		vo.setJOINDATE(request.getParameter("JOINDATE"));
 		vo.setREJOINYN(request.getParameter("REJOINYN"));
-		vo.setREJOINYN(retiredate);
 		vo.setRECOID(request.getParameter("RECOID"));
 		vo.setREMARK(request.getParameter("REMARK"));
 

@@ -20,16 +20,41 @@ public class EP011002Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
-	public List<EP011002VO> selectListEnaInsaMst() throws Exception {
+	public List<EP011002VO> selectListEnaMonthPayMst(EP011002VO vo) throws Exception {
 		List<EP011002VO> lst = null;
 
 		try {
-			//lst = EP011002Dao.selectListEnaInsaMst();
+			lst = EP011002Dao.selectListEnaMonthPayMst(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}
 		
 		return lst;
+	}
+	
+	
+	public int insertEnaMonthPayMst(EP011002VO vo) throws Exception {
+		int insertCnt = 0;
+		
+		try {
+			insertCnt = EP011002Dao.insertEnaMonthPayMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return insertCnt;
+	}
+	
+	public int updateEnaMonthPayMst(EP011002VO vo) throws Exception {
+		int updateCnt = 0;
+
+		try {
+			updateCnt = EP011002Dao.updateEnaMonthPayMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return updateCnt;
 	}
 	
 }
