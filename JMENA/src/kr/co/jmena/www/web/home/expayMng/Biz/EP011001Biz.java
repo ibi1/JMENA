@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
 import kr.co.jmena.www.web.home.expayMng.Dao.EP011001Dao;
+import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,43 @@ public class EP011001Biz {
 		return lst;
 	}
 	
+	public int selectDataEnaSudangMst(EP011001VO vo) throws Exception {
+		int cnt = 0;
+		
+		try {
+			cnt = EP011001Dao.selectDataEnaSudangMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return cnt;
+	}	
+	
+	public int insertEnaSudangMst(EP011001VO vo) throws Exception {
+		int insertCnt = 0;
+		
+		try {
+			insertCnt = EP011001Dao.insertEnaSudangMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return insertCnt;
+	}
+	
+	
+	public int updateEnaSudangMst(EP011001VO vo) throws Exception {
+		int updateCnt = 0;
+
+		try {
+			updateCnt = EP011001Dao.updateEnaSudangMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return updateCnt;
+	}	
+	
 	public List<EP011001VO> selectListEnaSudangPTb(EP011001VO vo) throws Exception {
 		List<EP011001VO> lst = null;
 
@@ -42,6 +80,32 @@ public class EP011001Biz {
 		}
 		
 		return lst;
+	}	
+	
+	
+	public int insertEnaSudangPTb(EP011001VO vo) throws Exception {
+		int insertCnt = 0;
+		
+		try {
+			insertCnt = EP011001Dao.insertEnaSudangPTb(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return insertCnt;
+	}
+	
+	
+	public int updateEnaSudangPTb(EP011001VO vo) throws Exception {
+		int updateCnt = 0;
+
+		try {
+			updateCnt = EP011001Dao.updateEnaSudangPTb(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return updateCnt;
 	}	
 	
 	public List<EP011001VO> selectListEnaSaleSudangList(EP011001VO vo) throws Exception {
@@ -56,5 +120,6 @@ public class EP011001Biz {
 		return lst;
 	}		
 	
+
 	
 }

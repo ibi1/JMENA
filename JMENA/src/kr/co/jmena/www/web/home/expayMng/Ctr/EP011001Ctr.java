@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.expayMng.Biz.EP011001Biz;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
@@ -56,6 +57,19 @@ public class EP011001Ctr {
 		return new ModelAndView("home/expayMng/EP011001_1");
 	}
 		
+	/**
+	 * @name 신고인 팝업 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/EP011001_2.do")
+	public ModelAndView EP011001_2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		return new ModelAndView("home/expayMng/EP011001_2");
+	}
+	
 	
 	
 	/**
@@ -88,8 +102,11 @@ public class EP011001Ctr {
 				
 				
 				obj.put("PAYDATE", lst.get(i).getPAYDATE());
+				obj.put("PAYSEQ", lst.get(i).getPAYSEQ());
 				obj.put("SALERCD", lst.get(i).getSALERCD());
 				obj.put("SALERNM", lst.get(i).getSALERNM());
+				obj.put("INSACODE", lst.get(i).getINSACODE());
+				obj.put("KNAME", lst.get(i).getKNAME());
 				obj.put("SELLAMT", lst.get(i).getSELLAMT());
 				obj.put("PAYAMT", lst.get(i).getPAYAMT());
 				obj.put("TAXAMT", lst.get(i).getTAXAMT());
@@ -119,6 +136,9 @@ public class EP011001Ctr {
 				obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
 				obj.put("SUPPLYTAX", lst.get(i).getSUPPLYTAX());
 				obj.put("REMARK", lst.get(i).getREMARK());
+				obj.put("REGISTERNUM", lst.get(i).getREGISTERNUM());
+				obj.put("GRADE", lst.get(i).getGRADE());
+				obj.put("DUTY", lst.get(i).getDUTY());
 				
 				jCell.add(obj);
 			}
@@ -169,7 +189,75 @@ public class EP011001Ctr {
 	
 	}	
 	
+
 	
+	/**
+	 * @name 수당 마스터 저장
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/updateEnaSudangMst.do")
+	public ModelAndView updateEnaSudangMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		EP011001VO vo = new EP011001VO();		
+		
+		int updateCnt = 0;
+		int insertCnt = 0;
+		System.out.println("SALEID           =       " +request.getParameter("SALEID"));
+		vo.setINSACODE(request.getParameter("INSACODE"));
+		vo.setKNAME(request.getParameter("KNAME"));
+		vo.setPAYDATE(request.getParameter("PAYDATE"));
+		vo.setSUDANGRATE(request.getParameter("SUDANGRATE"));
+		vo.setADDRATE(request.getParameter("ADDRATE"));
+		vo.setPAYAMT(request.getParameter("PAYAMT"));
+		vo.setTAXGUBUN(request.getParameter("TAXGUBUN"));
+		vo.setTAXINCOME(request.getParameter("TAXINCOME"));
+		vo.setTAXLOCAL(request.getParameter("TAXLOCAL"));
+		vo.setSUPPLYTAX(request.getParameter("SUPPLYTAX"));
+		vo.setDEDUCTAMT(request.getParameter("DEDUCTAMT"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
+
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();		
+
+		JSONObject obj = new JSONObject();
+		
+		if (EP011001Biz.selectDataEnaSudangMst(vo) == 0) {
+			System.out.println("여기까지 오케이~!");
+			insertCnt = EP011001Biz.insertEnaSudangMst(vo);
+			if(insertCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}			
+		}else{
+			updateCnt = EP011001Biz.updateEnaSudangMst(vo);
+			if(updateCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}
+		}
+
+		jCell.add(obj);
+		json.put("rows", jCell);
+		
+		System.out.println("updateCnt==>"+updateCnt);
+		System.out.println("insertCnt==>"+insertCnt);
+		
+		System.out.println("json==>"+json);
+		
+		return new ModelAndView("jsonView", json);	
+	}
 	
 	/**
 	 * @name 수당관리 화면 - 신고인 관리
@@ -183,9 +271,11 @@ public class EP011001Ctr {
 	@RequestMapping("/home/selectListEnaSudangPTb.do")
 	public ModelAndView selectListEnaSudangPTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP011001VO vo = new EP011001VO();
-		System.out.println("/home/selectListEnaSudangMst.do");
+		
+		System.out.println("/home/selectListEnaSudangPTb.do");
 		
 		List<EP011001VO> lst = EP011001Biz.selectListEnaSudangPTb(vo);
+		
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
@@ -203,10 +293,6 @@ public class EP011001Ctr {
 				obj.put("PAYERNAME", lst.get(i).getPAYERNAME());
 				obj.put("PAYERID", lst.get(i).getPAYERID());
 				obj.put("PAYAMT", lst.get(i).getPAYAMT());
-				obj.put("GRADE", lst.get(i).getGRADE());
-				obj.put("DUTY", lst.get(i).getDUTY());
-				obj.put("SUDANGRATE", lst.get(i).getSUDANGRATE());
-				obj.put("ADDRATE", lst.get(i).getADDRATE());
 				obj.put("TAXGUBUN", lst.get(i).getTAXGUBUN());
 				obj.put("TAXINCOME", lst.get(i).getTAXINCOME());
 				obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
@@ -215,8 +301,7 @@ public class EP011001Ctr {
 				obj.put("BANKID", lst.get(i).getBANKID());
 				obj.put("ACCTNO", lst.get(i).getACCTNO());
 				obj.put("ACCTOWNER", lst.get(i).getACCTOWNER());
-				obj.put("PAYNUM", lst.get(i).getPAYNUM());
-				obj.put("REMARK", lst.get(i).getREMARK());				
+				obj.put("REMARK", lst.get(i).getREMARK());
 				
 				jCell.add(obj);			
 			}
@@ -228,10 +313,7 @@ public class EP011001Ctr {
 			obj.put("PAYERNAME", "");
 			obj.put("PAYERID", "");
 			obj.put("PAYAMT", "");
-			obj.put("GRADE", "");
-			obj.put("DUTY", "");
 			obj.put("SUDANGRATE", "");
-			obj.put("ADDRATE", "");
 			obj.put("TAXGUBUN", "");
 			obj.put("TAXINCOME", "");
 			obj.put("TAXLOCAL", "");
@@ -240,14 +322,9 @@ public class EP011001Ctr {
 			obj.put("BANKID", "");
 			obj.put("ACCTNO", "");
 			obj.put("ACCTOWNER", "");
-			obj.put("PAYNUM", "");
 			obj.put("REMARK", "");
-			
-			jCell.add(obj);
-			
+			json.put("rows", jCell);
 		}
-		json.put("rows", jCell);
-		
 		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListEnaSudangMst]" + json);
 		
@@ -256,7 +333,77 @@ public class EP011001Ctr {
 	}	
 	
 	/**
-	 * @name 수당관리 화면 - 팝업창 조회
+	 * @name 신고인관리 저장
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/updateEnaSudangPTb.do")
+	public ModelAndView updateEnaSudangPTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		EP011001VO vo = new EP011001VO();		
+		
+		int updateCnt = 0;
+		int insertCnt = 0;
+		System.out.println("SALEID           =       " +request.getParameter("SALEID"));
+		vo.setPAYERNAME(request.getParameter("PAYERNAME"));
+		vo.setPAYERID(request.getParameter("PAYERID"));
+		vo.setPAYAMT(request.getParameter("PAYAMT"));
+		vo.setTAXGUBUN(request.getParameter("TAXGUBUN"));
+		vo.setTAXINCOME(request.getParameter("TAXINCOME"));
+		vo.setTAXLOCAL(request.getParameter("TAXLOCAL"));
+		vo.setSUPPLYTAX(request.getParameter("SUPPLYTAX"));
+		vo.setDEDUCTAMT(request.getParameter("DEDUCTAMT"));
+		vo.setBANKID(request.getParameter("BANKID"));
+		vo.setACCTNO(request.getParameter("ACCTNO"));
+		vo.setACCTOWNER(request.getParameter("ACCTOWNER"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
+		vo.setREGISTERSEQ(request.getParameter("REGISTERSEQ"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();		
+
+		JSONObject obj = new JSONObject();
+		
+		String IU_Flag = request.getParameter("S_FLAG");
+		if ("I".equals(IU_Flag)) {
+			insertCnt = EP011001Biz.insertEnaSudangPTb(vo);
+			if(insertCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}	
+		} else if ("U".equals(IU_Flag)) {
+			updateCnt = EP011001Biz.updateEnaSudangPTb(vo);
+			if(updateCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}
+		}				
+		
+
+		jCell.add(obj);
+		json.put("rows", jCell);
+		
+		System.out.println("updateCnt==>"+updateCnt);
+		System.out.println("insertCnt==>"+insertCnt);
+		
+		System.out.println("json==>"+json);
+		
+		return new ModelAndView("jsonView", json);	
+	}	
+	
+	/**
+	 * @name 수당관리 화면 - 매출 팝업창 조회
 	 * @param request
 	 * @param response
 	 * @return

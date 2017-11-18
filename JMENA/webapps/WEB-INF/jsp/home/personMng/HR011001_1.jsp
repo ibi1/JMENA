@@ -118,6 +118,7 @@
 				$("#RETIREDATE", parent.opener.document).val(selRowData.RETIREDATE);
 				$("#RECOID", parent.opener.document).val(selRowData.RECOID);
 				$("#REMARK", parent.opener.document).val(selRowData.REMARK);
+				
 				window.self.close();
 			} ,
 			loadComplete: function() {				

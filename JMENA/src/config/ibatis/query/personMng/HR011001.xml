@@ -88,7 +88,7 @@
 		SELECT 
 			T1.INSACODE,
 			T1.KNAME,
-			T1.JUMINID,
+			CONCAT(SUBSTR(T1.JUMINID, 1, 6),  '-' , SUBSTR(T1.JUMINID, 7, 13)) AS JUMINID,
  			T1.BIRTHDAYGUBUN,
 			T1.SAUPID,
 			T1.SAUPOWNER,
@@ -133,7 +133,7 @@
 		SELECT 
 			T1.INSACODE,
 			T1.KNAME,
-			T1.JUMINID,
+			CONCAT(SUBSTR(T1.JUMINID, 1, 6),  '-' , SUBSTR(T1.JUMINID, 7, 13)) AS JUMINID,
 			T1.BIRTHDAYGUBUN,
 			T1.SAUPID,
 			T1.SAUPOWNER,
@@ -158,34 +158,6 @@
 		AND T1.INSACODE = #INSACODE#
 		ORDER BY T1.SORTKEY ASC
 	</select>
-
-
-	
-	<update id="updateEnaInsaMst">
-		UPDATE hr_insamst
-		SET
-			KNAME = #KNAME#,
-			JUMINID = #JUMINID#,
-			SAUPID = #SAUPID#,
-			SAUPOWNER = #SAUPOWNER#,
-			ADDRESS = #ADDRESS#,
-			MOBILENO = #MOBILENO#,
-			TELNO = #TELNO#,
-			BRANCHCODE = #BRANCHCODE#,
-			DEPTCODE = #DEPTCODE#,
-			BASICPAY = #BASICPAY#,
-			EMPLOYGUBUN = #EMPLOYGUBUN#,
-			GRADE = #GRADE#,
-			DUTY = #DUTY#,
-			JOINDATE = #JOINDATE#,
-			REJOINYN = #REJOINYN#,
-			RETIREDATE = #RETIREDATE#,
-			RECOID = #RECOID#,
-			REMARK = #REMARK#,
-			UPDATEUSER = 'admin',
-			UPDATEDATE =  NOW()
-		WHERE INSACODE = #INSACODE#
-	</update>
 	
 	<insert id="insertEnaInsaMst">
 		INSERT INTO hr_insamst
@@ -234,11 +206,39 @@
 			#RETIREDATE#,
 			#RECOID#,
 			#REMARK#,
-			'admin',
+			#USERID#,
 			NOW()
 			
 		)
 	</insert>
+
+	
+	<update id="updateEnaInsaMst">
+		UPDATE hr_insamst
+		SET
+			KNAME = #KNAME#,
+			JUMINID = #JUMINID#,
+			SAUPID = #SAUPID#,
+			SAUPOWNER = #SAUPOWNER#,
+			ADDRESS = #ADDRESS#,
+			MOBILENO = #MOBILENO#,
+			TELNO = #TELNO#,
+			BRANCHCODE = #BRANCHCODE#,
+			DEPTCODE = #DEPTCODE#,
+			BASICPAY = #BASICPAY#,
+			EMPLOYGUBUN = #EMPLOYGUBUN#,
+			GRADE = #GRADE#,
+			DUTY = #DUTY#,
+			JOINDATE = #JOINDATE#,
+			REJOINYN = #REJOINYN#,
+			RETIREDATE = #RETIREDATE#,
+			RECOID = #RECOID#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE =  NOW()
+		WHERE INSACODE = #INSACODE#
+	</update>
+	
 	
 	<select id="selectListEnaAppointItem" resultMap="HR011001AppointData">
 		SELECT 
@@ -290,7 +290,7 @@
 			#EMPLOYGUBUN#,
 			#PREBASICPAY#,
 			#REMARK#,
-			'admin',
+			#USERID#,
 			SYSDATE()
 		)
 	</insert>	
@@ -307,12 +307,18 @@
 			EMPLOYGUBUN = #EMPLOYGUBUN#,
 			PREBASICPAY = #PREBASICPAY#,
 			REMARK = #REMARK#,
-			UPDATEUSER = 'admin',
+			UPDATEUSER = #USERID#,
 			UPDATEDATE = SYSDATE()
 		WHERE INSACODE = #INSACODE#
 		AND APPOINTSEQ = #APPOINTSEQ#
 	</update>
 	
+
+	<delete id="deleteEnaAppointItem">
+		DELETE FROM hr_appointitem 
+		WHERE INSACODE = #INSACODE#
+		AND APPOINTSEQ = #APPOINTSEQ#
+	</delete>	
 
 	
 	<select id="selectListEnaTexPayerItem" resultMap="HR011001EnaTexData">
@@ -320,11 +326,11 @@
 			T1.INSACODE,
 			T1.ITEMSEQ,
 			T1.PAYERNAME,
-			T1.PAYERID,
+			CONCAT(SUBSTR(T1.PAYERID, 1, 6),  '-' , SUBSTR(T1.PAYERID, 7, 13)) AS PAYERID,
 			T1.BANKID,
 			T1.ACCTNO,
 			T1.ACCTOWNER,
-			'1' AS BASICACCT,
+			T1.BASICACCT,
 			T1.REMARK
 		FROM hr_taxpayeritem T1
 		WHERE 1=1
@@ -356,7 +362,7 @@
 			#ACCTNO#,
 			#ACCTOWNER#,
 			#REMARK#,
-			'admin',
+			#USERID#,
 			SYSDATE()
 		)
 	</insert>	
@@ -370,11 +376,17 @@
 			ACCTNO = #ACCTNO#,
 			ACCTOWNER = #ACCTOWNER#,
 			REMARK = #REMARK#,
-			UPDATEUSER = 'admin',
+			UPDATEUSER = #USERID#,
 			UPDATEDATE = SYSDATE()
 		WHERE INSACODE = #INSACODE#
 		AND ITEMSEQ = #ITEMSEQ#
 	</update>
 	
+	
+	<delete id="deleteEnaTexPayerItem">
+		DELETE FROM hr_taxpayeritem 
+		WHERE INSACODE = #INSACODE#
+		AND ITEMSEQ = #ITEMSEQ#
+	</delete>		
 
 </sqlMap>

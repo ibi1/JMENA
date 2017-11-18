@@ -9,8 +9,11 @@
 	
 	<resultMap id="EP011001Data" class="EP011001VO">
 		<result property="PAYDATE"					column="PAYDATE"/>
+		<result property="PAYSEQ"					column="PAYSEQ"/>
 		<result property="SALERCD"					column="SALERCD"/>
 		<result property="SALERNM"					column="SALERNM"/>
+		<result property="INSACODE"					column="INSACODE"/>
+		<result property="KNAME"					column="KNAME"/>
 		<result property="SELLAMT"					column="SELLAMT"/>
 		<result property="PAYAMT"					column="PAYAMT"/>
 		<result property="TAXAMT"					column="TAXAMT"/>
@@ -38,20 +41,19 @@
 		<result property="TAXINCOME"				column="TAXINCOME"/>
 		<result property="TAXLOCAL"					column="TAXLOCAL"/>
 		<result property="SUPPLYTAX"				column="SUPPLYTAX"/>
+		<result property="REGISTERNUM"				column="REGISTERNUM"/>
+		<result property="GRADE"					column="GRADE"/>
+		<result property="DUTY"						column="DUTY"/>
 		<result property="REMARK"					column="REMARK"/>
 		
 	</resultMap>
-
+	
 	<resultMap id="EP011001Datas" class="EP011001VO">
 		<result property="SALEID"					column="SALEID"	/>
 		<result property="PAYSEQ"					column="PAYSEQ"/>
 		<result property="REGISTERSEQ"				column="REGISTERSEQ"/>		
 		<result property="PAYERNAME"				column="PAYERNAME"/>
 		<result property="PAYERID"					column="PAYERID"/>
-		<result property="GRADE"					column="GRADE"/>
-		<result property="DUTY"						column="DUTY"/>
-		<result property="SUDANGRATE"				column="SUDANGRATE"/>
-		<result property="ADDRATE"					column="ADDRATE"/>
 		<result property="PAYAMT"					column="PAYAMT"/>
 		<result property="TAXGUBUN"					column="TAXGUBUN"/>
 		<result property="TAXINCOME"				column="TAXINCOME"/>
@@ -61,7 +63,6 @@
 		<result property="BANKID"					column="BANKID"/>
 		<result property="ACCTNO"					column="ACCTNO"/>
 		<result property="ACCTOWNER"				column="ACCTOWNER"/>
-		<result property="PAYNUM"					column="PAYNUM"/>
 		<result property="REMARK"					column="REMARK"/>				
 	</resultMap>
 	
@@ -92,47 +93,24 @@
 
 
 	<select id="selectListEnaSudangMst" resultMap="EP011001Data">
-<!-- 	  SELECT SALEDATE,
-	         T1.SALEID,
-	         SALEGUBUN,         
-			 BRANCHCODE,
-	         (SELECT MANAGENO FROM mm_buymst WHERE BUYID = T3.BUYID) AS MANAGENO, 
-	         (SELECT CITYCODE FROM mm_buymst WHERE BUYID = T3.BUYID) AS CITYCODE,
-			 (SELECT ADDRESS FROM mm_buymst WHERE BUYID = T3.BUYID) AS ADDRESS,
-	         CONNAME,
-	         CONM2,
-	         CONPY,
-	         SALEAMT,
-			 SALEDANGA,
-	         DCGUBUN,
-	         DCRATE,
-	         DCAMT,
-	         SELLAMT,
-	         T1.REMARK
-	    FROM sa_sudangmst T1, sa_sudangpayertb T2, sa_salemst T3, sa_saledtl T4
-	   WHERE 1 = 1
-	     AND T1.SALEID = T2.SALEID
-		 AND T1.SALEID = T3.SALEID
-		 AND T3.SALEID = T4.SALEID
-	ORDER BY T1.SALEID ASC, T1.PAYSEQ -->
 	
-	  SELECT PAYDATE,
-	  		 '00000001' AS SALERCD, 
-	  		 '홍길동' AS SALERNM,
+	  SELECT T1.SALEID,
+	  		 T1.PAYSEQ,
+	         T1.PAYDATE,
+	  		 T1.INSACODE,
+	  		 (SELECT KNAME FROM hr_insamst WHERE INSACODE = T1.INSACODE) AS KNAME,
+	  		 (SELECT SALERCD FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALERCD,
+	  		 (SELECT KNAME FROM sa_salemst S, hr_insamst I WHERE S.SALEID = T1.SALEID AND I.INSACODE = S.SALERCD) AS SALERNM,
 	  		 (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
-<!--  	  		 (SELECT SALERCD FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALERCD, 
-	  		 (SELECT KNAME FROM sa_salemst s, hr_insamst i WHERE s.SALEID = T1.SALEID AND s.SALERCD = i.INSACODE) AS SALERNM, -->
 	  		 T1.PAYAMT,
-	  		 '1' AS TAXAMT,
+	  		 T1.PAYAMT - T1.DEDUCTAMT AS TAXAMT,
 	  		 T1.DEDUCTAMT,
-	  		 <!-- (SELECT SALEDATE FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEDATE, -->
-	  		 '2017-11-11' AS SALEDATE,
-	         T1.SALEID,
+	  		 (SELECT SALEDATE FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEDATE,	         
 	         (SELECT SALEGUBUN FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEGUBUN,         
-			 BRANCHCODE,
-	         '1' AS MANAGENO,
-			 '1' AS  CITYCODE,
-			 '1' AS  ADDRESS,
+			 T1.BRANCHCODE,
+			 (SELECT MANAGENO FROM mm_buymst M, sa_salemst S WHERE M.BUYID = S.BUYID AND S.SALEID = T1.SALEID) AS MANAGENO,
+			 (SELECT CITYCODE FROM mm_buymst M, sa_salemst S WHERE M.BUYID = S.BUYID AND S.SALEID = T1.SALEID) AS CITYCODE,
+			 (SELECT ADDRESS FROM mm_buymst M, sa_salemst S WHERE M.BUYID = S.BUYID AND S.SALEID = T1.SALEID) AS ADDRESS,
 	         (SELECT CONNAME FROM sa_salemst WHERE SALEID = T1.SALEID) AS CONNAME,
 			 (SELECT CONM2 FROM sa_salemst WHERE SALEID = T1.SALEID) AS CONM2,
 			 (SELECT CONPY FROM sa_salemst WHERE SALEID = T1.SALEID) AS CONPY,
@@ -148,39 +126,25 @@
 	         T1.TAXINCOME,
 	         T1.TAXLOCAL,
 	         T1.SUPPLYTAX,
-	         T1.REMARK
-	    FROM sa_sudangmst T1, sa_sudangpayertb T2
+	         T1.REMARK,
+	         (SELECT IFNULL(MAX(REGISTERSEQ),0) FROM sa_sudangpayertb T2 WHERE T1.SALEID = T2.SALEID AND T1.PAYSEQ = T2.PAYSEQ) AS REGISTERNUM,
+	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='003' AND I.GRADE = C.DCODE ) as GRADE,
+	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='004' AND I.DUTY = C.DCODE ) as DUTY
+	    FROM sa_sudangmst T1
 	   WHERE 1 = 1
-	     AND T1.SALEID = T2.SALEID
+	     AND T1.SALEID
 	ORDER BY T1.SALEID ASC, T1.PAYSEQ
 		</select>		
 		
+	<select id="selectDataEnaSudangMst" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(T1.INSACODE) AS CNT
+		FROM sa_sudangmst T1
+		WHERE 1=1
+		AND T1.SALEID = #SALEID#
+		AND T1.INSACODE = #INSACODE#
+	</select>		
 		
-	
-	<update id="updateEnaSudangMst">
-		UPDATE sa_sudangmst
-		SET
-			INSACODE = #INSACODE#,
-			BRANCHCODE = #BRANCHCODE#,
-			DEPTCODE = #DEPTCODE#,
-			GRADE = #GRADE#,
-			DUTY = #DUTY#,
-			PAYDATE = #PAYDATE#,
-			SUDANGRATE = #SUDANGRATE#,
-			ADDRATE = #ADDRATE#,
-			PAYAMT = #PAYAMT#,
-			TAXGUBUN = #TAXGUBUN#,
-			TAXINCOME = #TAXINCOME#,
-			TAXLOCAL = #TAXLOCAL#,
-			SUPPLYTAX = #SUPPLYTAX#,
-			DEDUCTAMT = #DEDUCTAMT#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
-		WHERE SALEID  = #SALEID#
-		AND PAYSEQ = #PAYSEQ#
-	</update>
-	
 	<insert id="insertEnaSudangMst">
 		INSERT INTO sa_sudangmst
 		(
@@ -208,11 +172,10 @@
 			#SALEID#,
 			(SELECT IFNULL(MAX(PAYSEQ),0) +1 FROM sa_sudangmst s WHERE SALEID = #SALEID#),
 			#INSACODE#,
-			(SELECT BRANCHCODE FROM hr_insamst WHERE INSACODE = #INSACODE#) AS BRANCHCODE,
-			(SELECT DEPTCODE FROM hr_insamst WHERE INSACODE = #INSACODE#) AS DEPTCODE,
-			(SELECT GRADE FROM hr_insamst WHERE INSACODE = #INSACODE#) AS GRADE,
-			(SELECT DUTY FROM hr_insamst WHERE INSACODE = #INSACODE#) AS DUTY,
-			(SELECT BRANCHCODE FROM hr_insamst WHERE INSACODE = #INSACODE#) AS BRANCHCODE,
+			(SELECT BRANCHCODE FROM hr_insamst WHERE INSACODE = #INSACODE#),
+			(SELECT DEPTCODE FROM hr_insamst WHERE INSACODE = #INSACODE#),
+			(SELECT GRADE FROM hr_insamst WHERE INSACODE = #INSACODE#),
+			(SELECT DUTY FROM hr_insamst WHERE INSACODE = #INSACODE#),
 			#PAYDATE#,
 			#SUDANGRATE#,
 			#ADDRATE#,
@@ -223,10 +186,35 @@
 			#SUPPLYTAX#,
 			#DEDUCTAMT#,
 			#REMARK#,
-			'admin',
+			#USERID#,
 			SYSDATE()
 		)
-	</insert>
+	</insert>	
+	
+	<update id="updateEnaSudangMst">
+		UPDATE sa_sudangmst
+		SET
+			INSACODE = #INSACODE#,
+			BRANCHCODE = (SELECT BRANCHCODE FROM hr_insamst WHERE INSACODE = #INSACODE#),
+			DEPTCODE = (SELECT DEPTCODE FROM hr_insamst WHERE INSACODE = #INSACODE#),
+			GRADE = (SELECT GRADE FROM hr_insamst WHERE INSACODE = #INSACODE#),
+			DUTY = (SELECT DUTY FROM hr_insamst WHERE INSACODE = #INSACODE#),
+			PAYDATE = #PAYDATE#,
+			SUDANGRATE = #SUDANGRATE#,
+			ADDRATE = #ADDRATE#,
+			PAYAMT = #PAYAMT#,
+			TAXGUBUN = #TAXGUBUN#,
+			TAXINCOME = #TAXINCOME#,
+			TAXLOCAL = #TAXLOCAL#,
+			SUPPLYTAX = #SUPPLYTAX#,
+			DEDUCTAMT = #DEDUCTAMT#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = SYSDATE()
+		WHERE SALEID  = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+	</update>
+
 	
 	<select id="selectListEnaSudangPTb" resultMap="EP011001Datas">
 		SELECT 
@@ -236,49 +224,22 @@
 			T1.PAYERNAME,
 			T1.PAYERID,
 			T1.PAYAMT,
-			(SELECT GRADE FROM hr_insamst WHERE JUMINID = T1.PAYERID ) AS GRADE,
-			(SELECT DUTY FROM hr_insamst WHERE JUMINID = T1.PAYERID ) AS DUTY,
-			(SELECT SUDANGRATE FROM sa_sudangmst WHERE SALEID = T1.SALEID) AS SUDANGRATE,
-			(SELECT ADDRATE FROM sa_sudangmst WHERE SALEID = T1.SALEID) AS ADDRATE,
-			T1.TAXGUBUN,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '013' AND DCODE = T1.TAXGUBUN) AS TAXGUBUN,
 			T1.TAXINCOME,
 			T1.TAXLOCAL,
 			T1.SUPPLYTAX,
 			T1.DEDUCTAMT,
-			T1.BANKID,
+			(SELECT BANKNAME FROM sy_bankmst WHERE BANKCODE = T1.BANKID) AS BANKID,			
 			T1.ACCTNO,
 			T1.ACCTOWNER,
-			T1.REMARK,
-			(SELECT MAX(REGISTERSEQ) FROM sa_sudangpayertb T2 WHERE T1.SALEID = T2.SALEID AND T1.PAYSEQ = T2.PAYSEQ) AS PAYNUM
+			T1.REMARK
 		FROM sa_sudangpayertb T1
 		WHERE 1=1
-<!-- 		AND T1.SALEID = #SALEID#
+ 		AND T1.SALEID = #SALEID#
 		AND T1.PAYSEQ = #PAYSEQ#
-		AND T1.REGISTERSEQ = #REGISTERSEQ# -->
+<!-- 		AND T1.REGISTERSEQ = #REGISTERSEQ# -->
 		ORDER BY T1.REGISTERSEQ DESC
 	</select>
-	
-	<update id="updateEnaSudangPTb">
-		UPDATE sa_sudangpayertb
-		SET
-			PAYERNAME = #PAYERNAME#,
-			PAYERID = #PAYERID#,
-			PAYAMT = #PAYAMT#,
-			TAXGUBUN = #TAXGUBUN#,
-			TAXINCOME = #TAXINCOME#,
-			TAXLOCAL = #TAXLOCAL#,
-			SUPPLYTAX = #SUPPLYTAX#,
-			DEDUCTAMT = #DEDUCTAMT#,
-			BANKID = #BANKID#,
-			ACCTNO = #ACCTNO#,
-			ACCTOWNER = #ACCTOWNER#,
-			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = # UPDATEDATE#
-		WHERE T1.SALEID = #SALEID#
-		AND T1.PAYSEQ = #PAYSEQ#
-		AND T1.REGISTERSEQ = #REGISTERSEQ#
-	</update>
 	
 	<insert id="insertEnaSudangPTb">
 		INSERT INTO sa_sudangpayertb
@@ -304,7 +265,7 @@
 		VALUES(
 			#SALEID#,
 			#PAYSEQ#,
-			#REGISTERSEQ#,
+			(SELECT IFNULL(MAX(REGISTERSEQ),0) +1 FROM sa_sudangmst s WHERE SALEID = #SALEID# AND PAYSEQ = #PAYSEQ#),
 			#PAYERNAME#,
 			#PAYERID#,
 			#PAYAMT#,
@@ -317,10 +278,34 @@
 			#ACCTNO#,
 			#ACCTOWNER#,
 			#REMARK#,
-			#INSERTUSER#,
+			#USERID#,
 			SYSDATE()
 		)
-	</insert>
+	</insert>	
+	
+	<update id="updateEnaSudangPTb">
+		UPDATE sa_sudangpayertb
+		SET
+			PAYERNAME = #PAYERNAME#,
+			PAYERID = #PAYERID#,
+			PAYAMT = #PAYAMT#,
+			TAXGUBUN = #TAXGUBUN#,
+			TAXINCOME = #TAXINCOME#,
+			TAXLOCAL = #TAXLOCAL#,
+			SUPPLYTAX = #SUPPLYTAX#,
+			DEDUCTAMT = #DEDUCTAMT#,
+			BANKID = #BANKID#,
+			ACCTNO = #ACCTNO#,
+			ACCTOWNER = #ACCTOWNER#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = SYSDATE()
+		WHERE T1.SALEID = #SALEID#
+		AND T1.PAYSEQ = #PAYSEQ#
+		AND T1.REGISTERSEQ = #REGISTERSEQ#
+	</update>
+	
+
 	
 	<select id="selectListEnaSaleSudangList" resultMap="EP011001DataSaleSudang">
 		SELECT 

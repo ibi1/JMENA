@@ -20,10 +20,9 @@
 		f_selectEnaCode("007");
 		f_selectEnaCode("008");
 		f_selectEnaCode("013");
-		//공통코드 가져오기 끝
-		
-		
+		//공통코드 가져오기 끝		
 		selectListEnaSudangMst();
+		searchbottomList();
 		
 	});
 
@@ -34,18 +33,19 @@
 			url:"/home/selectListEnaSudangMst.do" ,
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['지급일', '담당자','담당자성명', '매출금액', '지급금액', '세액', '차감지급액','계약일자','번호','매출구분','계약지사','관리자번호',
+			colNames:['지급일','지급순번','담당자','담당자성명', '매출금액', '지급금액', '세액', '차감지급액','계약일자','번호','매출구분','계약지사','관리자번호',
 			          '지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액','실판매가' ,
-			          '수당지급율','추가지급율','신고기준','사업소득세','지방세','부가가치세','비고'],
+			          '수당지급율','추가지급율','신고기준','사업소득세','지방세','부가가치세','비고','매출담당자','매출담당자성명','신고인수'],
 			colModel:[
-				 {name:"PAYDATE",		index:'PAYDATE',		width:60,		align:'center'}
-				,{name:"SALERCD",		index:'SALERCD',		width:60,		align:'center'}
-				,{name:"SALERNM",		index:'SALERNM',		width:60,		align:'center'}
-				,{name:"SELLAMT",		index:'SELLAMT',		width:60,		align:'center'}
-				,{name:"PAYAMT",		index:'PAYAMT',			width:60,		align:'center'}
-				,{name:"TAXAMT",		index:'TAXAMT',			width:60,		align:'center'}
-				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:60,		align:'center'}
-				,{name:"SALEDATE",		index:'SALEDATE',		width:60,		align:'center'}
+				 {name:"PAYDATE",		index:'PAYDATE',		width:80,		align:'center'}
+				,{name:"PAYSEQ",		index:'PAYSEQ',			width:80,		align:'center', hidden:true}
+				,{name:"INSACODE",		index:'INSACODE',		width:80,		align:'center', hidden:true}
+				,{name:"KNAME",			index:'KNAME',			width:80,		align:'center'}
+				,{name:"SELLAMT",		index:'SELLAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				,{name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				,{name:"TAXAMT",		index:'TAXAMT',			width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				,{name:"SALEDATE",		index:'SALEDATE',		width:80,		align:'center'}
 				,{name:"SALEID",		index:'SALEID',			width:60,		align:'center', hidden:true}
 				,{name:"SALEGUBUN",		index:'SALEGUBUN',		width:60,		align:'center', hidden:true}
 				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:60,		align:'center', hidden:true}
@@ -68,6 +68,9 @@
 				,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:60,		align:'center', hidden:true}
 				,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:60,		align:'center', hidden:true}
 				,{name:"REMARK",		index:'REMARK',			width:60,		align:'center', hidden:true}	
+				,{name:"SALERCD",		index:'SALERCD',		width:60,		align:'center', hidden:true}
+				,{name:"SALERNM",		index:'SALERNM',		width:60,		align:'center', hidden:true}
+				,{name:"REGISTERNUM",	index:'REGISTERNUM',	width:60,		align:'center', hidden:true}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -84,9 +87,8 @@
 			onSelectRow: function(ids){
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#PAYDATE").val(selRowData.PAYDATE);
-				$("#SALERCD").val(selRowData.SALERCD);
-				$("#SALERCD1").val(selRowData.SALERCD);
-				$("#SALERNM").val(selRowData.SALERNM);
+//				$("#SALERCD").val(selRowData.SALERCD);
+//				$("#SALERNM").val(selRowData.SALERNM);
 				$("#SALEDATE").val(selRowData.SALEDATE);
 				$("#SALEID").val(selRowData.SALEID);
 				$("#SALEGUBUN").val(selRowData.SALEGUBUN);
@@ -112,6 +114,10 @@
 				$("#PAYAMT").val(selRowData.PAYAMT);
 				$("#DEDUCTAMT").val(selRowData.DEDUCTAMT);
 				$("#REMARK").val(selRowData.REMARK);
+				$("#INSACODE").val(selRowData.INSACODE);
+				$("#KNAME").val(selRowData.KNAME);
+				$("#PAYSEQ").val(selRowData.PAYSEQ);
+				
 				searchbottomList();
 			} ,
 			hidegrid: false
@@ -124,29 +130,27 @@
 	function searchbottomList(){
 		$('#bottomList').jqGrid({
 			//caption: '수당지급관리'
-			url:"/home/selectListEnaSudangPTb.do" ,
+			url:"/home/selectListEnaSudangMst.do" ,
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고',
-			          '판매번호','순번','신고인순번','신고인주민번호'] ,
+			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
 			colModel:[  	
-				  {name:"GRADE",		index:'GRADE',		width:60,		align:'center'}
-				, {name:"DUTY",			index:'DUTY',		width:60,		align:'center'}
-				, {name:"PAYERNAME",	index:'PAYERNAME',	width:60,		align:'center'}
-				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:60,		align:'center'}
+				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center'}
+				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center'}
+				, {name:"KNAME",		index:'KNAME',		width:80,		align:'center'}
+				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:80,		align:'center'}
 				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center'}
-				, {name:"PAYAMT",		index:'PAYAMT',		width:60,		align:'center'}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:60,		align:'center'}
-				, {name:"TAXINCOME",	index:'TAXINCOME',	width:60,		align:'center'}
-				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:60,		align:'center'}
-				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:60,		align:'center'}
-				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:60,		align:'center'}
-				, {name:"PAYNUM",		index:'PAYNUM',		width:60,		align:'center'}
+				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center'}
 				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center'}
 				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center', hidden:true}
 				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center', hidden:true}
-				, {name:"REGISTERSEQ",	index:'REGISTERSEQ',width:60,		align:'center', hidden:true}
-				, {name:"PAYERID",		index:'PAYERID',	width:60,		align:'center', hidden:true}
+				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center', hidden:true}
 //				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
 			] ,
 			rowNum:10 ,
@@ -269,17 +273,79 @@
 
 	$(function(){
 		$("#popupButton").click(function(){
-			var popUrl = "/home/EP011001_1.do";	//팝업창에 출력될 페이지 UR
+			var popUrl = "/home/EP011001_1.do";
 			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"인사정보 관리",popOption);
 		}); 
 	});
 	
 	$(function(){
+		$("#payerButton").click(function(){
+			var popUrl = "/home/EP011001_2.do";
+			var popOption = "width=1120, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			window.open(popUrl,"신고인 관리",popOption);
+		}); 
+	});
+	
+	
+	$("#SUDANGRATE").change(function() {
+		paycal();
+	});
+	
+	
+	$("#ADDRATE").change(function() {
+		paycal();
+	});
+	
+	$("#TAXGUBUN").change(function() {
+		paycal();
+	});
+	
+	
+	function paycal(){
+		$("#PAYAMT").val("0");
+		$("#TAXINCOME").val("0");
+		$("#TAXLOCAL").val("0");
+		$("#SUPPLYTAX").val("0");
+		$("#DEDUCTAMT").val("0");
+		
+		var deductamt = "0";
+		
+		
+		var sellAmt = parseInt($("#SELLAMT").val());
+		var sudangrate = parseFloat($("#SUDANGRATE").val());
+		var addrate = parseFloat($("#ADDRATE").val());
+		var gijunAmt = sellAmt * (sudangrate + addrate) / 100;    //지급금액(기준금액)
+		
+		var taxgubun =$("#TAXGUBUN").val()
+		
+		
+		$("#PAYAMT").val(gijunAmt);
+		
+		if(taxgubun == "001"){
+			var taxincome = gijunAmt * 3 / 100;    //사업소득세
+			var taxlocal = taxincome * 10 / 100;    //지방세
+			taxincome = Math.floor(taxincome/10) * 10;
+			taxlocal = Math.floor(taxlocal/10) * 10;
+			$("#TAXINCOME").val(taxincome);
+			$("#TAXLOCAL").val(taxlocal);
+			deductamt = gijunAmt - taxincome - taxlocal;
+		}else if (taxgubun == "002"){
+			var supplytax = gijunAmt * 10 / 100;    //부가가치세
+			supplytax = Math.floor(supplytax/10) * 10;
+			$("#SUPPLYTAX").val(supplytax);
+			deductamt = gijunAmt - supplytax;
+		}
+		$("#DEDUCTAMT").val(deductamt);
+	}
+	
+	
+	
+	$(function(){
 		$("#insertButton").click(function() {
 			$("#PAYDATE").val("");
-			$("#SALERCD").val("");
-			$("#SALERNM").val("");
+			$("#INSACODE").val("");
+			$("#KNAME").val("");
 			$("#SUDANGRATE").val("");
 			$("#ADDRATE").val("");
 			$("#TAXGUBUN").val("");
@@ -296,10 +362,10 @@
 	
 	$(function(){
 		$("#saveButton").click(function(){
-			var formData = $("#EP011001").serialize();
+			var formData = $("#EP011001").serialize()+"&SALEID=" + $("#SALEID").val();
 		   	$.ajax({ 
 				type: 'POST' ,
-				url: "/home/updateEnaInsaMst.do", 
+				url: "/home/updateEnaSudangMst.do", 
 				//dataType : 'json' , 
 				data : formData,
 				//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
@@ -318,10 +384,16 @@
 				}  
 			});
 		}) 
-	})			
+	})		
 	
 	
-		
+	$(function(){	
+		$("#insaButton").click(function(){
+			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
+			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			window.open(popUrl,"인사정보 관리",popOption);
+		}); 		
+	})		
 </script>
 <body>
 <table width="99%">
@@ -386,7 +458,8 @@
 				</tr>
 				<tr>
 					<td>담당자</td>
-					<td><input type="text" id="SALERCD1" name="SALERCD1" disabled/></td>
+					<td><input type="hidden" id="SALERCD" name="SALERCD" disabled/>
+					<input type="text" id="SALERNM" name="SALERNM" disabled/></td>
 					<td>계약지사</td>
 					<td>
 						<select id="BRANCHCODE" name="BRANCHCODE" disabled>
@@ -446,37 +519,56 @@
 					<th width="120">지급일자</th>
 					<td><input type="text" id="PAYDATE" name="PAYDATE"> </td>
 					<th width="120">담당자 성명</th>
-					<td colspan="7"><input type="text" id="SALERCD" name="SALERCD"/>
-						<input type="text" id="SALERNM" name="SALERNM"/></td>
+					<td colspan="7"><input type="text" id="INSACODE" name="INSACODE"/>
+						<input type="text" id="KNAME" name="KNAME"/>
+						<input type="button" id='insaButton'/></td>
+						
 				</tr>
 				<tr>
 					<th width="120">수당지급율(%)</th>
-					<td ><input type="text" id="SUDANGRATE" name="SUDANGRATE" style="text-align:right;" /></td>
+					<td ><input type="text" id="SUDANGRATE" name="SUDANGRATE" style="text-align:right;"/></td>
 					<th width="120">추가지급율(%)</th>
 					<td><input type="text" id="ADDRATE" name="ADDRATE" style="text-align:right;"/></td>
 					<th width="120">지급금액</th>
-					<td colspan="5"><input type="text" id="PAYAMT" name="PAYAMT" style="text-align:right;"/></td>
+					<td colspan="5"><input type="text" id="PAYAMT" name="PAYAMT" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 				</tr>
 				<tr>
 					<th width="120">신고기준</th>				
 					<td><select id="TAXGUBUN" name="TAXGUBUN"></select>
 					</td>
 					<th width="120">사업소득세</th>
-					<td><input type="text" id="TAXINCOME" name="TAXINCOME" style="text-align:right;"/></td>
+					<td><input type="text" id="TAXINCOME" name="TAXINCOME" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 					<th width="120">지방세</th>
-					<td ><input type="text" id="TAXLOCAL" name="TAXLOCAL" style="text-align:right;"/></td>
+					<td ><input type="text" id="TAXLOCAL" name="TAXLOCAL" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 					<th width="120">부가가치세</th>
-					<td><input type="text" id="SUPPLYTAX" name="SUPPLYTAX" style="text-align:right;"/></td>
+					<td><input type="text" id="SUPPLYTAX" name="SUPPLYTAX" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 					<th width="120">차감지급액</th>
-					<td><input type="text" id="DEDUCTAMT" name="DEDUCTAMT" style="text-align:right;"/></td>
+					<td><input type="text" id="DEDUCTAMT" name="DEDUCTAMT" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 				</tr>
 				<tr>
 					<th width="120">비고</th>
-					<td colspan="9"><input type="text" id="REMARK" name="REMARK"/></td>
+					<td colspan="9"><input type="text" id="REMARK" name="REMARK"/>
+					<input type="hidden" id= "PAYSEQ" name="PAYSEQ"></td>
 				</tr>
 			</table>
 			</form>
+			<table width="99%">
+				<tr >
+					<td align="right">
+						<a class="ui-button ui-widget ui-corner-all" id="insertB1Button" name="payerButton">수당수령인 추가</a>
+						<a class="ui-button ui-widget ui-corner-all" id="deleteB2Button"   name="deleteB1Button">수당수령인 삭제</a>
+						<a class="ui-button ui-widget ui-corner-all" id="saveB1Button"   name="saveB1Button">저장 </a>
+					</td>
+				</tr>
+			</table>			
 			<table id="bottomList"></table>
+			<table width="99%">
+				<tr >
+					<td align="right">
+						<a class="ui-button ui-widget ui-corner-all" id="payerButton" name="payerButton">신고인 관리</a>
+					</td>
+				</tr>
+			</table>			
 		</div>
 	</div>
 </body>

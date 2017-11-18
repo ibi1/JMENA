@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.personMng.Biz.HR011001Biz;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
@@ -104,7 +105,9 @@ public class HR011001Ctr {
 				obj.put("MOBILENO", lst.get(i).getMOBILENO());
 				obj.put("TELNO", lst.get(i).getTELNO());
 				obj.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
+				obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
 				obj.put("DEPTCODE", lst.get(i).getDEPTCODE());
+				obj.put("DEPTNAME", lst.get(i).getDEPTNAME());
 				obj.put("BASICPAY", lst.get(i).getBASICPAY());
 				obj.put("EMPLOYGUBUN", lst.get(i).getEMPLOYGUBUN());
 				obj.put("GRADE", lst.get(i).getGRADE());
@@ -114,6 +117,7 @@ public class HR011001Ctr {
 				obj.put("RETIREDATE", lst.get(i).getRETIREDATE());
 				obj.put("RECOLID", lst.get(i).getRECOID());
 				obj.put("REMARK", lst.get(i).getREMARK());
+				
 				
 				jCell.add(obj);
 			}
@@ -153,94 +157,6 @@ public class HR011001Ctr {
 	
 	}
 
-	
-	
-	
-	/**
-	 * @name 인사관리 화면 - 발령사항 그리드
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-
-	@SuppressWarnings("unchecked")
-	@RequestMapping("/home/selectListEnaAppointItem.do")
-	public ModelAndView selectListEnaAppointItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		HR011001VO vo = new HR011001VO();
-		
-		vo.setINSACODE(request.getParameter("INSACODE"));
-		
-		List<HR011001VO> lst = HR011001Biz.selectListEnaAppointItem(vo);	
-		
-		JSONArray jCell = new JSONArray();
-		JSONObject json = new JSONObject();
-		
-		for (int i = 0; i < lst.size(); i++) {
-			//System.out.println(lst.get(i).getSYSID());
-			JSONObject jData = new JSONObject();
-			
-			jData.put("INSACODE", lst.get(i).getINSACODE());
-			jData.put("APPOINTSEQ", lst.get(i).getAPPOINTSEQ());
-			jData.put("APPOINTGUBUN", lst.get(i).getAPPOINTGUBUN());
-			jData.put("APPOINTDATE", lst.get(i).getAPPOINTDATE());
-			jData.put("APPOINTBRANCH", lst.get(i).getAPPOINTBRANCH());
-			jData.put("APPOINTDEPT", lst.get(i).getAPPOINTDEPT());
-			jData.put("GRADE", lst.get(i).getGRADE());
-			jData.put("DUTY", lst.get(i).getDUTY());
-			jData.put("EMPLOYGUBUN", lst.get(i).getEMPLOYGUBUN());
-			jData.put("PREBASICPAY", lst.get(i).getPREBASICPAY());
-			jData.put("REMARK", lst.get(i).getREMARK());
-			
-			
-			jCell.add(i, jData);
-		}
-		json.put("rows", jCell);
-		
-		return new ModelAndView("jsonView", json);
-	}
-	
-	/**
-	 * @name 인사관리 화면 - 신고인 관리 그리드
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	@SuppressWarnings("unchecked")
-	@RequestMapping("/home/selectListEnaTexPayerItem.do")
-	public ModelAndView selectListEnaTexPayerItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HR011001VO vo = new HR011001VO();
-		
-		vo.setINSACODE(request.getParameter("INSACODE"));
-		System.out.println(request.getParameter("INSACODE"));
-		List<HR011001VO> lst = HR011001Biz.selectListEnaTexPayerItem(vo);
-		
-		JSONArray jCell = new JSONArray();
-		JSONObject json = new JSONObject();
-		
-		
-		for (int i = 0; i < lst.size(); i++) {
-			//System.out.println(lst.get(i).getSYSID());
-			JSONObject jData = new JSONObject();
-			jData.put("INSACODE", lst.get(i).getINSACODE());
-			jData.put("ITEMSEQ", lst.get(i).getITEMSEQ());
-			jData.put("PAYERNAME", lst.get(i).getPAYERNAME());
-			jData.put("PAYERID", lst.get(i).getPAYERID());
-			jData.put("BANKID", lst.get(i).getBANKID());
-			jData.put("ACCTNO", lst.get(i).getACCTNO());
-			jData.put("ACCTOWNER", lst.get(i).getACCTOWNER());
-			jData.put("BASICACCT", lst.get(i).getBASICACCT());
-			jData.put("REMARK", lst.get(i).getREMARK());
-			
-			jCell.add(i, jData);
-		}
-		json.put("rows", jCell);
-		
-		return new ModelAndView("jsonView", json);
-	}
-	
 	
 	
 	
@@ -322,6 +238,54 @@ public class HR011001Ctr {
 	}
 	
 	
+	
+	/**
+	 * @name 인사관리 화면 - 발령사항 그리드
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/selectListEnaAppointItem.do")
+	public ModelAndView selectListEnaAppointItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setINSACODE(request.getParameter("INSACODE"));
+		
+		List<HR011001VO> lst = HR011001Biz.selectListEnaAppointItem(vo);	
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			//System.out.println(lst.get(i).getSYSID());
+			JSONObject jData = new JSONObject();
+			
+			jData.put("INSACODE", lst.get(i).getINSACODE());
+			jData.put("APPOINTSEQ", lst.get(i).getAPPOINTSEQ());
+			jData.put("APPOINTGUBUN", lst.get(i).getAPPOINTGUBUN());
+			jData.put("APPOINTDATE", lst.get(i).getAPPOINTDATE());
+			jData.put("APPOINTBRANCH", lst.get(i).getAPPOINTBRANCH());
+			jData.put("APPOINTDEPT", lst.get(i).getAPPOINTDEPT());
+			jData.put("GRADE", lst.get(i).getGRADE());
+			jData.put("DUTY", lst.get(i).getDUTY());
+			jData.put("EMPLOYGUBUN", lst.get(i).getEMPLOYGUBUN());
+			jData.put("PREBASICPAY", lst.get(i).getPREBASICPAY());
+			jData.put("REMARK", lst.get(i).getREMARK());
+			
+			
+			jCell.add(i, jData);
+		}
+		json.put("rows", jCell);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+
+	
 	/**
 	 * @name 발령사항 저장
 	 * @param request
@@ -390,7 +354,78 @@ public class HR011001Ctr {
 		
 		return new ModelAndView("jsonView", json);	
 	}	
+		
 	
+	@RequestMapping("/home/deleteEnaAppointItem.do")
+	public ModelAndView deleteEnaAppointItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setINSACODE(request.getParameter("INSACODE"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (HR011001Biz.deleteEnaAppointItem(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]선택된 매입 삭제 중 오류가 발생하였습니다.";
+		}
+		
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataBuyMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}		
+	
+	/**
+	 * @name 인사관리 화면 - 신고인 관리 그리드
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/selectListEnaTexPayerItem.do")
+	public ModelAndView selectListEnaTexPayerItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setINSACODE(request.getParameter("INSACODE"));
+		System.out.println(request.getParameter("INSACODE"));
+		List<HR011001VO> lst = HR011001Biz.selectListEnaTexPayerItem(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		
+		for (int i = 0; i < lst.size(); i++) {
+			//System.out.println(lst.get(i).getSYSID());
+			JSONObject jData = new JSONObject();
+			jData.put("INSACODE", lst.get(i).getINSACODE());
+			jData.put("ITEMSEQ", lst.get(i).getITEMSEQ());
+			jData.put("PAYERNAME", lst.get(i).getPAYERNAME());
+			jData.put("PAYERID", lst.get(i).getPAYERID());
+			jData.put("BANKID", lst.get(i).getBANKID());
+			jData.put("ACCTNO", lst.get(i).getACCTNO());
+			jData.put("ACCTOWNER", lst.get(i).getACCTOWNER());
+			jData.put("BASICACCT", lst.get(i).getBASICACCT());
+			jData.put("REMARK", lst.get(i).getREMARK());
+			
+			jCell.add(i, jData);
+		}
+		json.put("rows", jCell);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	
+
 	
 	/**
 	 * @name 신고인 관리 저장
@@ -415,6 +450,7 @@ public class HR011001Ctr {
 		vo.setBANKID(request.getParameter("BANKID"));
 		vo.setACCTNO(request.getParameter("ACCTNO"));
 		vo.setACCTOWNER(request.getParameter("ACCTOWNER"));
+		vo.setBASICACCT(request.getParameter("BASICACCT"));
 		vo.setREMARK(request.getParameter("REMARK"));
 				
 		HttpSession session = null;
@@ -456,4 +492,73 @@ public class HR011001Ctr {
 		
 		return new ModelAndView("jsonView", json);	
 	}	
+	
+	
+	@RequestMapping("/home/deleteEnaTexPayerItem.do")
+	public ModelAndView deleteEnaTexPayerItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setINSACODE(request.getParameter("INSACODE"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (HR011001Biz.deleteEnaTexPayerItem(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]선택된 매입 삭제 중 오류가 발생하였습니다.";
+		}
+		
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataBuyMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}		
+
+	
+//	@RequestMapping("/home/deleteEnaInsaMst.do")
+//	public ModelAndView deleteEnaInsaMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		HR011001VO vo = new HR011001VO();
+//		
+//		vo.setBUYID(request.getParameter("BUYID"));
+//		
+//		JSONObject json = new JSONObject();
+//		
+//		String resultCode = "";
+//		String resultMsg = "";
+//		
+//		if (HR011001Biz.deleteEnaInsaMst(vo) == true) {
+//			if (HR011001Biz.deleteAllPayScheduleTb(vo) == true) {
+//				if (HR011001Biz.deleteDataBuyMst(vo) == true) {
+//					resultCode ="SUCCESS";
+//					resultMsg = "정상적으로 삭제하였습니다.";
+//				} else {
+//					 resultCode ="FAILED";
+//					 resultMsg = "[ERROR]선택된 매입 삭제 중 오류가 발생하였습니다.";
+//				}
+//			} else {
+//				resultCode ="FAILED";
+//				resultMsg = "[ERROR]선택된 지급 스케줄 관리 전체 삭제 중 오류가 발생하였습니다.";
+//			}
+//		} else {
+//			resultCode ="FAILED";
+//			resultMsg = "[ERROR]선택된 지사 오픈 관리 전체 삭제 중 오류가 발생하였습니다.";
+//		}
+//		
+//
+//		json.put("resultCode", resultCode);
+//		json.put("resultMsg", resultMsg);
+//
+//		logger.debug("[deleteDataBuyMst]" + json);
+//		
+//		return new ModelAndView("jsonView", json);
+//	}	
+	
 }

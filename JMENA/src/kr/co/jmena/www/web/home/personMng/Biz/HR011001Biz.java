@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.personMng.Dao.HR011001Dao;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 
@@ -97,6 +98,18 @@ public class HR011001Biz {
 		return updateCnt;
 	}
 	
+	public boolean deleteEnaAppointItem(HR011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = HR011001Dao.deleteEnaAppointItem(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+		
+	}	
 	
 	
 	
@@ -137,5 +150,17 @@ public class HR011001Biz {
 		return updateCnt;
 	}
 	
+	
+	public boolean deleteEnaTexPayerItem(HR011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = HR011001Dao.deleteEnaTexPayerItem(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}	
 	
 }

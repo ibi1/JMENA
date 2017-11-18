@@ -53,9 +53,10 @@ public class EP011001VO {
 	private String PAYERID;
 	private String PAYERNAME;
 	private String PAYSEQ;
-	private String REGISTERSEQ;
-	
-	private String PAYNUM;
+	private String REGISTERSEQ;	
+	private String REGISTERNUM;	
+	private String KNAME;	
+	private String USERID;
 	
 	
 	public String getS_SALERCD() {
@@ -328,11 +329,24 @@ public class EP011001VO {
 	public void setREGISTERSEQ(String rEGISTERSEQ) {
 		this.REGISTERSEQ = rEGISTERSEQ;
 	}
-	public String getPAYNUM() {
-		return PAYNUM;
+
+	public String getREGISTERNUM() {
+		return REGISTERNUM;
 	}
-	public void setPAYNUM(String pAYNUM) {
-		this.PAYNUM = pAYNUM;
+	public void setREGISTERNUM(String rEGISTERNUM) {
+		this.REGISTERNUM = rEGISTERNUM;
+	}
+	public String getKNAME() {
+		return KNAME;
+	}
+	public void setKNAME(String kNAME) {
+		this.KNAME = kNAME;
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setUSERID(String uSERID) {
+		this.USERID = uSERID;
 	}
 
 }

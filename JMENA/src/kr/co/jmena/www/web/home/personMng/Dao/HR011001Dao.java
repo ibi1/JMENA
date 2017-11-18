@@ -2,6 +2,7 @@ package kr.co.jmena.www.web.home.personMng.Dao;
 
 import java.util.List;
 
+import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY021001VO;
 
@@ -47,9 +48,6 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		return updateCnt;
 	}
 	
-
-	
-	
 	@SuppressWarnings("unchecked")
 	public List<HR011001VO> selectListEnaAppointItem(HR011001VO vo) throws DataAccessException {
 		List<HR011001VO> lst = null;
@@ -76,7 +74,14 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		return updateCnt;
 	}	
 	
-	
+	public boolean deleteEnaAppointItem(HR011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaAppointItem", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<HR011001VO> selectListEnaTexPayerItem(HR011001VO vo) throws DataAccessException {
@@ -101,6 +106,15 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaTexPayerItem", vo);
 		
 		return updateCnt;
-	}		
+	}	
+	
+	public boolean deleteEnaTexPayerItem(HR011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaTexPayerItem", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
 		
 }

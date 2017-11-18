@@ -110,8 +110,8 @@
 
 </script>
 <body>
-	<div id="contents" style="width:1200px;" align="center">
-		<div id="leftDiv" style="width:60%; float:left; border:1px solid #333; padding: 10px" align="left">
+	<div id="contents" style="width:100%;" align="center">
+		<div id="leftDiv" style="width:90%; float:left; border:1px solid #333; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
 					<th>계약일자</th>
