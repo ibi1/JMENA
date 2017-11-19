@@ -3,17 +3,8 @@ JNDI Setting
 1. Tomcat Server.xml
 <GlobalNamingResources> 안에 
 
-<Resource 
-	auth="Container" 
-	driverClassName="com.mysql.jdbc.Driver" 
-	maxActive="20" 
-	maxIdle="10" 
-	maxWait="-1" 
-	name="jdbc/enaDS" 
-	password="root" 
-	type="javax.sql.DataSource" 
-	url="jdbc:mysql://localhost:3306/enadb" 
-	username="root"/>  
+  	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/enaDS" password="SHH3590" type="javax.sql.DataSource" url="jdbc:mysql://117.52.89.242:3306/enadb?useUnicode=yes&amp;characterEncoding=UTF-8&amp;autoReconnect=true" username="root"/>  
+
 
 2. Tomcat context.xml
 <Context> 안에
