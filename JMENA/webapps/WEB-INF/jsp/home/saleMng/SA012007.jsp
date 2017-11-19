@@ -19,9 +19,9 @@
 		var S_BOROUGHCODE = "";
 		var S_ADDRESS = "";
 		
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
 		
@@ -189,12 +189,12 @@
 			<table>
 				<tr>
 					<th width="120">지역구분</th>
-					<td>
+					<td width="150">
 						<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">
 						</select>
 					</td>
 					<th width="120">시/도 구분</th>
-					<td>
+					<td width="150">
 						<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:130px">
 						</select>
 					</td>

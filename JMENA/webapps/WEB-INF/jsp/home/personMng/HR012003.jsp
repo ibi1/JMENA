@@ -18,12 +18,18 @@
 		var S_BRANCHCODE = "";
 		var S_DEPTCODE = "";
 		
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_JOINDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-		$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+
+		$("#SUMCNT1").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SUMCNT2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SUMCNT3").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SUMCNT4").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SUMCNT5").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		
 		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
@@ -209,7 +215,7 @@
 			</table>
 		</div>
 		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<table style="width:100%;">
+			<table style="width:98%;">
 				<tr>
 					<td width="40%" align="left">
 						<table>
@@ -219,20 +225,20 @@
 							</tr>
 							<tr>
 								<th width="120">지사</th>
-								<td>
-									<select id="S_BRANCHCODE" name="S_BRANCHCODE">
+								<td width="140">
+									<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:120px">
 									</select>
 								</td>
 								<th width="120">부서</th>
 								<td>
-									<select id="S_DEPTCODE" name="S_DEPTCODE">
+									<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 									</select>
 								</td>
 							</tr>
 						</table>
 					</td>
 					<td align="right">
-						<table style="border:1px solid #333; padding: 10px;">
+						<table style="border:0px solid #333; padding: 10px;">
 							<tr>
 								<td align="center">임원</td>
 								<td align="center">실장</td>
@@ -241,11 +247,11 @@
 								<td align="center">지사 총 원</td>
 							</tr>
 							<tr>
-								<td><input type="text" id="SALEDATE" name="SALEDATE" style="width:70px" /></td>
-								<td><input type="text" id="SALEDATE" name="SALEDATE" style="width:70px" /></td>
-								<td><input type="text" id="SALEDATE" name="SALEDATE" style="width:70px" /></td>
-								<td><input type="text" id="SALEDATE" name="SALEDATE" style="width:70px" /></td>
-								<td><input type="text" id="SALEDATE" name="SALEDATE" style="width:70px" /></td>
+								<td><input type="text" id="SUMCNT1" name="SUMCNT1" style="width:70px" /></td>
+								<td><input type="text" id="SUMCNT2" name="SUMCNT2" style="width:70px" /></td>
+								<td><input type="text" id="SUMCNT3" name="SUMCNT3" style="width:70px" /></td>
+								<td><input type="text" id="SUMCNT4" name="SUMCNT4" style="width:70px" /></td>
+								<td><input type="text" id="SUMCNT5" name="SUMCNT5" style="width:70px" /></td>
 							</tr>
 						</table>
 					</td>

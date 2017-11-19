@@ -15,11 +15,11 @@
 	var v_rightLastSel = 0;		//오른쪽 그리드 선택 id
 	
 	$(document).ready(function(){
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#RS_CITYCODE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 3, minLength: 1});
 		$("#RS_CITYNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
@@ -43,9 +43,9 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['시/도 코드', '시/도 명', '정렬순서'] ,
 			colModel:[
-				{name:"CITYCODE",		index:'CITYCODE',		width:100,		align:'center', sortable:false}
-				, {name:"CITYNAME",		index:'CITYNAME',		width:150,		align:'center', sortable:false}
-				, {name:"SORTKEY",		index:'SORTKEY',		width:70,		align:'center', sortable:false}
+				{name:"CITYCODE",		index:'CITYCODE',		width:120,		align:'center', sortable:false}
+				, {name:"CITYNAME",		index:'CITYNAME',		width:200,		align:'center', sortable:false}
+				, {name:"SORTKEY",		index:'SORTKEY',		width:80,		align:'center', sortable:false}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
@@ -108,11 +108,11 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['시/구/군 코드', '시/구/군 명', '사용여부', '비고', '정렬순서'] ,
 			colModel:[
-				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:100,	align:'center', sortable:false, editable:true}
-				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:150,	align:'center', sortable:false, editable:true}
-				, {name:"USEYN",		index:'USEYN',			width:70,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"} }
+				{name:"BOROUGHCODE",	index:'BOROUGHCODE',	width:120,	align:'center', sortable:false, editable:true}
+				, {name:"BOROUGHNAME",	index:'BOROUGHNAME',	width:200,	align:'center', sortable:false, editable:true}
+				, {name:"USEYN",		index:'USEYN',			width:80,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"} }
 				, {name:"REMARK",		index:'REMARK',			width:250,	align:'center', sortable:false, editable:true}
-				, {name:"SORTKEY",		index:'SORTKEY',		width:70,	align:'center', sortable:false, editable:true}
+				, {name:"SORTKEY",		index:'SORTKEY',		width:80,	align:'center', sortable:false, editable:true}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
@@ -352,10 +352,10 @@
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
 			<form id="SY021003">
 				<input type="hidden" id="S_FLAG_L", name="S_FLAG_L" />
  				<table>
@@ -375,17 +375,15 @@
 				</table>
 			</form>
 			<input type="hidden" id="S_FLAG_R" name="S_FLAG_R" />
-			<div style="width:96%; float:left; padding: 10px" align="left">
-				<table align="right">
-					<tr>
-						<td><input type="button" value="추가" id='rightInsertButton' /></td>
-						<td><input type="button" value="저장" id='rightSaveButton' /></td>
-					</tr>
-				</table>
-			</div>
-			<div id="rightDiv2" style="width:96%; float:left; padding: 10px" align="left">
-				<table id="rightList"></table>
-			</div>
+			<table align="right">
+				<tr>
+					<td><input type="button" value="추가" id='rightInsertButton' /></td>
+					<td><input type="button" value="저장" id='rightSaveButton' /></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+			<table id="rightList"></table>
 		</div>
 	</div>
 </body>

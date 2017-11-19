@@ -171,15 +171,15 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['시스템ID', '시스템구분', '메뉴ID', '메뉴구분', '프로그램ID', '프로그램명', '메뉴정렬키', '비고', '사용여부'] ,
 					colModel:[
-						{name:"SYSID",			index:'SYSID',			width:70,		align:'center', sortable:false, hidden: true}
-						, {name:"SYSNAME",		index:'SYSNAME',		width:150,		align:'center', sortable:false}
-						, {name:"MENUID",		index:'MENUID',			width:70,		align:'center', sortable:false, hidden: true}
-						, {name:"MENUNAME",		index:'MENUNAME',		width:150,		align:'center', sortable:false}
-						, {name:"PGMID",		index:'PGMID',			width:60,		align:'center', sortable:false}
-						, {name:"PGMNAME",		index:'PGMNAME',		width:150,		align:'center', sortable:false}
-						, {name:"SORTKEY",		index:'SORTKEY',		width:70,		align:'center', sortable:false}
+						{name:"SYSID",			index:'SYSID',			width:80,		align:'center', sortable:false, hidden: true}
+						, {name:"SYSNAME",		index:'SYSNAME',		width:200,		align:'center', sortable:false}
+						, {name:"MENUID",		index:'MENUID',			width:80,		align:'center', sortable:false, hidden: true}
+						, {name:"MENUNAME",		index:'MENUNAME',		width:200,		align:'center', sortable:false}
+						, {name:"PGMID",		index:'PGMID',			width:100,		align:'center', sortable:false}
+						, {name:"PGMNAME",		index:'PGMNAME',		width:200,		align:'center', sortable:false}
+						, {name:"SORTKEY",		index:'SORTKEY',		width:80,		align:'center', sortable:false}
 						, {name:"REMARK",		index:'REMARK',			width:250,		align:'center', sortable:false}
-						, {name:"USEYN",		index:'USEYN',			width:70,		align:'center', sortable:false}
+						, {name:"USEYN",		index:'USEYN',			width:80,		align:'center', sortable:false}
 					] ,
 					rowNum:100,
 					autowidth: true ,
@@ -365,7 +365,7 @@
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="leftDiv" style="width:58%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
 					<th width="120">시스템구분</th>
@@ -391,7 +391,7 @@
 			<table id="leftList"></table>
 			<div id="leftNav"></div>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="rightDiv" style="width:38%; float:left; padding: 10px" align="left">
 			<form id="SY011002">
 			<input type="hidden" id="S_FLAG" name="S_FLAG" />
 			<table>

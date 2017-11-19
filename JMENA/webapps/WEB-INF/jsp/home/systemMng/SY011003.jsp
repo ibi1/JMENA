@@ -51,13 +51,13 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['사용자ID', '비밀번호', '사용자명', '사용여부', '사용자구분', '연락처', '모바일'] ,
 					colModel:[
-						{name:"USERID",			index:'USERID',		width:100,	align:'center', sortable:false}
+						{name:"USERID",			index:'USERID',		width:130,	align:'center', sortable:false}
 						, {name:"PASSWORD",		index:'PASSWORD',	width:100,	align:'center', sortable:false, hidden:true}
-						, {name:"USERNAME",		index:'USERNAME',	width:150,	align:'center', sortable:false}
-						, {name:"USEYN",		index:'USEYN',		width:70,	align:'center', sortable:false}
-						, {name:"USERGUBUN",	index:'USERGUBUN',	width:70,	align:'center', sortable:false, hidden:true}
-						, {name:"PHONENO",		index:'PHONENO',	width:90,	align:'center', sortable:false, hidden:true}
-						, {name:"MOBILENO",		index:'MOBILENO',	width:90,	align:'center', sortable:false, hidden:true}
+						, {name:"USERNAME",		index:'USERNAME',	width:200,	align:'center', sortable:false}
+						, {name:"USEYN",		index:'USEYN',		width:80,	align:'center', sortable:false}
+						, {name:"USERGUBUN",	index:'USERGUBUN',	width:80,	align:'center', sortable:false, hidden:true}
+						, {name:"PHONENO",		index:'PHONENO',	width:100,	align:'center', sortable:false, hidden:true}
+						, {name:"MOBILENO",		index:'MOBILENO',	width:100,	align:'center', sortable:false, hidden:true}
 					] ,
 					rowNum:100,
 					autowidth: true ,
@@ -121,10 +121,9 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['시스템코드', '시스템명', '사용여부', '비고'] ,
 					colModel:[
-						{name:"SYSID",			index:'SYSID',		width:100,	align:'center', sortable:false}
-						, {name:"SYSNAME",		index:'SYSNAME',	width:150,	align:'center', sortable:false}
-						//, {name:"AUTH_YN",		index:'AUTH_YN',	width:60,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/home/selectTest.do", buildSelect:setAuth_YNSelectBox}}
-						, {name:"AUTH_YN",		index:'AUTH_YN',	width:70,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+						{name:"SYSID",			index:'SYSID',		width:150,	align:'center', sortable:false}
+						, {name:"SYSNAME",		index:'SYSNAME',	width:200,	align:'center', sortable:false}
+						, {name:"AUTH_YN",		index:'AUTH_YN',	width:80,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
 						, {name:"REMARK",		index:'REMARK',		width:250,	align:'center', sortable:false, editable:true}
 					] ,
 					rowNum:100,
@@ -331,7 +330,7 @@
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
 					<th width="120">사용자명</th>
@@ -340,7 +339,7 @@
 			</table>
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
 			<form id="SY011003">
 			<input type="hidden" id="S_FLAG" name="S_FLAG"/>
 			<table>

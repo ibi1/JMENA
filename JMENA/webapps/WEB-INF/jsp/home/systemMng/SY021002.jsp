@@ -14,11 +14,11 @@
 	var v_rightLastSel = 0;
 	
 	$(document).ready(function(){
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#rightInsertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#LS_BRANCHNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		
@@ -48,9 +48,9 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['지사코드', '지사 명', '사용여부'] ,
 			colModel:[
-				{name:"BRANCHCODE",			index:'BRANCHCODE',		width:100,		align:'center', sortable:false}
-				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:150,		align:'center', sortable:false}
-				, {name:"USEYN",			index:'USEYN',			width:70,		align:'center', sortable:false}
+				{name:"BRANCHCODE",			index:'BRANCHCODE',		width:120,		align:'center', sortable:false}
+				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:200,		align:'center', sortable:false}
+				, {name:"USEYN",			index:'USEYN',			width:80,		align:'center', sortable:false}
 			] ,
 			rowNum:100 ,
 			autowidth: true ,
@@ -114,10 +114,10 @@
 			colNames:['부서코드', '부서명', '부서구분', '정렬순서', '사용여부', '비고'] ,
 			colModel:[
 				{name:"DEPTCODE",		index:'DEPTCODE',	width:100,	align:'center', sortable:false, editable:true}
-				, {name:"DEPTNAME",		index:'DEPTNAME',	width:150,	align:'center', sortable:false, editable:true}
+				, {name:"DEPTNAME",		index:'DEPTNAME',	width:200,	align:'center', sortable:false, editable:true}
 				, {name:"DEPTGUBUN",	index:'DEPTGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=001", buildSelect:selectListEnaDeptCode} }
-				, {name:"SORTKEY",		index:'SORTKEY',	width:70,	align:'center', sortable:false, editable:true}
-				, {name:"USEYN",		index:'USEYN',		width:70,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
+				, {name:"SORTKEY",		index:'SORTKEY',	width:80,	align:'center', sortable:false, editable:true}
+				, {name:"USEYN",		index:'USEYN',		width:80,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"} }
 				, {name:"REMARK",		index:'REMARK',		width:250,	align:'center', sortable:false, editable:true}
 			] ,
 			
@@ -400,7 +400,7 @@
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
 					<th width="120">지사명</th>
@@ -409,7 +409,7 @@
 			</table>
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
 			<form id="SY021002">
 				<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
 				<table>
@@ -434,17 +434,15 @@
 				</table>
 			</form>
 			<input type="hidden" id="S_FLAG_R" name="S_FLAG_R" />
-			<div style="width:96%; float:left; padding: 10px" align="left">
-				<table align="right">
-					<tr>
-						<td><input type="button" value="추가" id='rightInsertButton' /></td>
-						<td><input type="button" value="저장" id='rightSaveButton' /></td>
-					</tr>
-				</table>
-			</div>
-			<div id="rightDiv2" style="width:96%; float:left; padding: 10px" align="left">
-				<table id="rightList"></table>
-			</div>
+			<table align="right">
+				<tr>
+					<td><input type="button" value="추가" id='rightInsertButton' /></td>
+					<td><input type="button" value="저장" id='rightSaveButton' /></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+			<table id="rightList"></table>
 		</div>
 	</div>
 </body>

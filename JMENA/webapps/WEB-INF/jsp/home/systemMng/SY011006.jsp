@@ -39,10 +39,10 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['기관코드', '금융기관명', '사용여부', '확장코드'] ,
 				colModel:[
-					{name:"BANKCODE",		index:'BANKCODE',	width:80,	align:'center', sortable:false, editable:true}
-					, {name:"BANKNAME",		index:'BANKNAME',	width:150,	align:'center', sortable:false, editable:true}
-					, {name:"USEYN",		index:'USEYN',		width:70,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-					, {name:"AUXCODE",		index:'AUXCODE',	width:70,	align:'center', sortable:false, editable:true}
+					{name:"BANKCODE",		index:'BANKCODE',	width:120,	align:'center', sortable:false, editable:true}
+					, {name:"BANKNAME",		index:'BANKNAME',	width:200,	align:'center', sortable:false, editable:true}
+					, {name:"USEYN",		index:'USEYN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+					, {name:"AUXCODE",		index:'AUXCODE',	width:100,	align:'center', sortable:false, editable:true}
 				] ,
 				rowNum:1000,
 				autowidth: true ,

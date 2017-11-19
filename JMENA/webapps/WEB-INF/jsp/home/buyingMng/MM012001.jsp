@@ -13,9 +13,9 @@
 			var S_BOROUGHCODE = "";
 			var S_ADDRESS = "";
 			
-			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			$("#S_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 			

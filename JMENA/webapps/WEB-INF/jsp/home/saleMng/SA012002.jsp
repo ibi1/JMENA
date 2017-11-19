@@ -22,9 +22,9 @@
 		var S_DCODE = "";
 		var S_KNAME = "";
 		
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_SALEDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#S_SALEDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -255,9 +255,9 @@
 			<table>
 				<tr>
 					<th width="120">매출기간</th>
-					<td><input type="text" id="S_SALEDATE_FR" name="S_SALEDATE_FR" /> ~ <input type="text" id="S_SALEDATE_TO" name="S_SALEDATE_TO" /></td>
+					<td width="190"><input type="text" id="S_SALEDATE_FR" name="S_SALEDATE_FR" /> ~ <input type="text" id="S_SALEDATE_TO" name="S_SALEDATE_TO" /></td>
 					<th width="120">지사</th>
-					<td>
+					<td width="170">
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
 						</select>
 					</td>

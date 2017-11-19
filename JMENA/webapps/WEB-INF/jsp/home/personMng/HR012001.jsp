@@ -19,9 +19,9 @@
 		var S_KNAME = "";
 		var S_JUMINID = "";
 		
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 
 		$("#S_JOINDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#S_JOINDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -208,17 +208,17 @@
 				</tr>
 				<tr>
 					<th width="120">지사</th>
-					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
+					<td width="140">
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:120px">
 						</select>
 					</td>
 					<th width="120">부서</th>
-					<td>
-						<select id="S_DEPTCODE" name="S_DEPTCODE">
+					<td width="140">
+						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 						</select>
 					</td>
 					<th width="120">성명</th>
-					<td><input type="text" class="inputName" id="S_KNAME" name="S_KNAME" /></td>
+					<td width="170"><input type="text" class="inputName" id="S_KNAME" name="S_KNAME" /></td>
 					<th width="120">주민번호</th>
 					<td><input type="text" id="S_JUMINID" name="S_JUMINID" /></td>
 				</tr>

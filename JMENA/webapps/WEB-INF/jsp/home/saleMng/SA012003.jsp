@@ -21,9 +21,9 @@
 		var S_DEPTCODE = "";
 		var S_KNAME = "";
 		
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_SALEDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#S_SALEDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -227,12 +227,12 @@
 				</tr>
 				<tr>
 					<th width="120">지사</th>
-					<td>
+					<td width="190">
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
 						</select>
 					</td>
 					<th width="120">부서</th>
-					<td>
+					<td width="130">
 						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 						</select>
 					</td>

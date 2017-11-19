@@ -23,9 +23,9 @@
 		var S_IPGUMPERSON = "";
 		var S_IPGUMAMT = "";
 		
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_IPGUMDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#S_IPGUMDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -225,12 +225,12 @@
 			<table>
 				<tr>
 					<th width="120">입금기간</th>
-					<td><input type="text" id="S_IPGUMDATE_FR" name="S_IPGUMDATE_FR" /> ~ <input type="text" id="S_IPGUMDATE_TO" name="S_IPGUMDATE_TO" /></td>
+					<td width="190"><input type="text" id="S_IPGUMDATE_FR" name="S_IPGUMDATE_FR" /> ~ <input type="text" id="S_IPGUMDATE_TO" name="S_IPGUMDATE_TO" /></td>
 				</tr>
 				<tr>
 					<th width="120">지사</th>
 					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:90px">
 						</select>
 					</td>
 					<th width="120">담당자</th>
@@ -242,11 +242,11 @@
 				<tr>
 					<th width="120">입금구분</th>
 					<td>
-						<select id="S_IPGUMGUBUN" name="S_IPGUMGUBUN">
+						<select id="S_IPGUMGUBUN" name="S_IPGUMGUBUN" style="width:90px">
 						</select>
 					</td>
 					<th width="120">입금인</th>
-					<td><input type="text" id="S_IPGUMPERSON" name="S_IPGUMPERSON" /></td>
+					<td width="170"><input type="text" id="S_IPGUMPERSON" name="S_IPGUMPERSON" /></td>
 					<th width="120">입금금액</th>
 					<td><input type="text" id="S_IPGUMAMT" name="S_IPGUMAMT" /></td>
 				</tr>

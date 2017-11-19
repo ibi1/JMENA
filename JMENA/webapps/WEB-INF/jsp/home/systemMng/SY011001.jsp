@@ -44,19 +44,19 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['시스템코드', '시스템 명', '정렬순서'] ,
 				colModel:[
-					{name:"SYSID",			index:'SYSID',		width:70,		align:'center', sortable:false}
-					,{name:"SYSNAME",		index:'SYSNAME',	width:200,		align:'center', sortable:false}
-					,{name:"SORTKEY",		index:'SORTKEY',	width:70,		align:'center', sortable:false}
+					{name:"SYSID",			index:'SYSID',		width:130,		align:'center', sortable:false}
+					,{name:"SYSNAME",		index:'SYSNAME',	width:210,		align:'center', sortable:false}
+					,{name:"SORTKEY",		index:'SORTKEY',	width:100,		align:'center', sortable:false}
 					] ,
 				rowNum:100 ,
 				autowidth: true ,
-				shrinkToFit: false,
+				//shrinkToFit: false,
 				rowList:[10,20,30] ,
 				//pager: $('#leftNav') ,
 				sortname: 'SORTKEY' ,
 				viewrecords: true ,
 				sortorder:'asc' ,
-				width: "340px" ,
+				//width: "auto" ,
 				jsonReader: {
 					repeatitems: false
 				},
@@ -111,11 +111,11 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['메뉴코드', '메뉴명', '사용여부', '비고', '정렬순서'] ,
 					colModel:[
-						{name:"MENUID",			index:'MENUID',		width:70,		align:'center', sortable:false, editable:true}
-						, {name:"MENUNAME",		index:'MENUNAME',	width:200,		align:'center', sortable:false, editable:true}
-						, {name:"USEYN",		index:'USEYN',		width:70,		align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-						, {name:"REMARK",		index:'REMARK',		width:150,		align:'center', sortable:false, editable:true}
-						, {name:"SORTKEY",		index:'SORTKEY',	width:70,		align:'center', sortable:false, editable:true}
+						{name:"MENUID",			index:'MENUID',		width:150,		align:'center', sortable:false, editable:true}
+						, {name:"MENUNAME",		index:'MENUNAME',	width:250,		align:'center', sortable:false, editable:true}
+						, {name:"USEYN",		index:'USEYN',		width:100,		align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+						, {name:"REMARK",		index:'REMARK',		width:200,		align:'center', sortable:false, editable:true}
+						, {name:"SORTKEY",		index:'SORTKEY',	width:100,		align:'center', sortable:false, editable:true}
 						] ,
 					rowNum:100 ,
 					autowidth: true ,
@@ -125,7 +125,7 @@
 					sortname: 'SORTKEY' ,
 					viewrecords: true ,
 					sortorder:'asc' ,
-					width: "560px" ,
+					width: "800px" ,
 					jsonReader: {
 						repeatitems: false
 					},
@@ -361,11 +361,10 @@
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
 			<table id="leftList"></table>
-			<div id="leftNav"></div>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
 			<form id="SY011001">
 				<input type="hidden" id="S_FLAG_L" NAME="S_FLAG_L" />
 				<table width="600">
@@ -386,19 +385,15 @@
 			</form>
 			
 			<input type="hidden" id="S_FLAG_R" NAME="S_FLAG_R" />
-			
-			<div style="width:100%; float:left; padding: 10px" align="left">
-				<table align="right">
-					<tr>
-						<td><input type="button" value="추가" id='rightInsertButton' /></td>
-						<td><input type="button" value="저장" id='rightSaveButton' /></td>
-					</tr>
-				</table>
-			</div>
-			<div id="rightDiv2" style="width:100%; float:left; padding: 10px" align="left">
-				<table id="rightList"></table>
-				<div id="rightNav"></div>
-			</div>
+			<table align="right">
+				<tr>
+					<td><input type="button" value="추가" id='rightInsertButton' /></td>
+					<td><input type="button" value="저장" id='rightSaveButton' /></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+			<table id="rightList"></table>
 		</div>
 	</div>
 </body>

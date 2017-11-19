@@ -30,20 +30,20 @@
 			
 			$('#bottomTabs').jqxTabs({theme: 'bootstrap', autoHeight: false, width: 680});
 			
-			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#deleteButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			
-			$("#tab1InsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#tab1DeleteButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#tab1SaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#tab1InsertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#tab1DeleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#tab1SaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
-			$("#tab2InsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#tab2DeleteButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#tab2SaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#tab2InsertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#tab2DeleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#tab2SaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			$("#LS_BUYDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#LS_BUYDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -992,153 +992,147 @@
 	</script>
 </head>
 <body>
-	<div style="padding: 10px;">
-		<div id="contents">
-			<div id="topLayout">
-				<table align="right">
-					<tr>
-						<td><input type="button" value="조회" id='selectButton' /></td>
-						<td><input type="button" value="추가" id='insertButton' /></td>
-						<td><input type="button" value="삭제" id='deleteButton' /></td>
-						<td><input type="button" value="저장" id='saveButton' /></td>
-					</tr>
-				</table>
-			</div>
-			<div id="middleLayout">
-				<div id="leftDiv">
-					<table>
-						<tr>
-							<th width="120">매입기간</th>
-							<td><input type="text" id="LS_BUYDATE_FR" name="LS_BUYDATE_FR" /> - <input type="text" id="LS_BUYDATE_TO" name="LS_BUYDATE_TO" /></td>
-						</tr>
-						<tr>
-							<th width="120">지번(주소)</th>
-							<td><input type="text" id="LS_ADDRESS" name="LS_ADDRESS" onkeydown="f_selectButton();" /></td>
-						</tr>
-					</table>
-					<table id="leftList"></table>
-				</div>
-				<div id="bottomDiv" style="border: none;">
-					<form id="MM011001">
-					<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
-					<table>
-						<tr>
-							<th width="120">* 계약일자 / 번호</th>
-							<td><input type="text" id="BUYDATE" name="BUYDATE" onkeydown="f_getBuyId();" />&nbsp;<input type="text" id="BUYID" name="BUYID" /></td>
-							<td colspan="2"><input type="button" id="searchButton"/></td>
-						</tr>
-						<tr>
-							<th width="120">* 매입구분</th>
-							<td colspan="3">
-								<select id="BUYGUBUN" name="BUYGUBUN">
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th width="120">* 관리번호</th>
-							<td colspan="3"><input type="text" id="MANAGENO" name="MANAGENO" /></td>
-						</tr>
-						<tr height="10px">
-						</tr>
-						<tr>
-							<th width="120">지역구분</th>
-							<td>
-								<select id="CITYCODE" name="CITYCODE">
-								</select>
-							</td>
-							<th width="120">시/도구분</th>
-							<td>
-								<select id="BOROUGHCODE" name="BOROUGHCODE">
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th width="120">지목</th>
-							<td colspan="3">
-								<select id="USETYPE" name="USETYPE">
-								</select>
-							</td>	
-						</tr>
-						<tr>
-							<th width="120">주소</th>
-							<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
-						</tr>
-						<tr>
-							<th width="120">원지주성명</th>
-							<td><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
-							<th width="120">주민번호</th>
-							<td><input type="text" id="OWNERJUMINID" name="OWNERJUMINID" /></td>
-						</tr>
-						<tr>
-							<th width="120">계약면적</th>
-							<td><input type="text" id="BUYM2" name="BUYM2" /></td>
-							<th width="120">계약평수</th>
-							<td><input type="text" id="BUYPY" name="BUYPY" /></td>
-						</tr>
-						<tr>
-							<th width="120">분양/잔여면적</th>
-							<td><input type="text" id="BUNYM2" name="BUNYM2" /> / <input type="text" id="BUNJANM2" name="BUNJANM2" /></td>
-							<th width="120">분양/잔여평수</th>
-							<td><input type="text" id="BUNYPY" name="BUNYPY" /> / <input type="text" id="BUNJANPY" name="BUNJANPY" /></td>
-						</tr>
-						<tr>
-							<th width="120"><div id="mm_div1">매매대금</div></th>
-							<td><input type="text" id="BUYAMT" name="BUYAMT" /></td>
-							<th width="120"><div id="mm_div2">매매단가</div></th>
-							<td><input type="text" id="BUYDANGA" name="BUYDANGA" /></td>
-						</tr>
-						<tr>
-							<th width="120">등기여부</th>
-							<td colspan="3">
-								<input type="radio" id="REGYN" name="REGYN" value="Y">등기완료
-								<input type="radio" id="REGYN" name="REGYN" value="N">미등기
-							</td>
-						</tr>
-						<tr>
-							<th width="120">등기일자</th>
-							<td colspan="3"><input type="text" id="REGDATE" name="REGDATE" /></td>
-						</tr>
-						<tr>
-							<th width="120">비고</th>
-							<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
-						</tr>
-					</table>
-					</form>
-					<div id="rightDiv2">
-						<input type="hidden" id="S_FLAG_R_1" name="S_FLAG_R_1" />
-						<input type="hidden" id="S_FLAG_R_2" name="S_FLAG_R_2" />
-						<div id="bottomTabs">
-							<ul>
-       							<li>지급 스케줄 관리</li>
-								<li>지사 오픈관리</li>
-							</ul>
-							<div>
-								<div id="right1Div">
-									<table id="rightList1"></table>
-									<table width="100%">
-										<tr>
-											<td width="30%">지급합계</td>
-											<td width="70%" align="left"><input type="text" id="PAYTOTAL" name="PAYTOTAL" /></td>
-											<td align="right"><input type="button" value="추가" id='tab1InsertButton' /></td>
-											<td align="right"><input type="button" value="삭제" id='tab1DeleteButton' /></td>
-											<td align="right"><input type="button" value="저장" id='tab1SaveButton' /></td>
-										</tr>
-									</table>
-								</div>
-							</div>
-							<div>
-								<div id="right2Div">
-									<table id="rightList2"></table>
-									<table align="right">
-										<tr>
-											<td width="100%" align="right"><input type="button" value="추가" id='tab2InsertButton' /></td>
-											<td><input type="button" value="삭제" id='tab2DeleteButton' /></td>
-											<td><input type="button" value="저장" id='tab2SaveButton' /></td>
-										</tr>
-									</table>
-								</div>
-							</div>
+	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
+				<tr>
+					<td><input type="button" value="조회" id='selectButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="삭제" id='deleteButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
+				</tr>
+			</table>
+		</div>
+		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
+			<table>
+				<tr>
+					<th width="120">매입기간</th>
+					<td><input type="text" id="LS_BUYDATE_FR" name="LS_BUYDATE_FR" /> - <input type="text" id="LS_BUYDATE_TO" name="LS_BUYDATE_TO" /></td>
+				</tr>
+				<tr>
+					<th width="120">지번(주소)</th>
+					<td><input type="text" id="LS_ADDRESS" name="LS_ADDRESS" onkeydown="f_selectButton();" /></td>
+				</tr>
+			</table>
+			<table id="leftList"></table>
+		</div>
+		<div id="bottomDiv"  style="width:58%; float:left; padding: 10px" align="left">
+			<form id="MM011001">
+			<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
+			<table>
+				<tr>
+					<th width="120">* 계약일자 / 번호</th>
+					<td colspan="2"><input type="text" id="BUYDATE" name="BUYDATE" onkeydown="f_getBuyId();" />&nbsp;<input type="text" id="BUYID" name="BUYID" /></td>
+					<td><input type="button" id="searchButton"/></td>
+				</tr>
+				<tr>
+					<th width="120">* 매입구분</th>
+					<td colspan="3">
+						<select id="BUYGUBUN" name="BUYGUBUN">
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th width="120">* 관리번호</th>
+					<td colspan="3"><input type="text" id="MANAGENO" name="MANAGENO" /></td>
+				</tr>
+				<tr height="10px">
+				</tr>
+				<tr>
+					<th width="120">지역구분</th>
+					<td>
+						<select id="CITYCODE" name="CITYCODE">
+						</select>
+					</td>
+					<th width="120">시/도구분</th>
+					<td>
+						<select id="BOROUGHCODE" name="BOROUGHCODE">
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th width="120">지목</th>
+					<td colspan="3">
+						<select id="USETYPE" name="USETYPE">
+						</select>
+					</td>	
+				</tr>
+				<tr>
+					<th width="120">주소</th>
+					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
+				</tr>
+				<tr>
+					<th width="120">원지주성명</th>
+					<td><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
+					<th width="120">주민번호</th>
+					<td><input type="text" id="OWNERJUMINID" name="OWNERJUMINID" /></td>
+				</tr>
+				<tr>
+					<th width="120">계약면적</th>
+					<td><input type="text" id="BUYM2" name="BUYM2" /></td>
+					<th width="120">계약평수</th>
+					<td><input type="text" id="BUYPY" name="BUYPY" /></td>
+				</tr>
+				<tr>
+					<th width="120">분양/잔여면적</th>
+					<td><input type="text" id="BUNYM2" name="BUNYM2" /> / <input type="text" id="BUNJANM2" name="BUNJANM2" /></td>
+					<th width="120">분양/잔여평수</th>
+					<td><input type="text" id="BUNYPY" name="BUNYPY" /> / <input type="text" id="BUNJANPY" name="BUNJANPY" /></td>
+				</tr>
+				<tr>
+					<th width="120"><div id="mm_div1">매매대금</div></th>
+					<td><input type="text" id="BUYAMT" name="BUYAMT" /></td>
+					<th width="120"><div id="mm_div2">매매단가</div></th>
+					<td><input type="text" id="BUYDANGA" name="BUYDANGA" /></td>
+				</tr>
+				<tr>
+					<th width="120">등기여부</th>
+					<td colspan="3">
+						<input type="radio" id="REGYN" name="REGYN" value="Y">등기완료
+						<input type="radio" id="REGYN" name="REGYN" value="N">미등기
+					</td>
+				</tr>
+				<tr>
+					<th width="120">등기일자</th>
+					<td colspan="3"><input type="text" id="REGDATE" name="REGDATE" /></td>
+				</tr>
+				<tr>
+					<th width="120">비고</th>
+					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
+				</tr>
+			</table>
+			</form>
+			<div id="rightDiv2">
+				<input type="hidden" id="S_FLAG_R_1" name="S_FLAG_R_1" />
+				<input type="hidden" id="S_FLAG_R_2" name="S_FLAG_R_2" />
+				<div id="bottomTabs">
+					<ul>
+						<li>지급 스케줄 관리</li>
+						<li>지사 오픈관리</li>
+					</ul>
+					<div>
+						<div id="right1Div">
+							<table id="rightList1"></table>
+							<table width="100%">
+								<tr>
+									<td width="30%">지급합계</td>
+									<td width="70%" align="left"><input type="text" id="PAYTOTAL" name="PAYTOTAL" /></td>
+									<td align="right"><input type="button" value="추가" id='tab1InsertButton' /></td>
+									<td align="right"><input type="button" value="삭제" id='tab1DeleteButton' /></td>
+									<td align="right"><input type="button" value="저장" id='tab1SaveButton' /></td>
+								</tr>
+							</table>
 						</div>
+					</div>
+					<div>
+						<table id="rightList2"></table>
+						<table align="right">
+							<tr>
+								<td width="100%" align="right"><input type="button" value="추가" id='tab2InsertButton' /></td>
+								<td><input type="button" value="삭제" id='tab2DeleteButton' /></td>
+								<td><input type="button" value="저장" id='tab2SaveButton' /></td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>

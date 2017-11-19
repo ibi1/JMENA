@@ -14,11 +14,11 @@
 		var v_rightLastSel = 0;		//아래 그리드 선택 id
 		
 		$(document).ready(function(){	
-			$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#insertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#saveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#bottomInsertButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-			$("#bottomSaveButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#bottomInsertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			$("#bottomSaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			
@@ -59,11 +59,10 @@
 				sortname: 'CCODE' ,
 				viewrecords: true ,
 				sortorder:'asc' ,
-				width: "98%" ,
+				width: "96%" ,
 				jsonReader: {
 					repeatitems: false
 				},
-				height: '550px' ,
 				onSelectRow: function(ids){
 					v_rightLastSel = 0;
 					
@@ -140,11 +139,10 @@
 				sortname: 'DCODE' ,
 				viewrecords: true ,
 				sortorder:'asc' ,
-				width: "98%" ,
+				width: "96%" ,
 				jsonReader: {
 					repeatitems: false
 				},
-				height: '470px' ,
 				onSelectRow: function(id){
 					if (id > 0) {
 						$("#S_FLAG_B").val("U");
@@ -377,9 +375,9 @@
 		})
 	</script>
 </head>
-<body class="default">
-	<div  style="padding: 10px;">
-		<div id="contents" style="border: none;">
+<body>
+	<div id="contents" style="width:1200px;"  align="center">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table align="right">
 				<tr>
 					<td><input type="button" value="조회" id='selectButton' /></td>
@@ -387,45 +385,41 @@
 					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
-			<div id="leftDiv">
+		</div>
+		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
+			<table>
+				<tr>
+					<th width="120">공통코드명</th>
+					<td><input type="text" id="S_CCODENAME_L" name="S_CCODENAME_L" onkeydown="f_selectKeyCcodeMst();"/></td>
+				</tr>
+			</table>
+			<table id="leftList"></table>
+		</div>
+		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
+			<form id="SY011005">
+				<input type="hidden" id="S_FLAG_L" NAME="S_FLAG_L" />
 				<table>
 					<tr>
+						<th width="120">공통코드</th>
+						<td width="110"><input type="text" id="S_CCODE" name="S_CCODE" onkeydown="f_s_ccodeMstSelection();" /></td>
+						<td><input type="button" id='searchButton' /></td>
+					</tr>
+					<tr>
 						<th width="120">공통코드명</th>
-						<td><input type="text" id="S_CCODENAME_L" name="S_CCODENAME_L" onkeydown="f_selectKeyCcodeMst();"/></td>
+						<td colspan="2"><input type="text" id="S_CCODENAME_R" name="S_CCODENAME_R" onkeydown="f_saveCcodeMst();" /></td>
 					</tr>
 				</table>
-				<table id="leftList"></table>
-			</div>
-			<div id="rightDiv">
-				<form id="SY011005">
-					<input type="hidden" id="S_FLAG_L" NAME="S_FLAG_L" />
-					<table>
-						<tr>
-							<th width="120">공통코드</th>
-							<td width="110"><input type="text" id="S_CCODE" name="S_CCODE" onkeydown="f_s_ccodeMstSelection();" /></td>
-							<td><input type="button" id='searchButton' /></td>
-						</tr>
-						<tr>
-							<th width="120">공통코드명</th>
-							<td colspan="2"><input type="text" id="S_CCODENAME_R" name="S_CCODENAME_R" onkeydown="f_saveCcodeMst();" /></td>
-						</tr>
-					</table>
-				</form>
-			</div>
-			<div id="bottomDiv" style="border: none;">
-				<input type="hidden" id="S_FLAG_B" NAME="S_FLAG_B" />
-				<div>
-					<table align="right">
-						<tr>
-							<td><input type="button" value="추가" id='bottomInsertButton' /></td>
-							<td><input type="button" value="저장" id='bottomSaveButton' /></td>
-						</tr>
-					</table>
-				</div>
-				<div id="rightDiv2">
-					<table id="bottomList"></table>
-				</div>
-			</div>
+			</form>
+			<input type="hidden" id="S_FLAG_B" NAME="S_FLAG_B" />
+			<table align="right">
+				<tr>
+					<td><input type="button" value="추가" id='bottomInsertButton' /></td>
+					<td><input type="button" value="저장" id='bottomSaveButton' /></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+			<table id="bottomList"></table>
 		</div>
 	</div>
 </body>

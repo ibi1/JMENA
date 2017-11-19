@@ -17,9 +17,9 @@
 		var S_DEPTCODE = "";
 		var S_KNAME = "";
 		
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
@@ -195,15 +195,15 @@
 			<table>
 				<tr>
 					<th width="120">지급년월</th>
-					<td><input type="text" id="S_PAYDATE" name="S_PAYDATE" /></td>
+					<td width="120"><input type="text" id="S_PAYDATE" name="S_PAYDATE" /></td>
 					<th width="120">지사</th>
-					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
+					<td width="140">
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:120px">
 						</select>
 					</td>
 					<th width="120">부서</th>
-					<td>
-						<select id="S_DEPTCODE" name="S_DEPTCODE">
+					<td width="140">
+						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 						</select>
 					</td>
 					<th width="120">담당자명</th>

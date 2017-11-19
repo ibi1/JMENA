@@ -15,9 +15,9 @@
 		var S_BRANCHCODE = "";
 		var S_KNAME = "";
 		
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 100, height: 25 });
+		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
@@ -175,8 +175,8 @@
 				</tr>
 				<tr>
 					<th width="120">지사</th>
-					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:80px">
+					<td width="120">
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:100px">
 						</select>
 					</td>
 					<th width="120">담당자명</th>

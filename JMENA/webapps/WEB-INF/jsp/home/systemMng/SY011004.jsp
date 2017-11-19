@@ -185,8 +185,8 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['사용자ID', '사용자명'] ,
 					colModel:[
-						{name:"USERID",			index:'USERID',		width:120,	align:'center', sortable:false}
-						, {name:"USERNAME",		index:'USERNAME',	width:180,	align:'center', sortable:false}
+						{name:"USERID",			index:'USERID',		width:150,	align:'center', sortable:false}
+						, {name:"USERNAME",		index:'USERNAME',	width:200,	align:'center', sortable:false}
 					] ,
 					rowNum:1000,
 					autowidth: true ,
@@ -323,7 +323,7 @@
 				</tr>
 			</table>
 		</div>
-		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="leftDiv" style="width:32%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
 					<th width="120">사용자구분</th>
@@ -339,7 +339,7 @@
 			</table>
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
+		<div id="rightDiv" style="width:64%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
 					<th width="120">시스템구분</th>
