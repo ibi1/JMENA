@@ -2,6 +2,7 @@ package kr.co.jmena.www.web.home.expayMng.Dao;
 
 import java.util.List;
 
+import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
@@ -86,6 +87,15 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaSudangPTb", vo);
 		
 		return updateCnt;
+	}	
+	
+	public boolean deleteEnaSudangPTb(EP011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaSudangPTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
 	}	
 		
 	

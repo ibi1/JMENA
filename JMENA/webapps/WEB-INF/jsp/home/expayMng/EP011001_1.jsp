@@ -36,10 +36,19 @@
 
 
 	function selectListEnaSaleSudangList(){
+		if($("#S_SALEID").val() == "" && $("#S_SALEDATE").val() == ""){
+			alert("검색 조건을 입력 해 주세요");
+			return;
+		}
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#leftList').jqGrid({
 			//caption: '수당관리'
 			url:"/home/selectListEnaSaleSudangList.do" ,
+			mtype: 'POST',
+			postData : {
+				SALEID : $("#S_SALEID").val(),
+				SALEDATE : $("#S_SALEDATE").val()
+			},				
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['계약일자', '번호','담당자성명', '매매금액', '계약자성명',
@@ -64,7 +73,7 @@
 				,{name:"DCGUBUN",		index:'DCGUBUN',		width:100,		align:'center', hidden:true}
 				,{name:"DCRATE",		index:'DCRATE',			width:100,		align:'center', hidden:true}
 				,{name:"DCAMT",			index:'DCAMT',			width:100,		align:'center', hidden:true}
-				,{name:"SELLAMT",		index:'SELLAMT',			width:100,		align:'center', hidden:true}
+				,{name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center', hidden:true}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -74,6 +83,7 @@
 			viewrecords: true ,
 			sortorder:'asc' ,
 			width: "96%" ,
+			loadtext : "조회 중",
 			jsonReader: {
 				repeatitems: false
 			},
@@ -84,7 +94,7 @@
 				$("#SALEID", parent.opener.document).val(selRowData.SALEID);
 				$("#SALEGUBUN", parent.opener.document).val(selRowData.SALEGUBUN);
 				$("#SALERCD1", parent.opener.document).val(selRowData.SALERCD);
-//				$("#SALERNM", parent.opener.document).val(selRowData.SALERNM);
+				$("#SALERNM", parent.opener.document).val(selRowData.SALERNM);
 				$("#BRANCHCODE", parent.opener.document).val(selRowData.BRANCHCODE);
 				$("#MANAGENO", parent.opener.document).val(selRowData.MANAGENO);
 				$("#CITYCODE", parent.opener.document).val(selRowData.CITYCODE);
@@ -97,10 +107,12 @@
 				$("#DCGUBUN", parent.opener.document).val(selRowData.DCGUBUN);
 				$("#DCRATE", parent.opener.document).val(selRowData.DCRATE);
 				$("#DCAMT", parent.opener.document).val(selRowData.DCAMT);
-				$("#SELLAMT").val(selRowData.SELLAMT);
+				$("#SELLAMT", parent.opener.document).val(selRowData.SELLAMT);
 				$("#S_SALEID", parent.opener.document).val(selRowData.SALEID);
+				$(opener.location).attr("href", "javascript:selectListEnaSudangMst();");
+
 				window.self.close();
-				selectListEnaSudangMst();
+
 			} ,
 			hidegrid: false
 		});

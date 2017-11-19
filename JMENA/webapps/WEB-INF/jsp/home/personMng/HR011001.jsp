@@ -19,12 +19,12 @@
 		var BRANCHCODE = "";
 		$("#table1").show();
 		$("#table2").hide();
-		selectListInsaMst();
-		selectListEnaAppointItem(INSACODE);
-		selectListEnaTexPayerItem(INSACODE);
 		f_selectListEnaBranchCode();
 		f_selectListEnaGradeCode();
 		f_selectListEnaDutyCode();	
+		selectListInsaMst();
+		selectListEnaAppointItem(INSACODE);
+		selectListEnaTexPayerItem(INSACODE);
 	})
 
 
@@ -39,6 +39,7 @@
 				S_DEPTCODE : $("#S_DEPTCODE").val(),
 				S_KNAME : $("#S_KNAME").val(),
 				S_JUMINID : $("#S_JUMINID").val()
+//				S_INSACODE : $("#S_INSACODE").val()				 
 			},			
 			datatype:"json",		
 			loadError:function(){alert("Error~!!");},
@@ -76,11 +77,12 @@
 			viewrecords: true,
 			sortorder:'asc',
 			width: '96%',
+			loadtext : "조회 중",
 			jsonReader: {
 				repeatitems: false
 			},
 			//height: '100%',
-			onSelectRow: function(ids){				
+			onSelectRow: function(ids){					
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#INSACODE").val(selRowData.INSACODE);
 	 			$("#KNAME").val(selRowData.KNAME);
@@ -111,11 +113,11 @@
 				$("#REMARK").val(selRowData.REMARK);
 				selectListEnaAppointItem(selRowData.INSACODE);				
 				selectListEnaTexPayerItem(selRowData.INSACODE);
-				f_selectListEnaDeptCode("2");
 				v_rightLastSel = 0;
+				
 			} ,
 			loadComplete: function() {				
-				
+				f_selectListEnaDeptCode("3");
 			},			
 			hidegrid: false
 		});		
@@ -133,18 +135,20 @@
 		},
 		datatype:"json" ,
 		loadError:function(){alert("Error~!!!!");} ,
-		colNames:['사번','순번', '발령구분', '발령일자', '발령지사', '발령부서', '직급', '직책', '고용구분', '월정지급액', '비고'] ,
+		colNames:['사번','순번', '발령구분', '발령일자', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고'] ,
 		colModel:[
 			  {name:"INSACODE",			index:'INSACODE',			width:100,		align:'center', hidden:true}
 			, {name:"APPOINTSEQ",		index:'APPOINTSEQ',			width:100,		align:'center', hidden:true}
 			, {name:"APPOINTGUBUN",		index:'APPOINTGUBUN',		width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=002", buildSelect:selectListEnaCode}}
 			, {name:"APPOINTDATE",		index:'APPOINTDATE',		width:100,		align:'center', editable:true}
-			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1}}
-			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=001", buildSelect:selectListEnaCode} }
-			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode} }
-			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
+			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1}}
+			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
+//			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE=001", buildSelect:f_selectListEnaDeptCode1}}
+			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
+			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
+//			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
-			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'center', editable:true}
+			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center', editable:true}
 		] ,
 		rowNum:10 ,
@@ -270,9 +274,9 @@
 			f_selectListEnaDeptCode("1");
 		});	
 		
-		$("#BRANCHCODE").change(function() {
-			f_selectListEnaDeptCode("2");
-		});
+ 		$("#BRANCHCODE").change(function() {
+ 			f_selectListEnaDeptCode("2");
+ 		});
 		
 	})	
 
@@ -301,6 +305,7 @@
 	}
 		
 	function f_selectListEnaDeptCode(flag){
+		
 		var BRANCHCODE = "";		
 		if( flag == "0"){
 			var BRANCHCODE = $("#S_BRANCHCODE").val();
@@ -310,8 +315,12 @@
 			$("#S_DEPTCODE").empty().data('options');			
 		}else if(flag == "2"){
 			BRANCHCODE = $("#BRANCHCODE").val();
-			$("#DEPTCODE").empty().data('options');									
+			$("#DEPTCODE").empty().data('options');
+		}else if(flag == "3"){
+			BRANCHCODE = $("#S_BRANCHCODE").val();
+			$("#DEPTCODE").empty().data('options');
 		}
+		
 		
 	   	$.ajax({ 
 			type: 'POST' ,
@@ -332,7 +341,10 @@
 					$("#S_DEPTCODE").append(inHtml);					
 				}else if(flag == "2"){
 					$("#DEPTCODE").append(inHtml);										
+				}else if(flag == "3"){
+					$("#DEPTCODE").append(inHtml);					
 				}
+					
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -395,14 +407,12 @@
 		jsonValue.some(function(currentValue, index, array){
 			result += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 		});
-		
 		result +="</select>";
 		return result;
 	}
 	
-	
-	function f_selectListEnaDeptCode(data){
-		var jsonValue = $.parseJSON(data).branchMstList;
+	function f_selectListEnaDeptCode1(data){
+		var jsonValue = $.parseJSON(data).deptMstList;
 		
 		var result = "<select>";
 		
@@ -465,7 +475,6 @@
 			$("#DUTY").val("");
 			$("#JOINDATE").val("");
 			$("#REJOINYN").attr('checked', false);
-//			$("input:checkbox[name=REJOINYN]:input[value='']").attr("checked", true);
 			$("#RETIREDATE").val("");
 			$("#RECOID").val("");
 			$("#REMARK").val("");	
@@ -535,8 +544,8 @@
 			
 			//jqGrid SelectBox 는 뷰 모드 전에 값을 가져옴.
 			var appointGubun = $("#bottomList1 [name=APPOINTGUBUN] option:selected").val();
-//			var appointBranch = $("#bottomList1 [name=APPOINTBRANCH] option:selected").val();
-			var appointDept = $("#bottomList1 [name=APPOINTDEPT] option:selected").val();
+			var appointBranch = $("#bottomList1 [name=APPOINTBRANCH] option:selected").val();
+//			var appointDept = $("#bottomList1 [name=APPOINTDEPT] option:selected").val();
 			var grade = $("#bottomList1 [name=GRADE] option:selected").val();
 			var duty = $("#bottomList1 [name=DUTY] option:selected").val();
 			var employGubun = $("#bottomList1 [name=EMPLOYGUBUN] option:selected").val();
@@ -578,15 +587,16 @@
 			} else {
 				msg = "수정하시겠습니까?"
 			}
-
+			var insacode = $("#INSACODE").val();
 			if (confirm(msg) == true) {
 				var formData = "S_FLAG_B1=" + $("#S_FLAG_B1").val() +  
-							   "&INSACODE=" + $("#INSACODE").val() + 
+							   "&INSACODE=" + insacode + 
 							   "&APPOINTSEQ=" + cellData.APPOINTSEQ + 
 							   "&APPOINTGUBUN=" + appointGubun + 
 				               "&APPOINTDATE=" + cellData.APPOINTDATE + 
 				               "&APPOINTBRANCH=" + cellData.APPOINTBRANCH + 
-				               "&APPOINTDEPT=" + appointDept +
+				               "&APPOINTDEPT=" + cellData.APPOINTDEPT +
+//				               "&APPOINTDEPT=" + appointDept +
 				               "&GRADE=" + grade + 
 				               "&DUTY=" + duty +
 				               "&EMPLOYGUBUN=" + employGubun +
@@ -603,7 +613,7 @@
 							$("#S_FLAG_B1").val("U");							
 							v_rightLastSel = 0;
 							alert("저장이 완료되었습니다.");
-							selectListInsaMst();
+							selectListEnaAppointItem(insacode);
 						}else{
 							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 						}
@@ -615,7 +625,7 @@
 				});
 			} else {
 				v_rightLastSel = 0;
-				selectListInsaMst();
+				selectListEnaAppointItem(insacode);
 			}
 		});
 	})
@@ -794,7 +804,7 @@
 							$("#S_FLAG_B2").val("U");							
 							v_rightLastSel = 0;
 							alert("저장이 완료되었습니다.");
-							selectListInsaMst();
+							selectListEnaTexPayerItem(insacode);
 						}else{
 							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 						}
@@ -806,7 +816,7 @@
 				});
 			} else {
 				v_rightLastSel = 0;
-				selectListInsaMst();
+				selectListEnaTexPayerItem(insacode);
 			}
 		});
 	})
@@ -890,7 +900,8 @@
 				</tr>
 				<tr>
 					<th>성명</th>
-					<td colspan="3"><input type="text" class="inputName" id="S_KNAME" name="S_KNAME" /></td>
+					<td colspan="3"><input type="text" class="inputName" id="S_KNAME" name="S_KNAME" />
+					<!-- <input type="text" class="inputName" id="S_INSACODE" name="S_INSACODE" /> --></td>
 				</tr>
 				<tr>
 					<th>주민번호</th>

@@ -86,6 +86,13 @@ public class EP011001Ctr {
 		EP011001VO vo = new EP011001VO();
 		System.out.println("/home/selectListEnaSudangMst.do");
 		
+		vo.setS_SALEID(request.getParameter("S_SALEID"));
+		vo.setS_SALERCD(request.getParameter("S_SALERCD"));
+		vo.setS_SALEDATESYM(request.getParameter("S_SALEDATESYM"));
+		vo.setS_SALEDATEEYM(request.getParameter("S_SALEDATEEYM"));
+		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
+		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));		
+		
 		List<EP011001VO> lst = EP011001Biz.selectListEnaSudangMst(vo);
 		
 		JSONArray jCell = new JSONArray();
@@ -95,8 +102,6 @@ public class EP011001Ctr {
 		if(lst.size() > 0){
 			
 			for (int i = 0; i < lst.size(); i++) {
-				System.out.println("aaaaaa");
-				System.out.println("ADDRESS       =  "  + lst.get(i).getADDRESS());
 				
 				JSONObject obj = new JSONObject();			
 				
@@ -206,7 +211,7 @@ public class EP011001Ctr {
 		
 		int updateCnt = 0;
 		int insertCnt = 0;
-		System.out.println("SALEID           =       " +request.getParameter("SALEID"));
+		
 		vo.setINSACODE(request.getParameter("INSACODE"));
 		vo.setKNAME(request.getParameter("KNAME"));
 		vo.setPAYDATE(request.getParameter("PAYDATE"));
@@ -232,7 +237,6 @@ public class EP011001Ctr {
 		JSONObject obj = new JSONObject();
 		
 		if (EP011001Biz.selectDataEnaSudangMst(vo) == 0) {
-			System.out.println("여기까지 오케이~!");
 			insertCnt = EP011001Biz.insertEnaSudangMst(vo);
 			if(insertCnt > 0){
 				obj.put("MSG", "success");
@@ -274,12 +278,15 @@ public class EP011001Ctr {
 		
 		System.out.println("/home/selectListEnaSudangPTb.do");
 		
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
+
+		
 		List<EP011001VO> lst = EP011001Biz.selectListEnaSudangPTb(vo);
 		
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
-		
 		
 		if(lst.size() > 0){
 			
@@ -323,10 +330,14 @@ public class EP011001Ctr {
 			obj.put("ACCTNO", "");
 			obj.put("ACCTOWNER", "");
 			obj.put("REMARK", "");
-			json.put("rows", jCell);
+			
+			jCell.add(obj);
 		}
+	
+		json.put("rows", jCell);
+		
 		System.out.println("json==>"+json.get("rows"));
-		logger.debug("[selectListEnaSudangMst]" + json);
+		logger.debug("[selectListEnaSudangPTb]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	
@@ -347,7 +358,7 @@ public class EP011001Ctr {
 		
 		int updateCnt = 0;
 		int insertCnt = 0;
-		System.out.println("SALEID           =       " +request.getParameter("SALEID"));
+		
 		vo.setPAYERNAME(request.getParameter("PAYERNAME"));
 		vo.setPAYERID(request.getParameter("PAYERID"));
 		vo.setPAYAMT(request.getParameter("PAYAMT"));
@@ -402,6 +413,36 @@ public class EP011001Ctr {
 		return new ModelAndView("jsonView", json);	
 	}	
 	
+	
+	@RequestMapping("/home/deleteEnaSudangPTb.do")
+	public ModelAndView deleteEnaSudangPTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		EP011001VO vo = new EP011001VO();
+				
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
+		vo.setREGISTERSEQ(request.getParameter("REGISTERSEQ"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (EP011001Biz.deleteEnaSudangPTb(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteEnaSudangPTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}	
+	
 	/**
 	 * @name 수당관리 화면 - 매출 팝업창 조회
 	 * @param request
@@ -416,6 +457,12 @@ public class EP011001Ctr {
 		EP011001VO vo = new EP011001VO();
 		System.out.println("/home/selectListEnaSaleSudangList.do");
 		
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setSALEDATE(request.getParameter("SALEDATE"));
+		System.out.println("request.getParameter(SALEID)             =   "      +   request.getParameter("SALEID") );
+		System.out.println("request.getParameter(SALEDATE)             =   "      +   request.getParameter("SALEDATE") );
+		
+		
 		List<EP011001VO> lst = EP011001Biz.selectListEnaSaleSudangList(vo);
 		
 		JSONArray jCell = new JSONArray();
@@ -427,9 +474,6 @@ public class EP011001Ctr {
 			for (int i = 0; i < lst.size(); i++) {
 				
 				JSONObject obj = new JSONObject();			
-				
-				
-				System.out.println("getCONM2                     ====                   "     + lst.get(i).getCONM2());
 				
 				obj.put("SALEDATE", lst.get(i).getSALEDATE());
 				obj.put("SALEID", lst.get(i).getSALEID());

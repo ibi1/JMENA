@@ -72,14 +72,14 @@ public class HR011001Ctr {
 	public ModelAndView selectListEnaInsaMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HR011001VO vo = new HR011001VO();			
 		
-//		String s_branchcode = request.getParameter("S_BRANCHCODE") != null ? request.getParameter("S_BRANCHCODE") : ""; 
-//		String s_deptcode = request.getParameter("S_DEPTCODE") != null ? request.getParameter("S_DEPTCODE") : ""; 
+		String s_branchcode = request.getParameter("S_BRANCHCODE") != null ? request.getParameter("S_BRANCHCODE") : ""; 
+		String s_deptcode = request.getParameter("S_DEPTCODE") != null ? request.getParameter("S_DEPTCODE") : ""; 
 		String s_kname = request.getParameter("S_KNAME") != null ? request.getParameter("S_KNAME") : ""; 
 		String s_juminid = request.getParameter("S_JUMINID") != null ? request.getParameter("S_JUMINID") : ""; 
 		String s_insacode = request.getParameter("S_INSACODE") != null ? request.getParameter("S_INSACODE") : ""; 
 		
-//		vo.setS_BRANCHCODE(s_branchcode);
-//		vo.setS_DEPTCODE(s_deptcode);
+		vo.setS_BRANCHCODE(s_branchcode);
+		vo.setS_DEPTCODE(s_deptcode);
 		vo.setS_KNAME(s_kname);
 		vo.setS_JUMINID(s_juminid);
 		vo.setS_INSACODE(s_insacode);
@@ -262,14 +262,15 @@ public class HR011001Ctr {
 		
 		for (int i = 0; i < lst.size(); i++) {
 			//System.out.println(lst.get(i).getSYSID());
-			JSONObject jData = new JSONObject();
+			JSONObject jData = new JSONObject();			
 			
 			jData.put("INSACODE", lst.get(i).getINSACODE());
 			jData.put("APPOINTSEQ", lst.get(i).getAPPOINTSEQ());
 			jData.put("APPOINTGUBUN", lst.get(i).getAPPOINTGUBUN());
 			jData.put("APPOINTDATE", lst.get(i).getAPPOINTDATE());
-			jData.put("APPOINTBRANCH", lst.get(i).getAPPOINTBRANCH());
-			jData.put("APPOINTDEPT", lst.get(i).getAPPOINTDEPT());
+			jData.put("APPOINTBRANCH", lst.get(i).getBRANCHNAME());
+//			jData.put("APPOINTDEPT", lst.get(i).getDEPTNAME());			
+			jData.put("APPOINTDEPT", lst.get(i).getAPPOINTDEPT());			
 			jData.put("GRADE", lst.get(i).getGRADE());
 			jData.put("DUTY", lst.get(i).getDUTY());
 			jData.put("EMPLOYGUBUN", lst.get(i).getEMPLOYGUBUN());
@@ -397,7 +398,6 @@ public class HR011001Ctr {
 		HR011001VO vo = new HR011001VO();
 		
 		vo.setINSACODE(request.getParameter("INSACODE"));
-		System.out.println(request.getParameter("INSACODE"));
 		List<HR011001VO> lst = HR011001Biz.selectListEnaTexPayerItem(vo);
 		
 		JSONArray jCell = new JSONArray();

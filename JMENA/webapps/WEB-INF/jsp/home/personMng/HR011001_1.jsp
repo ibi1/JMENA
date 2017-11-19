@@ -53,15 +53,17 @@
 			},			
 			datatype:"json",		
 			loadError:function(){alert("Error~!!");},
-			colNames:['사번', '성명', '주민번호', '연락처', '소속지사',  '소속부서','생일구분'
+			colNames:['사번', '성명', '주민번호', '연락처', '소속지사', '소속부서' ,'소속지사코드' ,'소속부서코드','생일구분'
 			          ,'사업자번호','대표자명','주소','기타연락처','월정지급액','고용구분','직급','직책','입사일','재입사여부','퇴사일','추천인사번','비고'],
 			colModel:[
 				{name:"INSACODE",			index:'INSACODE',		width:100,	align:'center'}
 				, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
 				, {name:"JUMINID",			index:'JUMINID',		width:100,	align:'center'}
 				, {name:"MOBILENO",			index:'MOBILENO',		width:100,	align:'center'}
-				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center'}
-	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center'} 		
+				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
+	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center'}
+ 				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
+ 	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true} 		
 				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center', hidden:true}
 				, {name:"SAUPID",			index:'SAUPID',			width:100,	align:'center', hidden:true}
 				, {name:"SAUPOWNER",		index:'SAUPOWNER',		width:100,	align:'center', hidden:true}
@@ -104,10 +106,10 @@
 				$("#MOBILENO", parent.opener.document).val(selRowData.MOBILENO);
 				$("#TELNO", parent.opener.document).val(selRowData.TELNO);
 				$("#BRANCHCODE", parent.opener.document).val(selRowData.BRANCHCODE);
-				$("#DEPTCODE", parent.opener.document).val(selRowData.DEPTCODE);
 				$("#BASICPAY", parent.opener.document).val(selRowData.BASICPAY);
 				$("input:radio[name=EMPLOYGUBUN]:input[value=" + selRowData.EMPLOYGUBUN + "]", parent.opener.document).attr("checked", true);
 				$("#GRADE", parent.opener.document).val(selRowData.GRADE);
+				$("#DEPTCODE", parent.opener.document).val(selRowData.DEPTCODE);
 				$("#DUTY", parent.opener.document).val(selRowData.DUTY);
 				$("#JOINDATE", parent.opener.document).val(selRowData.JOINDATE);
 				if(selRowData.REJOINYN == "Y"){
@@ -118,7 +120,11 @@
 				$("#RETIREDATE", parent.opener.document).val(selRowData.RETIREDATE);
 				$("#RECOID", parent.opener.document).val(selRowData.RECOID);
 				$("#REMARK", parent.opener.document).val(selRowData.REMARK);
-				
+// 				$("#S_INSACODE", parent.opener.document).val(selRowData.INSACODE);
+// 				$("#S_KNAME", parent.opener.document).val(selRowData.KNAME);
+// 				$("#S_BRANCHCODE", parent.opener.document).val("");
+// 				$("#S_DEPTCODE", parent.opener.document).val("");
+				$(opener.location).attr("href", "javascript:selectListEnaInsaMst();");
 				window.self.close();
 			} ,
 			loadComplete: function() {				

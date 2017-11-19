@@ -19,23 +19,24 @@
 <script type="text/javascript">
 	var v_rightLastSel = 0;
 	$(function(){
-		var SALEID = "";
-		var PAYSEQ = "";
-		var SALEDATE = $("#SALEDATE",opener.document).val();
-		var SALEID = $("#SALEID",opener.document).val();
 		
-		$("#S_SALEDATE").val(SALEDATE);
-		$("#S_SALEID").val(SALEID);
+		$("#SALEID").val($("#SALEID",opener.document).val());
+		
 		searchLeftList();
-		searchbottomList(SALEID,PAYSEQ);
+		searchbottomList();
 	})
 
 
 	
 	function searchLeftList(){
+		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#leftList').jqGrid({
 			caption: '수당지급 현황',
 			url:"/home/selectListEnaSudangMst.do" ,
+			mtype: 'POST',
+			postData : {
+				S_SALEID : $("#SALEID").val()
+			},				
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
@@ -53,10 +54,9 @@
 				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
 				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center'}
 				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center'}
-				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center', hidden:true}
-				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center', hidden:true}
-				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center', hidden:true}
-//				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
+				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center'}
+				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center'}
+				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center'}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -66,47 +66,49 @@
 			viewrecords: true ,
 			sortorder:'asc' ,
 			width: "96%" ,
+			loadtext : "조회 중",
 			jsonReader: {
 				repeatitems: false
 			},
-			//height: '100%' ,
-			onSelectRow: function(id){
+			onSelectRow: function(ids){
+				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#SALEID").val(selRowData.SALEID);
-				$("#PAYSEQ").val(selRowData.PAYSEQ);
-				$("#REGISTERSEQ").val(selRowData.REGISTERSEQ);
-				searchbottomList(SALEID,PAYSEQ);
+				$("#PAYSEQ").val(selRowData.PAYSEQ);								
+				searchbottomList();
 				
 			} ,
 			hidegrid: false
 		});
 	}
 	
-	function searchbottomList(SALEID,PAYSEQ){
-		$('#bottomList').jqGrid({
+	function searchbottomList(){
+		$('#bottomList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+		$('#bottomList').jqGrid({	
 			caption: '신고인 관리',
 			url:"/home/selectListEnaSudangPTb.do" ,
+			mtype: 'POST',
 			postData : {
-				SALEID : SALEID,
-				PAYSEQ : PAYSEQ
-			},	
+				SALEID : $("#SALEID").val(),
+				PAYSEQ : $("#PAYSEQ").val()
+			},			
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['성명', '주민번호', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '거래은행', '계좌번호','계좌주','판매번호','순번','신고인순번','비고'],
 			colModel:[  	
 				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center', editable:true}
 				, {name:"PAYERID",		index:'PAYERID',		width:80,		align:'center', editable:true}
-				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
+				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
-				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-				, {name:"BANKID",		index:'BANKID',		width:80,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=005", buildSelect:f_selectEnaCode}}
+				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"BANKID",		index:'BANKID',		width:80,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectEnaBankCode}}
 				, {name:"ACCTNO",		index:'ACCTNO',		width:80,		align:'center', editable:true}
 				, {name:"ACCTOWNER",	index:'ACCTOWNER',	width:80,		align:'center', editable:true}
-				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center'}
-				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center'}
-				, {name:"REGISTERSEQ",	index:'REGISTERSEQ',width:60,		align:'center'}
+				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center', hidden:true}
+				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center', hidden:true}
+				, {name:"REGISTERSEQ",	index:'REGISTERSEQ',width:60,		align:'center', hidden:true}
 				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', editable:true}
 //				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
 			] ,
@@ -118,11 +120,14 @@
 			viewrecords: true ,
 			sortorder:'asc' ,
 			width: "96%" ,
+			loadtext : "조회 중",
 			jsonReader: {
 				repeatitems: false
 			},
 			//height: '100%' ,
 			onSelectRow: function(id){
+				var selRowData = $(this).jqGrid('getRowData', id);
+				$("#REGISTERSEQ").val(selRowData.REGISTERSEQ);
 				if (id > 0) {
 					$("#S_FLAG").val("U");
 				} else {
@@ -162,18 +167,19 @@
 		result +="</select>";
 
 		return result;		
+	}
 		
+	function f_selectEnaBankCode(data){
+		var jsonValue = $.parseJSON(data).bankList;
 		
-// 		var jsonValue = $.parseJSON(data).bankList;
+		var result = "<select>";
 		
-// 		var result = "<select>";
+		jsonValue.some(function(currentValue, index, array){
+			result += "<option value='" + currentValue.bankCode + "'>" + currentValue.bankName + "</option>\n";
+		});
 		
-// 		jsonValue.some(function(currentValue, index, array){
-// 			result += "<option value='" + currentValue.bankCode + "'>" + currentValue.bankName + "</option>\n";
-// 		});
-		
-// 		result +="</select>";
-// 		return result;
+		result +="</select>";
+		return result;
 	}		
 	
 	$(function() {
@@ -186,7 +192,7 @@
 				return false;
 			}		
 			
-	 		$("#bottomList").jqGrid("addRow", 0);		
+	 		$("#bottomList").jqGrid("addRow", 0);
 				
 		});
 	})
@@ -199,51 +205,20 @@
 				alert("그리드를 선택하셔야 합니다.");
 				
 				return false;
-			}
-			
-//			if (cellData.DEPTCODE == "") {
-//				alert("부서 코드를 입력하셔야 합니다.");
-			
-//				$('#rightList').jqGrid('editRow', ids, true);
-//				$("#"+ids+"_DEPTCODE").focus();
-			
-//				return false;
-//			}
-		
-//			if (cellData.DEPTNAME == "") {
-//				alert("부서 명을 입력하셔야 합니다.");
-			
-//				$('#rightList').jqGrid('editRow', ids, true);
-//				$("#"+ids+"_DEPTNAME").focus();
-			
-//				return false;
-//			}
-		
-//			if (cellData.SORTKEY == "") {
-//				alert("정렬 순서를 입력하셔야 합니다.");
-			
-//				$('#rightList').jqGrid('editRow', ids, true);
-//				$("#"+ids+"_SORTKEY").focus();
-			
-//				return false;
-//			}
-			//jqGrid SelectBox 는 뷰 모드 전에 값을 가져옴.
-//			var appointGubun = $("#bottomList1 [name=APPOINTGUBUN] option:selected").val();
-			
+			}	
 			
 			var taxGubun = $("#bottomList [name=TAXGUBUN] option:selected").val();
 			var bankId = $("#bottomList [name=BANKID] option:selected").val();
 			
-			$('#bottomList2').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+			$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 	
-			var cellData = $("#bottomList2").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+			var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
 			
 			var payerId = cellData.PAYERID.replace("-","");
 			
 			
 			var msg = "저장하시겠습니까?";
-	
-			if (confirm(msg) == true) {
+			if (confirm(msg) == true) {				
 				var formData = "S_FLAG=" + $("#S_FLAG").val() +  				
 							   "&SALEID=" +  $("#SALEID").val() +  
 							   "&PAYSEQ=" +  $("#PAYSEQ").val() +  
@@ -268,10 +243,10 @@
 					dataType : 'json' , 
 					success: function(data){
 						if(data.rows[0].MSG == "success"){
-							$("#S_FLAG_B2").val("U");							
+							$("#S_FLAG").val("U");							
 							v_rightLastSel = 0;
 							alert("저장이 완료되었습니다.");
-							selectListInsaMst();
+							searchbottomList();
 						}else{
 							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 						}
@@ -288,6 +263,51 @@
 		});
 	})
 			
+	$(function() {
+		$("#deleteButton").click(function() {
+			
+			if ($("#S_FLAG").val() == "I") {
+				alert("추가 중 일 경우 삭제할 수 없습니다.");
+				return;
+			}
+			
+			var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("그리드를 선택하셔야 합니다.");
+				return;
+			}
+			
+			$('#bottomList').jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+			var cellData = $("#bottomList").jqGrid('getRowData', v_rightLastSel); //셀 전체 데이터 가져오기
+
+			if (confirm("삭제하시겠습니까?") == true) {
+				$.ajax({ 
+					type: 'POST' ,
+					data: "SALEID=" + $("#SALEID").val() + 
+						  "&PAYSEQ=" + $("#PAYSEQ").val() +
+						  "&REGISTERSEQ=" + $("#REGISTERSEQ").val(),
+					url: "/home/deleteEnaSudangPTb.do", 
+					dataType : 'json' , 
+					success: function(data){
+						
+						v_rightLastSel = 0;
+						
+						alert("삭제가 완료되었습니다.");
+						searchbottomList();
+					},
+					error:function(e){  
+						alert("[ERROR]신고인 관리 삭제  중 오류가 발생하였습니다.");
+					}  
+				});
+			} else {
+				v_rightLastSel = 0;
+				searchbottomList();
+			}
+				
+		});
+	})
 			
 </script>
 <body>	
@@ -303,7 +323,7 @@
 		<tr >
 			<td align="right">
 				<a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">수당수령인 추가</a>
-				<a class="ui-button ui-widget ui-corner-all" id="deleteB2Button"   name="deleteB1Button">수당수령인 삭제</a>
+				<a class="ui-button ui-widget ui-corner-all" id="deleteButton"   name="deleteButton">수당수령인 삭제</a>
 				<a class="ui-button ui-widget ui-corner-all" id="saveButton"   name="saveButton">저장 </a>
 				
 			</td>

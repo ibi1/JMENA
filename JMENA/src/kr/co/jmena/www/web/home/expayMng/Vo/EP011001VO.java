@@ -2,6 +2,7 @@ package kr.co.jmena.www.web.home.expayMng.Vo;
 
 public class EP011001VO {
 	
+	private String S_SALEID;
 	private String S_SALERCD;
 	private String S_SALEDATESYM;
 	private String S_SALEDATEEYM;
@@ -59,6 +60,12 @@ public class EP011001VO {
 	private String USERID;
 	
 	
+	public String getS_SALEID() {
+		return S_SALEID;
+	}
+	public void setS_SALEID(String s_SALEID) {
+		this.S_SALEID = s_SALEID;
+	}
 	public String getS_SALERCD() {
 		return S_SALERCD;
 	}

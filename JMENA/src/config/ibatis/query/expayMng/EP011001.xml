@@ -132,9 +132,23 @@
 	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='004' AND I.DUTY = C.DCODE ) as DUTY
 	    FROM sa_sudangmst T1
 	   WHERE 1 = 1
-	     AND T1.SALEID
-	ORDER BY T1.SALEID ASC, T1.PAYSEQ
-		</select>		
+ 		<isNotEmpty property="S_SALEID">
+	 		AND T1.SALEID = #S_SALEID# 
+		</isNotEmpty>
+		<isEmpty property="S_SALEID">
+	 			AND DATE_FORMAT(T1.PAYDATE, '%Y-%m') BETWEEN #S_SALEDATESYM# AND #S_SALEDATEEYM#
+			<isNotEmpty property="S_SALERCD">
+	 			AND T1.SALERCD = #S_SALERCD# 
+			</isNotEmpty>
+			<isNotEmpty property="S_BRANCHCODE">
+	 			AND T1.BRANCHCODE = #S_BRANCHCODE# 
+			</isNotEmpty>
+			<isNotEmpty property="S_DEPTCODE">
+	 			AND T1.DEPTCODE = #S_DEPTCODE# 
+			</isNotEmpty>
+		</isEmpty>		
+		ORDER BY T1.SALEID ASC, T1.PAYSEQ
+	</select>		
 		
 	<select id="selectDataEnaSudangMst" resultClass="java.lang.Integer">
 		SELECT 
@@ -265,7 +279,7 @@
 		VALUES(
 			#SALEID#,
 			#PAYSEQ#,
-			(SELECT IFNULL(MAX(REGISTERSEQ),0) +1 FROM sa_sudangmst s WHERE SALEID = #SALEID# AND PAYSEQ = #PAYSEQ#),
+			(SELECT IFNULL(MAX(REGISTERSEQ),0) +1 FROM sa_sudangpayertb s WHERE SALEID = #SALEID# AND PAYSEQ = #PAYSEQ#),
 			#PAYERNAME#,
 			#PAYERID#,
 			#PAYAMT#,
@@ -305,6 +319,13 @@
 		AND T1.REGISTERSEQ = #REGISTERSEQ#
 	</update>
 	
+	<delete id="deleteEnaSudangPTb">
+		DELETE FROM sa_sudangpayertb
+		WHERE SALEID = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+		AND REGISTERSEQ = #REGISTERSEQ#
+	</delete>
+		
 
 	
 	<select id="selectListEnaSaleSudangList" resultMap="EP011001DataSaleSudang">
@@ -316,10 +337,10 @@
 			T1.CONNAME,
 			T1.SALEGUBUN,
 			SALERCD,
-			'001' AS BRANCHCODE, <!-- 계약지사 -->
-			'1' AS MANAGENO,
-			'1' AS CITYCODE,
-			'1' AS ADDRESS,
+			(SELECT BRANCHCODE FROM hr_insamst WHERE INSACODE = T1.SALERCD) AS BRANCHCODE,
+			(SELECT MANAGENO FROM mm_buymst WHERE BUYID = T1.BUYID) AS MANAGENO,
+			(SELECT CITYCODE FROM mm_buymst WHERE BUYID = T1.BUYID) AS CITYCODE,
+			(SELECT ADDRESS FROM mm_buymst WHERE BUYID = T1.BUYID) AS ADDRESS,
 			T1.CONNAME,
 			T1.CONM2,
 			T1.CONPY,
@@ -331,10 +352,13 @@
        	  	(SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT
    		FROM sa_salemst T1
 		WHERE 1=1
-<!-- 		AND T1.SALEID = #SALEID#
-		AND T1.PAYSEQ = #PAYSEQ#
-		AND T1.REGISTERSEQ = #REGISTERSEQ# 
-		ORDER BY T1.REGISTERSEQ DESC -->
+		<isNotEmpty property="SALEID">
+	 		AND T1.SALEID = #SALEID#
+		</isNotEmpty>
+ 		<isNotEmpty property="SALEDATE">
+	 		AND T1.SALEDATE = #SALEDATE# 
+		</isNotEmpty>
+		ORDER BY SALEID, SALEDATE
 	</select>	
 	
 	

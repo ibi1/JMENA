@@ -12,6 +12,14 @@
 </head>
 <script type="text/javascript">
 	$(document).ready(function(){
+		var dt = new Date();
+		// Display the month, day, and year. getMonth() returns a 0-based number.
+		var month = dt.getMonth()+1;
+		var year = dt.getFullYear();
+		var today = year + "-" + month;
+		$('#S_SALEDATESYM').val(today);
+		$('#S_SALEDATEEYM').val(today);
+		
 		
 		//공통코드 가져오기
 		f_selectListEnaCityCode();		
@@ -31,20 +39,29 @@
 		$('#leftList').jqGrid({
 			//caption: '수당관리'
 			url:"/home/selectListEnaSudangMst.do" ,
-			datatype:"json" ,
+			mtype: 'POST',
+			postData : {
+				S_SALEID : $("#S_SALEID").val(),
+				S_SALEDATESYM : $("#S_SALEDATESYM").val(),
+				S_SALEDATEEYM : $("#S_SALEDATEEYM").val(),
+				S_BRANCHCODE : $("#S_BRANCHCODE").val(),
+				S_DEPTCODE : $("#S_DEPTCODE").val(),
+				S_SALERCD : $("#S_SALERCD").val()
+			},				
+			datatype:"json" ,			
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['지급일','지급순번','담당자','담당자성명', '매출금액', '지급금액', '세액', '차감지급액','계약일자','번호','매출구분','계약지사','관리자번호',
-			          '지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액','실판매가' ,
+			          '지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액', //'실판매가' ,
 			          '수당지급율','추가지급율','신고기준','사업소득세','지방세','부가가치세','비고','매출담당자','매출담당자성명','신고인수'],
 			colModel:[
 				 {name:"PAYDATE",		index:'PAYDATE',		width:80,		align:'center'}
 				,{name:"PAYSEQ",		index:'PAYSEQ',			width:80,		align:'center', hidden:true}
 				,{name:"INSACODE",		index:'INSACODE',		width:80,		align:'center', hidden:true}
 				,{name:"KNAME",			index:'KNAME',			width:80,		align:'center'}
-				,{name:"SELLAMT",		index:'SELLAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				,{name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				,{name:"TAXAMT",		index:'TAXAMT',			width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				,{name:"SELLAMT",		index:'SELLAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"TAXAMT",		index:'TAXAMT',			width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"SALEDATE",		index:'SALEDATE',		width:80,		align:'center'}
 				,{name:"SALEID",		index:'SALEID',			width:60,		align:'center', hidden:true}
 				,{name:"SALEGUBUN",		index:'SALEGUBUN',		width:60,		align:'center', hidden:true}
@@ -59,8 +76,7 @@
 				,{name:"SALEDANGA",		index:'SALEDANGA',		width:60,		align:'center', hidden:true}
 				,{name:"DCGUBUN",		index:'DCGUBUN',		width:60,		align:'center', hidden:true}
 				,{name:"DCRATE",		index:'DCRATE',			width:60,		align:'center', hidden:true}
-				,{name:"DCAMT",			index:'DCAMT',			width:60,		align:'center', hidden:true}
-				,{name:"SELLAMT",		index:'SELLAMT',		width:60,		align:'center', hidden:true}				
+				,{name:"DCAMT",			index:'DCAMT',			width:60,		align:'center', hidden:true}			
 				,{name:"SUDANGRATE",	index:'SUDANGRATE',		width:60,		align:'center', hidden:true}
 				,{name:"ADDRATE",		index:'ADDRATE',		width:60,		align:'center', hidden:true}
 				,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:60,		align:'center', hidden:true}
@@ -80,6 +96,7 @@
 			viewrecords: true ,
 			sortorder:'asc' ,
 			width: "96%" ,
+			loadtext : "조회 중",
 			jsonReader: {
 				repeatitems: false
 			},
@@ -117,9 +134,13 @@
 				$("#INSACODE").val(selRowData.INSACODE);
 				$("#KNAME").val(selRowData.KNAME);
 				$("#PAYSEQ").val(selRowData.PAYSEQ);
-				
+				$("#S_SALEID").val(selRowData.SALEID);
 				searchbottomList();
 			} ,
+			
+			loadComplete: function(ids) {
+				searchbottomList();
+			},			
 			hidegrid: false
 		});
 	
@@ -128,9 +149,14 @@
 	
 	
 	function searchbottomList(){
+		$('#bottomList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#bottomList').jqGrid({
 			//caption: '수당지급관리'
 			url:"/home/selectListEnaSudangMst.do" ,
+			mtype: 'POST',
+			postData : {
+				S_SALEID : $("#S_SALEID").val()
+			},					
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
@@ -140,12 +166,12 @@
 				, {name:"KNAME",		index:'KNAME',		width:80,		align:'center'}
 				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:80,		align:'center'}
 				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center'}
-				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center'}
 				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center'}
 				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center', hidden:true}
@@ -161,6 +187,7 @@
 			viewrecords: true ,
 			sortorder:'asc' ,
 			width: "96%" ,
+			loadtext : "조회 중",
 			jsonReader: {
 				repeatitems: false
 			},
@@ -168,6 +195,9 @@
 			onSelectRow: function(id){
 				alert(id);
 			} ,
+			loadComplete: function(ids) {
+				$("#S_SALEID").val("");
+			},					
 			hidegrid: false
 		});
 	}
@@ -281,6 +311,17 @@
 	
 	$(function(){
 		$("#payerButton").click(function(){
+			if($("#SALEID").val() == ""){
+				alert("매출을 선택해 주세요");
+				return;
+			}
+			var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("그리드를 선택하셔야 합니다.");
+				
+				return;
+			}				
 			var popUrl = "/home/EP011001_2.do";
 			var popOption = "width=1120, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"신고인 관리",popOption);
@@ -340,6 +381,11 @@
 	}
 	
 	
+	$(function(){
+		$("#searchButton").click(function() {
+			selectListEnaSudangMst();
+		}); 
+	});	
 	
 	$(function(){
 		$("#insertButton").click(function() {
@@ -362,27 +408,32 @@
 	
 	$(function(){
 		$("#saveButton").click(function(){
-			var formData = $("#EP011001").serialize()+"&SALEID=" + $("#SALEID").val();
-		   	$.ajax({ 
-				type: 'POST' ,
-				url: "/home/updateEnaSudangMst.do", 
-				//dataType : 'json' , 
-				data : formData,
-				//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
-				success: function(data){
-					if(data.rows[0].MSG == "success")
-					{
-						alert("저장이 완료되었습니다.");
-						selectListInsaMst();
-					}else{
-						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-					}
-					
-				},
-				error:function(e){  
-					alert("인사 정보를 저장하는 중 오류가 발생하였습니다.");
-				}  
-			});
+			var saleId =  $("#SALEID").val();
+			var formData = $("#EP011001").serialize()+"&SALEID=" + saleId;
+			var msg = "저장하시겠습니까?";
+			if (confirm(msg) == true) {	
+			   	$.ajax({ 
+					type: 'POST' ,
+					url: "/home/updateEnaSudangMst.do", 
+					//dataType : 'json' , 
+					data : formData,
+					//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
+					success: function(data){
+						if(data.rows[0].MSG == "success")
+						{
+							alert("저장이 완료되었습니다.");
+							$("#S_SALEID").val(saleId);
+							selectListEnaSudangMst();
+						}else{
+							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+						}
+						
+					},
+					error:function(e){  
+						alert("수당 정보를 저장하는 중 오류가 발생하였습니다.");
+					}  
+				});
+			}
 		}) 
 	})		
 	
@@ -435,7 +486,7 @@
 					<td>담당자</td>
 					<td colspan="3">
 						<input type="text" id="S_SALERCD" name="S_SALERCD" />
-						<input type="text" id="S_SALEID" name="S_SALEID"/> 
+						<input type="hidden" id="S_SALEID" name="S_SALEID"/> 
 					</td>
 						
 				</tr>

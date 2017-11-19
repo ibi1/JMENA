@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
 import kr.co.jmena.www.web.home.expayMng.Dao.EP011001Dao;
-import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -106,6 +105,18 @@ public class EP011001Biz {
 		}
 		
 		return updateCnt;
+	}	
+	
+	public boolean deleteEnaSudangPTb(EP011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = EP011001Dao.deleteEnaSudangPTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
 	}	
 	
 	public List<EP011001VO> selectListEnaSaleSudangList(EP011001VO vo) throws Exception {
