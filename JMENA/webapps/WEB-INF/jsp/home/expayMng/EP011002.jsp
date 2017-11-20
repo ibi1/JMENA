@@ -13,7 +13,16 @@
 <script type="text/javascript">
 	var v_rightLastSel = 0;
 	
-	$(function(){
+	$(document).ready(function(){
+		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		$("#S_SALEYM").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+
+		
 		f_selectListEnaBranchCode();
 		
 		selectListEnaMonthPayMst();
@@ -35,29 +44,32 @@
 			url:"/home/selectListEnaMonthPayMst.do" ,
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['지급일자','판매번호','지사', '부서', '직급', '직책', '사번', '성명', '기본급', '활동비', '일비', '시상금', '총지급액', '신고기준', '소득세', '지방세', '부가가치세', '차감지급액', '입금은행', '계좌번호', '계좌주'] ,
+			colNames:['지급일자','판매번호','지사', '부서', '직급', 
+			          '직책', '사번', '성명', '기본급', '활동비',
+			          '일비', '시상금', '총지급액', '신고기준', '소득세',
+			          '지방세', '부가가치세', '차감지급액', '입금은행', '계좌번호', '계좌주'] ,
 			colModel:[
-				 {name:"PAYDATE",		index:'PAYDATE',		width:60,		align:'center', editable:true}
-				,{name:"YEARMONTH",		index:'YEARMONTH',		width:60,		align:'center', editable:true}
-				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:60,		align:'center', editable:true}
-				,{name:"DEPTCODE",		index:'DEPTCODE',		width:60,		align:'center', editable:true}
-				,{name:"GRADE",			index:'GRADE',			width:60,		align:'center', editable:true}
-				,{name:"DUTY",			index:'DUTY',			width:60,		align:'center', editable:true}
-				,{name:"INSACODE",		index:'INSACODE',		width:60,		align:'center', editable:true}
-				,{name:"KNAME",			index:'KNAME',			width:60,		align:'center', editable:true}
-				,{name:"BASICAMT",		index:'BASICAMT',		width:60,		align:'center', editable:true}
-				,{name:"ACTAMT",		index:'ACTAMT',			width:60,		align:'center', editable:true}
-				,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:60,		align:'center', editable:true}
-				,{name:"DAILYAMT",		index:'DAILYAMT',		width:60,		align:'center', editable:true}
-				,{name:"TOTALAMT",		index:'TOTALAMT',		width:60,		align:'center', editable:true}
-				,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:60,		align:'center', editable:true}
-				,{name:"TAXINCOME",		index:'TAXINCOME',		width:60,		align:'center', editable:true}
-				,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:60,		align:'center', editable:true}
-				,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:60,		align:'center', editable:true}
-				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:60,		align:'center', editable:true}
-				,{name:"BANKID",		index:'BANKID',			width:60,		align:'center', editable:true}
-				,{name:"ACCTNO",		index:'ACCTNO',			width:60,		align:'center', editable:true}
-				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:60,		align:'center', editable:true}
+				 {name:"PAYDATE",		index:'PAYDATE',		width:100,		align:'center', editable:true}
+				,{name:"YEARMONTH",		index:'YEARMONTH',		width:100,		align:'center', editable:true}
+				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:100,		align:'center', editable:true}
+				,{name:"DEPTCODE",		index:'DEPTCODE',		width:100,		align:'center', editable:true}
+				,{name:"GRADE",			index:'GRADE',			width:100,		align:'center', editable:true}
+				,{name:"DUTY",			index:'DUTY',			width:100,		align:'center', editable:true}
+				,{name:"INSACODE",		index:'INSACODE',		width:100,		align:'center', editable:true}
+				,{name:"KNAME",			index:'KNAME',			width:100,		align:'center', editable:true}
+				,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'center', editable:true}
+				,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'center', editable:true}
+				,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'center', editable:true}
+				,{name:"DAILYAMT",		index:'DAILYAMT',		width:120,		align:'center', editable:true}
+				,{name:"TOTALAMT",		index:'TOTALAMT',		width:120,		align:'center', editable:true}
+				,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:100,		align:'center', editable:true}
+				,{name:"TAXINCOME",		index:'TAXINCOME',		width:120,		align:'center', editable:true}
+				,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:120,		align:'center', editable:true}
+				,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:120,		align:'center', editable:true}
+				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:120,		align:'center', editable:true}
+				,{name:"BANKID",		index:'BANKID',			width:100,		align:'center', editable:true}
+				,{name:"ACCTNO",		index:'ACCTNO',			width:150,		align:'center', editable:true}
+				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center', editable:true}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -296,41 +308,40 @@
 		
 </script>
 <body>
-<table width="99%">
-	<tr>
-		<td align="right">
-			<table>
+
+	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">조회 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="deleteButton" name="deleteButton">삭제 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton"   name="saveButton">저장 </a></td>
+					<td><input type="button" value="조회" id='searchButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="삭제" id='deleteButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
-		</td>
-	</tr>
-</table>
-	<div id="contents" style="width:1200px;" align="center">
-		<table width="99%" class="blueone">
-			<tr>
-				<td>지급년월</td>
-				<td><input type="text" id="S_SALEYM" name="S_SALEYM" /></td>
-				<td>지급일자</td>
-				<td><input type="text" id="S_SALEDATE" name="S_SALEDATE" /></td>
-				<td>지사</td>
-				<td>
-					<select id="S_BRANCHCODE" name="S_BRANCHCODE">
-					</select>
-				</td>
-				<td>부서</td>
-				<td>
-					<select id="S_DEPTCODE" name="S_DEPTCODE">
-					</select>
-				</td>
-			</tr>
-		</table>
-		<input type="hidden" id="S_FLAG_B1" name="S_FLAG_B1" />
-		<table id="leftList"></table>
+		</div>
+		<div id="bottomDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
+				<tr>
+					<th width="120">지급년월</th>
+					<td width="100"><input type="text" id="S_SALEYM" name="S_SALEYM" /></td>
+					<th width="120">지급일자</th>
+					<td width="100"><input type="text" id="S_SALEDATE" name="S_SALEDATE" /></td>
+					<th width="120">지사</th>
+					<td width="100">
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
+						</select>
+					</td>
+					<th width="120">부서</th>
+					<td width="100">
+						<select id="S_DEPTCODE" name="S_DEPTCODE">
+						</select>
+					</td>
+				</tr>
+			</table>
+			<input type="hidden" id="S_FLAG_B1" name="S_FLAG_B1" />
+			<table id="leftList"></table>
+		</div>
 	</div>
 	
 </body>

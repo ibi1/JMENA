@@ -17,9 +17,57 @@
 		var month = dt.getMonth()+1;
 		var year = dt.getFullYear();
 		var today = year + "-" + month;
+
+		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+
+		$("#insertB1Button").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
+		$("#deleteB1Button").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
+		$("#saveB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#payerButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		
+		$("#popupButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+		$("#insaButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+		
+		
+		$("#S_SALEDATESYM").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_SALEDATEEYM").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_SALERCD").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#SALERCD").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#SALERNM").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 230, minLength: 1});
+		$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#CONM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#CONPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SALEAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#SALEDANGA").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#DCGUBUN").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#DCRATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#DCAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#SELLAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#INSACODE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#KNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#SUDANGRATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#ADDRATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#PAYAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#TAXGUBUN").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
+		$("#TAXINCOME").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#TAXLOCAL").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SUPPLYTAX").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#DEDUCTAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#PAYSEQ").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 550, minLength: 1});
+		
+		
 		$('#S_SALEDATESYM').val(today);
 		$('#S_SALEDATEEYM').val(today);
-		
 		
 		//공통코드 가져오기
 		f_selectListEnaCityCode();		
@@ -304,7 +352,7 @@
 	$(function(){
 		$("#popupButton").click(function(){
 			var popUrl = "/home/EP011001_1.do";
-			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			var popOption = "width=700, height=240, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"인사정보 관리",popOption);
 		}); 
 	});
@@ -447,35 +495,32 @@
 	})		
 </script>
 <body>
-<table width="99%">
-	<tr>
-		<td align="right">
-			<table>
+
+	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">조회 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="deleteButton" name="deleteButton">삭제 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton"   name="saveButton">저장 </a></td>
+					<td><input type="button" value="조회" id='searchButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="삭제" id='deleteButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
-		</td>
-	</tr>
-</table>
-	<div id="contents" style="width:1200px;" align="center">
-		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		</div>
+		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table width="99%" >
 				<tr>
-					<td>지급년월</td>
+					<th width="120">지급년월</th>
 					<td colspan="3"><input type="text" id="S_SALEDATESYM" name="S_SALEDATESYM" /> ~ <input type="text" id="S_SALEDATEEYM" name="S_SALEDATEEYM" /></td>
 				</tr>
 				<tr>
-					<td>지사</td>
+					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" >
 							<option></option>
 						</select>
 					</td>
-					<td>부서</td>
+					<th width="120">부서</th>
 					<td>
 						<select id="S_DEPTCODE" name="S_DEPTCODE">
 							<option></option>
@@ -483,7 +528,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>담당자</td>
+					<th width="120">담당자</th>
 					<td colspan="3">
 						<input type="text" id="S_SALERCD" name="S_SALERCD" />
 						<input type="hidden" id="S_SALEID" name="S_SALEID"/> 
@@ -493,108 +538,115 @@
 			</table>
 			<table id="leftList"></table>
 		</div>
-		<div id="rightDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table >
 				<tr>
-					<td>계약일자/번호</td>
-					<td colspan="3"><input type="text" id="SALEDATE" name="SALEDATE" />
-					<input type="text" id="SALEID" name="SALEID" /><input type="button" id='popupButton'/></td>
+					<th width="120">계약일자/번호</th>
+					<td colspan="2">
+						<input type="text" id="SALEDATE" name="SALEDATE" />
+						<input type="text" id="SALEID" name="SALEID" />
+					</td>
+					<td><input type="button" id='popupButton'/></td>
 				</tr>
 				<tr>
-					<td>매출구분</td>
+					<th width="120">매출구분</th>
 					<td colspan="3">
 						<select id="SALEGUBUN" name="SALEGUBUN" disabled >
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>담당자</td>
+					<th width="120">담당자</th>
 					<td><input type="hidden" id="SALERCD" name="SALERCD" disabled/>
 					<input type="text" id="SALERNM" name="SALERNM" disabled/></td>
-					<td>계약지사</td>
+					<th width="120">계약지사</th>
 					<td>
 						<select id="BRANCHCODE" name="BRANCHCODE" disabled>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>관리번호</td>
+					<th width="120">관리번호</th>
 					<td ><input type="text" id="MANAGENO" name="MANAGENO" disabled/></td>
-					<td>지역구분</td>
+					<th width="120">지역구분</th>
 					<td>
 						<select id="CITYCODE" name="CITYCODE" disabled>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>주소</td>
+					<th width="120">주소</th>
 					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" disabled/></td>
 				</tr>
 				<tr>
-					<td>계약자 성명</td>
+					<th width="120">계약자 성명</th>
 					<td colspan="3"><input type="text" id="CONNAME" name="CONNAME" disabled/></td>
 				</tr>
 				<tr>
-					<td>계약면적</td>
+					<th width="120">계약면적</th>
 					<td><input type="text" id="CONM2" name="CONM2" disabled/></td>
-					<td>계약평수</td>
+					<th width="120">계약평수</th>
 					<td><input type="text" id="CONPY" name="CONPY" disabled/></td>
 				</tr>
 				<tr>
-					<td>매매대금</td>
-					<td><input type="text" id="SALEAMT" name="SALEAMT" disabled/></td>
-					<td>매매단가</td>
+					<th width="120">매매대금</th>
+					<td width="120"><input type="text" id="SALEAMT" name="SALEAMT" disabled/></td>
+					<th width="120">매매단가</th>
 					<td><input type="text" id="SALEDANGA" name="SALEDANGA" disabled/></td>
 				</tr>
 				<tr>
-					<td>DC사항</td>
+					<th width="120">DC사항</th>
 					<td>
 						<select id="DCGUBUN" name="DCGUBUN" disabled>
 						</select>
 					</td>
-					<td>DC 율</td>
+					<th width="120">DC 율</th>
 					<td><input type="text" id="DCRATE" name="DCRATE" disabled/> % </td>
 				</tr>
 				<tr>
-					<td>DC금액</td>
+					<th width="120">DC금액</th>
 					<td><input type="text" id="DCAMT" name="DCAMT" disabled/></td>
-					<td>실 판매가</td>
+					<th width="120">실 판매가</th>
 					<td><input type="text" id="SELLAMT" name="SELLAMT" disabled/></td>
 				</tr>
 			</table>
 		</div>
-		<div id="bottomDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="bottomDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<form id="EP011001">
 			<table>
 				<tr>
 					<th width="120">지급일자</th>
-					<td><input type="text" id="PAYDATE" name="PAYDATE"> </td>
+					<td width="120"><input type="text" id="PAYDATE" name="PAYDATE"> </td>
 					<th width="120">담당자 성명</th>
-					<td colspan="7"><input type="text" id="INSACODE" name="INSACODE"/>
+					<td colspan="2">
+						<input type="text" id="INSACODE" name="INSACODE"/>
 						<input type="text" id="KNAME" name="KNAME"/>
-						<input type="button" id='insaButton'/></td>
-						
+					</td>
+					<td colspan="5">
+						<input type="button" id='insaButton'/>
+					</td>
 				</tr>
 				<tr>
 					<th width="120">수당지급율(%)</th>
-					<td ><input type="text" id="SUDANGRATE" name="SUDANGRATE" style="text-align:right;"/></td>
+					<td width="120"><input type="text" id="SUDANGRATE" name="SUDANGRATE" style="text-align:right;"/></td>
 					<th width="120">추가지급율(%)</th>
-					<td><input type="text" id="ADDRATE" name="ADDRATE" style="text-align:right;"/></td>
+					<td width="120"><input type="text" id="ADDRATE" name="ADDRATE" style="text-align:right;"/></td>
 					<th width="120">지급금액</th>
 					<td colspan="5"><input type="text" id="PAYAMT" name="PAYAMT" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 				</tr>
 				<tr>
 					<th width="120">신고기준</th>				
-					<td><select id="TAXGUBUN" name="TAXGUBUN"></select>
+					<td width="120">
+						<select id="TAXGUBUN" name="TAXGUBUN"></select>
 					</td>
 					<th width="120">사업소득세</th>
-					<td><input type="text" id="TAXINCOME" name="TAXINCOME" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td width="130"><input type="text" id="TAXINCOME" name="TAXINCOME" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 					<th width="120">지방세</th>
-					<td ><input type="text" id="TAXLOCAL" name="TAXLOCAL" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td width="130"><input type="text" id="TAXLOCAL" name="TAXLOCAL" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 					<th width="120">부가가치세</th>
-					<td><input type="text" id="SUPPLYTAX" name="SUPPLYTAX" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td width="130"><input type="text" id="SUPPLYTAX" name="SUPPLYTAX" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 					<th width="120">차감지급액</th>
-					<td><input type="text" id="DEDUCTAMT" name="DEDUCTAMT" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td width="130"><input type="text" id="DEDUCTAMT" name="DEDUCTAMT" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
 				</tr>
 				<tr>
 					<th width="120">비고</th>
@@ -603,21 +655,19 @@
 				</tr>
 			</table>
 			</form>
-			<table width="99%">
-				<tr >
-					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="insertB1Button" name="payerButton">수당수령인 추가</a>
-						<a class="ui-button ui-widget ui-corner-all" id="deleteB2Button"   name="deleteB1Button">수당수령인 삭제</a>
-						<a class="ui-button ui-widget ui-corner-all" id="saveB1Button"   name="saveB1Button">저장 </a>
-					</td>
+			<table align="right">
+				<tr>
+					<td><input type="button" value="수당수령인 추가" id='insertB1Button' /></td>
+					<td><input type="button" value="수당수령인 삭제" id='deleteB1Button' /></td>
+					<td><input type="button" value="저장" id='saveB1Button' /></td>
 				</tr>
-			</table>			
+			</table>
+			<br />			
+			<br />			
 			<table id="bottomList"></table>
-			<table width="99%">
-				<tr >
-					<td align="right">
-						<a class="ui-button ui-widget ui-corner-all" id="payerButton" name="payerButton">신고인 관리</a>
-					</td>
+			<table align="right">
+				<tr>
+					<td><input type="button" value="신고인 관리" id='payerButton' /></td>
 				</tr>
 			</table>			
 		</div>

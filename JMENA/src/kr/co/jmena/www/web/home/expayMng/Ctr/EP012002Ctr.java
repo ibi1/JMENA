@@ -51,17 +51,20 @@ public class EP012002Ctr {
 	public ModelAndView selectListEP012002(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP012002VO vo = new EP012002VO();
 		
+		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
+		String S_DEPTCODE = ("ALL".equals(request.getParameter("S_DEPTCODE"))) ? "" : request.getParameter("S_DEPTCODE");
+
 		vo.setS_PAYDATE(request.getParameter("S_PAYDATE"));
-		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
-		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
+		vo.setS_BRANCHCODE(S_BRANCHCODE);
+		vo.setS_DEPTCODE(S_DEPTCODE);
 		vo.setS_KNAME(request.getParameter("S_KNAME"));
 
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 
 		if(!(request.getParameter("S_PAYDATE").equals("") && 
-				request.getParameter("S_BRANCHCODE").equals("") && 
-				request.getParameter("S_DEPTCODE").equals("") && 
+				S_BRANCHCODE.equals("") && 
+				S_DEPTCODE.equals("") && 
 				request.getParameter("S_KNAME").equals(""))){
 		
 		

@@ -44,9 +44,9 @@
 				AND t1.ipgumdate BETWEEN #S_IPGUMDATE_FR# AND #S_IPGUMDATE_TO#
 			</isNotEmpty>
 		</isNotEmpty> 
-		<isNotEmpty property="S_BRANCHCODE">
+		<isNotEqual property="S_BRANCHCODE" compareValue="">
 		    AND t1.branchcode = #S_BRANCHCODE#
-		</isNotEmpty>
+		</isNotEqual>
 		<isNotEmpty property="S_SALERCD">
 		    AND t1.salercd = #S_SALERCD#
 		</isNotEmpty>

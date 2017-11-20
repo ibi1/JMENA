@@ -71,6 +71,8 @@ public class SA012001Ctr {
 		SA012001VO vo3 = new SA012001VO();
 		SA012001VO vo4 = new SA012001VO();
 		
+		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
+		
 		String S_SALEDATE = request.getParameter("S_SALEDATE");
 		String S_SALEDATE_FR = "";
 		String S_SALEDATE_TO = "";
@@ -82,14 +84,14 @@ public class SA012001Ctr {
 		}
 
 		
-		vo1.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
+		vo1.setS_BRANCHCODE(S_BRANCHCODE);
 		vo1.setS_KNAME(request.getParameter("S_KNAME"));
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 
 		if(!(request.getParameter("S_SALEDATE").equals("") && 
-				request.getParameter("S_BRANCHCODE").equals("") && 
+				S_BRANCHCODE.equals("") && 
 				request.getParameter("S_KNAME").equals(""))){
 		
 			List<SA012001VO> lst1 = SA012001Biz.selectListSA012001_1(vo1);

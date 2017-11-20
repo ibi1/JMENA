@@ -51,9 +51,11 @@ public class SA012005Ctr {
 	public ModelAndView selectListEnaBuyMstP(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA012005VO vo = new SA012005VO();
 		
+		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
+
 		vo.setS_IPGUMDATE_FR(request.getParameter("S_IPGUMDATE_FR"));
 		vo.setS_IPGUMDATE_TO(request.getParameter("S_IPGUMDATE_TO"));
-		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
+		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_SALERCD(request.getParameter("S_SALERCD"));
 		vo.setS_IPGUMGUBUN(request.getParameter("S_IPGUMGUBUN"));
 		vo.setS_IPGUMPERSON(request.getParameter("S_IPGUMPERSON"));
@@ -65,7 +67,7 @@ public class SA012005Ctr {
 
 		if(!(request.getParameter("S_IPGUMDATE_FR").equals("") && 
 				request.getParameter("S_IPGUMDATE_TO").equals("") && 
-				request.getParameter("S_BRANCHCODE").equals("") && 
+				S_BRANCHCODE.equals("") && 
 				request.getParameter("S_SALERCD").equals("") && 
 				request.getParameter("S_IPGUMGUBUN").equals("") && 
 				request.getParameter("S_IPGUMPERSON").equals("") && 

@@ -85,12 +85,12 @@
 		<isNotEmpty property="S_PAYDATE">
 		    and t1.paydate = #S_PAYDATE#
 		</isNotEmpty>
-		<isNotEmpty property="S_BRANCHCODE">
+		<isNotEqual property="S_BRANCHCODE" compareValue="">
 		    and t1.branchcode = #S_BRANCHCODE#
-		</isNotEmpty>
-		<isNotEmpty property="S_DEPTCODE">
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="">
 		    and t1.deptcode = #S_DEPTCODE#
-		</isNotEmpty>
+		</isNotEqual>
 		and t1.insacode = t3.insacode 
 		and t1.saleid = t2.saleid
 		and t1.payseq = t2.payseq

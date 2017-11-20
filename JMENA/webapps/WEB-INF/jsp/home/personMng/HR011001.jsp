@@ -14,9 +14,48 @@
 
 <script type="text/javascript">
 	var v_rightLastSel = 0;
-	$(function(){
+	
+	$(document).ready(function(){
 		var INSACODE = "";
 		var BRANCHCODE = "";
+		
+		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+
+		$("#bottomDiv1").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#bottomDiv2").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		$("#insertB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#deleteB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		$("#insertB2Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#deleteB2Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#saveB2Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+
+		$("#insaButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+		
+		
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
+		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#KNAME").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
+		$("#INSACODE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#JUMINID1").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#JUMINID2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#SAUPID1").jqxInput({theme: 'energyblue', height: 25, width: 50, minLength: 1});
+		$("#SAUPID2").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#SAUPID3").jqxInput({theme: 'energyblue', height: 25, width: 50, minLength: 1});
+		$("#SAUPOWNER").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
+		$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+		$("#MOBILENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#TELNO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#BASICPAY").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
+		$("#JOINDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#RETIREDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 350, minLength: 1});
+		
+		
 		$("#table1").show();
 		$("#table2").hide();
 		f_selectListEnaBranchCode();
@@ -266,7 +305,7 @@
 		
 		$("#insaButton").click(function(){
 			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
-			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			var popOption = "width=760, height=240, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"인사정보 관리",popOption);
 		}); 	
 	
@@ -870,91 +909,94 @@
 </script>
 <body>
 
-<table width="99%">
-	<tr>
-		<td align="right">
-			<table>
+	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table align="right">
 				<tr>
-					<td><a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">조회 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="insertButton" name="insertButton">추가 </a></td>
-					<td><a class="ui-button ui-widget ui-corner-all" id="saveButton"   name="saveButton">저장 </a></td>
+					<td><input type="button" value="조회" id='searchButton' /></td>
+					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
-		</td>
-	</tr>
-</table>
-	<div id="contents" style="width:1200px;" align="center">
-		<div id="leftDiv" style="width:48%; float:left; border:1px solid #333; padding: 10px" align="left">
+		</div>
+		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
-					<th>지사</th>
+					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE">
 						</select>
 					</td>
-					<th>부서</th>
+					<th width="120">부서</th>
 					<td>
 						<select id="S_DEPTCODE" name="S_DEPTCODE">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th>성명</th>
-					<td colspan="3"><input type="text" class="inputName" id="S_KNAME" name="S_KNAME" />
-					<!-- <input type="text" class="inputName" id="S_INSACODE" name="S_INSACODE" /> --></td>
+					<th width="120">성명</th>
+					<td colspan="3">
+						<input type="text" class="inputName" id="S_KNAME" name="S_KNAME" />
+					</td>
 				</tr>
 				<tr>
-					<th>주민번호</th>
+					<th width="120">주민번호</th>
 					<td colspan="3"><input type="text" id="S_JUMINID" name="S_JUMINID" /></td>
 				</tr>
 			</table>
 			<br/>
 			<table id="leftList" width="98%"></table>
 		</div>
-		<div id="rightDiv" style="width:48%;  float:left; border:1px solid #333; padding: 10px" align="left">
+		<div id="rightDiv" style="width:58%;  float:left; padding: 10px" align="left">
 			<form id="HR011001">
-			<table width="99%" border="0" cellspacing="10" cellpadding="0">
-				<col width="17%"><col width="17%"><col width="15%"><col width="5%"><col width="30%"><col>
+			<table width="98%">
 				<tr>
-					<th align="left">성명 / 사번</th>
-					<td colspan="3"><input type="text" id="KNAME" name="KNAME" style="width:18%;" />        
-					<input type="text" id="INSACODE"  name="INSACODE" style="width:18%; background-color: #e2e2e2;" maxlength="8" readonly/>
-					<input type="button" id='insaButton'/>
+					<th width="120">성명 / 사번</th>
+					<td>
+						<input type="text" id="KNAME" name="KNAME" />        
+						<input type="text" id="INSACODE" name="INSACODE" style="background-color: #e2e2e2;" maxlength="8" readonly/>
+					</td>
+					<td colspan="2">
+						<input type="button" id='insaButton'/>
 					</td>
 				</tr>
 				<tr>
-					<th align="left">주민번호</th>
-					<td><input type="text" id="JUMINID1" name="JUMINID1" style="width:40%;"  maxlength="6"  /> - 
-					<input type="text" id="JUMINID2" name="JUMINID2" style="width:47%;" maxlength="7"  /></td>
-					<th align="left">생일구분</th>
-					<td><input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" style="width:10%;" value="S" />양력 
-					<input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" style="width:10%;" value="M" />음력</td>
+					<th width="120">주민번호</th>
+					<td>
+						<input type="text" id="JUMINID1" name="JUMINID1" maxlength="6"  /> - 
+						<input type="text" id="JUMINID2" name="JUMINID2" maxlength="7"  />
+					</td>
+					<th width="120">생일구분</th>
+					<td>
+						<input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" value="S" />양력 
+						<input type="radio" id="BIRTHDAYGUBUN" name="BIRTHDAYGUBUN" value="M" />음력
+					</td>
 				</tr>
 				<tr>
-					<th align="left">사업자번호</th>
+					<th width="120">사업자번호</th>
 					<td><input type="text" style="width:15%;" id="SAUPID1" name="SAUPID1" maxlength="3" /> - 
 						<input type="text" style="width:15%;" id="SAUPID2" name="SAUPID2" maxlength="2" /> -
 						<input type="text" style="width:48%;" id="SAUPID3" name="SAUPID3" maxlength="5" /></td>
-					<th align="left">대표자명</th>
+					<th width="120">대표자명</th>
 					<td><input type="text" id="SAUPOWNER" name="SAUPOWNER" /></td>
 				</tr>
 				<tr>
-					<th align="left">주소</th>
-					<td colspan="3"><input  type="text" id="ADDRESS" name="ADDRESS" style="width:100%;"/></td>
+					<th width="120">주소</th>
+					<td colspan="3"><input  type="text" id="ADDRESS" name="ADDRESS"/></td>
 				</tr>
 				<tr>
-					<th align="left">핸드폰번호</th>
+					<th width="120">핸드폰번호</th>
 					<td><input type="text" id="MOBILENO" name="MOBILENO"/></td>
-					<th align="left">기타연락처</th>
+					<th width="120">기타연락처</th>
 					<td><input type="text" id="TELNO" name="TELNO" /></td>
 				</tr>
 				<tr>
-					<th align="left">소속지사</th>
+					<th width="120">소속지사</th>
 					<td>
 						<select id="BRANCHCODE" name="BRANCHCODE">
 						</select>
 					</td>
-					<th align="left">소속부서</th>
+					<th width="120">소속부서</th>
 					<td>
 						<select id="DEPTCODE" name="DEPTCODE">
 						</select>
@@ -962,36 +1004,36 @@
 				</tr>
 				<tr>
 					
-					<th align="left">월정지급액</th>
+					<th width="120">월정지급액</th>
 					<td><input type="text" id="BASICPAY" name="BASICPAY" /></td>
 					
-					<th align="left">고용구분</th>
+					<th width="120">고용구분</th>
 					<td colspan="3"><input type="radio" id="EMPLOYGUBUN" name="EMPLOYGUBUN" value="R" />정규 <input type="radio" id="EMPLOYGUBUN" name="EMPLOYGUBUN" value="F" />프리</td>
 				</tr>
 				<tr>
 				</tr>
 				<tr>
-					<th align="left">직급</th>
+					<th width="120">직급</th>
 					<td>
 						<select id="GRADE" name="GRADE"></select>
 					</td>
-					<th align="left">직책</th>
+					<th width="120">직책</th>
 					<td>
 						<select id="DUTY" name="DUTY"></select>
 					</td>
 				</tr>
 				<tr>
-					<th align="left">입사일</th>
+					<th width="120">입사일</th>
 					<td><input type="text" id="JOINDATE" name="JOINDATE" /></td>
-					<th align="left">재입사여부</th>
+					<th width="120">재입사여부</th>
 					<td><input type="checkbox" id="REJOINYN" name="REJOINYN" /></td>
 				</tr>
 				<tr>
-					<th align="left">퇴사일</th>
+					<th width="120">퇴사일</th>
 					<td colspan="3"><input type="text" id="RETIREDATE" name="RETIREDATE" /></td>
 				</tr>
 				<tr>
-					<th align="left">추천인</th>
+					<th width="120">추천인</th>
 					<td colspan="3">
 						<select id="RECOID" name="RECOID">
 							<option value="recoId">insaCode</option>
@@ -999,39 +1041,45 @@
 					</td>
 				</tr>
 				<tr>
-					<th align="left">비고</th>
+					<th width="120">비고</th>
 					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
 				</tr>			
 			</table>
 			</form>
 		</div>
+		<table style="width:98%">
+			<tr>
+			
+				<td style="width:50%" align="left">
+					<input type="button" value="발령사항" id='bottomDiv1' />	
+					<input type="button" value="신고인관리" id='bottomDiv2' />
+				</td>
+				
+				<td style="width:50%" align="right">
+					<input type="button" value="추가" id='insertB1Button' />
+					<input type="button" value="삭제" id='deleteB1Button' />
+					<input type="button" value="저장" id='saveB1Button' />
+				
+					<input type="button" value="추가" id='insertB2Button' />
+					<input type="button" value="삭제" id='deleteB2Button' />
+					<input type="button" value="저장" id='saveB2Button' />
+				</td>
+			
+				</td>
+			</tr>
+		</table>
+		<div id="bottomDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<input type="hidden" id="S_FLAG_B1" name="S_FLAG_B1" />
+			<input type="hidden" id="S_FLAG_B2" name="S_FLAG_B2" />
+				<div id ="table1">
+					<table id="bottomList1"></table>
+				</div>
+				<div id="table2">
+					<table id="bottomList2"></table>
+				</div>
+		</div>	
+
 	</div>
 	
-<table width="99%">
-	<tr >
-		<td><a class="ui-button ui-widget ui-corner-all" id="bottomDiv1"   name="bottomDiv1">발령사항 </a>
-		<a class="ui-button ui-widget ui-corner-all" id="bottomDiv2"   name="bottomDiv2">신고인 관리 </a></td>
-		<td align="right">
-			<a class="ui-button ui-widget ui-corner-all" id="insertB1Button" name="insertB1Button">추가</a>
-			<a class="ui-button ui-widget ui-corner-all" id="deleteB2Button"   name="deleteB1Button">삭제 </a>
-			<a class="ui-button ui-widget ui-corner-all" id="saveB1Button"   name="saveB1Button">저장 </a>
-		</td>
-		<td >
-			<a class="ui-button ui-widget ui-corner-all" id="insertB2Button" name="insertB2Button">a추가</a>
-			<a class="ui-button ui-widget ui-corner-all" id="deleteB2Button"   name="deleteB2Button">a삭제 </a>
-			<a class="ui-button ui-widget ui-corner-all" id="saveB2Button"   name="saveB2Button">a저장 </a>
-		</td>
-	</tr>
-</table>
-		<div id="bottomDiv" style="width:98%; float:left; border:1px solid #333; padding: 10px" align="left">
-		<input type="hidden" id="S_FLAG_B1" name="S_FLAG_B1" />
-		<input type="hidden" id="S_FLAG_B2" name="S_FLAG_B2" />
-			<div id ="table1">
-			<table id="bottomList1"></table>
-			</div>
-			<div id="table2">
-			<table id="bottomList2"></table>
-			</div>
-		</div>	
 </body>
 </html>

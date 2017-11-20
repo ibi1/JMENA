@@ -45,6 +45,7 @@
 			dataType : 'json' , 
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.branchMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 				});
@@ -236,6 +237,7 @@
 					<th width="120">지사</th>
 					<td>
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:90px">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 					<th width="120">담당자</th>

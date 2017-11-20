@@ -59,10 +59,14 @@ public class SA012002Ctr {
 	public ModelAndView selectListEnaBuyMstP(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA012002VO vo = new SA012002VO();
 		
+		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
+		String S_DEPTCODE = ("ALL".equals(request.getParameter("S_DEPTCODE"))) ? "" : request.getParameter("S_DEPTCODE");
+		
+		
 		vo.setS_SALEDATE_FR(request.getParameter("S_SALEDATE_FR"));
 		vo.setS_SALEDATE_TO(request.getParameter("S_SALEDATE_TO"));
-		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
-		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
+		vo.setS_BRANCHCODE(S_BRANCHCODE);
+		vo.setS_DEPTCODE(S_DEPTCODE);
 		vo.setS_DCODE(request.getParameter("S_DCODE"));
 		vo.setS_KNAME(request.getParameter("S_KNAME"));
 		
@@ -72,8 +76,8 @@ public class SA012002Ctr {
 
 		if(!(request.getParameter("S_SALEDATE_FR").equals("") && 
 				request.getParameter("S_SALEDATE_TO").equals("") && 
-				request.getParameter("S_BRANCHCODE").equals("") && 
-				request.getParameter("S_DEPTCODE").equals("") && 
+				S_BRANCHCODE.equals("") && 
+				S_DEPTCODE.equals("") && 
 				request.getParameter("S_DCODE").equals("") && 
 				request.getParameter("S_KNAME").equals(""))){
 			

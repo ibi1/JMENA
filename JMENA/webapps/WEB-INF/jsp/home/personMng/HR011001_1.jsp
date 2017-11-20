@@ -9,7 +9,69 @@
 	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
 
+	<link rel="stylesheet" href="/resource/jqwidgets-ver5.4.0/jqwidgets/styles/jqx.base.css" type="text/css" />
+	<link rel="stylesheet" href="/resource/jqwidgets-ver5.4.0/jqwidgets/styles/jqx.light.css" type="text/css" />
+	<link rel="stylesheet" href="/resource/jqwidgets-ver5.4.0/jqwidgets/styles/jqx.bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="/resource/jqwidgets-ver5.4.0/jqwidgets/styles/jqx.energyblue.css" type="text/css" />
+
+	<style>
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+            margin: 0;
+        }
+        th
+        {
+        	height : 22px;
+			text-align: center;
+			font-weight: bold;
+			border: 1px solid #CCC;
+        }
+        select
+        {
+		    min-height: 25px;
+		    min-width: 16px;
+		    margin: 0px;
+		    border-width: 1px;
+		    border-style: solid;
+		    font-size: 13px;
+		    padding: 0px;
+		    padding-left: 3px;
+		    padding-right: 3px;
+		    border-color: #a4bed4;
+		    -webkit-border-radius: 3px;
+		}
+        
+    </style>
+
+	<script type="text/javascript" src="/resource/js/jquery.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery-1.7.2.min.js"></script>	
+ 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxcore.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxnotification.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxtabs.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxsplitter.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxbuttons.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxbuttongroup.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxinput.js"></script>
+ 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxformattedinput.js"></script>
+ 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxnumberinput.js"></script>
+ 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxlistbox.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxcombobox.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxtree.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.sort.js"></script> 
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.pager.js"></script> 
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.selection.js"></script> 
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.edit.js"></script> 
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxdata.export.js"></script> 
+    <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.export.js"></script> 
+	
 	<script type="text/javascript" src="/resource/js/i18n/grid.locale-kr.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery.jqGrid.min.js"></script>
 
@@ -19,10 +81,16 @@
 
 <script type="text/javascript">
 	
-	$(function(){
+	$(document).ready(function(){
 		var KNAME = $("#KNAME",opener.document).val();
 		var INSACODE = $("#INSACODE",opener.document).val();
 
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#S_INSACODE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
+
+		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
 		selectListInsaMst();
 		
 		$("#S_KNAME").val(KNAME);
@@ -57,11 +125,11 @@
 			          ,'사업자번호','대표자명','주소','기타연락처','월정지급액','고용구분','직급','직책','입사일','재입사여부','퇴사일','추천인사번','비고'],
 			colModel:[
 				{name:"INSACODE",			index:'INSACODE',		width:100,	align:'center'}
-				, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
-				, {name:"JUMINID",			index:'JUMINID',		width:100,	align:'center'}
-				, {name:"MOBILENO",			index:'MOBILENO',		width:100,	align:'center'}
-				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center'}
+				, {name:"KNAME",			index:'KNAME',			width:150,	align:'center'}
+				, {name:"JUMINID",			index:'JUMINID',		width:150,	align:'center'}
+				, {name:"MOBILENO",			index:'MOBILENO',		width:120,	align:'center'}
+				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:120,	align:'center'}
+	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:120,	align:'center'}
  				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
  	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true} 		
 				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center', hidden:true}
@@ -86,7 +154,7 @@
 			sortname: 'kName',
 			viewrecords: true,
 			sortorder:'asc',
-			width: '96%',
+			width: '98%',
 			jsonReader: {
 				repeatitems: false
 			},
@@ -136,17 +204,17 @@
 		
 </script>
 <body>
-	<div id="contents" style="width:1200px;" align="center">
-		<div id="leftDiv" style="width:80%; float:left; border:1px solid #333; padding: 10px" align="left">
+	<div id="contents" style="width:800px;" align="center">
+		<div id="leftDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>
-					<th>성명</th>
+					<th width="120">성명</th>
 					<td><input type="text" class="inputName" id="S_KNAME" name="S_KNAME" /></td>
-					<th>사번</th>
+					<th width="120">사번</th>
 					<td><input type="text" class="inputName" id="S_INSACODE" name="S_INSACODE" /></td>
-					<th>주민번호</th>
-					<td><input type="text" id="S_JUMINID" name="S_JUMINID" />
-					<a class="ui-button ui-widget ui-corner-all" id="searchButton" name="searchButton">조회 </a></td>
+					<th width="120">주민번호</th>
+					<td><input type="text" id="S_JUMINID" name="S_JUMINID" /></td>
+					<td><input type="button" value="조회" id='searchButton' /></td>
 				</tr>
 			</table>
 			<table id="leftList" width="98%"></table>
