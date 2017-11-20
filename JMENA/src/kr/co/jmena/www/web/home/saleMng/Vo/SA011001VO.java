@@ -45,7 +45,20 @@ public class SA011001VO {
 	private String SALESEQ;
 	private String SELLAMT;
 	private String SELLDANGA;
-
+	private String SL_SALEDATE_FR;
+	private String SL_SALEDATE_TO;
+	private String ADDRESS;
+	private String CONBM2;
+	private String CONJM2;
+	private String CONBPY;
+	private String CONJPY;
+	private String USERID;
+	private String MANAGENO;
+	private String CITYCODE;
+	private String BRANCHCODE;
+	private String OWNERNAME;
+	private String OWNERJUMINID;
+	private String AGENCYAMT;
 
 	public String getBUYID(){
 		return this.BUYID;
@@ -305,6 +318,90 @@ public class SA011001VO {
 	}
 	public void setSELLDANGA(String SELLDANGA) {
 		this.SELLDANGA = SELLDANGA;
+	}
+	public String getSL_SALEDATE_FR() {
+		return SL_SALEDATE_FR;
+	}
+	public String getSL_SALEDATE_TO() {
+		return SL_SALEDATE_TO;
+	}
+	public String getADDRESS() {
+		return ADDRESS;
+	}
+	public String getCONBM2() {
+		return CONBM2;
+	}
+	public String getCONJM2() {
+		return CONJM2;
+	}
+	public String getCONBPY() {
+		return CONBPY;
+	}
+	public String getCONJPY() {
+		return CONJPY;
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public void setSL_SALEDATE_FR(String SL_SALEDATE_FR) {
+		this.SL_SALEDATE_FR = SL_SALEDATE_FR;
+	}
+	public void setSL_SALEDATE_TO(String SL_SALEDATE_TO) {
+		this.SL_SALEDATE_TO = SL_SALEDATE_TO;
+	}
+	public void setADDRESS(String ADDRESS) {
+		this.ADDRESS = ADDRESS;
+	}
+	public void setCONBM2(String CONBM2) {
+		this.CONBM2 = CONBM2;
+	}
+	public void setCONJM2(String CONJM2) {
+		this.CONJM2 = CONJM2;
+	}
+	public void setCONBPY(String CONBPY) {
+		this.CONBPY = CONBPY;
+	}
+	public void setCONJPY(String CONJPY) {
+		this.CONJPY = CONJPY;
+	}
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
+	}
+	public String getMANAGENO() {
+		return MANAGENO;
+	}
+	public String getCITYCODE() {
+		return CITYCODE;
+	}
+	public String getBRANCHCODE() {
+		return BRANCHCODE;
+	}
+	public String getOWNERNAME() {
+		return OWNERNAME;
+	}
+	public String getOWNERJUMINID() {
+		return OWNERJUMINID;
+	}
+	public String getAGENCYAMT() {
+		return AGENCYAMT;
+	}
+	public void setMANAGENO(String MANAGENO) {
+		this.MANAGENO = MANAGENO;
+	}
+	public void setCITYCODE(String CITYCODE) {
+		this.CITYCODE = CITYCODE;
+	}
+	public void setBRANCHCODE(String BRANCHCODE) {
+		this.BRANCHCODE = BRANCHCODE;
+	}
+	public void setOWNERNAME(String OWNERNAME) {
+		this.OWNERNAME = OWNERNAME;
+	}
+	public void setOWNERJUMINID(String OWNERJUMINID) {
+		this.OWNERJUMINID = OWNERJUMINID;
+	}
+	public void setAGENCYAMT(String AGENCYAMT) {
+		this.AGENCYAMT = AGENCYAMT;
 	}
 
 	

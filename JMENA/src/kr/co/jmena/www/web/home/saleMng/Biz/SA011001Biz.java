@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.saleMng.Dao.SA011001Dao;
 import kr.co.jmena.www.web.home.saleMng.Vo.SA011001VO;
 
@@ -20,16 +21,18 @@ public class SA011001Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
-	public List<SA011001VO> selectListEnaSaleMst(SA011001VO vo) throws Exception {
+	public List<SA011001VO> selectListEanSaleMst(SA011001VO vo) throws Exception {
 		List<SA011001VO> lst = null;
 
 		try {
-			lst = SA011001Dao.selectListEnaSaleMst(vo);
+			lst = SA011001Dao.selectListEanSaleMst(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}
 		
 		return lst;
 	}
+	
+	
 	
 }
