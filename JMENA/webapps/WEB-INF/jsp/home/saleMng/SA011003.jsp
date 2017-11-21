@@ -23,20 +23,22 @@
 		$("#deleteButton2").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#saveButton2").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
+		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+		
 		$("#SL_IPGUMDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#SL_IPGUMDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#SL_IPGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		
 		$("#IPGUMDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#IPGUMID").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-		$("#IPGUMPERSON").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#IPGUMPERSON").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 		$("#IPGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		$("#SUGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		$("#JANAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
-		$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 		$("#CONPY").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
+		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 		
 		$("#IPGUMID").attr("readonly","readonly");		
 		
@@ -123,6 +125,7 @@
 			},
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.insaMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
 				});
@@ -212,6 +215,7 @@
 			},
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.dcodeList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 				});
@@ -231,6 +235,7 @@
 			dataType : 'json' ,
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.bankList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.bankCode + "'>" + currentValue.bankName + "</option>\n";
 				});
@@ -285,7 +290,7 @@
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				var IPGUMID = selRowData.IPGUMID;
 				f_selectListEnaIpgumRDtl(IPGUMID);
-		        
+				f_selectListEnaIpgumDtl();
 			} ,
 			hidegrid: false
 		});
@@ -295,8 +300,11 @@
 		$('#bottomList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#bottomList').jqGrid({
 			//caption: '입금 스케쥴 관리'
-			url:"/home/selectListSysMst.do" ,
+			url:"/home/selectListEnaIpgumDtl.do" ,
 			datatype:"json" ,
+			postData : {
+				SL_IPGUMAMT : $("#SL_IPGUMAMT").val()
+			},
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['계약번호', '계약일자', '계약구분', '계약자', '계약자 연락처', '계약건 주소', '계약면적', '계약평수', '계약대금(실판매가)', '입금구분', '입금예정일', '입금예정금액', '처리금액'] ,
 			colModel:[  
@@ -333,12 +341,6 @@
 		});
 	}
 
-	$(function() {
-		$("#selectButton").click(function() {
-			f_selectListEnaIpgumMst();
-		});
-	})
-
 	function f_selectListEnaIpgumRDtl(IPGUMID){
 		$("#SL_IPGUMGUBUN").empty().data('options');
 	   	$.ajax({ 
@@ -374,6 +376,38 @@
 		});
 	}
 
+	$(function() {
+		$("#selectButton").click(function() {
+			f_selectListEnaIpgumMst();
+		});
+
+		$("#saveButton").click(function() {
+			var formData = $("#SA011003").serialize();
+			
+		   	$.ajax({ 
+				type: 'POST' ,
+				url: "/home/updateEnaIpgumMst.do", 
+				dataType : 'json' ,
+				data : formData,
+				success: function(data){
+					if(data.rows[0].MSG == "success")
+					{
+						alert("저장이 완료되었습니다.");
+						f_selectListEnaIpgumMst();
+					}else{
+						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+					}
+				},
+				error:function(e){  
+					alert("입금 정보를 저장하는 중 오류가 발생하였습니다.");
+				}  
+			});
+			
+		});
+		
+		
+	})
+	
 		
 </script>
 <body>
@@ -398,12 +432,13 @@
 					<th width="120">담당자</th>
 					<td>
 						<select id="SL_KNAME" name="SL_KNAME">
-							<option></option>
+							<option value="ALL">전체</option>
 						</select>
 					</td>
 					<th width="120">입금구분</th>
 					<td>
 						<select id="SL_IPGUMGUBUN" name="SL_IPGUMGUBUN">
+							<option value="ALL">전체</option>
 						</select>
 					</td>
 				</tr>
@@ -411,6 +446,7 @@
 					<th width="120">금융기관</th>
 					<td>
 						<select id="SL_BANKGUBUN" name="SL_BANKGUBUN">
+							<option value="ALL">전체</option>
 						</select>
 					</td>
 					<th width="120">입금금액</th>
@@ -420,10 +456,13 @@
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
+			<form id="SA011003">
 			<table>
 				<tr>
 					<th width="120">입금일자/번호</th>
-					<td colspan="3"><input type="text" id="IPGUMDATE" name="IPGUMDATE" /><input type="text" id="IPGUMID" name="IPGUMID" /></td>
+					<td><input type="text" id="IPGUMDATE" name="IPGUMDATE" /><input type="text" id="IPGUMID" name="IPGUMID" readonly/></td>
+					<td colspan="2"><input type="button" id='searchButton' /></td>
+					
 				</tr>
 				<tr>
 					<th width="120">입금형태</th>
@@ -487,6 +526,7 @@
 					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
 				</tr>
 			</table>
+			</form>
 		</div>
 		<div id="bottomDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table align="right">

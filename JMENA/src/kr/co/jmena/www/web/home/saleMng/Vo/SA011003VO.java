@@ -27,6 +27,8 @@ public class SA011003VO {
 	private String CONPY;
 	private String REMARK;
 	
+	private String USERID;
+	
 	
 	public String getIPGUMID() {
 		return this.IPGUMID;
@@ -94,7 +96,9 @@ public class SA011003VO {
 	public String getREMARK() {
 		return this.REMARK;
 	}
-	
+	public String getUSERID() {
+		return this.USERID;
+	}
 	
 	
 	public void setIPGUMID(String IPGUMID) {
@@ -162,6 +166,9 @@ public class SA011003VO {
 	}
 	public void setREMARK(String REMARK) {
 		this.REMARK = REMARK;
+	}
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
 	}
 	
 	

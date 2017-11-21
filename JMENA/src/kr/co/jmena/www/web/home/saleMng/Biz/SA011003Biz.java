@@ -31,5 +31,68 @@ public class SA011003Biz {
 		
 		return lst;
 	}
+
+	public int selectOneEnaIpgumMst(SA011003VO vo) throws Exception {
+		int cnt = 0;
+		
+		try {
+			cnt = SA011003Dao.selectOneEnaIpgumMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return cnt;
+	}	
+	
+	public int insertEnaIpgumMst(SA011003VO vo) throws Exception {
+		int insertCnt = 0;
+		
+		try {
+			insertCnt = SA011003Dao.insertEnaIpgumMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return insertCnt;
+	}
+	
+	
+	public int updateEnaIpgumMst(SA011003VO vo) throws Exception {
+		int updateCnt = 0;
+
+		try {
+			updateCnt = SA011003Dao.updateEnaIpgumMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return updateCnt;
+	}	
+
+	public int insertEnaIpgumDtl(SA011003VO vo) throws Exception {
+		int insertCnt = 0;
+		
+		try {
+			insertCnt = SA011003Dao.insertEnaIpgumDtl(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return insertCnt;
+	}
+	
+	
+	public int updateEnaIpgumDtl(SA011003VO vo) throws Exception {
+		int updateCnt = 0;
+
+		try {
+			updateCnt = SA011003Dao.updateEnaIpgumDtl(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return updateCnt;
+	}	
+	
 	
 }

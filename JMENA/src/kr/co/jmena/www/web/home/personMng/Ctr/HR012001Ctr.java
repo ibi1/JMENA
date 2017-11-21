@@ -124,9 +124,9 @@ public class HR012001Ctr {
 						vo2.setO_RETIREDATE(request.getParameter(lst2.get(j).getO_RETIREDATE()));
 						
 						List<HR012001VO> lst3 = HR012001Biz.selectListHR012001_3(vo2);
-						if(lst2.size() > 0){
+						if(lst3.size() > 0){
 							
-							obj.put("O_SELLAMT",lst3.get(j).getO_SELLAMT());
+							obj.put("O_SELLAMT",lst3.get(0).getO_SELLAMT());
 							
 						}else{
 							obj.put("O_SELLAMT","");

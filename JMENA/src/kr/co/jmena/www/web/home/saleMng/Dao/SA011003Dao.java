@@ -2,6 +2,7 @@ package kr.co.jmena.www.web.home.saleMng.Dao;
 
 import java.util.List;
 
+import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
 import kr.co.jmena.www.web.home.saleMng.Vo.SA011003VO;
 
 import org.apache.log4j.Logger;
@@ -28,5 +29,43 @@ public class SA011003Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}
+
+	public int selectOneEnaIpgumMst(SA011003VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectOneEnaIpgumMst", vo);
+			
+		return cnt;
+	}
+	
+	public int insertEnaIpgumMst(SA011003VO vo) throws DataAccessException {
+		int insertCnt = 0;
+		
+		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaIpgumMst", vo);
+		
+		return insertCnt;
+	}	
+	
+	public int updateEnaIpgumMst(SA011003VO vo) throws DataAccessException {
+		int updateCnt = 0;
+		
+		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaIpgumMst", vo);
+		
+		return updateCnt;
+	}	
+
+	public int insertEnaIpgumDtl(SA011003VO vo) throws DataAccessException {
+		int insertCnt = 0;
+		
+		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaIpgumDtl", vo);
+		
+		return insertCnt;
+	}	
+	
+	public int updateEnaIpgumDtl(SA011003VO vo) throws DataAccessException {
+		int updateCnt = 0;
+		
+		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaIpgumDtl", vo);
+		
+		return updateCnt;
+	}	
 	
 }

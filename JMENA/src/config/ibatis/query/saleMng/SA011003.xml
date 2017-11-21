@@ -45,26 +45,138 @@
 		<isNotEmpty property="IPGUMID">
 			and t1.ipgumid = #IPGUMID#
 		</isNotEmpty>
-		<isNotEmpty property="SL_KNAME">
+		<isNotEqual property="SL_KNAME" compareValue="ALL">		
 			and t1.salercd = #SL_KNAME#
-		</isNotEmpty>
+		</isNotEqual>
 		<isNotEmpty property="SL_IPGUMDATE_FR">
 			<isNotEmpty property="SL_IPGUMDATE_TO">
 				and t1.ipgumdate between #SL_IPGUMDATE_FR# and #SL_IPGUMDATE_TO# 
 			</isNotEmpty>
 		</isNotEmpty>
-		<isNotEmpty property="SL_IPGUMGUBUN">
+		<isNotEqual property="SL_IPGUMGUBUN" compareValue="ALL">		
 			and t1.ipgumgubun = #SL_IPGUMGUBUN#
-		</isNotEmpty>
-		<isNotEmpty property="SL_BANKGUBUN">
+		</isNotEqual>
+		<isNotEqual property="SL_BANKGUBUN" compareValue="ALL">		
 			and t1.bankgubun = #SL_BANKGUBUN#
-		</isNotEmpty>
+		</isNotEqual>
 		<isNotEmpty property="SL_IPGUMAMT">
 			and t1.ipgumamt like '%#SL_IPGUMAMT#%'
 		</isNotEmpty>
 		order by t1.ipgumid asc
 
 	</select>
+
+	<select id="selectOneEnaIpgumMst" resultClass="java.lang.Integer">
+		select
+			COUNT(t1.IPGUMID) AS CNT
+		from sa_ipgummst t1
+		where 1=1
+		and t1.ipgumid = #IPGUMID#
+
+	</select>
 	
+
+	<insert id="insertEnaIpgumMst">
+		INSERT INTO sa_ipgummst
+		(
+			IPGUMID,
+			IPGUMDATE,
+			IPGUMTYPE,
+			IPGUMGUBUN,
+			BANKGUBUN,
+			IPGUMAMT,
+			IPGUMPERSON,
+			BRANCHCODE,
+			SALERCD,
+			ADDRESS,
+			CONNAME,
+			CONPY,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			(select concat(date_format(curdate( ), '%y%m'), LPAD(right(ifnull(max(IPGUMID), 0),4) + 1, 4, '0'))
+  			   from sa_ipgummst b
+ 			  where left(IPGUMID,4) =  date_format(curdate( ),'%y%m')),
+			#IPGUMDATE#,
+			#IPGUMTYPE#,
+			#IPGUMGUBUN#,
+			#BANKGUBUN#,
+			#IPGUMAMT#,
+			#IPGUMPERSON#,
+			#BRANCHNAME#,
+			#KNAME#,
+			#ADDRESS#,
+			#CONNAME#,
+			#CONPY#,
+			#REMARK#,
+			#USERID#,
+			NOW()
+			
+		)
+	</insert>
+
+	
+	<update id="updateEnaIpgumMst">
+		UPDATE sa_ipgummst
+		SET
+			IPGUMDATE = #IPGUMDATE#,
+			IPGUMTYPE = #IPGUMTYPE#,
+			IPGUMGUBUN = #IPGUMGUBUN#,
+			BANKGUBUN = #BANKGUBUN#,
+			IPGUMAMT = #IPGUMAMT#,
+			IPGUMPERSON = #IPGUMPERSON#,
+			BRANCHCODE = #BRANCHNAME#,
+			SALERCD = #SALERCD#,
+			ADDRESS = #KNAME#,
+			CONNAME = #CONNAME#,
+			CONPY = #CONPY#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE =  NOW()
+		WHERE IPGUMID = #IPGUMID#
+	</update>
+
+
+	<insert id="insertEnaIpgumDtl">
+		INSERT INTO sa_ipgumdtl
+		(
+			IPGUMID,
+			SEQ,
+			IPGUMSEQ,
+			SUGUMAMT,
+			REMARK,
+			INSERTUSER,
+			INSERTDATE
+		)
+		VALUES(
+			#IPGUMID#
+			(SELECT IFNULL(MAX(SEQ),0) +1 FROM sa_ipgumdtl s WHERE IPGUMID = #IPGUMID#),
+			#IPGUMSEQ#,
+			#SUGUMAMT#,
+			#REMARK#,
+			#USERID#,
+			NOW()
+			
+		)
+	</insert>
+
+	
+	<update id="updateEnaIpgumDtl">
+		UPDATE sa_ipgumdtl
+		SET
+			SALEID = #SALEID#,
+			IPGUMSEQ = #IPGUMSEQ#,
+			SUGUMAMT = #SUGUMAMT#,
+			REMARK = #REMARK#,
+			UPDATEUSER = #USERID#,
+			UPDATEDATE =  NOW()
+		WHERE IPGUMID = #IPGUMID#
+		AND SEQ = #SEQ#
+	</update>
+
+
+
 
 </sqlMap>
