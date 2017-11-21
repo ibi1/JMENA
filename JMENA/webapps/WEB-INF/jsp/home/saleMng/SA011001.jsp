@@ -14,19 +14,27 @@
 		var v_rightLastSel_2 = 0;		//오른쪽 그리드 선택 tab2
 		var v_rightLastSel_3 = 0;		//오른쪽 그리드 선택 tab3
 	
+		function addZero(n) {
+			return n < 10 ? "0" + n : n;
+		}
+		
+		function dateInput(n) {
+			var date = new Date();
+			
+			date.setMonth(date.getMonth() - n);
+			
+			var yyyy = date.getFullYear();
+			var mm = date.getMonth() + 1;
+			var dd = date.getDate();
+			
+			return yyyy + "-" + addZero(mm) + "-" + addZero(dd);
+		}
+		
 		$(document).ready(function(){
 			$("#S_FLAG_L").val("I");
 			
-			var dt = new Date();
-
-			// Display the month, day, and year. getMonth() returns a 0-based number.
-			var month = dt.getMonth()+1;
-			var day = dt.getDate();
-			var year = dt.getFullYear();
-			var today = year + "-" + month + "-" + day;
-			
-			$("#SL_SALEDATE_FR").val(year + "-01-01");
-			$("#SL_SALEDATE_TO").val(today);
+			$("#SL_SALEDATE_FR").val(dateInput(3));
+			$("#SL_SALEDATE_TO").val(dateInput(0));
 			
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -51,16 +59,19 @@
 	
 			$('#bottomTabs').jqxTabs({theme: 'bootstrap', autoHeight: false, width: 1200});
 			
-			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-			$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
-			$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-			$("#BUYM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-			$("#JANM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-			$("#BUYPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-			$("#JANPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+			$("#searchPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			$("#searchManageNoPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			
+			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});
+			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true });
+			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1, disabled: true});
+			$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
+			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
+			$("#CONBM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
+			$("#CONJM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
+			$("#CONBPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
+			$("#CONJPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#CONJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#CONADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
@@ -75,6 +86,8 @@
 			$("#SELLAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});		
+			
+			$("#CITYCODE").attr("disabled", true);
 			
 			f_selectListEnaDCode();
 			f_selectListEnaCityCode();
@@ -212,7 +225,7 @@
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
-				colNames:['판매번호', '매출일자', 
+				colNames:['계약번호', '계약일자', 
 				          '관리번호', '지역구분', '지사구분', '주소', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
 				          '매출구분', '담당자', '매입번호', '게약자성명', '게약자주민번호', '계약자주소', 
 				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '위탁수수료', 
@@ -275,10 +288,39 @@
 					var selRowData = $(this).jqGrid('getRowData', ids);
 					
 					//값 채우기 넣기
+					$("#SALEDATE").val(selRowData.SALEDATE);
+					$("#SALEID").val(selRowData.SALEID);
+					$("#SALEGUBUN").val(selRowData.SALEGUBUN);
+					$("#SALERCD").val(selRowData.SALERCD);
+					$("#BRANCHNAME").val(selRowData.BRANCHCODE);
+					$("#MANAGENO").val(selRowData.MANAGENO);
+					$("#CITYCODE").val(selRowData.CITYCODE);
+					$("#ADDRESS").val(selRowData.ADDRESS);
+					$("#OWNERNAME").val(selRowData.OWNERNAME);
+					$("#OWNERJUMINID").val(selRowData.OWNERJUMINID);
+					$("#CONBM2").val(selRowData.CONBM2);
+					$("#CONJM2").val(selRowData.CONJM2);
+					$("#CONBPY").val(selRowData.CONBPY);
+					$("#CONJPY").val(selRowData.CONJPY);
+					$("#CONNAME").val(selRowData.CONNAME);
+					$("#CONJUMINID").val(selRowData.CONJUMINID);
+					$("#CONADDRESS").val(selRowData.CONADDRESS);
+					$("#CONTELNO").val(selRowData.CONTELNO);
+					$("#CONM2").val(selRowData.CONM2);
+					$("#CONPY").val(selRowData.CONPY);
+					$("#SALEAMT").val(selRowData.SALEAMT);
+					$("#SALEDANGA").val(selRowData.SALEDANGA);
+					$("#AGENCYAMT").val(selRowData.AGENCYAMT);
+					$("#DCGUBUN").val(selRowData.DCGUBUN);
+					$("#DCRATE").val(selRowData.DCRATE);
+					$("#DCAMT").val(selRowData.DCAMT);
+					$("#SELLAMT").val(selRowData.SELLAMT);
+					$("#REMARK").val(selRowData.REMARK);
 					
 					if (selRowData.SALEGUBUN == "001") {	//일반
-
+						$("#AGENCYAMT").jqxInput({ disabled: true });
 					} else { //위탁
+						$("#AGENCYAMT").jqxInput({ disabled: false });
 					}
 					
 					//f_selectListEnaPayScheduleTb(selRowData.BUYID);
@@ -417,6 +459,258 @@
 				hidegrid: false ,
 			});
 		}
+		
+		function f_clear(dF) {
+			if (dF == "Y") $("#SALEDATE").val("");
+
+			$("#SALEID").val("");
+			$("#SALEGUBUN").change();
+			$("#SALERCD").change();
+			$("#BRANCHNAME").change();
+			$("#MANAGENO").val("");
+			$("#CITYCODE").change();
+			$("#ADDRESS").val("");
+			$("#OWNERNAME").val("");
+			$("#OWNERJUMINID").val("");
+			$("#CONBM2").val("");
+			$("#CONJM2").val("");
+			$("#CONBPY").val("");
+			$("#CONJPY").val("");
+			$("#CONNAME").val("");
+			$("#CONJUMINID").val("");
+			$("#CONADDRESS").val("");
+			$("#CONTELNO").val("");
+			$("#CONM2").val("");
+			$("#CONPY").val("");
+			$("#SALEAMT").val("");
+			$("#SALEDANGA").val("");
+			$("#AGENCYAMT").val("");
+			$("#DCGUBUN").change();
+			$("#DCRATE").val("");
+			$("#DCAMT").val("");
+			$("#SELLAMT").val("");
+			$("#REMARK").val("");
+			
+			$('#bottomList1').jqGrid('clearGridData');
+			$('#bottomList2').jqGrid('clearGridData');
+			$('#bottomList3').jqGrid('clearGridData');
+		}
+		
+		$(function() {
+			$("#selectButton").click(function(){
+				$("#S_FLAG_L").val("U");
+				
+				f_clear("Y");
+				
+				f_selectListEnaSaleMst();
+			});
+		})
+		
+		function f_selectButton() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#selectButton").click();
+			}
+		}
+		
+		$(function() {
+			$("#insertButton").click(function() {
+				$("#S_FLAG_L").val("I");
+				
+				f_clear("Y");
+				
+				f_selectListEnaSaleMst();
+				
+				$("#SALEDATE").focus();
+			});
+		})
+		
+		$(function() {
+			$("#deleteButton").click(function() {
+				if ($("#S_FLAG_L").val() == "I") {
+					alert("데이터를 추가 중 일 경우 삭제 할 수 없습니다.");
+					
+					return false;
+				}
+				
+				if (confirm("삭제하시겠습니까?") == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: "SALEID=" + $("#SALEID").val(),
+						url: "/home/deleteDataSaleMst.do", 
+						dataType : 'json' , 
+						success: function(data){
+							alert(data.resultMsg);
+							
+							$("#selectButton").click();
+						},
+						error:function(e){  
+							alert("[ERROR]매출관리 삭제  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
+		
+		$(function() {
+			$("#saveButton").click(function() {
+				if ($("#SALEDATE").val() == "") {
+					alert("계약일자를 입력하셔야 합니다.");
+					
+					$("#SALEDATE").focus();
+					return false;
+				}
+
+				if ($("#CONNAME").val() == "") {
+					alert("계약자 성명을 입력하셔야 합니다.");
+					
+					$("#CONNAME").focus();
+					return false;
+				}
+				
+				if ($("#CONJUMINID").val() == "") {
+					alert("계약자 주민번호를 입력하셔야 합니다.");
+					
+					$("#CONJUMINID").focus();
+					return false;
+				}
+				
+				if ($("#CONM2").val() == "") {
+					alert("계약면적을 입력하셔야 합니다.");
+					
+					$("#CONM2").focus();
+					return false;
+				}
+				
+				if ($("#CONPY").val() == "") {
+					alert("계약평수를 입력하셔야 합니다.");
+					
+					$("#CONPY").focus();
+					return false;
+				}
+				
+				if ($("#SALEAMT").val() == "") {
+					alert("매매대금을 입력하셔야 합니다.");
+					
+					$("#SALEAMT").focus();
+					return false;
+				}
+				
+				if ($("#SALEDANGA").val() == "") {
+					alert("매매단가를 입력하셔야 합니다.");
+					
+					$("#SALEDANGA").focus();
+					return false;
+				}
+				
+				if ($("#SALEDANGA").val() == "") {
+					alert("매매단가를 입력하셔야 합니다.");
+					
+					$("#SALEDANGA").focus();
+					return false;
+				}
+				
+				//매출구분이 위탁일 경우
+				if ($("#SALEGUBUN").val() == "002") {
+					if ($("#AGENCYAMT").val() == "") {
+						alert("위탁수수료를 입력하셔야 합니다.");
+						
+						$("#AGENCYAMT").focus();
+						return false;
+					}
+				}
+				
+				if ($("#DCAMT").val() == "") {
+					alert("DC금액을 입력하셔야 합니다.");
+					
+					$("#DCAMT").focus();
+					return false;
+				}
+				
+				if ($("#DCAMT").val() == "") {
+					alert("DC금액을 입력하셔야 합니다.");
+					
+					$("#DCAMT").focus();
+					return false;
+				}
+				
+				if ($("#SELLAMT").val() == "") {
+					alert("실 판매가를 입력하셔야 합니다.");
+					
+					$("#SELLAMT").focus();
+					return false;
+				}
+				
+				var msg = "";
+				if ($("#S_FLAG_L").val() == "I") {
+					msg = "저장하시겠습니까?";
+				} else {
+					msg = "수정하시겠습니까?"
+				}
+				if (confirm(msg) == true) {
+					$('#SALEID').jqxInput({disabled: false });
+					
+					$.ajax({ 
+						type: 'POST' ,
+						data: $("#SA011001").serialize(),
+						url: "/home/insertDataSaleMst.do", 
+						dataType : 'json' , 
+						success: function(data){
+							$('#SALEID').jqxInput({disabled: true });
+							alert(data.resultMsg);
+							
+							if (data.resultCode == "SUCCESS") {
+								f_selectListEnaBuyMst();
+							} else {
+								$("#SALEDATE").focus();
+							}
+						},
+						error:function(e){  
+							alert("[ERROR]매출관리 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
+		
+		function f_saveButton() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#saveButton").click();
+			}
+		}
+		
+		$(function() {
+			$("#searchPopButton").click(function() {
+				var saleDate = $("#SALEDATE").val();
+				
+				if (saleDate == "") {
+					alert("계약일자를 입력하셔야 합니다.");
+					
+					$("#SALEDATE").focus();
+					return false;
+				}
+				
+				//팝업
+				alert("팝업 준비중...");
+			});
+		})
+		
+		$(function() {
+			$("#searchManageNoPopButton").click(function() {
+				if ($("#S_FLAG_L").val() != "I") {
+					alert("추가 시에만 검색할 수 있습니다.");
+					
+					return false;
+				}
+				
+				//팝업
+				alert("팝업 준비중...");
+			});
+		})
+		
+		
+		
 	</script>
 </head>
 <body>
@@ -447,7 +741,7 @@
 				</tr>
 				<tr>
 					<th width="120">지번(주소)</th>
-					<td><input type="text" id="SL_ADDRESS" name="SL_ADDRESS" /></td>
+					<td><input type="text" id="SL_ADDRESS" name="SL_ADDRESS" onkeydown="f_selectButton();"/></td>
 				</tr>
 			</table>
 			<table id="leftList"></table>
@@ -456,18 +750,19 @@
 			<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
 			<table >
 				<tr>
-					<th width="120">계약일자/번호</th>
+					<th width="120">* 계약일자/번호</th>
 					<td colspan="3"><input type="text" id="SALEDATE" name="SALEDATE" /><input type="text" id="SALEID" name="SALEID" /></td>
+					<td><input type="button" id="searchPopButton"/></td>
 				</tr>
 				<tr>
-					<th width="120">매출구분</th>
+					<th width="120">* 매출구분</th>
 					<td colspan="3">
 						<select id="SALEGUBUN" name="SALEGUBUN">
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th width="120">담당자</th>
+					<th width="120">* 담당자</th>
 					<td>
 						<select id="SALERCD" name="SALERCD">
 						</select>
@@ -481,6 +776,7 @@
 				<tr>
 					<th width="120">관리번호</th>
 					<td><input type="text" id="MANAGENO" name="MANAGENO" /></td>
+					<td><input type="button" id="searchManageNoPopButton"/></td>
 					<th width="120">지역구분</th>
 					<td>
 						<select id="CITYCODE" name="CITYCODE">
@@ -499,9 +795,9 @@
 				</tr>
 				<tr>
 					<th width="120">분양/잔여면적</th>
-					<td><input type="text" id="BUYM2" name="BUYM2" /> / <input type="text" id="JANM2" name="JANM2" /></td>
+					<td><input type="text" id="CONBM2" name="CONBM2" /> / <input type="text" id="CONJM2" name="CONJM2" /></td>
 					<th width="120">분양/잔여평수</th>
-					<td><input type="text" id="BUYPY" name="BUYPY" /> / <input type="text" id="JANPY" name="JANPY" /></td>
+					<td><input type="text" id="CONBPY" name="CONBPY" /> / <input type="text" id="CONJPY" name="CONJPY" /></td>
 				</tr>
 				<tr>
 					<th width="120">계약자 성명</th>
@@ -551,7 +847,7 @@
 				</tr>
 				<tr>
 					<th width="120">비고</th>
-					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
+					<td colspan="3"><input type="text" id="REMARK" name="REMARK" onkeydown="f_saveButton();"/></td>
 				</tr>
 			</table>
 		</div>

@@ -13,20 +13,28 @@
 	<script type="text/javascript">
 		var v_rightLastSel_1 = 0;		//오른쪽 그리드 선택 tab1
 		var v_rightLastSel_2 = 0;		//오른쪽 그리드 선택 tab2
-	
+		
+		function addZero(n) {
+			return n < 10 ? "0" + n : n;
+		}
+		
+		function dateInput(n) {
+			var date = new Date();
+			
+			date.setMonth(date.getMonth() - n);
+			
+			var yyyy = date.getFullYear();
+			var mm = date.getMonth() + 1;
+			var dd = date.getDate();
+			
+			return yyyy + "-" + addZero(mm) + "-" + addZero(dd);
+		}
+		
 		$(document).ready(function(){
 			$("#S_FLAG_L").val("I");
 			
-			var dt = new Date();
-
-			// Display the month, day, and year. getMonth() returns a 0-based number.
-			var month = dt.getMonth()+1;
-			var day = dt.getDate();
-			var year = dt.getFullYear();
-			var today = year + "-" + month + "-" + day;
-			
-			$("#LS_BUYDATE_FR").val(year + "-01-01");
-			$("#LS_BUYDATE_TO").val(today);
+			$("#LS_BUYDATE_FR").val(dateInput(3));
+			$("#LS_BUYDATE_TO").val(dateInput(0));
 			
 			$('#bottomTabs').jqxTabs({theme: 'bootstrap', autoHeight: false, width: 680});
 			
@@ -667,6 +675,13 @@
 			});
 		})
 		
+		function f_saveButton() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13) {
+				$("#saveButton").click();
+			}
+		}
+		
 		$(function() {
 			$("#searchButton").click(function() {
 				var buyDate = $("#BUYDATE").val();
@@ -1098,7 +1113,7 @@
 				</tr>
 				<tr>
 					<th width="120">비고</th>
-					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
+					<td colspan="3"><input type="text" id="REMARK" name="REMARK" onkeydown="f_saveButton();"/></td>
 				</tr>
 			</table>
 			</form>

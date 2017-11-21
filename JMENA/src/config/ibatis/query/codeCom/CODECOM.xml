@@ -126,7 +126,7 @@
 		  AND BRANCHCODE = #BRANCHCODE#
 		</isNotEmpty>
 		
-		ORDER BY INSACODE
+		ORDER BY KNAME
 	</select>
 	
 </sqlMap>
