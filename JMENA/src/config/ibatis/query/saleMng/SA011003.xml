@@ -23,6 +23,23 @@
 		<result property="REMARK" 		column="REMARK"/>
 	</resultMap>
 
+	<resultMap id="SA011003Data2" class="SA011003VO">
+		<result property="SALEID" 			column="SALEID"/>
+		<result property="SALEDATE" 		column="SALEDATE"/>
+		<result property="SALEGUBUN" 		column="SALEGUBUN"/>
+		<result property="CONNAME" 			column="CONNAME"/>
+		<result property="CONTELNO" 		column="CONTELNO"/>
+		<result property="CONADDRESS" 		column="CONADDRESS"/>
+		<result property="CONM2" 			column="CONM2"/>
+		<result property="CONPY" 			column="CONPY"/>
+		<result property="SELLAMT" 			column="SELLAMT"/>
+		<result property="DEPOSITGUBUN" 	column="DEPOSITGUBUN"/>
+		<result property="DEPOSITDATE" 		column="DEPOSITDATE"/>
+		<result property="DEPOSITAMT" 		column="DEPOSITAMT"/>
+		<result property="SUGUMAMT" 		column="SUGUMAMT"/>
+	</resultMap>
+
+
 	<select id="selectListEnaIpgumMst" resultMap="SA011003Data">
 		select 
 			t1.ipgumdate,
@@ -34,8 +51,8 @@
 			t1.ipgumamt,
 			(select sum(sugumamt) from sa_ipgumdtl where ipgumid = t1.ipgumid) as sugumamt,
 			(t1.ipgumamt - (select sum(sugumamt) from sa_ipgumdtl where ipgumid = t1.ipgumid)) as janamt,
-			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname,
-			(select kname from hr_insamst where insacode = t1.salercd) as kname,
+			t1.branchcode as branchname,
+			t1.salercd as kname,
 			t1.address,
 			t1.conname,
 			t1.conpy,
@@ -66,6 +83,28 @@
 
 	</select>
 
+	<select id="selectListEnaIpgumDtl" resultMap="SA011003Data2">
+		select 
+			saleid
+			,(select saledate from sa_salemst where 1=1 and saleid = t2.saleid) as saledate
+			,(select salegubun from sa_salemst where 1=1 and saleid = t2.saleid) as salegubun
+			,(select conname from sa_salemst where 1=1 and saleid = t2.saleid) as conname
+			,(select contelno from sa_salemst where 1=1 and saleid = t2.saleid) as contelno
+			,(select conaddress from sa_salemst where 1=1 and saleid = t2.saleid) as conaddress
+			,(select conm2 from sa_salemst where 1=1 and saleid = t2.saleid) as conm2
+			,(select conpy from sa_salemst where 1=1 and saleid = t2.saleid) as conpy
+			,(select sellamt from sa_saledtl where 1=1 and saleid = t2.saleid) as sellamt
+			,(select depositgubun from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositgubun
+			,(select depositdate from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositdate
+			,(select depositamt from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositamt
+			,t2.sugumamt
+		from sa_ipgummst t1, sa_ipgumdtl t2
+		where 1=1
+		and t1.ipgumid = #IPGUMID#
+		and t1.ipgumid = t2.ipgumid
+
+	</select>
+
 	<select id="selectOneEnaIpgumMst" resultClass="java.lang.Integer">
 		select
 			COUNT(t1.IPGUMID) AS CNT
@@ -90,7 +129,9 @@
 			SALERCD,
 			ADDRESS,
 			CONNAME,
+		<isNotEmpty property="CONPY">
 			CONPY,
+		</isNotEmpty>
 			REMARK,
 			INSERTUSER,
 			INSERTDATE
@@ -109,7 +150,9 @@
 			#KNAME#,
 			#ADDRESS#,
 			#CONNAME#,
+		<isNotEmpty property="CONPY">
 			#CONPY#,
+		</isNotEmpty>
 			#REMARK#,
 			#USERID#,
 			NOW()
@@ -131,7 +174,9 @@
 			SALERCD = #SALERCD#,
 			ADDRESS = #KNAME#,
 			CONNAME = #CONNAME#,
+		<isNotEmpty property="CONPY">
 			CONPY = #CONPY#,
+		</isNotEmpty>
 			REMARK = #REMARK#,
 			UPDATEUSER = #USERID#,
 			UPDATEDATE =  NOW()

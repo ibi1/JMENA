@@ -32,6 +32,18 @@ public class SA011003Biz {
 		return lst;
 	}
 
+	public List<SA011003VO> selectListEnaIpgumDtl(SA011003VO vo) throws Exception {
+		List<SA011003VO> lst = null;
+
+		try {
+			lst = SA011003Dao.selectListEnaIpgumDtl(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+	
 	public int selectOneEnaIpgumMst(SA011003VO vo) throws Exception {
 		int cnt = 0;
 		

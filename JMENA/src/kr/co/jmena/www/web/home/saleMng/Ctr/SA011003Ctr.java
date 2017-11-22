@@ -31,7 +31,7 @@ public class SA011003Ctr {
 	public SA011003Ctr() {}
 	
 	/**
-	 * @name 매출관리 화면
+	 * @name 입금관리 화면
 	 * @param request
 	 * @param response
 	 * @return
@@ -44,7 +44,7 @@ public class SA011003Ctr {
 	}
 	
 	/**
-	 * @name 매출관리 화면
+	 * @name 입금관리 화면
 	 * @param request
 	 * @param response
 	 * @return
@@ -124,7 +124,7 @@ public class SA011003Ctr {
 	}
 
 	/**
-	 * @name 매출관리 화면
+	 * @name 입금관리 화면
 	 * @param request
 	 * @param response
 	 * @return
@@ -134,17 +134,9 @@ public class SA011003Ctr {
 	public ModelAndView selectListEnaIpgumDtl(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA011003VO vo = new SA011003VO();
 
-		vo.setSL_IPGUMID(request.getParameter("SL_IPGUMID"));
+		vo.setIPGUMID(request.getParameter("IPGUMID"));
 		
-		vo.setSL_IPGUMDATE_FR(request.getParameter("SL_IPGUMDATE_FR"));
-		vo.setSL_IPGUMDATE_TO(request.getParameter("SL_IPGUMDATE_TO"));
-		vo.setSL_KNAME(request.getParameter("SL_KNAME"));
-		vo.setSL_IPGUMGUBUN(request.getParameter("SL_IPGUMGUBUN"));
-		vo.setSL_BANKGUBUN(request.getParameter("SL_BANKGUBUN"));
-		vo.setSL_IPGUMAMT(request.getParameter("SL_IPGUMAMT"));
-		
-		
-		List<SA011003VO> lst = SA011003Biz.selectListEnaIpgumMst(vo);
+		List<SA011003VO> lst = SA011003Biz.selectListEnaIpgumDtl(vo);
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
@@ -154,43 +146,38 @@ public class SA011003Ctr {
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
 				
-				obj.put("IPGUMDATE", lst.get(i).getIPGUMDATE());
-				obj.put("IPGUMID", lst.get(i).getIPGUMID());
-				obj.put("IPGUMTYPE", lst.get(i).getIPGUMTYPE());
-				obj.put("IPGUMGUBUN", lst.get(i).getIPGUMGUBUN());
-				obj.put("BANKGUBUN", lst.get(i).getBANKGUBUN());
-				obj.put("IPGUMPERSON", lst.get(i).getIPGUMPERSON());
-				obj.put("IPGUMAMT", lst.get(i).getIPGUMAMT());
-				obj.put("SUGUMAMT", lst.get(i).getSUGUMAMT());
-				obj.put("JANAMT", lst.get(i).getJANAMT());
-				obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
-				obj.put("KNAME", lst.get(i).getKNAME());
-				obj.put("ADDRESS", lst.get(i).getADDRESS());
+				obj.put("SALEID", lst.get(i).getSALEID());
+				obj.put("SALEDATE", lst.get(i).getSALEDATE());
+				obj.put("SALEGUBUN", lst.get(i).getSALEGUBUN());
 				obj.put("CONNAME", lst.get(i).getCONNAME());
+				obj.put("CONTELNO", lst.get(i).getCONTELNO());
+				obj.put("CONADDRESS", lst.get(i).getCONADDRESS());
+				obj.put("CONM2", lst.get(i).getCONM2());
 				obj.put("CONPY", lst.get(i).getCONPY());
-				obj.put("REMARK", lst.get(i).getREMARK());
-				
+				obj.put("SELLAMT", lst.get(i).getSELLAMT());
+				obj.put("DEPOSITGUBUN", lst.get(i).getDEPOSITGUBUN());
+				obj.put("DEPOSITDATE", lst.get(i).getDEPOSITDATE());
+				obj.put("DEPOSITAMT", lst.get(i).getDEPOSITAMT());
+				obj.put("SUGUMAMT", lst.get(i).getSUGUMAMT());
 				
 				jCell.add(obj);
 			}
 		}else{
 			JSONObject obj = new JSONObject();
 			
-			obj.put("IPGUMDATE", "");
-			obj.put("IPGUMID", "");
-			obj.put("IPGUMTYPE", "");
-			obj.put("IPGUMGUBUN", "");
-			obj.put("BANKGUBUN", "");
-			obj.put("IPGUMPERSON", "");
-			obj.put("IPGUMAMT", "");
-			obj.put("SUGUMAMT", "");
-			obj.put("JANAMT", "");
-			obj.put("BRANCHNAME", "");
-			obj.put("KNAME", "");
-			obj.put("ADDRESS", "");
+			obj.put("SALEID", "");
+			obj.put("SALEDATE", "");
+			obj.put("SALEGUBUN", "");
 			obj.put("CONNAME", "");
+			obj.put("CONTELNO", "");
+			obj.put("CONADDRESS", "");
+			obj.put("CONM2", "");
 			obj.put("CONPY", "");
-			obj.put("REMARK", "");
+			obj.put("SELLAMT", "");
+			obj.put("DEPOSITGUBUN", "");
+			obj.put("DEPOSITDATE", "");
+			obj.put("DEPOSITAMT", "");
+			obj.put("SUGUMAMT", "");
 			
 			jCell.add(obj);
 			

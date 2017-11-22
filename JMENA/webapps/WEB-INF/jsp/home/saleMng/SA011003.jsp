@@ -264,7 +264,10 @@
 				SL_IPGUMAMT : $("#SL_IPGUMAMT").val()
 			},
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['입금번호', '입금일자', '입금인', '입금금액', '입금구분', '입금처리금액', '미처리잔액'] ,
+			colNames:['입금번호', '입금일자', '입금인', '입금금액', '입금구분',
+			          '입금처리금액', '미처리잔액',
+			          '입금형태', '입금은행', '지사', '담당자', '소재지', '계약자', '평수', '비고'
+			          ] ,
 			colModel:[
 				{name:"IPGUMID",		index:'IPGUMID',		width:100,		align:'center', hidden:true}
 				,{name:"IPGUMDATE",		index:'IPGUMDATE',		width:100,		align:'center'}
@@ -273,6 +276,16 @@
 				,{name:"IPGUMGUBUN",	index:'IPGUMGUBUN',		width:100,		align:'center'}
 				,{name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center'}
 				,{name:"JANAMT",		index:'JANAMT',			width:100,		align:'center'}
+				
+				,{name:"IPGUMTYPE",		index:'IPGUMTYPE',	width:100,	align:'center', hidden:true}
+				,{name:"BANKGUBUN",		index:'BANKGUBUN',	width:100,	align:'center', hidden:true}
+				,{name:"BRANCHNAME",	index:'BRANCHNAME',	width:100,	align:'center', hidden:true}
+				,{name:"KNAME",			index:'KNAME',		width:100,	align:'center', hidden:true}
+				,{name:"ADDRESS",		index:'ADDRESS',	width:100,	align:'center', hidden:true}
+				,{name:"CONNAME",		index:'CONNAME',	width:100,	align:'center', hidden:true}
+				,{name:"CONPY",			index:'CONPY',		width:100,	align:'center', hidden:true}
+				,{name:"REMARK",		index:'REMARK',		width:100,	align:'center', hidden:true}
+
 			] ,
 			rowNum:100,
 			autowidth: true ,
@@ -289,7 +302,30 @@
 			onSelectRow: function(ids){
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				var IPGUMID = selRowData.IPGUMID;
-				f_selectListEnaIpgumRDtl(IPGUMID);
+				
+				console.log(selRowData);
+				$("#IPGUMDATE").val(selRowData.IPGUMDATE);
+				$("#IPGUMID").val(selRowData.IPGUMID);
+				
+				$("#IPGUMTYPE").val(selRowData.IPGUMTYPE);
+				$("#IPGUMGUBUN").val(selRowData.IPGUMGUBUN);
+				
+				$("#BANKGUBUN").val(selRowData.BANKGUBUN);
+				
+				$("#IPGUMPERSON").val(selRowData.IPGUMPERSON);
+				$("#IPGUMAMT").val(selRowData.IPGUMAMT);
+				$("#SUGUMAMT").val(selRowData.SUGUMAMT);
+				$("#JANAMT").val(selRowData.JANAMT);
+				
+				$("#BRANCHNAME").val(selRowData.BRANCHNAME);
+				
+				$("#KNAME").val(selRowData.KNAME);
+				
+				$("#ADDRESS").val(selRowData.ADDRESS);
+				$("#CONNAME").val(selRowData.CONNAME);
+				$("#CONPY").val(selRowData.CONPY);
+				$("#REMARK").val(selRowData.REMARK);
+				
 				f_selectListEnaIpgumDtl();
 			} ,
 			hidegrid: false
@@ -306,21 +342,23 @@
 				SL_IPGUMAMT : $("#SL_IPGUMAMT").val()
 			},
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['계약번호', '계약일자', '계약구분', '계약자', '계약자 연락처', '계약건 주소', '계약면적', '계약평수', '계약대금(실판매가)', '입금구분', '입금예정일', '입금예정금액', '처리금액'] ,
+			colNames:['계약번호', '계약일자', '계약구분', '계약자', '계약자 연락처',
+			          '계약자 주소', '계약면적', '계약평수', '계약대금(실판매가)', '입금구분',
+			          '입금예정일', '입금예정금액', '처리금액'] ,
 			colModel:[  
-				{name:"SYSID",			index:'SYSID',		width:100,		align:'center'}
-				, {name:"SYSNAME",		index:'SYSNAME',	width:100,		align:'center'}
-				, {name:"SORTKEY",		index:'SORTKEY',	width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"USEYN",		index:'USEYN',		width:100,		align:'center'}
-				, {name:"REMARK",		index:'REMARK',		width:100,		align:'center'}
+				{name:"SALEID",			index:'SALEID',			width:100,		align:'center'}
+				, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center'}
+				, {name:"SALEGUBUN",	index:'SALEGUBUN',		width:100,		align:'center'}
+				, {name:"CONNAME",		index:'CONNAME',		width:100,		align:'center'}
+				, {name:"CONTELNO",		index:'CONTELNO',		width:100,		align:'center'}
+				, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center'}
+				, {name:"CONM2",		index:'CONM2',			width:100,		align:'center'}
+				, {name:"CONPY",		index:'CONPY',			width:100,		align:'center'}
+				, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center'}
+				, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center'}
+				, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center'}
+				, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'center'}
+				, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center'}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -341,40 +379,6 @@
 		});
 	}
 
-	function f_selectListEnaIpgumRDtl(IPGUMID){
-		$("#SL_IPGUMGUBUN").empty().data('options');
-	   	$.ajax({ 
-			type: 'POST' ,
-			url: "/home/selectListEnaIpgumMst.do", 
-			dataType : 'json' ,
-			data : {
-				SL_IPGUMID : IPGUMID,
-			},
-			success: function(data){
-				data.rows.forEach(function(currentValue, index, array){
-					$("#IPGUMDATE").val(currentValue.IPGUMDATE);
-					$("#IPGUMID").val(currentValue.IPGUMID);
-					$("#IPGUMTYPE").val(currentValue.IPGUMTYPE);
-					$("#IPGUMGUBUN").val(currentValue.IPGUMGUBUN);
-					$("#BANKGUBUN").val(currentValue.BANKGUBUN);
-					$("#IPGUMPERSON").val(currentValue.IPGUMPERSON);
-					$("#IPGUMAMT").val(currentValue.IPGUMAMT);
-					$("#SUGUMAMT").val(currentValue.SUGUMAMT);
-					$("#JANAMT").val(currentValue.JANAMT);
-					$("#BRANCHNAME").val(currentValue.BRANCHNAME);
-					$("#KNAME").val(currentValue.KNAME);
-					$("#ADDRESS").val(currentValue.ADDRESS);
-					$("#CONNAME").val(currentValue.CONNAME);
-					$("#CONPY").val(currentValue.CONPY);
-					$("#REMARK").val(currentValue.REMARK);
-
-				});
-			},
-			error:function(e){  
-				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
-			}  
-		});
-	}
 
 	$(function() {
 		$("#selectButton").click(function() {
@@ -408,7 +412,17 @@
 		
 	})
 	
-		
+	function onEnterSubmit() {
+		var keyCode = window.event.keyCode;
+		var msg = "저장 하시겠습니까?";
+		if(keyCode==13){
+			if (confirm(msg) == true) {
+				$("#saveButton").click();
+			}
+		}
+
+	}
+
 </script>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
@@ -493,37 +507,35 @@
 				</tr>
 				<tr>
 					<th width="120">처리금액</th>
-					<td><input type="text" id="SUGUMAMT" name="SUGUMAMT" /></td>
+					<td><input type="text" id="SUGUMAMT" name="SUGUMAMT" readonly/></td>
 					<th width="120">미처리금액</th>
-					<td><input type="text" id="JANAMT" name="JANAMT" /></td>
+					<td><input type="text" id="JANAMT" name="JANAMT" readonly/></td>
 				</tr>
 				<tr>
 					<th width="120">담당지사</th>
 					<td>
 						<select id="BRANCHNAME" name="BRANCHNAME">
-							<option></option>
 						</select>
 					</td>
 					<th width="120">담당자</th>
 					<td>
 						<select id="KNAME" name="KNAME">
-							<option></option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th width="120">소재지</th>
-					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
+					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS"/></td>
 				</tr>
 				<tr>
 					<th width="120">계약자</th>
-					<td><input type="text" id="CONNAME" name="CONNAME" /></td>
+					<td><input type="text" id="CONNAME" name="CONNAME"/></td>
 					<th width="120">평수</th>
-					<td><input type="text" id="CONPY" name="CONPY" /></td>
+					<td><input type="text" id="CONPY" name="CONPY"/></td>
 				</tr>
 				<tr>
 					<th width="120">비고</th>
-					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
+					<td colspan="3"><input type="text" id="REMARK" name="REMARK" onkeydown="onEnterSubmit();"/></td>
 				</tr>
 			</table>
 			</form>

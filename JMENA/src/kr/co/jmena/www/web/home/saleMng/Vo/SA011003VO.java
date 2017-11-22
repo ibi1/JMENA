@@ -30,6 +30,18 @@ public class SA011003VO {
 	private String USERID;
 	
 	
+	private String SALEID;
+	private String SALEDATE;
+	private String SALEGUBUN;
+	private String CONTELNO;
+	private String CONADDRESS;
+	private String CONM2;
+	private String SELLAMT;
+	private String DEPOSITGUBUN;
+	private String DEPOSITDATE;
+	private String DEPOSITAMT;
+	
+
 	public String getIPGUMID() {
 		return this.IPGUMID;
 	}
@@ -99,7 +111,36 @@ public class SA011003VO {
 	public String getUSERID() {
 		return this.USERID;
 	}
-	
+	public String getSALEID() {
+		return this.SALEID;
+	}
+	public String getSALEDATE() {
+		return this.SALEDATE;
+	}
+	public String getSALEGUBUN() {
+		return this.SALEGUBUN;
+	}
+	public String getCONTELNO() {
+		return this.CONTELNO;
+	}
+	public String getCONADDRESS() {
+		return this.CONADDRESS;
+	}
+	public String getCONM2() {
+		return this.CONM2;
+	}
+	public String getSELLAMT() {
+		return this.SELLAMT;
+	}
+	public String getDEPOSITGUBUN() {
+		return this.DEPOSITGUBUN;
+	}
+	public String getDEPOSITDATE() {
+		return this.DEPOSITDATE;
+	}
+	public String getDEPOSITAMT() {
+		return this.DEPOSITAMT;
+	}
 	
 	public void setIPGUMID(String IPGUMID) {
 		this.IPGUMID = IPGUMID;
@@ -170,6 +211,36 @@ public class SA011003VO {
 	public void setUSERID(String USERID) {
 		this.USERID = USERID;
 	}
+	public void setSALEID(String SALEID) {
+		this.SALEID = SALEID;
+	}
+	public void setSALEDATE(String SALEDATE) {
+		this.SALEDATE = SALEDATE;
+	}
+	public void setSALEGUBUN(String SALEGUBUN) {
+		this.SALEGUBUN = SALEGUBUN;
+	}
+	public void setCONTELNO(String CONTELNO) {
+		this.CONTELNO = CONTELNO;
+	}
+	public void setCONADDRESS(String CONADDRESS) {
+		this.CONADDRESS = CONADDRESS;
+	}
+	public void setCONM2(String cONM2) {
+		this.CONM2 = cONM2;
+	}
+	public void setSELLAMT(String SELLAMT) {
+		this.SELLAMT = SELLAMT;
+	}
+	public void setDEPOSITGUBUN(String DEPOSITGUBUN) {
+		this.DEPOSITGUBUN = DEPOSITGUBUN;
+	}
+	public void setDEPOSITDATE(String DEPOSITDATE) {
+		this.DEPOSITDATE = DEPOSITDATE;
+	}
+	public void setDEPOSITAMT(String DEPOSITAMT) {
+		this.DEPOSITAMT = DEPOSITAMT;
+	}	
 	
 	
 	
