@@ -46,7 +46,7 @@ public class EP011002Ctr {
 	
 	
 	/**
-	 * @name 수당관리 조회 화면
+	 * @name 급여관리 조회 화면
 	 * @param request
 	 * @param response
 	 * @return
@@ -56,13 +56,12 @@ public class EP011002Ctr {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/selectListEnaMonthPayMst.do")
 	public ModelAndView selectListEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		EP011002VO vo = new EP011002VO();			
-		
-//		String s_branchcode = request.getParameter("S_BRANCHCODE") != null ? request.getParameter("S_BRANCHCODE") : ""; 
-//		String s_deptcode = request.getParameter("S_DEPTCODE") != null ? request.getParameter("S_DEPTCODE") : ""; 
-		
-//		vo.setS_BRANCHCODE(s_branchcode);
-//		vo.setS_DEPTCODE(s_deptcode);
+		EP011002VO vo = new EP011002VO();		
+ 
+		vo.setS_YEARMONTH(request.getParameter("S_YEARMONTH"));
+		vo.setS_PAYDATE(request.getParameter("S_PAYDATE"));
+		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
+		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
 		
 		List<EP011002VO> lst = EP011002Biz.selectListEnaMonthPayMst(vo);
 		
@@ -134,7 +133,67 @@ public class EP011002Ctr {
 	
 	}
 
-	
+	/**
+	 * @name 급여관리 생성
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/selectListEnaMonthPayMstCrt.do")
+	public ModelAndView selectListEnaMonthPayMstCrt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		EP011002VO vo = new EP011002VO();		
+ 
+		vo.setS_YEARMONTH(request.getParameter("S_YEARMONTH"));
+		vo.setS_PAYDATE(request.getParameter("S_PAYDATE"));
+		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
+		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
+		
+		List<EP011002VO> lst = EP011002Biz.selectListEnaMonthPayMstCrt(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		
+		if(lst.size() > 0){
+			
+			for (int i = 0; i < lst.size(); i++) {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("YEARMONTH", lst.get(i).getYEARMONTH());
+				obj.put("PAYDATE", lst.get(i).getPAYDATE());
+				obj.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
+				obj.put("DEPTCODE", lst.get(i).getDEPTCODE());
+				obj.put("GRADE", lst.get(i).getGRADE());
+				obj.put("DUTY", lst.get(i).getDUTY());
+				obj.put("INSACODE", lst.get(i).getINSACODE());
+				obj.put("KNAME", lst.get(i).getKNAME());
+				obj.put("BASICAMT", lst.get(i).getBASICAMT());
+				obj.put("BANKID", lst.get(i).getBANKID());
+				obj.put("ACCTNO", lst.get(i).getACCTNO());
+				obj.put("ACCTOWNER", lst.get(i).getACCTOWNER());
+				obj.put("TAXGUBUN", "");
+				obj.put("ACTAMT", "0");
+				obj.put("PRIZEAMT", "0");
+				obj.put("DAILYAMT", "0");
+				obj.put("TOTALAMT", "0");
+				obj.put("TAXINCOME", "0");
+				obj.put("TAXLOCAL", "0");
+				obj.put("SUPPLYTAX", "0");
+				obj.put("DEDUCTAMT", "0");
+				jCell.add(obj);
+				
+			}
+			json.put("rows", jCell);
+		}
+		System.out.println("json==>"+json.get("rows"));
+		logger.debug("[selectListSY021001]" + json);
+		
+		return new ModelAndView("jsonView", json);
+		
+		}
 	/**
 	 * @name 인사 기본 정보 관리 저장
 	 * @param request
@@ -144,13 +203,16 @@ public class EP011002Ctr {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/updateEnaMonthPayMst.do")
-	public ModelAndView updateEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView saveEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		EP011002VO vo = new EP011002VO();		
 		
-		String IU_Flag = request.getParameter("S_FLAG_B1");
-		int updateCnt = 0;
-		int insertCnt = 0;
+		vo.setS_YEARMONTH(request.getParameter("S_YEARMONTH"));
+		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
+		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
+		
+		EP011002Biz.deleteEnaMonthPayMstAll(vo);
+		int insertCnt =0;
 		
 		vo.setPAYDATE(request.getParameter("PAYDATE"));
 		vo.setYEARMONTH(request.getParameter("YEARMONTH"));
@@ -182,36 +244,49 @@ public class EP011002Ctr {
 		JSONObject json = new JSONObject();		
 
 		JSONObject obj = new JSONObject();
-		
-		if ("I".equals(IU_Flag)) {
-			insertCnt = EP011002Biz.insertEnaMonthPayMst(vo);
-			if(insertCnt > 0){
-				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
-			}			
-		} else if ("U".equals(IU_Flag)) {
-			updateCnt = EP011002Biz.updateEnaMonthPayMst(vo);
-			if(updateCnt > 0){
-				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
-			}
+		if(insertCnt > EP011002Biz.insertEnaMonthPayMst(vo)){
+			obj.put("MSG", "success");
+		}else{
+			obj.put("MSG", "error");
 		}
-
 		jCell.add(obj);
 		json.put("rows", jCell);
-		
-		System.out.println("updateCnt==>"+updateCnt);
-		System.out.println("insertCnt==>"+insertCnt);
 		
 		System.out.println("json==>"+json);
 		
 		return new ModelAndView("jsonView", json);	
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/deleteEnaMonthPayMst.do")
+	public ModelAndView deleteEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		EP011002VO vo = new EP011002VO();
+				
+		vo.setS_YEARMONTH(request.getParameter("S_YEARMONTH"));
+		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
+		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
+		vo.setINSACODE(request.getParameter("INSACODE"));
 		
-	
-			
-	
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (EP011002Biz.deleteEnaMonthPayMst(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteEnaSudangPTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}	
+		
 }

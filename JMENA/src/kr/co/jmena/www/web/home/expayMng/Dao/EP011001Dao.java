@@ -2,10 +2,7 @@ package kr.co.jmena.www.web.home.expayMng.Dao;
 
 import java.util.List;
 
-import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
-import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
-import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;

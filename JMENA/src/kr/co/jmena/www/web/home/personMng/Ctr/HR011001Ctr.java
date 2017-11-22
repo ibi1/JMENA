@@ -213,16 +213,16 @@ public class HR011001Ctr {
 		if(insacode == null || insacode == ""){
 			insertCnt = HR011001Biz.insertEnaInsaMst(vo);
 			if(insertCnt > 0){
-				obj.put("MSG", "success");
+				obj.put("MSG", "SUCCESS");
 			}else{
-				obj.put("MSG", "error");
+				obj.put("MSG", "ERROR");
 			}			
 		}else{
 			updateCnt = HR011001Biz.updateEnaInsaMst(vo);
 			if(updateCnt > 0){
-				obj.put("MSG", "success");
+				obj.put("MSG", "SUCCESS");
 			}else{
-				obj.put("MSG", "error");
+				obj.put("MSG", "ERROR");
 			}
 		}
 
@@ -269,8 +269,8 @@ public class HR011001Ctr {
 			jData.put("APPOINTGUBUN", lst.get(i).getAPPOINTGUBUN());
 			jData.put("APPOINTDATE", lst.get(i).getAPPOINTDATE());
 			jData.put("APPOINTBRANCH", lst.get(i).getBRANCHNAME());
-//			jData.put("APPOINTDEPT", lst.get(i).getDEPTNAME());			
-			jData.put("APPOINTDEPT", lst.get(i).getAPPOINTDEPT());			
+			jData.put("APPOINTDEPT", lst.get(i).getDEPTNAME());			
+//			jData.put("APPOINTDEPT", lst.get(i).getAPPOINTDEPT());			
 			jData.put("GRADE", lst.get(i).getGRADE());
 			jData.put("DUTY", lst.get(i).getDUTY());
 			jData.put("EMPLOYGUBUN", lst.get(i).getEMPLOYGUBUN());
@@ -331,16 +331,16 @@ public class HR011001Ctr {
 		if ("I".equals(IU_Flag)) {
 			insertCnt = HR011001Biz.insertEnaAppointItem(vo);
 			if(insertCnt > 0){
-				obj.put("MSG", "success");
+				obj.put("MSG", "SUCCESS");
 			}else{
-				obj.put("MSG", "error");
+				obj.put("MSG", "ERROR");
 			}	
 		} else if ("U".equals(IU_Flag)) {
 			updateCnt = HR011001Biz.updateEnaAppointItem(vo);
 			if(updateCnt > 0){
-				obj.put("MSG", "success");
+				obj.put("MSG", "SUCCESS");
 			}else{
-				obj.put("MSG", "error");
+				obj.put("MSG", "ERROR");
 			}
 		}
 		
@@ -357,30 +357,31 @@ public class HR011001Ctr {
 	}	
 		
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/deleteEnaAppointItem.do")
 	public ModelAndView deleteEnaAppointItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HR011001VO vo = new HR011001VO();
 		
 		vo.setINSACODE(request.getParameter("INSACODE"));
+		vo.setAPPOINTSEQ(request.getParameter("APPOINTSEQ"));
+
 		
-		JSONObject json = new JSONObject();
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();		
 		
-		String resultCode = "";
-		String resultMsg = "";
+		JSONObject obj = new JSONObject();
+		
 		
 		if (HR011001Biz.deleteEnaAppointItem(vo) == true) {
-			resultCode ="SUCCESS";
-			resultMsg = "정상적으로 삭제하였습니다.";
+			obj.put("MSG", "SUCCESS");
 		} else {
-			 resultCode ="FAILED";
-			 resultMsg = "[ERROR]선택된 매입 삭제 중 오류가 발생하였습니다.";
+			obj.put("MSG", "ERROR");
 		}
 		
+		jCell.add(obj);
+		json.put("rows", jCell);
 
-		json.put("resultCode", resultCode);
-		json.put("resultMsg", resultMsg);
-
-		logger.debug("[deleteDataBuyMst]" + json);
+		logger.debug("[deleteEnaAppointItem]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}		
@@ -468,16 +469,16 @@ public class HR011001Ctr {
 		if ("I".equals(IU_Flag)) {
 			insertCnt = HR011001Biz.insertEnaTexPayerItem(vo);
 			if(insertCnt > 0){
-				obj.put("MSG", "success");
+				obj.put("MSG", "SUCCESS");
 			}else{
-				obj.put("MSG", "error");
+				obj.put("MSG", "ERROR");
 			}	
 		} else if ("U".equals(IU_Flag)) {
 			updateCnt = HR011001Biz.updateEnaTexPayerItem(vo);
 			if(updateCnt > 0){
-				obj.put("MSG", "success");
+				obj.put("MSG", "SUCCESS");
 			}else{
-				obj.put("MSG", "error");
+				obj.put("MSG", "ERROR");
 			}
 		}
 		
@@ -494,71 +495,31 @@ public class HR011001Ctr {
 	}	
 	
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/deleteEnaTexPayerItem.do")
 	public ModelAndView deleteEnaTexPayerItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HR011001VO vo = new HR011001VO();
 		
 		vo.setINSACODE(request.getParameter("INSACODE"));
+		vo.setITEMSEQ(request.getParameter("ITEMSEQ"));
 		
-		JSONObject json = new JSONObject();
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();		
 		
-		String resultCode = "";
-		String resultMsg = "";
+		JSONObject obj = new JSONObject();
+		
 		
 		if (HR011001Biz.deleteEnaTexPayerItem(vo) == true) {
-			resultCode ="SUCCESS";
-			resultMsg = "정상적으로 삭제하였습니다.";
+			obj.put("MSG", "SUCCESS");
 		} else {
-			 resultCode ="FAILED";
-			 resultMsg = "[ERROR]선택된 매입 삭제 중 오류가 발생하였습니다.";
+			obj.put("MSG", "ERROR");
 		}
 		
+		jCell.add(obj);
+		json.put("rows", jCell);
 
-		json.put("resultCode", resultCode);
-		json.put("resultMsg", resultMsg);
-
-		logger.debug("[deleteDataBuyMst]" + json);
+		logger.debug("[deleteEnaTexPayerItem]" + json);
 		
 		return new ModelAndView("jsonView", json);
-	}		
-
-	
-//	@RequestMapping("/home/deleteEnaInsaMst.do")
-//	public ModelAndView deleteEnaInsaMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		HR011001VO vo = new HR011001VO();
-//		
-//		vo.setBUYID(request.getParameter("BUYID"));
-//		
-//		JSONObject json = new JSONObject();
-//		
-//		String resultCode = "";
-//		String resultMsg = "";
-//		
-//		if (HR011001Biz.deleteEnaInsaMst(vo) == true) {
-//			if (HR011001Biz.deleteAllPayScheduleTb(vo) == true) {
-//				if (HR011001Biz.deleteDataBuyMst(vo) == true) {
-//					resultCode ="SUCCESS";
-//					resultMsg = "정상적으로 삭제하였습니다.";
-//				} else {
-//					 resultCode ="FAILED";
-//					 resultMsg = "[ERROR]선택된 매입 삭제 중 오류가 발생하였습니다.";
-//				}
-//			} else {
-//				resultCode ="FAILED";
-//				resultMsg = "[ERROR]선택된 지급 스케줄 관리 전체 삭제 중 오류가 발생하였습니다.";
-//			}
-//		} else {
-//			resultCode ="FAILED";
-//			resultMsg = "[ERROR]선택된 지사 오픈 관리 전체 삭제 중 오류가 발생하였습니다.";
-//		}
-//		
-//
-//		json.put("resultCode", resultCode);
-//		json.put("resultMsg", resultMsg);
-//
-//		logger.debug("[deleteDataBuyMst]" + json);
-//		
-//		return new ModelAndView("jsonView", json);
-//	}	
-	
+	}			
 }

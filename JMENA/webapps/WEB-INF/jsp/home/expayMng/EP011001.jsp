@@ -23,9 +23,9 @@
 		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 
-		$("#insertB1Button").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
-		$("#deleteB1Button").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
-		$("#saveB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+// 		$("#insertB1Button").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
+// 		$("#deleteB1Button").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
+// 		$("#saveB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#payerButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		
@@ -153,7 +153,7 @@
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#PAYDATE").val(selRowData.PAYDATE);
 //				$("#SALERCD").val(selRowData.SALERCD);
-//				$("#SALERNM").val(selRowData.SALERNM);
+				$("#SALERNM").val(selRowData.SALERNM);
 				$("#SALEDATE").val(selRowData.SALEDATE);
 				$("#SALEID").val(selRowData.SALEID);
 				$("#SALEGUBUN").val(selRowData.SALEGUBUN);
@@ -181,8 +181,7 @@
 				$("#REMARK").val(selRowData.REMARK);
 				$("#INSACODE").val(selRowData.INSACODE);
 				$("#KNAME").val(selRowData.KNAME);
-				$("#PAYSEQ").val(selRowData.PAYSEQ);
-				$("#S_SALEID").val(selRowData.SALEID);
+				$("#S_SALEID").val(selRowData.SALEID);			
 				searchbottomList();
 			} ,
 			
@@ -215,7 +214,7 @@
 				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:80,		align:'center'}
 				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center'}
 				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
 				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -240,8 +239,9 @@
 				repeatitems: false
 			},
 			//height: '100%' ,
-			onSelectRow: function(id){
-				alert(id);
+			onSelectRow: function(ids){
+				var selRowData = $(this).jqGrid('getRowData', ids);
+				$("#PAYSEQ").val(selRowData.PAYSEQ);
 			} ,
 			loadComplete: function(ids) {
 				$("#S_SALEID").val("");
@@ -412,6 +412,8 @@
 		$("#PAYAMT").val(gijunAmt);
 		
 		if(taxgubun == "001"){
+			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
+			$("#PAYAMT").val(gijunAmt);
 			var taxincome = gijunAmt * 3 / 100;    //사업소득세
 			var taxlocal = taxincome * 10 / 100;    //지방세
 			taxincome = Math.floor(taxincome/10) * 10;
@@ -420,10 +422,14 @@
 			$("#TAXLOCAL").val(taxlocal);
 			deductamt = gijunAmt - taxincome - taxlocal;
 		}else if (taxgubun == "002"){
-			var supplytax = gijunAmt * 10 / 100;    //부가가치세
+			
+			var supply = gijunAmt/1.1;
+			supply = Math.ceil(supply/10) * 10; //공급가
+			var supplytax = supply * 10 / 100;    //부가가치세
 			supplytax = Math.floor(supplytax/10) * 10;
 			$("#SUPPLYTAX").val(supplytax);
 			deductamt = gijunAmt - supplytax;
+			
 		}
 		$("#DEDUCTAMT").val(deductamt);
 	}
@@ -551,63 +557,63 @@
 				<tr>
 					<th width="120">매출구분</th>
 					<td colspan="3">
-						<select id="SALEGUBUN" name="SALEGUBUN" disabled >
+						<select id="SALEGUBUN" name="SALEGUBUN" style="background-color: #e2e2e2;" readonly >
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th width="120">담당자</th>
-					<td><input type="hidden" id="SALERCD" name="SALERCD" disabled/>
-					<input type="text" id="SALERNM" name="SALERNM" disabled/></td>
+					<td><input type="hidden" id="SALERCD" name="SALERCD" style="background-color: #e2e2e2;" readonly />
+					<input type="text" id="SALERNM" name="SALERNM" style="background-color: #e2e2e2;" readonly/></td>
 					<th width="120">계약지사</th>
 					<td>
-						<select id="BRANCHCODE" name="BRANCHCODE" disabled>
+						<select id="BRANCHCODE" name="BRANCHCODE" style="background-color: #e2e2e2;" readonly >
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th width="120">관리번호</th>
-					<td ><input type="text" id="MANAGENO" name="MANAGENO" disabled/></td>
+					<td ><input type="text" id="MANAGENO" name="MANAGENO" style="background-color: #e2e2e2;" readonly/></td>
 					<th width="120">지역구분</th>
 					<td>
-						<select id="CITYCODE" name="CITYCODE" disabled>
+						<select id="CITYCODE" name="CITYCODE" style="background-color: #e2e2e2;" readonly >
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th width="120">주소</th>
-					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" disabled/></td>
+					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" style="background-color: #e2e2e2;" readonly/></td>
 				</tr>
 				<tr>
 					<th width="120">계약자 성명</th>
-					<td colspan="3"><input type="text" id="CONNAME" name="CONNAME" disabled/></td>
+					<td colspan="3"><input type="text" id="CONNAME" name="CONNAME" style="background-color: #e2e2e2;" readonly/></td>
 				</tr>
 				<tr>
 					<th width="120">계약면적</th>
-					<td><input type="text" id="CONM2" name="CONM2" disabled/></td>
+					<td><input type="text" id="CONM2" name="CONM2" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
 					<th width="120">계약평수</th>
-					<td><input type="text" id="CONPY" name="CONPY" disabled/></td>
+					<td><input type="text" id="CONPY" name="CONPY" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
 				</tr>
 				<tr>
 					<th width="120">매매대금</th>
-					<td width="120"><input type="text" id="SALEAMT" name="SALEAMT" disabled/></td>
+					<td width="120"><input type="text" id="SALEAMT" name="SALEAMT" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
 					<th width="120">매매단가</th>
-					<td><input type="text" id="SALEDANGA" name="SALEDANGA" disabled/></td>
+					<td><input type="text" id="SALEDANGA" name="SALEDANGA" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
 				</tr>
 				<tr>
 					<th width="120">DC사항</th>
 					<td>
-						<select id="DCGUBUN" name="DCGUBUN" disabled>
+						<select id="DCGUBUN" name="DCGUBUN" style="background-color: #e2e2e2;" readonly  >
 						</select>
 					</td>
 					<th width="120">DC 율</th>
-					<td><input type="text" id="DCRATE" name="DCRATE" disabled/> % </td>
+					<td><input type="text" id="DCRATE" name="DCRATE" style="text-align:right; background-color: #e2e2e2;" readonly/> % </td>
 				</tr>
 				<tr>
 					<th width="120">DC금액</th>
-					<td><input type="text" id="DCAMT" name="DCAMT" disabled/></td>
+					<td><input type="text" id="DCAMT" name="DCAMT" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
 					<th width="120">실 판매가</th>
-					<td><input type="text" id="SELLAMT" name="SELLAMT" disabled/></td>
+					<td><input type="text" id="SELLAMT" name="SELLAMT" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
 				</tr>
 			</table>
 		</div>
@@ -655,13 +661,6 @@
 				</tr>
 			</table>
 			</form>
-			<table align="right">
-				<tr>
-					<td><input type="button" value="수당수령인 추가" id='insertB1Button' /></td>
-					<td><input type="button" value="수당수령인 삭제" id='deleteB1Button' /></td>
-					<td><input type="button" value="저장" id='saveB1Button' /></td>
-				</tr>
-			</table>
 			<br />			
 			<br />			
 			<table id="bottomList"></table>

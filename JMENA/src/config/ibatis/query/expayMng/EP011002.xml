@@ -7,36 +7,52 @@
 	<typeAlias alias="EP011002VO" type="kr.co.jmena.www.web.home.expayMng.Vo.EP011002VO"/>
 
 	<resultMap id="EP011002Data" class="EP011002VO">
-		<result property="ACCTNO"				column="ACCTNO"/>
+		<result property="ACCTNO"			column="ACCTNO"/>
 		<result property="YEARMONTH"		column="YEARMONTH"/>
 		<result property="INSACODE"			column="INSACODE"/>
 		<result property="BRANCHCODE"		column="BRANCHCODE"/>
 		<result property="DEPTCODE"			column="DEPTCODE"/>
-		<result property="GRADE"					column="GRADE"/>
-		<result property="DUTY"					column="DUTY"/>
-		<result property="KNAME"					column="KNAME"/>
-		<result property="PAYDATE"				column="PAYDATE"/>
+		<result property="GRADE"			column="GRADE"/>
+		<result property="DUTY"				column="DUTY"/>
+		<result property="KNAME"			column="KNAME"/>
+		<result property="PAYDATE"			column="PAYDATE"/>
 		<result property="BASICAMT"			column="BASICAMT"/>
-		<result property="ACTAMT"				column="ACTAMT"/>
+		<result property="ACTAMT"			column="ACTAMT"/>
 		<result property="PRIZEAMT"			column="PRIZEAMT"/>
-		<result property="DAILYAMT"				column="DAILYAMT"/>
+		<result property="DAILYAMT"			column="DAILYAMT"/>
 		<result property="TOTALAMT"			column="TOTALAMT"/>
 		<result property="TAXGUBUN"			column="TAXGUBUN"/>
-		<result property="TAXINCOME"			column="TAXINCOME"/>
+		<result property="TAXINCOME"		column="TAXINCOME"/>
 		<result property="TAXLOCAL"			column="TAXLOCAL"/>
-		<result property="SUPPLYTAX"			column="SUPPLYTAX"/>
+		<result property="SUPPLYTAX"		column="SUPPLYTAX"/>
 		<result property="DEDUCTAMT"		column="DEDUCTAMT"/>
-		<result property="BANKID"					column="BANKID"/>
+		<result property="BANKID"			column="BANKID"/>
+		<result property="ACCTOWNER"		column="ACCTOWNER"/>
+	</resultMap>
+	
+	
+	<resultMap id="EP011002Datas" class="EP011002VO">
+		<result property="YEARMONTH"		column="YEARMONTH"/>
+		<result property="PAYDATE"			column="PAYDATE"/>
+		<result property="BRANCHCODE"		column="BRANCHCODE"/>
+		<result property="DEPTCODE"			column="DEPTCODE"/>
+		<result property="GRADE"			column="GRADE"/>
+		<result property="DUTY"				column="DUTY"/>
+		<result property="INSACODE"			column="INSACODE"/>
+		<result property="KNAME"			column="KNAME"/>
+		<result property="BASICPAY"			column="BASICPAY"/>
+		<result property="BANKID"			column="BANKID"/>
+		<result property="ACCTNO"			column="ACCTNO"/>
 		<result property="ACCTOWNER"		column="ACCTOWNER"/>
 	</resultMap>
 
 	<select id="selectListEnaMonthPayMst" resultMap="EP011002Data">
 		SELECT 
 			T1.YEARMONTH,
-			T1.BRANCHCODE,
-			T1.DEPTCODE,
-			T1.GRADE,
-			T1.DUTY,
+			(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHCODE,
+			(SELECT DEPTNAME FROM ba_deptmst WHERE BRANCHCODE = T1.BRANCHCODE AND DEPTCODE = T1.DEPTCODE) AS DEPTCODE,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '003' AND DCODE = T1.GRADE) AS GRADE,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '004' AND DCODE = T1.DUTY) AS DUTY,			
 			T1.INSACODE,
 			(SELECT KNAME FROM hr_insamst WHERE INSACODE = T1.INSACODE) AS KNAME,
 			T1.PAYDATE,
@@ -45,17 +61,47 @@
 			T1.PRIZEAMT,
 			T1.DAILYAMT,
 			T1.TOTALAMT,
-			T1.TAXGUBUN,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '013' AND DCODE = T1.TAXGUBUN) AS TAXGUBUN,
 			T1.TAXINCOME,
 			T1.TAXLOCAL,
 			T1.SUPPLYTAX,
 			T1.DEDUCTAMT,
-			T1.BANKID,
+			(SELECT BANKNAME FROM sy_bankmst WHERE BANKCODE = T1.BANKID) AS BANKID,
 			T1.ACCTNO,
 			T1.ACCTOWNER
 		FROM sa_monthpaytb T1
 		WHERE 1=1
-		<!-- ORDER BY T1.SALEID ASC, T1.PAYSEQ -->
+		<isNotEmpty property="S_YEARMONTH">
+			AND T1.YEARMONTH = #S_YEARMONTH#
+		</isNotEmpty>
+		<isNotEmpty property="S_PAYDATE">
+			AND T1.PAYDATE  = #S_PAYDATE#
+		</isNotEmpty>
+ 		<isNotEmpty property="S_BRANCHCODE">
+			AND T1.BRANCHCODE = #S_BRANCHCODE#
+		</isNotEmpty>
+		<isNotEmpty property="S_DEPTCODE">
+			AND T1.DEPTCODE = #S_DEPTCODE#
+		</isNotEmpty>
+	</select>
+
+	<select id="selectListEnaMonthPayMstCrt" resultMap="EP011002Datas">
+		SELECT  #S_YEARMONTH# AS YEARMONTH,
+				#S_PAYDATE# AS PAYDATE,
+				(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHCODE,
+				(SELECT DEPTNAME FROM ba_deptmst WHERE DEPTCODE = T1.DEPTCODE) AS DEPTCODE,
+				(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '003' AND DCODE = T1.GRADE) AS GRADE,
+				(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '004' AND DCODE = T1.DUTY) AS DUTY,
+				INSACODE,
+				KNAME,
+				(CASE (SELECT DEPTGUBUN FROM ba_deptmst WHERE DEPTCODE = T1.DEPTCODE) WHEN '001' THEN BASICPAY ELSE '0' END) AS BASICPAY,
+				(SELECT BANKNAME FROM hr_taxpayeritem, sy_bankmst B WHERE INSACODE = T1.INSACODE AND BANKID = B.BANKCODE  AND BASICACCT = 'Y') AS BANKID,
+				(SELECT ACCTNO FROM hr_taxpayeritem WHERE INSACODE = T1.INSACODE AND BASICACCT = 'Y') AS ACCTNO,
+				(SELECT ACCTOWNER FROM hr_taxpayeritem WHERE INSACODE = T1.INSACODE AND BASICACCT = 'Y') AS ACCTOWNER
+		  FROM	 hr_insamst T1
+		 WHERE	 1=1
+		   AND	 BRANCHCODE = #S_BRANCHCODE#
+		   AND 	 DEPTCODE = #S_DEPTCODE#
 	</select>
 
 	
@@ -137,5 +183,21 @@
 		WHERE YEARMONTH = #YEARMONTH#
 		AND INSACODE = #INSACODE#
 
-	</update>	
+	</update>
+	
+	<delete id="deleteEnaMonthPayMstAll">
+		DELETE FROM sa_monthpaytb 
+		WHERE YEARMONTH = #S_YEARMONTH#
+		AND BRANCHCODE = #S_BRANCHCODE#
+		AND DEPTCODE = #S_DEPTCODE#
+	</delete>		
+	
+	<delete id="deleteEnaMonthPayMst">
+		DELETE FROM sa_monthpaytb 
+		WHERE YEARMONTH = #S_YEARMONTH#
+		AND BRANCHCODE = #S_BRANCHCODE#
+		AND DEPTCODE = #S_DEPTCODE#
+		AND INSACODE = #INSACODE#
+	</delete>	
+	
 </sqlMap> 

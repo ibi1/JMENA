@@ -2,6 +2,11 @@ package kr.co.jmena.www.web.home.expayMng.Vo;
 
 public class EP011002VO {
 	
+	private String S_YEARMONTH;
+	private String S_PAYDATE;
+	private String S_BRANCHCODE;
+	private String S_DEPTCODE;	
+	
 	private String ACCTNO;
 	private String YEARMONTH;
 	private String INSACODE;
@@ -22,12 +27,37 @@ public class EP011002VO {
 	private String DEDUCTAMT;
 	private String BANKID;
 	private String ACCTOWNER;
+	private String BASICPAY;
 	
 	private String KNAME;
 	
 	private String USERID;
 	
 	
+	public String getS_YEARMONTH() {
+		return S_YEARMONTH;
+	}
+	public void setS_YEARMONTH(String s_YEARMONTH) {
+		this.S_YEARMONTH = s_YEARMONTH;
+	}
+	public String getS_PAYDATE() {
+		return S_PAYDATE;
+	}
+	public void setS_PAYDATE(String s_PAYDATE) {
+		this.S_PAYDATE = s_PAYDATE;
+	}
+	public String getS_BRANCHCODE() {
+		return S_BRANCHCODE;
+	}
+	public void setS_BRANCHCODE(String s_BRANCHCODE) {
+		this.S_BRANCHCODE = s_BRANCHCODE;
+	}
+	public String getS_DEPTCODE() {
+		return S_DEPTCODE;
+	}
+	public void setS_DEPTCODE(String s_DEPTCODE) {
+		this.S_DEPTCODE = s_DEPTCODE;
+	}
 	public String getACCTNO() {
 		return this.ACCTNO;
 	}
@@ -149,6 +179,12 @@ public class EP011002VO {
 	}
 	public void setACCTOWNER(String ACCTOWNER) {
 		this.ACCTOWNER = ACCTOWNER;
+	}
+	public String getBASICPAY() {
+		return BASICPAY;
+	}
+	public void setBASICPAY(String bASICPAY) {
+		this.BASICPAY = bASICPAY;
 	}
 	public String getKNAME() {
 		return KNAME;

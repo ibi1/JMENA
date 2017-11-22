@@ -83,7 +83,8 @@
 	$(document).ready(function(){
 		
 		$("#SALEID").val($("#SALEID",opener.document).val());
-		
+		$("#PAYSEQ").val($("#PAYSEQ",opener.document).val());
+		$("#S_PAYSEQ").val($("#PAYSEQ",opener.document).val());
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 150, height: 25 });
 		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 150, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -101,7 +102,8 @@
 			url:"/home/selectListEnaSudangMst.do" ,
 			mtype: 'POST',
 			postData : {
-				S_SALEID : $("#SALEID").val()
+				S_SALEID : $("#SALEID").val(),
+				S_PAYSEQ : $("#S_PAYSEQ").val()
 			},				
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
@@ -113,7 +115,7 @@
 				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:80,		align:'center'}
 				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center'}
 				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center'}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
 				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
 				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
 				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:","}}
@@ -133,6 +135,7 @@
 			sortorder:'asc' ,
 			width: "96%" ,
 			loadtext : "조회 중",
+			emptyrecords : "Data가 없습니다.",
 			jsonReader: {
 				repeatitems: false
 			},
@@ -164,7 +167,20 @@
 				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center', editable:true}
 				, {name:"PAYERID",		index:'PAYERID',		width:80,		align:'center', editable:true}
 				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', editable:true
+					, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode,
+						dataEvents:[{
+							type:'change',
+							fn:function(e){
+								if($("#bottomList [name=PAYAMT] ").val() == ""){
+									alert("지급 금액을 입력 해 주세요.");
+									return;
+								}else{
+									paycal();								
+								}
+							}
+						}]
+					}}
 				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -187,6 +203,7 @@
 			sortorder:'asc' ,
 			width: "96%" ,
 			loadtext : "조회 중",
+			emptyrecords : "Data가 없습니다.",
 			jsonReader: {
 				repeatitems: false
 			},
@@ -247,6 +264,45 @@
 		result +="</select>";
 		return result;
 	}		
+	
+	
+	function paycal(){
+		var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+		var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+		
+		
+		var gijunAmt = $("#bottomList [name=PAYAMT] ").val();
+		var taxgubun = $("#bottomList [name=TAXGUBUN] ").val();
+		
+		
+		
+		if(taxgubun == "001"){
+			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
+			var taxincome = gijunAmt * 3 / 100;    //사업소득세
+			var taxlocal = taxincome * 10 / 100;    //지방세
+			taxincome = Math.floor(taxincome/10) * 10;
+			taxlocal = Math.floor(taxlocal/10) * 10;
+			$("#bottomList").setCell(ids,"TAXINCOME",taxincome);
+			$("#bottomList").setCell(ids,"TAXLOCAL",taxlocal);
+			$("#bottomList").setCell(ids,"SUPPLYTAX","0");
+			deductamt = gijunAmt - taxincome - taxlocal;
+		}else if (taxgubun == "002"){
+			
+			var supply = gijunAmt/1.1;
+			supply = Math.ceil(supply/10) * 10; //공급가
+			var supplytax = supply * 10 / 100;    //부가가치세
+			supplytax = Math.floor(supplytax/10) * 10;
+			$("#bottomList").setCell(ids,"TAXINCOME","0");
+			$("#bottomList").setCell(ids,"TAXLOCAL","0");
+			$("#bottomList").setCell(ids,"SUPPLYTAX",supplytax);
+			deductamt = gijunAmt - supplytax;
+			
+		}
+		$("#bottomList").setCell(ids,"DEDUCTAMT",deductamt);
+	}
+				
+		
+	
 	
 	$(function() {
 		$("#insertButton").click(function() {
@@ -392,6 +448,7 @@
 			<input type="hidden" id="S_FLAG" name="S_FLAG" />
 			<input type="hidden" id="SALEID" name="SALEID" />
 			<input type="hidden" id="PAYSEQ" name="PAYSEQ" />
+			<input type="hidden" id="S_PAYSEQ" name="S_PAYSEQ" />
 			<input type="hidden" id="REGISTERSEQ" name="REGISTERSEQ" />
 			<table id="bottomList" width="98%"></table>
 		</div>				

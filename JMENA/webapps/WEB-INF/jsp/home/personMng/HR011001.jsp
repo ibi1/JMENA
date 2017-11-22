@@ -77,8 +77,8 @@
 				S_BRANCHCODE : $("#S_BRANCHCODE").val(),
 				S_DEPTCODE : $("#S_DEPTCODE").val(),
 				S_KNAME : $("#S_KNAME").val(),
-				S_JUMINID : $("#S_JUMINID").val()
-//				S_INSACODE : $("#S_INSACODE").val()				 
+				S_JUMINID : $("#S_JUMINID").val(),
+				S_INSACODE : $("#S_INSACODE").val()				 
 			},			
 			datatype:"json",		
 			loadError:function(){alert("Error~!!");},
@@ -89,9 +89,9 @@
 				, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
 				, {name:"JUMINID",			index:'JUMINID',		width:120,	align:'center'}
 				, {name:"MOBILENO",			index:'MOBILENO',		width:100,	align:'center'}
-				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
+				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center'}
 				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true} 		
+	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center'} 		
 	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center'} 		
 				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center', hidden:true}
 				, {name:"SAUPID",			index:'SAUPID',			width:100,	align:'center', hidden:true}
@@ -123,6 +123,7 @@
 			//height: '100%',
 			onSelectRow: function(ids){					
 				var selRowData = $(this).jqGrid('getRowData', ids);
+				$("#DEPTCODE").val(selRowData.DEPTCODE);
 				$("#INSACODE").val(selRowData.INSACODE);
 	 			$("#KNAME").val(selRowData.KNAME);
 				$("#JUMINID1").val(selRowData.JUMINID.substr(0,6));
@@ -136,7 +137,8 @@
 				$("#MOBILENO").val(selRowData.MOBILENO);
 				$("#TELNO").val(selRowData.TELNO);
 				$("#BRANCHCODE").val(selRowData.BRANCHCODE);
-				$("#DEPTCODE").val(selRowData.DEPTCODE);
+//				$("#BRANCHCODE").val($("#leftList [name=BRANCHCODE] option:selected").val());
+//				$("#DEPTCODE").val($("#leftList [name=DEPTCODE] option:selected").val());
 				$("#BASICPAY").val(selRowData.BASICPAY);
 				$("input:radio[name=EMPLOYGUBUN]:input[value=" + selRowData.EMPLOYGUBUN + "]").attr("checked", true);
 				$("#GRADE").val(selRowData.GRADE);
@@ -150,13 +152,13 @@
 				$("#RETIREDATE").val(selRowData.RETIREDATE);
 				$("#RECOID").val(selRowData.RECOID);
 				$("#REMARK").val(selRowData.REMARK);
+				f_selectListEnaDeptCode("2",selRowData.DEPTCODE);				
 				selectListEnaAppointItem(selRowData.INSACODE);				
 				selectListEnaTexPayerItem(selRowData.INSACODE);
 				v_rightLastSel = 0;
-				
 			} ,
-			loadComplete: function() {				
-				f_selectListEnaDeptCode("3");
+			loadComplete: function() {
+				$("#S_INSACODE").val("");
 			},			
 			hidegrid: false
 		});		
@@ -164,7 +166,8 @@
 
 	
 	function selectListEnaAppointItem(INSACODE){
-		$('#bottomList1').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용		
+		$('#bottomList1').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+		
 		$('#bottomList1').jqGrid({
 		//caption: '발령사항'
 		url:"/home/selectListEnaAppointItem.do" ,
@@ -178,11 +181,40 @@
 		colModel:[
 			  {name:"INSACODE",			index:'INSACODE',			width:100,		align:'center', hidden:true}
 			, {name:"APPOINTSEQ",		index:'APPOINTSEQ',			width:100,		align:'center', hidden:true}
-			, {name:"APPOINTGUBUN",		index:'APPOINTGUBUN',		width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=002", buildSelect:selectListEnaCode}}
+			, {name:"APPOINTGUBUN",		index:'APPOINTGUBUN',		width:100,		align:'center', editable:true
+				, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=002", buildSelect:selectListEnaCode,
+					dataEvents:[{
+						type:'change',
+						fn:function(e){
+							//여기 수정해야 함.
+							var appGu = $("#bottomList1 [name=APPOINTGUBUN] ").val();
+							if(appGu == "001"){
+								
+							}else{
+								
+							}
+							
+
+							//$("#bottomList").setCell(ids,"TAXINCOME",taxincome);
+						}
+					}]					
+				
+				}}
 			, {name:"APPOINTDATE",		index:'APPOINTDATE',		width:100,		align:'center', editable:true}
-			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1}}
-			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
-//			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE=001", buildSelect:f_selectListEnaDeptCode1}}
+			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center', editable:true
+				, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1,
+					dataEvents:[{
+						type:'change',
+						fn:function(e){
+							//여기 수정해야 함.
+//							$("#bottomList1 [name=APPOINTBRANCH] option:selected").val();
+							
+							//$("#bottomList").setCell(ids,"TAXINCOME",taxincome);
+						}
+					}]	
+				}}
+//			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
+			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do", buildSelect:f_selectListEnaDeptCode1}}
 			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
 			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
 //			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
@@ -310,11 +342,11 @@
 		}); 	
 	
 		$("#S_BRANCHCODE").change(function() {
-			f_selectListEnaDeptCode("1");
+			f_selectListEnaDeptCode("1","");
 		});	
 		
  		$("#BRANCHCODE").change(function() {
- 			f_selectListEnaDeptCode("2");
+ 			f_selectListEnaDeptCode("2","");
  		});
 		
 	})	
@@ -335,7 +367,7 @@
 				});
 				$("#S_BRANCHCODE").append(inHtml);
 				$("#BRANCHCODE").append(inHtml);
-				f_selectListEnaDeptCode("0");
+				f_selectListEnaDeptCode("0","");
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -343,8 +375,7 @@
 		});
 	}
 		
-	function f_selectListEnaDeptCode(flag){
-		
+	function f_selectListEnaDeptCode(flag,deptcode){
 		var BRANCHCODE = "";		
 		if( flag == "0"){
 			var BRANCHCODE = $("#S_BRANCHCODE").val();
@@ -358,8 +389,11 @@
 		}else if(flag == "3"){
 			BRANCHCODE = $("#S_BRANCHCODE").val();
 			$("#DEPTCODE").empty().data('options');
+		}else if(flag == "4"){
+			BRANCHCODE = $("#BRANCHCODE").val();
+			$("#S_DEPTCODE").empty().data('options');
+			$("#DEPTCODE").empty().data('options');
 		}
-		
 		
 	   	$.ajax({ 
 			type: 'POST' ,
@@ -369,6 +403,7 @@
 				BRANCHCODE : BRANCHCODE,
 			},
 			success: function(data){
+				
 				var inHtml = "";
 				data.deptMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
@@ -379,11 +414,19 @@
 				}else if(flag == "1"){
 					$("#S_DEPTCODE").append(inHtml);					
 				}else if(flag == "2"){
-					$("#DEPTCODE").append(inHtml);										
+					$("#DEPTCODE").append(inHtml);	
 				}else if(flag == "3"){
 					$("#DEPTCODE").append(inHtml);					
+				}else if(flag == "4"){
+					$("#S_DEPTCODE").append(inHtml);
+					$("#DEPTCODE").append(inHtml);
 				}
-					
+				if(deptcode != ""){
+					$("#DEPTCODE").val(deptcode);
+					if(flag == "4"){
+						$("#S_DEPTCODE").val(deptcode);						
+					}
+				}
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -517,7 +560,7 @@
 			$("#RETIREDATE").val("");
 			$("#RECOID").val("");
 			$("#REMARK").val("");	
-			f_selectListEnaDeptCode("2");
+			f_selectListEnaDeptCode("2","");
 			selectListEnaAppointItem("");				
 			selectListEnaTexPayerItem("");
 			f_selectListEnaGradeCode();
@@ -536,7 +579,7 @@
 				data : formData,
 				//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
 				success: function(data){
-					if(data.rows[0].MSG == "success")
+					if(data.rows[0].MSG == "SUCCESS")
 					{
 						alert("저장이 완료되었습니다.");
 						selectListInsaMst();
@@ -648,7 +691,7 @@
 					url: "/home/updateEnaAppointItem.do", 
 					dataType : 'json' , 
 					success: function(data){
-						if(data.rows[0].MSG == "success"){
+						if(data.rows[0].MSG == "SUCCESS"){
 							$("#S_FLAG_B1").val("U");							
 							v_rightLastSel = 0;
 							alert("저장이 완료되었습니다.");
@@ -691,63 +734,39 @@
 
 			var cellData = $("#bottomList1").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
 			var msg = "삭제하시겠습니까?";
+			var insacode = $("#INSACODE").val();
 			if (confirm(msg) == true) {
-				var formData = "INSACODE=" + $("#INSACODE").val() + 
+				var formData = "INSACODE=" + insacode + 
 							   "&APPOINTSEQ=" + cellData.APPOINTSEQ ;
 				
 				$.ajax({ 
 					type: 'POST' ,
 					data: formData,
-					url: "/home/updateEnaAppointItem.do", 
+					url: "/home/deleteEnaAppointItem.do", 
 					dataType : 'json' , 
 					success: function(data){
-						if(data.rows[0].MSG == "success"){
+						if(data.rows[0].MSG == "SUCCESS"){
 							$("#S_FLAG_B1").val("U");							
 							v_rightLastSel = 0;
-							alert("저장이 완료되었습니다.");
-							selectListInsaMst();
+							alert("삭제가 완료되었습니다.");
+							selectListEnaAppointItem(insacode);
 						}else{
-							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+							alert("삭제 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+							
 						}
 						
 					},
 					error:function(e){  
-						alert("발령 사항을 저장하는 중 오류가 발생하였습니다.");
+						alert("발령 사항을 삭제하는 중 오류가 발생하였습니다.");
 					}  	
 				});
 			} else {
 				v_rightLastSel = 0;
-				$("#searchButton").click();
+				selectListEnaAppointItem(insacode);
 			}
 		});
 	})	
 
-		$(function() {
-			$("#deleteButton").click(function() {
-				if ($("#S_FLAG_L").val() == "I") {
-					alert("데이터를 추가 중 일 경우 삭제 할 수 없습니다.");
-					
-					return false;
-				}
-				
-				if (confirm("삭제하시겠습니까?") == true) {
-					$.ajax({ 
-						type: 'POST' ,
-						data: "BUYID=" + $("#BUYID").val(),
-						url: "/home/deleteDataBuyMst.do", 
-						dataType : 'json' , 
-						success: function(data){
-							alert(data.resultMsg);
-							
-							$("#selectButton").click();
-						},
-						error:function(e){  
-							alert("[ERROR]선택 매입 데이터 삭제  중 오류가 발생하였습니다.");
-						}  
-					});
-				}
-			});
-		})
 
 
 	$(function() {
@@ -839,7 +858,7 @@
 					url: "/home/updateEnaTexPayerItem.do", 
 					dataType : 'json' , 
 					success: function(data){
-						if(data.rows[0].MSG == "success"){
+						if(data.rows[0].MSG == "SUCCESS"){
 							$("#S_FLAG_B2").val("U");							
 							v_rightLastSel = 0;
 							alert("저장이 완료되었습니다.");
@@ -861,50 +880,51 @@
 	})
 		
 	
-	//	$(function() {
-	//		$("#deleteB2Button").click(function() {
-	//			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+		$(function() {
+			$("#deleteB2Button").click(function() {
+				var ids = $("#bottomList2").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 			
-	//			if (ids == null || ids == "") {
-	//				alert("그리드를 선택하셔야 합니다.");
+				if (ids == null || ids == "") {
+					alert("그리드를 선택하셔야 합니다.");
 				
-	//				return false;
-	//			}
+					return false;
+				}
 			
-	//			$('#bottomList1').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+				$('#bottomList2').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 	
-	//			var cellData = $("#bottomList1").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
-	//			var msg = "삭제하시겠습니까?";
-	//			if (confirm(msg) == true) {
-	//				var formData = "INSACODE=" + $("#INSACODE").val() + 
-	//							   "&APPOINTSEQ=" + cellData.APPOINTSEQ ;
+				var cellData = $("#bottomList2").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+				var msg = "삭제하시겠습니까?";
+				var insacode = $("#INSACODE").val();
+				if (confirm(msg) == true) {
+					var formData = "INSACODE=" +insacode + 
+								   "&ITEMSEQ=" + cellData.ITEMSEQ ;
 				
-	//				$.ajax({ 
-	//					type: 'POST' ,
-	//					data: formData,
-	//					url: "/home/updateEnaAppointItem.do", 
-	//					dataType : 'json' , 
-	//					success: function(data){
-	//						if(data.rows[0].MSG == "success"){
-	//							$("#S_FLAG_B1").val("U");							
-	//							v_rightLastSel = 0;
-	//							alert("저장이 완료되었습니다.");
-	//							selectListInsaMst();
-	//						}else{
-	//							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-	//						}
+					$.ajax({ 
+						type: 'POST' ,
+						data: formData,
+						url: "/home/deleteEnaTexPayerItem.do", 
+						dataType : 'json' , 
+						success: function(data){
+							if(data.rows[0].MSG == "SUCCESS"){
+								alert("삭제가 완료되었습니다.");
+								selectListEnaTexPayerItem(insacode);
+								$("#S_FLAG_B2").val("U");							
+								v_rightLastSel = 0;
+							}else{
+								alert("신고인 삭제 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+							}
 						
-	//					},
-	//					error:function(e){  
-	//						alert("발령 사항을 저장하는 중 오류가 발생하였습니다.");
-	//					}  	
-	//				});
-	//			} else {
-	//				v_rightLastSel = 0;
-	//				$("#searchButton").click();
-	//			}
-	//		});
-	//	})	
+						},
+						error:function(e){  
+							alert("소득신고인을 저장하는 중 오류가 발생하였습니다.");
+						}  	
+					});
+				} else {
+					v_rightLastSel = 0;
+					selectListEnaTexPayerItem(insacode);
+				}
+			});
+		})	
 		
 </script>
 <body>

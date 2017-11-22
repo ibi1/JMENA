@@ -3,6 +3,7 @@ package kr.co.jmena.www.web.home.expayMng.Vo;
 public class EP011001VO {
 	
 	private String S_SALEID;
+	private String S_PAYSEQ;
 	private String S_SALERCD;
 	private String S_SALEDATESYM;
 	private String S_SALEDATEEYM;
@@ -68,6 +69,12 @@ public class EP011001VO {
 	}
 	public String getS_SALERCD() {
 		return S_SALERCD;
+	}
+	public String getS_PAYSEQ() {
+		return S_PAYSEQ;
+	}
+	public void setS_PAYSEQ(String s_PAYSEQ) {
+		this.S_PAYSEQ = s_PAYSEQ;
 	}
 	public void setS_SALERCD(String s_SALERCD) {
 		this.S_SALERCD = s_SALERCD;

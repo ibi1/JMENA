@@ -30,6 +30,15 @@ public class EP011002Dao extends SqlMapClientDaoSupport {
 		return lst;
 	}	
 	
+	@SuppressWarnings("unchecked")
+	public List<EP011002VO> selectListEnaMonthPayMstCrt(EP011002VO vo) throws DataAccessException {
+		List<EP011002VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaMonthPayMstCrt", vo);
+		
+		return lst;
+	}		
+	
 	public int insertEnaMonthPayMst(EP011002VO vo) throws DataAccessException {
 		int insertCnt = 0;
 		
@@ -45,7 +54,23 @@ public class EP011002Dao extends SqlMapClientDaoSupport {
 		
 		return updateCnt;
 	}
+
+	public boolean deleteEnaMonthPayMstAll(EP011002VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaMonthPayMstAll", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}	
 	
-	
+	public boolean deleteEnaMonthPayMst(EP011002VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaMonthPayMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}		
 	
 }

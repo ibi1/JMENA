@@ -229,7 +229,6 @@ public class CodeComCtr {
 		DeptVO vo = new DeptVO();
 		
 		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
-
 		List<DeptVO> lst = codeComBiz.selectDeptMstList(vo);
 		
 		JSONArray jsonArr = new JSONArray();

@@ -87,6 +87,7 @@ public class EP011001Ctr {
 		System.out.println("/home/selectListEnaSudangMst.do");
 		
 		vo.setS_SALEID(request.getParameter("S_SALEID"));
+		vo.setS_PAYSEQ(request.getParameter("S_PAYSEQ"));
 		vo.setS_SALERCD(request.getParameter("S_SALERCD"));
 		vo.setS_SALEDATESYM(request.getParameter("S_SALEDATESYM"));
 		vo.setS_SALEDATEEYM(request.getParameter("S_SALEDATEEYM"));
@@ -147,44 +148,8 @@ public class EP011001Ctr {
 				
 				jCell.add(obj);
 			}
-		}else{
-			JSONObject obj = new JSONObject();
-			obj.put("PAYDATE", "");
-			obj.put("SALERCD", "");
-			obj.put("SALERNM", "");
-			obj.put("SELLAMT", "");
-			obj.put("PAYAMT", "");
-			obj.put("TAXAMT", "");
-			obj.put("DEDUCTAMT", "");
-			obj.put("SALEDATE", "");
-			obj.put("SALEID", "");
-			obj.put("SALEGUBUN", "");
-			obj.put("BRANCHCODE", "");
-			obj.put("MANAGENO", "");
-			obj.put("CITYCODE", "");
-			obj.put("ADDRESS", "");
-			obj.put("CONNAME", "");
-			obj.put("CONM2", "");
-			obj.put("CONPY", "");
-			obj.put("SALEAMT", "");
-			obj.put("SALEDANGA", "");
-			obj.put("DCGUBUN", "");
-			obj.put("DCRATE", "");
-			obj.put("DCAMT", "");
-			obj.put("SELLAMT", "");
-			obj.put("SUDANGRATE", "");
-			obj.put("ADDRATE", "");
-			obj.put("TAXGUBUN", "");
-			obj.put("TAXINCOME", "");
-			obj.put("TAXLOCAL", "");
-			obj.put("SUPPLYTAX", "");
-			obj.put("REMARK", "");		
-			
-
-			
-			jCell.add(obj);
-			
 		}
+		
 		json.put("rows", jCell);
 		
 		System.out.println("json==>"+json.get("rows"));
@@ -312,26 +277,6 @@ public class EP011001Ctr {
 				
 				jCell.add(obj);			
 			}
-		}else{
-			JSONObject obj = new JSONObject();
-			obj.put("SALEID", "");
-			obj.put("PAYSEQ", "");
-			obj.put("REGISTERSEQ", "");
-			obj.put("PAYERNAME", "");
-			obj.put("PAYERID", "");
-			obj.put("PAYAMT", "");
-			obj.put("SUDANGRATE", "");
-			obj.put("TAXGUBUN", "");
-			obj.put("TAXINCOME", "");
-			obj.put("TAXLOCAL", "");
-			obj.put("SUPPLYTAX", "");
-			obj.put("DEDUCTAMT", "");
-			obj.put("BANKID", "");
-			obj.put("ACCTNO", "");
-			obj.put("ACCTOWNER", "");
-			obj.put("REMARK", "");
-			
-			jCell.add(obj);
 		}
 	
 		json.put("rows", jCell);

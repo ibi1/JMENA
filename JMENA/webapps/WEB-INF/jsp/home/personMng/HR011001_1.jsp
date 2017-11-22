@@ -174,10 +174,10 @@
 				$("#MOBILENO", parent.opener.document).val(selRowData.MOBILENO);
 				$("#TELNO", parent.opener.document).val(selRowData.TELNO);
 				$("#BRANCHCODE", parent.opener.document).val(selRowData.BRANCHCODE);
+				$("#DEPTCODE", parent.opener.document).val(selRowData.DEPTCODE);
 				$("#BASICPAY", parent.opener.document).val(selRowData.BASICPAY);
 				$("input:radio[name=EMPLOYGUBUN]:input[value=" + selRowData.EMPLOYGUBUN + "]", parent.opener.document).attr("checked", true);
 				$("#GRADE", parent.opener.document).val(selRowData.GRADE);
-				$("#DEPTCODE", parent.opener.document).val(selRowData.DEPTCODE);
 				$("#DUTY", parent.opener.document).val(selRowData.DUTY);
 				$("#JOINDATE", parent.opener.document).val(selRowData.JOINDATE);
 				if(selRowData.REJOINYN == "Y"){
@@ -188,15 +188,17 @@
 				$("#RETIREDATE", parent.opener.document).val(selRowData.RETIREDATE);
 				$("#RECOID", parent.opener.document).val(selRowData.RECOID);
 				$("#REMARK", parent.opener.document).val(selRowData.REMARK);
+ 				$("#S_BRANCHCODE", parent.opener.document).val(selRowData.BRANCHCODE);
+ 				$("#S_DEPTCODE", parent.opener.document).val(selRowData.DEPTCODE);
+	 			$("#S_KNAME", parent.opener.document).val(selRowData.KNAME);
 // 				$("#S_INSACODE", parent.opener.document).val(selRowData.INSACODE);
-// 				$("#S_KNAME", parent.opener.document).val(selRowData.KNAME);
-// 				$("#S_BRANCHCODE", parent.opener.document).val("");
-// 				$("#S_DEPTCODE", parent.opener.document).val("");
-				$(opener.location).attr("href", "javascript:selectListEnaInsaMst();");
+				$(opener.location).attr("href", "javascript:f_selectListEnaDeptCode('4','"+selRowData.DEPTCODE+"');");				
+				$(opener.location).attr("href", "javascript:selectListInsaMst();");				
+
+
 				window.self.close();
 			} ,
 			loadComplete: function() {				
-				
 			},			
 			hidegrid: false
 		});		
