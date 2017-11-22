@@ -42,6 +42,48 @@
 		<result property="CANCELDATE"	column="CANCELDATE"/>
 	</resultMap>
 
+	<resultMap id="ipgumScheduleTbDataList" class="SA011001VO">
+		<result property="SALEID"		column="SALEID"/>
+		<result property="IPGUMSEQ"		column="IPGUMSEQ"/>
+		<result property="DEPOSITGUBUN"		column="DEPOSITGUBUN"/>
+		<result property="DEPOSITDATE"		column="DEPOSITDATE"/>
+		<result property="DEPOSITAMT"		column="DEPOSITAMT"/>
+		<result property="DEPOSITYN"		column="DEPOSITYN"/>
+		<result property="REMARK"		column="REMARK"/>
+		<result property="IPGUMID"		column="IPGUMID"/>
+		<result property="SEQ"		column="SEQ"/>
+		<result property="SUGUMAMT"		column="SUGUMAMT"/>
+	</resultMap>
+
+	<resultMap id="jointNameTbDataList" class="SA011001VO">
+		<result property="SALEID"		column="SALEID"/>
+		<result property="JOINTSEQ"		column="JOINTSEQ"/>
+		<result property="JOINTNAME"		column="JOINTNAME"/>
+		<result property="JOINTJUMINID"		column="JOINTJUMINID"/>
+		<result property="JOINTTELNO"		column="JOINTTELNO"/>
+		<result property="OCCUM2"		column="OCCUM2"/>
+		<result property="OCCUPY"		column="OCCUPY"/>
+		<result property="SALEAMT"		column="SALEAMT"/>
+		<result property="SELLDANGA"		column="SELLDANGA"/>
+		<result property="DCGUBUN"		column="DCGUBUN"/>
+		<result property="DCRATE"		column="DCRATE"/>
+		<result property="SELLAMT"		column="SELLAMT"/>
+		<result property="PAPERREGYN"		column="PAPERREGYN"/>
+		<result property="REMARK"		column="REMARK"/>
+	</resultMap>
+	
+	<resultMap id="saleHistoryTbDataList" class="SA011001VO">
+		<result property="SALEID"		column="SALEID"/>
+		<result property="SALESEQ"		column="SALESEQ"/>
+		<result property="CHGGUBUN"		column="CHGGUBUN"/>
+		<result property="CHGDATE"		column="CHGDATE"/>
+		<result property="PREM2"		column="PREM2"/>
+		<result property="PREPY"		column="PREPY"/>
+		<result property="CHGM2"		column="CHGM2"/>
+		<result property="CHGPY"		column="CHGPY"/>
+		<result property="REMARK"		column="REMARK"/>
+	</resultMap>
+
 	<select id="selectListEanSaleMst" resultMap="saleMstDataList">
 		SELECT
 			T3.MANAGENO, T3.CITYCODE, 
@@ -127,105 +169,34 @@
 		)
 	</insert>
 
-	<select id="selectListEnaSaleDtl">
+	<select id="selectListEnaIpgumScheduleTb" resultMap="ipgumScheduleTbDataList">
 		SELECT 
-			T1.SALEID,
-			T1.SALEAMT,
-			T1.SALEDANGA,
-			T1.DCGUBUN,
-			T1.DCRATE,
-			T1.DCAMT,
-			T1.SELLAMT,
-			T1.JOINYN,
-			T1.REGYN,
-			T1.REGDATE,
-			T1.CANCELYN,
-			T1.CANCELDATE
-		FROM sa_saledtl T1
-		WHERE 1=1
-		ORDER BY T1.SALEID ASC
-	</select>
-	
-	<update id="updateEnaSaleDtl">
-		UPDATE sa_saledtl
-		SET
-			SALEAMT = #SALEAMT#,
-			SALEDANGA = #SALEDANGA#,
-			DCGUBUN = #DCGUBUN#,
-			DCRATE = #DCRATE#,
-			DCAMT = #DCAMT#,
-			SELLAMT = #SELLAMT#,
-			JOINYN = #JOINYN#,
-			REGYN = #REGYN#,
-			REGDATE = #REGDATE#,
-			CANCELYN = #CANCELYN#,
-			CANCELDATE = #CANCELDATE#
-		WHERE SALEID = #SALEID#
-	</update>
-	
-	<insert id="insertEnaSaleDtl">
-		INSERT INTO sa_saledtl
-		(
-			SALEID,
-			SALEAMT,
-			SALEDANGA,
-			DCGUBUN,
-			DCRATE,
-			DCAMT,
-			SELLAMT,
-			JOINYN,
-			REGYN,
-			REGDATE,
-			CANCELYN,
-			CANCELDATE
-		)
-		VALUES(
-			#SALEID#,
-			#SALEAMT#,
-			#SALEDANGA#,
-			#DCGUBUN#,
-			#DCRATE#,
-			#DCAMT#,
-			#SELLAMT#,
-			#JOINYN#,
-			#REGYN#,
-			#REGDATE#,
-			#CANCELYN#,
-			#CANCELDATE#
-		)
-	</insert>
-
-	<select id="selectListEnaSaleISTb">
-		SELECT 
-			T1.SALEID,
-			T1.IPGUMSEQ,
-			T1.DEPOSITGUBUN,
-			T1.DEPOSITDATE,
-			T1.DEPOSITAMT,
-			T1.DEPOSITYN,
-			T1.REMARK
+			T1.SALEID, T1.IPGUMSEQ, 
+			(SELECT T3.DCODENAME FROM sy_ccodedtl T3 WHERE T3.CCODE = '009' AND T3.DCODE = T1.DEPOSITGUBUN) AS DEPOSITGUBUN, 
+			T1.DEPOSITDATE, T1.DEPOSITAMT, T1.DEPOSITYN, T1.REMARK, T2.IPGUMID, T2.SEQ, T2.SUGUMAMT
 		FROM sa_ipgumscheduletb T1
+		LEFT JOIN sa_ipgumdtl T2
+			ON T1.SALEID = T2.SALEID
+			AND T1.IPGUMSEQ = T2.IPGUMSEQ
 		WHERE 1=1
-		AND T1.SALEID = #SALEID# 
-		AND T1.IPGUMSEQ = #IPGUMSEQ# 
-		ORDER BY T1.SALEID ASC
+		AND T1.SALEID = #SALEID#
+		ORDER BY T1.IPGUMSEQ
 	</select>
 	
-	<update id="updateEnaSaleISTb">
+	<update id="updateDataEnaIpgumScheduleTb">
 		UPDATE sa_ipgumscheduletb
 		SET
 			DEPOSITGUBUN = #DEPOSITGUBUN#,
 			DEPOSITDATE = #DEPOSITDATE#,
 			DEPOSITAMT = #DEPOSITAMT#,
-			DEPOSITYN = #DEPOSITYN#,
 			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = #UPDATEDATE#
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
 		WHERE SALEID = #SALEID# 
 		AND IPGUMSEQ = #IPGUMSEQ# 
 	</update>
 	
-	<insert id="insertEnaSaleISTb">
+	<insert id="insertDataEnaIpgumScheduleTb">
 		INSERT INTO sa_ipgumscheduletb
 		(
 			SALEID,
@@ -233,48 +204,53 @@
 			DEPOSITGUBUN,
 			DEPOSITDATE,
 			DEPOSITAMT,
-			DEPOSITYN,
 			REMARK,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#SALEID#,
-			#IPGUMSEQ#,
+			(SELECT LPAD(IFNULL(MAX(T1.IPGUMSEQ), 0) + 1, 3, 0) AS IPGUMSEQ FROM sa_ipgumscheduletb T1 WHERE SALEID = #SALEID#),
 			#DEPOSITGUBUN#,
 			#DEPOSITDATE#,
 			#DEPOSITAMT#,
-			#DEPOSITYN#,
 			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#
 		)
 	</insert>
+	
+	<delete id="deleteDataEnaIpgumScheduleTb">
+		DELETE FROM sa_ipgumscheduletb
+		WHERE SALEID = #SALEID#
+		AND IPGUMSEQ = #IPGUMSEQ#
+	</delete>
 
-	<select id="selectListEnaSaleJNTb">
+	<select id="selectListEnaJointNameTb" resultMap="jointNameTbDataList">
 		SELECT 
-			T1.SALEID,
-			T1.JOINTSEQ,
-			T1.JOINTNAME,
-			T1.JOINTJUMINID,
-			T1.JOINTTELNO,
-			T1.OCCUM2,
-			T1.OCCUPY,
-			T1.SALEAMT,
-			T1.SELLDANGA,
-			T1.DCGUBUN,
-			T1.DCRATE,
-			T1.SELLAMT,
-			T1.PAPERREGYN,
-			T1.REMARK
+			T1.SALEID, T1.JOINTSEQ, T1.JOINTNAME, T1.JOINTJUMINID, T1.JOINTTELNO, T1.OCCUM2, T1.OCCUPY, T1.SALEAMT, T1.SELLDANGA, 
+			(SELECT DCODENAME FROM sy_ccodedtl T2 WHERE CCODE = '008' AND T2.DCODE = T1.DCGUBUN) AS DCGUBUN, 
+			T1.DCRATE, T1.SELLAMT, T1.PAPERREGYN, T1.REMARK
 		FROM sa_jointnametb T1
 		WHERE 1=1
-		AND T1.SALEID = #SALEID# 
-		AND T1.JOINTSEQ = #JOINTSEQ# 
-		ORDER BY T1.SALEID ASC
+		AND T1.SALEID = #SALEID#
+		ORDER BY T1.JOINTSEQ
 	</select>
 	
-	<update id="updateEnaSaleJNTb">
+	<update id="updateDataJoint">
+		UPDATE sa_saledtl
+		SET
+			JOINYN = #JOINYN#,
+			REGYN = #REGYN#,
+			<isEmpty property="REGDATE">
+				REGDATE = NULL
+			</isEmpty>
+			<isNotEmpty property="REGDATE">
+				REGDATE = #REGDATE#
+			</isNotEmpty>
+		WHERE SALEID = #SALEID#
+	</update>
+	
+	
+	<update id="updateDataEnaJointNameTb">
 		UPDATE sa_jointnametb
 		SET
 			JOINTNAME = #JOINTNAME#,
@@ -289,13 +265,13 @@
 			SELLAMT = #SELLAMT#,
 			PAPERREGYN = #PAPERREGYN#,
 			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = #UPDATEDATE#
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
 		WHERE SALEID = #SALEID# 
 		AND JOINTSEQ = #JOINTSEQ# 
 	</update>
 	
-	<insert id="insertEnaSaleJNTb">
+	<insert id="insertDataEnaJointNameTb">
 		INSERT INTO sa_jointnametb
 		(
 			SALEID,
@@ -312,12 +288,11 @@
 			SELLAMT,
 			PAPERREGYN,
 			REMARK,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#SALEID#,
-			#JOINTSEQ#,
+			(SELECT LPAD(IFNULL(MAX(T1.JOINTSEQ), 0) + 1, 3, 0) AS JOINTSEQ FROM sa_jointnametb T1 WHERE SALEID = #SALEID#),
 			#JOINTNAME#,
 			#JOINTJUMINID#,
 			#JOINTTELNO#,
@@ -330,73 +305,97 @@
 			#SELLAMT#,
 			#PAPERREGYN#,
 			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#
 		)
 	</insert>
+	
+	<delete id="deleteDataEnaJointNameTb">
+		DELETE FROM sa_jointnametb
+		WHERE SALEID = #SALEID#
+		AND JOINTSEQ = #JOINTSEQ#
+	</delete>
 
-	<select id="selectListEnaSaleHisTb">
+	<select id="selectListEnaSaleHistoryTb" resultMap="saleHistoryTbDataList">
 		SELECT 
-			T1.SALEID,
-			T1.SALESEQ,
-			T1.CHGGUBUN,
-			T1.CHGDATE,
-			T1.PREM2,
-			T1.PREPY,
-			T1.CHGM2,
-			T1.CHGPY,
-			T1.REMARK
+			T1.SALEID, T1.SALESEQ, 
+			(SELECT DCODENAME FROM sy_ccodedtl T2 WHERE T2.CCODE = '010' AND T2.DCODE = T1.CHGGUBUN) AS CHGGUBUN, 
+			T1.CHGDATE, T1.PREM2, T1.PREPY, T1.CHGM2, T1.CHGPY, T1.REMARK 
 		FROM sa_salehistorytb T1
-		WHERE 1=1
-		AND T1.SALEID = #SALEID# 
-		AND T1.SALESEQ = #SALESEQ# 
-		ORDER BY T1.SALEID ASC
+		WHERE T1.SALEID = #SALEID#
+		ORDER BY T1.SALESEQ
 	</select>
 	
-	<update id="updateEnaSaleHisTb">
+	<update id="updateDataEnaSaleHistoryTb">
 		UPDATE sa_salehistorytb
 		SET
 			CHGGUBUN = #CHGGUBUN#,
 			CHGDATE = #CHGDATE#,
+			<isNotEmpty property="PREM2">
 			PREM2 = #PREM2#,
+			</isNotEmpty>
+			<isNotEmpty property="PREPY">
 			PREPY = #PREPY#,
+			</isNotEmpty>
+			<isNotEmpty property="CHGM2">
 			CHGM2 = #CHGM2#,
+			</isNotEmpty>
+			<isNotEmpty property="CHGPY">
 			CHGPY = #CHGPY#,
+			</isNotEmpty>
 			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = #UPDATEDATE#
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
 		WHERE SALEID = #SALEID# 
 		AND SALESEQ = #SALESEQ# 
 	</update>
 	
-	<insert id="insertEnaSaleHisTb">
+	<insert id="insertDataEnaSaleHistoryTb">
 		INSERT INTO sa_salehistorytb
 		(
 			SALEID,
 			SALESEQ,
 			CHGGUBUN,
 			CHGDATE,
+			<isNotEmpty property="PREM2">
 			PREM2,
+			</isNotEmpty>
+			<isNotEmpty property="PREPY">
 			PREPY,
+			</isNotEmpty>
+			<isNotEmpty property="CHGM2">
 			CHGM2,
+			</isNotEmpty>
+			<isNotEmpty property="CHGPY">
 			CHGPY,
+			</isNotEmpty>
 			REMARK,
-			INSERTUSER,
-			INSERTDATE
+			INSERTUSER
 		)
 		VALUES(
 			#SALEID#,
-			#SALESEQ#,
+			(SELECT LPAD(IFNULL(MAX(T1.SALESEQ), 0) + 1, 3, 0) AS SALESEQ FROM sa_salehistorytb T1 WHERE SALEID = #SALEID#),
 			#CHGGUBUN#,
 			#CHGDATE#,
+			<isNotEmpty property="PREM2">
 			#PREM2#,
+			</isNotEmpty>
+			<isNotEmpty property="PREPY">
 			#PREPY#,
+			</isNotEmpty>
+			<isNotEmpty property="CHGM2">
 			#CHGM2#,
+			</isNotEmpty>
+			<isNotEmpty property="CHGPY">
 			#CHGPY#,
+			</isNotEmpty>
 			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#
 		)
 	</insert>
 	
+	<delete id="deleteDataEnaSaleHistoryTb">
+		DELETE FROM sa_salehistorytb
+		WHERE SALEID = #SALEID#
+		AND SALESEQ = #SALESEQ#
+	</delete>
 </sqlMap>

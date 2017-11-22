@@ -117,8 +117,6 @@ public class MM011001Ctr {
 		
 		List<MM011001VO> lst = MM011001Biz.selectListEnaPayScheduleTb(vo);
 		
-		System.out.println("lst.size()====>"+lst.size());
-		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		
@@ -136,7 +134,6 @@ public class MM011001Ctr {
 			jCell.add(obj);
 		}
 		
-		json.put("records", lst.size());
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);
@@ -159,8 +156,6 @@ public class MM011001Ctr {
 		
 		List<MM011001VO> lst = MM011001Biz.selectListEnaSalesOpenTb(vo);
 		
-		System.out.println("lst.size()====>"+lst.size());
-		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		
@@ -179,7 +174,6 @@ public class MM011001Ctr {
 			jCell.add(obj);
 		}
 		
-		json.put("records", lst.size());
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);

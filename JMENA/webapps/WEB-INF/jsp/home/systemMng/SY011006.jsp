@@ -103,6 +103,8 @@
 		
 		$(function() {
 			$("#saveButton").click(function() {
+				var ids = $("#rightList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
 				$('#leftList').jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
 				var cellData = $("#leftList").jqGrid('getRowData', v_rightLastSel); //셀 전체 데이터 가져오기

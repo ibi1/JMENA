@@ -59,6 +59,9 @@ public class SA011001VO {
 	private String OWNERNAME;
 	private String OWNERJUMINID;
 	private String AGENCYAMT;
+	private String IPGUMID;
+	private String SEQ;
+	private String SUGUMAMT;
 
 	public String getBUYID(){
 		return this.BUYID;
@@ -402,6 +405,24 @@ public class SA011001VO {
 	}
 	public void setAGENCYAMT(String AGENCYAMT) {
 		this.AGENCYAMT = AGENCYAMT;
+	}
+	public String getIPGUMID() {
+		return IPGUMID;
+	}
+	public void setIPGUMID(String IPGUMID) {
+		this.IPGUMID = IPGUMID;
+	}
+	public String getSEQ() {
+		return SEQ;
+	}
+	public String getSUGUMAMT() {
+		return SUGUMAMT;
+	}
+	public void setSEQ(String SEQ) {
+		this.SEQ = SEQ;
+	}
+	public void setSUGUMAMT(String SUGUMAMT) {
+		this.SUGUMAMT = SUGUMAMT;
 	}
 
 	

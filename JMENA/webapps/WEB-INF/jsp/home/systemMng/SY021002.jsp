@@ -302,6 +302,8 @@
 
 	$(function() {
 		$("#rightSaveButton").click(function() {
+			var ids = $("#rightList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
 			if (v_rightLastSel == 0 || v_rightLastSel == "") {
 				alert("그리드를 선택하셔야 합니다.");
 				

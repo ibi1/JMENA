@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.saleMng.Biz.SA011001Biz;
@@ -112,4 +113,386 @@ public class SA011001Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
+	/**
+	 * 입금 스케줄 관리
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/selectListEnaIpgumScheduleTb.do")
+	public ModelAndView selectListEnaIpgumScheduleTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		
+		List<SA011001VO> lst = SA011001Biz.selectListEnaIpgumScheduleTb(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
+
+			obj.put("SALEID", lst.get(i).getSALEID());
+			obj.put("IPGUMSEQ", lst.get(i).getIPGUMSEQ());
+			obj.put("DEPOSITGUBUN", lst.get(i).getDEPOSITGUBUN());
+			obj.put("DEPOSITDATE", lst.get(i).getDEPOSITDATE());
+			obj.put("DEPOSITAMT", lst.get(i).getDEPOSITAMT());
+			obj.put("DEPOSITYN", lst.get(i).getDEPOSITYN());
+			obj.put("REMARK", lst.get(i).getREMARK());
+			obj.put("IPGUMID", lst.get(i).getIPGUMID());
+			obj.put("SEQ", lst.get(i).getSEQ());
+			obj.put("SUGUMAMT", lst.get(i).getSUGUMAMT());
+			
+			jCell.add(obj);
+		}
+		
+		json.put("rows", jCell);
+		
+		logger.debug("[selectListEnaIpgumScheduleTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataEnaIpgumScheduleTb.do")
+	public ModelAndView insertDataEnaIpgumScheduleTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setIPGUMSEQ(request.getParameter("IPGUMSEQ"));
+		vo.setDEPOSITGUBUN(request.getParameter("DEPOSITGUBUN"));
+		vo.setDEPOSITDATE(request.getParameter("DEPOSITDATE"));
+		vo.setDEPOSITAMT(request.getParameter("DEPOSITAMT"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_R_1");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SA011001Biz.insertDataEnaIpgumScheduleTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SA011001Biz.updateDataEnaIpgumScheduleTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]입금 스케줄 관리 처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataEnaIpgumScheduleTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+
+	@RequestMapping("/home/deleteDataEnaIpgumScheduleTb.do")
+	public ModelAndView deleteDataEnaIpgumScheduleTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setIPGUMSEQ(request.getParameter("IPGUMSEQ"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (SA011001Biz.deleteDataEnaIpgumScheduleTb(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataEnaIpgumScheduleTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	/**
+	 * 등기 관리
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/selectListEnaJointNameTb.do")
+	public ModelAndView selectListEnaJointNameTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		
+		List<SA011001VO> lst = SA011001Biz.selectListEnaJointNameTb(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
+
+			obj.put("SALEID", lst.get(i).getSALEID());
+			obj.put("JOINTSEQ", lst.get(i).getJOINTSEQ());
+			obj.put("JOINTNAME", lst.get(i).getJOINTNAME());
+			obj.put("JOINTJUMINID", lst.get(i).getJOINTJUMINID());
+			obj.put("JOINTTELNO", lst.get(i).getJOINTTELNO());
+			obj.put("OCCUM2", lst.get(i).getOCCUM2());
+			obj.put("OCCUPY", lst.get(i).getOCCUPY());
+			obj.put("SALEAMT", lst.get(i).getSALEAMT());
+			obj.put("SELLDANGA", lst.get(i).getSELLDANGA());
+			obj.put("DCGUBUN", lst.get(i).getDCGUBUN());
+			obj.put("DCRATE", lst.get(i).getDCRATE());
+			obj.put("SELLAMT", lst.get(i).getSELLAMT());
+			obj.put("PAPERREGYN", lst.get(i).getPAPERREGYN());
+			obj.put("REMARK", lst.get(i).getREMARK());
+			
+			jCell.add(obj);
+		}
+		
+		json.put("rows", jCell);
+		
+		logger.debug("[selectListEnaJointNameTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataEnaJointNameTb.do")
+	public ModelAndView insertDataEnaJointNameTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setJOINYN(request.getParameter("JOINYN"));
+		vo.setREGYN(request.getParameter("REGYN"));
+		vo.setREGDATE(request.getParameter("REGDATE"));
+		vo.setJOINTNAME(request.getParameter("JOINTNAME"));
+		
+		if (!"".equals(vo.getJOINTNAME())) {	//그리드 추가 값이 있을 경우
+			vo.setJOINTSEQ(request.getParameter("JOINTSEQ"));
+			vo.setJOINTJUMINID(request.getParameter("JOINTJUMINID").replaceAll("-", ""));
+			vo.setJOINTTELNO(request.getParameter("JOINTTELNO"));
+			vo.setOCCUM2(request.getParameter("OCCUM2"));
+			vo.setOCCUPY(request.getParameter("OCCUPY"));
+			vo.setSALEAMT(request.getParameter("SALEAMT"));
+			vo.setSELLDANGA(request.getParameter("SELLDANGA"));
+			vo.setDCGUBUN(request.getParameter("DCGUBUN"));
+			vo.setDCRATE(request.getParameter("DCRATE"));
+			vo.setSELLAMT(request.getParameter("SELLAMT"));
+			vo.setPAPERREGYN(request.getParameter("PAPERREGYN"));
+			vo.setREMARK(request.getParameter("REMARK"));
+		}
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_R_2");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SA011001Biz.insertDataEnaJointNameTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SA011001Biz.updateDataEnaJointNameTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]등기 관리 처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataEnaIpgumScheduleTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/deleteDataEnaJointNameTb.do")
+	public ModelAndView deleteDataEnaJointNameTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setJOINTSEQ(request.getParameter("JOINTSEQ"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (SA011001Biz.deleteDataEnaJointNameTb(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataEnaJointNameTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	/**
+	 * 계약변동관리
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/selectListEnaSaleHistoryTb.do")
+	public ModelAndView selectListEnaSaleHistoryTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		
+		List<SA011001VO> lst = SA011001Biz.selectListEnaSaleHistoryTb(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
+
+			obj.put("SALEID", lst.get(i).getSALEID());
+			obj.put("SALESEQ", lst.get(i).getSALESEQ());
+			obj.put("CHGGUBUN", lst.get(i).getCHGGUBUN());
+			obj.put("CHGDATE", lst.get(i).getCHGDATE());
+			obj.put("PREM2", lst.get(i).getPREM2());
+			obj.put("PREPY", lst.get(i).getPREPY());
+			obj.put("CHGM2", lst.get(i).getCHGM2());
+			obj.put("CHGPY", lst.get(i).getCHGPY());
+			obj.put("REMARK", lst.get(i).getREMARK());
+			
+			jCell.add(obj);
+		}
+		
+		json.put("rows", jCell);
+		
+		logger.debug("[selectListEnaSaleHistoryTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataEnaSaleHistoryTb.do")
+	public ModelAndView insertDataEnaSaleHistoryTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setSALESEQ(request.getParameter("SALESEQ"));
+		vo.setCHGGUBUN(request.getParameter("CHGGUBUN"));
+		vo.setCHGDATE(request.getParameter("CHGDATE"));
+		vo.setPREM2(request.getParameter("PREM2"));
+		vo.setPREPY(request.getParameter("PREPY"));
+		vo.setCHGM2(request.getParameter("CHGM2"));
+		vo.setCHGPY(request.getParameter("CHGPY"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_R_3");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SA011001Biz.insertDataEnaSaleHistoryTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SA011001Biz.updateDataEnaSaleHistoryTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]계약변동관리 처리 중 오류가 발생했습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataEnaSaleHistoryTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+
+	@RequestMapping("/home/deleteDataEnaSaleHistoryTb.do")
+	public ModelAndView deleteDataEnaSaleHistoryTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setSALESEQ(request.getParameter("SALESEQ"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (SA011001Biz.deleteDataEnaSaleHistoryTb(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataEnaSaleHistoryTb]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
 }

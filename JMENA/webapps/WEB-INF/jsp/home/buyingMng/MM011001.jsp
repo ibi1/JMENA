@@ -788,6 +788,8 @@
 		
 		$(function() {
 			$("#tab1SaveButton").click(function() {
+				var ids = $("#rightList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
 				var payGubun =  $("#rightList1 [name=PAYGUBUN] option:selected").val();
 
 				$('#rightList1').jqGrid('saveRow',v_rightLastSel_1,false,'clientArray'); //선택된 놈 뷰 모드로 변경
@@ -922,6 +924,8 @@
 		
 		$(function() {
 			$("#tab2SaveButton").click(function() {
+				var ids = $("#rightList2").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
 				var branchCode =  $("#rightList2 [name=BRANCHCODE] option:selected").val();
 				
 				$('#rightList2').jqGrid('saveRow',v_rightLastSel_2,false,'clientArray'); //선택된 놈 뷰 모드로 변경
