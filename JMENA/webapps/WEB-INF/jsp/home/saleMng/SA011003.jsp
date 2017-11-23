@@ -29,18 +29,20 @@
 		$("#SL_IPGUMDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#SL_IPGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		
-		$("#IPGUMDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#IPGUMDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#IPGUMID").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-		$("#IPGUMPERSON").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
+		$("#IPGUMPERSON").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#IPGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		$("#SUGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-		$("#JANAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#JANAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 		$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 		$("#CONPY").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 		
 		$("#IPGUMID").attr("readonly","readonly");		
+		
+		$("#S_FLAG_L").val("I");
 		
 		f_selectListEnaIpgumTypeCode();
 		f_selectListEnaIpgumGubunCode();
@@ -300,6 +302,7 @@
 			},
 			//height: '100%' ,
 			onSelectRow: function(ids){
+				$("#S_FLAG_L").val("U");
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				var IPGUMID = selRowData.IPGUMID;
 				
@@ -328,6 +331,24 @@
 				
 				f_selectListEnaIpgumDtl();
 			} ,
+			/*
+			loadComplete: function(ids) {
+				var ipgumid = $("#IPGUMID").val();
+				
+				var ids = jQuery("#leftList").jqGrid('getDataIDs');
+				
+				ids.some(function(currentValue, index, array){
+					var cellData = $("#leftList").jqGrid('getCell', ids[index], 'IPGUMID');
+					if (cellData == ipgumid) {
+						$("#S_FLAG_L").val("U");
+		        		$("#leftList").jqGrid('setSelection', ids[index]);
+		    			return true;
+		        	} else {
+		        		$("#S_FLAG_L").val("I");
+		        	}	        
+				});
+			},
+			*/
 			hidegrid: false
 		});
 	}
@@ -382,6 +403,16 @@
 
 	$(function() {
 		$("#selectButton").click(function() {
+			
+			
+			var txtEle = $("#SA011003 input[type=text], select");
+			  
+			for(var i = 0; i < txtEle.length; i ++){
+				$(txtEle[i]).val("");
+			}
+
+
+
 			f_selectListEnaIpgumMst();
 		});
 
@@ -409,6 +440,47 @@
 			
 		});
 		
+		$("#deleteButton").click(function() {
+			if ($("#S_FLAG_L").val() == "I") {
+				alert("데이터를 추가 중 일 경우 삭제 할 수 없습니다.");
+				
+				return false;
+			}
+			
+			if (confirm("삭제하시겠습니까?") == true) {
+				$.ajax({ 
+					type: 'POST' ,
+					data: "IPGUMID=" + $("#IPGUMID").val(),
+					url: "/home/deleteEnaIpgumMst.do", 
+					dataType : 'json' , 
+					success: function(data){
+						alert(data.resultMsg);
+						
+						$("#selectButton").click();
+					},
+					error:function(e){  
+						alert("[ERROR]선택 입금관리 데이터 삭제  중 오류가 발생하였습니다.");
+					}  
+				});
+			}
+		});
+		
+		$("#searchButton").click(function() {
+			var ipgumdate = $("#IPGUMDATE").val();
+			alert("ipgumdate==>"+ipgumdate);
+			
+			if (ipgumdate == "") {
+				alert("입금일자를 입력하셔야 합니다.");
+				
+				$("#IPGUMDATE").focus();
+				return false;
+			}
+			
+			$("#SL_IPGUMDATE_FR").val(ipgumdate);
+			$("#SL_IPGUMDATE_TO").val(ipgumdate);
+			
+			f_selectListEnaIpgumMst();
+		});
 		
 	})
 	
@@ -471,7 +543,8 @@
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<form id="SA011003">
-			<table>
+			<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
+			<table width="98%" >
 				<tr>
 					<th width="120">입금일자/번호</th>
 					<td><input type="text" id="IPGUMDATE" name="IPGUMDATE" /><input type="text" id="IPGUMID" name="IPGUMID" readonly/></td>
@@ -499,7 +572,7 @@
 						</select>
 					</td>
 					<th width="120">입금인</th>
-					<td><input type="text" id="IPGUMPERSON" name="IPGUMPERSON" /></td>
+					<td width="120"><input type="text" id="IPGUMPERSON" name="IPGUMPERSON" /></td>
 				</tr>
 				<tr>
 					<th width="120">입금금액</th>

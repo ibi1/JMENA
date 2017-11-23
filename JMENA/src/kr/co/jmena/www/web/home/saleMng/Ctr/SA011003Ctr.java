@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 import kr.co.jmena.www.web.home.saleMng.Vo.SA011003VO;
@@ -279,5 +280,40 @@ public class SA011003Ctr {
 	
 	}
 	
-	
+
+	@RequestMapping("/home/deleteEnaIpgumMst.do")
+	public ModelAndView deleteEnaIpgumMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011003VO vo = new SA011003VO();
+		
+		vo.setIPGUMID(request.getParameter("IPGUMID"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		
+
+		if (SA011003Biz.deleteEnaIpgumDtl(vo) == true) {
+			if (SA011003Biz.deleteEnaIpgumMst(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 삭제하였습니다.";
+			} else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]선택된 입금관리 전체 삭제 중 오류가 발생하였습니다.";
+			}
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]선택된 입금관리 상세데이터 삭제 중 오류가 발생하였습니다.";
+		}
+		
+		
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataBuyMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+
 }
