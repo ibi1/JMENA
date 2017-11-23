@@ -495,4 +495,72 @@ public class SA011001Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}
+	
+	
+	@RequestMapping("/home/SA011001_searchPopup.do")
+	public ModelAndView SA011001_searchPopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		return new ModelAndView("home/saleMng/SA011001_searchPopup");
+	}
+	
+	@RequestMapping("/home/selectListEanSaleMstPopup.do")
+	public ModelAndView selectListEanSaleMstPopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEDATE(request.getParameter("SALEDATE"));
+		
+		List<SA011001VO> lst = SA011001Biz.selectListEanSaleMstPopup(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
+			
+			obj.put("SALEID", lst.get(i).getSALEID());
+			obj.put("SALEDATE", lst.get(i).getSALEDATE());
+			obj.put("MANAGENO", lst.get(i).getMANAGENO());
+			obj.put("CITYCODE", lst.get(i).getCITYCODE());
+			obj.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
+			obj.put("ADDRESS", lst.get(i).getADDRESS());
+			obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
+			obj.put("OWNERJUMINID", lst.get(i).getOWNERJUMINID());
+			obj.put("CONBM2", lst.get(i).getCONBM2());
+			obj.put("CONJM2", lst.get(i).getCONJM2());
+			obj.put("CONBPY", lst.get(i).getCONBPY());
+			obj.put("CONJPY", lst.get(i).getCONJPY());
+			obj.put("SALEGUBUN", lst.get(i).getSALEGUBUN());
+			obj.put("SALERCD", lst.get(i).getSALERCD());
+			obj.put("BUYID", lst.get(i).getBUYID());
+			obj.put("CONNAME", lst.get(i).getCONNAME());
+			obj.put("CONJUMINID", lst.get(i).getCONJUMINID());
+			obj.put("CONADDRESS", lst.get(i).getCONADDRESS());
+			obj.put("CONTELNO", lst.get(i).getCONTELNO());
+			obj.put("CONM2", lst.get(i).getCONM2());
+			obj.put("CONPY", lst.get(i).getCONPY());
+			obj.put("REMARK", lst.get(i).getREMARK());
+			obj.put("SALEAMT", lst.get(i).getSALEAMT());
+			obj.put("SALEDANGA", lst.get(i).getSALEDANGA());
+			obj.put("DCGUBUN", lst.get(i).getDCGUBUN());
+			obj.put("DCRATE", lst.get(i).getDCRATE());
+			obj.put("DCAMT", lst.get(i).getDCAMT());
+			obj.put("SELLAMT", lst.get(i).getSELLAMT());
+			obj.put("AGENCYAMT", lst.get(i).getAGENCYAMT());
+			obj.put("JOINYN", lst.get(i).getJOINYN());
+			obj.put("REGYN", lst.get(i).getREGYN());
+			obj.put("REGDATE", lst.get(i).getREGDATE());
+			obj.put("CANCELYN", lst.get(i).getCANCELYN());
+			obj.put("CANCELDATE", lst.get(i).getCANCELDATE());
+			
+			jCell.add(obj);
+			
+		}
+		
+		json.put("records", lst.size());
+		json.put("rows", jCell);
+		
+		logger.debug("[selectListEanSaleMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
 }

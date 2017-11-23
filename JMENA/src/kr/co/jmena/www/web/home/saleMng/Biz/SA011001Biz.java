@@ -193,4 +193,16 @@ public class SA011001Biz {
 		return chkFlag;
 	}
 	
+	public List<SA011001VO> selectListEanSaleMstPopup(SA011001VO vo) throws Exception {
+		List<SA011001VO> lst = null;
+
+		try {
+			lst = SA011001Dao.selectListEanSaleMstPopup(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+	
 }

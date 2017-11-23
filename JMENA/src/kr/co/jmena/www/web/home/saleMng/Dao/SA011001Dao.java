@@ -139,4 +139,11 @@ public class SA011001Dao extends SqlMapClientDaoSupport {
 		return chkFlag;
 	}
 	
+	public List<SA011001VO> selectListEanSaleMstPopup(SA011001VO vo) throws DataAccessException {
+		List<SA011001VO> lst = null;	
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEanSaleMstPopup", vo);
+		
+		return lst;
+	}
 }

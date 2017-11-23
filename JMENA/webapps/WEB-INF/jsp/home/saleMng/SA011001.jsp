@@ -266,7 +266,7 @@
 					{name:"DCAMT",			index:'DCAMT',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"SELLAMT",		index:'SELLAMT',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"AGENCYAMT",		index:'AGENCYAMT',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"JOINYN",			index:'JOINYN',			width:100,	align:'center',	sortable:false,	hidden:false},
+					{name:"JOINYN",			index:'JOINYN',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"REGYN",			index:'REGYN',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"REGDATE",		index:'REGDATE',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CANCELYN",		index:'CANCELYN',		width:100,	align:'center',	sortable:false,	hidden:true},
@@ -815,7 +815,9 @@
 				}
 				
 				//팝업
-				alert("팝업 준비중...");
+				var popUrl = "/home/SA011001_searchPopup.do";	//팝업창에 출력될 페이지 UR
+				var popOption = "width=1200, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				window.open(popUrl,"매출관리",popOption);
 			});
 		})
 		
