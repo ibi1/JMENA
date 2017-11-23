@@ -315,5 +315,12 @@ public class SA011003Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}
+	
+	@RequestMapping("/home/SA011003_salePopup.do")
+	public ModelAndView SA011003_salePopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		return new ModelAndView("home/saleMng/SA011003_salePopup");
+	}
+	
 
 }
