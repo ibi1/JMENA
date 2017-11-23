@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.saleMng.Dao.SA011003Dao;
 import kr.co.jmena.www.web.home.saleMng.Vo.SA011003VO;
 
@@ -106,5 +107,28 @@ public class SA011003Biz {
 		return updateCnt;
 	}	
 	
+	public boolean deleteEnaIpgumMst(SA011003VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SA011003Dao.deleteEnaIpgumMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+
+	public boolean deleteEnaIpgumDtl(SA011003VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SA011003Dao.deleteEnaIpgumDtl(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
 	
 }

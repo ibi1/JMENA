@@ -171,8 +171,8 @@
 			IPGUMAMT = #IPGUMAMT#,
 			IPGUMPERSON = #IPGUMPERSON#,
 			BRANCHCODE = #BRANCHNAME#,
-			SALERCD = #SALERCD#,
-			ADDRESS = #KNAME#,
+			SALERCD = #KNAME#,
+			ADDRESS = #ADDRESS#,
 			CONNAME = #CONNAME#,
 		<isNotEmpty property="CONPY">
 			CONPY = #CONPY#,
@@ -223,5 +223,15 @@
 
 
 
+	<delete id="deleteEnaIpgumMst">
+		DELETE FROM sa_ipgummst
+		WHERE IPGUMID = #IPGUMID#
+	</delete>
+
+
+	<delete id="deleteEnaIpgumDtl">
+		DELETE FROM sa_ipgumdtl
+		WHERE IPGUMID = #IPGUMID#
+	</delete>
 
 </sqlMap>
