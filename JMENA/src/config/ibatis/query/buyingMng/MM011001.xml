@@ -330,7 +330,7 @@
 	
 	<select id="selectSumSaleMst" resultMap="sumSaleMst">
 		SELECT 
-			IFNULL(CAST(SUM(CONM2) AS CHAR), 0) AS CONM2, IFNULL(CAST(SUM(CONPY) AS CHAR), 0) AS CONPY 
+			IFNULL(CAST(SUM(CONM2) AS DECIMAL(12, 0)), 0) AS CONM2, IFNULL(CAST(SUM(CONPY) AS DECIMAL(12, 0)), 0) AS CONPY 
 		FROM sa_salemst 
 		WHERE BUYID = #BUYID#
 	</select>

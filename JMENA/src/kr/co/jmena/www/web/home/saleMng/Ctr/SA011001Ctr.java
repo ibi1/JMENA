@@ -41,7 +41,27 @@ public class SA011001Ctr {
 
 		return new ModelAndView("home/saleMng/SA011001");
 	}
-
+	
+	
+	@RequestMapping("/home/selectDataSaleHistoryTb004.do")
+	public ModelAndView selectDataSaleHistoryTb004(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		
+		int cnt = SA011001Biz.selectDataSaleHistoryTb004(vo);
+		
+		JSONObject json = new JSONObject();
+		
+		String resultMsg = (cnt > 0) ? "Y" : "N";
+		
+		json.put("resultMsg", resultMsg);
+		
+		logger.debug("[selectDataSaleHistoryTb004]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
 	/**
 	 * @name 매출관리 화면
 	 * @param request
@@ -109,6 +129,123 @@ public class SA011001Ctr {
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListEanSaleMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/insertDataSaleMst.do")
+	public ModelAndView insertDataSaleMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		//mst
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setSALEDATE(request.getParameter("SALEDATE"));
+		vo.setSALEGUBUN(request.getParameter("SALEGUBUN"));
+		vo.setSALERCD(request.getParameter("SALERCD"));
+		vo.setBUYID(request.getParameter("MANAGENO"));
+		vo.setMANAGENO(request.getParameter("MANAGENO"));
+		vo.setCONNAME(request.getParameter("CONNAME"));
+		vo.setCONJUMINID(request.getParameter("CONJUMINID"));
+		vo.setCONADDRESS(request.getParameter("CONADDRESS"));
+		vo.setCONTELNO(request.getParameter("CONTELNO"));
+		vo.setCONM2(request.getParameter("CONM2"));
+		vo.setCONPY(request.getParameter("CONPY"));
+		vo.setREMARK(request.getParameter("REMARK"));
+		
+		//dtl
+		vo.setSALEAMT(request.getParameter("SALEAMT"));
+		vo.setSALEDANGA(request.getParameter("SALEDANGA"));
+		vo.setDCGUBUN(request.getParameter("DCGUBUN"));
+		vo.setDCRATE(request.getParameter("DCRATE"));
+		vo.setDCAMT(request.getParameter("DCAMT"));
+		vo.setSELLAMT(request.getParameter("SELLAMT"));
+		vo.setAGENCYAMT(request.getParameter("AGENCYAMT"));
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		String IU_Flag = request.getParameter("S_FLAG_L");
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if ("I".equals(IU_Flag)) {
+			if (SA011001Biz.insertDataSaleMst(vo) == true) {
+				json.put("SALEID", vo.getSALEID_PK());
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 저장하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]저장 중 오류가 발생하였습니다.";
+			 }
+		} else if ("U".equals(IU_Flag)) {
+			if (SA011001Biz.updateDataSaleMst(vo) == true) {
+				json.put("SALEID", vo.getSALEID());
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 수정하였습니다.";
+			 } else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]수정 중 오류가 발생하였습니다.";
+			 }
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]매출관리 처리 중 오류가 발생했습니다.";
+		}
+		
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[insertDataSaleMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/deleteDataSaleMst.do")
+	public ModelAndView deleteDataSaleMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALEID(request.getParameter("SALEID"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (SA011001Biz.deleteAllSaleHistoryTb(vo) == true) {
+			if (SA011001Biz.deleteAllJointnameTb(vo) == true) {
+				if (SA011001Biz.deleteAllIpgumScheduleTb(vo) == true) {
+					if (SA011001Biz.deleteDataSaleDtl(vo) == true) {
+						if (SA011001Biz.deleteDataSaleMst(vo) == true) {
+							resultCode ="SUCCESS";
+							resultMsg = "정상적으로 삭제하였습니다.";
+						} else {
+							resultCode ="FAILED";
+							 resultMsg = "[ERROR]선택된 매출 삭제 중 오류가 발생하였습니다.";
+						}
+					} else {
+						 resultCode ="FAILED";
+						 resultMsg = "[ERROR]선택된 매출 상세 삭제 중 오류가 발생하였습니다.";
+					}
+				} else {
+					resultCode ="FAILED";
+					resultMsg = "[ERROR]선택된 입금 스케줄 관리 전체 삭제 중 오류가 발생하였습니다.";
+				}
+			} else {
+				resultCode ="FAILED";
+				resultMsg = "[ERROR]선택된 등기 관리 전체 삭제 중 오류가 발생하였습니다.";
+			}
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]계약 변동 관리 전체 삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataSaleMst]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}
@@ -559,7 +696,53 @@ public class SA011001Ctr {
 		json.put("records", lst.size());
 		json.put("rows", jCell);
 		
-		logger.debug("[selectListEanSaleMst]" + json);
+		logger.debug("[selectListEanSaleMstPopup]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/SA011001_searchManagePopup.do")
+	public ModelAndView SA011001_searchManagePopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		return new ModelAndView("home/saleMng/SA011001_searchManagePopup");
+	}
+	
+	@RequestMapping("/home/selectListEnaBuyMstPopup.do")
+	public ModelAndView selectListEnaBuyMstPopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+
+		List<MM011001VO> lst = SA011001Biz.selectListEnaBuyMstPopup(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
+
+			obj.put("BUYID", lst.get(i).getBUYID());
+			obj.put("BUYDATE", lst.get(i).getBUYDATE());
+			obj.put("BUYGUBUN", lst.get(i).getBUYGUBUN());
+			obj.put("MANAGENO", lst.get(i).getMANAGENO());
+			obj.put("CITYCODE", lst.get(i).getCITYCODE());
+			obj.put("CITYNAME", lst.get(i).getCITYNAME());
+			obj.put("BOROUGHCODE", lst.get(i).getBOROUGHCODE());
+			obj.put("BOROUGHNAME", lst.get(i).getBOROUGHNAME());
+			obj.put("USETYPE", lst.get(i).getUSETYPE());
+			obj.put("ADDRESS", lst.get(i).getADDRESS());
+			obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
+			obj.put("OWNERJUMINID", lst.get(i).getOWNERJUMINID());
+			obj.put("CONBM2", lst.get(i).getCONBM2());
+			obj.put("CONJM2", lst.get(i).getCONJM2());
+			obj.put("CONBPY", lst.get(i).getCONBPY());
+			obj.put("CONJPY", lst.get(i).getCONJPY());
+			
+			jCell.add(obj);
+			
+		}
+		
+		json.put("rows", jCell);
+		
+		logger.debug("[selectListEnaBuyMstPopup]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}

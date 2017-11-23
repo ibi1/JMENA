@@ -90,8 +90,6 @@
 			
 			$("#SUGUMTOTAL").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
 			
-			
-			
 			$("#CITYCODE").attr("disabled", true);
 			
 			f_selectListEnaDCode();
@@ -100,7 +98,7 @@
 			f_selectListEnaBranchCode();
 			f_selectListEnaDcGubun();
 			
-		   	f_selectListEnaSaleMst();
+			f_selectListEnaSaleMst();
 		   	
 			f_selectListEnaIpgumScheduleTb();
 			f_selectListEnaJointNameTb();
@@ -184,6 +182,8 @@
 						inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 					});
 					$("#SALEGUBUN").append(inHtml);
+					
+					$("#SALEGUBUN").change();
 				},
 				error:function(e){  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -339,6 +339,38 @@
 					$("#REGDATE").val(selRowData.REGDATE);
 					
 					f_selectListEnaSaleHistoryTb(selRowData.SALEID);
+					
+					//해약여부 확인
+					$.ajax({ 
+						type: 'POST' ,
+						url: "/home/selectDataSaleHistoryTb004.do", 
+						dataType : 'json' ,
+						data : {
+							SALEID : selRowData.SALEID
+						},
+						success: function(data){
+							var flag = (data.resultMsg == "Y") ? true : false;
+							
+							$("#insertButton").jqxButton({ disabled: flag });
+							$("#deleteButton").jqxButton({ disabled: flag });
+							$("#saveButton").jqxButton({ disabled: flag });
+					
+							$("#tab1InsertButton").jqxButton({ disabled: flag });
+							$("#tab1DeleteButton").jqxButton({ disabled: flag });
+							$("#tab1SaveButton").jqxButton({ disabled: flag });
+							
+							$("#tab2InsertButton").jqxButton({ disabled: flag });
+							$("#tab2DeleteButton").jqxButton({ disabled: flag });
+							$("#tab2SaveButton").jqxButton({ disabled: flag });
+							
+							$("#tab3InsertButton").jqxButton({ disabled: flag });
+							$("#tab3DeleteButton").jqxButton({ disabled: flag });
+							$("#tab3SaveButton").jqxButton({ disabled: flag });
+						},
+						error:function(e){  
+							alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+						}  
+					});
 				} ,
 				loadComplete: function(ids) {
 					var saleId = $("#SALEID").val();
@@ -764,6 +796,8 @@
 					return false;
 				}
 				
+				$("#MANAGENO").jqxInput({disabled: false});
+				
 				var msg = "";
 				if ($("#S_FLAG_L").val() == "I") {
 					msg = "저장하시겠습니까?";
@@ -780,15 +814,19 @@
 						dataType : 'json' , 
 						success: function(data){
 							$('#SALEID').jqxInput({disabled: true });
+							$("#MANAGENO").jqxInput({disabled: true});
 							alert(data.resultMsg);
 							
 							if (data.resultCode == "SUCCESS") {
-								f_selectListEnaBuyMst();
+								$("#SALEID").val(data.SALEID);
+								f_selectListEnaSaleMst();
 							} else {
 								$("#SALEDATE").focus();
 							}
+							
+							
 						},
-						error:function(e){  
+						error:function(e){
 							alert("[ERROR]매출관리 저장  중 오류가 발생하였습니다.");
 						}  
 					});
@@ -830,7 +868,9 @@
 				}
 				
 				//팝업
-				alert("팝업 준비중...");
+				var popUrl = "/home/SA011001_searchManagePopup.do";	//팝업창에 출력될 페이지 UR
+				var popOption = "width=1200, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				window.open(popUrl,"매출관리",popOption);
 			});
 		})
 		
@@ -1274,7 +1314,8 @@
 					return false;
 				}
 				
-				if (chgGubun == "003") {	//명의변경
+				if (chgGubun == "004") {	//해약					
+				} else if (chgGubun == "003") {	//명의변경
 					if (cellData.REMARK == "") {
 						alert("비고를 입력하셔야 합니다.");
 						
@@ -1351,6 +1392,7 @@
 							
 							alert(data.resultMsg);
 							
+							f_selectListEnaSaleMst();
 							f_selectListEnaSaleHistoryTb($("#SALEID").val());
 						},
 						error:function(e){  
@@ -1359,7 +1401,18 @@
 					});
 				} else {
 					v_rightLastSel_3 = 0;
+					f_selectListEnaSaleMst();
 					f_selectListEnaSaleHistoryTb($("#SALEID").val());
+				}
+			});
+		})
+		
+		$(function() {
+			$("#SALEGUBUN").change(function() {
+				if ($(this).val() == "001") {	//일반
+					$("#AGENCYAMT").jqxInput({ disabled: true });
+				} else { //위탁
+					$("#AGENCYAMT").jqxInput({ disabled: false });
 				}
 			});
 		})
@@ -1399,6 +1452,7 @@
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
+			<form id="SA011001">
 			<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
 			<table >
 				<tr>
@@ -1503,6 +1557,7 @@
 				</tr>
 			</table>
 		</div>
+		</form>
 		<div id="bottomDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<input type="hidden" id="S_FLAG_R_1" name="S_FLAG_R_1" />
 			<input type="hidden" id="S_FLAG_R_2" name="S_FLAG_R_2" />

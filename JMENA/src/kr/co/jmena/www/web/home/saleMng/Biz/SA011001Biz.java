@@ -3,8 +3,6 @@ package kr.co.jmena.www.web.home.saleMng.Biz;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.saleMng.Dao.SA011001Dao;
@@ -23,6 +21,15 @@ public class SA011001Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
+	
+	public int selectDataSaleHistoryTb004(SA011001VO vo) throws Exception {
+		try {
+			return SA011001Dao.selectDataSaleHistoryTb004(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+	}
+	
 	public List<SA011001VO> selectListEanSaleMst(SA011001VO vo) throws Exception {
 		List<SA011001VO> lst = null;
 
@@ -33,6 +40,103 @@ public class SA011001Biz {
 		}
 		
 		return lst;
+	}
+	
+	
+	public boolean insertDataSaleMst(SA011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SA011001Dao.insertDataSaleMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean updateDataSaleMst(SA011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SA011001Dao.updateDataSaleMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteAllSaleHistoryTb(SA011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			if (SA011001Dao.selectAllSaleHistoryTb(vo) > 0) {
+				chkFlag = SA011001Dao.deleteAllSaleHistoryTb(vo);
+			} else {
+				chkFlag = true;
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteAllJointnameTb(SA011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			if (SA011001Dao.selectAllJointnameTb(vo) > 0) {
+				chkFlag = SA011001Dao.deleteAllJointnameTb(vo);
+			} else {
+				chkFlag = true;
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteAllIpgumScheduleTb(SA011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			if (SA011001Dao.selectAllIpgumScheduleTb(vo) > 0) {
+				chkFlag = SA011001Dao.deleteAllIpgumScheduleTb(vo);
+			} else {
+				chkFlag = true;
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteDataSaleDtl(SA011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SA011001Dao.deleteDataSaleDtl(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
+	
+	public boolean deleteDataSaleMst(SA011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = SA011001Dao.deleteDataSaleMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
 	}
 	
 	public List<SA011001VO> selectListEnaIpgumScheduleTb(SA011001VO vo) throws Exception {
@@ -198,6 +302,18 @@ public class SA011001Biz {
 
 		try {
 			lst = SA011001Dao.selectListEanSaleMstPopup(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+	
+	public List<MM011001VO> selectListEnaBuyMstPopup(MM011001VO vo) throws Exception {
+		List<MM011001VO> lst = null;
+
+		try {
+			lst = SA011001Dao.selectListEnaBuyMstPopup(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}

@@ -36,6 +36,11 @@ public class MM011001VO {
 	private String LS_INSERTUSER;
 	private String LS_ADDRESS;
 	private String USERID;
+	private String CONBM2;
+	private String CONJM2;
+	private String CONBPY;
+	private String CONJPY;
+	
 
 	private String CITYNAME;
 	private String BOROUGHCODE;
@@ -361,6 +366,38 @@ public class MM011001VO {
 
 	public void setCONPY(String CONPY) {
 		this.CONPY = CONPY;
+	}
+
+	public String getCONBM2() {
+		return CONBM2;
+	}
+
+	public String getCONJM2() {
+		return CONJM2;
+	}
+
+	public String getCONBPY() {
+		return CONBPY;
+	}
+
+	public String getCONJPY() {
+		return CONJPY;
+	}
+
+	public void setCONBM2(String CONBM2) {
+		this.CONBM2 = CONBM2;
+	}
+
+	public void setCONJM2(String CONJM2) {
+		this.CONJM2 = CONJM2;
+	}
+
+	public void setCONBPY(String CONBPY) {
+		this.CONBPY = CONBPY;
+	}
+
+	public void setCONJPY(String CONJPY) {
+		this.CONJPY = CONJPY;
 	}
 	
 }

@@ -17,12 +17,105 @@ public class SA011001Dao extends SqlMapClientDaoSupport {
 	
 	private final String NAME_SPACE = "SA011001.";
 
+	public int selectDataSaleHistoryTb004(SA011001VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectDataSaleHistoryTb004", vo);
+
+		return cnt;
+	}
+	
 	public List<SA011001VO> selectListEanSaleMst(SA011001VO vo) throws DataAccessException {
 		List<SA011001VO> lst = null;	
 		
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEanSaleMst", vo);
 		
 		return lst;
+	}
+	
+	public boolean insertDataSaleMst(SA011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		String SALEID = (String) getSqlMapClientTemplate().insert(NAME_SPACE + "insertDataSaleMst", vo);
+		
+		vo.setSALEID(SALEID);
+		
+		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataSaleDtl", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean updateDataSaleMst(SA011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		int cnt = 0;
+		
+		if ((int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataSaleMst", vo) > 0) {
+			cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "updateDataSaleDtl", vo);
+		}
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public int selectAllSaleHistoryTb(SA011001VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectAllSaleHistoryTb", vo);
+
+		return cnt;
+	}
+	
+	public boolean deleteAllSaleHistoryTb(SA011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteAllSaleHistoryTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public int selectAllJointnameTb(SA011001VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectAllJointnameTb", vo);
+
+		return cnt;
+	}
+	
+	public boolean deleteAllJointnameTb(SA011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteAllJointnameTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public int selectAllIpgumScheduleTb(SA011001VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectAllIpgumScheduleTb", vo);
+
+		return cnt;
+	}
+	
+	public boolean deleteAllIpgumScheduleTb(SA011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteAllIpgumScheduleTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean deleteDataSaleDtl(SA011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteDataSaleDtl", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean deleteDataSaleMst(SA011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteDataSaleMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
 	}
 	
 	public List<SA011001VO> selectListEnaIpgumScheduleTb(SA011001VO vo) throws DataAccessException {
@@ -146,4 +239,13 @@ public class SA011001Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}
+	
+	public List<MM011001VO> selectListEnaBuyMstPopup(MM011001VO vo) throws DataAccessException {
+		List<MM011001VO> lst = null;	
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaBuyMstPopup", vo);
+		
+		return lst;
+	}
+	
 }

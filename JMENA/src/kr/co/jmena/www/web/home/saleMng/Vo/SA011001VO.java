@@ -2,6 +2,7 @@ package kr.co.jmena.www.web.home.saleMng.Vo;
 
 public class SA011001VO {
 	
+	private String SALEID_PK;
 	private String BUYID;
 	private String CANCELDATE;
 	private String CANCELYN;
@@ -423,6 +424,12 @@ public class SA011001VO {
 	}
 	public void setSUGUMAMT(String SUGUMAMT) {
 		this.SUGUMAMT = SUGUMAMT;
+	}
+	public String getSALEID_PK() {
+		return SALEID_PK;
+	}
+	public void setSALEID_PK(String SALEID_PK) {
+		this.SALEID_PK = SALEID_PK;
 	}
 
 	

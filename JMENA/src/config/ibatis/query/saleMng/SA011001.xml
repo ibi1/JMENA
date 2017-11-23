@@ -4,7 +4,27 @@
 
 <sqlMap namespace="SA011001">
 	<typeAlias alias="SA011001VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA011001VO"/>
+	<typeAlias alias="MM011001VO" type="kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO"/>
 
+	<resultMap id="BuyMstData" class="MM011001VO">
+		<result property="BUYID"			column="BUYID"/>
+		<result property="BUYDATE"			column="BUYDATE"/>
+		<result property="BUYGUBUN"			column="BUYGUBUN"/>
+		<result property="MANAGENO"			column="MANAGENO"/>
+		<result property="CITYCODE"			column="CITYCODE"/>
+		<result property="CITYNAME"			column="CITYNAME"/>
+		<result property="BOROUGHCODE"		column="BOROUGHCODE"/>
+		<result property="BOROUGHNAME"		column="BOROUGHNAME"/>
+		<result property="USETYPE"			column="USETYPE"/>
+		<result property="ADDRESS"			column="ADDRESS"/>
+		<result property="OWNERNAME"		column="OWNERNAME"/>
+		<result property="OWNERJUMINID"		column="OWNERJUMINID"/>
+		<result property="CONBM2"		column="CONBM2"/>
+		<result property="CONJM2"		column="CONJM2"/>
+		<result property="CONBPY"		column="CONBPY"/>
+		<result property="CONJPY"		column="CONJPY"/>
+	</resultMap>
+	
 	<resultMap id="saleMstDataList" class="SA011001VO">
 		<result property="SALEID"		column="SALEID"/>
 		<result property="SALEDATE"		column="SALEDATE"/>
@@ -84,15 +104,23 @@
 		<result property="REMARK"		column="REMARK"/>
 	</resultMap>
 
+
+	<select id="selectDataSaleHistoryTb004" resultClass="java.lang.Integer">
+		SELECT COUNT(SALEID) AS CNT 
+		FROM sa_salehistorytb
+		WHERE SALEID = #SALEID#
+		AND CHGGUBUN = '004'
+	</select>
+	
 	<select id="selectListEanSaleMst" resultMap="saleMstDataList">
 		SELECT
 			T3.MANAGENO, T3.CITYCODE, 
 			(SELECT IN1.BRANCHCODE FROM hr_insamst IN1 WHERE IN1.INSACODE = T1.SALERCD) AS BRANCHCODE, 
 			T3.ADDRESS, T3.OWNERNAME, T3.OWNERJUMINID,
-			CAST(((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID)) AS CHAR) AS CONBM2,
-			CAST(((SELECT IFNULL(IN2.BUYM2, 0) AS BUYM2 FROM mm_buymst IN2 WHERE IN2.BUYID = T1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS CHAR) AS CONJM2,
-			CAST(((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID)) AS CHAR) AS CONBPY, 
-			CAST(((SELECT IFNULL(IN2.BUYPY, 0) AS BUYPY FROM mm_buymst IN2 WHERE IN2.BUYID = T1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS CHAR) AS CONJPY,
+			CAST(((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID)) AS DECIMAL(12, 0)) AS CONBM2,
+			CAST(((SELECT IFNULL(IN2.BUYM2, 0) AS BUYM2 FROM mm_buymst IN2 WHERE IN2.BUYID = T1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS DECIMAL(12, 0)) AS CONJM2,
+			CAST(((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID)) AS DECIMAL(12, 0)) AS CONBPY, 
+			CAST(((SELECT IFNULL(IN2.BUYPY, 0) AS BUYPY FROM mm_buymst IN2 WHERE IN2.BUYID = T1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS DECIMAL(12, 0)) AS CONJPY,
 			T1.SALEID, T1.SALEDATE, T1.SALEGUBUN, T1.SALERCD, T1.BUYID, T1.CONNAME, T1.CONJUMINID, T1.CONADDRESS, T1.CONTELNO, T1.CONM2, T1.CONPY,
 			T1.REMARK, T2.SALEAMT, T2.SALEDANGA, T2.DCGUBUN, T2.DCRATE, T2.DCAMT, T2.SELLAMT, T2.AGENCYAMT, T2.JOINYN, T2.REGYN, T2.REGDATE, T2.CANCELYN, T2.CANCELDATE
 		FROM sa_salemst T1, sa_saledtl T2, mm_buymst T3
@@ -114,7 +142,7 @@
 		ORDER BY T1.SALEDATE DESC
 	</select>
 	
-	<update id="updateEnaSaleMst">
+	<update id="updateDataSaleMst">
 		UPDATE sa_salemst
 		SET
 			SALEDATE = #SALEDATE#,
@@ -128,14 +156,39 @@
 			CONM2 = #CONM2#,
 			CONPY = #CONPY#,
 			REMARK = #REMARK#,
-			UPDATEUSER = #UPDATEUSER#,
-			UPDATEDATE = SYSDATE()
+			UPDATEUSER = #USERID#,
+			UPDATEDATE = NOW()
 		WHERE SALEID = #SALEID#
 	</update>
 	
-	<insert id="insertEnaSaleMst">
-		INSERT INTO sa_salemst
-		(
+	<update id="updateDataSaleDtl">
+		UPDATE sa_saledtl
+		SET
+			SALEAMT = #SALEAMT#,
+			SALEDANGA = #SALEDANGA#,
+			DCGUBUN = #DCGUBUN#,
+			DCRATE = #DCRATE#,
+			DCAMT = #DCAMT#,
+			SELLAMT = #SELLAMT#,
+			<isEmpty property="AGENCYAMT">
+				AGENCYAMT = NULL
+			</isEmpty>
+			<isNotEmpty property="AGENCYAMT">
+				AGENCYAMT = #AGENCYAMT#
+			</isNotEmpty>
+		WHERE SALEID = #SALEID#
+	</update>
+	
+	<insert id="insertDataSaleMst">		
+		<selectKey resultClass="java.lang.String" keyProperty="SALEID_PK">
+   			SELECT 
+				(SELECT 
+					CONCAT('SA', DATE_FORMAT(NOW(), '%y%m'), LPAD(IFNULL(MAX(SUBSTR(SALEID, 7, 4)), 0) + 1, 4, 0)) AS SALEID 
+				FROM sa_salemst T1
+				WHERE SUBSTR(SALEID, 3, 4) = DATE_FORMAT(NOW(), '%y%m') ) AS SALEID_PK
+			FROM dual
+  		</selectKey>
+		INSERT INTO sa_salemst (
 			SALEID,
 			SALEDATE,
 			SALEGUBUN,
@@ -148,11 +201,9 @@
 			CONM2,
 			CONPY,
 			REMARK,
-			INSERTUSER,
-			INSERTDATE
-		)
-		VALUES(
-			#SALEID#,
+			INSERTUSER
+		) VALUES (
+			#SALEID_PK#,
 			#SALEDATE#,
 			#SALEGUBUN#,
 			#SALERCD#,
@@ -164,11 +215,80 @@
 			#CONM2#,
 			#CONPY#,
 			#REMARK#,
-			#INSERTUSER#,
-			SYSDATE()
+			#USERID#
+		)
+	</insert>
+	
+	<insert id="insertDataSaleDtl">
+		INSERT INTO sa_saledtl (
+			SALEID,
+			SALEAMT,
+			SALEDANGA,
+			DCGUBUN,
+			DCRATE,
+			DCAMT,
+			SELLAMT,
+			AGENCYAMT
+		) VALUES (
+			#SALEID#,
+			#SALEAMT#,
+			#SALEDANGA#,
+			#DCGUBUN#,
+			#DCRATE#,
+			#DCAMT#,
+			#SELLAMT#,
+			<isEmpty property="AGENCYAMT">
+				NULL
+			</isEmpty>
+			<isNotEmpty property="AGENCYAMT">
+				#AGENCYAMT#
+			</isNotEmpty>
 		)
 	</insert>
 
+	<select id="selectAllSaleHistoryTb" resultClass="java.lang.Integer">
+		SELECT COUNT(SALEID) AS CNT 
+		FROM sa_salehistorytb
+		WHERE SALEID = #SALEID#
+	</select>
+	
+	<delete id="deleteAllSaleHistoryTb">
+		DELETE FROM sa_salehistorytb
+		WHERE SALEID = #SALEID#
+	</delete>
+	
+	<select id="selectAllJointnameTb" resultClass="java.lang.Integer">
+		SELECT COUNT(SALEID) AS CNT 
+		FROM sa_jointnametb
+		WHERE SALEID = #SALEID#
+	</select>
+	
+	<delete id="deleteAllJointnameTb">
+		DELETE FROM sa_jointnametb
+		WHERE SALEID = #SALEID#
+	</delete>
+	
+	<select id="selectAllIpgumScheduleTb" resultClass="java.lang.Integer">
+		SELECT COUNT(SALEID) AS CNT 
+		FROM sa_ipgumscheduletb
+		WHERE SALEID = #SALEID#
+	</select>
+	
+	<delete id="deleteAllIpgumScheduleTb">
+		DELETE FROM sa_ipgumscheduletb
+		WHERE SALEID = #SALEID#
+	</delete>
+
+	<delete id="deleteDataSaleDtl">
+		DELETE FROM sa_saledtl
+		WHERE SALEID = #SALEID#
+	</delete>
+	
+	<delete id="deleteDataSaleMst">
+		DELETE FROM sa_salemst
+		WHERE SALEID = #SALEID#
+	</delete>
+	
 	<select id="selectListEnaIpgumScheduleTb" resultMap="ipgumScheduleTbDataList">
 		SELECT 
 			T1.SALEID, T1.IPGUMSEQ, 
@@ -420,5 +540,48 @@
 			AND T1.SALEDATE = #SALEDATE#
 		</isNotEmpty>
 		ORDER BY T1.SALEDATE, T1.SALEID DESC
+	</select>
+	
+	<select id="selectListEnaBuyMstPopup" resultMap="BuyMstData">
+		SELECT 
+			A1.BUYID,
+			A1.BUYDATE,
+			A1.BUYGUBUN,
+			A1.MANAGENO,
+			A1.CITYCODE,
+			A1.CITYNAME,
+			A1.BOROUGHCODE,
+			A1.BOROUGHNAME,
+			A1.USETYPE,
+			A1.ADDRESS,
+			A1.OWNERNAME,
+			A1.OWNERJUMINID,
+			A1.CONBM2,
+			A1.CONJM2,
+			A1.CONBPY, 
+			A1.CONJPY
+		FROM (
+			SELECT 
+				T1.BUYID,
+				T1.BUYDATE,
+				T1.BUYGUBUN,
+				T1.MANAGENO,
+				T1.CITYCODE,
+				(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
+				T1.BOROUGHCODE,
+				(SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T1.CITYCODE AND BOROUGHCODE = T1.BOROUGHCODE) AS BOROUGHNAME,
+				T1.USETYPE,
+				T1.ADDRESS,
+				T1.OWNERNAME,
+				T1.OWNERJUMINID,
+				CAST(((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID)) AS DECIMAL(12, 0)) AS CONBM2,
+				CAST((T1.BUYM2 - ((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS DECIMAL(12, 0)) AS CONJM2,
+				CAST(((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID)) AS DECIMAL(12, 0)) AS CONBPY, 
+				CAST((T1.BUYPY - ((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS DECIMAL(12, 0)) AS CONJPY
+			FROM mm_buymst T1
+			WHERE 1=1) A1
+		WHERE 1=1
+		AND A1.CONJM2 > 0
+		ORDER BY A1.BUYID
 	</select>
 </sqlMap>
