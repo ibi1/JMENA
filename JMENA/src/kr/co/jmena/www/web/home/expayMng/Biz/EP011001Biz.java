@@ -69,6 +69,31 @@ public class EP011001Biz {
 		return updateCnt;
 	}	
 	
+	public boolean deleteEnaSudangMst(EP011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = EP011001Dao.deleteEnaSudangMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}	
+	
+	public boolean deleteEnaSudangMstPTb(EP011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = EP011001Dao.deleteEnaSudangMstPTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}		
+	
+	
 	public List<EP011001VO> selectListEnaSudangPTb(EP011001VO vo) throws Exception {
 		List<EP011001VO> lst = null;
 

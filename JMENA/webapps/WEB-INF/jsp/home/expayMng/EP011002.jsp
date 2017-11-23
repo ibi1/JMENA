@@ -79,7 +79,25 @@
 				,{name:"INSACODE",		index:'INSACODE',		width:100,		align:'center'}
 				,{name:"KNAME",			index:'KNAME',			width:100,		align:'center'}
 				,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-				,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'right',editable:true,edittype:'text',
+					editoptions:{
+						dataEvents:[{
+							type:'keydown',
+							fn:function(e){
+								alert("?");
+								if(e.keyCode == 9 || e.keyCode == 13){      //Enter Key or Tab Key
+									alert("oh ho~");;
+								}
+								alert("oh ho~");
+								if($("#bottomList [name=PAYAMT] ").val() == ""){
+									alert("지급 금액을 입력 해 주세요.");
+									return;
+								}else{
+									paycal();								
+								}
+							}
+						}]
+					}}	
 				,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"DAILYAMT",		index:'DAILYAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"TOTALAMT",		index:'TOTALAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -315,6 +333,8 @@
 			$('#leftList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 	
 			var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+			
+			var data = $("#leftList").getRowData();
 	
 	//			if (cellData.DEPTCODE == "") {
 	//				alert("부서 코드를 입력하셔야 합니다.");
@@ -346,27 +366,30 @@
 			
 			
 			if (confirm(msg) == true) {
-				var formData = "PAYDATE=" + cellData.PAYDATE + 
-							   "&YEARMONTH=" + cellData.YEARMONTH + 
-							   "&INSACODE=" + cellData.INSACODE + 
-							   "&BRANCHCODE=" + cellData.BRANCHCODE + 
-							   "&DEPTCODE=" + cellData.DEPTCODE + 
-							   "&GRADE=" + cellData.GRADE + 
-							   "&DUTY=" + cellData.DUTY + 
-							   "&BASICAMT=" + cellData.BASICAMT + 
-							   "&ACTAMT=" + cellData.ACTAMT + 
-							   "&PRIZEAMT=" + cellData.PRIZEAMT + 
-							   "&DAILYAMT=" + cellData.DAILYAMT + 
-							   "&TOTALAMT=" + cellData.TOTALAMT + 
-							   "&TAXGUBUN=" + cellData.TAXGUBUN + 
-							   "&TAXINCOME=" + cellData.TAXINCOME + 
-							   "&TAXLOCAL=" + cellData.TAXLOCAL + 
-							   "&SUPPLYTAX=" + cellData.SUPPLYTAX + 
-							   "&DEDUCTAMT=" + cellData.DEDUCTAMT + 
-							   "&BANKID=" + cellData.BANKID+
-				               "&ACCTNO=" + cellData.ACCTNO+
-				               "&ACCTOWNER=" + cellData.ACCTOWNER+
-				               "&REMARK=" + cellData.REMARK;					
+				var formData = data;
+// 				var formData = "PAYDATE=" + cellData.PAYDATE + 
+// 							   "&YEARMONTH=" + cellData.YEARMONTH + 
+// 							   "&INSACODE=" + cellData.INSACODE + 
+// 							   "&BRANCHCODE=" + cellData.BRANCHCODE + 
+// 							   "&DEPTCODE=" + cellData.DEPTCODE + 
+// 							   "&GRADE=" + cellData.GRADE + 
+// 							   "&DUTY=" + cellData.DUTY + 
+// 							   "&BASICAMT=" + cellData.BASICAMT + 
+// 							   "&ACTAMT=" + cellData.ACTAMT + 
+// 							   "&PRIZEAMT=" + cellData.PRIZEAMT + 
+// 							   "&DAILYAMT=" + cellData.DAILYAMT + 
+// 							   "&TOTALAMT=" + cellData.TOTALAMT + 
+// 							   "&TAXGUBUN=" + cellData.TAXGUBUN + 
+// 							   "&TAXINCOME=" + cellData.TAXINCOME + 
+// 							   "&TAXLOCAL=" + cellData.TAXLOCAL + 
+// 							   "&SUPPLYTAX=" + cellData.SUPPLYTAX + 
+// 							   "&DEDUCTAMT=" + cellData.DEDUCTAMT + 
+// 							   "&BANKID=" + cellData.BANKID+
+// 				               "&ACCTNO=" + cellData.ACCTNO+
+// 				               "&ACCTOWNER=" + cellData.ACCTOWNER+
+// 				               "&REMARK=" + cellData.REMARK;	
+
+
 				
 				
 				$.ajax({ 

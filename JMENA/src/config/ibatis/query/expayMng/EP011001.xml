@@ -54,6 +54,7 @@
 		<result property="REGISTERSEQ"				column="REGISTERSEQ"/>		
 		<result property="PAYERNAME"				column="PAYERNAME"/>
 		<result property="PAYERID"					column="PAYERID"/>
+		<result property="SAUPOWNER"				column="SAUPOWNER"/>
 		<result property="PAYAMT"					column="PAYAMT"/>
 		<result property="TAXGUBUN"					column="TAXGUBUN"/>
 		<result property="TAXINCOME"				column="TAXINCOME"/>
@@ -232,6 +233,17 @@
 		AND PAYSEQ = #PAYSEQ#
 	</update>
 
+	<delete id="deleteEnaSudangMst">
+		DELETE FROM sa_sudangmst
+		WHERE SALEID = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+	</delete>
+
+	<delete id="deleteEnaSudangMstPTb">
+		DELETE FROM sa_sudangpayertb
+		WHERE SALEID = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+	</delete>
 	
 	<select id="selectListEnaSudangPTb" resultMap="EP011001Datas">
 		SELECT 
@@ -240,6 +252,7 @@
 			T1.REGISTERSEQ,
 			T1.PAYERNAME,
 			CONCAT(SUBSTR(T1.PAYERID, 1, 6),  '-' , SUBSTR(T1.PAYERID, 7, 13)) AS PAYERID,
+			T1.SAUPOWNER,
 			T1.PAYAMT,
 			(SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '013' AND DCODE = T1.TAXGUBUN) AS TAXGUBUN,
 			T1.TAXINCOME,
@@ -266,6 +279,7 @@
 			REGISTERSEQ,
 			PAYERNAME,
 			PAYERID,
+			SAUPOWNER,
 			PAYAMT,
 			TAXGUBUN,
 			TAXINCOME,
@@ -285,6 +299,7 @@
 			(SELECT IFNULL(MAX(REGISTERSEQ),0) +1 FROM sa_sudangpayertb s WHERE SALEID = #SALEID# AND PAYSEQ = #PAYSEQ#),
 			#PAYERNAME#,
 			#PAYERID#,
+			#SAUPOWNER#,
 			#PAYAMT#,
 			#TAXGUBUN#,
 			#TAXINCOME#,
@@ -305,6 +320,7 @@
 		SET
 			PAYERNAME = #PAYERNAME#,
 			PAYERID = #PAYERID#,
+			SAUPOWNER = #SAUPOWNER#,
 			PAYAMT = #PAYAMT#,
 			TAXGUBUN = #TAXGUBUN#,
 			TAXINCOME = #TAXINCOME#,
@@ -317,9 +333,9 @@
 			REMARK = #REMARK#,
 			UPDATEUSER = #USERID#,
 			UPDATEDATE = SYSDATE()
-		WHERE T1.SALEID = #SALEID#
-		AND T1.PAYSEQ = #PAYSEQ#
-		AND T1.REGISTERSEQ = #REGISTERSEQ#
+		WHERE SALEID = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+		AND REGISTERSEQ = #REGISTERSEQ#
 	</update>
 	
 	<delete id="deleteEnaSudangPTb">

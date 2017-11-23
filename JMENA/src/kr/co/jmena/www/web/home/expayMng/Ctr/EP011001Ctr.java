@@ -228,6 +228,44 @@ public class EP011001Ctr {
 		return new ModelAndView("jsonView", json);	
 	}
 	
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/deleteEnaSudangMst.do")
+	public ModelAndView deleteEnaSudangMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		EP011001VO vo = new EP011001VO();
+				
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (EP011001Biz.deleteEnaSudangMst(vo) == true) {
+			if (EP011001Biz.deleteEnaSudangMstPTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 삭제하였습니다.";
+			}else{
+				resultCode ="FAILED";
+				resultMsg = "[ERROR] 신고인 삭제 중 오류가 발생하였습니다.";
+			}
+			
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR] 수당관리 삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteEnaSudangMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}	
+		
+	
 	/**
 	 * @name 수당관리 화면 - 신고인 관리
 	 * @param request
@@ -264,6 +302,7 @@ public class EP011001Ctr {
 				obj.put("REGISTERSEQ", lst.get(i).getREGISTERSEQ());
 				obj.put("PAYERNAME", lst.get(i).getPAYERNAME());
 				obj.put("PAYERID", lst.get(i).getPAYERID());
+				obj.put("SAUPOWNER", lst.get(i).getSAUPOWNER());
 				obj.put("PAYAMT", lst.get(i).getPAYAMT());
 				obj.put("TAXGUBUN", lst.get(i).getTAXGUBUN());
 				obj.put("TAXINCOME", lst.get(i).getTAXINCOME());
@@ -306,6 +345,7 @@ public class EP011001Ctr {
 		
 		vo.setPAYERNAME(request.getParameter("PAYERNAME"));
 		vo.setPAYERID(request.getParameter("PAYERID"));
+		vo.setSAUPOWNER(request.getParameter("SAUPOWNER"));
 		vo.setPAYAMT(request.getParameter("PAYAMT"));
 		vo.setTAXGUBUN(request.getParameter("TAXGUBUN"));
 		vo.setTAXINCOME(request.getParameter("TAXINCOME"));

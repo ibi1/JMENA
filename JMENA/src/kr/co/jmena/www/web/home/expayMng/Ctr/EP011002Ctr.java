@@ -202,7 +202,7 @@ public class EP011002Ctr {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping("/home/updateEnaMonthPayMst.do")
+	@RequestMapping("/home/saveEnaMonthPayMst.do")
 	public ModelAndView saveEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		EP011002VO vo = new EP011002VO();		

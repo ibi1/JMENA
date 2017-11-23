@@ -56,6 +56,26 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 	}	
 	
 	
+	public boolean deleteEnaSudangMst(EP011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaSudangMst", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}		
+	
+	public boolean deleteEnaSudangMstPTb(EP011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaSudangMstPTb", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}		
+	
+	
+	
 	/**
 	 * 신고인 관리
 	 * @return

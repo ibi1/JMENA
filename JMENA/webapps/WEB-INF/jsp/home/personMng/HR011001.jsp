@@ -181,33 +181,17 @@
 		colModel:[
 			  {name:"INSACODE",			index:'INSACODE',			width:100,		align:'center', hidden:true}
 			, {name:"APPOINTSEQ",		index:'APPOINTSEQ',			width:100,		align:'center', hidden:true}
-			, {name:"APPOINTGUBUN",		index:'APPOINTGUBUN',		width:100,		align:'center', editable:true
-				, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=002", buildSelect:selectListEnaCode,
-					dataEvents:[{
-						type:'change',
-						fn:function(e){
-							//여기 수정해야 함.
-							var appGu = $("#bottomList1 [name=APPOINTGUBUN] ").val();
-							if(appGu == "001"){
-								
-							}else{
-								
-							}
-							
-
-							//$("#bottomList").setCell(ids,"TAXINCOME",taxincome);
-						}
-					}]					
-				
-				}}
+			, {name:"APPOINTGUBUN",		index:'APPOINTGUBUN',		width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=002", buildSelect:selectListEnaCode}}
 			, {name:"APPOINTDATE",		index:'APPOINTDATE',		width:100,		align:'center', editable:true}
 			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center', editable:true
 				, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1,
 					dataEvents:[{
 						type:'change',
 						fn:function(e){
+							alert("a");
+							$("#bottomList1").jqGrid('setColProp', 'APPOINTDEPT', {edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}});
 							//여기 수정해야 함.
-//							$("#bottomList1 [name=APPOINTBRANCH] option:selected").val();
+							$("#bottomList1 [name=APPOINTBRANCH] option:selected").val();
 							
 							//$("#bottomList").setCell(ids,"TAXINCOME",taxincome);
 						}
@@ -305,7 +289,7 @@
 			} ,
 			loadComplete: function() {				
 				
-			},	
+			},
 			hidegrid: false
 		});
 	}
@@ -925,6 +909,7 @@
 				}
 			});
 		})	
+		
 		
 </script>
 <body>

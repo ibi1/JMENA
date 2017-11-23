@@ -53,6 +53,7 @@ public class EP011001VO {
 	private String GRADE;
 	private String INSACODE;
 	private String PAYERID;
+	private String SAUPOWNER;
 	private String PAYERNAME;
 	private String PAYSEQ;
 	private String REGISTERSEQ;	
@@ -355,6 +356,12 @@ public class EP011001VO {
 	}
 	public void setKNAME(String kNAME) {
 		this.KNAME = kNAME;
+	}
+	public String getSAUPOWNER() {
+		return SAUPOWNER;
+	}
+	public void setSAUPOWNER(String sAUPOWNER) {
+		this.SAUPOWNER = sAUPOWNER;
 	}
 	public String getUSERID() {
 		return USERID;

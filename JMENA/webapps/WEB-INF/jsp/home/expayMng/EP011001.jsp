@@ -181,7 +181,8 @@
 				$("#REMARK").val(selRowData.REMARK);
 				$("#INSACODE").val(selRowData.INSACODE);
 				$("#KNAME").val(selRowData.KNAME);
-				$("#S_SALEID").val(selRowData.SALEID);			
+				$("#S_SALEID").val(selRowData.SALEID);
+				$("#PAYSEQ").val(selRowData.PAYSEQ);
 				searchbottomList();
 			} ,
 			
@@ -241,7 +242,7 @@
 			//height: '100%' ,
 			onSelectRow: function(ids){
 				var selRowData = $(this).jqGrid('getRowData', ids);
-				$("#PAYSEQ").val(selRowData.PAYSEQ);
+//				$("#PAYSEQ").val(selRowData.PAYSEQ);
 			} ,
 			loadComplete: function(ids) {
 				$("#S_SALEID").val("");
@@ -363,13 +364,7 @@
 				alert("매출을 선택해 주세요");
 				return;
 			}
-			var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 			
-			if (ids == null || ids == "") {
-				alert("그리드를 선택하셔야 합니다.");
-				
-				return;
-			}				
 			var popUrl = "/home/EP011001_2.do";
 			var popOption = "width=1120, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"신고인 관리",popOption);
@@ -489,8 +484,45 @@
 				});
 			}
 		}) 
-	})		
+	})	
+		
 	
+	$(function() {
+		$("#deleteButton").click(function() {
+			
+			var msg = "삭제하시겠습니까?";
+			var insacode = $("#INSACODE").val();
+			if (confirm(msg) == true) {
+				var formData = "SALEID=" + $("#SALEID").val()+
+								"PAYSEQ=" + $("#PAYSEQ").val() ;
+				
+				$.ajax({ 
+					type: 'POST' ,
+					data: formData,
+					url: "/home/deleteEnaSudangMst.do", 
+					dataType : 'json' , 
+					success: function(data){
+						if(data.rows[0].MSG == "SUCCESS"){
+							$("#S_FLAG_B1").val("U");							
+							v_rightLastSel = 0;
+							alert("삭제가 완료되었습니다.");
+							selectListEnaAppointItem(insacode);
+						}else{
+							alert("삭제 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+							
+						}
+						
+					},
+					error:function(e){  
+						alert("발령 사항을 삭제하는 중 오류가 발생하였습니다.");
+					}  	
+				});
+			} else {
+				v_rightLastSel = 0;
+				selectListEnaAppointItem(insacode);
+			}
+		});
+	})		
 	
 	$(function(){	
 		$("#insaButton").click(function(){
