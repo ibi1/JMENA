@@ -19,7 +19,7 @@
 			
 			f_selectListEnaSaleMstPopup(SALEDATE);
 		});
-	
+		
 		//매출관리 메인 그리드 팝업
 		function f_selectListEnaSaleMstPopup(SALEDATE){
 			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용

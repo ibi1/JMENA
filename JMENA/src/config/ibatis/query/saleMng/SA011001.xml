@@ -126,7 +126,7 @@
 		WHERE T1.SALEID = T2.SALEID
 		AND T1.BUYID = T3.BUYID
 		<isNotEmpty property="SL_SALEDATE_FR">
-			<isNotEmpty property="SL_SALEDATE_FR">
+			<isNotEmpty property="SL_SALEDATE_TO">
 				AND T1.SALEDATE BETWEEN #SL_SALEDATE_FR# AND #SL_SALEDATE_TO#   
 			</isNotEmpty>	
 		</isNotEmpty>

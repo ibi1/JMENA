@@ -157,7 +157,6 @@
 						inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 					});
 					$("#BRANCHNAME").append(inHtml);
-					f_selectListEnaSalerCode();
 				},
 				error:function(e){  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -233,7 +232,7 @@
 				loadError:function(){alert("Error~!!");},
 				colNames:['계약번호', '계약일자', 
 				          '관리번호', '지역구분', '지사구분', '주소', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
-				          '매출구분', '담당자', '매입번호', '게약자성명', '게약자주민번호', '계약자주소', 
+				          '매출구분', '담당자', '매입번호', '계약자성명', '계약자주민번호', '계약자주소', 
 				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '위탁수수료', 
 				          '공동명의구분', '등기여부', '등기일자', '해약여부', '해약일자'],
 				colModel:[
@@ -748,13 +747,6 @@
 					alert("매매대금을 입력하셔야 합니다.");
 					
 					$("#SALEAMT").focus();
-					return false;
-				}
-				
-				if ($("#SALEDANGA").val() == "") {
-					alert("매매단가를 입력하셔야 합니다.");
-					
-					$("#SALEDANGA").focus();
 					return false;
 				}
 				

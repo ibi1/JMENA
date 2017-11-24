@@ -42,7 +42,13 @@ public class SA011001Ctr {
 		return new ModelAndView("home/saleMng/SA011001");
 	}
 	
-	
+	/**
+	 * 해약여부 확인
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/home/selectDataSaleHistoryTb004.do")
 	public ModelAndView selectDataSaleHistoryTb004(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA011001VO vo = new SA011001VO();
@@ -632,7 +638,6 @@ public class SA011001Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}
-	
 	
 	@RequestMapping("/home/SA011001_searchPopup.do")
 	public ModelAndView SA011001_searchPopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
