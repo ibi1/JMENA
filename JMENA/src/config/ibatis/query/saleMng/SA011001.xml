@@ -103,8 +103,7 @@
 		<result property="CHGPY"		column="CHGPY"/>
 		<result property="REMARK"		column="REMARK"/>
 	</resultMap>
-
-
+	
 	<select id="selectDataSaleHistoryTb004" resultClass="java.lang.Integer">
 		SELECT COUNT(SALEID) AS CNT 
 		FROM sa_salehistorytb
