@@ -191,9 +191,9 @@
  				$("#S_BRANCHCODE", parent.opener.document).val(selRowData.BRANCHCODE);
 				$("#S_DEPTCODE", parent.opener.document).val(selRowData.DEPTCODE);
 	 			$("#S_KNAME", parent.opener.document).val(selRowData.KNAME);
- 				$("#S_INSACODE", parent.opener.document).val(selRowData.INSACODE);
+// 				$("#S_INSACODE", parent.opener.document).val(selRowData.INSACODE);
 				$(opener.location).attr("href", "javascript:f_selectListEnaDeptCode('4','"+selRowData.DEPTCODE+"');");		
-//				$(opener.location).attr("href", "javascript:selectListInsaMst();");				
+				$(opener.location).attr("href", "javascript:selectListInsaMst();");				
 
 
 				window.self.close();
