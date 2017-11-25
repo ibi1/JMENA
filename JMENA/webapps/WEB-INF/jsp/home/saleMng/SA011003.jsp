@@ -385,7 +385,7 @@
 				, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center', editable:true}
 				, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center', editable:false, hidden:true}
 			] ,
-			rowNum:10 ,
+			rowNum:100 ,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,
@@ -398,8 +398,11 @@
 			},
 			//height: '100%' ,
 			onSelectRow: function(id){
-				$("#S_FLAG_D").val("U");
-				
+				if (id > 0) {
+					$("#S_FLAG_D").val("U");
+				} else {
+					$("#S_FLAG_D").val("I");
+				}
 				
 				if( v_bottomCellId != id ){
 			        $(this).jqGrid('restoreRow',v_bottomCellId,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
@@ -424,9 +427,10 @@
 				$(txtEle[i]).val("");
 			}
 
-			f_selectListEnaIpgumMst();
 			$("#S_FLAG_L").val("I");
 			$("#S_FLAG_D").val("I");
+			f_selectListEnaIpgumMst();
+			f_selectListEnaIpgumDtl();
 			
 		});
 
@@ -481,7 +485,7 @@
 		
 		$("#searchButton").click(function() {
 			var ipgumdate = $("#IPGUMDATE").val();
-			alert("ipgumdate==>"+ipgumdate);
+			//alert("ipgumdate==>"+ipgumdate);
 			
 			if (ipgumdate == "") {
 				alert("입금일자를 입력하셔야 합니다.");
@@ -493,7 +497,11 @@
 			$("#SL_IPGUMDATE_FR").val(ipgumdate);
 			$("#SL_IPGUMDATE_TO").val(ipgumdate);
 			
+			$("#S_FLAG_L").val("I");
+			$("#S_FLAG_D").val("I");
+			
 			f_selectListEnaIpgumMst();
+			f_selectListEnaIpgumDtl();
 		});
 		
 		$("#addButton").click(function() {
@@ -522,12 +530,18 @@
 
 		$("#deleteButton2").click(function() {
 
+			//alert("v_bottomCellId==>"+v_bottomCellId+":S_FLAG_D=>"+$("#S_FLAG_D").val());
 			if($("#IPGUMID").val() == ""){
 				alert("입금일자 조회 후 삭제 할 수 없습니다.");
 				
 				return false;
 			}
 			
+			if(v_bottomCellId == 0 || v_bottomCellId == ""){
+				alert("그리드를 선택하셔야 합니다.");
+				
+				return false;
+			}
 			if ($("#S_FLAG_D").val() == "I") {
 				alert("데이터를 추가 중 일 경우 삭제 할 수 없습니다.");
 				
@@ -585,10 +599,13 @@
 			,SUGUMAMT:""
 			,IPGUMSEQ:$("#dtl_IPGUMSEQ").val()}; 
 		
-		$("#bottomList").addRowData(0, data, "first");
-		$('#bottomList').jqGrid('editRow', v_bottomCellId, true);
-//		$('#bottomList').jqGrid('saveRow',v_bottomCellId,false,'clientArray'); //선택된 놈 뷰 모드로 변경
-		
+		$("#bottomList").jqGrid("addRow", 0);
+		var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+		v_bottomCellId = ids;
+		$("#bottomList").jqGrid("setRowData", ids, data);
+
+		$("#bottomList").jqGrid('editRow',ids,true);  //해당 row가 수정모드(?)로 변경
+	
 	}
 	
 </script>
