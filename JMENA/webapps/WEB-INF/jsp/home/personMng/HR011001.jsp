@@ -277,7 +277,11 @@
 				,{name:"BANKID",		index:'BANKID',			width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
 				,{name:"ACCTNO",		index:'ACCTNO',			width:100,		align:'center', editable:true}
 				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center', editable:true}
-				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N",
+				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', sortable:false, editable: true, formatter:test, edittype:'checkbox', editoptions:{value:"Y:N"}}
+				
+				
+				
+				/* ,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N",
  						dataEvents:[{
  							type:'change',
  							fn:function(id){
@@ -305,7 +309,7 @@ return;
 // 								for(var i = 0 ; i < this.getGridParam("reccount") ;)
  							}
 						}]
-					}}
+					}} */
 				,{name:"REMARK",		index:'REMARK',			width:100,		align:'center', editable:true}
 			] ,
 			rowNum:10 ,
@@ -364,7 +368,13 @@ return;
 		});
 	}
 
+	function test(cellvalue, options, rowObject) {
+		return '<input type="checkbox"' + (cellvalue == "Y" ? 'checked="checked"' : '') + 'onclick="onClickTest(' + options.rowId +')"/>';
+	}
 	
+	function onClickTest(ids) {
+		$("#bottomList2").jqGrid('setSelection', ids, true);
+	}
 	
 	
 	

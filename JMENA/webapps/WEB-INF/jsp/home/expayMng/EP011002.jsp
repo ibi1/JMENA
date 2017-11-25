@@ -462,10 +462,12 @@
 		var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기		
 		var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기	
 		
- 		var actamt = $("#leftList").jqGrid('getCell',ids,"ACTAMT");
+// 		var actamt = $("#leftList").jqGrid('getCell',ids,"ACTAMT");
  		var actamt = $("#leftList").jqGrid('getCell',ids,"ACTAMT");
  		var dailyamt = $("#leftList").jqGrid('getCell',ids,"DAILYAMT");
  		var prizeamt = $("#leftList").jqGrid('getCell',ids,"PRIZEAMT");
+ 		
+ 		
 
 		var gijunAmt =  actamt + dailyamt + prizeamt ;
 
