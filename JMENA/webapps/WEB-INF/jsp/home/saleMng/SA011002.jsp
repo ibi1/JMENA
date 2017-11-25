@@ -51,9 +51,9 @@
 			$("#searchPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			$("#searchManageNoPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			
-			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 			$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});
-			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});
+			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 190, minLength: 1, disabled: true});
 			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1, disabled: true});
 			$("#CONBM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONJM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
@@ -909,15 +909,15 @@
 			<form id="SA011002">
 			<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
 			<input type="hidden" id="SALEGUBUN" name="SALEGUBUN" value="003"/>
-			<table>
+			<table width="98%">
 				<tr>
 					<th width="120">* 계약일자/번호</th>
-					<td colspan="3"><input type="text" id="SALEDATE" name="SALEDATE" /><input type="text" id="SALEID" name="SALEID" /></td>
-					<td><input type="button" id="searchPopButton"/></td>
+					<td colspan="2"><input type="text" id="SALEDATE" name="SALEDATE" /><input type="text" id="SALEID" name="SALEID" /></td>
+					<td colspan="2"><input type="button" id="searchPopButton"/></td>
 				</tr>
 				<tr>
 					<th width="120">* 담당자</th>
-					<td>
+					<td colspan="2">
 						<select id="SALERCD" name="SALERCD">
 						</select>
 					</td>
@@ -931,7 +931,7 @@
 				<tr>
 					<th width="120">관리번호</th>
 					<td><input type="text" id="MANAGENO" name="MANAGENO" /></td>
-					<td><input type="button" id="searchManageNoPopButton"/></td>
+					<td width="30"><input type="button" id="searchManageNoPopButton"/></td>
 					<th width="120">지역구분</th>
 					<td>
 						<select id="CITYCODE" name="CITYCODE">
@@ -941,41 +941,41 @@
 				</tr>
 				<tr>
 					<th width="120">주소</th>
-					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
+					<td colspan="4"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
 				</tr>
 				<tr>
 					<th width="120">분양/잔여면적</th>
-					<td><input type="text" id="CONBM2" name="CONBM2" /> / <input type="text" id="CONJM2" name="CONJM2" /></td>
+					<td colspan="2"><input type="text" id="CONBM2" name="CONBM2" /> / <input type="text" id="CONJM2" name="CONJM2" /></td>
 					<th width="120">분양/잔여평수</th>
 					<td><input type="text" id="CONBPY" name="CONBPY" /> / <input type="text" id="CONJPY" name="CONJPY" /></td>
 				</tr>
 				<tr>
 					<th width="120">차입자 성명</th>
-					<td><input type="text" id="CONNAME" name="CONNAME" /></td>
+					<td colspan="2"><input type="text" id="CONNAME" name="CONNAME" /></td>
 					<th width="120">차입자주민번호</th>
 					<td><input type="text" id="CONJUMINID" name="CONJUMINID" /></td>
 				</tr>
 				<tr>
 					<th width="120">차입자 연락처</th>
-					<td colspan="3"><input type="text" id="CONTELNO" name="CONTELNO" /></td>
+					<td colspan="4"><input type="text" id="CONTELNO" name="CONTELNO" /></td>
 				</tr>
 				<tr>
 					<th width="120">차입자 주소</th>
-					<td colspan="3"><input type="text" id="CONADDRESS" name="CONADDRESS" /></td>
+					<td colspan="4"><input type="text" id="CONADDRESS" name="CONADDRESS" /></td>
 				</tr>
 				<tr>
 					<th width="120">계약면적</th>
-					<td><input type="text" id="CONM2" name="CONM2" /></td>
+					<td colspan="2"><input type="text" id="CONM2" name="CONM2" /></td>
 					<th width="120">계약평수</th>
 					<td><input type="text" id="CONPY" name="CONPY" /></td>
 				</tr>
 				<tr>
 					<th width="120">차입형식</th>
-					<td><input type="radio" id="BRROWTYPE" name="BRROWTYPE" value="M"/> 월지급     <input type="radio" id="BRROWTYPE" name="BRROWTYPE"  value="Y"/> 년지급    </td>
+					<td colspan="4"><input type="radio" id="BRROWTYPE" name="BRROWTYPE" value="M"/> 월지급     <input type="radio" id="BRROWTYPE" name="BRROWTYPE"  value="Y"/> 년지급    </td>
 				</tr>
 				<tr>
 					<th width="120">차입대금</th>
-					<td><input type="text" id="BRROWAMT" name="BRROWAMT" /></td>
+					<td colspan="2"><input type="text" id="BRROWAMT" name="BRROWAMT" /></td>
 					<th width="120">차입기간</th>
 					<td>
 						<input type="text" id="BRROWPERIOD" name="BRROWPERIOD" /> 
@@ -985,13 +985,13 @@
 				</tr>
 				<tr>
 					<th width="120">지급이율</th>
-					<td><input type="text" id="PAYRATE" name="PAYRATE" /> % </td>
+					<td colspan="2"><input type="text" id="PAYRATE" name="PAYRATE" /> % </td>
 					<th width="120">지급이자</th>
 					<td><input type="text" id="PAYAMT" name="PAYAMT" /></td>
 				</tr>
 				<tr>
 					<th width="120">지급계좌</th>
-					<td><input type="text" id="PAYACCOUNT" name="PAYACCOUNT" /></td>
+					<td colspan="2"><input type="text" id="PAYACCOUNT" name="PAYACCOUNT" /></td>
 					<th width="120">지급은행</th>
 					<td>
 						<select id="PAYBANK" name="PAYBANK">
@@ -1001,29 +1001,29 @@
 				</tr>
 				<tr>
 					<th width="120">계좌주</th>
-					<td colspan="3"><input type="text" id="PAYOWNER" name="PAYOWNER" /></td>
+					<td colspan="4"><input type="text" id="PAYOWNER" name="PAYOWNER" /></td>
 				</tr>
 				<tr>
 					<th width="120">차입날짜</th>
-					<td><input type="text" id="BRROWDATE" name="BRROWDATE" /></td>
+					<td colspan="2"><input type="text" id="BRROWDATE" name="BRROWDATE" /></td>
 					<th width="120">만기날짜</th>
 					<td><input type="text" id="EXPIREDATE" name="EXPIREDATE" /></td>
 				</tr>
 				<tr>
 					<th width="120">만기연장</th>
-					<td><input type="checkbox" id="EXTENDYN" name="EXTENDYN" /></td>
+					<td colspan="2"><input type="checkbox" id="EXTENDYN" name="EXTENDYN" /></td>
 					<th width="120">연장날짜</th>
 					<td><input type="text" id="EXTENDDATE" name="EXTENDDATE" /></td>
 				</tr>
 				<tr>
 					<th width="120">중도해지</th>
-					<td><input type="checkbox" id="CANCELYN" name="CANCELYN" /></td>
+					<td colspan="2"><input type="checkbox" id="CANCELYN" name="CANCELYN" /></td>
 					<th width="120">해지날짜</th>
 					<td><input type="text" id="CANCELDATE" name="CANCELDATE" /></td>
 				</tr>
 				<tr>
 					<th width="120">비고</th>
-					<td colspan="3"><input type="text" id="REMARK" name="REMARK" onkeydown="f_saveButton();"/></td>
+					<td colspan="4"><input type="text" id="REMARK" name="REMARK" onkeydown="f_saveButton();"/></td>
 				</tr>
 			</table>
 			</form>
