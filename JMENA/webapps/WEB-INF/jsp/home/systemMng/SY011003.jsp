@@ -19,7 +19,7 @@
 			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-			$("#sysSearchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			
 			$("#S_USERNAME_L").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#S_USERID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -178,7 +178,7 @@
 		function f_onEncterUserId() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				$("#s_userIdSearchButton").click();
+				$("#searchButton").click();
 			}
 		}
 		
@@ -197,7 +197,7 @@
 		}
 		
 		$(function() {
-			$("#s_userIdSearchButton").click(function() {
+			$("#searchButton").click(function() {
 				f_rightClear("Y");
 				f_selectUserMst();
 				$("#S_USERNAME_R").focus();
@@ -266,7 +266,7 @@
 							
 							alert(data.resultMsg);
 							
-							$("#s_userIdSearchButton").click();
+							$("#searchButton").click();
 						},
 						error:function(e){  
 							alert("[ERROR]프로그램 저장  중 오류가 발생하였습니다.");
@@ -346,7 +346,7 @@
 				<tr>
 					<th width="120">사용자</th>
 					<td width="100"><input type="text" id="S_USERID" name="S_USERID" onkeydown="f_onEncterUserId();" />
-					<td><input type="button" id='sysSearchButton' /></td>
+					<td><input type="button" id='searchButton' /></td>
 					</td>
 				</tr>
 				<tr>
