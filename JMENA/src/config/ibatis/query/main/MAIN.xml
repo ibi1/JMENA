@@ -30,6 +30,14 @@
 		<result property="PGMNAME" column="PGMNAME"/>
 	</resultMap>
 	
+	<resultMap id="pgmAuthData" class="mainVO">
+		<result property="AUTH_S" column="AUTH_S"/>
+		<result property="AUTH_I" column="AUTH_I"/>
+		<result property="AUTH_U" column="AUTH_U"/>
+		<result property="AUTH_D" column="AUTH_D"/>
+		<result property="AUTH_P" column="AUTH_P"/>
+	</resultMap>
+	
  	<select id="selectUserInfo" resultMap="mainData">
 		SELECT 
 			USERID,
@@ -92,5 +100,17 @@
 			AND T1.PGMID = T2.PGMID
 			ORDER BY T2.MENUID, T2.SORTKEY
 		</isEqual>
+	</select>
+	
+	<select id="selectPgmAuth" resultMap="pgmAuthData">
+		SELECT 
+			IFNULL(AUTH_S, 'N') AS AUTH_S, 
+			IFNULL(AUTH_I, 'N') AS AUTH_I,
+		    IFNULL(AUTH_U, 'N') AS AUTH_U, 
+		    IFNULL(AUTH_D, 'N') AS AUTH_D, 
+		    IFNULL(AUTH_P, 'N') AS AUTH_P
+		FROM sy_userpgmauthtb 
+		WHERE USERID = #USERID# 
+		AND PGMID = #PGMID#
 	</select>
 </sqlMap>

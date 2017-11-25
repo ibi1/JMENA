@@ -74,6 +74,23 @@
 	<script type="text/javascript" src="/resource/js/jquery.jqGrid.min.js"></script>
 	
 	<script type="text/javascript">
+		function f_selectPgmAuth(PGMID) {
+			$.ajax({ 
+				type: 'POST' ,
+				data: "PGMID=" + PGMID,
+				url: "/home/selectPgmAuth.do", 
+				dataType : 'json' , 
+				success: function(data){
+					if (data.returnCode == "FAILED") {
+						alert("[ERROR-SCRIPT]권한 조회 중 오류가 발생하였습니다.");
+					}
+				},
+				error:function(e){  
+					alert("[ERROR]프로그램 권한 호출 중 오류가 발생하였습니다.");
+				}  
+			});
+		}
+		
 	 	$(document).ready(function(){
 	 		$("#logoutButton").jqxButton({theme: 'light', width: 60, height: 25 });
 	 		
@@ -86,10 +103,14 @@
 
 			//트리 선택 시 마다 수행
 	 		$('#tree').on('itemClick',function (event) {
+	 			
 	 			var args = event.args;
 				var item = $('#tree').jqxTree('getItem', args.element);
 				var value = item.value; 
 
+				//권한가져오기
+	 			f_selectPgmAuth(value);
+	 			
 				$("#center").load("/home/" + value + ".do");
 		  	});
 	 		
@@ -228,6 +249,8 @@
     	                $('#tree').jqxTree('selectItem', $("#2")[0]);
     	                
     	                var item = $('#tree').jqxTree('getSelectedItem');
+    	                
+    	                f_selectPgmAuth(item.value);
     	                
     	                $("#center").load("/home/" + item.value + ".do");
     				},

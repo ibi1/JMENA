@@ -103,4 +103,16 @@ public class MainBiz {
 		
 		return strArr;
 	}
+	
+	public List<MainVO> selectPgmAuth(MainVO vo) throws Exception {
+		List<MainVO> lst = null;
+
+		try {
+			lst = mainDao.selectPgmAuth(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
 }

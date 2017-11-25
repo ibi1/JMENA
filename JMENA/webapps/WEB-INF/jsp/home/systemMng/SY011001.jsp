@@ -11,8 +11,10 @@
 
 	<script type="text/javascript">
 		var v_rightLastSel = 0;		//오른쪽 그리드 선택 id
-	
+		var auth_i = true;
+		
 		$(document).ready(function(){
+			
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -20,7 +22,15 @@
 			$("#rightSaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			$("#sysSearchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
-			   
+			
+			<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+				$("#insertButton").hide();
+				$("#saveButton").hide();
+				$("#rightInsertButton").hide();
+				$("#rightSaveButton").hide();
+				auth_i = false;
+			<% }%>
+			
 			$("#S_SYSID").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 2, minLength: 1});
 			$("#S_SYSNAME").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 			$("#S_SORTKEY").jqxFormattedInput({theme: 'energyblue', height: 23, width: 94, radix: 'decimal', value: ''});
@@ -111,11 +121,11 @@
 					loadError:function(){alert("Error~!!");} ,
 					colNames:['메뉴코드', '메뉴명', '사용여부', '비고', '정렬순서'] ,
 					colModel:[
-						{name:"MENUID",			index:'MENUID',		width:150,		align:'center', sortable:false, editable:true}
-						, {name:"MENUNAME",		index:'MENUNAME',	width:250,		align:'center', sortable:false, editable:true}
-						, {name:"USEYN",		index:'USEYN',		width:100,		align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
-						, {name:"REMARK",		index:'REMARK',		width:200,		align:'center', sortable:false, editable:true}
-						, {name:"SORTKEY",		index:'SORTKEY',	width:100,		align:'center', sortable:false, editable:true}
+						{name:"MENUID",			index:'MENUID',		width:150,		align:'center', sortable:false, editable:auth_i}
+						, {name:"MENUNAME",		index:'MENUNAME',	width:250,		align:'center', sortable:false, editable:auth_i}
+						, {name:"USEYN",		index:'USEYN',		width:100,		align:'center', sortable:false, editable:auth_i, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
+						, {name:"REMARK",		index:'REMARK',		width:200,		align:'center', sortable:false, editable:auth_i}
+						, {name:"SORTKEY",		index:'SORTKEY',	width:100,		align:'center', sortable:false, editable:auth_i}
 						] ,
 					rowNum:100 ,
 					autowidth: true ,
@@ -255,7 +265,9 @@
 		function f_sysMstSave() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				$("#saveButton").click();
+				if (auth_i == true) {
+					$("#saveButton").click();
+				}
 			}
 		}
 		

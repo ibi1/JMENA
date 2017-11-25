@@ -69,4 +69,18 @@ public class MainDao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}
+	
+	/**
+	 * 프로그램 권한 가져오기
+	 * @param vo
+	 * @return
+	 * @throws DataAccessException
+	 */
+	public List<MainVO> selectPgmAuth(MainVO vo) throws DataAccessException {
+		List<MainVO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectPgmAuth", vo);
+		
+		return lst;
+	}
 }

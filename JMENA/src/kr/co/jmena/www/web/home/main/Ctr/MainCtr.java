@@ -140,4 +140,49 @@ public class MainCtr {
 		
 		return new ModelAndView("jsonView", json);
 	}
+	
+	@RequestMapping("/home/selectPgmAuth.do")
+	public ModelAndView selectPgmAuth(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MainVO vo = new MainVO();
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		vo.setPGMID(request.getParameter("PGMID"));
+		
+		JSONObject json = new JSONObject();
+		String returnCode = "FAILED";
+		
+		if ("A".equals((String)session.getAttribute("userGubun"))) {
+			//관리자
+			session.setAttribute("AUTH_S", "Y");
+			session.setAttribute("AUTH_I", "Y");
+			session.setAttribute("AUTH_U", "Y");
+			session.setAttribute("AUTH_D", "Y");
+			session.setAttribute("AUTH_P", "Y");
+			returnCode = "SUCCESS";
+		} else {
+			//일반사용자
+			List<MainVO> lst = mainBiz.selectPgmAuth(vo);
+			
+			if (lst.size() > 0) {
+				session.setAttribute("AUTH_S", lst.get(0).getAUTH_S());
+				session.setAttribute("AUTH_I", lst.get(0).getAUTH_I());
+				session.setAttribute("AUTH_U", lst.get(0).getAUTH_U());
+				session.setAttribute("AUTH_D", lst.get(0).getAUTH_D());
+				session.setAttribute("AUTH_P", lst.get(0).getAUTH_P());
+				returnCode = "SUCCESS";
+			} else {
+				session.setAttribute("AUTH_S", "N");
+				session.setAttribute("AUTH_I", "N");
+				session.setAttribute("AUTH_U", "N");
+				session.setAttribute("AUTH_D", "N");
+				session.setAttribute("AUTH_P", "N");
+			}
+		}
+
+		json.put("returnCode", returnCode);
+		
+		return new ModelAndView("jsonView", json);
+	}
 }

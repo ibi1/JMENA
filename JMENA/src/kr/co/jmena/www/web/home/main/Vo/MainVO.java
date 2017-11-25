@@ -11,6 +11,12 @@ public class MainVO {
 	private String PGMID;
 	private String PGMNAME;
 	private String USERGUBUN;
+	private String AUTH_S;
+	private String AUTH_I;
+	private String AUTH_U;
+	private String AUTH_D;
+	private String AUTH_P;
+	private String returnCode;
 	
 	public String getMENUID() {
 		return MENUID;
@@ -72,7 +78,40 @@ public class MainVO {
 	public void setUSERGUBUN(String USERGUBUN) {
 		this.USERGUBUN = USERGUBUN;
 	}
-	
-	
-	
+	public String getAUTH_S() {
+		return AUTH_S;
+	}
+	public String getAUTH_I() {
+		return AUTH_I;
+	}
+	public String getAUTH_U() {
+		return AUTH_U;
+	}
+	public String getAUTH_D() {
+		return AUTH_D;
+	}
+	public String getAUTH_P() {
+		return AUTH_P;
+	}
+	public void setAUTH_S(String AUTH_S) {
+		this.AUTH_S = AUTH_S;
+	}
+	public void setAUTH_I(String AUTH_I) {
+		this.AUTH_I = AUTH_I;
+	}
+	public void setAUTH_U(String AUTH_U) {
+		this.AUTH_U = AUTH_U;
+	}
+	public void setAUTH_D(String AUTH_D) {
+		this.AUTH_D = AUTH_D;
+	}
+	public void setAUTH_P(String AUTH_P) {
+		this.AUTH_P = AUTH_P;
+	}
+	public String getReturnCode() {
+		return returnCode;
+	}
+	public void setReturnCode(String returnCode) {
+		this.returnCode = returnCode;
+	}
 }
