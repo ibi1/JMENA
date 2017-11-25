@@ -14,10 +14,16 @@
 		var S_SALEDATE = "";
 		var S_BRANCHCODE = "";
 		var S_KNAME = "";
-		
+		var auth_p = true;
+
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		<%if ("N".equals(session.getAttribute("AUTH_P"))) { %>
+			$("#excelButton").hide();
+			$("#printButton").hide();
+			auth_p = false;
+		<% }%>
 		
 		$("#S_SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});

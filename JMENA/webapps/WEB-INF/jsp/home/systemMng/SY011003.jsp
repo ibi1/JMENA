@@ -11,7 +11,8 @@
 
 	<script type="text/javascript">
 		var v_rightLastSel = 0;
-		
+		var auth_i = true;
+
 		$(document).ready(function(){
 
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -28,6 +29,13 @@
 			//$("#S_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true,  height: 25, width: 100});
 			$("#S_PHONENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#S_MOBILENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			
+			<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+				$("#insertButton").hide();
+				$("#saveButton").hide();
+				$("#rightSaveButton").hide();
+				auth_i = false;
+			<% }%>
 			
 			
 			$("#S_FLAG").val("U");

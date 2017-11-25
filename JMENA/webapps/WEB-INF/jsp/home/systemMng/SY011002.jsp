@@ -12,7 +12,8 @@
 	<script type="text/javascript">
 		var g_menuId1 = "ALL";
 		var g_menuId2 = "ALL";
-		
+		var auth_i = true;
+
 		$(document).ready(function(){
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -30,6 +31,12 @@
 			$("#S_REMARK").jqxInput({theme: 'energyblue', height: 25, width: 100});
 			//s$("#S_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true,  height: 25, width: 100});
 			$("#S_SORTKEY").jqxInput({theme: 'energyblue', height: 25, width: 100});
+			
+			<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+				$("#insertButton").hide();
+				$("#saveButton").hide();
+				auth_i = false;
+			<% }%>
 			
 			
 			$("#S_FLAG").val("U");
@@ -348,9 +355,15 @@
 		
 		function f_saveKeyDown() {
 			var keyCode = window.event.keyCode;
-			if(keyCode==13) {
-				$("#saveButton").click();
-			}
+			<%
+				if(auth_i == true){
+			%>
+				if(keyCode==13) {
+					$("#saveButton").click();
+				}
+			<%
+				}
+			%>
 		}
 	</script>
 </head>

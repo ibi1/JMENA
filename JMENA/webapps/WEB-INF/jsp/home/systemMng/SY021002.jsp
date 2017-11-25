@@ -12,7 +12,8 @@
 <script type="text/javascript">
 	var DeptCode = "";
 	var v_rightLastSel = 0;
-	
+	var auth_i = true;
+
 	$(document).ready(function(){
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -27,6 +28,14 @@
 		//$("#RS_USEYN").jqxComboBox({theme: 'energyblue', autoDropDownHeight: true, height: 25, width: 98});
 		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+		
+		<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+			$("#insertButton").hide();
+			$("#saveButton").hide();
+			$("#rightInsertButton").hide();
+			$("#rightSaveButton").hide();
+			auth_i = false;
+		<% }%>
 		
 		f_selectListEnaBranchMst();
 		f_selectListEnaDeptMst();

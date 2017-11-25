@@ -12,7 +12,8 @@
 	<script type="text/javascript">
 		var v_ccode = "null";
 		var v_rightLastSel = 0;		//아래 그리드 선택 id
-		
+		var auth_i = true;
+
 		$(document).ready(function(){	
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -26,6 +27,14 @@
 			$("#S_CCODENAME_R").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			
 			$("#S_CCODENAME_L").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			
+			<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+				$("#insertButton").hide();
+				$("#saveButton").hide();
+				$("#bottomInsertButton").hide();
+				$("#bottomSaveButton").hide();
+				auth_i = false;
+			<% }%>
 			
 			$("#S_FLAG_L").val("I");	//I : 저장, U : 수정
 			$("#S_FLAG_B").val("U");	//I : 저장, U : 수정

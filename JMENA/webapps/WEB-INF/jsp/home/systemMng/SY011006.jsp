@@ -11,7 +11,8 @@
 	
 	<script type="text/javascript">
 		var v_rightLastSel = 0;
-	
+		var auth_i = true;
+
 		$(document).ready(function(){
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -19,6 +20,11 @@
 
 			$("#S_BANKNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			
+			<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+				$("#insertButton").hide();
+				$("#saveButton").hide();
+				auth_i = false;
+			<% }%>
 			
 			$("#S_FLAG").val("U");
 			

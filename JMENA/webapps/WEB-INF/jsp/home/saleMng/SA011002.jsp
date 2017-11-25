@@ -11,7 +11,9 @@
 
 	<script type="text/javascript">
 		var v_rightLastSel = 0;
-		
+		var auth_i = true;
+		var auth_d = true;
+
 		function addZero(n) {
 			return n < 10 ? "0" + n : n;
 		}
@@ -50,6 +52,19 @@
 			
 			$("#searchPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			$("#searchManageNoPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			
+			<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+				$("#insertButton").hide();
+				$("#saveButton").hide();
+				$("#tab1InsertButton").hide();
+				$("#tab1SaveButton").hide();
+				auth_i = false;
+			<% }%>
+			<%if ("N".equals(session.getAttribute("AUTH_D"))) { %>
+				$("#deleteButton").hide();
+				$("#tab1DeleteButton").hide();
+				auth_d = false;
+			<% }%>
 			
 			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 			$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});

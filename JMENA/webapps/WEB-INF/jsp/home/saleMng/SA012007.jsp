@@ -18,10 +18,17 @@
 		var S_CITYCODE = "";
 		var S_BOROUGHCODE = "";
 		var S_ADDRESS = "";
-		
+		var auth_p = true;
+
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		<%if ("N".equals(session.getAttribute("AUTH_P"))) { %>
+			$("#excelButton").hide();
+			$("#printButton").hide();
+			auth_p = false;
+		<% }%>
 		
 		$("#S_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
 		

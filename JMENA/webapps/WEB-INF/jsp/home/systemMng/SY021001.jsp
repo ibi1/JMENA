@@ -11,6 +11,8 @@
 
 </head>
 <script type="text/javascript">
+	var auth_i = true;
+
 	$(document).ready(function(){
 		
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -29,6 +31,11 @@
 		$("#RELEASEDESC").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		$("#TAXOFFICE").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
 		
+		
+		<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+			$("#saveButton").hide();
+			auth_i = false;
+		<% }%>
 		
 		f_reload();
 	});

@@ -13,7 +13,8 @@
 <script type="text/javascript">
 	var BoroughCode = "";
 	var v_rightLastSel = 0;		//오른쪽 그리드 선택 id
-	
+	var auth_i = true;
+
 	$(document).ready(function(){
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -26,6 +27,15 @@
 		$("#RS_SORTKEY").jqxFormattedInput({theme: 'energyblue', height: 23, width: 94, radix: 'decimal', value: ''});
 		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+
+		<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+			$("#insertButton").hide();
+			$("#saveButton").hide();
+			$("#rightInsertButton").hide();
+			$("#rightSaveButton").hide();
+			auth_i = false;
+		<% }%>
+		
 		
 		f_selectListEnaCityMst();
 		f_selectListEnaCityDtl();		

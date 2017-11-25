@@ -21,12 +21,18 @@
 	</style>
 	<script type="text/javascript">
 		var v_selectUserId = "";	//선택된 사용자
-		
+		var auth_i = true;
+
 		$(document).ready(function(){
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			$("#S_USERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			
+			<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+				$("#saveButton").hide();
+				auth_i = false;
+			<% }%>
 			
 			$("#saveButton").on('click', function () {
 				var ids = $("#rightList").jqGrid('getDataIDs');

@@ -13,6 +13,9 @@
 <script type="text/javascript">
 
 	var v_bottomCellId = 0;
+	var auth_i = true;
+	var auth_d = true;
+	
 	$(document).ready(function(){
 		$("#dtlData").hide();
 		
@@ -26,6 +29,19 @@
 		$("#saveButton2").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+		<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+			$("#insertButton").hide();
+			$("#saveButton").hide();
+			$("#addButton").hide();
+			$("#saveButton2").hide();
+			auth_i = false;
+		<% }%>
+		<%if ("N".equals(session.getAttribute("AUTH_D"))) { %>
+			$("#deleteButton").hide();
+			$("#deleteButton2").hide();
+			auth_d = false;
+		<% }%>
+		
 		
 		$("#SL_IPGUMDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#SL_IPGUMDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});

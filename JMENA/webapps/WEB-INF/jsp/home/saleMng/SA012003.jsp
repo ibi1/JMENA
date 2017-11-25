@@ -20,10 +20,17 @@
 		var S_BRANCHCODE = "";
 		var S_DEPTCODE = "";
 		var S_KNAME = "";
-		
+		var auth_p = true;
+
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		<%if ("N".equals(session.getAttribute("AUTH_P"))) { %>
+			$("#excelButton").hide();
+			$("#printButton").hide();
+			auth_p = false;
+		<% }%>
 		
 		$("#S_SALEDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#S_SALEDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
