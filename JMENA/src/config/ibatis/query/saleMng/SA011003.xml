@@ -37,6 +37,8 @@
 		<result property="DEPOSITDATE" 		column="DEPOSITDATE"/>
 		<result property="DEPOSITAMT" 		column="DEPOSITAMT"/>
 		<result property="SUGUMAMT" 		column="SUGUMAMT"/>
+		<result property="SEQ" 				column="SEQ"/>
+		<result property="IPGUMSEQ" 		column="IPGUMSEQ"/>
 	</resultMap>
 
 	<resultMap id="saleMstDataList" class="SA011003VO">
@@ -114,6 +116,8 @@
 			,(select depositdate from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositdate
 			,(select depositamt from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositamt
 			,t2.sugumamt
+            ,t2.seq
+            ,t2.ipgumseq
 		from sa_ipgummst t1, sa_ipgumdtl t2
 		where 1=1
 		and t1.ipgumid = #IPGUMID#
@@ -130,6 +134,17 @@
 
 	</select>
 	
+	<select id="selectOneEnaIpgumDtl" resultClass="java.lang.Integer">
+		select
+			COUNT(t1.IPGUMID) AS CNT
+		from sa_ipgumdtl t1
+		where 1=1
+		and t1.ipgumid = #IPGUMID#
+		and t1.Seq = #SEQ#
+		and t1.SaleId = #SALEID#
+		and t1.IpgumSeq = #IPGUMSEQ#
+
+	</select>
 
 	<insert id="insertEnaIpgumMst">
 		INSERT INTO sa_ipgummst
@@ -205,17 +220,23 @@
 		(
 			IPGUMID,
 			SEQ,
+			SALEID,
 			IPGUMSEQ,
+		<isNotEmpty property="SUGUMAMT">
 			SUGUMAMT,
+		</isNotEmpty>
 			REMARK,
 			INSERTUSER,
 			INSERTDATE
 		)
 		VALUES(
-			#IPGUMID#
-			(SELECT IFNULL(MAX(SEQ),0) +1 FROM sa_ipgumdtl s WHERE IPGUMID = #IPGUMID#),
+			#IPGUMID#,
+			(SELECT IFNULL(MAX(SEQ),0) +1 FROM sa_ipgumdtl S WHERE IPGUMID = #IPGUMID#),
+			#SALEID#,
 			#IPGUMSEQ#,
+		<isNotEmpty property="SUGUMAMT">
 			#SUGUMAMT#,
+		</isNotEmpty>
 			#REMARK#,
 			#USERID#,
 			NOW()
@@ -247,7 +268,12 @@
 
 	<delete id="deleteEnaIpgumDtl">
 		DELETE FROM sa_ipgumdtl
-		WHERE IPGUMID = #IPGUMID#
+		WHERE 1=1
+		AND IPGUMID = #IPGUMID#
+		AND SEQ = #SEQ#
+		AND SALEID = #SALEID#
+		AND IPGUMSEQ = #IPGUMSEQ#
+
 	</delete>
 
 	<select id="selectListEanSalePopup" resultMap="saleMstDataList">
@@ -276,9 +302,11 @@
 
 	<delete id="deleteEnaIpgumDtl2">
 		DELETE FROM sa_ipgumdtl
-		WHERE IPGUMID = #IPGUMID#
+		WHERE 1=1
+		AND IPGUMID = #IPGUMID#
 		AND SEQ = #SEQ#
 		AND SALEID = #SALEID#
+		AND IPGUMSEQ = #IPGUMSEQ#
 	</delete>
 
 </sqlMap>

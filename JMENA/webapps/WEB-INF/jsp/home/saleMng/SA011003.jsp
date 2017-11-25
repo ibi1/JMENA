@@ -363,12 +363,12 @@
 			url:"/home/selectListEnaIpgumDtl.do" ,
 			datatype:"json" ,
 			postData : {
-				SL_IPGUMAMT : $("#SL_IPGUMAMT").val()
+				IPGUMID : $("#IPGUMID").val()
 			},
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['계약번호', '계약일자', '계약구분', '계약자', '계약자 연락처',
 			          '계약자 주소', '계약면적', '계약평수', '계약대금(실판매가)', '입금구분',
-			          '입금예정일', '입금예정금액', '처리금액', '입금순번'] ,
+			          '입금예정일', '입금예정금액', '처리금액', '처리순번', '입금순번'] ,
 			colModel:[  
 				{name:"SALEID",			index:'SALEID',			width:100,		align:'center', editable:false}
 				, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center', editable:false}
@@ -383,6 +383,7 @@
 				, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center', editable:false}
 				, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'center', editable:false}
 				, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center', editable:true}
+				, {name:"SEQ",			index:'SEQ',			width:100,		align:'center', editable:false, hidden:true}
 				, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center', editable:false, hidden:true}
 			] ,
 			rowNum:100 ,
@@ -405,7 +406,7 @@
 				}
 				
 				if( v_bottomCellId != id ){
-			        $(this).jqGrid('restoreRow',v_bottomCellId,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+					$(this).jqGrid('restoreRow',v_bottomCellId,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 			        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
 
 			        v_bottomCellId = id;
@@ -506,7 +507,7 @@
 		
 		$("#addButton").click(function() {
 			if($("#S_FLAG_D").val() == "U"){
-				//alert("추가 작업 중입니다.");
+				alert("추가 작업 중입니다.");
 				return false;
 			}
 			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
@@ -523,9 +524,6 @@
 			var popOption = "width=730, height=440, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"매출조회",popOption);
 			
-			$("#S_FLAG_D").val("U");
-			
-
 		});
 
 		$("#deleteButton2").click(function() {
@@ -549,14 +547,28 @@
 			}
 			
 			if (confirm("삭제하시겠습니까?") == true) {
+				var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				$('#bottomList').jqGrid('saveRow',v_bottomCellId,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+				var cellData = $("#bottomList").jqGrid('getRowData', v_bottomCellId); //셀 전체 데이터 가져오기
+				
+				var formData = "IPGUMID=" + $("#IPGUMID").val() + 
+				"&SEQ=" + cellData.SEQ + 
+				"&SALEID=" + cellData.SALEID + 
+				"&IPGUMSEQ=" + cellData.IPGUMSEQ + 
+				"&SUGUMAMT=" + cellData.SUGUMAMT;
+				alert(formData);
 				$.ajax({ 
 					type: 'POST' ,
-					data: "IPGUMID=" + $("#IPGUMID").val()+"&SEQ=" + $("#SEQ").val(),
-					url: "/home/deleteEnaIpgumDtl2.do", 
+					data: formData,
+					url: "/home/deleteEnaIpgumDtl.do", 
 					dataType : 'json' , 
 					success: function(data){
 						alert(data.resultMsg);
 						
+						f_selectListEnaIpgumMst();
+
 						$("#selectButton").click();
 					},
 					error:function(e){  
@@ -566,6 +578,63 @@
 			}
 		});
 
+		$("#saveButton2").click(function() {
+			var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			$('#bottomList').jqGrid('saveRow',v_bottomCellId,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+			var cellData = $("#bottomList").jqGrid('getRowData', v_bottomCellId); //셀 전체 데이터 가져오기
+			
+			if (v_bottomCellId == 0 || v_bottomCellId == "") {
+				alert("그리드를 선택하셔야 합니다.");
+				
+				return false;
+			}
+			
+/* 			if (cellData.PAYAMT == "") {
+				alert("지급금액를 입력하셔야 합니다.");
+				
+				$('#rightList1').jqGrid('editRow', v_rightLastSel_1, true);
+				$("#"+ids+"_PAYAMT").focus();
+				
+				return false;
+			}
+ */			
+			var msg = "";
+			msg = "저장하시겠습니까?";
+			if (confirm(msg) == true) {
+				var formData = "IPGUMID=" + $("#IPGUMID").val() + 
+				"&SALEID=" + cellData.SALEID + 
+				"&IPGUMSEQ=" + cellData.IPGUMSEQ + 
+				"&SUGUMAMT=" + cellData.SUGUMAMT;
+				
+				$.ajax({ 
+					type: 'POST' ,
+					data: formData,
+					url: "/home/updateEnaIpgumDtl.do", 
+					dataType : 'json' , 
+					success: function(data){
+						$("#S_FLAG_R_1").val("U");
+						
+						v_bottomCellId = 0;
+						
+						if(data.rows[0].MSG == "success"){
+							alert('저장되었습니다.');
+						}
+						
+						f_selectListEnaIpgumMst();
+						
+					},
+					error:function(e){  
+						alert("[ERROR]입금상세 관리 저장 중 오류가 발생하였습니다.");
+					}  
+				});
+			} else {
+				v_bottomCellId = 0;
+				f_selectListEnaIpgumMst();
+			}
+		});
+		
 		
 	})
 	
@@ -597,14 +666,20 @@
 			,DEPOSITDATE:$("#dtl_DEPOSITDATE").val()
 			,DEPOSITAMT:$("#dtl_DEPOSITAMT").val()
 			,SUGUMAMT:""
+			,SEQ:""
 			,IPGUMSEQ:$("#dtl_IPGUMSEQ").val()}; 
 		
 		$("#bottomList").jqGrid("addRow", 0);
+		
 		var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+		
 		v_bottomCellId = ids;
+		
 		$("#bottomList").jqGrid("setRowData", ids, data);
+		$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
-		$("#bottomList").jqGrid('editRow',ids,true);  //해당 row가 수정모드(?)로 변경
+		$("#bottomList").jqGrid('editRow', ids, true);
+		
 	
 	}
 	
@@ -752,6 +827,7 @@
 					<td><input type="text" id="dtl_DEPOSITGUBUN" 	name="dtl_DEPOSITGUBUN"/></td>
 					<td><input type="text" id="dtl_DEPOSITDATE" 	name="dtl_DEPOSITDATE"/></td>
 					<td><input type="text" id="dtl_DEPOSITAMT" 		name="dtl_DEPOSITAMT"/></td>
+					<td><input type="text" id="dtl_SEQ" 			name="dtl_SEQ"/></td>
 					<td><input type="text" id="dtl_IPGUMSEQ" 		name="dtl_IPGUMSEQ"/></td>
 				</tr>
 			</table>

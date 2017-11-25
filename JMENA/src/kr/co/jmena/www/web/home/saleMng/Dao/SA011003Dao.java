@@ -45,6 +45,12 @@ public class SA011003Dao extends SqlMapClientDaoSupport {
 			
 		return cnt;
 	}
+
+	public int selectOneEnaIpgumDtl(SA011003VO vo) throws DataAccessException {
+		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectOneEnaIpgumDtl", vo);
+			
+		return cnt;
+	}
 	
 	public int insertEnaIpgumMst(SA011003VO vo) throws DataAccessException {
 		int insertCnt = 0;
@@ -96,15 +102,6 @@ public class SA011003Dao extends SqlMapClientDaoSupport {
 		return chkFlag;
 	}
 
-	public boolean deleteEnaIpgumDtl2(SA011003VO vo) throws DataAccessException {
-		boolean chkFlag = false;
-		
-		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaIpgumDtl2", vo);
-		
-		if (cnt > 0) chkFlag = true;
-		return chkFlag;
-	}
-	
 	public List<SA011003VO> selectListEanSalePopup(SA011003VO vo) throws DataAccessException {
 		List<SA011003VO> lst = null;	
 		

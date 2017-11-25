@@ -57,6 +57,18 @@ public class SA011003Biz {
 		
 		return cnt;
 	}	
+
+	public int selectOneEnaIpgumDtl(SA011003VO vo) throws Exception {
+		int cnt = 0;
+		
+		try {
+			cnt = SA011003Dao.selectOneEnaIpgumDtl(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return cnt;
+	}	
 	
 	public int insertEnaIpgumMst(SA011003VO vo) throws Exception {
 		int insertCnt = 0;
@@ -132,18 +144,6 @@ public class SA011003Biz {
 		return chkFlag;
 	}
 
-	public boolean deleteEnaIpgumDtl2(SA011003VO vo) throws Exception {
-		boolean chkFlag = false;
-		
-		try {
-			chkFlag = SA011003Dao.deleteEnaIpgumDtl2(vo);
-		} catch (Exception e) {
-			throw e;
-		}
-		
-		return chkFlag;
-	}
-	
 	public List<SA011003VO> selectListEanSalePopup(SA011003VO vo) throws Exception {
 		List<SA011003VO> lst = null;
 
