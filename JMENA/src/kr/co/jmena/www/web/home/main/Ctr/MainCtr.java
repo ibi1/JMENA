@@ -79,6 +79,7 @@ public class MainCtr {
 			session.setMaxInactiveInterval(3600);
 			session.setAttribute("userId", lst.get(0).getUSERID());
 			session.setAttribute("userName", lst.get(0).getUSERNAME());
+			session.setAttribute("userGubun", lst.get(0).getUSERGUBUN());
 			
 			json.put("ReturnMsg", "SUCCESS");
 		} else {
@@ -95,7 +96,14 @@ public class MainCtr {
 	
 	@RequestMapping("/home/systemMenu.do")
 	public ModelAndView systemMenu(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<MainVO> lst = mainBiz.selectSystemMenu();
+		MainVO vo = new MainVO();
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		vo.setUSERGUBUN((String)session.getAttribute("userGubun"));
+		
+		List<MainVO> lst = mainBiz.selectSystemMenu(vo);
 		
 		JSONArray jsonArr = new JSONArray();
 		JSONObject json = new JSONObject();
@@ -116,10 +124,15 @@ public class MainCtr {
 	
 	@RequestMapping("/home/treeMenu.do")
 	public ModelAndView treeMenu(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MainVO vo = new MainVO();
 		
-		String sysId = request.getParameter("SYSID");
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		vo.setUSERGUBUN((String)session.getAttribute("userGubun"));
+		vo.setSYSID(request.getParameter("SYSID"));
 		
-		String[] strArr = mainBiz.selectTreeMenu(sysId);
+		String[] strArr = mainBiz.selectTreeMenu(vo);
 		
 		JSONObject json = new JSONObject();
 		json.put("tree", strArr[0]);

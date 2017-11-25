@@ -60,7 +60,11 @@ public class MM011001Dao extends SqlMapClientDaoSupport {
 	public boolean insertDataBuyMst(MM011001VO vo) throws DataAccessException {
 		boolean chkFlag = false;
 		
-		int cnt = (int)getSqlMapClientTemplate().update(NAME_SPACE + "insertDataBuyMst", vo);
+		String BUYID = (String) getSqlMapClientTemplate().insert(NAME_SPACE + "insertDataBuyMst", vo);
+		
+		vo.setBUYID(BUYID);
+		
+		int cnt = !"".equals(BUYID) ? 1 : 0;
 		
 		if (cnt > 0) chkFlag = true;
 		return chkFlag;
@@ -172,6 +176,14 @@ public class MM011001Dao extends SqlMapClientDaoSupport {
 		List<MM011001VO> lst = null;
 		
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectSumSaleMst", vo);
+		
+		return lst;
+	}
+	
+	public List<MM011001VO> selectListMMBuyMstPopup(MM011001VO vo) throws DataAccessException {
+		List<MM011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListMMBuyMstPopup", vo);
 		
 		return lst;
 	}

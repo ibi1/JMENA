@@ -88,7 +88,7 @@
 			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 			
 			$('#leftList').jqGrid({
-				url:"/home/selectListEanSaleMstPopup.do" ,
+				url:"/home/selectListEanSalePopup.do" ,
 				datatype:"json",
 				mtype: 'POST',
 				postData : {
@@ -96,48 +96,25 @@
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
-				colNames:['계약번호', '계약일자', 
-				          '관리번호', '지역구분', '지사구분', '주소', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
-				          '매출구분', '담당자', '매입번호', '게약자성명', '게약자주민번호', '계약자주소', 
-				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '위탁수수료', 
-				          '공동명의구분', '등기여부', '등기일자', '해약여부', '해약일자'],
-				colModel:[
-					{name:"SALEID",			index:'SALEID',			width:100,	align:'center',	sortable:false},
-					{name:"SALEDATE",		index:'SALEDATE',		width:100,	align:'center',	sortable:false},
-					{name:"MANAGENO",		index:'MANAGENO',		width:100,	align:'center',	sortable:false},
-					{name:"CITYCODE",		index:'CITYCODE',		width:100,	align:'center',	sortable:false},
-					{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center',	sortable:false},
-					{name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center',	sortable:false, hidden:true},
-					{name:"OWNERJUMINID",	index:'OWNERJUMINID',	width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONBM2",			index:'CONBM2',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONJM2",			index:'CONJM2',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONBPY",			index:'CONBPY',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONJPY",			index:'CONJPY',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"SALEGUBUN",		index:'SALEGUBUN',		width:100,	align:'center',	sortable:false},
-					{name:"SALERCD",		index:'SALERCD',		width:100,	align:'center',	sortable:false, hidden:true},
-					{name:"BUYID",			index:'BUYID',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center',	sortable:false},
-					{name:"CONJUMINID",		index:'CONJUMINID',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONADDRESS",		index:'CONADDRESS',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONTELNO",		index:'CONTELNO',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONM2",			index:'CONM2',			width:100,	align:'center',	sortable:false},
-					{name:"CONPY",			index:'CONPY',			width:100,	align:'center',	sortable:false},
-					{name:"REMARK",			index:'REMARK',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"SALEAMT",		index:'SALEAMT',		width:100,	align:'center',	sortable:false},
-					{name:"SALEDANGA",		index:'SALEDANGA',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"DCGUBUN",		index:'DCGUBUN',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"DCRATE",			index:'DCRATE',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"DCAMT",			index:'DCAMT',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"SELLAMT",		index:'SELLAMT',		width:100,	align:'center',	sortable:false},
-					{name:"AGENCYAMT",		index:'AGENCYAMT',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"JOINYN",			index:'JOINYN',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"REGYN",			index:'REGYN',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"REGDATE",		index:'REGDATE',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CANCELYN",		index:'CANCELYN',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CANCELDATE",		index:'CANCELDATE',		width:100,	align:'center',	sortable:false,	hidden:true}
-				],
-				rowNum:1000,
+				colNames:['계약번호', '계약일자', '계약구분', '계약자', '계약자 연락처',
+				          '계약자 주소', '계약면적', '계약평수', '계약대금(실판매가)', '입금구분',
+				          '입금예정일', '입금예정금액', '입금순번'] ,
+				colModel:[  
+					{name:"SALEID",			index:'SALEID',			width:100,		align:'center'}
+					, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center'}
+					, {name:"SALEGUBUN",	index:'SALEGUBUN',		width:100,		align:'center'}
+					, {name:"CONNAME",		index:'CONNAME',		width:100,		align:'center'}
+					, {name:"CONTELNO",		index:'CONTELNO',		width:100,		align:'center'}
+					, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center'}
+					, {name:"CONM2",		index:'CONM2',			width:100,		align:'center'}
+					, {name:"CONPY",		index:'CONPY',			width:100,		align:'center'}
+					, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center'}
+					, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center'}
+					, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center'}
+					, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'center'}
+					, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center', hidden:true}
+				] ,
+				rowNum:5000,
 				autowidth: true,
 				shrinkToFit: false,
 				rowList:[10,20,30],
@@ -155,13 +132,23 @@
 				ondblClickRow: function(id,irow,icol,e) {
 					var selRowData = $(this).jqGrid('getRowData', id);
 
-/* 					
-					$("#SL_SALEDATE_FR",opener.document).val(selRowData.SALEDATE);
-					$("#SL_SALEDATE_TO",opener.document).val(selRowData.SALEDATE);
-					$("#SALEID",opener.document).val(selRowData.SALEID);
+ 					
+					$("#dtl_SALEID",opener.document).val(selRowData.SALEID);
+					$("#dtl_SALEDATE",opener.document).val(selRowData.SALEDATE);
+					$("#dtl_SALEGUBUN",opener.document).val(selRowData.SALEGUBUN);
+					$("#dtl_CONNAME",opener.document).val(selRowData.CONNAME);
+					$("#dtl_CONTELNO",opener.document).val(selRowData.CONTELNO);
+					$("#dtl_CONADDRESS",opener.document).val(selRowData.CONADDRESS);
+					$("#dtl_CONM2",opener.document).val(selRowData.CONM2);
+					$("#dtl_CONPY",opener.document).val(selRowData.CONPY);
+					$("#dtl_SELLAMT",opener.document).val(selRowData.SELLAMT);
+					$("#dtl_DEPOSITGUBUN",opener.document).val(selRowData.DEPOSITGUBUN);
+					$("#dtl_DEPOSITDATE",opener.document).val(selRowData.DEPOSITDATE);
+					$("#dtl_DEPOSITAMT",opener.document).val(selRowData.DEPOSITAMT);
+					$("#dtl_IPGUMSEQ",opener.document).val(selRowData.IPGUMSEQ);
 					
-					opener.f_selectListEnaSaleMst();
- */					
+					opener.bottomListAdd();
+					
 					
 					self.close();
 				},
@@ -187,7 +174,7 @@
 		<div id="topDiv" style="width:98%; float:left;padding: 10px" align="left">
 			<table width="98%">
 				<tr>
-					<th width="150">* 계약일자/번호</th>
+					<th width="150">* 계약일자</th>
 					<td><input type="text" id="SALEDATE" name="SALEDATE" />    <input type="button" value="조회" id='selectButton' /></td>
 				</tr>
 			</table>

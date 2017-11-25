@@ -34,10 +34,10 @@ public class MainDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws DataAccessException
 	 */
-	public List<MainVO> selectSystemMenu() throws DataAccessException {
+	public List<MainVO> selectSystemMenu(MainVO vo) throws DataAccessException {
 		List<MainVO> lst = null;
 		
-		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectSystemMenu");
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectSystemMenu", vo);
 		
 		return lst;
 	}
@@ -48,11 +48,8 @@ public class MainDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws DataAccessException
 	 */
-	public List<MainVO> selectMenuTb(String sysId) throws DataAccessException {
+	public List<MainVO> selectMenuTb(MainVO vo) throws DataAccessException {
 		List<MainVO> lst = null;
-		MainVO vo = new MainVO();
-		
-		vo.setSYSID(sysId);
 		
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectMenuTb", vo);
 		
@@ -65,11 +62,8 @@ public class MainDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws DataAccessException
 	 */
-	public List<MainVO> selectPgmTb(String sysId) throws DataAccessException {
+	public List<MainVO> selectPgmTb(MainVO vo) throws DataAccessException {
 		List<MainVO> lst = null;
-		MainVO vo = new MainVO();
-		
-		vo.setSYSID(sysId);
 		
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectPgmTb", vo);
 		

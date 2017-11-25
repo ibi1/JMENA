@@ -88,7 +88,6 @@
 		<isNotEmpty property="LS_ADDRESS">
 			AND T1.ADDRESS LIKE '%$LS_ADDRESS$%'   
 		</isNotEmpty>
-		
 	</select>
 	
 	<update id="updateDataBuyMst">
@@ -108,7 +107,12 @@
 			BUYAMT = #BUYAMT#,
 			BUYDANGA = #BUYDANGA#,
 			REGYN = #REGYN#,
+			<isEqual property="REGYN" compareValue="Y">
 			REGDATE = #REGDATE#,
+			</isEqual>
+			<isEqual property="REGYN" compareValue="N">
+			REGDATE = NULL,
+			</isEqual>
 			REMARK = #REMARK#,
 			UPDATEUSER = #USERID#,
 			UPDATEDATE = NOW()
@@ -116,6 +120,14 @@
 	</update>
 	
 	<insert id="insertDataBuyMst">
+		<selectKey resultClass="java.lang.String" keyProperty="BUYID_PK">
+   			SELECT 
+				(SELECT 
+				CONCAT('BU', DATE_FORMAT(NOW(), '%y%m'), LPAD(IFNULL(MAX(SUBSTR(BUYID, 7, 4)), 0) + 1, 4, 0)) AS BUYID 
+			FROM mm_buymst T1
+			WHERE SUBSTR(BUYID, 3, 4) = DATE_FORMAT(NOW(), '%y%m') ) AS BUYID_PK
+			FROM dual
+  		</selectKey>
 		INSERT INTO mm_buymst
 		(
 			BUYID,
@@ -133,15 +145,14 @@
 			BUYAMT,
 			BUYDANGA,
 			REGYN,
+			<isEqual property="REGYN" compareValue="Y">
 			REGDATE,
+			</isEqual>
 			REMARK,
 			INSERTUSER
 		)
 		VALUES(
-			(SELECT 
-				CONCAT('BU', DATE_FORMAT(NOW(), '%y%m'), LPAD(IFNULL(MAX(SUBSTR(BUYID, 7, 4)), 0) + 1, 4, 0)) AS BUYID 
-			FROM mm_buymst T1
-			WHERE SUBSTR(BUYID, 3, 4) = DATE_FORMAT(NOW(), '%y%m') ),
+			#BUYID_PK#,
 			#BUYDATE#,
 			#BUYGUBUN#,
 			#MANAGENO#,
@@ -156,7 +167,9 @@
 			#BUYAMT#,
 			#BUYDANGA#,
 			#REGYN#,
+			<isEqual property="REGYN" compareValue="Y">
 			#REGDATE#,
+			</isEqual>
 			#REMARK#,
 			#USERID#
 		)
@@ -333,5 +346,33 @@
 			IFNULL(CAST(SUM(CONM2) AS DECIMAL(12, 0)), 0) AS CONM2, IFNULL(CAST(SUM(CONPY) AS DECIMAL(12, 0)), 0) AS CONPY 
 		FROM sa_salemst 
 		WHERE BUYID = #BUYID#
+	</select>
+	
+	<select id="selectListMMBuyMstPopup" resultMap="BuyMstData">
+		SELECT 
+			T1.BUYID,
+			T1.BUYDATE,
+			T1.BUYGUBUN,
+			T1.MANAGENO,
+			T1.CITYCODE,
+			(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
+			T1.BOROUGHCODE,
+			(SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T1.CITYCODE AND BOROUGHCODE = T1.BOROUGHCODE) AS BOROUGHNAME,
+			T1.USETYPE,
+			T1.ADDRESS,
+			T1.OWNERNAME,
+			T1.OWNERJUMINID,
+			T1.BUYM2,
+			T1.BUYPY,
+			'' BUNJANM2,
+			'' BUNJANPY,
+			T1.BUYAMT,
+			T1.BUYDANGA,
+			T1.REGYN,
+			T1.REGDATE,
+			T1.REMARK
+		FROM mm_buymst T1
+		WHERE 1=1
+		AND T1.BUYDATE = #BUYDATE#
 	</select>
 </sqlMap>

@@ -216,6 +216,7 @@ public class MM011001Ctr {
 		
 		if ("I".equals(IU_Flag)) {
 			if (MM011001Biz.insertDataBuyMst(vo) == true) {
+				json.put("BUYID", vo.getBUYID_PK());
 				resultCode ="SUCCESS";
 				resultMsg = "정상적으로 저장하였습니다.";
 			 } else {
@@ -464,4 +465,57 @@ public class MM011001Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 	
+	@RequestMapping("/home/MM011001_searchPopup.do")
+	public ModelAndView MM011001_searchPopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		return new ModelAndView("home/buyingMng/MM011001_searchPopup");
+	}
+	
+	@RequestMapping("/home/selectListMMBuyMstPopup.do")
+	public ModelAndView selectListMMBuyMstPopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYDATE(request.getParameter("BUYDATE"));
+		
+		List<MM011001VO> lst = MM011001Biz.selectListMMBuyMstPopup(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
+			
+			obj.put("BUYID", lst.get(i).getBUYID());
+			obj.put("BUYDATE", lst.get(i).getBUYDATE());
+			obj.put("BUYGUBUN", lst.get(i).getBUYGUBUN());
+			obj.put("MANAGENO", lst.get(i).getMANAGENO());
+			obj.put("CITYCODE", lst.get(i).getCITYCODE());
+			obj.put("CITYNAME", lst.get(i).getCITYNAME());
+			obj.put("BOROUGHCODE", lst.get(i).getBOROUGHCODE());
+			obj.put("BOROUGHNAME", lst.get(i).getBOROUGHNAME());
+			obj.put("USETYPE", lst.get(i).getUSETYPE());
+			obj.put("ADDRESS", lst.get(i).getADDRESS());
+			obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
+			obj.put("OWNERJUMINID", lst.get(i).getOWNERJUMINID());
+			obj.put("BUYM2", lst.get(i).getBUYM2());
+			obj.put("BUYPY", lst.get(i).getBUYPY());
+			obj.put("BUNJANM2", lst.get(i).getBUNJANM2());
+			obj.put("BUNJANPY", lst.get(i).getBUNJANPY());
+			obj.put("BUYAMT", lst.get(i).getBUYAMT());
+			obj.put("BUYDANGA", lst.get(i).getBUYDANGA());
+			obj.put("REGYN", lst.get(i).getREGYN());
+			obj.put("REGDATE", lst.get(i).getREGDATE());
+			obj.put("REMARK", lst.get(i).getREMARK());
+			
+			jCell.add(obj);
+			
+		}
+		
+		json.put("records", lst.size());
+		json.put("rows", jCell);
+		
+		logger.debug("[selectListEnaBuyMstPopup]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
 }

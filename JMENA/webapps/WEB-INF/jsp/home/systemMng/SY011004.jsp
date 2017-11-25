@@ -246,6 +246,7 @@
 						, {name:"PGMID",		index:'PGMID',		width:120,		align:'center', sortable:false}
 						, {name:"PGMNAME",		index:'PGMNAME',	width:200,		align:'center', sortable:false}
 						, {name:"AUTH_S",		index:'AUTH_S',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+						//, {name:"AUTH_S",		index:'AUTH_S',		width:50,		align:'center', sortable:false, editable: true, formatter:test, edittype:'checkbox', editoptions:{value:"Y:N"}}
 						, {name:"AUTH_I",		index:'AUTH_I',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 						, {name:"AUTH_U",		index:'AUTH_U',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 						, {name:"AUTH_D",		index:'AUTH_D',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
@@ -276,6 +277,15 @@
 				
 			})
 		}
+		
+		/* checkbox 클릭 시 이벤트 
+		function test(cellvalue, options, rowObject) {
+			return '<input type="checkbox"' + (cellvalue == "Y" ? 'checked="checked"' : '') + 'onclick="onClickTest(' + options.rowId +')"/>';
+		}
+		
+		function onClickTest(ids) {
+			$("#rightList").jqGrid('setSelection', ids, true);
+		} */
 		
 		//그리드 체크박스
 		function checkBox(e, cell) {

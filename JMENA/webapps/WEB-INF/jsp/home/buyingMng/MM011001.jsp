@@ -43,7 +43,7 @@
 			$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
-			$("#searchButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+			$("#searchPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			
 			$("#tab1InsertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#tab1DeleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -104,7 +104,9 @@
 				success: function(data){
 					var inHtml = "";
 					data.dcodeList.forEach(function(currentValue, index, array){
-						inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+						if (currentValue.DCODE != '003') {
+							inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+						}
 					});
 					$("#BUYGUBUN").append(inHtml);
 				},
@@ -199,7 +201,6 @@
 				postData : {
 					LS_BUYDATE_FR : $("#LS_BUYDATE_FR").val(),
 					LS_BUYDATE_TO : $("#LS_BUYDATE_TO").val(),
-					//LS_INSERTUSER : LS_INSERTUSER,
 					LS_ADDRESS : $("#LS_ADDRESS").val()
 				},
 				loadtext: '로딩중...',
@@ -274,23 +275,8 @@
 					$("#REGDATE").val(selRowData.REGDATE);
 					$("#REMARK").val(selRowData.REMARK);
 					
-					if (selRowData.BUYGUBUN == "001") {	//일반
-						$("#mm_div1").text("매매대금");
-						$("#mm_div2").text("매매단가");
-						
-						//일반일 경우만 지급 스케줄 관리 사용
-						$("#tab1InsertButton").jqxButton({disabled: false});
-						$("#tab1DeleteButton").jqxButton({disabled: false});
-						$("#tab1SaveButton").jqxButton({disabled: false});
-					} else { //위탁
-						$("#mm_div1").text("위탁수수료");
-						$("#mm_div2").text("수수료단가");
-						
-						//위탁일 경우만 지급 스케줄 관리 미 사용
-						$("#tab1InsertButton").jqxButton({disabled: true});
-						$("#tab1DeleteButton").jqxButton({disabled: true});
-						$("#tab1SaveButton").jqxButton({disabled: true});
-					}
+					$("#BUYGUBUN").change();
+					
 					f_selectListEnaPayScheduleTb(selRowData.BUYID);
 					f_selectListEnaSalesOpenTb(selRowData.BUYID);
 	
@@ -662,6 +648,7 @@
 							alert(data.resultMsg);
 							
 							if (data.resultCode == "SUCCESS") {
+								$("#BUYID").val(data.BUYID);
 								f_selectListEnaBuyMst();
 							} else {
 								$("#BUYDATE").focus();
@@ -682,26 +669,7 @@
 			}
 		}
 		
-		$(function() {
-			$("#searchButton").click(function() {
-				var buyDate = $("#BUYDATE").val();
-				
-				if (buyDate == "") {
-					alert("계약일자를 입력하셔야 합니다.");
-					
-					$("#BUYDATE").focus();
-					return false;
-				}
-				
-				var buyDate = $("#BUYDATE").val();
-				$("#LS_BUYDATE_FR").val(buyDate);
-				$("#LS_BUYDATE_TO").val(buyDate);
-				
-				f_selectListEnaBuyMst();
-			});
-		})
-		
-		function f_getBuyId() {
+		function f_searchButton() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
 				var buyDate = $("#BUYDATE").val();
@@ -720,6 +688,24 @@
 				$("#MANAGENO").focus();
 			}
 		}
+		
+		$(function() {
+			$("#searchPopButton").click(function() {
+				var buyDate = $("#BUYDATE").val();
+				
+				if (buyDate == "") {
+					alert("계약일자를 입력하셔야 합니다.");
+					
+					$("#BUYDATE").focus();
+					return false;
+				}
+				
+				//팝업
+				var popUrl = "/home/MM011001_searchPopup.do";	//팝업창에 출력될 페이지 UR
+				var popOption = "width=1200, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				window.open(popUrl,"매입관리",popOption);
+			});
+		})
 		
 		$(function() {
 			$('#bottomTabs').on('tabclick', function (event) { 
@@ -1008,6 +994,28 @@
 				}
 			});
 		})
+		
+		$(function() {
+			$("#BUYGUBUN").change(function() {
+				if ($(this).val() == "001") {	//일반
+					$("#mm_div1").text("매매대금");
+					$("#mm_div2").text("매매단가");
+					
+					//일반일 경우만 지급 스케줄 관리 사용
+					$("#tab1InsertButton").jqxButton({disabled: false});
+					$("#tab1DeleteButton").jqxButton({disabled: false});
+					$("#tab1SaveButton").jqxButton({disabled: false});
+				} else { //위탁
+					$("#mm_div1").text("위탁수수료");
+					$("#mm_div2").text("수수료단가");
+					
+					//위탁일 경우만 지급 스케줄 관리 미 사용
+					$("#tab1InsertButton").jqxButton({disabled: true});
+					$("#tab1DeleteButton").jqxButton({disabled: true});
+					$("#tab1SaveButton").jqxButton({disabled: true});
+				}
+			});
+		})
 	</script>
 </head>
 <body>
@@ -1041,8 +1049,8 @@
 			<table>
 				<tr>
 					<th width="120">* 계약일자 / 번호</th>
-					<td colspan="2"><input type="text" id="BUYDATE" name="BUYDATE" onkeydown="f_getBuyId();" />&nbsp;<input type="text" id="BUYID" name="BUYID" /></td>
-					<td><input type="button" id="searchButton"/></td>
+					<td colspan="2"><input type="text" id="BUYDATE" name="BUYDATE" onkeydown="f_searchButton();" />&nbsp;<input type="text" id="BUYID" name="BUYID" /></td>
+					<td><input type="button" id="searchPopButton"/></td>
 				</tr>
 				<tr>
 					<th width="120">* 매입구분</th>

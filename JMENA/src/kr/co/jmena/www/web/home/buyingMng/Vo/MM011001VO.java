@@ -2,6 +2,7 @@ package kr.co.jmena.www.web.home.buyingMng.Vo;
 
 public class MM011001VO {
 	
+	private String BUYID_PK;
 	private String BUYID;
 	private String BUYDATE;
 	private String BUYGUBUN;
@@ -398,6 +399,14 @@ public class MM011001VO {
 
 	public void setCONJPY(String CONJPY) {
 		this.CONJPY = CONJPY;
+	}
+
+	public String getBUYID_PK() {
+		return BUYID_PK;
+	}
+
+	public void setBUYID_PK(String BUYID_PK) {
+		this.BUYID_PK = BUYID_PK;
 	}
 	
 }

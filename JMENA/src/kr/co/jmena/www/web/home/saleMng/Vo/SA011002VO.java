@@ -2,8 +2,8 @@ package kr.co.jmena.www.web.home.saleMng.Vo;
 
 public class SA011002VO {
 	
-	private String SL_SALEDATE_FR;
-	private String SL_SALEDATE_TO;
+	private String SL_BRROWDATE_FR;
+	private String SL_BRROWDATE_TO;
 	private String SL_SALERCD;
 	private String SL_ADDRESS;
 	private String SALEDATE;
@@ -42,18 +42,28 @@ public class SA011002VO {
 	private String JOINYN;
 	private String REGYN;
 	private String REGDATE;
-	
+	private String BRANCHCODE;
+	private String USERID;
+	private String BUYID;
+	private String OWNERNAME;
+	private String OWNERJUMINID;
+	private String CONBM2;
+	private String CONJM2;
+	private String CONBPY;
+	private String CONJPY;
+	private String SALEGUBUN;
 	private String SL_SALEID;
+	private String SALEID_PK;
 	
 	
 	public String getSL_SALEID() {
 		return this.SL_SALEID;
 	}
-	public String getSL_SALEDATE_FR() {
-		return this.SL_SALEDATE_FR;
+	public String getSL_BRROWDATE_FR() {
+		return this.SL_BRROWDATE_FR;
 	}
-	public String getSL_SALEDATE_TO() {
-		return this.SL_SALEDATE_TO;
+	public String getSL_BRROWDATE_TO() {
+		return this.SL_BRROWDATE_TO;
 	}
 	public String getSL_SALERCD() {
 		return this.SL_SALERCD;
@@ -174,11 +184,11 @@ public class SA011002VO {
 	public void setSL_SALEID(String SL_SALEID) {
 		this.SL_SALEID = SL_SALEID;
 	}
-	public void setSL_SALEDATE_FR(String SL_SALEDATE_FR) {
-		this.SL_SALEDATE_FR = SL_SALEDATE_FR;
+	public void setSL_BRROWDATE_FR(String SL_BRROWDATE_FR) {
+		this.SL_BRROWDATE_FR = SL_BRROWDATE_FR;
 	}
-	public void setSL_SALEDATE_TO(String SL_SALEDATE_TO) {
-		this.SL_SALEDATE_TO = SL_SALEDATE_TO;
+	public void setSL_BRROWDATE_TO(String SL_BRROWDATE_TO) {
+		this.SL_BRROWDATE_TO = SL_BRROWDATE_TO;
 	}
 	public void setSL_SALERCD(String SL_SALERCD) {
 		this.SL_SALERCD = SL_SALERCD;
@@ -293,6 +303,72 @@ public class SA011002VO {
 	}
 	public void setREGDATE(String REGDATE) {
 		this.REGDATE = REGDATE;
+	}
+	public String getBRANCHCODE() {
+		return BRANCHCODE;
+	}
+	public String getUSERID() {
+		return USERID;
+	}
+	public String getBUYID() {
+		return BUYID;
+	}
+	public String getOWNERNAME() {
+		return OWNERNAME;
+	}
+	public String getOWNERJUMINID() {
+		return OWNERJUMINID;
+	}
+	public String getCONBM2() {
+		return CONBM2;
+	}
+	public String getCONJM2() {
+		return CONJM2;
+	}
+	public String getCONBPY() {
+		return CONBPY;
+	}
+	public String getCONJPY() {
+		return CONJPY;
+	}
+	public String getSALEGUBUN() {
+		return SALEGUBUN;
+	}
+	public void setBRANCHCODE(String BRANCHCODE) {
+		this.BRANCHCODE = BRANCHCODE;
+	}
+	public void setUSERID(String USERID) {
+		this.USERID = USERID;
+	}
+	public void setBUYID(String BUYID) {
+		this.BUYID = BUYID;
+	}
+	public void setOWNERNAME(String OWNERNAME) {
+		this.OWNERNAME = OWNERNAME;
+	}
+	public void setOWNERJUMINID(String OWNERJUMINID) {
+		this.OWNERJUMINID = OWNERJUMINID;
+	}
+	public void setCONBM2(String CONBM2) {
+		this.CONBM2 = CONBM2;
+	}
+	public void setCONJM2(String CONJM2) {
+		this.CONJM2 = CONJM2;
+	}
+	public void setCONBPY(String CONBPY) {
+		this.CONBPY = CONBPY;
+	}
+	public void setCONJPY(String CONJPY) {
+		this.CONJPY = CONJPY;
+	}
+	public void setSALEGUBUN(String SALEGUBUN) {
+		this.SALEGUBUN = SALEGUBUN;
+	}
+	public String getSALEID_PK() {
+		return SALEID_PK;
+	}
+	public void setSALEID_PK(String SALEID_PK) {
+		this.SALEID_PK = SALEID_PK;
 	}
 
 	

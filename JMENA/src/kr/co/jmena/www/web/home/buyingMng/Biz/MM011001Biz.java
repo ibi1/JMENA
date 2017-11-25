@@ -209,4 +209,16 @@ public class MM011001Biz {
 		
 		return lst;
 	}
+	
+	public List<MM011001VO> selectListMMBuyMstPopup(MM011001VO vo) throws Exception {
+		List<MM011001VO> lst = null;
+
+		try {
+			lst = MM011001Dao.selectListMMBuyMstPopup(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
 }

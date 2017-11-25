@@ -12,7 +12,9 @@
 </head>
 <script type="text/javascript">
 
+	var v_bottomCellId = 0;
 	$(document).ready(function(){
+		$("#dtlData").hide();
 		
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -43,6 +45,7 @@
 		$("#IPGUMID").attr("readonly","readonly");		
 		
 		$("#S_FLAG_L").val("I");
+		$("#S_FLAG_D").val("I");
 		
 		f_selectListEnaIpgumTypeCode();
 		f_selectListEnaIpgumGubunCode();
@@ -302,11 +305,11 @@
 			},
 			//height: '100%' ,
 			onSelectRow: function(ids){
+				v_bottomCellId = 0;
 				$("#S_FLAG_L").val("U");
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				var IPGUMID = selRowData.IPGUMID;
 				
-				console.log(selRowData);
 				$("#IPGUMDATE").val(selRowData.IPGUMDATE);
 				$("#IPGUMID").val(selRowData.IPGUMID);
 				
@@ -365,21 +368,22 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['계약번호', '계약일자', '계약구분', '계약자', '계약자 연락처',
 			          '계약자 주소', '계약면적', '계약평수', '계약대금(실판매가)', '입금구분',
-			          '입금예정일', '입금예정금액', '처리금액'] ,
+			          '입금예정일', '입금예정금액', '처리금액', '입금순번'] ,
 			colModel:[  
-				{name:"SALEID",			index:'SALEID',			width:100,		align:'center'}
-				, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center'}
-				, {name:"SALEGUBUN",	index:'SALEGUBUN',		width:100,		align:'center'}
-				, {name:"CONNAME",		index:'CONNAME',		width:100,		align:'center'}
-				, {name:"CONTELNO",		index:'CONTELNO',		width:100,		align:'center'}
-				, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center'}
-				, {name:"CONM2",		index:'CONM2',			width:100,		align:'center'}
-				, {name:"CONPY",		index:'CONPY',			width:100,		align:'center'}
-				, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center'}
-				, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center'}
-				, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center'}
-				, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'center'}
-				, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center'}
+				{name:"SALEID",			index:'SALEID',			width:100,		align:'center', editable:false}
+				, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center', editable:false}
+				, {name:"SALEGUBUN",	index:'SALEGUBUN',		width:100,		align:'center', editable:false}
+				, {name:"CONNAME",		index:'CONNAME',		width:100,		align:'center', editable:false}
+				, {name:"CONTELNO",		index:'CONTELNO',		width:100,		align:'center', editable:false}
+				, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center', editable:false}
+				, {name:"CONM2",		index:'CONM2',			width:100,		align:'center', editable:false}
+				, {name:"CONPY",		index:'CONPY',			width:100,		align:'center', editable:false}
+				, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center', editable:false}
+				, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center', editable:false}
+				, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center', editable:false}
+				, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'center', editable:false}
+				, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center', editable:true}
+				, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center', editable:false, hidden:true}
 			] ,
 			rowNum:10 ,
 			autowidth: true ,
@@ -394,7 +398,16 @@
 			},
 			//height: '100%' ,
 			onSelectRow: function(id){
-				alert(id);
+				$("#S_FLAG_D").val("U");
+				
+				
+				if( v_bottomCellId != id ){
+			        $(this).jqGrid('restoreRow',v_bottomCellId,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+			        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+			        v_bottomCellId = id;
+				}
+				
 			} ,
 			hidegrid: false
 		});
@@ -411,9 +424,10 @@
 				$(txtEle[i]).val("");
 			}
 
-
-
 			f_selectListEnaIpgumMst();
+			$("#S_FLAG_L").val("I");
+			$("#S_FLAG_D").val("I");
+			
 		});
 
 		$("#saveButton").click(function() {
@@ -483,11 +497,61 @@
 		});
 		
 		$("#addButton").click(function() {
+			if($("#S_FLAG_D").val() == "U"){
+				//alert("추가 작업 중입니다.");
+				return false;
+			}
+			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("선택된 입금정보가 없습니다.");
+				
+				return false;
+			}
+			
+			
 			//팝업
 			var popUrl = "/home/SA011003_salePopup.do";	//팝업창에 출력될 페이지 UR
 			var popOption = "width=730, height=440, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"매출조회",popOption);
+			
+			$("#S_FLAG_D").val("U");
+			
+
 		});
+
+		$("#deleteButton2").click(function() {
+
+			if($("#IPGUMID").val() == ""){
+				alert("입금일자 조회 후 삭제 할 수 없습니다.");
+				
+				return false;
+			}
+			
+			if ($("#S_FLAG_D").val() == "I") {
+				alert("데이터를 추가 중 일 경우 삭제 할 수 없습니다.");
+				
+				return false;
+			}
+			
+			if (confirm("삭제하시겠습니까?") == true) {
+				$.ajax({ 
+					type: 'POST' ,
+					data: "IPGUMID=" + $("#IPGUMID").val()+"&SEQ=" + $("#SEQ").val(),
+					url: "/home/deleteEnaIpgumDtl2.do", 
+					dataType : 'json' , 
+					success: function(data){
+						alert(data.resultMsg);
+						
+						$("#selectButton").click();
+					},
+					error:function(e){  
+						alert("[ERROR]선택 입금관리 데이터 삭제  중 오류가 발생하였습니다.");
+					}  
+				});
+			}
+		});
+
 		
 	})
 	
@@ -502,6 +566,31 @@
 
 	}
 
+	function bottomListAdd() {
+		
+		$("#S_FLAG_D").val("I");
+		
+		var data = {SALEID:$("#dtl_SALEID").val()
+			,SALEDATE:$("#dtl_SALEDATE").val()
+			,SALEGUBUN:$("#dtl_SALEGUBUN").val()
+			,CONNAME:$("#dtl_CONNAME").val()
+			,CONTELNO:$("#dtl_CONTELNO").val()
+			,CONADDRESS:$("#dtl_CONADDRESS").val()
+			,CONM2:$("#dtl_CONM2").val()
+			,CONPY:$("#dtl_CONPY").val()
+			,SELLAMT:$("#dtl_SELLAMT").val()
+			,DEPOSITGUBUN:$("#dtl_DEPOSITGUBUN").val()
+			,DEPOSITDATE:$("#dtl_DEPOSITDATE").val()
+			,DEPOSITAMT:$("#dtl_DEPOSITAMT").val()
+			,SUGUMAMT:""
+			,IPGUMSEQ:$("#dtl_IPGUMSEQ").val()}; 
+		
+		$("#bottomList").addRowData(0, data, "first");
+		$('#bottomList').jqGrid('editRow', v_bottomCellId, true);
+//		$('#bottomList').jqGrid('saveRow',v_bottomCellId,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+		
+	}
+	
 </script>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
@@ -551,6 +640,7 @@
 		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<form id="SA011003">
 			<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
+			<input type="hidden" id="S_FLAG_D" name="S_FLAG_D" />
 			<table width="98%" >
 				<tr>
 					<th width="120">입금일자/번호</th>
@@ -631,6 +721,23 @@
 			<br />
 			<br />
 			<table id="bottomList"></table>
+			<table id="dtlData">
+				<tr>
+					<td><input type="text" id="dtl_SALEID" 			name="dtl_SALEID"/></td>
+					<td><input type="text" id="dtl_SALEDATE" 		name="dtl_SALEDATE"/></td>
+					<td><input type="text" id="dtl_SALEGUBUN" 		name="dtl_SALEGUBUN"/></td>
+					<td><input type="text" id="dtl_CONNAME" 		name="dtl_CONNAME"/></td>
+					<td><input type="text" id="dtl_CONTELNO" 		name="dtl_CONTELNO"/></td>
+					<td><input type="text" id="dtl_CONADDRESS" 		name="dtl_CONADDRESS"/></td>
+					<td><input type="text" id="dtl_CONM2" 			name="dtl_CONM2"/></td>
+					<td><input type="text" id="dtl_CONPY" 			name="dtl_CONPY"/></td>
+					<td><input type="text" id="dtl_SELLAMT" 		name="dtl_SELLAMT"/></td>
+					<td><input type="text" id="dtl_DEPOSITGUBUN" 	name="dtl_DEPOSITGUBUN"/></td>
+					<td><input type="text" id="dtl_DEPOSITDATE" 	name="dtl_DEPOSITDATE"/></td>
+					<td><input type="text" id="dtl_DEPOSITAMT" 		name="dtl_DEPOSITAMT"/></td>
+					<td><input type="text" id="dtl_IPGUMSEQ" 		name="dtl_IPGUMSEQ"/></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </body>

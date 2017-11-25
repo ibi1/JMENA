@@ -42,7 +42,6 @@ public class SA011001Biz {
 		return lst;
 	}
 	
-	
 	public boolean insertDataSaleMst(SA011001VO vo) throws Exception {
 		boolean chkFlag = false;
 		

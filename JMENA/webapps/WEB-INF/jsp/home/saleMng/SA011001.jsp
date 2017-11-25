@@ -63,9 +63,9 @@
 			$("#searchPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			$("#searchManageNoPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			
-			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 			$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});
-			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true });
+			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 190, minLength: 1, disabled: true });
 			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1, disabled: true});
 			$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
 			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
@@ -157,7 +157,6 @@
 						inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 					});
 					$("#BRANCHNAME").append(inHtml);
-					f_selectListEnaSalerCode();
 				},
 				error:function(e){  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -233,7 +232,7 @@
 				loadError:function(){alert("Error~!!");},
 				colNames:['계약번호', '계약일자', 
 				          '관리번호', '지역구분', '지사구분', '주소', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
-				          '매출구분', '담당자', '매입번호', '게약자성명', '게약자주민번호', '계약자주소', 
+				          '매출구분', '담당자', '매입번호', '계약자성명', '계약자주민번호', '계약자주소', 
 				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '위탁수수료', 
 				          '공동명의구분', '등기여부', '등기일자', '해약여부', '해약일자'],
 				colModel:[
@@ -748,13 +747,6 @@
 					alert("매매대금을 입력하셔야 합니다.");
 					
 					$("#SALEAMT").focus();
-					return false;
-				}
-				
-				if ($("#SALEDANGA").val() == "") {
-					alert("매매단가를 입력하셔야 합니다.");
-					
-					$("#SALEDANGA").focus();
 					return false;
 				}
 				
@@ -1454,22 +1446,22 @@
 		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
 			<form id="SA011001">
 			<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
-			<table >
+			<table width="98%">
 				<tr>
 					<th width="120">* 계약일자/번호</th>
-					<td colspan="3"><input type="text" id="SALEDATE" name="SALEDATE" /><input type="text" id="SALEID" name="SALEID" /></td>
-					<td><input type="button" id="searchPopButton"/></td>
+					<td colspan="2"><input type="text" id="SALEDATE" name="SALEDATE" /><input type="text" id="SALEID" name="SALEID" /></td>
+					<td colspan="2"><input type="button" id="searchPopButton"/></td>
 				</tr>
 				<tr>
 					<th width="120">* 매출구분</th>
-					<td colspan="3">
+					<td colspan="4">
 						<select id="SALEGUBUN" name="SALEGUBUN">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th width="120">* 담당자</th>
-					<td>
+					<td colspan="2">
 						<select id="SALERCD" name="SALERCD">
 						</select>
 					</td>
@@ -1482,7 +1474,7 @@
 				<tr>
 					<th width="120">관리번호</th>
 					<td><input type="text" id="MANAGENO" name="MANAGENO" /></td>
-					<td><input type="button" id="searchManageNoPopButton"/></td>
+					<td width="30"><input type="button" id="searchManageNoPopButton"/></td>
 					<th width="120">지역구분</th>
 					<td>
 						<select id="CITYCODE" name="CITYCODE">
@@ -1491,53 +1483,53 @@
 				</tr>
 				<tr>
 					<th width="120">주소</th>
-					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
+					<td colspan="4"><input type="text" id="ADDRESS" name="ADDRESS" /></td>
 				</tr>
 				<tr>
 					<th width="120">원지주 성명</th>
-					<td><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
+					<td colspan="2"><input type="text" id="OWNERNAME" name="OWNERNAME" /></td>
 					<th width="120">주민번호</th>
-					<td><input type="text" id="OWNERJUMINID" name="OWNERJUMINID" /></td>
+					<td colspan="2"><input type="text" id="OWNERJUMINID" name="OWNERJUMINID" /></td>
 				</tr>
 				<tr>
 					<th width="120">분양/잔여면적</th>
-					<td><input type="text" id="CONBM2" name="CONBM2" /> / <input type="text" id="CONJM2" name="CONJM2" /></td>
+					<td colspan="2"><input type="text" id="CONBM2" name="CONBM2" /> / <input type="text" id="CONJM2" name="CONJM2" /></td>
 					<th width="120">분양/잔여평수</th>
 					<td><input type="text" id="CONBPY" name="CONBPY" /> / <input type="text" id="CONJPY" name="CONJPY" /></td>
 				</tr>
 				<tr>
 					<th width="120">계약자 성명</th>
-					<td><input type="text" id="CONNAME" name="CONNAME" /></td>
+					<td colspan="2"><input type="text" id="CONNAME" name="CONNAME" /></td>
 					<th width="120">계약자주민번호</th>
 					<td><input type="text" id="CONJUMINID" name="CONJUMINID" /></td>
 				</tr>
 				<tr>
 					<th width="120">계약자 주소</th>
-					<td colspan="3"><input type="text" id="CONADDRESS" name="CONADDRESS" /></td>
+					<td colspan="4"><input type="text" id="CONADDRESS" name="CONADDRESS" /></td>
 				</tr>
 				<tr>
 					<th width="120">계약자 연락처</th>
-					<td colspan="3"><input type="text" id="CONTELNO" name="CONTELNO" /></td>
+					<td colspan="4"><input type="text" id="CONTELNO" name="CONTELNO" /></td>
 				</tr>
 				<tr>
 					<th width="120">계약면적</th>
-					<td><input type="text" id="CONM2" name="CONM2" /></td>
+					<td colspan="2"><input type="text" id="CONM2" name="CONM2" /></td>
 					<th width="120">계약평수</th>
 					<td><input type="text" id="CONPY" name="CONPY" /></td>
 				</tr>
 				<tr>
 					<th width="120">매매대금</th>
-					<td><input type="text" id="SALEAMT" name="SALEAMT" /></td>
+					<td colspan="2"><input type="text" id="SALEAMT" name="SALEAMT" /></td>
 					<th width="120">매매단가</th>
 					<td><input type="text" id="SALEDANGA" name="SALEDANGA" /></td>
 				</tr>
 				<tr>
 					<th width="120">위탁수수료</th>
-					<td colspan="3"><input type="text" id="AGENCYAMT" name="AGENCYAMT" /></td>
+					<td colspan="4"><input type="text" id="AGENCYAMT" name="AGENCYAMT" /></td>
 				</tr>
 				<tr>
 					<th width="120">DC사항</th>
-					<td>
+					<td colspan="2">
 						<select id="DCGUBUN" name="DCGUBUN">
 							<option></option>
 						</select>
@@ -1547,13 +1539,13 @@
 				</tr>
 				<tr>
 					<th width="120">DC금액</th>
-					<td><input type="text" id="DCAMT" name="DCAMT" /></td>
+					<td colspan="2"><input type="text" id="DCAMT" name="DCAMT" /></td>
 					<th width="120">실 판매가</th>
 					<td><input type="text" id="SELLAMT" name="SELLAMT" /></td>
 				</tr>
 				<tr>
 					<th width="120">비고</th>
-					<td colspan="3"><input type="text" id="REMARK" name="REMARK" onkeydown="f_saveButton();"/></td>
+					<td colspan="4"><input type="text" id="REMARK" name="REMARK" onkeydown="f_saveButton();"/></td>
 				</tr>
 			</table>
 		</div>

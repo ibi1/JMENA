@@ -7,8 +7,8 @@
 
 	<resultMap id="mainData" class="mainVO">
 		<result property="USERID" column="USERID"/>
-		<result property="PASSWORD" column="PASSWORD"/>
 		<result property="USERNAME" column="USERNAME"/>
+		<result property="USERGUBUN" column="USERGUBUN"/>
 	</resultMap>
 	
 	<resultMap id="systemMenuData" class="mainVO">
@@ -33,18 +33,32 @@
  	<select id="selectUserInfo" resultMap="mainData">
 		SELECT 
 			USERID,
-			PASSWORD,
-			USERNAME
+			USERNAME,
+			USERGUBUN
 		FROM sy_usermst
 		WHERE USERID = #USERID#
 		  AND PASSWORD = #PASSWORD#
 	</select>
-	
+		
 	<select id="selectSystemMenu" resultMap="systemMenuData">
-		SELECT 
-			SYSID, SYSNAME 
-		FROM sy_sysmst 
-		ORDER BY SORTKEY
+		<isEqual property="USERGUBUN" compareValue="A">
+			<!-- 관리자 -->
+			SELECT 
+				SYSID, SYSNAME 
+			FROM sy_sysmst 
+			ORDER BY SORTKEY
+		</isEqual>
+		<isEqual property="USERGUBUN" compareValue="B">
+			<!-- 일반사용자 -->
+			SELECT 
+				T1.SYSID, T1.SYSNAME 
+			FROM sy_sysmst T1, sy_usersystb T2
+			WHERE 1=1
+			AND T2.USERID = #USERID#
+			AND T2.AUTH_YN = 'Y'
+			AND T1.SYSID = T2.SYSID
+			ORDER BY T1.SORTKEY
+		</isEqual>
 	</select>
 	
 	<select id="selectMenuTb" resultMap="treeMenuData">
@@ -57,11 +71,26 @@
 	</select>
 	
 	<select id="selectPgmTb" resultMap="treePgmData">
-		SELECT 
-			MENUID, PGMID, PGMNAME 
-		FROM sy_menupgmtb
-		WHERE SYSID = #SYSID#
-		   AND USEYN = 'Y'
-		ORDER BY MENUID, SORTKEY
+		<isEqual property="USERGUBUN" compareValue="A">
+			<!-- 관리자 -->
+			SELECT 
+				MENUID, PGMID, PGMNAME 
+			FROM sy_menupgmtb
+			WHERE SYSID = #SYSID#
+			   AND USEYN = 'Y'
+			ORDER BY MENUID, SORTKEY
+		</isEqual>
+		<isEqual property="USERGUBUN" compareValue="B">
+			<!-- 일반사용자 -->
+			SELECT 
+				T2.MENUID, T2.PGMID, T2.PGMNAME
+			FROM (SELECT IN1.* FROM sy_userpgmauthtb IN1 WHERE IN1.USERID = #USERID# AND IN1.SYSID = #SYSID# AND IN1.AUTH_S = 'Y') T1, 
+				(SELECT IN2.* FROM sy_menupgmtb IN2 WHERE IN2.SYSID = #SYSID# AND IN2.USEYN = 'Y') T2
+			WHERE 1=1
+			AND T1.SYSID = T2.SYSID
+			AND T1.MENUID = T2.MENUID 
+			AND T1.PGMID = T2.PGMID
+			ORDER BY T2.MENUID, T2.SORTKEY
+		</isEqual>
 	</select>
 </sqlMap>
