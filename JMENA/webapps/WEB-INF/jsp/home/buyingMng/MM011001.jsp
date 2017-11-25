@@ -9,7 +9,6 @@
 	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
 
-
 	<script type="text/javascript">
 		var v_rightLastSel_1 = 0;		//오른쪽 그리드 선택 tab1
 		var v_rightLastSel_2 = 0;		//오른쪽 그리드 선택 tab2
