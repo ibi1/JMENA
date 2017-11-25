@@ -136,6 +136,10 @@ public class SA011003Ctr {
 			obj.put("DEPOSITAMT", lst.get(i).getDEPOSITAMT());
 			obj.put("SUGUMAMT", lst.get(i).getSUGUMAMT());
 			
+			obj.put("SEQ", lst.get(i).getSEQ());
+			obj.put("IPGUMSEQ", lst.get(i).getIPGUMSEQ());
+			obj.put("SUGUMAMT", lst.get(i).getSUGUMAMT());
+			
 			jCell.add(obj);
 		}
 		json.put("rows", jCell);
@@ -276,22 +280,83 @@ public class SA011003Ctr {
 
 		return new ModelAndView("home/saleMng/SA011003_salePopup");
 	}
+
+	/**
+	 * @name 인사 기본 정보 관리 저장
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/updateEnaIpgumDtl.do")
+	public ModelAndView updateEnaIpgumDtl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		SA011003VO vo = new SA011003VO();		
+		
+		int updateCnt = 0;
+		int insertCnt = 0;
+		
+		vo.setIPGUMID(request.getParameter("IPGUMID"));
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setIPGUMSEQ(request.getParameter("IPGUMSEQ"));
+		vo.setSUGUMAMT(request.getParameter("SUGUMAMT"));
+		vo.setREMARK("");
+
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();		
+
+		JSONObject obj = new JSONObject();
+		
+		if (SA011003Biz.selectOneEnaIpgumDtl(vo) == 0) {
+			insertCnt = SA011003Biz.insertEnaIpgumDtl(vo);
+			if(insertCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}			
+		}else{
+			updateCnt = SA011003Biz.updateEnaIpgumDtl(vo);
+			if(updateCnt > 0){
+				obj.put("MSG", "success");
+			}else{
+				obj.put("MSG", "error");
+			}
+		}
+
+		jCell.add(obj);
+		json.put("rows", jCell);
+		
+		System.out.println("updateCnt==>"+updateCnt);
+		System.out.println("insertCnt==>"+insertCnt);
+		
+		System.out.println("json==>"+json);
+		
+		return new ModelAndView("jsonView", json);	
+
+	
+	}
 	
 
-	@RequestMapping("/home/deleteEnaIpgumDtl2.do")
+	@RequestMapping("/home/deleteEnaIpgumDtl.do")
 	public ModelAndView deleteEnaIpgumDtl2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA011003VO vo = new SA011003VO();
 		
 		vo.setIPGUMID(request.getParameter("IPGUMID"));
 		vo.setSEQ(request.getParameter("SEQ"));
 		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setIPGUMSEQ(request.getParameter("IPGUMSEQ"));
 		
 		JSONObject json = new JSONObject();
 		
 		String resultCode = "";
 		String resultMsg = "";
 		
-		if (SA011003Biz.deleteEnaIpgumDtl2(vo) == true) {
+		if (SA011003Biz.deleteEnaIpgumDtl(vo) == true) {
 			resultCode ="SUCCESS";
 			resultMsg = "정상적으로 삭제하였습니다.";
 		} else {
