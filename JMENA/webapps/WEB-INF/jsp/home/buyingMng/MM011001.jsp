@@ -94,7 +94,7 @@
 			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 	
 			$("#PAYTOTAL").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
-	
+			
 			f_selectListEnaBuyMst();
 			f_selectListEnaPayScheduleTb();
 			f_selectListEnaSalesOpenTb();
