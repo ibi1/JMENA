@@ -88,6 +88,8 @@
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 150, height: 25 });
 		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 150, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		var SALEID = $("#SALEID",opener.document).val();
+		var PAYSEQ = $("#PAYSEQ",opener.document).val();
 		
 		searchLeftList();
 		searchbottomList();
@@ -143,22 +145,27 @@
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#SALEID").val(selRowData.SALEID);
 				$("#PAYSEQ").val(selRowData.PAYSEQ);								
-				searchbottomList();
+				searchbottomList(selRowData.SALEID,selRowData.PAYSEQ);
 				
 			} ,
+			loadComplete: function(ids) {
+				
+			},	
 			hidegrid: false
 		});
 	}
 	
-	function searchbottomList(){
+	function searchbottomList(SALEID,PAYSEQ){
 		$('#bottomList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#bottomList').jqGrid({	
 			caption: '신고인 관리',
 			url:"/home/selectListEnaSudangPTb.do" ,
 			mtype: 'POST',
 			postData : {
-				SALEID : $("#SALEID").val(),
-				PAYSEQ : $("#PAYSEQ").val()
+				SALEID : SALEID,
+				PAYSEQ : PAYSEQ
+// 				SALEID : $("#SALEID").val(),
+// 				PAYSEQ : $("#PAYSEQ").val()
 			},			
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
@@ -167,13 +174,21 @@
 				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center', editable:true}
 				, {name:"PAYERID",		index:'PAYERID',		width:80,		align:'center', editable:true}
 				, {name:"SAUPOWNER",	index:'SAUPOWNER',		width:80,		align:'center', editable:true}
-				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right' ,  editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right' ,  editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
+ 					editoptions:{
+ 						dataEvents:[{
+ 							type:'change',
+ 							fn:function(e){
+ 								paycal();
+ 							}
+						}]
+					}}					
 				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', editable:true
 					, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode,
 						dataEvents:[{
 							type:'change',
 							fn:function(e){
-								if($("#bottomList [name=PAYAMT] ").val() == ""){
+								if(this.value == ""){
 									alert("지급 금액을 입력 해 주세요.");
 									return;
 								}else{
@@ -225,19 +240,11 @@
 			        v_rightLastSel = id;
 				}
 			} ,
-			editoptions: {
-                dataEvents: [{type: 'change', fn: function(e){
-                   	alert("a");
-                   }
-                }]
-
-            },			
+			
 			hidegrid: false
 		});
 	}	
-		
-		
-		
+				
 	function f_selectEnaCode(data){
 		
 		var jsonValue = $.parseJSON(data).dcodeList;
@@ -340,7 +347,77 @@
 			
 			var payerId = cellData.PAYERID.replace("-","");
 			
+			if (cellData.PAYERNAME == "") {
+				alert("성명을 입력하셔야 합니다.");
 			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"PAYERNAME").focus();
+			
+				return false;
+			}
+			
+			if (payerId == "") {
+				alert("주민번호를 입력하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"PAYERID").focus();
+			
+				return false;
+			}
+
+			if (cellData.SAUPOWNER == "") {
+				alert("대표자명을 입력하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"SAUPOWNER").focus();
+			
+				return false;
+			}
+			if (cellData.PAYAMT == "") {
+				alert("지급금액을 입력하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"PAYAMT").focus();
+			
+				return false;
+			}
+			
+			if (taxGubun == "") {
+				alert("신고기준을 선택하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"PAYAMT").focus();
+			
+				return false;
+			}
+			
+			if (bankId == "") {
+				alert("거래은행을 선택하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"BANKID").focus();
+			
+				return false;
+			}
+			
+			if (cellData.ACCTNO == "") {
+				alert("계좌번호를 입력하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"ACCTNO").focus();
+			
+				return false;
+			}
+			
+			if (cellData.ACCTOWNER == "") {
+				alert("계좌주를 입력하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"ACCTOWNER").focus();
+			
+				return false;
+			}
+					
 			var msg = "저장하시겠습니까?";
 			if (confirm(msg) == true) {				
 				var formData = "S_FLAG=" + $("#S_FLAG").val() +  				

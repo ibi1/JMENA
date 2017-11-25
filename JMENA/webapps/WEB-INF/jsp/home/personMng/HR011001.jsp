@@ -55,12 +55,16 @@
 		$("#RETIREDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 350, minLength: 1});
 		
-		
+
 		$("#table1").show();
 		$("#table2").hide();
 		f_selectListEnaBranchCode();
 		f_selectListEnaGradeCode();
-		f_selectListEnaDutyCode();	
+		f_selectListEnaDutyCode();
+		$("#APPOINTBRANCH").val("");
+// 		$("#S_BRANCHCODE").val("00001");
+// 		$("#S_DEPTCODE").val("00101");
+				
 		selectListInsaMst();
 		selectListEnaAppointItem(INSACODE);
 		selectListEnaTexPayerItem(INSACODE);
@@ -69,6 +73,10 @@
 
 	function selectListInsaMst(){	
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+		if($("#S_BRANCHCODE").val() == "" && $("#S_DEPTCODE").val() == "" && $("#S_KNAME").val() == "" && $("#S_JUMINID").val() == ""){
+			alert("조회조건을 입력해 주세요");
+			return;
+		}
 		$('#leftList').jqGrid({
 			//caption: '인사관리', 
 			url:"/home/selectListEnaInsaMst.do" ,
@@ -116,7 +124,7 @@
 			viewrecords: true,
 			sortorder:'asc',
 			width: '96%',
-			loadtext : "조회 중",
+			loadtext: '로딩중...',
 			jsonReader: {
 				repeatitems: false
 			},
@@ -176,6 +184,7 @@
 			INSACODE : INSACODE
 		},
 		datatype:"json" ,
+		loadtext: '로딩중...',
 		loadError:function(){alert("Error~!!!!");} ,
 		colNames:['사번','순번', '발령구분', '발령일자', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고'] ,
 		colModel:[
@@ -188,20 +197,24 @@
 					dataEvents:[{
 						type:'change',
 						fn:function(e){
-							alert("a");
-							$("#bottomList1").jqGrid('setColProp', 'APPOINTDEPT', {edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}});
+							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+							var appointbranch = this.value;
+							$("#APPOINTBRANCH").val(appointbranch);
+							alert("aaaaa");
+							$("#bottomList1").jqGrid('setColProp','APPOINTDEPT', {editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+$("#APPOINTBRANCH").val(), buildSelect:f_selectListEnaDeptCode1}});
+//							$("#bottomList2").jqGrid('setColProp', 'PAYERID', {editoptions:{readonly:true}});  요게 되는거
 							//여기 수정해야 함.
-							$("#bottomList1 [name=APPOINTBRANCH] option:selected").val();
+							
 							
 							//$("#bottomList").setCell(ids,"TAXINCOME",taxincome);
 						}
 					}]	
 				}}
 //			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
-			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do", buildSelect:f_selectListEnaDeptCode1}}
+			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+$("#APPOINTBRANCH").val(), buildSelect:f_selectListEnaDeptCode1}}
 			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
-			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
-//			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
+//			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
+			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center', editable:true}
@@ -231,6 +244,11 @@
 
 		        v_rightLastSel = id;
 			}
+			var cellData = $("#bottomList1").jqGrid('getRowData', id); //셀 전체 데이터 가져오기
+//			$("#bottomList1").jqGrid('setColProp',id ,'APPOINTDEPT', {edittype:'select', editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+$("#APPOINTBRANCH").val(), buildSelect:f_selectListEnaDeptCode1}});
+		},
+		loadComplete: function(id) {
+			$("#APPOINTBRANCH").val( $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCH);
 		},		
 		hidegrid: false
 		});	
@@ -248,6 +266,7 @@
 				INSACODE : INSACODE
 			},		
 			datatype:"json" ,
+			loadtext: '로딩중...',
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['사번','순번','소득신고인', '주민번호', '거래은행', '계좌번호', '계좌주', '기본계좌', '비고'] ,
 			colModel:[
@@ -258,7 +277,35 @@
 				,{name:"BANKID",		index:'BANKID',			width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
 				,{name:"ACCTNO",		index:'ACCTNO',			width:100,		align:'center', editable:true}
 				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center', editable:true}
-				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N",
+ 						dataEvents:[{
+ 							type:'change',
+ 							fn:function(id){
+//  								var ids = jQuery("#leftList").jqGrid('getDataIDs');
+ 								
+//  								ids.some(function(currentValue, index, array){
+ 									var cellData = this.value;
+alert(cellData);
+return;
+ 									
+//  									if (cellData == saleId) {
+//  										$("#S_FLAG_L").val("U");
+//  						        		$("#leftList").jqGrid('setSelection', ids[index]);
+//  						    			return true;
+//  						        	} else {
+//  						        		$("#S_FLAG_L").val("I");
+//  						        	}	        
+//  								});
+ 								
+ 								
+ 								
+ 								alert(this.getGridParam("reccount"));
+ 								return;
+ 								var index = id;
+// 								for(var i = 0 ; i < this.getGridParam("reccount") ;)
+ 							}
+						}]
+					}}
 				,{name:"REMARK",		index:'REMARK',			width:100,		align:'center', editable:true}
 			] ,
 			rowNum:10 ,
@@ -288,7 +335,30 @@
 				}
 			} ,
 			loadComplete: function() {				
+				var ids = $(this).jqGrid('getDataIDs');
 				
+				ids.some(function(currentValue, index, array){
+					var basicacct = $("#bottomList2").jqGrid('getCell', ids[index], 'BASICACCT');
+					
+					if (basicacct == "Y") {
+//						$('#bottomList2').jqGrid('editRow', ids, true);						
+						
+					}else{
+// 						$('#bottomList2').jqGrid('editRow', ids, true);
+// 						$("#"+index+"_PAYERID").prop("disabled", "disabled");
+//						$('#bottomList2').jqGrid('setCell', index,  'PAYERID', "", 'not-editable-cell'); 
+
+//						$("#bottomList2").jqGrid('setColProp',index, 'PAYERID', {editoptions:{readonly:true}});
+						// 						$('#bottomList').jqGrid('editRow', ids, true);
+// 						$("#"+ids+"_PAYERID").prop("disabled", true)
+
+//						$("#bottomList2").jqGrid('setCell', index ,  'PAYERID', {editoptions:{readonly:true}});
+//						$("#bottomList2").jqGrid('setColProp', index, 'PAYERID', {editoptions:{readonly:true}});
+//						$("#bottomList2").jqGrid('setColProp', 'PAYERID', {editoptions:{readonly:true}});  //요게 되는거
+						
+//						$("#bottomList2").jqGrid('setColProp', 'PAYERID', {editoptions:{readonly:true}});  요게 되는거
+					}		        	     
+				});
 			},
 			hidegrid: false
 		});
@@ -346,6 +416,7 @@
 			dataType : 'json' , 
 			success: function(data){
 				var inHtml = "";
+//				inHtml += "<option value=''>전체</option>\n";
 				data.branchMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 				});
@@ -389,6 +460,7 @@
 			success: function(data){
 				
 				var inHtml = "";
+//					inHtml += "<option value=''>전체</option>\n";
 				data.deptMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 				});
@@ -477,7 +549,7 @@
 		return result;
 	}
 	
-	function f_selectListEnaDeptCode1(data){
+ 	function f_selectListEnaDeptCode1(data){
 		var jsonValue = $.parseJSON(data).deptMstList;
 		
 		var result = "<select>";
@@ -488,7 +560,7 @@
 		
 		result +="</select>";
 		return result;
-	}		
+	}		 
 	
 	function f_selectListEnaBankCode(data){
 		var jsonValue = $.parseJSON(data).bankList;
@@ -556,26 +628,33 @@
 		$("#saveButton").click(function(){		
 			$("#REJOINYN").is(":checked") ? $("#REJOINYN").val("Y") : $("#REJOINYN").val("N");
 			var formData = $("#HR011001").serialize();
-		   	$.ajax({ 
-				type: 'POST' ,
-				url: "/home/updateEnaInsaMst.do", 
-				//dataType : 'json' , 
-				data : formData,
-				//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
-				success: function(data){
-					if(data.rows[0].MSG == "SUCCESS")
-					{
-						alert("저장이 완료되었습니다.");
-						selectListInsaMst();
-					}else{
-						alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
-					}
+			return;
+			if (confirm("저장하시겠습니까?") == true) {
+			   	$.ajax({ 
+					type: 'POST' ,
+					url: "/home/updateEnaInsaMst.do", 
+					//dataType : 'json' ,
 					
-				},
-				error:function(e){  
-					alert("인사 정보를 저장하는 중 오류가 발생하였습니다.");
-				}  
-			});
+						data : formData,
+						//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
+						success: function(data){
+							if(data.rows[0].MSG == "SUCCESS")
+							{
+								alert("저장이 완료되었습니다.");
+								selectListInsaMst();
+							}else{
+								alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+							}
+							
+						},
+					error:function(e){  
+						alert("인사 정보를 저장하는 중 오류가 발생하였습니다.");
+					}  
+				});
+			}else{
+				selectListInsaMst();
+			}
+			
 		}) 
 	})		
 	
@@ -607,46 +686,78 @@
 				
 				return false;
 			}
-			
 			//jqGrid SelectBox 는 뷰 모드 전에 값을 가져옴.
 			var appointGubun = $("#bottomList1 [name=APPOINTGUBUN] option:selected").val();
 			var appointBranch = $("#bottomList1 [name=APPOINTBRANCH] option:selected").val();
-//			var appointDept = $("#bottomList1 [name=APPOINTDEPT] option:selected").val();
+			var appointDept = $("#bottomList1 [name=APPOINTDEPT] option:selected").val();
 			var grade = $("#bottomList1 [name=GRADE] option:selected").val();
 			var duty = $("#bottomList1 [name=DUTY] option:selected").val();
 			var employGubun = $("#bottomList1 [name=EMPLOYGUBUN] option:selected").val();
-			
 			$('#bottomList1').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
 			var cellData = $("#bottomList1").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
 
-// 			if (cellData.DEPTCODE == "") {
-// 				alert("부서 코드를 입력하셔야 합니다.");
+			if (appointGubun == "") {
+				alert("발령구분을 선택하셔야 합니다.");
 				
-// 				$('#rightList').jqGrid('editRow', ids, true);
-// 				$("#"+ids+"_DEPTCODE").focus();
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"APPOINTGUBUN").focus();
 				
-// 				return false;
-// 			}
+				return false;
+			}
 			
-// 			if (cellData.DEPTNAME == "") {
-// 				alert("부서 명을 입력하셔야 합니다.");
+			if (cellData.APPOINTDATE == "") {
+				alert("발령일자를 입력하셔야 합니다.");
 				
-// 				$('#rightList').jqGrid('editRow', ids, true);
-// 				$("#"+ids+"_DEPTNAME").focus();
+				$('#bottomList1').jqGrid('editRow', ids, true);
+				$("#"+ids+"APPOINTDATE").focus();
 				
-// 				return false;
-// 			}
+				return false;
+			}
 			
-// 			if (cellData.SORTKEY == "") {
-// 				alert("정렬 순서를 입력하셔야 합니다.");
+			if (appointBranch == "") {
+				alert("발령지사을 선택하셔야 합니다.");
 				
-// 				$('#rightList').jqGrid('editRow', ids, true);
-// 				$("#"+ids+"_SORTKEY").focus();
+				$('#bottomList1').jqGrid('editRow', ids, true);
+				$("#"+ids+"APPOINTBRANCH").focus();
 				
-// 				return false;
-// 			}
+				return false;
+			}
 			
+			if (appointDept == "") {
+				alert("발령부서를 선택하셔야 합니다.");
+				
+				$('#bottomList1').jqGrid('editRow', ids, true);
+				$("#"+ids+"APPOINTDEPT").focus();
+				
+				return false;
+			}
+			if (grade == "") {
+				alert("직급을 선택하셔야 합니다.");
+				
+				$('#bottomList1').jqGrid('editRow', ids, true);
+				$("#"+ids+"GRADE").focus();
+				
+				return false;
+			}
+			
+			if (duty == "") {
+				alert("직책을 선택하셔야 합니다.");
+				
+				$('#bottomList1').jqGrid('editRow', ids, true);
+				$("#"+ids+"DUTY").focus();
+				
+				return false;
+			}
+			
+			if (employGubun == "") {
+				alert("고용구분을 선택하셔야 합니다.");
+				
+				$('#bottomList1').jqGrid('editRow', ids, true);
+				$("#"+ids+"EMPLOYGUBUN").focus();
+				
+				return false;
+			}
 			var msg = "";
 			if ($("#S_FLAG_B1").val() == "I") {
 				msg = "저장하시겠습니까?";
@@ -660,7 +771,7 @@
 							   "&APPOINTSEQ=" + cellData.APPOINTSEQ + 
 							   "&APPOINTGUBUN=" + appointGubun + 
 				               "&APPOINTDATE=" + cellData.APPOINTDATE + 
-				               "&APPOINTBRANCH=" + cellData.APPOINTBRANCH + 
+				               "&APPOINTBRANCH=" + appointBranch + 
 				               "&APPOINTDEPT=" + cellData.APPOINTDEPT +
 //				               "&APPOINTDEPT=" + appointDept +
 				               "&GRADE=" + grade + 
@@ -792,32 +903,49 @@
 			
 			var payerId = cellData.PAYERID.replace("-","");
 			
-	//			if (cellData.DEPTCODE == "") {
-	//				alert("부서 코드를 입력하셔야 합니다.");
-				
-	//				$('#rightList').jqGrid('editRow', ids, true);
-	//				$("#"+ids+"_DEPTCODE").focus();
-				
-	//				return false;
-	//			}
+			if (cellData.PAYERNAME == "") {
+				alert("소득신고인을 입력하셔야 합니다.");
 			
-	//			if (cellData.DEPTNAME == "") {
-	//				alert("부서 명을 입력하셔야 합니다.");
-				
-	//				$('#rightList').jqGrid('editRow', ids, true);
-	//				$("#"+ids+"_DEPTNAME").focus();
-				
-	//				return false;
-	//			}
+				$('#bottomList2').jqGrid('editRow', ids, true);
+				$("#"+ids+"_DEPTCODE").focus();
 			
-	//			if (cellData.SORTKEY == "") {
-	//				alert("정렬 순서를 입력하셔야 합니다.");
-				
-	//				$('#rightList').jqGrid('editRow', ids, true);
-	//				$("#"+ids+"_SORTKEY").focus();
-				
-	//				return false;
-	//			}
+				return false;
+			}
+			if (payerId == "") {
+				alert("주민번호를 입력하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"PAYERID").focus();
+			
+				return false;
+			}
+		
+			if (bankId == "") {
+				alert("거래은행을 선택하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"BANKID").focus();
+			
+				return false;
+			}
+			if (cellData.ACCTNO == "") {
+				alert("계좌번호를 입력하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"ACCTNO").focus();
+			
+				return false;
+			}
+		
+			if (cellData.ACCTOWNER == "") {
+				alert("계좌주를 입력하셔야 합니다.");
+			
+				$('#rightList').jqGrid('editRow', ids, true);
+				$("#"+ids+"ACCTOWNER").focus();
+			
+				return false;
+			}
+			
 			
 			var msg = "";
 			if ($("#S_FLAG_B2").val() == "I") {
@@ -1047,7 +1175,8 @@
 				</tr>
 				<tr>
 					<th width="120">비고</th>
-					<td colspan="3"><input type="text" id="REMARK" name="REMARK" /></td>
+					<td colspan="3"><input type="text" id="REMARK" name="REMARK" />
+					<input type="hidden" id="APPOINTBRANCH" name="APPOINTBRANCH" /></td>
 				</tr>			
 			</table>
 			</form>

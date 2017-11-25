@@ -113,7 +113,9 @@
 			DEPTCODE, DEPTNAME 
 		FROM ba_deptmst
 		WHERE USEYN = 'Y'
-		  AND BRANCHCODE = #BRANCHCODE#
+		<isNotEmpty property="BRANCHCODE">
+			AND BRANCHCODE = #BRANCHCODE#
+		</isNotEmpty>
 		ORDER BY DEPTCODE
 	</select>
 

@@ -78,28 +78,10 @@
 				,{name:"DUTY",			index:'DUTY',			width:100,		align:'center'}
 				,{name:"INSACODE",		index:'INSACODE',		width:100,		align:'center'}
 				,{name:"KNAME",			index:'KNAME',			width:100,		align:'center'}
-				,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-				,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'right',editable:true,edittype:'text',
-					editoptions:{
-						dataEvents:[{
-							type:'keydown',
-							fn:function(e){
-								alert("?");
-								if(e.keyCode == 9 || e.keyCode == 13){      //Enter Key or Tab Key
-									alert("oh ho~");;
-								}
-								alert("oh ho~");
-								if($("#bottomList [name=PAYAMT] ").val() == ""){
-									alert("지급 금액을 입력 해 주세요.");
-									return;
-								}else{
-									paycal();								
-								}
-							}
-						}]
-					}}	
-				,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}	
 				,{name:"DAILYAMT",		index:'DAILYAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"TOTALAMT",		index:'TOTALAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:100,		align:'center'}				
 				,{name:"TAXINCOME",		index:'TAXINCOME',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -270,25 +252,59 @@
 					,{name:"DUTY",			index:'DUTY',			width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
 					,{name:"INSACODE",		index:'INSACODE',		width:100,		align:'center'}
 					,{name:"KNAME",			index:'KNAME',			width:100,		align:'center'}
-					,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right', editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-					,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"DAILYAMT",		index:'DAILYAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"TOTALAMT",		index:'TOTALAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right', editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
+	 					editoptions:{
+	 						dataEvents:[{
+	 							type:'change',
+	 							fn:function(e){
+	 								paycal();
+	 							}
+							}]
+						}}
+					,{name:"DAILYAMT",		index:'DAILYAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
+						editoptions:{
+	 						dataEvents:[{
+	 							type:'change',
+	 							fn:function(e){
+	 								paycal();
+	 							}
+							}]								
+							
+					}}
+					,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
+						editoptions:{
+	 						dataEvents:[{
+	 							type:'change',
+	 							fn:function(e){
+	 								paycal();
+	 							}
+							}]								
+							
+						}}
+					,{name:"TOTALAMT",		index:'TOTALAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
+					editoptions:{
+ 						dataEvents:[{
+ 							type:'change',
+ 							fn:function(e){
+ 								//paycal();
+ 							}
+						}]					
+					}}
 					,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:100,		align:'center',editable:true,
 						edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:selectListEnaCode,
 						dataEvents:[{
 							type:'change',
 							fn:function(e){
-								if($("#leftList [name=TAXGUBUN] ").val() == ""){
-									alert("신고기준을 선택 해 주세요.");
+								if(this.value == ""){
+									alert("신고기준을 선택해주세요.");
 									return;
 								}else{
-									paycal();								
+									paycal();						
 								}
 							}
 						}]
-					}}				
+					}}					
 					,{name:"TAXINCOME",		index:'TAXINCOME',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -313,6 +329,9 @@
 //				        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
 				} ,
+				loadComplete: function(id) {
+					
+				},	
 				hidegrid: false
 			});
 		});
@@ -335,32 +354,6 @@
 			var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
 			
 			var data = $("#leftList").getRowData();
-	
-	//			if (cellData.DEPTCODE == "") {
-	//				alert("부서 코드를 입력하셔야 합니다.");
-				
-	//				$('#rightList').jqGrid('editRow', ids, true);
-	//				$("#"+ids+"_DEPTCODE").focus();
-				
-	//				return false;
-	//			}
-			
-	//			if (cellData.DEPTNAME == "") {
-	//				alert("부서 명을 입력하셔야 합니다.");
-				
-	//				$('#rightList').jqGrid('editRow', ids, true);
-
-	//				return false;
-	//			}
-			
-	//			if (cellData.SORTKEY == "") {
-	//				alert("정렬 순서를 입력하셔야 합니다.");
-				
-	//				$('#rightList').jqGrid('editRow', ids, true);
-	//				$("#"+ids+"_SORTKEY").focus();
-				
-	//				return false;
-	//			}
 			
 			var msg = "저장하시겠습니까?";
 			
@@ -466,12 +459,20 @@
 	})		
 	
 	function paycal(){
-		var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-		var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+		var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기		
+		var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기	
 		
-		
-		var gijunAmt = $("#leftList [name=TOTALAMT] ").val();
-		var taxgubun = $("#leftList [name=TAXGUBUN] ").val();
+ 		var actamt = $("#leftList").jqGrid('getCell',ids,"ACTAMT");
+ 		var actamt = $("#leftList").jqGrid('getCell',ids,"ACTAMT");
+ 		var dailyamt = $("#leftList").jqGrid('getCell',ids,"DAILYAMT");
+ 		var prizeamt = $("#leftList").jqGrid('getCell',ids,"PRIZEAMT");
+
+		var gijunAmt =  actamt + dailyamt + prizeamt ;
+
+		$("#leftList").setCell(ids,"TOTALAMT",gijunAmt);
+
+
+ 		var taxgubun = $("#leftList").jqGrid('getCell',ids,"TAXGUBUN");
 		
 		if(taxgubun == "001"){
 			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
@@ -530,7 +531,7 @@
 					</td>
 				</tr>
 			</table>			
-			<table id="leftList"></table>
+			<table id="leftList" style="display:inline;"></table>
 		</div>
 	</div>
 	

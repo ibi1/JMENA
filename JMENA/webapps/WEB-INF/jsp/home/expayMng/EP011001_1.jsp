@@ -83,14 +83,14 @@
 	$(document).ready(function(){
 		var SALEDATE = $("#SALEDATE",opener.document).val();
 		var SALEID = $("#SALEID",opener.document).val();
+		$("#S_SALEDATE").val(SALEDATE);
+		$("#S_SALEID").val(SALEID);
 		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#S_SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		
-		$("#S_SALEDATE").val(SALEDATE);
-		$("#S_SALEID").val(SALEID);
 		selectListEnaSaleSudangList();
 		
 
