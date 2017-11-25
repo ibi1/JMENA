@@ -199,9 +199,30 @@
 						fn:function(e){
 							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 							var appointbranch = this.value;
-							$("#APPOINTBRANCH").val(appointbranch);
-							alert("aaaaa");
-							$("#bottomList1").jqGrid('setColProp','APPOINTDEPT', {editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+$("#APPOINTBRANCH").val(), buildSelect:f_selectListEnaDeptCode1}});
+							
+							$("#bottomList1").jqGrid('getCell', ids, 'APPOINTDEPT').empty().data("options");
+							$.ajax({ 
+								type: 'POST' ,
+								url: "/codeCom/deptMstList.do", 
+								dataType : 'json' ,
+								data : {
+									BRANCHCODE : appointbranch
+								},
+								success: function(data){
+									var inHtml = "";
+									data.deptMstList.forEach(function(currentValue, index, array){
+										inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+									});
+									$("#bottomList1").jqGrid('getCell', ids, 'APPOINTDEPT').append(inHtml);
+								},
+								error:function(e){  
+									alert("[ERROR]매출 합계 데이터 호출 중 오류가 발생하였습니다.");
+								}  
+							});
+							
+							
+							//$("#APPOINTBRANCH").val(appointbranch);
+							//$("#bottomList1").jqGrid('setColProp','APPOINTDEPT', {editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+$("#APPOINTBRANCH").val(), buildSelect:f_selectListEnaDeptCode1}});
 //							$("#bottomList2").jqGrid('setColProp', 'PAYERID', {editoptions:{readonly:true}});  요게 되는거
 							//여기 수정해야 함.
 							
@@ -368,12 +389,32 @@ return;
 		});
 	}
 
+	var selChk = "";
+	
 	function test(cellvalue, options, rowObject) {
-		return '<input type="checkbox"' + (cellvalue == "Y" ? 'checked="checked"' : '') + 'onclick="onClickTest(' + options.rowId +')"/>';
+		var checked =  (cellvalue == "Y" ? "checked" : "");
+		selChk = cellvalue;
+		return "<input type=\"checkbox\"" + checked + "onclick=\"onClickTest('" + options.rowId + "');\"/>";
+		
+//		return "<input type='checkbox'" + (cellvalue == "Y" ? "checked='checked'" : "") + "onclick='onClickTest("+options.rowId +","+cellvalue+")'/>";
 	}
 	
 	function onClickTest(ids) {
 		$("#bottomList2").jqGrid('setSelection', ids, true);
+		var rec = $("#bottomList2").getGridParam("reccount");
+	   for(var i=0; i < rec.length; i++){
+	    	if(selChk == "Y"){
+	    		//로직
+	    	}else{
+	    	}
+	    }
+
+
+//		var basicacct = $("#bottomList2").jqGrid('getCell',ids,"BASICACCT");
+		
+//		var basicacct = $("#bottomList2 [name=BASICACCT] option:checked").val()
+//		alert(basicacct);
+
 	}
 	
 	
@@ -973,6 +1014,7 @@ return;
 				               "&BANKID=" + bankId+
 				               "&ACCTNO=" + cellData.ACCTNO+
 				               "&ACCTOWNER=" + cellData.ACCTOWNER+
+				               "&BASICACCT=" + cellData.BASICACCT+
 				               "&REMARK=" + cellData.REMARK;	
 				$.ajax({ 
 					type: 'POST' ,
