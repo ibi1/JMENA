@@ -22,9 +22,8 @@
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-
-		$("#bottomDiv1").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#bottomDiv2").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		
+		$('#bottomTabs').jqxTabs({theme: 'bootstrap', autoHeight: false, width: 1200});
 		
 		$("#insertB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#deleteB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -200,7 +199,7 @@
 							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 							var appointbranch = this.value;
 							
-							$("#bottomList1").jqGrid('getCell', ids, 'APPOINTDEPT').empty().data("options");
+							//$("#bottomList1").jqGrid('getCell', ids, 'APPOINTDEPT').empty().data("options");
 							$.ajax({ 
 								type: 'POST' ,
 								url: "/codeCom/deptMstList.do", 
@@ -359,31 +358,7 @@ return;
 			        v_rightLastSel = id;
 				}
 			} ,
-			loadComplete: function() {				
-				var ids = $(this).jqGrid('getDataIDs');
-				
-				ids.some(function(currentValue, index, array){
-					var basicacct = $("#bottomList2").jqGrid('getCell', ids[index], 'BASICACCT');
-					
-					if (basicacct == "Y") {
-//						$('#bottomList2').jqGrid('editRow', ids, true);						
-						
-					}else{
-// 						$('#bottomList2').jqGrid('editRow', ids, true);
-// 						$("#"+index+"_PAYERID").prop("disabled", "disabled");
-//						$('#bottomList2').jqGrid('setCell', index,  'PAYERID', "", 'not-editable-cell'); 
-
-//						$("#bottomList2").jqGrid('setColProp',index, 'PAYERID', {editoptions:{readonly:true}});
-						// 						$('#bottomList').jqGrid('editRow', ids, true);
-// 						$("#"+ids+"_PAYERID").prop("disabled", true)
-
-//						$("#bottomList2").jqGrid('setCell', index ,  'PAYERID', {editoptions:{readonly:true}});
-//						$("#bottomList2").jqGrid('setColProp', index, 'PAYERID', {editoptions:{readonly:true}});
-//						$("#bottomList2").jqGrid('setColProp', 'PAYERID', {editoptions:{readonly:true}});  //요게 되는거
-						
-//						$("#bottomList2").jqGrid('setColProp', 'PAYERID', {editoptions:{readonly:true}});  요게 되는거
-					}		        	     
-				});
+			loadComplete: function() {			
 			},
 			hidegrid: false
 		});
@@ -392,7 +367,7 @@ return;
 	var selChk = "";
 	
 	function test(cellvalue, options, rowObject) {
-		var checked =  (cellvalue == "Y" ? "checked" : "");
+		var checked =  (cellvalue == "Y" ? "checked=checked" : "");
 		selChk = cellvalue;
 		return "<input type=\"checkbox\"" + checked + "onclick=\"onClickTest('" + options.rowId + "');\"/>";
 		
@@ -423,7 +398,7 @@ return;
 		$("#searchButton").click(function(){
 			selectListInsaMst();
 		}); 
-		
+		/*
 		$("#bottomDiv1").click(function(){
 			$("#table1").show();
 			$("#table2").hide();
@@ -439,7 +414,7 @@ return;
 			selectListEnaTexPayerItem(insacode);
 			v_rightLastSel = 0;
 		}); 		
-		
+		*/
 		$("#insaButton").click(function(){
 			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
 			var popOption = "width=760, height=240, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
@@ -947,7 +922,7 @@ return;
 			
 			
 			var bankId = $("#bottomList2 [name=BANKID] option:selected").val();
-			
+			var basicAcct = $("#bottomList2 [name=BASICACCT]").val()
 			$('#bottomList2').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 	
 			var cellData = $("#bottomList2").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
@@ -1004,17 +979,18 @@ return;
 			} else {
 				msg = "수정하시겠습니까?"
 			}
-	
+			
+			var insacode = $("#INSACODE").val();
 			if (confirm(msg) == true) {
 				var formData = "S_FLAG_B2=" + $("#S_FLAG_B2").val() +  
-							   "&INSACODE=" + $("#INSACODE").val() + 
+							   "&INSACODE=" + insacode + 
 							   "&ITEMSEQ=" + cellData.ITEMSEQ + 
 				               "&PAYERNAME=" + cellData.PAYERNAME + 
 				               "&PAYERID=" + payerId + 
 				               "&BANKID=" + bankId+
 				               "&ACCTNO=" + cellData.ACCTNO+
 				               "&ACCTOWNER=" + cellData.ACCTOWNER+
-				               "&BASICACCT=" + cellData.BASICACCT+
+				               "&BASICACCT=" + basicAcct+
 				               "&REMARK=" + cellData.REMARK;	
 				$.ajax({ 
 					type: 'POST' ,
@@ -1090,7 +1066,12 @@ return;
 			});
 		})	
 		
-		
+	$(function() {
+			$('#bottomTabs').on('tabclick', function (event) { 
+				$("#bottomList1").trigger("reloadGrid");
+				$("#bottomList2").trigger("reloadGrid");
+			}); 
+		}) 	
 </script>
 <body>
 
@@ -1233,39 +1214,38 @@ return;
 			</table>
 			</form>
 		</div>
-		<table style="width:98%">
-			<tr>
-			
-				<td style="width:50%" align="left">
-					<input type="button" value="발령사항" id='bottomDiv1' />	
-					<input type="button" value="신고인관리" id='bottomDiv2' />
-				</td>
-				
-				<td style="width:50%" align="right">
-					<input type="button" value="추가" id='insertB1Button' />
-					<input type="button" value="삭제" id='deleteB1Button' />
-					<input type="button" value="저장" id='saveB1Button' />
-				
-					<input type="button" value="추가" id='insertB2Button' />
-					<input type="button" value="삭제" id='deleteB2Button' />
-					<input type="button" value="저장" id='saveB2Button' />
-				</td>
-			
-				</td>
-			</tr>
-		</table>
-		<div id="bottomDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<input type="hidden" id="S_FLAG_B1" name="S_FLAG_B1" />
-			<input type="hidden" id="S_FLAG_B2" name="S_FLAG_B2" />
-				<div id ="table1">
+		<input type="hidden" id="S_FLAG_B1" name="S_FLAG_B1" />
+		<input type="hidden" id="S_FLAG_B2" name="S_FLAG_B2" />
+		<div id="bottomTabs">
+			<ul>
+				<li>발령사항</li>
+				<li>신고인관리</li>
+			</ul>
+			<div>
+				<div id="bottomDiv1">
 					<table id="bottomList1"></table>
-				</div>
-				<div id="table2">
+					<table  width="100%">
+						<tr>
+							<td width="100%" align="right"><input type="button" value="추가" id='insertB1Button' /></td>
+							<td><input type="button" value="삭제" id='deleteB1Button' /></td>
+							<td><input type="button" value="저장" id='saveB1Button' /></td>				
+						</tr>
+					</table>
+				</div>	
+			</div>
+			<div>
+				<div id="bottomDiv2">
 					<table id="bottomList2"></table>
-				</div>
-		</div>	
-
+					<table  width="100%">
+						<tr>
+							<td width="100%" align="right"><input type="button" value="추가" id='insertB2Button' /></td>
+							<td ><input type="button" value="삭제" id='deleteB2Button' /></td>
+							<td><input type="button" value="저장" id='saveB2Button' /></td>
+						</tr>
+					</table>
+				</div>	
+			</div>
+		</div>
 	</div>
-	
 </body>
 </html>

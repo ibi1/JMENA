@@ -105,6 +105,7 @@
 			},
 			//height: '100%' ,
 			onSelectRow: function(id){
+				
 			} ,
 			hidegrid: false
 		});
@@ -163,7 +164,6 @@
 		
 		var result = "<select>";
 		
-			result += "<option value=''>선택</option>\n";
 		jsonValue.some(function(currentValue, index, array){
 			result += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 		});
@@ -326,8 +326,13 @@
 				},
 				//height: '100%' ,
 				onSelectRow: function(id){
-//				        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+					if( v_rightLastSel != id ){
+						$(this).jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+				        v_rightLastSel = id;
+					}
+					  	
 				} ,
 				loadComplete: function(id) {
 					
@@ -461,6 +466,9 @@
 	function paycal(){
 		var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기		
 		
+
+		var taxgubun = $("#leftList [name=TAXGUBUN] option:selected").val();
+		
 		$('#leftList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
 		
@@ -476,11 +484,12 @@
 		var gijunAmt =  parseInt(actamt) + parseInt(dailyamt) + parseInt(prizeamt) ;
 
 		$("#leftList").setCell(ids,"TOTALAMT",gijunAmt);
-		alert("aaaaa");
 		
-//		var taxgubun = $("#leftList [name=TAXGUBUN] option:selected").val();
- 		var taxgubun = $("#leftList").jqGrid('getCell',ids,"TAXGUBUN");
+		
+//		var taxgubun = $("#leftList [name=TAXGUBUN] ").val();
 		alert(taxgubun);
+// 		var taxgubun = $("#leftList").jqGrid('getCell',ids,"TAXGUBUN");
+		
 		if(taxgubun == "001"){
 			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
 			var taxincome = gijunAmt * 3 / 100;    //사업소득세
