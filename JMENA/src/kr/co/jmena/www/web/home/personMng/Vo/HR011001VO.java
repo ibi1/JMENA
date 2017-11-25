@@ -27,6 +27,7 @@ public class HR011001VO {
 	private String ACCTNO;
 	private String ACCTOWNER;
 	private String APPOINTBRANCH;
+	private String APPOINTBRANCHCODE;
 	private String APPOINTDATE;
 	private String APPOINTDEPT;
 	private String APPOINTGUBUN;
@@ -298,5 +299,11 @@ public class HR011001VO {
 	}
 	public void setUSERID(String uSERID) {
 		this.USERID = uSERID;
+	}
+	public String getAPPOINTBRANCHCODE() {
+		return APPOINTBRANCHCODE;
+	}
+	public void setAPPOINTBRANCHCODE(String APPOINTBRANCHCODE) {
+		this.APPOINTBRANCHCODE = APPOINTBRANCHCODE;
 	}	
 }

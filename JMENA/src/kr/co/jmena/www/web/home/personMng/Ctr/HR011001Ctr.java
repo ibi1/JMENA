@@ -268,6 +268,7 @@ public class HR011001Ctr {
 			jData.put("APPOINTSEQ", lst.get(i).getAPPOINTSEQ());
 			jData.put("APPOINTGUBUN", lst.get(i).getAPPOINTGUBUN());
 			jData.put("APPOINTDATE", lst.get(i).getAPPOINTDATE());
+			jData.put("APPOINTBRANCHCODE", lst.get(i).getAPPOINTBRANCH()); //코드값으로 가져오기
 			jData.put("APPOINTBRANCH", lst.get(i).getBRANCHNAME());
 			jData.put("APPOINTDEPT", lst.get(i).getDEPTNAME());			
 //			jData.put("APPOINTDEPT", lst.get(i).getAPPOINTDEPT());			

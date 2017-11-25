@@ -171,7 +171,7 @@
 		});		
 	}
 
-	
+	var v_branchCode;
 	function selectListEnaAppointItem(INSACODE){
 		$('#bottomList1').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		
@@ -185,12 +185,13 @@
 		datatype:"json" ,
 		loadtext: '로딩중...',
 		loadError:function(){alert("Error~!!!!");} ,
-		colNames:['사번','순번', '발령구분', '발령일자', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고'] ,
+		colNames:['사번','순번', '발령구분', '발령일자', '발령지사코드', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고'] ,
 		colModel:[
 			  {name:"INSACODE",			index:'INSACODE',			width:100,		align:'center', hidden:true}
 			, {name:"APPOINTSEQ",		index:'APPOINTSEQ',			width:100,		align:'center', hidden:true}
 			, {name:"APPOINTGUBUN",		index:'APPOINTGUBUN',		width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=002", buildSelect:selectListEnaCode}}
 			, {name:"APPOINTDATE",		index:'APPOINTDATE',		width:100,		align:'center', editable:true}
+			, {name:"APPOINTBRANCHCODE",		index:'APPOINTBRANCHCODE',		width:100,		align:'center', editable:true, hidden:true}
 			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center', editable:true
 				, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1,
 					dataEvents:[{
@@ -199,7 +200,6 @@
 							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 							var appointbranch = this.value;
 							
-							//$("#bottomList1").jqGrid('getCell', ids, 'APPOINTDEPT').empty().data("options");
 							$.ajax({ 
 								type: 'POST' ,
 								url: "/codeCom/deptMstList.do", 
@@ -209,29 +209,23 @@
 								},
 								success: function(data){
 									var inHtml = "";
+									inHtml += "<select>";
 									data.deptMstList.forEach(function(currentValue, index, array){
 										inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 									});
-									$("#bottomList1").jqGrid('getCell', ids, 'APPOINTDEPT').append(inHtml);
+									inHtml += "</select>";
+									
+									$("select#"+ids+"_APPOINTDEPT").html(inHtml);
 								},
 								error:function(e){  
 									alert("[ERROR]매출 합계 데이터 호출 중 오류가 발생하였습니다.");
 								}  
 							});
-							
-							
-							//$("#APPOINTBRANCH").val(appointbranch);
-							//$("#bottomList1").jqGrid('setColProp','APPOINTDEPT', {editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+$("#APPOINTBRANCH").val(), buildSelect:f_selectListEnaDeptCode1}});
-//							$("#bottomList2").jqGrid('setColProp', 'PAYERID', {editoptions:{readonly:true}});  요게 되는거
-							//여기 수정해야 함.
-							
-							
-							//$("#bottomList").setCell(ids,"TAXINCOME",taxincome);
 						}
 					}]	
 				}}
 //			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
-			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+$("#APPOINTBRANCH").val(), buildSelect:f_selectListEnaDeptCode1}}
+			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1}}
 			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
 //			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
 			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
@@ -257,18 +251,21 @@
 			} else {
 				$("#S_FLAG_B1").val("I");
 			}
+
+			//발령지사에서 키 값 가져오기
+			v_branchCode = $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCHCODE;
 			
 			if( v_rightLastSel != id ){
 		        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 		        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
-
+		        
 		        v_rightLastSel = id;
 			}
+			
 			var cellData = $("#bottomList1").jqGrid('getRowData', id); //셀 전체 데이터 가져오기
-//			$("#bottomList1").jqGrid('setColProp',id ,'APPOINTDEPT', {edittype:'select', editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+$("#APPOINTBRANCH").val(), buildSelect:f_selectListEnaDeptCode1}});
+			
 		},
 		loadComplete: function(id) {
-			$("#APPOINTBRANCH").val( $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCH);
 		},		
 		hidegrid: false
 		});	
