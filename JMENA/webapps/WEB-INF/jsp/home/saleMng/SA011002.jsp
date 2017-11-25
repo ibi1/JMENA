@@ -244,9 +244,9 @@
 					{name:"BRROWDATE",		index:'BRROWDATE',		width:100,	align:'center',	sortable:false},
 					{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center',	sortable:false},
 					{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center',	sortable:false},
-					{name:"BRROWAMT",		index:'BRROWAMT',		width:100,	align:'center',	sortable:false},
+					{name:"BRROWAMT",		index:'BRROWAMT',		width:100,	align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 					{name:"BRROWTYPE",		index:'BRROWTYPE',		width:100,	align:'center',	sortable:false},
-					{name:"PAYACCOUNT",		index:'PAYACCOUNT',		width:100,	align:'center',	sortable:false},
+					{name:"PAYACCOUNT",		index:'PAYACCOUNT',		width:100,	align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 					{name:"SALEID",			index:'SALEID',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"SALEDATE",		index:'SALEDATE',		width:100,	align:'center',	sortable:false, hidden:true},
 					{name:"MANAGENO",		index:'MANAGENO',		width:100,	align:'center',	sortable:false,	hidden:true},
@@ -675,7 +675,9 @@
 		function f_saveButton() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				$("#saveButton").click();
+				if (auth_i == true) {
+					$("#saveButton").click();
+				}
 			}
 		}
 		
@@ -1048,7 +1050,7 @@
 			<table  width="100%">
 				<tr>
 					<td width="60%" align="left">
-						<table >
+						<table width="98%">
 							<tr>
 								<th width="120">공동명의 여부</th>
 								<td colspan="4"><input type="checkbox" id="JOINYN" name="JOINYN" /></td>

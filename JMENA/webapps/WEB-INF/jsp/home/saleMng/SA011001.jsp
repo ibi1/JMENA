@@ -279,7 +279,7 @@
 					{name:"CONM2",			index:'CONM2',			width:100,	align:'center',	sortable:false},
 					{name:"CONPY",			index:'CONPY',			width:100,	align:'center',	sortable:false},
 					{name:"REMARK",			index:'REMARK',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"SALEAMT",		index:'SALEAMT',		width:100,	align:'center',	sortable:false},
+					{name:"SALEAMT",		index:'SALEAMT',		width:100,	align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 					{name:"SALEDANGA",		index:'SALEDANGA',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"DCGUBUN",		index:'DCGUBUN',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"DCRATE",			index:'DCRATE',			width:100,	align:'center',	sortable:false,	hidden:true},
@@ -426,16 +426,16 @@
 				loadError:function(){alert("Error~!!");},
 				colNames:['판매번호', '입급순번', '입급구분', '입금일자', '입급예정금액', '입금처리금액', '입금여부', '비고', '입금번호', '처리순번'],
 				colModel:[
-					{name:"SALEID",	index:'SALEID',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
-					, {name:"IPGUMSEQ",	index:'IPGUMSEQ',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
-					, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=009", buildSelect:f_selectListEnaIpgumGubunCode} }
-					, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,	align:'center', sortable:false, editable:true}
-					, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"SUGUMAMT",	index:'SUGUMAMT',		width:100,	align:'center', sortable:false, editable:false}
-					, {name:"DEPOSITYN",	index:'DEPOSITYN',		width:100,	align:'center', sortable:false, editable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"IPGUMID",	index:'IPGUMID',		width:100,	align:'center', sortable:false, editable:false, hidden:true}
-					, {name:"SEQ",	index:'SEQ',		width:100,	align:'center', sortable:false, editable:false, hidden:true}
+					{name:"SALEID",				index:'SALEID',			width:100,	align:'center', sortable:false, editable:true, hidden:true}
+					, {name:"IPGUMSEQ",			index:'IPGUMSEQ',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
+					, {name:"DEPOSITGUBUN",		index:'DEPOSITGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=009", buildSelect:f_selectListEnaIpgumGubunCode} }
+					, {name:"DEPOSITDATE",		index:'DEPOSITDATE',	width:100,	align:'center', sortable:false, editable:true}
+					, {name:"DEPOSITAMT",		index:'DEPOSITAMT',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"SUGUMAMT",			index:'SUGUMAMT',		width:100,	align:'right', sortable:false, editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"DEPOSITYN",		index:'DEPOSITYN',		width:100,	align:'center', sortable:false, editable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', sortable:false, editable:true}
+					, {name:"IPGUMID",			index:'IPGUMID',		width:100,	align:'center', sortable:false, editable:false, hidden:true}
+					, {name:"SEQ",				index:'SEQ',			width:100,	align:'center', sortable:false, editable:false, hidden:true}
 				],
 				rowNum:1000,
 				autowidth: true,
@@ -508,20 +508,20 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['판매번호', '공동명의 순번', '명의자', '주민번호', '연락처', '점유면적', '점유평수', '매매대금', '매매단가', 'DC사항', 'DC율', '실 매매가', '등본제출여부', '비고'] ,
 				colModel:[
-					{name:"SALEID",	index:'SALEID',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
-					, {name:"JOINTSEQ",	index:'JOINTSEQ',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
-					, {name:"JOINTNAME",	index:'JOINTNAME',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"JOINTJUMINID",	index:'JOINTJUMINID',	width:100,	align:'center', sortable:false, editable:true}
-					, {name:"JOINTTELNO",	index:'JOINTTELNO',	width:100,	align:'center', sortable:false, editable:true}
-					, {name:"OCCUM2",	index:'OCCUM2',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"OCCUPY",	index:'OCCUPY',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"SALEAMT",	index:'SALEAMT',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"SELLDANGA",	index:'SELLDANGA',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"DCGUBUN",	index:'DCGUBUN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=008", buildSelect:f_selectListEnaDcGubunCode} }
-					, {name:"DCRATE",	index:'DCRATE',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"SELLAMT",	index:'SELLAMT',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"PAPERREGYN",	index:'PAPERREGYN',		width:100,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', sortable:false, editable:true}
+					{name:"SALEID",				index:'SALEID',			width:100,	align:'center', sortable:false, editable:true, hidden:true}
+					, {name:"JOINTSEQ",			index:'JOINTSEQ',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
+					, {name:"JOINTNAME",		index:'JOINTNAME',		width:100,	align:'center', sortable:false, editable:true}
+					, {name:"JOINTJUMINID",		index:'JOINTJUMINID',	width:100,	align:'center', sortable:false, editable:true}
+					, {name:"JOINTTELNO",		index:'JOINTTELNO',		width:100,	align:'center', sortable:false, editable:true}
+					, {name:"OCCUM2",			index:'OCCUM2',			width:100,	align:'center', sortable:false, editable:true}
+					, {name:"OCCUPY",			index:'OCCUPY',			width:100,	align:'center', sortable:false, editable:true}
+					, {name:"SALEAMT",			index:'SALEAMT',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"SELLDANGA",		index:'SELLDANGA',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"DCGUBUN",			index:'DCGUBUN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=008", buildSelect:f_selectListEnaDcGubunCode} }
+					, {name:"DCRATE",			index:'DCRATE',			width:100,	align:'center', sortable:false, editable:true}
+					, {name:"SELLAMT",			index:'SELLAMT',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"PAPERREGYN",		index:'PAPERREGYN',		width:100,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', sortable:false, editable:true}
 				] ,
 				rowNum:10 ,
 				autowidth: true ,
@@ -581,10 +581,10 @@
 				loadError:function(){alert("Error~!!");} ,
 				colNames:['판매번호', '이력순번', '변동일자', '변동구분', '직전 계약면적', '직전 계약평수', '변경면적', '변경평수', '비고'] ,
 				colModel:[
-					{name:"SALEID",	index:'SALEID',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
-					, {name:"SALESEQ",	index:'SALESEQ',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
-					, {name:"CHGDATE",	index:'CHGDATE',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"CHGGUBUN",	index:'CHGGUBUN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=010", buildSelect:f_selectListEnaChgGubunCode} }
+					{name:"SALEID",		index:'SALEID',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
+					, {name:"SALESEQ",	index:'SALESEQ',	width:100,	align:'center', sortable:false, editable:true, hidden:true}
+					, {name:"CHGDATE",	index:'CHGDATE',	width:100,	align:'center', sortable:false, editable:true}
+					, {name:"CHGGUBUN",	index:'CHGGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=010", buildSelect:f_selectListEnaChgGubunCode} }
 					, {name:"PREM2",	index:'PREM2',		width:100,	align:'center', sortable:false, editable:true}
 					, {name:"PREPY",	index:'PREPY',		width:100,	align:'center', sortable:false, editable:true}
 					, {name:"CHGM2",	index:'CHGM2',		width:100,	align:'center', sortable:false, editable:true}
@@ -850,7 +850,9 @@
 		function f_saveButton() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				$("#saveButton").click();
+				if (auth_i == true) {
+					$("#saveButton").click();
+				}
 			}
 		}
 		

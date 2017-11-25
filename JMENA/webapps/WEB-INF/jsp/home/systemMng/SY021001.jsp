@@ -118,7 +118,7 @@
 		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
 	
 			<form id="SY021001">
-				<table align="left" style="border-spacing:5px; ">
+				<table align="left" style="border-spacing:5px; " width="98%">
 					<tr>
 						<th width="120">사업자번호</th>
 						<td><input type="text" id="COMPANYNO" name="COMPANYNO" /></td>

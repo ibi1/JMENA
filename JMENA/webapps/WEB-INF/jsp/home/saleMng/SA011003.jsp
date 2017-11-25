@@ -293,19 +293,18 @@
 				{name:"IPGUMID",		index:'IPGUMID',		width:100,		align:'center', hidden:true}
 				,{name:"IPGUMDATE",		index:'IPGUMDATE',		width:100,		align:'center'}
 				,{name:"IPGUMPERSON",	index:'IPGUMPERSON',	width:100,		align:'center'}
-				,{name:"IPGUMAMT",		index:'IPGUMAMT',		width:100,		align:'center'}
+				,{name:"IPGUMAMT",		index:'IPGUMAMT',		width:100,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"IPGUMGUBUN",	index:'IPGUMGUBUN',		width:100,		align:'center'}
-				,{name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center'}
-				,{name:"JANAMT",		index:'JANAMT',			width:100,		align:'center'}
-				
-				,{name:"IPGUMTYPE",		index:'IPGUMTYPE',	width:100,	align:'center', hidden:true}
-				,{name:"BANKGUBUN",		index:'BANKGUBUN',	width:100,	align:'center', hidden:true}
-				,{name:"BRANCHNAME",	index:'BRANCHNAME',	width:100,	align:'center', hidden:true}
-				,{name:"KNAME",			index:'KNAME',		width:100,	align:'center', hidden:true}
-				,{name:"ADDRESS",		index:'ADDRESS',	width:100,	align:'center', hidden:true}
-				,{name:"CONNAME",		index:'CONNAME',	width:100,	align:'center', hidden:true}
-				,{name:"CONPY",			index:'CONPY',		width:100,	align:'center', hidden:true}
-				,{name:"REMARK",		index:'REMARK',		width:100,	align:'center', hidden:true}
+				,{name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"JANAMT",		index:'JANAMT',			width:100,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"IPGUMTYPE",		index:'IPGUMTYPE',		width:100,		align:'center', hidden:true}
+				,{name:"BANKGUBUN",		index:'BANKGUBUN',		width:100,		align:'center', hidden:true}
+				,{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,		align:'center', hidden:true}
+				,{name:"KNAME",			index:'KNAME',			width:100,		align:'center', hidden:true}
+				,{name:"ADDRESS",		index:'ADDRESS',		width:100,		align:'center', hidden:true}
+				,{name:"CONNAME",		index:'CONNAME',		width:100,		align:'center', hidden:true}
+				,{name:"CONPY",			index:'CONPY',			width:100,		align:'center', hidden:true}
+				,{name:"REMARK",		index:'REMARK',			width:100,		align:'center', hidden:true}
 
 			] ,
 			rowNum:100,
@@ -394,11 +393,11 @@
 				, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center', editable:false}
 				, {name:"CONM2",		index:'CONM2',			width:100,		align:'center', editable:false}
 				, {name:"CONPY",		index:'CONPY',			width:100,		align:'center', editable:false}
-				, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center', editable:false}
+				, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'right', 	editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center', editable:false}
 				, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center', editable:false}
-				, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'center', editable:false}
-				, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'center', editable:true}
+				, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'right', 	editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'right', 	editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"SEQ",			index:'SEQ',			width:100,		align:'center', editable:false, hidden:true}
 				, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center', editable:false, hidden:true}
 			] ,
@@ -659,7 +658,9 @@
 		var msg = "저장 하시겠습니까?";
 		if(keyCode==13){
 			if (confirm(msg) == true) {
-				$("#saveButton").click();
+				if (auth_i == true) {
+					$("#saveButton").click();
+				}
 			}
 		}
 

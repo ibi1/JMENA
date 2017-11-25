@@ -287,7 +287,9 @@
 		function f_saveUser() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				$("#saveButton").click();
+				if (auth_i == true) {
+					$("#saveButton").click();
+				}
 			}
 		}
 		

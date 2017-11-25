@@ -12,7 +12,9 @@
 	<script type="text/javascript">
 		var v_rightLastSel_1 = 0;		//오른쪽 그리드 선택 tab1
 		var v_rightLastSel_2 = 0;		//오른쪽 그리드 선택 tab2
-		
+		var auth_i = true;
+		var auth_d = true;
+
 		function addZero(n) {
 			return n < 10 ? "0" + n : n;
 		}
@@ -51,6 +53,22 @@
 			$("#tab2InsertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#tab2DeleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#tab2SaveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+			
+			<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+				$("#insertButton").hide();
+				$("#saveButton").hide();
+				$("#tab1InsertButton").hide();
+				$("#tab1SaveButton").hide();
+				$("#tab2InsertButton").hide();
+				$("#tab2SaveButton").hide();
+				auth_i = false;
+			<% }%>
+			<%if ("N".equals(session.getAttribute("AUTH_D"))) { %>
+				$("#deleteButton").hide();
+				$("#tab1DeleteButton").hide();
+				$("#tab2DeleteButton").hide();
+				auth_d = false;
+			<% }%>
 			
 			$("#LS_BUYDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#LS_BUYDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -226,7 +244,7 @@
 					, {name:"BUYPY",			index:'BUYPY',			width:100,	align:'center', sortable:false}
 					, {name:"BUNJANM2",			index:'BUNJANM2',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', sortable:false, hidden:true}
-					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'center', sortable:false}
+					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'right',  sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"BUYDANGA",			index:'BUYDANGA',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REGYN",			index:'REGYN',			width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REGDATE",			index:'REGDATE',		width:100,	align:'center', sortable:false, hidden:true}
@@ -319,7 +337,7 @@
 					, {name:"BUYSEQ",	index:'BUYSEQ',		width:100,	align:'center', sortable:false, editable:true, hidden: true}
 					, {name:"PAYGUBUN",	index:'PAYGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=005", buildSelect:f_selectListEnaPayGubunCode} }
 					, {name:"PAYDATE",	index:'PAYDATE',	width:100,	align:'center', sortable:false, editable:true}
-					, {name:"PAYAMT",	index:'PAYAMT',		width:100,	align:'center', sortable:false, editable:true}
+					, {name:"PAYAMT",	index:'PAYAMT',		width:100,	align:'right',  sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"PAYYN",	index:'PAYYN',		width:100,	align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', sortable:false, editable:true}
 				],
@@ -664,7 +682,9 @@
 		function f_saveButton() {
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
-				$("#saveButton").click();
+				if (auth_i == true) {
+					$("#saveButton").click();
+				}
 			}
 		}
 		

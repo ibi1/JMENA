@@ -355,15 +355,11 @@
 		
 		function f_saveKeyDown() {
 			var keyCode = window.event.keyCode;
-			<%
-				if(auth_i == true){
-			%>
-				if(keyCode==13) {
+			if(keyCode==13) {
+				if (auth_i == true) {
 					$("#saveButton").click();
 				}
-			<%
-				}
-			%>
+			}
 		}
 	</script>
 </head>
