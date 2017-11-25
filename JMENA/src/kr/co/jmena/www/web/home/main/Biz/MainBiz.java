@@ -34,11 +34,11 @@ public class MainBiz {
 		return lst;
 	}
 	
-	public List<MainVO> selectSystemMenu() throws Exception {
+	public List<MainVO> selectSystemMenu(MainVO vo) throws Exception {
 		List<MainVO> lst = null;
 
 		try {
-			lst = mainDao.selectSystemMenu();
+			lst = mainDao.selectSystemMenu(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}
@@ -46,7 +46,7 @@ public class MainBiz {
 		return lst;
 	}
 	
-	public String[] selectTreeMenu(String sysId) throws Exception {
+	public String[] selectTreeMenu(MainVO vo) throws Exception {
 		StringBuilder treeHtml = new StringBuilder();
 		String pgmFirst = "";
 		String[] strArr = new String[2];
@@ -55,14 +55,9 @@ public class MainBiz {
 		List<MainVO> pgmlst = null;
 		
 		try {
-			menulst = mainDao.selectMenuTb(sysId);	//메뉴리스트
-			pgmlst = mainDao.selectPgmTb(sysId); //프로그램리스트
+			menulst = mainDao.selectMenuTb(vo);	//메뉴리스트
+			pgmlst = mainDao.selectPgmTb(vo); //프로그램리스트
 			
-//			treeHtml.append("<div id=\"sidetree\">");
-//			treeHtml.append("<div class=\"treeheader\">&nbsp;</div>");
-//			treeHtml.append("<div id=\"sidetreecontrol\"><a href=\"?#\">Collapse All</a> | <a href=\"?#\">Expand All</a></div>");
-//			
-//			treeHtml.append("<ul id=\"tree\">");
 			//tree html 생성
 			JSONObject jTreeData = new JSONObject();
 			JSONArray jsonArr = new JSONArray();

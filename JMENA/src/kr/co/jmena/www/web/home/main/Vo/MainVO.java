@@ -10,6 +10,7 @@ public class MainVO {
 	private String MENUNAME;
 	private String PGMID;
 	private String PGMNAME;
+	private String USERGUBUN;
 	
 	public String getMENUID() {
 		return MENUID;
@@ -64,6 +65,12 @@ public class MainVO {
 	}
 	public void setUSERNAME(String USERNAME) {
 		this.USERNAME = USERNAME;
+	}
+	public String getUSERGUBUN() {
+		return USERGUBUN;
+	}
+	public void setUSERGUBUN(String USERGUBUN) {
+		this.USERGUBUN = USERGUBUN;
 	}
 	
 	
