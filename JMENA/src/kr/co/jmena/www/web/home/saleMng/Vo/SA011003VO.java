@@ -41,7 +41,11 @@ public class SA011003VO {
 	private String DEPOSITDATE;
 	private String DEPOSITAMT;
 	
+	private String SEQ;
+	
 
+	private String IPGUMSEQ;
+	
 	public String getIPGUMID() {
 		return this.IPGUMID;
 	}
@@ -140,6 +144,13 @@ public class SA011003VO {
 	}
 	public String getDEPOSITAMT() {
 		return this.DEPOSITAMT;
+	}
+	public String getSEQ() {
+		return this.SEQ;
+	}
+	
+	public String getIPGUMSEQ() {
+		return this.IPGUMSEQ;
 	}
 	
 	public void setIPGUMID(String IPGUMID) {
@@ -241,6 +252,12 @@ public class SA011003VO {
 	public void setDEPOSITAMT(String DEPOSITAMT) {
 		this.DEPOSITAMT = DEPOSITAMT;
 	}	
+	public void setSEQ(String SEQ) {
+		this.SEQ = SEQ;
+	}
+	public void setIPGUMSEQ(String IPGUMSEQ) {
+		this.IPGUMSEQ = IPGUMSEQ;
+	}
 	
 	
 	

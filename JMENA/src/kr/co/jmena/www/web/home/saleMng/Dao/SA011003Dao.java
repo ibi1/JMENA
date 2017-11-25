@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
+import kr.co.jmena.www.web.home.saleMng.Vo.SA011001VO;
 import kr.co.jmena.www.web.home.saleMng.Vo.SA011003VO;
 
 import org.apache.log4j.Logger;
@@ -93,6 +94,23 @@ public class SA011003Dao extends SqlMapClientDaoSupport {
 		
 		if (cnt > 0) chkFlag = true;
 		return chkFlag;
+	}
+
+	public boolean deleteEnaIpgumDtl2(SA011003VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteEnaIpgumDtl2", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public List<SA011003VO> selectListEanSalePopup(SA011003VO vo) throws DataAccessException {
+		List<SA011003VO> lst = null;	
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEanSalePopup", vo);
+		
+		return lst;
 	}
 	
 }

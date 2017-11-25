@@ -39,6 +39,22 @@
 		<result property="SUGUMAMT" 		column="SUGUMAMT"/>
 	</resultMap>
 
+	<resultMap id="saleMstDataList" class="SA011003VO">
+		<result property="SALEID"			column="SALEID"/>
+		<result property="SALEDATE"			column="SALEDATE"/>
+		<result property="SALEGUBUN"		column="SALEGUBUN"/>
+		<result property="CONNAME"			column="CONNAME"/>
+		<result property="CONTELNO"			column="CONTELNO"/>
+		<result property="CONADDRESS"		column="CONADDRESS"/>
+		<result property="CONM2"			column="CONM2"/>
+		<result property="CONPY"			column="CONPY"/>
+		<result property="SELLAMT"			column="SELLAMT"/>
+		<result property="DEPOSITGUBUN"		column="DEPOSITGUBUN"/>
+		<result property="DEPOSITDATE"		column="DEPOSITDATE"/>
+		<result property="DEPOSITAMT"		column="DEPOSITAMT"/>
+		<result property="IPGUMSEQ"			column="IPGUMSEQ"/>
+	</resultMap>
+
 
 	<select id="selectListEnaIpgumMst" resultMap="SA011003Data">
 		select 
@@ -232,6 +248,37 @@
 	<delete id="deleteEnaIpgumDtl">
 		DELETE FROM sa_ipgumdtl
 		WHERE IPGUMID = #IPGUMID#
+	</delete>
+
+	<select id="selectListEanSalePopup" resultMap="saleMstDataList">
+		select 
+			t1.saleid
+			, t1.saledate
+			, t1.SaleGubun
+			, t1.ConName
+			, t1.ConTelNo
+			, t1.ConAddress
+			, t1.ConM2
+			, t1.ConPY
+			, t2.SellAmt
+			, t3.DepositGubun
+			, t3.DepositDate
+			, t3.DepositAmt
+			, t3.IpgumSeq
+		FROM sa_salemst t1, sa_saledtl t2, sa_ipgumscheduletb t3
+		WHERE 1=1
+			AND t1.SALEDATE = #SALEDATE#
+			AND t1.SALEID = t2.SALEID
+			AND t1.SALEID = t3.SALEID
+		ORDER BY t1.SALEDATE, t1.SALEID DESC
+	</select>
+
+
+	<delete id="deleteEnaIpgumDtl2">
+		DELETE FROM sa_ipgumdtl
+		WHERE IPGUMID = #IPGUMID#
+		AND SEQ = #SEQ#
+		AND SALEID = #SALEID#
 	</delete>
 
 </sqlMap>

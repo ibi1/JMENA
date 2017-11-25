@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
+import kr.co.jmena.www.web.home.saleMng.Vo.SA011001VO;
 import kr.co.jmena.www.web.home.saleMng.Vo.SA011003VO;
 import kr.co.jmena.www.web.home.saleMng.Biz.SA011003Biz;
 
@@ -323,4 +324,99 @@ public class SA011003Ctr {
 	}
 	
 
+	@RequestMapping("/home/deleteEnaIpgumDtl2.do")
+	public ModelAndView deleteEnaIpgumDtl2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011003VO vo = new SA011003VO();
+		
+		vo.setIPGUMID(request.getParameter("IPGUMID"));
+		vo.setSEQ(request.getParameter("SEQ"));
+		vo.setSALEID(request.getParameter("SALEID"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (SA011003Biz.deleteEnaIpgumDtl2(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]선택된 입금관리 상세데이터 삭제 중 오류가 발생하였습니다.";
+		}
+		
+		
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataBuyMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+
+	@RequestMapping("/home/selectListEanSalePopup.do")
+	public ModelAndView selectListEanSalePopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011003VO vo = new SA011003VO();
+
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+
+		vo.setSALEDATE(request.getParameter("SALEDATE"));
+		
+		if(request.getParameter("SALEDATE").equals("")){
+/*			
+			JSONObject obj_ = new JSONObject();
+			obj_.put("SALEID", "");
+			obj_.put("SALEDATE", "");
+			obj_.put("SALEGUBUN", "");
+			obj_.put("CONNAME", "");
+			obj_.put("CONTELNO", "");
+			obj_.put("CONADDRESS", "");
+			obj_.put("CONM2", "");
+			obj_.put("CONPY", "");
+			obj_.put("SELLAMT", "");
+			obj_.put("DEPOSITGUBUN", "");
+			obj_.put("DEPOSITDATE", "");
+			obj_.put("DEPOSITAMT", "");
+			obj_.put("IPGUMSEQ", "");
+			
+			
+			jCell.add(obj_);
+*/			
+		}else{
+		
+			List<SA011003VO> lst = SA011003Biz.selectListEanSalePopup(vo);
+			
+			
+			for (int i = 0; i < lst.size(); i++) {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("SALEID", lst.get(i).getSALEID());
+				obj.put("SALEDATE", lst.get(i).getSALEDATE());
+				obj.put("SALEGUBUN", lst.get(i).getSALEGUBUN());
+				obj.put("CONNAME", lst.get(i).getCONNAME());
+				obj.put("CONTELNO", lst.get(i).getCONTELNO());
+				obj.put("CONADDRESS", lst.get(i).getCONADDRESS());
+				obj.put("CONM2", lst.get(i).getCONM2());
+				obj.put("CONPY", lst.get(i).getCONPY());
+				obj.put("SELLAMT", lst.get(i).getSELLAMT());
+				obj.put("DEPOSITGUBUN", lst.get(i).getDEPOSITGUBUN());
+				obj.put("DEPOSITDATE", lst.get(i).getDEPOSITDATE());
+				obj.put("DEPOSITAMT", lst.get(i).getDEPOSITAMT());
+				obj.put("IPGUMSEQ", lst.get(i).getIPGUMSEQ());
+								
+				jCell.add(obj);
+				
+			}
+			
+			json.put("records", lst.size());
+		}
+		
+		json.put("rows", jCell);
+		
+		logger.debug("[selectListEanSalePopup]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
 }
