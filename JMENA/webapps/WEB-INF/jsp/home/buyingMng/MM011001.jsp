@@ -298,6 +298,9 @@
 					f_selectListEnaSalesOpenTb(selRowData.BUYID);
 	
 					f_selectListEnaBoroughCode();
+					
+					//콤마 셋팅
+					f_commaInputData("click");
 				} ,
 				loadComplete: function(ids) {
 					var buyId = $("#BUYID").val();
@@ -477,11 +480,17 @@
 							sale_m2_tot = data.rows.CONM2;
 							sale_py_tot = data.rows.CONPY;
 
+							//콤마 remove
+							f_commaInputData("remove");
+							
 							$("#BUNYM2").val(parseFloat(sale_m2_tot) + parseFloat(hm2_tot));
 							$("#BUNYPY").val(parseFloat(sale_py_tot) + parseFloat(hpy_tot));
 							
 							$("#BUNJANM2").val(eval($("#BUYM2").val() - $("#BUNYM2").val()));
 							$("#BUNJANPY").val(eval($("#BUYPY").val() - $("#BUNYPY").val()));
+							
+							//콤마 set
+							f_commaInputData("click");
 						},
 						error:function(e){  
 							alert("[ERROR]매출 합계 데이터 호출 중 오류가 발생하였습니다.");
@@ -654,6 +663,9 @@
 				}
 				if (confirm(msg) == true) {
 					$('#BUYID').jqxInput({disabled: false });
+					
+					//저장전 콤마 삭제
+					f_commaInputData("remove");
 					
 					$.ajax({ 
 						type: 'POST' ,
@@ -1035,6 +1047,99 @@
 				}
 			});
 		})
+		
+		//금액관련 콤마(,)처리 와 숫자만 입력
+		function inputComma(id) {
+			var selector="input[id="+id+"]";
+ 			
+ 			$(selector).keypress(function(event) {
+ 				if(event.which && ((event.which < 48 || event.which > 57) 
+ 						 && event.which != 45 && event.which != 46)) {
+   					event.preventDefault();
+  				}
+ 			}).keyup(function() {
+ 				if( $(this).val() != null && $(this).val() != '' ) {
+   					$(this).val( $(this).val().replace(/[^0-9-.]/g, '') );
+   					$(this).val( setComma($(this).val()) );
+  				}
+ 			}).click(function() {
+ 				if( $(this).val() != null && $(this).val() != '' ) {
+   					$(this).val( $(this).val().replace(/[^0-9-.]/g, '') );
+   					$(this).val( setComma($(this).val()) );
+  				}
+ 			});
+		}
+		
+		//콤마 넣기
+		function setComma(num) {
+			var numArr =num.split(".");
+			
+			if(numArr[0]<1000){
+				return num;
+			}
+		    
+			var len, point, str;  
+		 
+			numArr[0] = numArr[0] + "";  
+		    point = numArr[0].length % 3;
+		    len = numArr[0].length;  
+		 
+		    str = numArr[0].substring(0, point);  
+		    
+		    while (point < len) {  
+		        if (str != "") str += ",";  
+		        str += numArr[0].substring(point, point + 3);  
+		        point += 3;  
+		    }  
+
+			var reData;
+		    if (numArr.length == 1) {
+		    	reData = str;
+		    } else {
+		    	reData = str + "." + numArr[1];
+		    }
+		    return reData ;
+		}
+		
+		// 콤마 빼기
+		function removeComma(n){
+		 	str = parseInt(n.replace(/,/g, ""));
+		  	return str;  
+		 }
+ 
+		$(function() {
+			inputComma("BUYM2");
+			inputComma("BUYPY");
+			inputComma("BUNYM2");
+			inputComma("BUNJANM2");
+    		inputComma("BUNYPY");
+    		inputComma("BUNJANPY");
+    		inputComma("BUYAMT");
+    		inputComma("BUYDANGA");
+		})
+		
+		function f_commaInputData(str) {
+			if (str == "click") {
+				$("#BUYM2").click();
+				$("#BUYPY").click();
+				$("#BUNYM2").click();
+				$("#BUNJANM2").click();
+				$("#BUNYPY").click();
+				$("#BUNJANPY").click();
+				$("#BUYAMT").click();
+				$("#BUYDANGA").click();
+			} else if (str == "remove") {
+				$("#BUYM2").val(removeComma($("#BUYM2").val()));
+				$("#BUYPY").val(removeComma($("#BUYPY").val()));
+				$("#BUNYM2").val(removeComma($("#BUNYM2").val()));
+				$("#BUNJANM2").val(removeComma($("#BUNJANM2").val()));
+				$("#BUNYPY").val(removeComma($("#BUNYPY").val()));
+				$("#BUNJANPY").val(removeComma($("#BUNJANPY").val()));
+				$("#BUYAMT").val(removeComma($("#BUYAMT").val()));
+				$("#BUYDANGA").val(removeComma($("#BUYDANGA").val()));
+			}
+			
+		}
 	</script>
 </head>
 <body>
