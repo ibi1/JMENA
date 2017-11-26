@@ -106,7 +106,7 @@
 				{name:"O_BRANCHNAME",	type: 'string' },
 				{name:"O_JOINDATE",		type: 'string' },
 				{name:"O_RETIREDATE",	type: 'string' },
-				{name:"O_SELLAMT",		type: 'string' },
+				{name:"O_SELLAMT",		type: 'number' },
 				{name:"O_EMPLOYGUBUN",	type: 'string' },
 				{name:"REMARK",			type: 'string' }
 				
@@ -153,7 +153,7 @@
 				{ text: '지사', 		columngroup: '전근무현황',		datafield: 'O_BRANCHNAME',		width: 100, cellsalign: 'center', align:"center"},
 				{ text: '입사', 		columngroup: '전근무현황',		datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center', align:"center"},
 				{ text: '퇴사', 		columngroup: '전근무현황',		datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center', align:"center"},
-				{ text: '실적', 		columngroup: '전근무현황',		datafield: 'O_SELLAMT',			width: 150, cellsalign: 'right', align:"center", formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '실적', 		columngroup: '전근무현황',		datafield: 'O_SELLAMT',			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
 				{ text: '고용구분', 	columngroup: '전근무현황', 		datafield: 'O_EMPLOYGUBUN',		width: 80, cellsalign: 'center', align:"center"},
 				{ text: '비고', 		datafield: 'REMARK',			width: 250, cellsalign: 'center', align:"center"}
             ],

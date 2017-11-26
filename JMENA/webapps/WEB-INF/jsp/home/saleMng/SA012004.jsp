@@ -135,13 +135,13 @@
 				{name:"KNAME",		type: 'string' },
 				{name:"CONNAME",	type: 'string' },
 				{name:"IPGUMGUBUN",	type: 'string' },
-				{name:"IPGUMAMT",	type: 'string' },
-				{name:"SUGUMAMT",	type: 'string' },
-				{name:"JANGUMAMT",	type: 'string' },
+				{name:"IPGUMAMT",	type: 'number' },
+				{name:"SUGUMAMT",	type: 'number' },
+				{name:"JANGUMAMT",	type: 'number' },
 				{name:"BANKNAME",	type: 'string' },
 				{name:"IPGUMTYPE",	type: 'string' },
 				{name:"ADDRESS",	type: 'string' },
-				{name:"CONPY",		type: 'string' },
+				{name:"CONPY",		type: 'number' },
 				{name:"REMARK",		type: 'string' }
 
             ],
@@ -179,13 +179,13 @@
 				{ text: '담당자', 			datafield: "KNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '계약자', 			datafield: "CONNAME",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '입금구분', 		datafield: "IPGUMGUBUN",	width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
 				{ text: '입금은행', 		datafield: "BANKNAME",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '입금형태', 		datafield: "IPGUMTYPE",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '소재지', 			datafield: "ADDRESS",		width: 200, cellsalign: 'center', align: 'center'},
-				{ text: '평수', 			datafield: "CONPY",			width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '평수', 			datafield: "CONPY",			width: 100, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
 				{ text: '비고', 			datafield: "REMARK",		width: 250, cellsalign: 'center', align: 'center'}
 				
 			]

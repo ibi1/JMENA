@@ -76,13 +76,13 @@
 				{name:"O_JOINDATE",			type: 'string' },
 				{name:"O_RETIREDATE",		type: 'string' },
 				{name:"O_EMPLOYGUBUN",		type: 'string' },
-				{name:"AMT6",				type: 'string' },
-				{name:"AMT5",				type: 'string' },
-				{name:"AMT4",				type: 'string' },
-				{name:"AMT3",				type: 'string' },
-				{name:"AMT2",				type: 'string' },
-				{name:"AMT1",				type: 'string' },
-				{name:"TOTAMT",				type: 'string' }
+				{name:"AMT6",				type: 'number' },
+				{name:"AMT5",				type: 'number' },
+				{name:"AMT4",				type: 'number' },
+				{name:"AMT3",				type: 'number' },
+				{name:"AMT2",				type: 'number' },
+				{name:"AMT1",				type: 'number' },
+				{name:"TOTAMT",				type: 'number' }
 				
             ],
             root: "rows",
@@ -127,13 +127,13 @@
 				{ text: '입사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center'},
 				{ text: '퇴사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center'},
 				{ text: '고용구분', 		columngroup: '전근무현황',	align: 'center',	datafield: 'O_EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
-				{ text: 'M-6', 				datafield: 'AMT6',			align: 'center',	width: 150, cellsalign: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: 'M-5', 				datafield: 'AMT5',			align: 'center',	width: 150, cellsalign: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: 'M-4', 				datafield: 'AMT4',			align: 'center',	width: 150, cellsalign: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: 'M-3', 				datafield: 'AMT3',			align: 'center',	width: 150, cellsalign: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: 'M-2', 				datafield: 'AMT2',			align: 'center',	width: 150, cellsalign: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: 'M-1', 				datafield: 'AMT1',			align: 'center',	width: 150, cellsalign: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '합계', 			datafield: 'TOTAMT',		align: 'center',	width: 150, cellsalign: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				{ text: 'M-6', 				datafield: 'AMT6',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: 'M-5', 				datafield: 'AMT5',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: 'M-4', 				datafield: 'AMT4',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: 'M-3', 				datafield: 'AMT3',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: 'M-2', 				datafield: 'AMT2',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: 'M-1', 				datafield: 'AMT1',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: '합계', 			datafield: 'TOTAMT',		align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'}
 				
 			],
             columngroups: [
