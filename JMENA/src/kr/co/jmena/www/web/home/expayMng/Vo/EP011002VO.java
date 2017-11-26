@@ -30,6 +30,7 @@ public class EP011002VO {
 	private String SUPPLYTAX;
 	private String DEDUCTAMT;
 	private String BANKID;
+	private String BANKNAME;
 	private String ACCTOWNER;
 	private String BASICPAY;
 	
@@ -225,6 +226,12 @@ public class EP011002VO {
 	}
 	public void setUSERID(String uSERID) {
 		this.USERID = uSERID;
+	}
+	public String getBANKNAME() {
+		return BANKNAME;
+	}
+	public void setBANKNAME(String bANKNAME) {
+		this.BANKNAME = bANKNAME;
 	}
 	
 	

@@ -529,4 +529,35 @@ public class HR011001Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}			
+	
+	/**
+	 * @name 인사관리 화면 - 신고인 관리 그리드
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/selectDeptGubun.do")
+	public ModelAndView selectDeptGubun(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setDEPTCODE(request.getParameter("APPOINTDEPT"));
+		List<HR011001VO> lst = HR011001Biz.selectDeptGubun(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		
+		for (int i = 0; i < lst.size(); i++) {
+			//System.out.println(lst.get(i).getSYSID());
+			JSONObject jData = new JSONObject();
+			jData.put("DEPTGUBUN", lst.get(i).getDEPTGUBUN());
+			
+			jCell.add(i, jData);
+		}
+		json.put("DeptGubun", jCell);
+		
+		return new ModelAndView("jsonView", json);
+	}	
 }

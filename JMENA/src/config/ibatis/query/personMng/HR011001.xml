@@ -84,6 +84,11 @@
 		
 	</resultMap>	
 
+	<resultMap id="deptData" class="HR011001VO">	
+		<result property="DEPTGUBUN" 	column="DEPTGUBUN"/>		
+	</resultMap>	
+	
+	
 	<select id="selectListEnaInsaMst" resultMap="selectListEnaInsaMstData">
 		SELECT 
 			T1.INSACODE,
@@ -402,5 +407,13 @@
 			BASICACCT = 'N'
 		WHERE INSACODE = #INSACODE#
 	</update>
+
+	<select id="selectDeptGubun" resultMap="deptData">
+		SELECT DEPTGUBUN 
+	  	  FROM ba_deptmst
+		 WHERE USEYN = 'Y'		
+		   AND DEPTCODE = #DEPTCODE#		
+		ORDER BY DEPTCODE
+	</select>
 
 </sqlMap>

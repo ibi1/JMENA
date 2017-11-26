@@ -125,4 +125,12 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		return updateCnt;
 	}	
 		
+	@SuppressWarnings("unchecked")
+	public List<HR011001VO> selectDeptGubun(HR011001VO vo) throws DataAccessException {
+		List<HR011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectDeptGubun", vo);
+		
+		return lst;
+	}	
 }

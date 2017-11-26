@@ -48,6 +48,8 @@ public class HR011001VO {
 	private String S_JUMINID;
 	private String S_INSACODE;
 	
+	private String DEPTGUBUN;
+	
 	private String USERID;
 		
 
@@ -305,5 +307,11 @@ public class HR011001VO {
 	}
 	public void setAPPOINTBRANCHCODE(String APPOINTBRANCHCODE) {
 		this.APPOINTBRANCHCODE = APPOINTBRANCHCODE;
+	}
+	public String getDEPTGUBUN() {
+		return DEPTGUBUN;
+	}
+	public void setDEPTGUBUN(String dEPTGUBUN) {
+		this.DEPTGUBUN = dEPTGUBUN;
 	}	
 }

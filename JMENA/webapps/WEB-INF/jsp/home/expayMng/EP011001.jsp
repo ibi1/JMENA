@@ -35,7 +35,7 @@
 		
 		$("#S_SALEDATESYM").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#S_SALEDATEEYM").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-		$("#S_SALERCD").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_SALERCD").jqxInput({theme: 'energyblue', height: 25, width: 110, minLength: 1});
 		$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#SALERCD").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
@@ -57,9 +57,9 @@
 		$("#SUDANGRATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#ADDRATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#PAYAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-		$("#TAXGUBUN").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
-		$("#TAXINCOME").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-		$("#TAXLOCAL").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#TAXGUBUN").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#TAXINCOME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#TAXLOCAL").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#SUPPLYTAX").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#DEDUCTAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#PAYSEQ").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
@@ -212,16 +212,16 @@
 				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center'}
 				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center'}
 				, {name:"KNAME",		index:'KNAME',		width:80,		align:'center'}
-				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:80,		align:'center'}
-				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center'}
+				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:110,		align:'center'}
+				, {name:"ADDRATE",		index:'ADDRATE',	width:80,		align:'center'}
 				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
-				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
+				, {name:"TAXINCOME",	index:'TAXINCOME',	width:100,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center'}
-				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center'}
+				, {name:"REMARK",		index:'REMARK',		width:90,		align:'center'}
 				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center', hidden:true}
 				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center', hidden:true}
 				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center', hidden:true}

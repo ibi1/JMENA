@@ -93,6 +93,7 @@ public class EP011002Ctr {
 				obj.put("SUPPLYTAX", lst.get(i).getSUPPLYTAX());
 				obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());
 				obj.put("BANKID", lst.get(i).getBANKID());
+				obj.put("BANKNAME", lst.get(i).getBANKNAME());
 				obj.put("ACCTNO", lst.get(i).getACCTNO());
 				obj.put("ACCTOWNER", lst.get(i).getACCTOWNER());
 				jCell.add(obj);
@@ -177,9 +178,11 @@ public class EP011002Ctr {
 				obj.put("KNAME", lst.get(i).getKNAME());
 				obj.put("BASICAMT", lst.get(i).getBASICAMT());
 				obj.put("BANKID", lst.get(i).getBANKID());
+				obj.put("BANKNAME", lst.get(i).getBANKNAME());
 				obj.put("ACCTNO", lst.get(i).getACCTNO());
 				obj.put("ACCTOWNER", lst.get(i).getACCTOWNER());
-				obj.put("TAXGUBUN", "");
+				obj.put("TAXGUBUN", "001");
+				obj.put("TAXGUBUNCODE", "");
 				obj.put("ACTAMT", "0");
 				obj.put("PRIZEAMT", "0");
 				obj.put("DAILYAMT", "0");

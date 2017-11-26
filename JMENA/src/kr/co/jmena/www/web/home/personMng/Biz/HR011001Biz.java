@@ -175,4 +175,17 @@ public class HR011001Biz {
 		return updateCnt;
 	}	
 	
+	public List<HR011001VO> selectDeptGubun(HR011001VO vo) throws Exception {
+		List<HR011001VO> lst = null;
+
+		try {
+			lst = HR011001Dao.selectDeptGubun(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+		
+	
 }

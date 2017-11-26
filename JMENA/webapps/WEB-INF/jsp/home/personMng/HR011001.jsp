@@ -43,12 +43,12 @@
 		$("#JUMINID1").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#JUMINID2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#SAUPID1").jqxInput({theme: 'energyblue', height: 25, width: 50, minLength: 1});
-		$("#SAUPID2").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-		$("#SAUPID3").jqxInput({theme: 'energyblue', height: 25, width: 50, minLength: 1});
+		$("#SAUPID2").jqxInput({theme: 'energyblue', height: 25, width: 50, minLength: 1});
+		$("#SAUPID3").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#SAUPOWNER").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
-		$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
-		$("#MOBILENO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-		$("#TELNO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 400, minLength: 1});
+		$("#MOBILENO").jqxInput({theme: 'energyblue', height: 25, width: 130, minLength: 1});
+		$("#TELNO").jqxInput({theme: 'energyblue', height: 25, width: 130, minLength: 1});
 		$("#BASICPAY").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 		$("#JOINDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#RETIREDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -96,9 +96,9 @@
 				, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
 				, {name:"JUMINID",			index:'JUMINID',		width:120,	align:'center'}
 				, {name:"MOBILENO",			index:'MOBILENO',		width:100,	align:'center'}
-				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center'}
+				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
 				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center'} 		
+	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true} 		
 	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center'} 		
 				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center', hidden:true}
 				, {name:"SAUPID",			index:'SAUPID',			width:100,	align:'center', hidden:true}
@@ -184,6 +184,7 @@
 		},
 		datatype:"json" ,
 		loadtext: '로딩중...',
+		//cellEdit: true,
 		loadError:function(){alert("Error~!!!!");} ,
 		colNames:['사번','순번', '발령구분', '발령일자', '발령지사코드', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고'] ,
 		colModel:[
@@ -193,7 +194,9 @@
 			, {name:"APPOINTDATE",		index:'APPOINTDATE',		width:100,		align:'center', editable:true}
 			, {name:"APPOINTBRANCHCODE",		index:'APPOINTBRANCHCODE',		width:100,		align:'center', editable:true, hidden:true}
 			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center', editable:true
-				, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1,
+				, formatter:function (cellvalue, options, rowObject) {
+					return cellvalue;
+				}, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1,
 					dataEvents:[{
 						type:'change',
 						fn:function(e){
@@ -209,7 +212,7 @@
 								},
 								success: function(data){
 									var inHtml = "";
-									inHtml += "<select>";
+									inHtml += "<select>"; //이거 수정하셨어요? 로우로 되어 있는데?밑에꺼 하다가 수정했수도 있는듯.. ㅠㅠㅠㅠ deptMstList 
 									data.deptMstList.forEach(function(currentValue, index, array){
 										inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 									});
@@ -225,7 +228,60 @@
 					}]	
 				}}
 //			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
-			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1}}
+			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
+				dataEvents:[{
+					type:'change',
+					fn:function(e){
+						var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+						var appointbranch = this.value;
+						
+						//$(this).jqGrid('setCell', ids[index],  'PREBASICPAY', '', 'not-editable-cell'); // 특정 cell 수정 못하게
+						
+			             //  $(this).val($(e.target).val());
+							//alert($("#bottomList1 [name=APPOINTBRANCHCODE]").val()); //.jqGrid("getCell", ids, 'APPOINTBRANCH'));
+							//$('#bottomList1').jqGrid('saveCell',ids, 3); //선택된 놈 뷰 모드로 변경
+							
+							//$("#bottomList1").jqGrid('editCell', ids, 10, true);
+			               //$(this).jqGrid('editCell', rowId, 4, false);
+
+						
+						
+						
+						
+						$.ajax({ 
+							type: 'POST' ,
+							url: "/home/selectDeptGubun.do", 
+							dataType : 'json' ,
+							data : {
+								APPOINTDEPT : this.value
+							},
+							success: function(data){
+								data.DeptGubun.forEach(function(currentValue, index, array){									
+									if(currentValue.DEPTGUBUN == "001"){
+										alert("al");
+										//$('#bottomList1').jqGrid('editCell', , "PREBASICPAY", true);
+//										grid.editCell( nextRowID, 7, false);
+										//$('#' + ids + '_PREBASICPAY').attr('editable', true);
+										//$('#bottomList1').setColProp("PREBASICPAY",{editable:true});
+//										$('#bottomList1').jqGrid('setCell', ids,  "PREBASICPAY", "", 'editable-cell');
+//										$('#bottomList1').jqGrid('addClass','editable-cell');
+//										$('#bottomList1').jqGrid('setCell', ids,  'PREBASICPAY', '', {editable:'0'});												
+									}else{
+										alert("ab"); // 여기가 수정이 되야 해요? 아니면 위에?위입니다
+//										$('#bottomList1').jqGrid('addClass','not-editable-cell');
+//										$('#bottomList1').jqGrid('setCell', ids,  'EMPLOYGUBUN', '', {editable:'1'});												
+//										$('#bottomList1').jqGrid('selColProp', ids,  "EMPLOYGUBUN", "", 'not-editable-cell');
+									}
+								});								
+								
+							},
+							error:function(e){  
+								alert("[ERROR]매출 합계 데이터 호출 중 오류가 발생하였습니다.");
+							}  
+						});
+					}
+				}]
+			}}
 			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
 //			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
 			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
@@ -256,24 +312,34 @@
 			v_branchCode = $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCHCODE;
 			
 			if( v_rightLastSel != id ){
-		        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+		        //$(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 		        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
 		        
 		        v_rightLastSel = id;
 			}
 			
-			var cellData = $("#bottomList1").jqGrid('getRowData', id); //셀 전체 데이터 가져오기
+			//var cellData = $("#bottomList1").jqGrid('getRowData', id); //셀 전체 데이터 가져오기
 			
 		},
 		loadComplete: function(id) {
+			var ids = $(this).jqGrid('getDataIDs');
+			
+			ids.some(function(currentValue, index, array){
+				var tt = $("#bottomList1").jqGrid("getRowData", ids[index]);
+				//alert(tt.APPOINTBRANCHCODE);
+				//$(this).jqGrid('setCell', ids[index],  'PREBASICPAY', 'editable-cell'); // 특정 cell 수정 가능하게
+				$(this).jqGrid('setCell', ids[index],  'PREBASICPAY', 'not-editable-cell'); // 특정 cell 수정 못하게
+
+				//$(this).jqGrid('editCell', id, 10, false);
+			});
+			
+			
 		},		
 		hidegrid: false
 		});	
 		
 	}	
-	
-	
-	
+
 	function selectListEnaTexPayerItem(INSACODE){
 		$('#bottomList2').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#bottomList2').jqGrid({
@@ -1031,7 +1097,7 @@
 				$("#bottomList1").trigger("reloadGrid");
 				$("#bottomList2").trigger("reloadGrid");
 			}); 
-		}) 	
+		})
 </script>
 <body>
 
@@ -1100,18 +1166,18 @@
 				</tr>
 				<tr>
 					<th width="120">사업자번호</th>
-					<td><input type="text" style="width:15%;" id="SAUPID1" name="SAUPID1" maxlength="3" /> - 
-						<input type="text" style="width:15%;" id="SAUPID2" name="SAUPID2" maxlength="2" /> -
-						<input type="text" style="width:48%;" id="SAUPID3" name="SAUPID3" maxlength="5" /></td>
+					<td><input type="text" id="SAUPID1" name="SAUPID1" maxlength="3" /> - 
+						<input type="text" id="SAUPID2" name="SAUPID2" maxlength="2" /> -
+						<input type="text" id="SAUPID3" name="SAUPID3" maxlength="5" /></td>
 					<th width="120">대표자명</th>
 					<td><input type="text" id="SAUPOWNER" name="SAUPOWNER" /></td>
 				</tr>
 				<tr>
-					<th width="120">주소</th>
-					<td colspan="3"><input  type="text" id="ADDRESS" name="ADDRESS"/></td>
+					<th width="160">주소</th>
+					<td colspan="5"><input  type="text" id="ADDRESS" name="ADDRESS"/></td>
 				</tr>
 				<tr>
-					<th width="120">핸드폰번호</th>
+					<th width="150">핸드폰번호</th>
 					<td><input type="text" id="MOBILENO" name="MOBILENO"/></td>
 					<th width="120">기타연락처</th>
 					<td><input type="text" id="TELNO" name="TELNO" /></td>
