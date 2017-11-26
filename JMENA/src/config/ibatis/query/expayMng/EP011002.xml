@@ -27,6 +27,7 @@
 		<result property="SUPPLYTAX"		column="SUPPLYTAX"/>
 		<result property="DEDUCTAMT"		column="DEDUCTAMT"/>
 		<result property="BANKID"			column="BANKID"/>
+		<result property="BANKNAME"			column="BANKNAME"/>
 		<result property="ACCTOWNER"		column="ACCTOWNER"/>
 	</resultMap>
 	
@@ -46,6 +47,7 @@
 		<result property="KNAME"			column="KNAME"/>
 		<result property="BASICPAY"			column="BASICPAY"/>
 		<result property="BANKID"			column="BANKID"/>
+		<result property="BANKNAME"			column="BANKNAME"/>
 		<result property="ACCTNO"			column="ACCTNO"/>
 		<result property="ACCTOWNER"		column="ACCTOWNER"/>
 	</resultMap>
@@ -70,7 +72,8 @@
 			T1.TAXLOCAL,
 			T1.SUPPLYTAX,
 			T1.DEDUCTAMT,
-			(SELECT BANKNAME FROM sy_bankmst WHERE BANKCODE = T1.BANKID) AS BANKID,
+			(SELECT BANKID FROM hr_taxpayeritem, sy_bankmst B WHERE INSACODE = T1.INSACODE AND BANKID = B.BANKCODE  AND BASICACCT = 'Y') AS BANKID,
+			(SELECT BANKNAME FROM hr_taxpayeritem, sy_bankmst B WHERE INSACODE = T1.INSACODE AND BANKID = B.BANKCODE  AND BASICACCT = 'Y') AS BANKNAME,
 			T1.ACCTNO,
 			T1.ACCTOWNER
 		FROM sa_monthpaytb T1
@@ -103,7 +106,8 @@
 				INSACODE,
 				KNAME,
 				(CASE (SELECT DEPTGUBUN FROM ba_deptmst WHERE DEPTCODE = T1.DEPTCODE) WHEN '001' THEN BASICPAY ELSE '0' END) AS BASICPAY,
-				(SELECT BANKNAME FROM hr_taxpayeritem, sy_bankmst B WHERE INSACODE = T1.INSACODE AND BANKID = B.BANKCODE  AND BASICACCT = 'Y') AS BANKID,
+				(SELECT BANKNAME FROM hr_taxpayeritem, sy_bankmst B WHERE INSACODE = T1.INSACODE AND BANKID = B.BANKCODE  AND BASICACCT = 'Y') AS BANKNAME,
+				(SELECT BANKID FROM hr_taxpayeritem, sy_bankmst B WHERE INSACODE = T1.INSACODE AND BANKID = B.BANKCODE  AND BASICACCT = 'Y') AS BANKID,
 				(SELECT ACCTNO FROM hr_taxpayeritem WHERE INSACODE = T1.INSACODE AND BASICACCT = 'Y') AS ACCTNO,
 				(SELECT ACCTOWNER FROM hr_taxpayeritem WHERE INSACODE = T1.INSACODE AND BASICACCT = 'Y') AS ACCTOWNER
 		  FROM	 hr_insamst T1
