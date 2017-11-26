@@ -209,6 +209,13 @@
 			var S_IPGUMPERSON = $("#S_IPGUMPERSON").val();
 			var S_IPGUMAMT = $("#S_IPGUMAMT").val();
 			
+			if (S_IPGUMDATE_FR == "" || S_IPGUMDATE_TO == "") {
+				alert("입금기간을 입력하셔야합니다.");
+				
+				$("#S_SALEDATE").focus();				
+				return false;
+			}
+			
 			f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
 		});
 		

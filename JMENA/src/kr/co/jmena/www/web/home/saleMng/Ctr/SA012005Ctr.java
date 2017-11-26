@@ -67,8 +67,7 @@ public class SA012005Ctr {
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 
-		if(!(request.getParameter("S_IPGUMDATE_FR").equals("") && 
-				request.getParameter("S_IPGUMDATE_TO").equals("") && 
+		if(!(
 				request.getParameter("S_IPGUMGUBUN").equals("") && 
 				request.getParameter("S_IPGUMPERSON").equals("") && 
 				request.getParameter("S_IPGUMAMT").equals(""))){
@@ -81,14 +80,13 @@ public class SA012005Ctr {
 			
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
+				
 				vo1.setIPGUMID(lst.get(i).getIPGUMID());
 				
 				List<SA012005VO> lst2 = SA012005Biz.selectListSA012005_2(vo1);
-				System.out.println("******************************************");
-				System.out.println("lst2========>"+lst2);
-
 				if(lst2.size() > 0){
 					for (int j = 0; j < lst2.size(); j++) {
+						obj = new JSONObject();
 						if(j == 0){
 							obj.put("IPGUMDATE",lst.get(i).getIPGUMDATE());
 							obj.put("IPGUMID",lst.get(i).getIPGUMID());
@@ -97,9 +95,7 @@ public class SA012005Ctr {
 							obj.put("IPGUMAMT",lst.get(i).getIPGUMAMT());
 							obj.put("SUMSUGUMAMT",lst.get(i).getSUMSUGUMAMT());
 							obj.put("JANGUMAMT",lst.get(i).getJANGUMAMT());
-							System.out.println("******************************************");
-							System.out.println("obj111========>"+obj.toString());
-
+							
 						}else{
 							obj.put("IPGUMDATE","");
 							obj.put("IPGUMID","");
@@ -108,11 +104,8 @@ public class SA012005Ctr {
 							obj.put("IPGUMAMT","");
 							obj.put("SUMSUGUMAMT","");
 							obj.put("JANGUMAMT","");
-
-							System.out.println("******************************************");
-							System.out.println("obj222========>"+obj.toString());
+							
 						}
-						
 						obj.put("SEQ",lst2.get(j).getSEQ());
 						obj.put("SALEDATE",lst2.get(j).getSALEDATE());
 						obj.put("SALEID",lst2.get(j).getSALEID());
@@ -123,10 +116,11 @@ public class SA012005Ctr {
 						obj.put("SUGUMAMT",lst2.get(j).getSUGUMAMT());
 						obj.put("KNAME",lst2.get(j).getKNAME());
 						obj.put("ADDRESS",lst2.get(j).getADDRESS());
+
 						jCell.add(obj);
-						
 					}
 				}else{
+					obj = new JSONObject();
 					obj.put("IPGUMDATE",lst.get(i).getIPGUMDATE());
 					obj.put("IPGUMID",lst.get(i).getIPGUMID());
 					obj.put("IPGUMGUBUN",lst.get(i).getIPGUMGUBUN());
@@ -144,7 +138,7 @@ public class SA012005Ctr {
 					obj.put("SUGUMAMT","");
 					obj.put("KNAME","");
 					obj.put("ADDRESS","");
-					
+
 					jCell.add(obj);
 					
 				}

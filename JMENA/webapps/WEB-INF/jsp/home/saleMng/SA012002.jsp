@@ -234,7 +234,7 @@
 			var S_DCODE = $("#S_DCODE").val();
 			var S_KNAME = $("#S_KNAME").val();
 			
-			if (S_SALEDATE_FR == "" && S_SALEDATE_TO == "") {
+			if (S_SALEDATE_FR == "" || S_SALEDATE_TO == "") {
 				alert("매출기간을 입력하셔야합니다.");
 				
 				$("#S_SALEDATE_FR").focus();				
