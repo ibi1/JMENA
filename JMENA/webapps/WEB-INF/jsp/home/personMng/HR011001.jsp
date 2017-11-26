@@ -284,7 +284,7 @@
 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center', editable:true}
-			, {name:"DEPTGUBUN",			index:'DEPTGUBUN',				width:100,		align:'center', editable:true}
+			, {name:"DEPTGUBUN",		index:'DEPTGUBUN',			width:100,		align:'center', hidden:true }
 		] ,
 		rowNum:10 ,
 		autowidth: true ,
