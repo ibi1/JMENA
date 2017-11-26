@@ -155,11 +155,11 @@
               { text: '담당자', 	datafield: 'KNAME', 		width: 120, cellsalign: 'center', align: 'center' },
               { text: '소득신고', 	datafield: 'PAYERNAME',	 	width: 120, cellsalign: 'center', align: 'center' },
               { text: '주민번호', 	datafield: 'PAYERID',		width: 120, cellsalign: 'center', align: 'center' },
-              { text: '총지금액', 	datafield: 'PAYAMT', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-              { text: '소득세', 	datafield: 'TAXINCOME',	 	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-              { text: '지방세', 	datafield: 'TAXLOCAL', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-              { text: '세금 계', 	datafield: 'TOTTAX', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-              { text: '실 지급액', 	datafield: 'DEDUCTAMT', 	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'}
+              { text: '총지금액', 	datafield: 'PAYAMT', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+              { text: '소득세', 	datafield: 'TAXINCOME',	 	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+              { text: '지방세', 	datafield: 'TAXLOCAL', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+              { text: '세금 계', 	datafield: 'TOTTAX', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+              { text: '실 지급액', 	datafield: 'DEDUCTAMT', 	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'}
             ]
         });
 	

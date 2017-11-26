@@ -152,15 +152,15 @@
 				{ text: '주소/지번',	datafield: "ADDRESS",			width: 200, cellsalign: 'center', align: 'center'},
 				{ text: '면적(m2)',		datafield: "BUYM2",				width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '등기이전일',	datafield: "REGDATE1",			width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '매입금액',		datafield: "BUYAMT",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: '매입금액',		datafield: "BUYAMT",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 				{ text: '매출순번',		datafield: "SELLSEQ",			width: 80,  cellsalign: 'center', align: 'center'},
 				{ text: '매수자',		datafield: "CONNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '주민번호',		datafield: "CONJUMINID",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '계약면적',		datafield: "CONM2",				width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '이전일',		datafield: "REGDATE2",			width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '매도금액',		datafield: "SALEAMT",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '재고면적',		datafield: "REMNM2",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '재고금액',		datafield: "REMNAMT",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
+				{ text: '매도금액',		datafield: "SALEAMT",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '재고면적',		datafield: "REMNM2",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
+				{ text: '재고금액',		datafield: "REMNAMT",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 				
 			]            
         });

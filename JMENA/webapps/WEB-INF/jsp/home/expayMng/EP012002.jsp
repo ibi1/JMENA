@@ -143,16 +143,16 @@
 				{ text: '직급', 		datafield: 'DUTYNAME',		width: 100, cellsalign: 'center', align: 'center' },
 				{ text: '사번', 		datafield: 'INSACODE',		width: 100, cellsalign: 'center', align: 'center' },
 				{ text: '성명', 		datafield: 'KNAME',			width: 120, cellsalign: 'center', align: 'center' },
-				{ text: '기본급', 		datafield: 'BASICAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '활동비', 		datafield: 'ACTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '일비', 		datafield: 'DAILYAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '시상금', 		datafield: 'PRIZEAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '수당금액', 	datafield: 'PAYAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '총지급액', 	datafield: 'TOTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '소득세', 		datafield: 'TAXINCOME',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '지방세', 		datafield: 'TAXLOCAL',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '부가가치세',	datafield: 'SUPPLYTAX',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'},
-				{ text: '차감지급액',	datafield: 'DEDUCTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'c3'}
+				{ text: '기본급', 		datafield: 'BASICAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '활동비', 		datafield: 'ACTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '일비', 		datafield: 'DAILYAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '시상금', 		datafield: 'PRIZEAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '수당금액', 	datafield: 'PAYAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '총지급액', 	datafield: 'TOTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '소득세', 		datafield: 'TAXINCOME',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '지방세', 		datafield: 'TAXLOCAL',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '부가가치세',	datafield: 'SUPPLYTAX',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '차감지급액',	datafield: 'DEDUCTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'}
             ]
         });
 	}
