@@ -1,6 +1,7 @@
 package kr.co.jmena.www.web.home.saleMng.Ctr;
 
 import java.io.FileOutputStream;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -83,10 +84,11 @@ public class SA012001Ctr {
 			S_SALEDATE_TO = S_SALEDATE+"31";
 		}
 
+		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
 		
 		vo1.setS_BRANCHCODE(S_BRANCHCODE);
 		
-		vo1.setS_KNAME(request.getParameter("S_KNAME"));
+		vo1.setS_KNAME(S_KNAME);
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();

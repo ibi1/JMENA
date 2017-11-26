@@ -1,6 +1,7 @@
 package kr.co.jmena.www.web.home.buyingMng.Ctr;
 
 import java.io.FileOutputStream;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,10 +72,12 @@ public class MM012001Ctr {
 	@RequestMapping("/home/selectListMM012001.do")
 	public ModelAndView selectListMM012001(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MM012001VO vo = new MM012001VO();
+
+		String S_ADDRESS = (URLDecoder.decode(request.getParameter("S_ADDRESS"),"UTF-8"));
 		
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
-		vo.setS_ADDRESS(request.getParameter("S_ADDRESS"));
+		vo.setS_ADDRESS(S_ADDRESS);
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		

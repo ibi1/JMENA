@@ -120,11 +120,15 @@
 	}
 	
 	function f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT){
+		S_IPGUMPERSON = encodeURI(encodeURIComponent(S_IPGUMPERSON));
+		
 		var url = "/home/selectListSA012005.do?S_IPGUMDATE_FR=" + S_IPGUMDATE_FR + "&S_IPGUMDATE_TO=" + S_IPGUMDATE_TO + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_SALERCD=" + S_SALERCD + "&S_IPGUMGUBUN=" + S_IPGUMGUBUN + "&S_IPGUMPERSON=" + S_IPGUMPERSON + "&S_IPGUMAMT=" + S_IPGUMAMT;
+		//var url = "/home/selectListSA012005.do";
 		
         // prepare the data
         var source = {
             datatype: "json",
+            type : "post",
             datafields: [
                          
 				{name:"IPGUMDATE",		type: 'string' },
@@ -153,7 +157,7 @@
         };
 
         var dataAdapter = new $.jqx.dataAdapter(source, {
-            downloadComplete: function (data, status, xhr) {
+        	downloadComplete: function (data, status, xhr) {
             },
             loadComplete: function (data) {
             },

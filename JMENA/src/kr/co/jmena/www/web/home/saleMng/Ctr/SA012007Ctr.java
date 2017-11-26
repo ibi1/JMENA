@@ -1,5 +1,6 @@
 package kr.co.jmena.www.web.home.saleMng.Ctr;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -53,11 +54,12 @@ public class SA012007Ctr {
 
 		//String S_CITYCODE = ("ALL".equals(request.getParameter("S_CITYCODE"))) ? "" : request.getParameter("S_CITYCODE");
 		//String S_BOROUGHCODE = ("ALL".equals(request.getParameter("S_BOROUGHCODE"))) ? "" : request.getParameter("S_BOROUGHCODE");
+		String S_ADDRESS = (URLDecoder.decode(request.getParameter("S_ADDRESS"),"UTF-8"));
 		
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
 
-		vo.setS_ADDRESS(request.getParameter("S_ADDRESS"));
+		vo.setS_ADDRESS(S_ADDRESS);
 
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();

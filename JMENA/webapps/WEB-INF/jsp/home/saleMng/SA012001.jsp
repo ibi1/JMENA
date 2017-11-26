@@ -56,6 +56,8 @@
 	}
 	
 	function f_selectListSA012001(S_SALEDATE, S_BRANCHCODE, S_KNAME){
+		S_KNAME = encodeURI(encodeURIComponent(S_KNAME));
+		
 		var url = "/home/selectListSA012001.do?S_SALEDATE=" + S_SALEDATE + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_KNAME=" + S_KNAME;
 		
         // prepare the data

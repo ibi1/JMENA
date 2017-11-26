@@ -1,6 +1,7 @@
 package kr.co.jmena.www.web.home.saleMng.Ctr;
 
 import java.io.FileOutputStream;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -62,12 +63,14 @@ public class SA012004Ctr {
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
 		String S_SALERCD = ("ALL".equals(request.getParameter("S_SALERCD"))) ? "" : request.getParameter("S_SALERCD");
 		
+		String S_IPGUMPERSON = (URLDecoder.decode(request.getParameter("S_IPGUMPERSON"),"UTF-8"));
+		
 		vo.setS_IPGUMDATE_FR(request.getParameter("S_IPGUMDATE_FR"));
 		vo.setS_IPGUMDATE_TO(request.getParameter("S_IPGUMDATE_TO"));
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_SALERCD(S_SALERCD);
 		vo.setS_IPGUMGUBUN(request.getParameter("S_IPGUMGUBUN"));
-		vo.setS_IPGUMPERSON(request.getParameter("S_IPGUMPERSON"));
+		vo.setS_IPGUMPERSON(S_IPGUMPERSON);
 		vo.setS_IPGUMAMT(request.getParameter("S_IPGUMAMT"));
 
 		JSONArray jCell = new JSONArray();

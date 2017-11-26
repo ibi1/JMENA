@@ -1,5 +1,6 @@
 package kr.co.jmena.www.web.home.expayMng.Ctr;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -53,11 +54,13 @@ public class EP012002Ctr {
 		
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
 		String S_DEPTCODE = ("ALL".equals(request.getParameter("S_DEPTCODE"))) ? "" : request.getParameter("S_DEPTCODE");
+		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
 
+		
 		vo.setS_PAYDATE(request.getParameter("S_PAYDATE"));
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_DEPTCODE(S_DEPTCODE);
-		vo.setS_KNAME(request.getParameter("S_KNAME"));
+		vo.setS_KNAME(S_KNAME);
 
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();

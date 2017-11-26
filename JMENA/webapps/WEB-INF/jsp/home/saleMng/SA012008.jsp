@@ -92,6 +92,7 @@
 	}
 	
 	function f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
+		S_ADDRESS = encodeURI(encodeURIComponent(S_ADDRESS));
 
 		var url = "/home/selectListSA012008.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS;
 		

@@ -54,10 +54,10 @@
 		    AND t1.ipgumgubun = #S_IPGUMGUBUN#
 		</isNotEmpty>
 		<isNotEmpty property="S_IPGUMPERSON">
-		    AND t1.ipgumperson  LIKE '%#S_IPGUMPERSON#%' 
+		    AND t1.ipgumperson  LIKE '%$S_IPGUMPERSON$%' 
 		</isNotEmpty>
 		<isNotEmpty property="S_IPGUMAMT">
-		    AND t1.ipgumamt LIKE '%#S_IPGUMAMT#%'
+		    AND t1.ipgumamt LIKE '%$S_IPGUMAMT$%'
 		</isNotEmpty>
 		order by t1.ipgumdate asc
 	</select>

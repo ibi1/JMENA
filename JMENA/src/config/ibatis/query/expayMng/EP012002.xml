@@ -46,7 +46,7 @@
 		from sa_monthpaytb t1, 
 		(select kname, insacode from hr_insamst where 1=1 
 		<isNotEmpty property="S_KNAME">
-		    and t1.ipgumperson  LIKE '%#S_KNAME#%'
+		    and t1.ipgumperson  LIKE '%$S_KNAME$%'
 		</isNotEmpty>
 		) t2
 		where 1=1

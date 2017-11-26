@@ -1,5 +1,6 @@
 package kr.co.jmena.www.web.home.personMng.Ctr;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -57,11 +58,13 @@ public class HR012002Ctr {
 		HR012002VO vo2 = new HR012002VO();
 		HR012002VO vo3 = new HR012002VO();
 		
+		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
+		
 		vo.setS_RETIREDATE_FR(request.getParameter("S_RETIREDATE_FR"));
 		vo.setS_RETIREDATE_TO(request.getParameter("S_RETIREDATE_TO"));
 		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
 		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
-		vo.setS_KNAME(request.getParameter("S_KNAME"));
+		vo.setS_KNAME(S_KNAME);
 		vo.setS_JUMINID(request.getParameter("S_JUMINID"));
 
 		JSONArray jCell = new JSONArray();

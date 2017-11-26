@@ -95,7 +95,7 @@
 			and t1.bankgubun = #SL_BANKGUBUN#
 		</isNotEqual>
 		<isNotEmpty property="SL_IPGUMAMT">
-			and t1.ipgumamt like '%#SL_IPGUMAMT#%'
+			and t1.ipgumamt like '%$SL_IPGUMAMT$%'
 		</isNotEmpty>
 		order by t1.ipgumid asc
 

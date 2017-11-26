@@ -90,6 +90,8 @@
 	}
 
 	function f_selectListHR012002(S_RETIREDATE_FR, S_RETIREDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID){
+		S_KNAME = encodeURI(encodeURIComponent(S_KNAME));
+		
 		var url = "/home/selectListHR012002.do?S_RETIREDATE_FR=" + S_RETIREDATE_FR + "&S_RETIREDATE_TO=" + S_RETIREDATE_TO + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE + "&S_KNAME=" + S_KNAME + "&S_JUMINID=" + S_JUMINID;
 		
         // prepare the data

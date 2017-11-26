@@ -64,10 +64,10 @@
 			and t1.deptcode = #S_DEPTCODE#
 		</isNotEmpty>
 		<isNotEmpty property="S_KNAME">
-			and t1.kname like '%#S_KNAME#%'
+			and t1.kname like '%$S_KNAME$%'
 		</isNotEmpty>
 		<isNotEmpty property="S_JUMINID">
-			and t1.juminid '%#S_JUMINID#%' 
+			and t1.juminid '%$S_JUMINID$%' 
 		</isNotEmpty>
 		and t1.retiredate is NULL
 		order by t1.branchcode, t1.deptcode, t1.kname

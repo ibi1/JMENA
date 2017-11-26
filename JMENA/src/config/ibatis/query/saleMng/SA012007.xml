@@ -51,7 +51,7 @@
 		    AND boroughcode = #S_BOROUGHCODE#
 		</isNotEmpty>
 		<isNotEmpty property="S_ADDRESS">
-		    AND address LIKE '%#S_ADDRESS#%'
+		    AND address LIKE '%$S_ADDRESS$%'
 		</isNotEmpty>
 		order by t1.buyid asc
 	</select>

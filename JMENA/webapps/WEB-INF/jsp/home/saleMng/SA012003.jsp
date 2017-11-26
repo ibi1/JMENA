@@ -97,6 +97,8 @@
 
 	
 	function f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
+		S_KNAME = encodeURI(encodeURIComponent(S_KNAME));
+		
 		var url = "/home/selectListSA012003.do?S_SALEDATE_FR=" + S_SALEDATE_FR + "&S_SALEDATE_TO=" + S_SALEDATE_TO 
 		+ "&S_BRANCHCODE=" + S_BRANCHCODE
 		+ "&S_DEPTCODE=" + S_DEPTCODE

@@ -83,7 +83,7 @@
 		    AND DEPTCODE = #S_DEPTCODE#
 		</isNotEqual>
 		<isNotEmpty property="S_KNAME">
-		    AND KNAME LIKE '%#S_KNAME#%'
+		    AND KNAME LIKE '%$S_KNAME$%'
 		</isNotEmpty>
 		) T2
 		where 1=1

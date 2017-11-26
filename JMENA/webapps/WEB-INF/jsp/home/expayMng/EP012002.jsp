@@ -85,6 +85,8 @@
 	}
 	
 	function f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
+		S_KNAME = encodeURI(encodeURIComponent(S_KNAME));
+		
 		var url = "/home/selectListEP012002.do?S_PAYDATE=" + S_PAYDATE + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE + "&S_KNAME=" + S_KNAME;
 		
         // prepare the data
