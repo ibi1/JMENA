@@ -70,7 +70,7 @@
             t2.conname,
             t2.conm2,
             t2.conpy,
-            (select dcodename from sy_ccodedtl where ccode = '009' and dcode = (select DepositGubun from sa_ipgumscheduletb where saleid = t1.saleid)) as DepositGubun,
+            (select dcodename from sy_ccodedtl where ccode = '009' and dcode = (select DepositGubun from sa_ipgumscheduletb where saleid = t1.saleid and ipgumseq = t1.ipgumseq)) as DepositGubun,
             t1.sugumamt,
             (select kname from hr_insamst where insacode = (select salercd from sa_salemst where saleid = t1.saleid)) as kname,
             (select address from mm_buymst where buyid = (select buyid from sa_salemst where saleid = t1.saleid)) as address

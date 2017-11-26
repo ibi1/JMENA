@@ -50,13 +50,15 @@ public class SA012005Ctr {
 	@RequestMapping("/home/selectListSA012005.do")
 	public ModelAndView selectListEnaBuyMstP(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA012005VO vo = new SA012005VO();
+		SA012005VO vo1 = new SA012005VO();
 		
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
+		String S_SALERCD = ("ALL".equals(request.getParameter("S_SALERCD"))) ? "" : request.getParameter("S_SALERCD");
 
 		vo.setS_IPGUMDATE_FR(request.getParameter("S_IPGUMDATE_FR"));
 		vo.setS_IPGUMDATE_TO(request.getParameter("S_IPGUMDATE_TO"));
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
-		vo.setS_SALERCD(request.getParameter("S_SALERCD"));
+		vo.setS_SALERCD(S_SALERCD);
 		vo.setS_IPGUMGUBUN(request.getParameter("S_IPGUMGUBUN"));
 		vo.setS_IPGUMPERSON(request.getParameter("S_IPGUMPERSON"));
 		vo.setS_IPGUMAMT(request.getParameter("S_IPGUMAMT"));
@@ -67,8 +69,6 @@ public class SA012005Ctr {
 
 		if(!(request.getParameter("S_IPGUMDATE_FR").equals("") && 
 				request.getParameter("S_IPGUMDATE_TO").equals("") && 
-				S_BRANCHCODE.equals("") && 
-				request.getParameter("S_SALERCD").equals("") && 
 				request.getParameter("S_IPGUMGUBUN").equals("") && 
 				request.getParameter("S_IPGUMPERSON").equals("") && 
 				request.getParameter("S_IPGUMAMT").equals(""))){
@@ -81,14 +81,15 @@ public class SA012005Ctr {
 			
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
-				SA012005VO vo1 = new SA012005VO();
 				vo1.setIPGUMID(lst.get(i).getIPGUMID());
 				
-				List<SA012005VO> lst2 = SA012005Biz.selectListSA012005_2(vo1);			
-	
+				List<SA012005VO> lst2 = SA012005Biz.selectListSA012005_2(vo1);
+				System.out.println("******************************************");
+				System.out.println("lst2========>"+lst2);
+
 				if(lst2.size() > 0){
 					for (int j = 0; j < lst2.size(); j++) {
-						if(j==0){
+						if(j == 0){
 							obj.put("IPGUMDATE",lst.get(i).getIPGUMDATE());
 							obj.put("IPGUMID",lst.get(i).getIPGUMID());
 							obj.put("IPGUMGUBUN",lst.get(i).getIPGUMGUBUN());
@@ -96,6 +97,9 @@ public class SA012005Ctr {
 							obj.put("IPGUMAMT",lst.get(i).getIPGUMAMT());
 							obj.put("SUMSUGUMAMT",lst.get(i).getSUMSUGUMAMT());
 							obj.put("JANGUMAMT",lst.get(i).getJANGUMAMT());
+							System.out.println("******************************************");
+							System.out.println("obj111========>"+obj.toString());
+
 						}else{
 							obj.put("IPGUMDATE","");
 							obj.put("IPGUMID","");
@@ -104,6 +108,9 @@ public class SA012005Ctr {
 							obj.put("IPGUMAMT","");
 							obj.put("SUMSUGUMAMT","");
 							obj.put("JANGUMAMT","");
+
+							System.out.println("******************************************");
+							System.out.println("obj222========>"+obj.toString());
 						}
 						
 						obj.put("SEQ",lst2.get(j).getSEQ());
@@ -116,7 +123,6 @@ public class SA012005Ctr {
 						obj.put("SUGUMAMT",lst2.get(j).getSUGUMAMT());
 						obj.put("KNAME",lst2.get(j).getKNAME());
 						obj.put("ADDRESS",lst2.get(j).getADDRESS());
-						
 						jCell.add(obj);
 						
 					}
@@ -138,10 +144,10 @@ public class SA012005Ctr {
 					obj.put("SUGUMAMT","");
 					obj.put("KNAME","");
 					obj.put("ADDRESS","");
+					
 					jCell.add(obj);
 					
 				}
-	
 			}
 		}
 		

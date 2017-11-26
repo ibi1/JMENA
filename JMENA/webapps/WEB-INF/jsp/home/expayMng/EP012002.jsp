@@ -21,7 +21,7 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
-		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 6, minLength: 1});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		
 		f_selectListEnaBranchCode();
@@ -143,16 +143,16 @@
 				{ text: '직급', 		datafield: 'DUTYNAME',		width: 100, cellsalign: 'center', align: 'center' },
 				{ text: '사번', 		datafield: 'INSACODE',		width: 100, cellsalign: 'center', align: 'center' },
 				{ text: '성명', 		datafield: 'KNAME',			width: 120, cellsalign: 'center', align: 'center' },
-				{ text: '기본급', 		datafield: 'BASICAMT',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '활동비', 		datafield: 'ACTAMT',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '일비', 		datafield: 'DAILYAMT',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '시상금', 		datafield: 'PRIZEAMT',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '수당금액', 	datafield: 'PAYAMT',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '총지급액', 	datafield: 'TOTAMT',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '소득세', 		datafield: 'TAXINCOME',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '지방세', 		datafield: 'TAXLOCAL',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '부가가치세',	datafield: 'SUPPLYTAX',		width: 150, cellsalign: 'center', align: 'center' },
-				{ text: '차감지급액',	datafield: 'DEDUCTAMT',		width: 150, cellsalign: 'center', align: 'center' }
+				{ text: '기본급', 		datafield: 'BASICAMT',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '활동비', 		datafield: 'ACTAMT',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '일비', 		datafield: 'DAILYAMT',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '시상금', 		datafield: 'PRIZEAMT',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '수당금액', 	datafield: 'PAYAMT',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '총지급액', 	datafield: 'TOTAMT',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '소득세', 		datafield: 'TAXINCOME',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '지방세', 		datafield: 'TAXLOCAL',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '부가가치세',	datafield: 'SUPPLYTAX',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '차감지급액',	datafield: 'DEDUCTAMT',		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''} }
             ]
         });
 	}

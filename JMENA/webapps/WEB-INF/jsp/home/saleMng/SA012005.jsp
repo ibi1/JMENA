@@ -85,6 +85,7 @@
 			},
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.insaMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
 				});
@@ -178,9 +179,9 @@
 				{ text: '입금번호',			datafield: "IPGUMID",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '입금구분',			datafield: "IPGUMGUBUN",	width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '입금인',			datafield: "IPGUMPERSON",	width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '입금금액',			datafield: "IPGUMAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '수금처리금액',		datafield: "SUMSUGUMAMT",	width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '처리잔액',			datafield: "JANGUMAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '입금금액',			datafield: "IPGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '수금처리금액',		datafield: "SUMSUGUMAMT",	width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '처리잔액',			datafield: "JANGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '처리순번',			datafield: "SEQ",			width: 80, cellsalign: 'center', align: 'center'},
 				{ text: '계약일자',			datafield: "SALEDATE",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '계약번호',			datafield: "SALEID",		width: 150, cellsalign: 'center', align: 'center'},
@@ -188,7 +189,7 @@
 				{ text: '계약면적',			datafield: "CONM2",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '계약평수',			datafield: "CONPY",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '입금 구분',		datafield: "DEPOSITGUBUN",	width: 80, cellsalign: 'center', align: 'center'},
-				{ text: '수금금액',			datafield: "SUGUMAMT",		width: 180, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '수금금액',			datafield: "SUGUMAMT",		width: 180, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '담당자',			datafield: "KNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '소재지',			datafield: "ADDRESS",		width: 200, cellsalign: 'center', align: 'center'}
 				
@@ -250,6 +251,7 @@
 					<th width="120">담당자</th>
 					<td>
 						<select id="S_SALERCD" name="S_SALERCD">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 				</tr>

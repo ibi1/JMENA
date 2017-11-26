@@ -23,10 +23,10 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 
-		$("#S_JOINDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-		$("#S_JOINDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_JOINDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, maxLength: 8, minLength: 1});
+		$("#S_JOINDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, maxLength: 8, minLength: 1});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, maxLength: 13, minLength: 1});
 		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
@@ -153,7 +153,7 @@
 				{ text: '지사', 		columngroup: '전근무현황',		datafield: 'O_BRANCHNAME',		width: 100, cellsalign: 'center', align:"center"},
 				{ text: '입사', 		columngroup: '전근무현황',		datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center', align:"center"},
 				{ text: '퇴사', 		columngroup: '전근무현황',		datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center', align:"center"},
-				{ text: '실적', 		columngroup: '전근무현황',		datafield: 'O_SELLAMT',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '실적', 		columngroup: '전근무현황',		datafield: 'O_SELLAMT',			width: 150, cellsalign: 'right', align:"center", formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '고용구분', 	columngroup: '전근무현황', 		datafield: 'O_EMPLOYGUBUN',		width: 80, cellsalign: 'center', align:"center"},
 				{ text: '비고', 		datafield: 'REMARK',			width: 250, cellsalign: 'center', align:"center"}
             ],

@@ -72,10 +72,7 @@ public class SA012003Ctr {
 		JSONObject json = new JSONObject();
 		
 		if(!(request.getParameter("S_SALEDATE_FR").equals("") && 
-				request.getParameter("S_SALEDATE_TO").equals("") && 
-				S_BRANCHCODE.equals("") && 
-				S_DEPTCODE.equals("") && 
-				request.getParameter("S_KNAME").equals(""))){
+				request.getParameter("S_SALEDATE_TO").equals(""))){
 		
 			List<SA012003VO> lst = SA012003Biz.selectListSA012003(vo);
 			

@@ -22,7 +22,7 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
-		$("#S_JOINDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_JOINDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, maxLength: 8, minLength: 1});
 
 		$("#SUMCNT1").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#SUMCNT2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -164,7 +164,7 @@
 				{ text: '입사', 		columngroup: '전근무현황',		datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center', align:"center"},
 				{ text: '퇴사', 		columngroup: '전근무현황',		datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center', align:"center"},
 				{ text: '고용구분', 	columngroup: '전근무현황',		datafield: 'O_EMPLOYGUBUN',		width: 80, cellsalign: 'center', align:"center"},
-				{ text: '연락처', 		datafield: 'MOBILENO',			width: 100, cellsalign: 'center', align:"center"},
+				{ text: '연락처', 		datafield: 'MOBILENO',			width: 150, cellsalign: 'center', align:"center"},
 				{ text: '주민번호', 	datafield: 'JUMINID',			width: 150, cellsalign: 'center', align:"center"},
 				{ text: '생일구분', 	datafield: 'BIRTHDAYGUBUN',		width: 80, cellsalign: 'center', align:"center"},
 				{ text: '입금자명', 	datafield: 'ACCTOWNER',			width: 150, cellsalign: 'center', align:"center"},
@@ -172,7 +172,7 @@
 				{ text: '계좌번호', 	datafield: 'ACCTNO',			width: 150, cellsalign: 'center', align:"center"},
 				{ text: '성명', 		columngroup: '소득신고',		datafield: 'PAYERNAME',			width: 150, cellsalign: 'center', align:"center"},
 				{ text: '주민번호', 	columngroup: '소득신고',		datafield: 'PAYERID',			width: 150, cellsalign: 'center', align:"center"},
-				{ text: '주소', 		datafield: 'ADDRESS',			width: 250, cellsalign: 'center', align:"center"}
+				{ text: '주소', 		datafield: 'ADDRESS',			width: 550, cellsalign: 'left', align:"center"}
 			],
             columngroups: [
          		{ text: '전근무현황', align: 'center', name: '전근무현황' },

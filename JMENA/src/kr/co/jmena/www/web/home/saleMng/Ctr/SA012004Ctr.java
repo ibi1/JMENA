@@ -60,11 +60,12 @@ public class SA012004Ctr {
 		SA012004VO vo = new SA012004VO();
 		
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
+		String S_SALERCD = ("ALL".equals(request.getParameter("S_SALERCD"))) ? "" : request.getParameter("S_SALERCD");
 		
 		vo.setS_IPGUMDATE_FR(request.getParameter("S_IPGUMDATE_FR"));
 		vo.setS_IPGUMDATE_TO(request.getParameter("S_IPGUMDATE_TO"));
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
-		vo.setS_SALERCD(request.getParameter("S_SALERCD"));
+		vo.setS_SALERCD(S_SALERCD);
 		vo.setS_IPGUMGUBUN(request.getParameter("S_IPGUMGUBUN"));
 		vo.setS_IPGUMPERSON(request.getParameter("S_IPGUMPERSON"));
 		vo.setS_IPGUMAMT(request.getParameter("S_IPGUMAMT"));
@@ -74,8 +75,6 @@ public class SA012004Ctr {
 
 		if(!(request.getParameter("S_IPGUMDATE_FR").equals("") && 
 				request.getParameter("S_IPGUMDATE_TO").equals("") && 
-				S_BRANCHCODE.equals("") && 
-				request.getParameter("S_SALERCD").equals("") && 
 				request.getParameter("S_IPGUMGUBUN").equals("") && 
 				request.getParameter("S_IPGUMPERSON").equals("") && 
 				request.getParameter("S_IPGUMAMT").equals(""))){

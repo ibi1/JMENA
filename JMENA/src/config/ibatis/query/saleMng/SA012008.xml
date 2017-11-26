@@ -70,7 +70,7 @@
 				t1.conm2,
 				t2.regdate as regdate2,
 				t2.saleamt,
-				((select buym2 from mm_buymst where buyid = #BUYID#) - (select sum(t1.conm2) from sa_salemst where buyid = #BUYID#)) as remnm2,
+				((select buym2 from mm_buymst where buyid = #BUYID#) - (select sum(conm2) from sa_salemst where buyid = #BUYID#)) as remnm2,
 		        (select buym2 from mm_buymst where buyid = #BUYID#) as buym2,
 		        (select buyamt from mm_buymst where buyid = #BUYID#) as buyamt
 			from sa_salemst t1, sa_saledtl t2

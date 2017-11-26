@@ -6,17 +6,18 @@
 	<typeAlias alias="SA012007VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA012007VO"/>
 
 	<resultMap id="SA012007Data" class="SA012007VO">
-		<result property="DCODENAME" 		column="DCODENAME"/>
-		<result property="CITYNAME" 		column="CITYNAME"/>
-		<result property="BOROUGHNAME" 		column="BOROUGHNAME"/>
-		<result property="ADDRESS" 			column="ADDRESS"/>
-		<result property="BUYM2" 			column="BUYM2"/>
-		<result property="BUYPY" 			column="BUYPY"/>
-		<result property="CONM2" 			column="CONM2"/>
-		<result property="CONPY" 			column="CONPY"/>
-		<result property="REMNM2" 			column="REMNM2"/>
-		<result property="REMNPY" 			column="REMNPY"/>
-		<result property="BUYDANGA" 		column="BUYDANGA"/>
+		<result property="BUYID" 		column="BUYID"/>
+		<result property="DCODENAME" 	column="DCODENAME"/>
+		<result property="CITYNAME" 	column="CITYNAME"/>
+		<result property="BOROUGHNAME" 	column="BOROUGHNAME"/>
+		<result property="ADDRESS" 		column="ADDRESS"/>
+		<result property="BUYM2" 		column="BUYM2"/>
+		<result property="BUYPY" 		column="BUYPY"/>
+		<result property="CONM2" 		column="CONM2"/>
+		<result property="CONPY" 		column="CONPY"/>
+		<result property="REMNM2" 		column="REMNM2"/>
+		<result property="REMNPY" 		column="REMNPY"/>
+		<result property="BUYDANGA" 	column="BUYDANGA"/>
 	</resultMap>
 
 	<resultMap id="SA012007Data1" class="SA012007VO">
@@ -29,17 +30,18 @@
 
 	<select id="selectListSA012007" resultMap="SA012007Data">
 		select
-		(select dcodename from sy_ccodedtl where ccode = '014' and dcode = t1.buygubun) as dcodename,
-		(select cityname from ba_citymst where citycode = t1.citycode) as cityname,
-		(select boroughname from ba_citydtl where citycode = t1.citycode and boroughcode = t1.boroughcode) as boroughname,
-		t1.address,
-		t1.buym2,
-		t1.buypy,
-		(select sum(conm2) from sa_salemst where buyid = t1.buyid) as conm2,
-		(select sum(conpy) from sa_salemst where buyid = t1.buyid) as conpy,
-		t1.buym2 - (select sum(conm2) from sa_salemst where buyid = t1.buyid) as remnm2,
-		t1.buypy - (select sum(conpy) from sa_salemst where buyid = t1.buyid) as remnpy,
-		t1.buydanga
+			t1.buyid,
+			(select dcodename from sy_ccodedtl where ccode = '014' and dcode = t1.buygubun) as dcodename,
+			(select cityname from ba_citymst where citycode = t1.citycode) as cityname,
+			(select boroughname from ba_citydtl where citycode = t1.citycode and boroughcode = t1.boroughcode) as boroughname,
+			t1.address,
+			t1.buym2,
+			t1.buypy,
+			(select sum(conm2) from sa_salemst where buyid = t1.buyid) as conm2,
+			(select sum(conpy) from sa_salemst where buyid = t1.buyid) as conpy,
+			t1.buym2 - (select sum(conm2) from sa_salemst where buyid = t1.buyid) as remnm2,
+			t1.buypy - (select sum(conpy) from sa_salemst where buyid = t1.buyid) as remnpy,
+			t1.buydanga
 		from mm_buymst t1
 		where 1=1
 		<isNotEmpty property="S_CITYCODE">
@@ -51,14 +53,13 @@
 		<isNotEmpty property="S_ADDRESS">
 		    AND address LIKE '%#S_ADDRESS#%'
 		</isNotEmpty>
-		
 		order by t1.buyid asc
 	</select>
 	
 
 	<select id="selectListSA012007_1" resultMap="SA012007Data1">
 		select
-			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname
+			(select branchname from ba_branchmst where branchcode = t1.branchcode) as OPENBRANCH
 		from mm_salesopentb t1
 		where 1=1
 		and t1.buyid = #BUYID# 

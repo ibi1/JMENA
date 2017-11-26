@@ -146,21 +146,21 @@
             selectionmode: 'singlerow',
             columns: [
                       
-				{ text: '매입구분',		datafield: "BUYGUBUN",			width: 80, cellsalign: 'center', align: 'center'},
+				{ text: '매입구분',		datafield: "BUYGUBUN",			width: 80,  cellsalign: 'center', align: 'center'},
 				{ text: '매도자',		datafield: "OWNERNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '주민번호',		datafield: "OWNERJUMINID",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '주소/지번',	datafield: "ADDRESS",			width: 200, cellsalign: 'center', align: 'center'},
 				{ text: '면적(m2)',		datafield: "BUYM2",				width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '등기이전일',	datafield: "REGDATE1",			width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '매입금액',		datafield: "BUYAMT",			width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '매출순번',		datafield: "SELLSEQ",			width: 80, cellsalign: 'center', align: 'center'},
+				{ text: '매입금액',		datafield: "BUYAMT",			width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '매출순번',		datafield: "SELLSEQ",			width: 80,  cellsalign: 'center', align: 'center'},
 				{ text: '매수자',		datafield: "CONNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '주민번호',		datafield: "CONJUMINID",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '계약면적',		datafield: "CONM2",				width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '이전일',		datafield: "REGDATE2",			width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '매도금액',		datafield: "SALEAMT",			width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '매도금액',		datafield: "SALEAMT",			width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '재고면적',		datafield: "REMNM2",			width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '재고금액',		datafield: "REMNAMT",			width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				{ text: '재고금액',		datafield: "REMNAMT",			width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				
 			]            
         });

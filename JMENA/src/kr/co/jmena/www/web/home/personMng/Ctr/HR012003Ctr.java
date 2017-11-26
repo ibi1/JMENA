@@ -74,7 +74,7 @@ public class HR012003Ctr {
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
 				
-				vo1.setINSACODE(request.getParameter(lst.get(i).getINSACODE()));
+				vo1.setINSACODE(lst.get(i).getINSACODE());
 				
 				List<HR012003VO> lst2 = HR012003Biz.selectListHR012003_2(vo1);
 				if(lst2.size() > 0){
@@ -90,16 +90,16 @@ public class HR012003Ctr {
 							obj.put("RECOID",lst.get(i).getRECOID());
 							obj.put("RECONAME",lst.get(i).getRECONAME());
 							obj.put("JOINDATE",lst.get(i).getJOINDATE());
-							obj.put("MOBILENO",lst.get(i).getJOINDATE());
-							obj.put("JUMINID",lst.get(i).getJOINDATE());
-							obj.put("BIRTHDAYGUBUN",lst.get(i).getJOINDATE());
-							obj.put("ACCTOWNER",lst.get(i).getJOINDATE());
-							obj.put("BANKID",lst.get(i).getJOINDATE());
-							obj.put("BANKNAME",lst.get(i).getJOINDATE());
-							obj.put("ACCTNO",lst.get(i).getJOINDATE());
-							obj.put("PAYERNAME",lst.get(i).getJOINDATE());
-							obj.put("PAYERID",lst.get(i).getJOINDATE());
-							obj.put("ADDRESS",lst.get(i).getJOINDATE());						
+							obj.put("MOBILENO",lst.get(i).getMOBILENO());
+							obj.put("JUMINID",lst.get(i).getJUMINID());
+							obj.put("BIRTHDAYGUBUN",lst.get(i).getBIRTHDAYGUBUN());
+							obj.put("ACCTOWNER",lst.get(i).getACCTOWNER());
+							obj.put("BANKID",lst.get(i).getBANKID());
+							obj.put("BANKNAME",lst.get(i).getBANKNAME());
+							obj.put("ACCTNO",lst.get(i).getACCTNO());
+							obj.put("PAYERNAME",lst.get(i).getPAYERNAME());
+							obj.put("PAYERID",lst.get(i).getPAYERID());
+							obj.put("ADDRESS",lst.get(i).getADDRESS());						
 							
 							
 						}else{
@@ -144,16 +144,16 @@ public class HR012003Ctr {
 					obj.put("RECOID",lst.get(i).getRECOID());
 					obj.put("RECONAME",lst.get(i).getRECONAME());
 					obj.put("JOINDATE",lst.get(i).getJOINDATE());
-					obj.put("MOBILENO",lst.get(i).getJOINDATE());
-					obj.put("JUMINID",lst.get(i).getJOINDATE());
-					obj.put("BIRTHDAYGUBUN",lst.get(i).getJOINDATE());
-					obj.put("ACCTOWNER",lst.get(i).getJOINDATE());
-					obj.put("BANKID",lst.get(i).getJOINDATE());
-					obj.put("BANKNAME",lst.get(i).getJOINDATE());
-					obj.put("ACCTNO",lst.get(i).getJOINDATE());
-					obj.put("PAYERNAME",lst.get(i).getJOINDATE());
-					obj.put("PAYERID",lst.get(i).getJOINDATE());
-					obj.put("ADDRESS",lst.get(i).getJOINDATE());						
+					obj.put("MOBILENO",lst.get(i).getMOBILENO());
+					obj.put("JUMINID",lst.get(i).getJUMINID());
+					obj.put("BIRTHDAYGUBUN",lst.get(i).getBIRTHDAYGUBUN());
+					obj.put("ACCTOWNER",lst.get(i).getACCTOWNER());
+					obj.put("BANKID",lst.get(i).getBANKID());
+					obj.put("BANKNAME",lst.get(i).getBANKNAME());
+					obj.put("ACCTNO",lst.get(i).getACCTNO());
+					obj.put("PAYERNAME",lst.get(i).getPAYERNAME());
+					obj.put("PAYERID",lst.get(i).getPAYERID());
+					obj.put("ADDRESS",lst.get(i).getADDRESS());						
 					
 					
 					obj.put("O_BRANCHNAME","");

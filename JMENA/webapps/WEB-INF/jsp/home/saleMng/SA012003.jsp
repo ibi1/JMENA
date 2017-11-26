@@ -171,11 +171,11 @@
 				{ text: '주민번호', 	datafield: "CONJUMINID",	width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '지급구분', 	datafield: "BRROWTYPE",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '차용기간', 	datafield: "BRROWTERM",		width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '차입금액', 	datafield: "BRROWAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '차입금액', 	datafield: "BRROWAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '지급이율(%)', 	datafield: "PAYRATE",		width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '지급이자', 	datafield: "PAYAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '이자소득세', 	datafield: "TAXAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '실 수령액', 	datafield: "JIGUEBAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '지급이자', 	datafield: "PAYAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '이자소득세', 	datafield: "TAXAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '실 수령액', 	datafield: "JIGUEBAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '만기일', 		datafield: "EXPIREDATE",	width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '연장여부', 	datafield: "EXTENDYN",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '연장일', 		datafield: "EXTENDDATE",	width: 150, cellsalign: 'center', align: 'center'},
@@ -201,6 +201,13 @@
 			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
 			var S_DEPTCODE = $("#S_DEPTCODE").val();
 			var S_KNAME = $("#S_KNAME").val();
+			
+			if (S_SALEDATE_FR == "" && S_SALEDATE_TO == "") {
+				alert("매출기간을 입력하셔야합니다.");
+				
+				$("#S_SALEDATE_FR").focus();				
+				return false;
+			}
 			
 			f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 		});

@@ -26,10 +26,10 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
-		$("#S_RETIREDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-		$("#S_RETIREDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_RETIREDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, maxLength: 8, minLength: 1});
+		$("#S_RETIREDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, maxLength: 8, minLength: 1});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, maxLength: 13, minLength: 1});
 		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
@@ -158,12 +158,12 @@
 				{ text: '추천인', 			datafield: 'RECONAME',			width: 150, cellsalign: 'center', align:"center"},
 				{ text: '입사일', 			datafield: 'JOINDATE',			width: 150, cellsalign: 'center', align:"center"},
 				{ text: '퇴사일', 			datafield: 'RETIREDATE',		width: 150, cellsalign: 'center', align:"center"},
-				{ text: '직전지사실적', 	datafield: 'SELLAMT',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '직전지사실적', 	datafield: 'SELLAMT',			width: 150, cellsalign: 'right', align:"center", formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '지사코드', 		columngroup: '전근무현황',	datafield: 'O_BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
 				{ text: '지사', 			columngroup: '전근무현황',	datafield: 'O_BRANCHNAME',		width: 100, cellsalign: 'center', align:"center"},
 				{ text: '입사', 			columngroup: '전근무현황',	datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center', align:"center"},
 				{ text: '퇴사', 			columngroup: '전근무현황',	datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center', align:"center"},
-				{ text: '실적', 			columngroup: '전근무현황',	datafield: 'O_SELLAMT',			width: 150, cellsalign: 'center', align:"center"},
+				{ text: '실적', 			columngroup: '전근무현황',	datafield: 'O_SELLAMT',			width: 150, cellsalign: 'right', align:"center", formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '비고', 			columngroup: '전근무현황',	datafield: 'O_REMARK',			width: 250, cellsalign: 'center', align:"center"},
 				{ text: '비고', 			datafield: 'REMARK',			width: 250, cellsalign: 'center', align:"center"}
             ],

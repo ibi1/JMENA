@@ -52,6 +52,9 @@ public class SA012008Ctr {
 		SA012008VO vo = new SA012008VO();
 		SA012008VO vo1 = new SA012008VO();
 		
+		//String S_CITYCODE = ("ALL".equals(request.getParameter("S_CITYCODE"))) ? "" : request.getParameter("S_CITYCODE");
+		//String S_BOROUGHCODE = ("ALL".equals(request.getParameter("S_BOROUGHCODE"))) ? "" : request.getParameter("S_BOROUGHCODE");
+		
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
 		vo.setS_ADDRESS(request.getParameter("S_ADDRESS"));
@@ -60,8 +63,7 @@ public class SA012008Ctr {
 		JSONObject json = new JSONObject();
 		
 		if(!(request.getParameter("S_CITYCODE").equals("") && 
-				request.getParameter("S_BOROUGHCODE").equals("") && 
-				request.getParameter("S_ADDRESS").equals(""))){
+				request.getParameter("S_BOROUGHCODE").equals(""))){
 		
 			List<SA012008VO> lst = SA012008Biz.selectListSA012008(vo);
 			
@@ -72,11 +74,11 @@ public class SA012008Ctr {
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
 				
-				vo.setBUYID(request.getParameter(lst.get(i).getBUYID()));
+				vo1.setBUYID(lst.get(i).getBUYID());
 	
 				List<SA012008VO> lst2 = SA012008Biz.selectListSA012008_2(vo1);
 				if(lst2.size() > 0){
-					for (int j = 0; j < lst.size(); j++) {
+					for (int j = 0; j < lst2.size(); j++) {
 						if(j == 0){
 							obj.put("BUYGUBUN",lst.get(i).getBUYGUBUN());
 							obj.put("OWNERNAME",lst.get(i).getOWNERNAME());
@@ -96,14 +98,14 @@ public class SA012008Ctr {
 							obj.put("BUYAMT","");
 							
 						}
-						obj.put("SELLSEQ",lst.get(i).getSELLSEQ());
-						obj.put("CONNAME",lst.get(i).getCONNAME());
-						obj.put("CONJUMINID",lst.get(i).getCONJUMINID());
-						obj.put("CONM2",lst.get(i).getCONM2());
-						obj.put("REGDATE2",lst.get(i).getREGDATE2());
-						obj.put("SALEAMT",lst.get(i).getSALEAMT());
-						obj.put("REMNM2",lst.get(i).getREMNM2());
-						obj.put("REMNAMT",lst.get(i).getREMNAMT());
+						obj.put("SELLSEQ",lst2.get(j).getSELLSEQ());
+						obj.put("CONNAME",lst2.get(j).getCONNAME());
+						obj.put("CONJUMINID",lst2.get(j).getCONJUMINID());
+						obj.put("CONM2",lst2.get(j).getCONM2());
+						obj.put("REGDATE2",lst2.get(j).getREGDATE2());
+						obj.put("SALEAMT",lst2.get(j).getSALEAMT());
+						obj.put("REMNM2",lst2.get(j).getREMNM2());
+						obj.put("REMNAMT",lst2.get(j).getREMNAMT());
 						
 						jCell.add(obj);
 					}

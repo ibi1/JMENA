@@ -21,7 +21,7 @@
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
-		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 6, minLength: 1});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		
 		f_selectListEP012001(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
@@ -145,21 +145,21 @@
             editable: false,
             selectionmode: 'singlerow',
             columns: [
-              { text: '지사', datafield: 'BRANCHNAME', width: 100, cellsalign: 'center', align: 'center' },
-              { text: '부서', datafield: 'DEPTNAME', width: 150, cellsalign: 'center', align: 'center' },
-              { text: '지급일', datafield: 'PAYDATE', width: 160, cellsalign: 'center', align: 'center' },
-              { text: '고객', datafield: 'CONNAME', width: 120, cellsalign: 'center', align: 'center' },
-              { text: '물건지', datafield: 'ADDRESS', width: 200, cellsalign: 'center', align: 'center' },
-              { text: '계약면적', datafield: 'CONM2', width: 100, cellsalign: 'center', align: 'center' },
-              { text: '계약평수', datafield: 'CONPY', width: 100, cellsalign: 'center', align: 'center' },
-              { text: '담당자', datafield: 'KNAME', width: 120, cellsalign: 'center', align: 'center' },
-              { text: '소득신고', datafield: 'PAYERNAME', width: 120, cellsalign: 'center', align: 'center' },
-              { text: '주민번호', datafield: 'PAYERID', width: 120, cellsalign: 'center', align: 'center' },
-              { text: '총지금액', datafield: 'PAYAMT', width: 150, cellsalign: 'center', align: 'center' },
-              { text: '소득세', datafield: 'TAXINCOME', width: 150, cellsalign: 'center', align: 'center' },
-              { text: '지방세', datafield: 'TAXLOCAL', width: 150, cellsalign: 'center', align: 'center' },
-              { text: '세금 계', datafield: 'TOTTAX', width: 150, cellsalign: 'center', align: 'center' },
-              { text: '실 지급액', datafield: 'DEDUCTAMT', width: 150, cellsalign: 'center', align: 'center' }
+              { text: '지사',		datafield: 'BRANCHNAME', 	width: 100, cellsalign: 'center', align: 'center' },
+              { text: '부서', 		datafield: 'DEPTNAME', 		width: 150, cellsalign: 'center', align: 'center' },
+              { text: '지급일', 	datafield: 'PAYDATE', 		width: 160, cellsalign: 'center', align: 'center' },
+              { text: '고객', 		datafield: 'CONNAME', 		width: 120, cellsalign: 'center', align: 'center' },
+              { text: '물건지', 	datafield: 'ADDRESS', 		width: 200, cellsalign: 'center', align: 'center' },
+              { text: '계약면적', 	datafield: 'CONM2', 		width: 100, cellsalign: 'center', align: 'center' },
+              { text: '계약평수', 	datafield: 'CONPY', 		width: 100, cellsalign: 'center', align: 'center' },
+              { text: '담당자', 	datafield: 'KNAME', 		width: 120, cellsalign: 'center', align: 'center' },
+              { text: '소득신고', 	datafield: 'PAYERNAME',	 	width: 120, cellsalign: 'center', align: 'center' },
+              { text: '주민번호', 	datafield: 'PAYERID',		width: 120, cellsalign: 'center', align: 'center' },
+              { text: '총지금액', 	datafield: 'PAYAMT', 		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+              { text: '소득세', 	datafield: 'TAXINCOME',	 	width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+              { text: '지방세', 	datafield: 'TAXLOCAL', 		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+              { text: '세금 계', 	datafield: 'TOTTAX', 		width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+              { text: '실 지급액', 	datafield: 'DEDUCTAMT', 	width: 150, cellsalign: 'right', align: 'center' , formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
             ]
         });
 	

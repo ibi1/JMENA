@@ -50,19 +50,21 @@ public class SA012007Ctr {
 	@RequestMapping("/home/selectListSA012007.do")
 	public ModelAndView selectListEnaBuyMstP(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA012007VO vo = new SA012007VO();
+
+		//String S_CITYCODE = ("ALL".equals(request.getParameter("S_CITYCODE"))) ? "" : request.getParameter("S_CITYCODE");
+		//String S_BOROUGHCODE = ("ALL".equals(request.getParameter("S_BOROUGHCODE"))) ? "" : request.getParameter("S_BOROUGHCODE");
 		
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
+
 		vo.setS_ADDRESS(request.getParameter("S_ADDRESS"));
 
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 
 		if(!(request.getParameter("S_CITYCODE").equals("") && 
-				request.getParameter("S_BOROUGHCODE").equals("") && 
-				request.getParameter("S_ADDRESS").equals(""))){
-
-			
+				request.getParameter("S_BOROUGHCODE").equals(""))){
+		
 			List<SA012007VO> lst = SA012007Biz.selectListSA012007(vo);
 			
 			System.out.println("******************************************");
@@ -85,25 +87,26 @@ public class SA012007Ctr {
 				obj.put("BUYDANGA",lst.get(i).getBUYDANGA());
 	
 				SA012007VO vo2 = new SA012007VO();
-				List<SA012007VO> lst2 = SA012007Biz.selectListSA012007(vo2);
+				vo2.setBUYID(lst.get(i).getBUYID());
+				List<SA012007VO> lst2 = SA012007Biz.selectListSA012007_1(vo2);
 				String OPENBRANCH = "";
-				for (int j = 0; j < lst.size(); j++) {
-					OPENBRANCH = OPENBRANCH+lst.get(j).getOPENBRANCH() + ",";
+				for (int j = 0; j < lst2.size(); j++) {
+					OPENBRANCH = OPENBRANCH + lst2.get(j).getOPENBRANCH() + ",";
 				}
 				obj.put("OPENBRANCH", OPENBRANCH);
 				
 				SA012007VO vo3 = new SA012007VO();
-				List<SA012007VO> lst3 = SA012007Biz.selectListSA012007(vo3);
+				vo3.setBUYID(lst.get(i).getBUYID());
+				List<SA012007VO> lst3 = SA012007Biz.selectListSA012007_2(vo3);
 				String HOLDING = "";
-				for (int k = 0; k < lst.size(); k++) {
-					HOLDING = HOLDING+lst.get(k).getHOLDING() + ",";
+				for (int k = 0; k < lst3.size(); k++) {
+					HOLDING = HOLDING + lst3.get(k).getHOLDING() + ",";
 				}
 				obj.put("HOLDING", HOLDING);
 				
 				jCell.add(obj);
 			}
 		}
-		
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSysMst]" + json);

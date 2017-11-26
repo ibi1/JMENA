@@ -153,7 +153,7 @@
 				{ text: '계약평수',			datafield: "CONPY",				width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '잔여면적',			datafield: "REMNM2",			width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '잔여평수',			datafield: "REMNPY",			width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '평단가',			datafield: "BUYDANGA",			width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '평단가',			datafield: "BUYDANGA",			width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '오픈지사현황',		datafield: "OPENBRANCH",		width: 200, cellsalign: 'center', align: 'center'},
 				{ text: '비고',				datafield: "HOLDING",			width: 250, cellsalign: 'center', align: 'center'}
 				

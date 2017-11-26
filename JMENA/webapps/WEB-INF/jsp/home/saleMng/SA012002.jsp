@@ -200,19 +200,19 @@
 				{ text: '주소', 			datafield: "ADDRESS",		width: 250, cellsalign: 'center', align: 'center'},
 				{ text: '계약면적', 		datafield: "CONM2",			width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '계약평수', 		datafield: "CONPY",			width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '원 판매가', 		datafield: "SALEAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '원 판매가', 		datafield: "SALEAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '할인율(%)', 		datafield: "DCRATE",		width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '실판매가', 		datafield: "SELLAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '평단가', 			datafield: "SALEDANGA",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '위탁수수료', 		datafield: "AGENCYAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '계약금', 			datafield: "DEPOSITAMT1",	width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '중도금', 			datafield: "DEPOSITAMT2",	width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '잔금', 			datafield: "DEPOSITAMT3",	width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '계약입금액', 		datafield: "SUGUMAMT1",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '중도입금액', 		datafield: "SUGUMAMT2",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '잔금입금액', 		datafield: "SUGUMAMT3",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '입금총액', 		datafield: "SUGUMAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '입금잔액', 		datafield: "REMNAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '실판매가', 		datafield: "SELLAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '평단가', 			datafield: "SALEDANGA",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '위탁수수료', 		datafield: "AGENCYAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '계약금', 			datafield: "DEPOSITAMT1",	width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '중도금', 			datafield: "DEPOSITAMT2",	width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '잔금', 			datafield: "DEPOSITAMT3",	width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '계약입금액', 		datafield: "SUGUMAMT1",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '중도입금액', 		datafield: "SUGUMAMT2",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '잔금입금액', 		datafield: "SUGUMAMT3",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '입금총액', 		datafield: "SUGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '입금잔액', 		datafield: "REMNAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '입금율(%)', 		datafield: "IPGUMRATE",		width: 150, cellsalign: 'center', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '비고', 			datafield: "REMARK",		width: 250, cellsalign: 'center', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				
@@ -233,6 +233,13 @@
 			var S_DEPTCODE = $("#S_DEPTCODE").val();
 			var S_DCODE = $("#S_DCODE").val();
 			var S_KNAME = $("#S_KNAME").val();
+			
+			if (S_SALEDATE_FR == "" && S_SALEDATE_TO == "") {
+				alert("매출기간을 입력하셔야합니다.");
+				
+				$("#S_SALEDATE_FR").focus();				
+				return false;
+			}
 			
 			f_selectListSA012002(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_DCODE, S_KNAME);
 		});

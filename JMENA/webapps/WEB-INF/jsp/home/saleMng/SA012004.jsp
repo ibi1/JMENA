@@ -88,6 +88,7 @@
 			},
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.insaMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
 				});
@@ -178,9 +179,9 @@
 				{ text: '담당자', 			datafield: "KNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '계약자', 			datafield: "CONNAME",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '입금구분', 		datafield: "IPGUMGUBUN",	width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
-				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 150, cellsalign: 'center', align: 'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 150, cellsalign: 'right', align: 'center', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 				{ text: '입금은행', 		datafield: "BANKNAME",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '입금형태', 		datafield: "IPGUMTYPE",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '소재지', 			datafield: "ADDRESS",		width: 200, cellsalign: 'center', align: 'center'},
@@ -245,6 +246,7 @@
 					<th width="120">담당자</th>
 					<td>
 						<select id="S_SALERCD" name="S_SALERCD">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 				</tr>

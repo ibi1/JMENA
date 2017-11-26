@@ -75,13 +75,15 @@ public class HR012001Ctr {
 			List<HR012001VO> lst = HR012001Biz.selectListHR012001(vo);
 			
 			System.out.println("******************************************");
-			System.out.println("size()"+lst.size());
+			System.out.println("size()==>"+lst.size());
 			
 			
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
 				
-				vo1.setINSACODE(request.getParameter(lst.get(i).getINSACODE()));
+				System.out.println("******************************************");
+				System.out.println("lst.get(i).getINSACODE()==>"+lst.get(i).getINSACODE());
+				vo1.setINSACODE(lst.get(i).getINSACODE());
 				
 				List<HR012001VO> lst2 = HR012001Biz.selectListHR012001_2(vo1);
 				if(lst2.size() > 0){
@@ -119,9 +121,13 @@ public class HR012001Ctr {
 						obj.put("O_RETIREDATE",lst2.get(j).getO_RETIREDATE());
 						obj.put("O_EMPLOYGUBUN",lst2.get(j).getO_EMPLOYGUBUN());
 						
-						vo2.setINSACODE(request.getParameter(lst.get(i).getINSACODE()));
-						vo2.setO_JOINDATE(request.getParameter(lst2.get(j).getO_JOINDATE()));
-						vo2.setO_RETIREDATE(request.getParameter(lst2.get(j).getO_RETIREDATE()));
+						vo2.setINSACODE(lst.get(i).getINSACODE());
+						vo2.setO_JOINDATE(lst2.get(j).getO_JOINDATE());
+						vo2.setO_RETIREDATE(lst2.get(j).getO_RETIREDATE());
+						System.out.println("******************************************");
+						System.out.println("lst.get(i).getINSACODE()==>"+lst.get(i).getINSACODE());
+						System.out.println("lst2.get(j).getO_JOINDATE()==>"+lst2.get(j).getO_JOINDATE());
+						System.out.println("lst2.get(j).getO_RETIREDATE()==>"+lst2.get(j).getO_RETIREDATE());
 						
 						List<HR012001VO> lst3 = HR012001Biz.selectListHR012001_3(vo2);
 						if(lst3.size() > 0){
