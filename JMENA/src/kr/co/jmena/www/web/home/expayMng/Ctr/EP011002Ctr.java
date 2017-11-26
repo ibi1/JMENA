@@ -98,6 +98,7 @@ public class EP011002Ctr {
 				jCell.add(obj);
 			}
 		}else{
+			System.out.println("데이터 없음");
 //			JSONObject obj = new JSONObject();
 //			
 //			obj.put("YEARMONTH", "");
@@ -127,7 +128,7 @@ public class EP011002Ctr {
 		json.put("rows", jCell);
 		
 		System.out.println("json==>"+json.get("rows"));
-		logger.debug("[selectListSY021001]" + json);
+		logger.debug("[selectListEnaMonthPayMst]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	
@@ -168,6 +169,10 @@ public class EP011002Ctr {
 				obj.put("DEPTCODE", lst.get(i).getDEPTCODE());
 				obj.put("GRADE", lst.get(i).getGRADE());
 				obj.put("DUTY", lst.get(i).getDUTY());
+				obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
+				obj.put("DEPTNAME", lst.get(i).getDEPTNAME());
+				obj.put("GRADENAME", lst.get(i).getGRADENAME());
+				obj.put("DUTYNAME", lst.get(i).getDUTYNAME());
 				obj.put("INSACODE", lst.get(i).getINSACODE());
 				obj.put("KNAME", lst.get(i).getKNAME());
 				obj.put("BASICAMT", lst.get(i).getBASICAMT());
@@ -194,26 +199,47 @@ public class EP011002Ctr {
 		return new ModelAndView("jsonView", json);
 		
 		}
-	/**
+	
+
+	@RequestMapping("/home/insertEnaMonthPayMst.do")
+	public ModelAndView insertEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		boolean chkFlag = false;
+		JSONObject json = new JSONObject();
+		
+		JSONArray jCell = new JSONArray();
+
+		JSONObject obj = new JSONObject();
+		if(EP011002Biz.insertEnaMonthPayMst(request) == true){
+			obj.put("MSG", "SUCCESS");
+		}else{
+			obj.put("MSG", "ERROR");
+		}
+		jCell.add(obj);
+		json.put("rows", jCell);
+		
+		System.out.println("json==>"+json);
+		
+
+		logger.debug("[insertEnaMonthPayMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+		
+/*	
+	
+	*//**
 	 * @name 인사 기본 정보 관리 저장
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/saveEnaMonthPayMst.do")
 	public ModelAndView saveEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		EP011002VO vo = new EP011002VO();		
-		
-		vo.setS_YEARMONTH(request.getParameter("S_YEARMONTH"));
-		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
-		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
-		
-		EP011002Biz.deleteEnaMonthPayMstAll(vo);
 		int insertCnt =0;
-		
 		vo.setPAYDATE(request.getParameter("PAYDATE"));
 		vo.setYEARMONTH(request.getParameter("YEARMONTH"));
 		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
@@ -244,7 +270,7 @@ public class EP011002Ctr {
 		JSONObject json = new JSONObject();		
 
 		JSONObject obj = new JSONObject();
-		if(insertCnt > EP011002Biz.insertEnaMonthPayMst(vo)){
+		if(insertCnt > EP011002Biz.insertEnaMonthPayMst(request)){
 			obj.put("MSG", "success");
 		}else{
 			obj.put("MSG", "error");
@@ -256,7 +282,7 @@ public class EP011002Ctr {
 		
 		return new ModelAndView("jsonView", json);	
 	}
-	
+	*/
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/deleteEnaMonthPayMst.do")

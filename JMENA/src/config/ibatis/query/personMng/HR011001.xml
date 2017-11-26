@@ -395,4 +395,12 @@
 		AND ITEMSEQ = #ITEMSEQ#
 	</delete>		
 
+
+	<update id="updateBasicAcct">
+		UPDATE hr_taxpayeritem
+		SET			
+			BASICACCT = 'N'
+		WHERE INSACODE = #INSACODE#
+	</update>
+
 </sqlMap>

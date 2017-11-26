@@ -38,6 +38,10 @@
 		<result property="DEPTCODE"			column="DEPTCODE"/>
 		<result property="GRADE"			column="GRADE"/>
 		<result property="DUTY"				column="DUTY"/>
+		<result property="BRANCHNAME"		column="BRANCHNAME"/>
+		<result property="DEPTNAME"			column="DEPTNAME"/>
+		<result property="GRADENAME"		column="GRADENAME"/>
+		<result property="DUTYNAME"			column="DUTYNAME"/>
 		<result property="INSACODE"			column="INSACODE"/>
 		<result property="KNAME"			column="KNAME"/>
 		<result property="BASICPAY"			column="BASICPAY"/>
@@ -88,10 +92,14 @@
 	<select id="selectListEnaMonthPayMstCrt" resultMap="EP011002Datas">
 		SELECT  #S_YEARMONTH# AS YEARMONTH,
 				#S_PAYDATE# AS PAYDATE,
-				(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHCODE,
-				(SELECT DEPTNAME FROM ba_deptmst WHERE DEPTCODE = T1.DEPTCODE) AS DEPTCODE,
-				(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '003' AND DCODE = T1.GRADE) AS GRADE,
-				(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '004' AND DCODE = T1.DUTY) AS DUTY,
+				T1.BRANCHCODE,
+				T1.DEPTCODE,
+				T1.GRADE,
+				T1.DUTY,
+				(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,
+				(SELECT DEPTNAME FROM ba_deptmst WHERE DEPTCODE = T1.DEPTCODE) AS DEPTNAME,				
+				(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '003' AND DCODE = T1.GRADE) AS GRADENAME,
+				(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '004' AND DCODE = T1.DUTY) AS DUTYNAME,
 				INSACODE,
 				KNAME,
 				(CASE (SELECT DEPTGUBUN FROM ba_deptmst WHERE DEPTCODE = T1.DEPTCODE) WHEN '001' THEN BASICPAY ELSE '0' END) AS BASICPAY,

@@ -294,39 +294,7 @@
 				,{name:"BANKID",		index:'BANKID',			width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
 				,{name:"ACCTNO",		index:'ACCTNO',			width:100,		align:'center', editable:true}
 				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center', editable:true}
-				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', sortable:false, editable: true, formatter:test, edittype:'checkbox', editoptions:{value:"Y:N"}}
-				
-				
-				
-				/* ,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N",
- 						dataEvents:[{
- 							type:'change',
- 							fn:function(id){
-//  								var ids = jQuery("#leftList").jqGrid('getDataIDs');
- 								
-//  								ids.some(function(currentValue, index, array){
- 									var cellData = this.value;
-alert(cellData);
-return;
- 									
-//  									if (cellData == saleId) {
-//  										$("#S_FLAG_L").val("U");
-//  						        		$("#leftList").jqGrid('setSelection', ids[index]);
-//  						    			return true;
-//  						        	} else {
-//  						        		$("#S_FLAG_L").val("I");
-//  						        	}	        
-//  								});
- 								
- 								
- 								
- 								alert(this.getGridParam("reccount"));
- 								return;
- 								var index = id;
-// 								for(var i = 0 ; i < this.getGridParam("reccount") ;)
- 							}
-						}]
-					}} */
+				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', sortable:false, editable: true, formatter:test, edittype:'checkbox', editoptions:{value:"Y:N"}}			
 				,{name:"REMARK",		index:'REMARK',			width:100,		align:'center', editable:true}
 			] ,
 			rowNum:10 ,
@@ -365,30 +333,17 @@ return;
 	
 	function test(cellvalue, options, rowObject) {
 		var checked =  (cellvalue == "Y" ? "checked=checked" : "");
-		selChk = cellvalue;
+		selChk = cellvalue;		
 		return "<input type=\"checkbox\"" + checked + "onclick=\"onClickTest('" + options.rowId + "');\"/>";
+		
+		
 		
 //		return "<input type='checkbox'" + (cellvalue == "Y" ? "checked='checked'" : "") + "onclick='onClickTest("+options.rowId +","+cellvalue+")'/>";
 	}
 	
-	function onClickTest(ids) {
+	function onClickTest(ids) {		
 		$("#bottomList2").jqGrid('setSelection', ids, true);
-		var rec = $("#bottomList2").getGridParam("reccount");
-	   for(var i=0; i < rec.length; i++){
-	    	if(selChk == "Y"){
-	    		//로직
-	    	}else{
-	    	}
-	    }
-
-
-//		var basicacct = $("#bottomList2").jqGrid('getCell',ids,"BASICACCT");
-		
-//		var basicacct = $("#bottomList2 [name=BASICACCT] option:checked").val()
-//		alert(basicacct);
-
 	}
-	
 	
 	
 	$(function(){
@@ -703,7 +658,6 @@ return;
 	$(function() {
 		$("#saveB1Button").click(function() {
 			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-			
 			if (ids == null || ids == "") {
 				alert("그리드를 선택하셔야 합니다.");
 				
@@ -916,14 +870,23 @@ return;
 			
 			//jqGrid SelectBox 는 뷰 모드 전에 값을 가져옴.
 //			var appointGubun = $("#bottomList1 [name=APPOINTGUBUN] option:selected").val();
+						
 			
-			
+			 
 			var bankId = $("#bottomList2 [name=BANKID] option:selected").val();
-			var basicAcct = $("#bottomList2 [name=BASICACCT]").val()
+			
+			var basicAcct = $("#bottomList2 [name=BASICACCT]").is(":checked") ? "Y" : "N";
+			
+			var rec = $("#bottomList2").getGridParam("reccount");
+			var cnt = 0
+			
+			//$("#bottomList2 input:checkbox[id='BASICACCT" + ids + "']").is(":checked",false);
+			
+			
 			$('#bottomList2').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 	
 			var cellData = $("#bottomList2").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
-			
+
 			var payerId = cellData.PAYERID.replace("-","");
 			
 			if (cellData.PAYERNAME == "") {

@@ -116,5 +116,13 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		if (cnt > 0) chkFlag = true;
 		return chkFlag;
 	}
+	
+	public int updateBasicAcct(HR011001VO vo) throws DataAccessException {
+		int updateCnt = 0;
+		
+		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateBasicAcct", vo);
+		
+		return updateCnt;
+	}	
 		
 }

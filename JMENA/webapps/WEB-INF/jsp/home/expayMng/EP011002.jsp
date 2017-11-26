@@ -19,7 +19,7 @@
 	var month = dt.getMonth()+1;
 	var day = dt.getDate();
 	var year = dt.getFullYear();
-	var yearMonth = year + "-" + month;
+	var yearMonth = year + "" + month;
 	var today = year + "-" + month + "-" + day;
 	
 	$("#S_YEARMONTH").val(yearMonth);
@@ -65,17 +65,21 @@
 			},			
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['지급년월','지급일자','지사', '부서', '직급', 
-			          '직책', '사번', '성명', '기본급', '활동비',
+			colNames:['지급년월','지급일자','지사', '부서', '직급', '직첵','지사명', '부서명','직급명', '직책명',
+			          '사번', '성명', '기본급', '활동비',
 			          '일비', '시상금', '총지급액', '신고기준', '소득세',
 			          '지방세', '부가가치세', '차감지급액', '입금은행', '계좌번호', '계좌주'] ,
 			colModel:[
 				 {name:"YEARMONTH",		index:'YEARMONTH',		width:100,		align:'center'}
-				,{name:"PAYDATE",		index:'PAYDATE',		width:100,		align:'center'}
+				,{name:"PAYDATE",		index:'PAYDATE',		width:100,		align:'center'}				
 				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:100,		align:'center'}
 				,{name:"DEPTCODE",		index:'DEPTCODE',		width:100,		align:'center'}
 				,{name:"GRADE",			index:'GRADE',			width:100,		align:'center'}
 				,{name:"DUTY",			index:'DUTY',			width:100,		align:'center'}
+				,{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,		align:'center',hidden:true}
+				,{name:"DEPTNAME",		index:'DEPTNAME',		width:100,		align:'center',hidden:true}
+				,{name:"GRADENAME",		index:'GRADENAME',		width:100,		align:'center',hidden:true}
+				,{name:"DUTYNAME",		index:'DUTYNAME',		width:100,		align:'center',hidden:true}
 				,{name:"INSACODE",		index:'INSACODE',		width:100,		align:'center'}
 				,{name:"KNAME",			index:'KNAME',			width:100,		align:'center'}
 				,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -226,177 +230,369 @@
 	
 	$(function() {
 		$("#insertButton").click(function() {
-			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-			$('#leftList').jqGrid({
-				//caption: '급여관리'
-				url:"/home/selectListEnaMonthPayMstCrt.do" ,
-				mtype: 'POST',
-				postData : {
-					S_YEARMONTH : $("#S_YEARMONTH").val(),
-					S_PAYDATE : $("#S_PAYDATE").val(),
-					S_BRANCHCODE : $("#S_BRANCHCODE").val(),
-					S_DEPTCODE : $("#S_DEPTCODE").val()
-				},						
-				datatype:"json" ,
-				loadError:function(){alert("Error~!!");} ,
-				colNames:['지급년월','지급일자','지사', '부서', '직급', 
-				          '직책', '사번', '성명', '기본급', '활동비',
-				          '일비', '시상금', '총지급액', '신고기준', '소득세',
-				          '지방세', '부가가치세', '차감지급액', '입금은행', '계좌번호', '계좌주'] ,
-				colModel:[
-					 {name:"YEARMONTH",		index:'YEARMONTH',		width:100,		align:'center'}
-					,{name:"PAYDATE",		index:'PAYDATE',		width:100,		align:'center'}
-					,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1}}
-					,{name:"DEPTCODE",		index:'DEPTCODE',		width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaDeptCode1}}
-					,{name:"GRADE",			index:'GRADE',			width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
-					,{name:"DUTY",			index:'DUTY',			width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
-					,{name:"INSACODE",		index:'INSACODE',		width:100,		align:'center'}
-					,{name:"KNAME",			index:'KNAME',			width:100,		align:'center'}
-					,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right', editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
-	 					editoptions:{
-	 						dataEvents:[{
-	 							type:'change',
-	 							fn:function(e){
-	 								paycal();
-	 							}
-							}]
+			if(confirm("생성하시겠습니까?") == true) {
+				$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+				$('#leftList').jqGrid({
+					//caption: '급여관리'
+					url:"/home/selectListEnaMonthPayMstCrt.do" ,
+					mtype: 'POST',
+					postData : {
+						S_YEARMONTH : $("#S_YEARMONTH").val(),
+						S_PAYDATE : $("#S_PAYDATE").val(),
+						S_BRANCHCODE : $("#S_BRANCHCODE").val(),
+						S_DEPTCODE : $("#S_DEPTCODE").val()
+					},						
+					datatype:"json" ,
+					loadError:function(){alert("Error~!!");} ,
+					colNames:['지급년월','지급일자','지사코드','부서코드', '직급코드','직책코드','지사', '부서', '직급','직책',
+					          '사번', '성명', '기본급', '활동비',
+					          '일비', '시상금', '총지급액', '신고기준', '소득세',
+					          '지방세', '부가가치세', '차감지급액', '입금은행', '계좌번호', '계좌주'] ,
+					colModel:[
+						 {name:"YEARMONTH",		index:'YEARMONTH',		width:100,		align:'center'}
+						,{name:"PAYDATE",		index:'PAYDATE',		width:100,		align:'center'}
+						,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:100,		align:'center',hidden:true}
+						,{name:"DEPTCODE",		index:'DEPTCODE',		width:100,		align:'center',hidden:true}
+						,{name:"GRADE",			index:'GRADE',			width:100,		align:'center',hidden:true}
+						,{name:"DUTY",			index:'DUTY',			width:100,		align:'center',hidden:true}
+						,{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1}}
+						,{name:"DEPTNAME",		index:'DEPTNAME',		width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaDeptCode1}}
+						,{name:"GRADENAME",		index:'GRADENAME',		width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
+						,{name:"DUTYNAME",		index:'DUTYNAME',		width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
+						,{name:"INSACODE",		index:'INSACODE',		width:100,		align:'center'}
+						,{name:"KNAME",			index:'KNAME',			width:100,		align:'center'}
+						,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right',formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: 0}}
+						,{name:"ACTAMT",		index:'ACTAMT',			width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: 0},
+		 					editoptions:{
+		 						dataEvents:[{
+		 							type:'change',
+		 							fn:function(e){
+		 								paycal();
+		 							}
+								}]
+							}}
+						,{name:"DAILYAMT",		index:'DAILYAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: 0},
+							editoptions:{
+		 						dataEvents:[{
+		 							type:'change',
+		 							fn:function(e){
+		 								paycal();
+		 							}
+								}]								
+								
 						}}
-					,{name:"DAILYAMT",		index:'DAILYAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
+						,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: 0},
+							editoptions:{
+		 						dataEvents:[{
+		 							type:'change',
+		 							fn:function(e){
+		 								paycal();
+		 							}
+								}]								
+								
+							}}
+						,{name:"TOTALAMT",		index:'TOTALAMT',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
 						editoptions:{
 	 						dataEvents:[{
 	 							type:'change',
 	 							fn:function(e){
-	 								paycal();
+	 								//paycal();
 	 							}
-							}]								
-							
-					}}
-					,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
-						editoptions:{
-	 						dataEvents:[{
-	 							type:'change',
-	 							fn:function(e){
-	 								paycal();
-	 							}
-							}]								
-							
+							}]					
 						}}
-					,{name:"TOTALAMT",		index:'TOTALAMT',		width:120,		align:'right', editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
-					editoptions:{
- 						dataEvents:[{
- 							type:'change',
- 							fn:function(e){
- 								//paycal();
- 							}
-						}]					
-					}}
-					,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:100,		align:'center',editable:true,
-						edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:selectListEnaCode,
-						dataEvents:[{
-							type:'change',
-							fn:function(e){
-								if(this.value == ""){
-									alert("신고기준을 선택해주세요.");
-									return;
-								}else{
-									paycal();						
-								}
-							}
-						}]
-					}}					
-					,{name:"TAXINCOME",		index:'TAXINCOME',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"BANKID",		index:'BANKID',			width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
-					,{name:"ACCTNO",		index:'ACCTNO',			width:150,		align:'center'}
-					,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center'}
-				] ,
-				rowNum:10 ,
-				autowidth: true ,
-				shrinkToFit: false,
-				rowList:[10,20,30] ,
-				sortname: 'sortKey' ,
-				viewrecords: true ,
-				sortorder:'asc' ,
-				width: "96%" ,
-				jsonReader: {
-					repeatitems: false
-				},
-				//height: '100%' ,
-				onSelectRow: function(id){
-					if( v_rightLastSel != id ){
-						$(this).jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
-				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
-
-				        v_rightLastSel = id;
-					}
-					  	
-				} ,
-				loadComplete: function(id) {
-					
-				},	
-				hidegrid: false
-			});
+						,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:100,		align:'center',editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:selectListEnaCode}}					
+						,{name:"TAXINCOME",		index:'TAXINCOME',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+						,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+						,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+						,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:120,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+						,{name:"BANKID",		index:'BANKID',			width:100,		align:'center',editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
+						,{name:"ACCTNO",		index:'ACCTNO',			width:150,		align:'center'}
+						,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center'}
+					] ,
+					rowNum:10 ,
+					autowidth: true ,
+					shrinkToFit: false,
+					rowList:[10,20,30] ,
+					sortname: 'sortKey' ,
+					viewrecords: true ,
+					sortorder:'asc' ,
+					width: "96%" ,
+					jsonReader: {
+						repeatitems: false
+					},
+					//height: '100%' ,
+					onSelectRow: function(id){
+						if( v_rightLastSel != id ){
+							$(this).jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+					        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+	
+					        v_rightLastSel = id;
+						}
+						  	
+					} ,
+					loadComplete: function(id) {
+						
+					},	
+					hidegrid: false
+				});
+			}
 		});
+		
 	})	
 	
 	$(function() {
 		$("#saveButton").click(function() {
-			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+
+			var dataIds = $("#leftList").jqGrid('getDataIDs');			
+
+			var len = dataIds.length;
+		
+			if (len == 0) {
+				alert("저장할 데이터가 없습니다.");
 			
-			//jqGrid SelectBox 는 뷰 모드 전에 값을 가져옴.
-// 			var branchcode = $("#leftList [name=BRANCHCODE] option:selected").val();
-// 			var deptcode = $("#leftList [name=DEPTCODE] option:selected").val();
-// 			var grade = $("#leftList [name=GRADE] option:selected").val();
-// 			var duty = $("#leftList [name=DUTY] option:selected").val();
-// 			var bankid = $("#leftList [name=BANKID] option:selected").val();
-// 			var taxgubun = $("#leftList [name=TAXGUBUN] option:selected").val();
+				return false;
+			}
 			
-			$('#leftList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+			//그리드 데이터를 배열에 저장
+			//
+			var yearmonthArr = [];
+			var paydateArr = [];
+			var branchcodeArr = [];
+			var deptcodeArr = [];
+			var gradeArr = [];
+			var dutyArr = [];
+			var insacodeArr = [];
+			var knameArr = [];
+			var basicamtArr = [];
+			var actamtArr = [];
+			var dailyamtArr = [];
+			var prizeamtArr = [];
+			var totalamtArr = [];
+			var taxgubunArr = [];
+			var taxincomeArr = [];
+			var taxlocalArr = [];
+			var supplytaxArr = [];
+			var deductamtArr = [];
+			var bankidArr = [];
+			var acctnoArr = [];
+			var acctownerArr = [];
+			
+			//$("#leftList [id='TAXGUBUN_" + ids + "']").is(":checked",false);
+// 			$(this).jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+// 	        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+//        dataIds.some(function(currentValue, index, array){
+// 				$("#leftList").setSelection(array[index], true);
+// 				$("#leftList").jqGrid('editRow',array[index],false);  //해당 row가 수정모드(?)로 변경				
+// 				alert($("#leftList [name=TAXGUBUN] option:selected").val());
+// 				taxgubunArr.push($("#leftList [name=TAXGUBUN] option:selected").val());
+// 				bankidArr.push($("#leftList [name=BANKID] option:selected").val());
+// 				alert(taxgubunArr[array[index]]);
+// 				$('#leftList').jqGrid('saveRow',array[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경
+// 			});		
+//			$('#leftList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+// 	 		dataIds.some(function(currentValue, index, array){
+// 	 			$("#leftList").jqGrid("setSelection", array[index]);
+// 				taxgubunArr.push($("#leftList [name=TAXGUBUN] option:selected").val());
+// 				bankidArr.push($("#leftList [name=BANKID] option:selected").val());
+// 				$('#leftList').jqGrid('saveRow',array[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경
+	 		
+// 	 		});
+	 		
+// 	 		for(var i= 0 ; i < len ; i++){
+// 	 			$("#leftList").jqGrid("setSelection", i);
+// 	 			taxgubunArr.push($("#leftList [name=TAXGUBUN] option:selected").val());
+// 				bankidArr.push($("#leftList [name=BANKID] option:selected").val());
+// 	 		}
+
+	 		
+ 
+ 	 		
+ 	 		
+ 	 		
+ 	 		
+//  	 		for(var i= 0 ; i < len ; i++){
+//  	 			$("#leftList").jqGrid("setSelection", dataIds[i]);
+// 				$(this).jqGrid('saveRow',i,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+// 		        $(this).jqGrid('editRow',i,false);  //해당 row가 수정모드(?)로 변경
+ 	 			
+ 	 			
+// //				$("#leftList").jqGrid('editRow',i,true);  //해당 row가 수정모드(?)로 변경
+				
+// 				taxgubunArr.push($("#leftList [name=TAXGUBUN] option:selected").val());
+// 				bankidArr.push($("#leftList [name=BANKID] option:selected").val());
+// 				alert($("#leftList [name=TAXGUBUN] option:selected").val());
+// 				alert($("#leftList [name=BANKID] option:selected").val());				
+// //				$("#leftList").jqGrid('restoreRow',i,true);
+// 				//yearmonthArr.push($("#leftList").jqGrid('getCell', array[index], 'YEARMONTH'));
+//  	 		}
+ 	 		
+ 	 		dataIds.some(function(currentValue, index, array){	
+ 	 			alert('a');
+				$(this).jqGrid('saveRow',array[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경
+		        $(this).jqGrid('editRow',array[index],false);  //해당 row가 수정모드(?)로 변경
+	 			$("#leftList").jqGrid("setSelection", array[index]);
+ 				taxgubunArr.push($("#leftList [name=TAXGUBUN] option:selected").val());
+ 				bankidArr.push($("#leftList [name=BANKID] option:selected").val());
+ 				alert($("#leftList [name=TAXGUBUN] option:selected").val());
+ 				alert($("#leftList [name=BANKID] option:selected").val());	
+ 	 		})
+ 	 		
+ 	 		
+ 	 		
+// 	 		$("#leftList").jqGrid("setSelection", dataIds[0]);
+//			dataIds.some(function(currentValue, index, array){	 
+//				
+// 				$('#leftList').jqGrid('saveRow',array[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경				
+// 				yearmonthArr.push($("#leftList").jqGrid('getCell', array[index], 'YEARMONTH'));
+// 				paydateArr.push($("#leftList").jqGrid('getCell', array[index], 'PAYDATE'));
+// 				branchcodeArr.push($("#leftList").jqGrid('getCell', array[index], 'BRANCHCODE'));
+// 				deptcodeArr.push($("#leftList").jqGrid('getCell', array[index], 'DEPTCODE'));
+// 				gradeArr.push($("#leftList").jqGrid('getCell', array[index], 'GRADE'));
+// 				dutyArr.push($("#leftList").jqGrid('getCell', array[index], 'DUTY'));
+// 				insacodeArr.push($("#leftList").jqGrid('getCell', array[index], 'INSACODE'));
+// 				knameArr.push($("#leftList").jqGrid('getCell', array[index], 'KNAME'));
+// 				basicamtArr.push($("#leftList").jqGrid('getCell', array[index], 'BASICAMT'));
+// 				actamtArr.push($("#leftList").jqGrid('getCell', array[index], 'ACTAMT'));
+// 				dailyamtArr.push($("#leftList").jqGrid('getCell', array[index], 'DAILYAMT'));
+// 				prizeamtArr.push($("#leftList").jqGrid('getCell', array[index], 'PRIZEAMT'));
+// 				totalamtArr.push($("#leftList").jqGrid('getCell', array[index], 'TOTALAMT'));
+// 				taxincomeArr.push($("#leftList").jqGrid('getCell', array[index], 'TAXINCOME'));
+// 				taxlocalArr.push($("#leftList").jqGrid('getCell', array[index], 'TAXLOCAL'));
+// 				supplytaxArr.push($("#leftList").jqGrid('getCell', array[index], 'SUPPLYTAX'));
+// 				deductamtArr.push($("#leftList").jqGrid('getCell', array[index], 'DEDUCTAMT'));
+// 				acctnoArr.push($("#leftList").jqGrid('getCell', array[index], 'ACCTNO'));
+// 				acctownerArr.push($("#leftList").jqGrid('getCell', array[index], 'ACCTOWNER'));
+//				taxgubunArr.push("001");
+//				bankidArr.push("001");					
+//		});  	 		
+ 	 		
+ 	 		
+// 				$('#leftList').jqGrid('saveRow',i-1,false,'clientArray'); //선택된 놈 뷰 모드로 변경	
+// 				yearmonthArr.push($("#leftList").jqGrid('getCell', i, 'YEARMONTH'));
+// 				paydateArr.push($("#leftList").jqGrid('getCell', i , 'PAYDATE'));
+// 				branchcodeArr.push($("#leftList").jqGrid('getCell', i, 'BRANCHCODE'));
+// 				deptcodeArr.push($("#leftList").jqGrid('getCell', i, 'DEPTCODE'));
+// 				gradeArr.push($("#leftList").jqGrid('getCell', i, 'GRADE'));
+// 				dutyArr.push($("#leftList").jqGrid('getCell', i, 'DUTY'));
+// 				insacodeArr.push($("#leftList").jqGrid('getCell', i, 'INSACODE'));
+// 				knameArr.push($("#leftList").jqGrid('getCell', i, 'KNAME'));
+// 				basicamtArr.push($("#leftList").jqGrid('getCell', i, 'BASICAMT'));
+// 				actamtArr.push($("#leftList").jqGrid('getCell', i, 'ACTAMT'));
+// 				dailyamtArr.push($("#leftList").jqGrid('getCell', i, 'DAILYAMT'));
+// 				prizeamtArr.push($("#leftList").jqGrid('getCell', i, 'PRIZEAMT'));
+// 				totalamtArr.push($("#leftList").jqGrid('getCell', i, 'TOTALAMT'));
+// 				taxincomeArr.push($("#leftList").jqGrid('getCell', i, 'TAXINCOME'));
+// 				taxlocalArr.push($("#leftList").jqGrid('getCell', i, 'TAXLOCAL'));
+// 				supplytaxArr.push($("#leftList").jqGrid('getCell', i, 'SUPPLYTAX'));
+// 				deductamtArr.push($("#leftList").jqGrid('getCell', i, 'DEDUCTAMT'));
+// 				acctnoArr.push($("#leftList").jqGrid('getCell', i, 'ACCTNO'));
+// 				acctownerArr.push($("#leftList").jqGrid('getCell', i, 'ACCTOWNER'));
+// 				taxgubunArr.push("001");
+// 				bankidArr.push("001");
+//				$("#leftList").jqGrid('restoreRow',i,true);
+//  	 		}
+
+	 		
+//  	 		for(var i= 1 ; i < len+1 ; i++){
+// 				$("#leftList").jqGrid('editRow',i,false);  //해당 row가 수정모드(?)로 변경
+// 				taxgubunArr.push($("#leftList [name=TAXGUBUN] option:selected").val());
+// 				bankidArr.push($("#leftList [name=BANKID] option:selected").val());
+// 				$('#leftList').jqGrid('saveRow',i,false,'clientArray'); //선택된 놈 뷰 모드로 변경				
+// 				yearmonthArr.push($("#leftList").jqGrid('getCell', i, 'YEARMONTH'));
+// 				paydateArr.push($("#leftList").jqGrid('getCell', i , 'PAYDATE'));
+// 				branchcodeArr.push($("#leftList").jqGrid('getCell', i, 'BRANCHCODE'));
+// 				deptcodeArr.push($("#leftList").jqGrid('getCell', i, 'DEPTCODE'));
+// 				gradeArr.push($("#leftList").jqGrid('getCell', i, 'GRADE'));
+// 				dutyArr.push($("#leftList").jqGrid('getCell', i, 'DUTY'));
+// 				insacodeArr.push($("#leftList").jqGrid('getCell', i, 'INSACODE'));
+// 				knameArr.push($("#leftList").jqGrid('getCell', i, 'KNAME'));
+// 				basicamtArr.push($("#leftList").jqGrid('getCell', i, 'BASICAMT'));
+// 				actamtArr.push($("#leftList").jqGrid('getCell', i, 'ACTAMT'));
+// 				dailyamtArr.push($("#leftList").jqGrid('getCell', i, 'DAILYAMT'));
+// 				prizeamtArr.push($("#leftList").jqGrid('getCell', i, 'PRIZEAMT'));
+// 				totalamtArr.push($("#leftList").jqGrid('getCell', i, 'TOTALAMT'));
+// 				taxincomeArr.push($("#leftList").jqGrid('getCell', i, 'TAXINCOME'));
+// 				taxlocalArr.push($("#leftList").jqGrid('getCell', i, 'TAXLOCAL'));
+// 				supplytaxArr.push($("#leftList").jqGrid('getCell', i, 'SUPPLYTAX'));
+// 				deductamtArr.push($("#leftList").jqGrid('getCell', i, 'DEDUCTAMT'));
+// 				acctnoArr.push($("#leftList").jqGrid('getCell', i, 'ACCTNO'));
+// 				acctownerArr.push($("#leftList").jqGrid('getCell', i, 'ACCTOWNER'));
+// //				$("#leftList").jqGrid('restoreRow',i,true);
+//  	 		}
+ 
+	 		
+// 			dataIds.some(function(currentValue, index, array){	 
+//  				$("#leftList").jqGrid('editRow',array[index],false);  //해당 row가 수정모드(?)로 변경
+//  				taxgubunArr.push($("#leftList [name=TAXGUBUN] option:selected").val());
+//  				bankidArr.push($("#leftList [name=BANKID] option:selected").val());
+// 				$('#leftList').jqGrid('saveRow',array[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경				
+// 				yearmonthArr.push($("#leftList").jqGrid('getCell', array[index], 'YEARMONTH'));
+// 				paydateArr.push($("#leftList").jqGrid('getCell', array[index], 'PAYDATE'));
+// 				branchcodeArr.push($("#leftList").jqGrid('getCell', array[index], 'BRANCHCODE'));
+// 				deptcodeArr.push($("#leftList").jqGrid('getCell', array[index], 'DEPTCODE'));
+// 				gradeArr.push($("#leftList").jqGrid('getCell', array[index], 'GRADE'));
+// 				dutyArr.push($("#leftList").jqGrid('getCell', array[index], 'DUTY'));
+// 				insacodeArr.push($("#leftList").jqGrid('getCell', array[index], 'INSACODE'));
+// 				knameArr.push($("#leftList").jqGrid('getCell', array[index], 'KNAME'));
+// 				basicamtArr.push($("#leftList").jqGrid('getCell', array[index], 'BASICAMT'));
+// 				actamtArr.push($("#leftList").jqGrid('getCell', array[index], 'ACTAMT'));
+// 				dailyamtArr.push($("#leftList").jqGrid('getCell', array[index], 'DAILYAMT'));
+// 				prizeamtArr.push($("#leftList").jqGrid('getCell', array[index], 'PRIZEAMT'));
+// 				totalamtArr.push($("#leftList").jqGrid('getCell', array[index], 'TOTALAMT'));
+// 				taxincomeArr.push($("#leftList").jqGrid('getCell', array[index], 'TAXINCOME'));
+// 				taxlocalArr.push($("#leftList").jqGrid('getCell', array[index], 'TAXLOCAL'));
+// 				supplytaxArr.push($("#leftList").jqGrid('getCell', array[index], 'SUPPLYTAX'));
+// 				deductamtArr.push($("#leftList").jqGrid('getCell', array[index], 'DEDUCTAMT'));
+// 				acctnoArr.push($("#leftList").jqGrid('getCell', array[index], 'ACCTNO'));
+// 				acctownerArr.push($("#leftList").jqGrid('getCell', array[index], 'ACCTOWNER'));
+//  				taxgubunArr.push("001");
+//  				bankidArr.push("001");				
+// 				$("#leftList").jqGrid('restoreRow',array[index],true);
+// 			}); 
+
+// 			dataIds.some(function(currentValue, index, array){
+// 				$("#leftList").jqGrid("setSelection", array[index]);
+// 				$("#leftList").jqGrid('editRow',array[index],false);  //해당 row가 수정모드(?)로 변경
+// 				taxgubunArr.push($("#leftList [name=TAXGUBUN] option:selected").val());
+// 				bankidArr.push($("#leftList [name=BANKID] option:selected").val());
+// 				$("#leftList").jqGrid('restoreRow',array[index],true);
+// 			});
 	
-			var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
-			
-			var data = $("#leftList").getRowData();
-			
-			var msg = "저장하시겠습니까?";
-			
-			
-			if (confirm(msg) == true) {
-				var formData = data;
-// 				var formData = "PAYDATE=" + cellData.PAYDATE + 
-// 							   "&YEARMONTH=" + cellData.YEARMONTH + 
-// 							   "&INSACODE=" + cellData.INSACODE + 
-// 							   "&BRANCHCODE=" + cellData.BRANCHCODE + 
-// 							   "&DEPTCODE=" + cellData.DEPTCODE + 
-// 							   "&GRADE=" + cellData.GRADE + 
-// 							   "&DUTY=" + cellData.DUTY + 
-// 							   "&BASICAMT=" + cellData.BASICAMT + 
-// 							   "&ACTAMT=" + cellData.ACTAMT + 
-// 							   "&PRIZEAMT=" + cellData.PRIZEAMT + 
-// 							   "&DAILYAMT=" + cellData.DAILYAMT + 
-// 							   "&TOTALAMT=" + cellData.TOTALAMT + 
-// 							   "&TAXGUBUN=" + cellData.TAXGUBUN + 
-// 							   "&TAXINCOME=" + cellData.TAXINCOME + 
-// 							   "&TAXLOCAL=" + cellData.TAXLOCAL + 
-// 							   "&SUPPLYTAX=" + cellData.SUPPLYTAX + 
-// 							   "&DEDUCTAMT=" + cellData.DEDUCTAMT + 
-// 							   "&BANKID=" + cellData.BANKID+
-// 				               "&ACCTNO=" + cellData.ACCTNO+
-// 				               "&ACCTOWNER=" + cellData.ACCTOWNER+
-// 				               "&REMARK=" + cellData.REMARK;	
-
-
-				
-				
-				$.ajax({ 
+			if(confirm("저장하시겠습니까?") == true) {
+			 	$.ajax({ 
 					type: 'POST' ,
-					data: formData,
-					url: "/home/saveEnaMonthPayMst.do", 
+					url: "/home/insertEnaMonthPayMst.do", 
+					data: {
+						'yearmonthArr':yearmonthArr, 
+						'paydateArr':paydateArr,
+						'branchcodeArr':branchcodeArr,
+						'deptcodeArr':deptcodeArr,
+						'gradeArr':gradeArr, 
+						'dutyArr':dutyArr, 
+						'insacodeArr':insacodeArr,
+						'knameArr':knameArr,
+						'basicamtArr':basicamtArr,
+						'actamtArr':actamtArr,
+						'dailyamtArr':dailyamtArr,
+						'prizeamtArr':prizeamtArr,
+						'totalamtArr':totalamtArr,
+						'taxgubunArr':taxgubunArr,
+						'taxincomeArr':taxincomeArr,
+						'taxlocalArr':taxlocalArr,
+						'supplytaxArr':supplytaxArr,
+						'deductamtArr':deductamtArr,
+						'bankidArr':bankidArr,
+						'acctnoArr':acctnoArr,
+						'acctownerArr':acctownerArr,
+						'S_YEARMONTH' :  $("#S_YEARMONTH").val(),
+						'S_PAYDATE' :  $("#S_PAYDATE").val(),
+						'S_BRANCHCODE' :  $("#S_BRANCHCODE").val(),
+						'S_DEPTCODE' :  $("#S_DEPTCODE").val()
+					},
 					dataType : 'json' , 
 					success: function(data){
-						if(data.rows[0].MSG == "success"){														
+						if(data.rows[0].MSG == "SUCCESS"){														
 							v_rightLastSel = 0;
 							alert("저장이 완료되었습니다.");
 							selectListEnaMonthPayMst();
@@ -487,7 +683,6 @@
 		
 		
 //		var taxgubun = $("#leftList [name=TAXGUBUN] ").val();
-		alert(taxgubun);
 // 		var taxgubun = $("#leftList").jqGrid('getCell',ids,"TAXGUBUN");
 		
 		if(taxgubun == "001"){
@@ -514,6 +709,8 @@
 		}
 		$("#leftList").setCell(ids,"DEDUCTAMT",deductamt);
 	}	
+	
+	
 </script>
 <body>
 

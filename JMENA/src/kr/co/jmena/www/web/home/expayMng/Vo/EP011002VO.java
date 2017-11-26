@@ -14,6 +14,10 @@ public class EP011002VO {
 	private String DEPTCODE;
 	private String GRADE;
 	private String DUTY;
+	private String BRANCHNAME;
+	private String DEPTNAME;
+	private String GRADENAME;
+	private String DUTYNAME;
 	private String PAYDATE;
 	private String BASICAMT;
 	private String ACTAMT;
@@ -78,6 +82,30 @@ public class EP011002VO {
 	}
 	public String getDUTY() {
 		return this.DUTY;
+	}
+	public String getBRANCHNAME() {
+		return BRANCHNAME;
+	}
+	public void setBRANCHNAME(String bRANCHNAME) {
+		this.BRANCHNAME = bRANCHNAME;
+	}
+	public String getDEPTNAME() {
+		return DEPTNAME;
+	}
+	public void setDEPTNAME(String dEPTNAME) {
+		this.DEPTNAME = dEPTNAME;
+	}
+	public String getGRADENAME() {
+		return GRADENAME;
+	}
+	public void setGRADENAME(String gRADENAME) {
+		this.GRADENAME = gRADENAME;
+	}
+	public String getDUTYNAME() {
+		return DUTYNAME;
+	}
+	public void setDUTYNAME(String dUTYNAME) {
+		this.DUTYNAME = dUTYNAME;
 	}
 	public String getPAYDATE() {
 		return this.PAYDATE;

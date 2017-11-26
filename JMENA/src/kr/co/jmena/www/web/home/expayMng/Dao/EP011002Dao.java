@@ -39,12 +39,13 @@ public class EP011002Dao extends SqlMapClientDaoSupport {
 		return lst;
 	}		
 	
-	public int insertEnaMonthPayMst(EP011002VO vo) throws DataAccessException {
-		int insertCnt = 0;
+	public boolean insertEnaMonthPayMst(EP011002VO vo) throws DataAccessException {
+		boolean chkFlag = false;
 		
-		insertCnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaMonthPayMst", vo);
+		int cnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertEnaMonthPayMst", vo);
 		
-		return insertCnt;
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
 	}	
 
 	public int updateEnaMonthPayMst(EP011002VO vo) throws DataAccessException {

@@ -454,6 +454,12 @@ public class HR011001Ctr {
 		vo.setACCTOWNER(request.getParameter("ACCTOWNER"));
 		vo.setBASICACCT(request.getParameter("BASICACCT"));
 		vo.setREMARK(request.getParameter("REMARK"));
+		
+		String basicacct = request.getParameter("BASICACCT");
+		if(basicacct.equals("Y") || basicacct == "Y" ){
+			HR011001Biz.updateBasicAcct(vo);
+		}
+		
 				
 		HttpSession session = null;
 		session = request.getSession(false);

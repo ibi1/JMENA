@@ -163,4 +163,16 @@ public class HR011001Biz {
 		return chkFlag;
 	}	
 	
+	public int updateBasicAcct(HR011001VO vo) throws Exception {
+		int updateCnt = 0;
+
+		try {
+			updateCnt = HR011001Dao.updateBasicAcct(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return updateCnt;
+	}	
+	
 }
