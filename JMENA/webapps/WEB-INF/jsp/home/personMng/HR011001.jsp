@@ -186,7 +186,7 @@
 		loadtext: '로딩중...',
 		//cellEdit: true,
 		loadError:function(){alert("Error~!!!!");} ,
-		colNames:['사번','순번', '발령구분', '발령일자', '발령지사코드', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고'] ,
+		colNames:['사번','순번', '발령구분', '발령일자', '발령지사코드', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고','발령구분'] ,
 		colModel:[
 			  {name:"INSACODE",			index:'INSACODE',			width:100,		align:'center', hidden:true}
 			, {name:"APPOINTSEQ",		index:'APPOINTSEQ',			width:100,		align:'center', hidden:true}
@@ -212,7 +212,7 @@
 								},
 								success: function(data){
 									var inHtml = "";
-									inHtml += "<select>"; //이거 수정하셨어요? 로우로 되어 있는데?밑에꺼 하다가 수정했수도 있는듯.. ㅠㅠㅠㅠ deptMstList 
+									inHtml += "<select>"; 
 									data.deptMstList.forEach(function(currentValue, index, array){
 										inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 									});
@@ -234,19 +234,7 @@
 					fn:function(e){
 						var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 						var appointbranch = this.value;
-						
-						//$(this).jqGrid('setCell', ids[index],  'PREBASICPAY', '', 'not-editable-cell'); // 특정 cell 수정 못하게
-						
-			             //  $(this).val($(e.target).val());
-							//alert($("#bottomList1 [name=APPOINTBRANCHCODE]").val()); //.jqGrid("getCell", ids, 'APPOINTBRANCH'));
-							//$('#bottomList1').jqGrid('saveCell',ids, 3); //선택된 놈 뷰 모드로 변경
-							
-							//$("#bottomList1").jqGrid('editCell', ids, 10, true);
-			               //$(this).jqGrid('editCell', rowId, 4, false);
-
-						
-						
-						
+												
 						
 						$.ajax({ 
 							type: 'POST' ,
@@ -257,21 +245,29 @@
 							},
 							success: function(data){
 								data.DeptGubun.forEach(function(currentValue, index, array){									
-									if(currentValue.DEPTGUBUN == "001"){
-										alert("al");
-										//$('#bottomList1').jqGrid('editCell', , "PREBASICPAY", true);
-//										grid.editCell( nextRowID, 7, false);
-										//$('#' + ids + '_PREBASICPAY').attr('editable', true);
-										//$('#bottomList1').setColProp("PREBASICPAY",{editable:true});
-//										$('#bottomList1').jqGrid('setCell', ids,  "PREBASICPAY", "", 'editable-cell');
-//										$('#bottomList1').jqGrid('addClass','editable-cell');
-//										$('#bottomList1').jqGrid('setCell', ids,  'PREBASICPAY', '', {editable:'0'});												
-									}else{
-										alert("ab"); // 여기가 수정이 되야 해요? 아니면 위에?위입니다
-//										$('#bottomList1').jqGrid('addClass','not-editable-cell');
-//										$('#bottomList1').jqGrid('setCell', ids,  'EMPLOYGUBUN', '', {editable:'1'});												
-//										$('#bottomList1').jqGrid('selColProp', ids,  "EMPLOYGUBUN", "", 'not-editable-cell');
-									}
+										$("#bottomList1").setCell(ids,"DEPTGUBUN",currentValue.DEPTGUBUN);
+// 									if(currentValue.DEPTGUBUN == "001"){
+// 										$("#bottomList1").setCell(ids,"DEPTGUBUN","001");
+// 									}else{
+// 										$("#bottomList1").setCell(ids,"DEPTGUBUN","");
+// 									}
+									
+										
+// 									if(currentValue.DEPTGUBUN == "001"){
+// 										alert("al");
+// 										//$('#bottomList1').jqGrid('editCell', , "PREBASICPAY", true);
+// 										//grid.editCell( nextRowID, 7, false);
+// 										//$('#' + ids + '_PREBASICPAY').attr('editable', true);
+// 										//$('#bottomList1').setColProp("PREBASICPAY",{editable:true});
+// 										$('#bottomList1').jqGrid('setCell', ids,  "PREBASICPAY", "", 'editable-cell');
+// 										$('#bottomList1').jqGrid('addClass','editable-cell');
+// 										$('#bottomList1').jqGrid('setCell', ids,  'PREBASICPAY', '', {editable:'0'});												
+// 									}else{
+// 										alert("ab"); // 여기가 수정이 되야 해요? 아니면 위에?위입니다
+// 										$('#bottomList1').jqGrid('addClass','not-editable-cell');
+// 										$('#bottomList1').jqGrid('setCell', ids,  'EMPLOYGUBUN', '', {editable:'1'});												
+// 										$('#bottomList1').jqGrid('selColProp', ids,  "EMPLOYGUBUN", "", 'not-editable-cell');
+// 									}
 								});								
 								
 							},
@@ -288,6 +284,7 @@
 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center', editable:true}
+			, {name:"DEPTGUBUN",			index:'DEPTGUBUN',				width:100,		align:'center', editable:true}
 		] ,
 		rowNum:10 ,
 		autowidth: true ,
@@ -312,7 +309,7 @@
 			v_branchCode = $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCHCODE;
 			
 			if( v_rightLastSel != id ){
-		        //$(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+		        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 		        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
 		        
 		        v_rightLastSel = id;
@@ -739,7 +736,16 @@
 			$('#bottomList1').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
 			var cellData = $("#bottomList1").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
-
+			alert(cellData.DEPTGUBUN);
+			alert(cellData.PREBASICPAY);
+			
+			if(cellData.PREBASICPAY == "" || cellData.PREBASICPAY == "0"){			
+			}else{
+				if (cellData.DEPTGUBUN != "001" ) {
+					alert("해당 부서는 월정지급액을 입력 할 수 없습니다.");
+					return false;
+				}
+			}			
 			if (appointGubun == "") {
 				alert("발령구분을 선택하셔야 합니다.");
 				
@@ -801,6 +807,46 @@
 				
 				return false;
 			}
+			
+			
+// 			var i;
+// 			var beIndex = 0;
+// 				var dataIds = $("#bottomList1").jqGrid('getDataIDs');
+// 			for ( i =0; i<2; i++) {
+// 				if (i == 0) {
+// 					beIndex = 0;
+// 					dataIds.some(function(currentValue, index, array){
+// 						$("#bottomList1").jqGrid('setSelection',beIndex,false);
+// 						$("#bottomList1").jqGrid('setSelection',currentValue,true);
+						
+// 						//$("#bottomList1").jqGrid('setSelection',array[index],false);
+// 						//$('#bottomList1').jqGrid('saveRow',array[index],true,'clientArray'); //선택된 놈 뷰 모드로 변경	
+						
+// 						beIndex = currentValue;	
+			
+						
+// 					});
+// 				} else {
+// 					beIndex = 0;
+// 					dataIds.some(function(currentValue, index, array){
+// 						$("#bottomList1").jqGrid('setSelection',beIndex,false);
+// 						$("#bottomList1").jqGrid('setSelection',currentValue,true);
+// 						var t1 = $("#"+currentValue+"_APPOINTBRANCH").val(); //셀 전체 데이터 가져오기
+						 
+// 						//var t = cellData.;
+// 						alert(t1);
+						
+						
+// 						beIndex = currentValue;	
+						
+// 					});
+// 				}
+// 			}
+			
+			
+					
+			
+			
 			var msg = "";
 			if ($("#S_FLAG_B1").val() == "I") {
 				msg = "저장하시겠습니까?";

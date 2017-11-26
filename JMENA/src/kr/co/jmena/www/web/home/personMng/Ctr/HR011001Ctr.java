@@ -276,6 +276,7 @@ public class HR011001Ctr {
 			jData.put("DUTY", lst.get(i).getDUTY());
 			jData.put("EMPLOYGUBUN", lst.get(i).getEMPLOYGUBUN());
 			jData.put("PREBASICPAY", lst.get(i).getPREBASICPAY());
+			jData.put("DEPTGUBUN", "");
 			jData.put("REMARK", lst.get(i).getREMARK());
 			
 			
