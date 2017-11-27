@@ -89,6 +89,7 @@
 			$("#BUNJANPY").jqxInput({theme: 'energyblue', height: 23, width: 70, disabled: true});
 			$("#BUYAMT").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			$("#BUYDANGA").jqxInput({theme: 'energyblue', height: 23, width: 150});
+			$("#SELLDANGA").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
@@ -225,7 +226,7 @@
 				colNames:['매입번호', '매입일자', '매입구분', '관리번호', '지역코드',
 				          '지역구분', '시/도코드', '시/도구분',  '지목', '주소',
 				          '원지주 성명', '주민번호', '계약면적', '계약평수', '잔여면적',
-				          '잔여평수', '매매대금', '매매단가', '등기여부', '등기일자',
+				          '잔여평수', '매매대금', '매매단가', '판매단가', '등기여부', '등기일자',
 				          '비고'],
 				colModel:[
 					{name:"BUYID",				index:'BUYID',			width:100,	align:'center', sortable:false, hidden:true}
@@ -246,6 +247,7 @@
 					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'right',  sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"BUYDANGA",			index:'BUYDANGA',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"SELLDANGA",		index:'SELLDANGA',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REGYN",			index:'REGYN',			width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REGDATE",			index:'REGDATE',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', sortable:false, hidden:true}
@@ -288,6 +290,7 @@
 					$("#BUNJANPY").val(selRowData.BUNJANPY);
 					$("#BUYAMT").val(selRowData.BUYAMT);
 					$("#BUYDANGA").val(selRowData.BUYDANGA);
+					$("#SELLDANGA").val(selRowData.SELLDANGA);
 					$("input:radio[name=REGYN]:input[value=" + selRowData.REGYN + "]").attr("checked", true);
 					$("#REGDATE").val(selRowData.REGDATE);
 					$("#REMARK").val(selRowData.REMARK);
@@ -534,6 +537,7 @@
 			$("#BUNJANPY").val("");
 			$("#BUYAMT").val("");
 			$("#BUYDANGA").val("");
+			$("#SELLDANGA").val("");
 			$("input:radio[name=REGYN]:input[value=Y]").attr("checked", true);
 			$("#REGDATE").val("");
 			$("#REMARK").val("");
@@ -653,6 +657,22 @@
 					
 					$("#BUYDANGA").focus();
 					return false;
+				}
+				
+				if($("input:radio[name=REGYN]:checked").val() == "Y") {
+					if ($("#REGDATE").val() == "") {
+						alert("등기일자를 입력하셔야 합니다.");
+						
+						$("#REGDATE").focus();
+						return false;
+					}
+				} else if($("input:radio[name=REGYN]:checked").val() == "N") {
+					if ($("#REGDATE").val() != "") {
+						alert("등기여부를 확인하셔야 합니다.");
+						
+						$("#REGYN").focus();
+						return false;
+					}
 				}
 				
 				var msg = "";
@@ -1064,8 +1084,8 @@
 					$("#tab1DeleteButton").jqxButton({disabled: false});
 					$("#tab1SaveButton").jqxButton({disabled: false});
 				} else { //위탁
-					$("#mm_div1").text("위탁수수료");
-					$("#mm_div2").text("수수료단가");
+					$("#mm_div1").text("위탁매입");
+					$("#mm_div2").text("위탁매입단가");
 					
 					//위탁일 경우만 지급 스케줄 관리 미 사용
 					$("#tab1InsertButton").jqxButton({disabled: true});
@@ -1085,6 +1105,7 @@
     		inputComma("BUNJANPY");
     		inputComma("BUYAMT");
     		inputComma("BUYDANGA");
+    		inputComma("SELLDANGA");
 		})
 		
 		function f_commaInputData(str) {
@@ -1097,6 +1118,7 @@
 				$("#BUNJANPY").click();
 				$("#BUYAMT").click();
 				$("#BUYDANGA").click();
+				$("#SELLDANGA").click();
 			} else if (str == "remove") {
 				$("#BUYM2").val(removeComma($("#BUYM2").val()));
 				$("#BUYPY").val(removeComma($("#BUYPY").val()));
@@ -1106,6 +1128,7 @@
 				$("#BUNJANPY").val(removeComma($("#BUNJANPY").val()));
 				$("#BUYAMT").val(removeComma($("#BUYAMT").val()));
 				$("#BUYDANGA").val(removeComma($("#BUYDANGA").val()));
+				$("#SELLDANGA").val(removeComma($("#SELLDANGA").val()));
 			}
 			
 		}
@@ -1206,19 +1229,21 @@
 					<td><input type="text" id="BUYDANGA" name="BUYDANGA" /></td>
 				</tr>
 				<tr>
-					<th width="120">등기여부</th>
-					<td colspan="3">
-						<input type="radio" id="REGYN" name="REGYN" value="Y">등기완료
-						<input type="radio" id="REGYN" name="REGYN" value="N">미등기
-					</td>
+					<th width="120">판매단가</th>
+					<td colspan="3"><input type="text" id="SELLDANGA" name="SELLDANGA" /></td>
 				</tr>
 				<tr>
 					<th width="120">등기일자</th>
 					<td colspan="3"><input type="text" id="REGDATE" name="REGDATE" /></td>
 				</tr>
 				<tr>
+					<th width="120">등기여부</th>
+					<td>
+						<input type="radio" id="REGYN" name="REGYN" value="Y">등기완료
+						<input type="radio" id="REGYN" name="REGYN" value="N">미등기
+					</td>
 					<th width="120">비고</th>
-					<td colspan="3"><input type="text" id="REMARK" name="REMARK" onkeydown="f_saveButton();"/></td>
+					<td><input type="text" id="REMARK" name="REMARK" onkeydown="f_saveButton();"/></td>
 				</tr>
 			</table>
 			</form>

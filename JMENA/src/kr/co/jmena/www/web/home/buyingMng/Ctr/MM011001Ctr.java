@@ -57,7 +57,6 @@ public class MM011001Ctr {
 		
 		vo.setLS_BUYDATE_FR(request.getParameter("LS_BUYDATE_FR"));
 		vo.setLS_BUYDATE_TO(request.getParameter("LS_BUYDATE_TO"));
-		//vo.setLS_INSERTUSER(request.getParameter("LS_INSERTUSER"));
 		vo.setLS_ADDRESS(request.getParameter("LS_ADDRESS"));
 		
 		List<MM011001VO> lst = MM011001Biz.selectListEnaBuyMst(vo);
@@ -86,6 +85,7 @@ public class MM011001Ctr {
 			obj.put("BUNJANPY", lst.get(i).getBUNJANPY());
 			obj.put("BUYAMT", lst.get(i).getBUYAMT());
 			obj.put("BUYDANGA", lst.get(i).getBUYDANGA());
+			obj.put("SELLDANGA", lst.get(i).getSELLDANGA());
 			obj.put("REGYN", lst.get(i).getREGYN());
 			obj.put("REGDATE", lst.get(i).getREGDATE());
 			obj.put("REMARK", lst.get(i).getREMARK());
@@ -199,6 +199,7 @@ public class MM011001Ctr {
 		vo.setBUYPY(request.getParameter("BUYPY"));
 		vo.setBUYAMT(request.getParameter("BUYAMT"));
 		vo.setBUYDANGA(request.getParameter("BUYDANGA"));
+		vo.setSELLDANGA(request.getParameter("SELLDANGA"));
 		vo.setREGYN(request.getParameter("REGYN"));
 		vo.setREGDATE(request.getParameter("REGDATE"));
 		vo.setREMARK(request.getParameter("REMARK"));

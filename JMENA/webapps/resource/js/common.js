@@ -56,6 +56,11 @@ function setComma(num) {
 
 // 콤마 빼기
 function removeComma(n){
+	if (n == null || n == "") {
+		return n;
+	}
+	
  	str = parseInt(n.replace(/,/g, ""));
+
   	return str;  
  }
