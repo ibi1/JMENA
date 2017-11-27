@@ -24,6 +24,7 @@
 		<result property="BUNJANPY"			column="BUNJANPY"/>
 		<result property="BUYAMT"			column="BUYAMT"/>
 		<result property="BUYDANGA"			column="BUYDANGA"/>
+		<result property="SELLDANGA"		column="SELLDANGA"/>
 		<result property="REGYN"			column="REGYN"/>
 		<result property="REGDATE"			column="REGDATE"/>
 		<result property="REMARK"			column="REMARK"/>
@@ -75,6 +76,7 @@
 			'' BUNJANPY,
 			T1.BUYAMT,
 			T1.BUYDANGA,
+			T1.SELLDANGA,
 			T1.REGYN,
 			T1.REGDATE,
 			T1.REMARK
@@ -106,6 +108,12 @@
 			BUYPY = #BUYPY#,
 			BUYAMT = #BUYAMT#,
 			BUYDANGA = #BUYDANGA#,
+			<isNotEmpty property="SELLDANGA">
+			SELLDANGA = #SELLDANGA#,
+			</isNotEmpty>
+			<isEmpty property="SELLDANGA">
+			SELLDANGA = NULL,
+			</isEmpty>
 			REGYN = #REGYN#,
 			<isEqual property="REGYN" compareValue="Y">
 			REGDATE = #REGDATE#,
@@ -144,6 +152,7 @@
 			BUYPY,
 			BUYAMT,
 			BUYDANGA,
+			SELLDANGA,
 			REGYN,
 			<isEqual property="REGYN" compareValue="Y">
 			REGDATE,
@@ -166,6 +175,12 @@
 			#BUYPY#,
 			#BUYAMT#,
 			#BUYDANGA#,
+			<isNotEmpty property="SELLDANGA">
+			#SELLDANGA#,
+			</isNotEmpty>
+			<isEmpty property="SELLDANGA">
+			NULL,
+			</isEmpty>
 			#REGYN#,
 			<isEqual property="REGYN" compareValue="Y">
 			#REGDATE#,

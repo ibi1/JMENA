@@ -41,14 +41,12 @@ public class MM011001VO {
 	private String CONJM2;
 	private String CONBPY;
 	private String CONJPY;
-	
-
+	private String SELLDANGA;
 	private String CITYNAME;
 	private String BOROUGHCODE;
 	private String BOROUGHNAME;
 	private String BUNJANM2;
 	private String BUNJANPY;
-	
 	private String CONM2;
 	private String CONPY;
 
@@ -407,6 +405,14 @@ public class MM011001VO {
 
 	public void setBUYID_PK(String BUYID_PK) {
 		this.BUYID_PK = BUYID_PK;
+	}
+
+	public String getSELLDANGA() {
+		return SELLDANGA;
+	}
+
+	public void setSELLDANGA(String SELLDANGA) {
+		this.SELLDANGA = SELLDANGA;
 	}
 	
 }
