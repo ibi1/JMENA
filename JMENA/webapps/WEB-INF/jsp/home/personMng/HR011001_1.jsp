@@ -90,8 +90,7 @@
 		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		
-		selectListInsaMst();
+
 		
 		$("#S_KNAME").val(KNAME);
 		$("#S_INSACODE").val(INSACODE);
@@ -117,7 +116,9 @@
 			postData : {
 				S_KNAME : $("#S_KNAME").val(),
 				S_INSACODE : $("#S_INSACODE").val(),
-				S_JUMINID : $("#S_JUMINID").val()
+				S_JUMINID : $("#S_JUMINID").val(),
+				S_BRANCHCODE : "ALL",
+				S_DEPTCODE : "ALL"
 			},			
 			datatype:"json",		
 			loadError:function(){alert("Error~!!");},

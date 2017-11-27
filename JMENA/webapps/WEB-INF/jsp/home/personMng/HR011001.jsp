@@ -410,6 +410,7 @@
 				$("#S_BRANCHCODE").append(inHtml1);
 				$("#BRANCHCODE").append(inHtml);
 				f_selectListEnaDeptCode("0","");
+				f_selectListEnaDeptCode("2","");
 			},
 			error:function(e){  
 				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -457,7 +458,7 @@
 					$("#S_DEPTCODE").append(inHtml1);
 					$("#DEPTCODE").append(inHtml);					
 				}else if(flag == "1"){
-					$("#S_DEPTCODE").append(inHtml);					
+					$("#S_DEPTCODE").append(inHtml1);					
 				}else if(flag == "2"){
 					$("#DEPTCODE").append(inHtml);	
 				}else if(flag == "3"){
