@@ -402,7 +402,7 @@
 			dataType : 'json' , 
 			success: function(data){
 				var inHtml = "";
-				inHtml1 += "<option value='ALL'>전체</option>\n";
+				var inHtml1 = "<option value='ALL'>전체</option>\n";
 				data.branchMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 					inHtml1 += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
@@ -447,7 +447,7 @@
 			success: function(data){
 				
 				var inHtml = "";					
-					inHtml1 = "<option value='ALL'>전체</option>\n";						
+				var inHtml1 = "<option value='ALL'>전체</option>\n";						
 					
 				data.deptMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
