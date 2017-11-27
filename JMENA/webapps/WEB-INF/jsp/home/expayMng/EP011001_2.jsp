@@ -111,24 +111,24 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
 			colModel:[  	
-				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center'}
-				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center'}
-				, {name:"KNAME",		index:'KNAME',		width:80,		align:'center'}
-				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:80,		align:'center'}
-				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center'}
-				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
-				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:","}}
-				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center'}
-				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center'}
-				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center'}
-				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center'}
-				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center'}
+				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
+				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
+				, {name:"KNAME",		index:'KNAME',		width:80,		align:'center',	sortable:false}
+				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:80,		align:'center',	sortable:false}
+				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center',	sortable:false}
+				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center',	sortable:false, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
+				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:","}}
+				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
+				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center',	sortable:false}
+				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center',	sortable:false}
+				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false}
+				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center',	sortable:false}
+				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center',	sortable:false}
 			] ,
-			rowNum:10 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,
@@ -171,10 +171,10 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['성명', '주민번호','대표자명', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '거래은행', '계좌번호','계좌주','판매번호','순번','신고인순번','비고'],
 			colModel:[  	
-				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center', editable:true}
-				, {name:"PAYERID",		index:'PAYERID',		width:80,		align:'center', editable:true}
-				, {name:"SAUPOWNER",	index:'SAUPOWNER',		width:80,		align:'center', editable:true}
-				, {name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right' ,  editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
+				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center',	sortable:false, editable:true}
+				, {name:"PAYERID",		index:'PAYERID',		width:80,		align:'center',	sortable:false, editable:true}
+				, {name:"SAUPOWNER",	index:'SAUPOWNER',		width:80,		align:'center',	sortable:false, editable:true}
+				, {name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right' ,	sortable:false,  editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
  					editoptions:{
  						dataEvents:[{
  							type:'change',
@@ -183,7 +183,7 @@
  							}
 						}]
 					}}					
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center', editable:true
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center',	sortable:false, editable:true
 					, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode,
 						dataEvents:[{
 							type:'change',
@@ -197,20 +197,20 @@
 							}
 						}]
 					}}
-				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right' , formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"BANKID",		index:'BANKID',		width:80,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectEnaBankCode}}
-				, {name:"ACCTNO",		index:'ACCTNO',		width:80,		align:'center', editable:true}
-				, {name:"ACCTOWNER",	index:'ACCTOWNER',	width:80,		align:'center', editable:true}
-				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center', hidden:true}
-				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center', hidden:true}
-				, {name:"REGISTERSEQ",	index:'REGISTERSEQ',width:60,		align:'center', hidden:true}
-				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center', editable:true}
-//				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
+				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right' ,	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right' ,	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right' ,	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right' ,	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"BANKID",		index:'BANKID',		width:80,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectEnaBankCode}}
+				, {name:"ACCTNO",		index:'ACCTNO',		width:80,		align:'center',	sortable:false, editable:true}
+				, {name:"ACCTOWNER",	index:'ACCTOWNER',	width:80,		align:'center',	sortable:false, editable:true}
+				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false, hidden:true}
+				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center',	sortable:false, hidden:true}
+				, {name:"REGISTERSEQ",	index:'REGISTERSEQ',width:60,		align:'center',	sortable:false, hidden:true}
+				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center',	sortable:false, editable:true}
+//				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',	sortable:false,  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
 			] ,
-			rowNum:10 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,

@@ -52,7 +52,7 @@
 					, {name:"CONBPY",			index:'CONBPY',			width:100,	align:'center', sortable:false}
 					, {name:"CONJPY",			index:'CONJPY',			width:100,	align:'center', sortable:false}
 				],
-				rowNum:1000,
+				rowNum:10000000,
 				autowidth: true,
 				shrinkToFit: false,
 				rowList:[10,20,30],

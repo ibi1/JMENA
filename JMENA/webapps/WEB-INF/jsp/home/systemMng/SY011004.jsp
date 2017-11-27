@@ -194,7 +194,7 @@
 						{name:"USERID",			index:'USERID',		width:150,	align:'center', sortable:false}
 						, {name:"USERNAME",		index:'USERNAME',	width:200,	align:'center', sortable:false}
 					] ,
-					rowNum:1000,
+					rowNum:10000000,
 					autowidth: true ,
 					shrinkToFit: false,
 					rowList:[10,20,30] ,
@@ -258,7 +258,7 @@
 						, {name:"AUTH_D",		index:'AUTH_D',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 						, {name:"AUTH_P",		index:'AUTH_P',		width:50,		align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 					] ,
-					rowNum:1000,
+					rowNum:10000000,
 					autowidth: true ,
 					shrinkToFit: false,
 					rowList:[10,20,30] ,

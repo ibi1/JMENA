@@ -102,41 +102,41 @@
 			          '지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액', //'실판매가' ,
 			          '수당지급율','추가지급율','신고기준','사업소득세','지방세','부가가치세','비고','매출담당자','매출담당자성명','신고인수'],
 			colModel:[
-				 {name:"PAYDATE",		index:'PAYDATE',		width:80,		align:'center'}
-				,{name:"PAYSEQ",		index:'PAYSEQ',			width:80,		align:'center', hidden:true}
-				,{name:"INSACODE",		index:'INSACODE',		width:80,		align:'center', hidden:true}
-				,{name:"KNAME",			index:'KNAME',			width:80,		align:'center'}
-				,{name:"SELLAMT",		index:'SELLAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				,{name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				,{name:"TAXAMT",		index:'TAXAMT',			width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				,{name:"SALEDATE",		index:'SALEDATE',		width:80,		align:'center'}
-				,{name:"SALEID",		index:'SALEID',			width:60,		align:'center', hidden:true}
-				,{name:"SALEGUBUN",		index:'SALEGUBUN',		width:60,		align:'center', hidden:true}
-				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:60,		align:'center', hidden:true}
-				,{name:"MANAGENO",		index:'MANAGENO',		width:60,		align:'center', hidden:true}
-				,{name:"CITYCODE",		index:'CITYCODE',		width:60,		align:'center', hidden:true}
-				,{name:"ADDRESS",		index:'ADDRESS',		width:60,		align:'center', hidden:true}
-				,{name:"CONNAME",		index:'CONNAME',		width:60,		align:'center', hidden:true}
-				,{name:"CONM2",			index:'CONM2',			width:60,		align:'center', hidden:true}
-				,{name:"CONPY",			index:'CONPY',			width:60,		align:'center', hidden:true}
-				,{name:"SALEAMT",		index:'SALEAMT',		width:60,		align:'center', hidden:true}
-				,{name:"SALEDANGA",		index:'SALEDANGA',		width:60,		align:'center', hidden:true}
-				,{name:"DCGUBUN",		index:'DCGUBUN',		width:60,		align:'center', hidden:true}
-				,{name:"DCRATE",		index:'DCRATE',			width:60,		align:'center', hidden:true}
-				,{name:"DCAMT",			index:'DCAMT',			width:60,		align:'center', hidden:true}			
-				,{name:"SUDANGRATE",	index:'SUDANGRATE',		width:60,		align:'center', hidden:true}
-				,{name:"ADDRATE",		index:'ADDRATE',		width:60,		align:'center', hidden:true}
-				,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:60,		align:'center', hidden:true}
-				,{name:"TAXINCOME",		index:'TAXINCOME',		width:60,		align:'center', hidden:true}
-				,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:60,		align:'center', hidden:true}
-				,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:60,		align:'center', hidden:true}
-				,{name:"REMARK",		index:'REMARK',			width:60,		align:'center', hidden:true}	
-				,{name:"SALERCD",		index:'SALERCD',		width:60,		align:'center', hidden:true}
-				,{name:"SALERNM",		index:'SALERNM',		width:60,		align:'center', hidden:true}
-				,{name:"REGISTERNUM",	index:'REGISTERNUM',	width:60,		align:'center', hidden:true}
+				 {name:"PAYDATE",		index:'PAYDATE',		width:80,		align:'center',	sortable:false}
+				,{name:"PAYSEQ",		index:'PAYSEQ',			width:80,		align:'center',	sortable:false, hidden:true}
+				,{name:"INSACODE",		index:'INSACODE',		width:80,		align:'center',	sortable:false, hidden:true}
+				,{name:"KNAME",			index:'KNAME',			width:80,		align:'center',	sortable:false}
+				,{name:"SELLAMT",		index:'SELLAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"TAXAMT",		index:'TAXAMT',			width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"DEDUCTAMT",		index:'DEDUCTAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				,{name:"SALEDATE",		index:'SALEDATE',		width:80,		align:'center',	sortable:false}
+				,{name:"SALEID",		index:'SALEID',			width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"SALEGUBUN",		index:'SALEGUBUN',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"MANAGENO",		index:'MANAGENO',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"CITYCODE",		index:'CITYCODE',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"ADDRESS",		index:'ADDRESS',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"CONNAME",		index:'CONNAME',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"CONM2",			index:'CONM2',			width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"CONPY",			index:'CONPY',			width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"SALEAMT",		index:'SALEAMT',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"SALEDANGA",		index:'SALEDANGA',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"DCGUBUN",		index:'DCGUBUN',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"DCRATE",		index:'DCRATE',			width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"DCAMT",			index:'DCAMT',			width:60,		align:'center',	sortable:false, hidden:true}			
+				,{name:"SUDANGRATE",	index:'SUDANGRATE',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"ADDRATE",		index:'ADDRATE',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"TAXINCOME",		index:'TAXINCOME',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"REMARK",		index:'REMARK',			width:60,		align:'center',	sortable:false, hidden:true}	
+				,{name:"SALERCD",		index:'SALERCD',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"SALERNM",		index:'SALERNM',		width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"REGISTERNUM",	index:'REGISTERNUM',	width:60,		align:'center',	sortable:false, hidden:true}
 			] ,
-			rowNum:10 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,
@@ -184,6 +184,9 @@
 				$("#S_SALEID").val(selRowData.SALEID);
 				$("#PAYSEQ").val(selRowData.PAYSEQ);
 				searchbottomList();
+
+				//콤마 set
+				f_commaInputData("click");
 			} ,
 			
 			loadComplete: function(ids) {
@@ -209,25 +212,25 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
 			colModel:[  	
-				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center'}
-				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center'}
-				, {name:"KNAME",		index:'KNAME',		width:80,		align:'center'}
-				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:110,		align:'center'}
-				, {name:"ADDRATE",		index:'ADDRATE',	width:80,		align:'center'}
-				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:100,		align:'center', edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
-				, {name:"TAXINCOME",	index:'TAXINCOME',	width:100,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center'}
-				, {name:"REMARK",		index:'REMARK',		width:90,		align:'center'}
-				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center', hidden:true}
-				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center', hidden:true}
-				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center', hidden:true}
-//				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
+				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
+				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
+				, {name:"KNAME",		index:'KNAME',		width:80,		align:'center',	sortable:false}
+				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:110,		align:'center',	sortable:false}
+				, {name:"ADDRATE",		index:'ADDRATE',	width:80,		align:'center',	sortable:false}
+				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:100,		align:'center',	sortable:false, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
+				, {name:"TAXINCOME",	index:'TAXINCOME',	width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center',	sortable:false}
+				, {name:"REMARK",		index:'REMARK',		width:90,		align:'center',	sortable:false}
+				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false, hidden:true}
+				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center',	sortable:false, hidden:true}
+				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center',	sortable:false, hidden:true}
+//				{name:"SYSID",			index:'SYSID',		width:60,		align:'center',	sortable:false,  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
 			] ,
-			rowNum:10 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,
@@ -401,7 +404,9 @@
 		
 		var deductamt = "0";
 		
-		
+		//콤마 remove
+		f_commaInputData("remove");
+
 		var sellAmt = parseInt($("#SELLAMT").val());
 		var sudangrate = parseFloat($("#SUDANGRATE").val());
 		var addrate = parseFloat($("#ADDRATE").val());
@@ -433,6 +438,9 @@
 			
 		}
 		$("#DEDUCTAMT").val(deductamt);
+		
+		//콤마 set
+		f_commaInputData("click");
 	}
 	
 	
@@ -463,10 +471,15 @@
 	
 	$(function(){
 		$("#saveButton").click(function(){
-			var saleId =  $("#SALEID").val();
-			var formData = $("#EP011001").serialize()+"&SALEID=" + saleId;
+			
 			var msg = "저장하시겠습니까?";
 			if (confirm(msg) == true) {	
+				//콤마 remove
+				f_commaInputData("remove");
+				
+				var saleId =  $("#SALEID").val();
+				var formData = $("#EP011001").serialize()+"&SALEID=" + saleId;
+
 			   	$.ajax({ 
 					type: 'POST' ,
 					url: "/home/updateEnaSudangMst.do", 
@@ -482,6 +495,10 @@
 						}else{
 							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 						}
+
+						//콤마 set
+						f_commaInputData("click");
+
 						
 					},
 					error:function(e){  
@@ -536,7 +553,51 @@
 			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"인사정보 관리",popOption);
 		}); 		
-	})		
+	})
+	
+	
+	$(function() {
+		inputComma("CONM2");
+		inputComma("CONPY");
+		inputComma("SALEAMT");
+		inputComma("SALEDANGA");
+		inputComma("DCAMT");
+		inputComma("SELLAMT");
+		inputComma("PAYAMT");
+		inputComma("TAXINCOME");
+		inputComma("TAXLOCAL");
+		inputComma("SUPPLYTAX");
+		inputComma("DEDUCTAMT");
+	})
+	
+	function f_commaInputData(str) {
+		if (str == "click") {
+			$("#CONM2").click();
+			$("#CONPY").click();
+			$("#SALEAMT").click();
+			$("#SALEDANGA").click();
+			$("#DCAMT").click();
+			$("#SELLAMT").click();
+			$("#PAYAMT").click();
+			$("#TAXINCOME").click();
+			$("#TAXLOCAL").click();
+			$("#SUPPLYTAX").click();
+			$("#DEDUCTAMT").click();
+		} else if (str == "remove") {
+			$("#CONM2").val(removeComma($("#CONM2").val()));
+			$("#CONPY").val(removeComma($("#CONPY").val()));
+			$("#SALEAMT").val(removeComma($("#SALEAMT").val()));
+			$("#SALEDANGA").val(removeComma($("#SALEDANGA").val()));
+			$("#DCAMT").val(removeComma($("#DCAMT").val()));
+			$("#SELLAMT").val(removeComma($("#SELLAMT").val()));
+			$("#PAYAMT").val(removeComma($("#PAYAMT").val()));
+			$("#TAXINCOME").val(removeComma($("#TAXINCOME").val()));
+			$("#TAXLOCAL").val(removeComma($("#TAXLOCAL").val()));
+			$("#SUPPLYTAX").val(removeComma($("#SUPPLYTAX").val()));
+			$("#DEDUCTAMT").val(removeComma($("#DEDUCTAMT").val()));
+		}
+		
+	}
 </script>
 <body>
 

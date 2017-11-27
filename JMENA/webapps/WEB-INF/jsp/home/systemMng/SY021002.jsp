@@ -61,7 +61,7 @@
 				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:200,		align:'center', sortable:false}
 				, {name:"USEYN",			index:'USEYN',			width:80,		align:'center', sortable:false}
 			] ,
-			rowNum:100 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			viewrecords: true ,
@@ -131,7 +131,7 @@
 			] ,
 			
 			
-			rowNum:100 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			//rowList:[10,20,30] ,

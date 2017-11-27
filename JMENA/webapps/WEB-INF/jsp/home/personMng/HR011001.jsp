@@ -90,30 +90,30 @@
 			colNames:['사번', '성명', '주민번호', '연락처', '지사코드','소속지사','부서코드','소속부서','생일구분'
 			          ,'사업자번호','대표자명','주소','기타연락처','월정지급액','고용구분','직급','직책','입사일','재입사여부','퇴사일','추천인사번','비고'],
 			colModel:[
-				{name:"INSACODE",			index:'INSACODE',		width:100,	align:'center'}
-				, {name:"KNAME",			index:'KNAME',			width:100,	align:'center'}
-				, {name:"JUMINID",			index:'JUMINID',		width:120,	align:'center'}
-				, {name:"MOBILENO",			index:'MOBILENO',		width:100,	align:'center'}
-				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
-				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center'}
-	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true} 		
-	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center'} 		
-				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center', hidden:true}
-				, {name:"SAUPID",			index:'SAUPID',			width:100,	align:'center', hidden:true}
-				, {name:"SAUPOWNER",		index:'SAUPOWNER',		width:100,	align:'center', hidden:true}
-				, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center', hidden:true}
-				, {name:"TELNO",			index:'TELNO',			width:100,	align:'center', hidden:true}
-				, {name:"BASICPAY",			index:'BASICPAY',		width:100,	align:'center', hidden:true}
-				, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',	width:100,	align:'center', hidden:true}
-				, {name:"GRADE",			index:'GRADE',			width:100,	align:'center', hidden:true}
-				, {name:"DUTY",				index:'DUTY',			width:100,	align:'center', hidden:true}
-				, {name:"JOINDATE",			index:'JOINDATE',		width:100,	align:'center', hidden:true}
-				, {name:"REJOINYN",			index:'REJOINYN',		width:100,	align:'center', hidden:true}
-				, {name:"RETIREDATE",		index:'RETIREDATE',		width:100,	align:'center', hidden:true}
-				, {name:"RECOID",			index:'RECOID',			width:100,	align:'center', hidden:true}
-				, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', hidden:true}
+				{name:"INSACODE",			index:'INSACODE',		width:100,	align:'center',	sortable:false}
+				, {name:"KNAME",			index:'KNAME',			width:100,	align:'center',	sortable:false}
+				, {name:"JUMINID",			index:'JUMINID',		width:120,	align:'center',	sortable:false}
+				, {name:"MOBILENO",			index:'MOBILENO',		width:100,	align:'center',	sortable:false}
+				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:100,	align:'center',	sortable:false}
+	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center',	sortable:false, hidden:true} 		
+	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:100,	align:'center',	sortable:false} 		
+				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"SAUPID",			index:'SAUPID',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"SAUPOWNER",		index:'SAUPOWNER',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"TELNO",			index:'TELNO',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"BASICPAY",			index:'BASICPAY',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',	width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"GRADE",			index:'GRADE',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"DUTY",				index:'DUTY',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"JOINDATE",			index:'JOINDATE',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"REJOINYN",			index:'REJOINYN',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"RETIREDATE",		index:'RETIREDATE',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"RECOID",			index:'RECOID',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"REMARK",			index:'REMARK',			width:100,	align:'center',	sortable:false, hidden:true}
 			],
-			rowNum:10,
+			rowNum:10000000,
 			autowidth: true,
 			shrinkToFit: false,
 			rowList:[10,20,30],
@@ -159,6 +159,9 @@
 				selectListEnaAppointItem(selRowData.INSACODE);				
 				selectListEnaTexPayerItem(selRowData.INSACODE);
 				v_rightLastSel = 0;
+				
+				//콤마 set
+				f_commaInputData("click");
 			} ,
 			loadComplete: function() {
 				$("#S_INSACODE").val("");
@@ -184,12 +187,12 @@
 		loadError:function(){alert("Error~!!!!");} ,
 		colNames:['사번','순번', '발령구분', '발령일자', '발령지사코드', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고','발령구분'] ,
 		colModel:[
-			  {name:"INSACODE",			index:'INSACODE',			width:100,		align:'center', hidden:true}
-			, {name:"APPOINTSEQ",		index:'APPOINTSEQ',			width:100,		align:'center', hidden:true}
-			, {name:"APPOINTGUBUN",		index:'APPOINTGUBUN',		width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=002", buildSelect:selectListEnaCode}}
-			, {name:"APPOINTDATE",		index:'APPOINTDATE',		width:100,		align:'center', editable:true}
-			, {name:"APPOINTBRANCHCODE",		index:'APPOINTBRANCHCODE',		width:100,		align:'center', editable:true, hidden:true}
-			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center', editable:true
+			  {name:"INSACODE",			index:'INSACODE',			width:100,		align:'center',	sortable:false, hidden:true}
+			, {name:"APPOINTSEQ",		index:'APPOINTSEQ',			width:100,		align:'center',	sortable:false, hidden:true}
+			, {name:"APPOINTGUBUN",		index:'APPOINTGUBUN',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=002", buildSelect:selectListEnaCode}}
+			, {name:"APPOINTDATE",		index:'APPOINTDATE',		width:100,		align:'center',	sortable:false, editable:true}
+			, {name:"APPOINTBRANCHCODE",		index:'APPOINTBRANCHCODE',		width:100,		align:'center',	sortable:false, editable:true, hidden:true}
+			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center',	sortable:false, editable:true
 				, formatter:function (cellvalue, options, rowObject) {
 					return cellvalue;
 				}, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1,
@@ -224,7 +227,7 @@
 					}]	
 				}}
 //			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
-			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
+			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
 				dataEvents:[{
 					type:'change',
 					fn:function(e){
@@ -251,14 +254,14 @@
 					}
 				}]
 			}}
-			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
-			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
-			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
-			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center', editable:true}
-			, {name:"DEPTGUBUN",		index:'DEPTGUBUN',			width:100,		align:'center', hidden:true }
+			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
+			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
+			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center',	sortable:false, editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
+			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' ,	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center',	sortable:false, editable:true}
+			, {name:"DEPTGUBUN",		index:'DEPTGUBUN',			width:100,		align:'center',	sortable:false, hidden:true }
 		] ,
-		rowNum:10 ,
+		rowNum:10000000,
 		autowidth: true ,
 		shrinkToFit: false,
 		rowList:[10,20,30] ,
@@ -315,17 +318,17 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['사번','순번','소득신고인', '주민번호', '거래은행', '계좌번호', '계좌주', '기본계좌', '비고'] ,
 			colModel:[
-				 {name:"INSACODE",		index:'INSACODE',		width:100,		align:'center', hidden:true}
-				,{name:"ITEMSEQ",		index:'ITEMSEQ',		width:100,		align:'center', hidden:true}
-				,{name:"PAYERNAME",		index:'PAYERNAME',		width:100,		align:'center', editable:true}
-				,{name:"PAYERID",		index:'PAYERID',		width:120,		align:'center', editable:true}
-				,{name:"BANKID",		index:'BANKID',			width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
-				,{name:"ACCTNO",		index:'ACCTNO',			width:100,		align:'center', editable:true}
-				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center', editable:true}
-				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center', sortable:false, editable: true, formatter:test, edittype:'checkbox', editoptions:{value:"Y:N"}}			
-				,{name:"REMARK",		index:'REMARK',			width:100,		align:'center', editable:true}
+				 {name:"INSACODE",		index:'INSACODE',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"ITEMSEQ",		index:'ITEMSEQ',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"PAYERNAME",		index:'PAYERNAME',		width:100,		align:'center',	sortable:false, editable:true}
+				,{name:"PAYERID",		index:'PAYERID',		width:120,		align:'center',	sortable:false, editable:true}
+				,{name:"BANKID",		index:'BANKID',			width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
+				,{name:"ACCTNO",		index:'ACCTNO',			width:100,		align:'center',	sortable:false, editable:true}
+				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center',	sortable:false, editable:true}
+				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center',	sortable:false, sortable:false, editable: true, formatter:test, edittype:'checkbox', editoptions:{value:"Y:N"}}			
+				,{name:"REMARK",		index:'REMARK',			width:100,		align:'center',	sortable:false, editable:true}
 			] ,
-			rowNum:10 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,
@@ -615,11 +618,14 @@
 	})
 	
 	$(function(){
-		$("#saveButton").click(function(){		
-			$("#REJOINYN").is(":checked") ? $("#REJOINYN").val("Y") : $("#REJOINYN").val("N");
-			var formData = $("#HR011001").serialize();
-			return;
+		$("#saveButton").click(function(){
 			if (confirm("저장하시겠습니까?") == true) {
+				//콤마 remove
+				f_commaInputData("remove");
+				
+				$("#REJOINYN").is(":checked") ? $("#REJOINYN").val("Y") : $("#REJOINYN").val("N");
+				var formData = $("#HR011001").serialize();
+
 			   	$.ajax({ 
 					type: 'POST' ,
 					url: "/home/updateEnaInsaMst.do", 
@@ -636,6 +642,9 @@
 								alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 							}
 							
+							//콤마 set
+							f_commaInputData("click");
+							
 						},
 					error:function(e){  
 						alert("인사 정보를 저장하는 중 오류가 발생하였습니다.");
@@ -643,6 +652,9 @@
 				});
 			}else{
 				selectListInsaMst();
+
+				//콤마 set
+				f_commaInputData("click");
 			}
 			
 		}) 
@@ -1084,6 +1096,20 @@
 				$("#bottomList2").trigger("reloadGrid");
 			}); 
 		})
+		
+		$(function() {
+			inputComma("BASICPAY");
+
+		})
+		
+		function f_commaInputData(str) {
+			if (str == "click") {
+				$("#BASICPAY").click();
+			} else if (str == "remove") {
+				$("#BASICPAY").val(removeComma($("#BASICPAY").val()));
+			}
+		}
+			
 </script>
 <body>
 

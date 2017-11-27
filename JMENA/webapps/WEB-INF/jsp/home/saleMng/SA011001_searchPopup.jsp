@@ -74,7 +74,7 @@
 					{name:"CANCELYN",		index:'CANCELYN',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CANCELDATE",		index:'CANCELDATE',		width:100,	align:'center',	sortable:false,	hidden:true}
 				],
-				rowNum:1000,
+				rowNum:10000000,
 				autowidth: true,
 				shrinkToFit: false,
 				rowList:[10,20,30],

@@ -100,21 +100,21 @@
 				          '계약자 주소', '계약면적', '계약평수', '계약대금(실판매가)', '입금구분',
 				          '입금예정일', '입금예정금액', '입금순번'] ,
 				colModel:[  
-					{name:"SALEID",			index:'SALEID',			width:100,		align:'center'}
-					, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center'}
-					, {name:"SALEGUBUN",	index:'SALEGUBUN',		width:100,		align:'center'}
-					, {name:"CONNAME",		index:'CONNAME',		width:100,		align:'center'}
-					, {name:"CONTELNO",		index:'CONTELNO',		width:100,		align:'center'}
-					, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center'}
-					, {name:"CONM2",		index:'CONM2',			width:100,		align:'center'}
-					, {name:"CONPY",		index:'CONPY',			width:100,		align:'center'}
-					, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center'}
-					, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center'}
-					, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center'}
-					, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'center'}
-					, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center', hidden:true}
+					{name:"SALEID",			index:'SALEID',			width:100,		align:'center',	sortable:false}
+					, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center',	sortable:false}
+					, {name:"SALEGUBUN",	index:'SALEGUBUN',		width:100,		align:'center',	sortable:false}
+					, {name:"CONNAME",		index:'CONNAME',		width:100,		align:'center',	sortable:false}
+					, {name:"CONTELNO",		index:'CONTELNO',		width:100,		align:'center',	sortable:false}
+					, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center',	sortable:false}
+					, {name:"CONM2",		index:'CONM2',			width:100,		align:'center',	sortable:false}
+					, {name:"CONPY",		index:'CONPY',			width:100,		align:'center',	sortable:false}
+					, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center',	sortable:false}
+					, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center',	sortable:false}
+					, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center',	sortable:false}
+					, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'center',	sortable:false}
+					, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center',	sortable:false, hidden:true}
 				] ,
-				rowNum:5000,
+				rowNum:10000000,
 				autowidth: true,
 				shrinkToFit: false,
 				rowList:[10,20,30],

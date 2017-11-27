@@ -289,24 +289,24 @@
 				          '입금형태', '입금은행', '지사', '담당자', '소재지', '계약자', '평수', '비고'
 				          ] ,
 				colModel:[
-					{name:"IPGUMID",		index:'IPGUMID',		width:100,		align:'center', hidden:true}
-					,{name:"IPGUMDATE",		index:'IPGUMDATE',		width:100,		align:'center'}
-					,{name:"IPGUMPERSON",	index:'IPGUMPERSON',	width:100,		align:'center'}
-					,{name:"IPGUMAMT",		index:'IPGUMAMT',		width:100,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"IPGUMGUBUN",	index:'IPGUMGUBUN',		width:100,		align:'center'}
-					,{name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"JANAMT",		index:'JANAMT',			width:100,		align:'right', formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					,{name:"IPGUMTYPE",		index:'IPGUMTYPE',		width:100,		align:'center', hidden:true}
-					,{name:"BANKGUBUN",		index:'BANKGUBUN',		width:100,		align:'center', hidden:true}
-					,{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,		align:'center', hidden:true}
-					,{name:"KNAME",			index:'KNAME',			width:100,		align:'center', hidden:true}
-					,{name:"ADDRESS",		index:'ADDRESS',		width:100,		align:'center', hidden:true}
-					,{name:"CONNAME",		index:'CONNAME',		width:100,		align:'center', hidden:true}
-					,{name:"CONPY",			index:'CONPY',			width:100,		align:'center', hidden:true}
-					,{name:"REMARK",		index:'REMARK',			width:100,		align:'center', hidden:true}
+					{name:"IPGUMID",		index:'IPGUMID',		width:100,		align:'center',	sortable:false, hidden:true}
+					,{name:"IPGUMDATE",		index:'IPGUMDATE',		width:100,		align:'center',	sortable:false}
+					,{name:"IPGUMPERSON",	index:'IPGUMPERSON',	width:100,		align:'center',	sortable:false}
+					,{name:"IPGUMAMT",		index:'IPGUMAMT',		width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					,{name:"IPGUMGUBUN",	index:'IPGUMGUBUN',		width:100,		align:'center',	sortable:false}
+					,{name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					,{name:"JANAMT",		index:'JANAMT',			width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					,{name:"IPGUMTYPE",		index:'IPGUMTYPE',		width:100,		align:'center',	sortable:false, hidden:true}
+					,{name:"BANKGUBUN",		index:'BANKGUBUN',		width:100,		align:'center',	sortable:false, hidden:true}
+					,{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,		align:'center',	sortable:false, hidden:true}
+					,{name:"KNAME",			index:'KNAME',			width:100,		align:'center',	sortable:false, hidden:true}
+					,{name:"ADDRESS",		index:'ADDRESS',		width:100,		align:'center',	sortable:false, hidden:true}
+					,{name:"CONNAME",		index:'CONNAME',		width:100,		align:'center',	sortable:false, hidden:true}
+					,{name:"CONPY",			index:'CONPY',			width:100,		align:'center',	sortable:false, hidden:true}
+					,{name:"REMARK",		index:'REMARK',			width:100,		align:'center',	sortable:false, hidden:true}
 	
 				] ,
-				rowNum:100,
+				rowNum:10000000,
 				autowidth: true ,
 				shrinkToFit: false,
 				rowList:[10,20,30] ,
@@ -385,21 +385,21 @@
 				          '계약자 주소', '계약면적', '계약평수', '계약대금(실판매가)', '입금구분',
 				          '입금예정일', '입금예정금액', '처리금액', '처리순번', '입금순번'] ,
 				colModel:[  
-					{name:"SALEID",			index:'SALEID',			width:100,		align:'center', editable:false}
-					, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center', editable:false}
-					, {name:"SALEGUBUN",	index:'SALEGUBUN',		width:100,		align:'center', editable:false}
-					, {name:"CONNAME",		index:'CONNAME',		width:100,		align:'center', editable:false}
-					, {name:"CONTELNO",		index:'CONTELNO',		width:100,		align:'center', editable:false}
-					, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center', editable:false}
-					, {name:"CONM2",		index:'CONM2',			width:100,		align:'center', editable:false}
-					, {name:"CONPY",		index:'CONPY',			width:100,		align:'center', editable:false}
-					, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'right', 	editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center', editable:false}
-					, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center', editable:false}
-					, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'right', 	editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'right', 	editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					, {name:"SEQ",			index:'SEQ',			width:100,		align:'center', editable:false, hidden:true}
-					, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center', editable:false, hidden:true}
+					{name:"SALEID",			index:'SALEID',			width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"SALEDATE",		index:'SALEDATE',		width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"SALEGUBUN",	index:'SALEGUBUN',		width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"CONNAME",		index:'CONNAME',		width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"CONTELNO",		index:'CONTELNO',		width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"CONADDRESS",	index:'CONADDRESS',		width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"CONM2",		index:'CONM2',			width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"CONPY",		index:'CONPY',			width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'right',	sortable:false, 	editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"DEPOSITGUBUN",	index:'DEPOSITGUBUN',	width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"DEPOSITDATE",	index:'DEPOSITDATE',	width:100,		align:'center',	sortable:false, editable:false}
+					, {name:"DEPOSITAMT",	index:'DEPOSITAMT',		width:100,		align:'right',	sortable:false, 	editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"SUGUMAMT",		index:'SUGUMAMT',		width:100,		align:'right',	sortable:false, 	editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"SEQ",			index:'SEQ',			width:100,		align:'center',	sortable:false, editable:false, hidden:true}
+					, {name:"IPGUMSEQ",		index:'IPGUMSEQ',		width:100,		align:'center',	sortable:false, editable:false, hidden:true}
 				] ,
 				rowNum:100 ,
 				autowidth: true ,

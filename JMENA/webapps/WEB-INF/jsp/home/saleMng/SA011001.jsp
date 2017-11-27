@@ -292,7 +292,7 @@
 					{name:"CANCELYN",		index:'CANCELYN',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CANCELDATE",		index:'CANCELDATE',		width:100,	align:'center',	sortable:false,	hidden:true}
 				],
-				rowNum:1000,
+				rowNum:10000000,
 				autowidth: true,
 				shrinkToFit: false,
 				rowList:[10,20,30],
@@ -440,7 +440,7 @@
 					, {name:"IPGUMID",			index:'IPGUMID',		width:100,	align:'center', sortable:false, editable:false, hidden:true}
 					, {name:"SEQ",				index:'SEQ',			width:100,	align:'center', sortable:false, editable:false, hidden:true}
 				],
-				rowNum:1000,
+				rowNum:10000000,
 				autowidth: true,
 				shrinkToFit: false,
 				rowList:[10,20,30],
@@ -526,7 +526,7 @@
 					, {name:"PAPERREGYN",		index:'PAPERREGYN',		width:100,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', sortable:false, editable:true}
 				] ,
-				rowNum:10 ,
+				rowNum:10000000,
 				autowidth: true ,
 				shrinkToFit: false,
 				rowList:[10,20,30] ,
@@ -594,7 +594,7 @@
 					, {name:"CHGPY",	index:'CHGPY',		width:100,	align:'center', sortable:false, editable:true}
 					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', sortable:false, editable:true}
 				] ,
-				rowNum:1000 ,
+				rowNum:10000000,
 				autowidth: true ,
 				rowList:[10,20,30] ,
 				//pager: $('#leftNav') ,

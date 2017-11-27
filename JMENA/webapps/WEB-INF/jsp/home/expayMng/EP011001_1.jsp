@@ -121,28 +121,28 @@
 			colNames:['계약일자', '번호','담당자성명', '매매금액', '계약자성명',
 			          '매출구분','담당자','관리번호','지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액','실판매가'],
 			colModel:[
-				 {name:"SALEDATE",		index:'PAYDATE',		width:120,		align:'center'}
-				,{name:"SALEID",		index:'SALEID',			width:150,		align:'center'}
-				,{name:"SALERNM",		index:'SALERNM',		width:150,		align:'center'}
-				,{name:"SALEAMT",		index:'SALEAMT',		width:120,		align:'center'}
-				,{name:"CONNAME",		index:'CONNAME',		width:150,		align:'center'}
-				,{name:"SALEGUBUN",		index:'SALEGUBUN',		width:100,		align:'center', hidden:true}
-				,{name:"SALERCD",		index:'SALERCD',		width:100,		align:'center', hidden:true}
-//				,{name:"SALERNM",		index:'SALERNM',		width:100,		align:'center', hidden:true}
-				,{name:"MANAGENO",		index:'MANAGENO',		width:100,		align:'center', hidden:true}
-				,{name:"CITYCODE",		index:'CITYCODE',		width:100,		align:'center', hidden:true}
-				,{name:"ADDRESS",		index:'ADDRESS',		width:100,		align:'center', hidden:true}
-				,{name:"CONNAME",		index:'CONNAME',		width:100,		align:'center', hidden:true}
-				,{name:"CONM2",			index:'CONM2',			width:100,		align:'center', hidden:true}
-				,{name:"CONPY",			index:'CONPY',			width:100,		align:'center', hidden:true}
-				,{name:"SALEAMT",		index:'SALEAMT',		width:100,		align:'center', hidden:true}
-				,{name:"SALEDANGA",		index:'SALEDANGA',		width:100,		align:'center', hidden:true}
-				,{name:"DCGUBUN",		index:'DCGUBUN',		width:100,		align:'center', hidden:true}
-				,{name:"DCRATE",		index:'DCRATE',			width:100,		align:'center', hidden:true}
-				,{name:"DCAMT",			index:'DCAMT',			width:100,		align:'center', hidden:true}
-				,{name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center', hidden:true}
+				 {name:"SALEDATE",		index:'PAYDATE',		width:120,		align:'center',	sortable:false}
+				,{name:"SALEID",		index:'SALEID',			width:150,		align:'center',	sortable:false}
+				,{name:"SALERNM",		index:'SALERNM',		width:150,		align:'center',	sortable:false}
+				,{name:"SALEAMT",		index:'SALEAMT',		width:120,		align:'center',	sortable:false}
+				,{name:"CONNAME",		index:'CONNAME',		width:150,		align:'center',	sortable:false}
+				,{name:"SALEGUBUN",		index:'SALEGUBUN',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"SALERCD",		index:'SALERCD',		width:100,		align:'center',	sortable:false, hidden:true}
+//				,{name:"SALERNM",		index:'SALERNM',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"MANAGENO",		index:'MANAGENO',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"CITYCODE",		index:'CITYCODE',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"ADDRESS",		index:'ADDRESS',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"CONNAME",		index:'CONNAME',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"CONM2",			index:'CONM2',			width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"CONPY",			index:'CONPY',			width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"SALEAMT",		index:'SALEAMT',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"SALEDANGA",		index:'SALEDANGA',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"DCGUBUN",		index:'DCGUBUN',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"DCRATE",		index:'DCRATE',			width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"DCAMT",			index:'DCAMT',			width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center',	sortable:false, hidden:true}
 			] ,
-			rowNum:10 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,

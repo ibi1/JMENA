@@ -125,30 +125,30 @@
 			colNames:['사번', '성명', '주민번호', '연락처', '소속지사', '소속부서' ,'소속지사코드' ,'소속부서코드','생일구분'
 			          ,'사업자번호','대표자명','주소','기타연락처','월정지급액','고용구분','직급','직책','입사일','재입사여부','퇴사일','추천인사번','비고'],
 			colModel:[
-				{name:"INSACODE",			index:'INSACODE',		width:100,	align:'center'}
-				, {name:"KNAME",			index:'KNAME',			width:150,	align:'center'}
-				, {name:"JUMINID",			index:'JUMINID',		width:150,	align:'center'}
-				, {name:"MOBILENO",			index:'MOBILENO',		width:120,	align:'center'}
-				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:120,	align:'center'}
-	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:120,	align:'center'}
- 				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', hidden:true}
- 	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center', hidden:true} 		
-				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center', hidden:true}
-				, {name:"SAUPID",			index:'SAUPID',			width:100,	align:'center', hidden:true}
-				, {name:"SAUPOWNER",		index:'SAUPOWNER',		width:100,	align:'center', hidden:true}
-				, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center', hidden:true}
-				, {name:"TELNO",			index:'TELNO',			width:100,	align:'center', hidden:true}
-				, {name:"BASICPAY",			index:'BASICPAY',		width:100,	align:'center', hidden:true}
-				, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',	width:100,	align:'center', hidden:true}
-				, {name:"GRADE",			index:'GRADE',			width:100,	align:'center', hidden:true}
-				, {name:"DUTY",				index:'DUTY',			width:100,	align:'center', hidden:true}
-				, {name:"JOINDATE",			index:'JOINDATE',		width:100,	align:'center', hidden:true}
-				, {name:"REJOINYN",			index:'REJOINYN',		width:100,	align:'center', hidden:true}
-				, {name:"RETIREDATE",		index:'RETIREDATE',		width:100,	align:'center', hidden:true}
-				, {name:"RECOID",			index:'RECOID',			width:100,	align:'center', hidden:true}
-				, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', hidden:true}
+				{name:"INSACODE",			index:'INSACODE',		width:100,	align:'center',	sortable:false}
+				, {name:"KNAME",			index:'KNAME',			width:150,	align:'center',	sortable:false}
+				, {name:"JUMINID",			index:'JUMINID',		width:150,	align:'center',	sortable:false}
+				, {name:"MOBILENO",			index:'MOBILENO',		width:120,	align:'center',	sortable:false}
+				, {name:"BRANCHNAME",		index:'BRANCHNAME',		width:120,	align:'center',	sortable:false}
+	 			, {name:"DEPTNAME",			index:'DEPTNAME',		width:120,	align:'center',	sortable:false}
+ 				, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center',	sortable:false, hidden:true}
+ 	 			, {name:"DEPTCODE",			index:'DEPTCODE',		width:100,	align:'center',	sortable:false, hidden:true} 		
+				, {name:"BIRTHDAYGUBUN",	index:'BIRTHDAYGUBUN',	width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"SAUPID",			index:'SAUPID',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"SAUPOWNER",		index:'SAUPOWNER',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"TELNO",			index:'TELNO',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"BASICPAY",			index:'BASICPAY',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',	width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"GRADE",			index:'GRADE',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"DUTY",				index:'DUTY',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"JOINDATE",			index:'JOINDATE',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"REJOINYN",			index:'REJOINYN',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"RETIREDATE",		index:'RETIREDATE',		width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"RECOID",			index:'RECOID',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"REMARK",			index:'REMARK',			width:100,	align:'center',	sortable:false, hidden:true}
 			],
-			rowNum:10,
+			rowNum:10000000,
 			autowidth: true,
 			shrinkToFit: false,
 			rowList:[10,20,30],

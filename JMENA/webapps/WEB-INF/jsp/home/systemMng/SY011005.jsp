@@ -60,7 +60,7 @@
 					{name:"CCODE",			index:'CCODE',			width:70,		align:'center', sortable:false}
 					, {name:"CCODENAME",	index:'CCODENAME',		width:200,		align:'center', sortable:false}
 				] ,
-				rowNum:100,
+				rowNum:10000000,
 				autowidth: true ,
 				shrinkToFit: false,
 				rowList:[10,20,30] ,
@@ -140,7 +140,7 @@
 					, {name:"AUX4",			index:'aux4',		width:100,		align:'center', sortable:false, editable: true}
 					, {name:"AUX4DESC",		index:'AUX4DESC',	width:100,		align:'center', sortable:false, editable: true}
 				] ,
-				rowNum:100,
+				rowNum:10000000,
 				autowidth: true ,
 				shrinkToFit: false,
 				rowList:[10,20,30] ,

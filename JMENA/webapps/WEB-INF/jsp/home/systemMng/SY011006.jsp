@@ -50,7 +50,7 @@
 					, {name:"USEYN",		index:'USEYN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
 					, {name:"AUXCODE",		index:'AUXCODE',	width:100,	align:'center', sortable:false, editable:true}
 				] ,
-				rowNum:1000,
+				rowNum:10000000,
 				autowidth: true ,
 				shrinkToFit: false,
 				rowList:[10,20,30] ,

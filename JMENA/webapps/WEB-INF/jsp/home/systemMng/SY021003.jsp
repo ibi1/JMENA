@@ -57,7 +57,7 @@
 				, {name:"CITYNAME",		index:'CITYNAME',		width:200,		align:'center', sortable:false}
 				, {name:"SORTKEY",		index:'SORTKEY',		width:80,		align:'center', sortable:false}
 			] ,
-			rowNum:100 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,
@@ -124,7 +124,7 @@
 				, {name:"REMARK",		index:'REMARK',			width:250,	align:'center', sortable:false, editable:true}
 				, {name:"SORTKEY",		index:'SORTKEY',		width:80,	align:'center', sortable:false, editable:true}
 			] ,
-			rowNum:100 ,
+			rowNum:10000000,
 			autowidth: true ,
 			shrinkToFit: false,
 			rowList:[10,20,30] ,

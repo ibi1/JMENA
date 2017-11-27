@@ -67,7 +67,7 @@
 						, {name:"PHONENO",		index:'PHONENO',	width:100,	align:'center', sortable:false, hidden:true}
 						, {name:"MOBILENO",		index:'MOBILENO',	width:100,	align:'center', sortable:false, hidden:true}
 					] ,
-					rowNum:100,
+					rowNum:10000000,
 					autowidth: true ,
 					shrinkToFit: false,
 					rowList:[10,20,30] ,
@@ -134,7 +134,7 @@
 						, {name:"AUTH_YN",		index:'AUTH_YN',	width:80,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{value: "Y:Y;N:N"}}
 						, {name:"REMARK",		index:'REMARK',		width:250,	align:'center', sortable:false, editable:true}
 					] ,
-					rowNum:100,
+					rowNum:10000000,
 					autowidth: true ,
 					shrinkToFit: false,
 					rowList:[10,20,30] ,
