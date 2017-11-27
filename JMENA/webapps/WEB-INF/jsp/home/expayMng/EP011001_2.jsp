@@ -113,8 +113,8 @@
 				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
 				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
 				, {name:"KNAME",		index:'KNAME',		width:80,		align:'center',	sortable:false}
-				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:80,		align:'center',	sortable:false}
-				, {name:"ADDRATE",		index:'ADDRATE',	width:60,		align:'center',	sortable:false}
+				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:100,		align:'center',	sortable:false}
+				, {name:"ADDRATE",		index:'ADDRATE',	width:100,		align:'center',	sortable:false}
 				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
 				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center',	sortable:false, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
 				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
@@ -123,9 +123,9 @@
 				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
 				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center',	sortable:false}
 				, {name:"REMARK",		index:'REMARK',		width:60,		align:'center',	sortable:false}
-				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false}
-				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center',	sortable:false}
-				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center',	sortable:false}
+				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false, hidden:true}
+				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center',	sortable:false, hidden:true}
+				, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center',	sortable:false, hidden:true}
 			] ,
 			rowNum:10000000,
 			autowidth: true ,
@@ -171,7 +171,7 @@
 			colNames:['성명', '주민번호','대표자명', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '거래은행', '계좌번호','계좌주','판매번호','순번','신고인순번','비고'],
 			colModel:[  	
 				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center',	sortable:false, editable:true}
-				, {name:"PAYERID",		index:'PAYERID',		width:80,		align:'center',	sortable:false, editable:true}
+				, {name:"PAYERID",		index:'PAYERID',		width:120,		align:'center',	sortable:false, editable:true}
 				, {name:"SAUPOWNER",	index:'SAUPOWNER',		width:80,		align:'center',	sortable:false, editable:true}
 				, {name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right' ,	sortable:false,  editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
  					editoptions:{
