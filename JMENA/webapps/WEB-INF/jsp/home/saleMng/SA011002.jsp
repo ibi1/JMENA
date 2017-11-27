@@ -346,6 +346,9 @@
 					$("input:radio[name=REGYN]:input[value=" + selRowData.REGYN + "]").attr("checked", true);
 					//등기일자
 					$("#REGDATE").val(selRowData.REGDATE);
+					
+					//콤마 set
+					f_commaInputData("click");
 				} ,
 				loadComplete: function(ids) {
 					var saleId = $("#SALEID").val();
@@ -636,7 +639,11 @@
 					}
 				}
 				
-				$("#MANAGENO").jqxInput({disabled: false});
+				if ($("#MANAGENO").val() == "") {
+					alert("관리번호를 조회하셔야 합니다.");
+					
+					return false;
+				}
 				
 				var msg = "";
 				if ($("#S_FLAG_L").val() == "I") {
@@ -645,8 +652,12 @@
 					msg = "수정하시겠습니까?"
 				}
 				if (confirm(msg) == true) {
+					$("#MANAGENO").jqxInput({disabled: false});
 					$('#SALEID').jqxInput({disabled: false });
 					
+					//콤마 remove
+					f_commaInputData("remove");
+
 					$.ajax({ 
 						type: 'POST' ,
 						data: $("#SA011002").serialize(),
@@ -887,6 +898,40 @@
 				}
 			});
 		})
+		
+		$(function() {
+			inputComma("CONBM2");
+			inputComma("CONJM2");
+			inputComma("CONBPY");
+			inputComma("CONJPY");
+			inputComma("CONM2");
+			inputComma("CONPY");
+			inputComma("BRROWAMT");
+			inputComma("PAYAMT");
+		})
+		
+		function f_commaInputData(str) {
+			if (str == "click") {
+				$("#CONBM2").click();
+				$("#CONJM2").click();
+				$("#CONBPY").click();
+				$("#CONJPY").click();
+				$("#CONM2").click();
+				$("#CONPY").click();
+				$("#BRROWAMT").click();
+				$("#PAYAMT").click();
+			} else if (str == "remove") {
+				$("#CONBM2").val(removeComma($("#CONBM2").val()));
+				$("#CONJM2").val(removeComma($("#CONJM2").val()));
+				$("#CONBPY").val(removeComma($("#CONBPY").val()));
+				$("#CONJPY").val(removeComma($("#CONJPY").val()));
+				$("#CONM2").val(removeComma($("#CONM2").val()));
+				$("#CONPY").val(removeComma($("#CONPY").val()));
+				$("#BRROWAMT").val(removeComma($("#BRROWAMT").val()));
+				$("#PAYAMT").val(removeComma($("#PAYAMT").val()));
+			}
+			
+		}
 	</script>
 </head>
 <body>

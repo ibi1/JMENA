@@ -45,6 +45,7 @@
 		}
         
     </style>
+	<script type="text/javascript" src="/resource/js/common.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery.js"></script>
 	<script type="text/javascript" src="/resource/js/jquery-1.7.2.min.js"></script>	
  	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxcore.js"></script>

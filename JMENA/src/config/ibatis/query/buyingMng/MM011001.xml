@@ -260,15 +260,16 @@
 		SET
 			OPENYN = #OPENYN#,
 			HOLDINGYN = #HOLDINGYN#,
-			<isNotEmpty property="HOLDINGM2">
+			<isEqual property="HOLDINGYN" compareValue="Y">
 			HOLDINGM2 = #HOLDINGM2#,
-			</isNotEmpty>
-			<isNotEmpty property="HOLDINGPY">
 			HOLDINGPY = #HOLDINGPY#,
-			</isNotEmpty>
-			<isNotEmpty property="HOLDINGDATE">
 			HOLDINGDATE = #HOLDINGDATE#,
-			</isNotEmpty>
+			</isEqual>
+			<isEqual property="HOLDINGYN" compareValue="N">
+			HOLDINGM2 = NULL,
+			HOLDINGPY = NULL,
+			HOLDINGDATE = NULL,
+			</isEqual>
 			REMARK = #REMARK#,
 			UPDATEUSER = #USERID#,
 			UPDATEDATE = NOW()
@@ -283,15 +284,9 @@
 			BRANCHCODE,
 			OPENYN,
 			HOLDINGYN,
-			<isNotEmpty property="HOLDINGM2">
 			HOLDINGM2,
-			</isNotEmpty>
-			<isNotEmpty property="HOLDINGPY">
 			HOLDINGPY,
-			</isNotEmpty>
-			<isNotEmpty property="HOLDINGDATE">
 			HOLDINGDATE,
-			</isNotEmpty>
 			REMARK,
 			INSERTUSER
 		)
@@ -300,15 +295,16 @@
 			#BRANCHCODE#,
 			#OPENYN#,
 			#HOLDINGYN#,
-			<isNotEmpty property="HOLDINGM2">
+			<isEqual property="HOLDINGYN" compareValue="Y">
 			#HOLDINGM2#,
-			</isNotEmpty>
-			<isNotEmpty property="HOLDINGPY">
 			#HOLDINGPY#,
-			</isNotEmpty>
-			<isNotEmpty property="HOLDINGDATE">
 			#HOLDINGDATE#,
-			</isNotEmpty>
+			</isEqual>
+			<isEqual property="HOLDINGYN" compareValue="N">
+			NULL,
+			NULL,
+			NULL,
+			</isEqual>
 			#REMARK#,
 			#USERID#
 		)

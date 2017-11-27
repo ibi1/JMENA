@@ -204,6 +204,8 @@
 	
 	$(function(){
 		$("#selectButton").click(function(){
+			//콤마 remove
+			f_commaInputData("remove");
 			
 			var S_IPGUMDATE_FR = $("#S_IPGUMDATE_FR").val();
 			var S_IPGUMDATE_TO = $("#S_IPGUMDATE_TO").val();
@@ -216,11 +218,19 @@
 			if (S_IPGUMDATE_FR == "" || S_IPGUMDATE_TO == "") {
 				alert("입금기간을 입력하셔야합니다.");
 				
-				$("#S_SALEDATE").focus();				
+				$("#S_SALEDATE").focus();	
+				
+				//콤마 set
+				f_commaInputData("click");
+				
 				return false;
 			}
 			
 			f_selectListSA012005(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
+			
+			//콤마 set
+			f_commaInputData("click");
+			
 		});
 		
 		$("#excelButton").click(function () {
@@ -230,6 +240,19 @@
 		
 	})
 	
+		$(function() {
+			inputComma("S_IPGUMAMT");
+		})
+		
+		function f_commaInputData(str) {
+			if (str == "click") {
+				$("#S_IPGUMAMT").click();
+			} else if (str == "remove") {
+				$("#S_IPGUMAMT").val(removeComma($("#S_IPGUMAMT").val()));
+
+			}
+			
+		}
 	
 </script>
 <body>
