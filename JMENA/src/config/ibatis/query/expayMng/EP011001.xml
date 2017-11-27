@@ -144,12 +144,12 @@
 			<isNotEmpty property="S_SALERCD">
 	 			AND T1.SALERCD = #S_SALERCD# 
 			</isNotEmpty>
-			<isNotEmpty property="S_BRANCHCODE">
+			<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
 	 			AND T1.BRANCHCODE = #S_BRANCHCODE# 
-			</isNotEmpty>
-			<isNotEmpty property="S_DEPTCODE">
+			</isNotEqual>
+			<isNotEqual property="S_DEPTCODE" compareValue="ALL">
 	 			AND T1.DEPTCODE = #S_DEPTCODE# 
-			</isNotEmpty>
+			</isNotEqual>
 		</isEmpty>		
 		ORDER BY T1.SALEID ASC, T1.PAYSEQ
 	</select>		

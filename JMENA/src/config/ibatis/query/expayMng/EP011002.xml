@@ -84,12 +84,12 @@
 		<isNotEmpty property="S_PAYDATE">
 			AND T1.PAYDATE  = #S_PAYDATE#
 		</isNotEmpty>
- 		<isNotEmpty property="S_BRANCHCODE">
+ 		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
 			AND T1.BRANCHCODE = #S_BRANCHCODE#
-		</isNotEmpty>
-		<isNotEmpty property="S_DEPTCODE">
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
 			AND T1.DEPTCODE = #S_DEPTCODE#
-		</isNotEmpty>
+		</isNotEqual>
 	</select>
 
 	<select id="selectListEnaMonthPayMstCrt" resultMap="EP011002Datas">

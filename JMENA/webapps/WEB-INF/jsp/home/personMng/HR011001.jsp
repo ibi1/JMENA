@@ -61,8 +61,6 @@
 		f_selectListEnaGradeCode();
 		f_selectListEnaDutyCode();
 		$("#APPOINTBRANCH").val("");
-// 		$("#S_BRANCHCODE").val("00001");
-// 		$("#S_DEPTCODE").val("00101");
 				
 		selectListInsaMst();
 		selectListEnaAppointItem(INSACODE);
@@ -71,8 +69,8 @@
 
 
 	function selectListInsaMst(){	
-		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-		if($("#S_BRANCHCODE").val() == "" && $("#S_DEPTCODE").val() == "" && $("#S_KNAME").val() == "" && $("#S_JUMINID").val() == ""){
+		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용		
+		if($("#S_BRANCHCODE").val() == "ALL" && $("#S_DEPTCODE").val() == "ALL" && $("#S_KNAME").val() == "" && $("#S_JUMINID").val() == ""){
 			alert("조회조건을 입력해 주세요");
 			return;
 		}
@@ -144,8 +142,6 @@
 				$("#MOBILENO").val(selRowData.MOBILENO);
 				$("#TELNO").val(selRowData.TELNO);
 				$("#BRANCHCODE").val(selRowData.BRANCHCODE);
-//				$("#BRANCHCODE").val($("#leftList [name=BRANCHCODE] option:selected").val());
-//				$("#DEPTCODE").val($("#leftList [name=DEPTCODE] option:selected").val());
 				$("#BASICPAY").val(selRowData.BASICPAY);
 				$("input:radio[name=EMPLOYGUBUN]:input[value=" + selRowData.EMPLOYGUBUN + "]").attr("checked", true);
 				$("#GRADE").val(selRowData.GRADE);
@@ -246,30 +242,7 @@
 							success: function(data){
 								data.DeptGubun.forEach(function(currentValue, index, array){									
 										$("#bottomList1").setCell(ids,"DEPTGUBUN",currentValue.DEPTGUBUN);
-// 									if(currentValue.DEPTGUBUN == "001"){
-// 										$("#bottomList1").setCell(ids,"DEPTGUBUN","001");
-// 									}else{
-// 										$("#bottomList1").setCell(ids,"DEPTGUBUN","");
-// 									}
-									
-										
-// 									if(currentValue.DEPTGUBUN == "001"){
-// 										alert("al");
-// 										//$('#bottomList1').jqGrid('editCell', , "PREBASICPAY", true);
-// 										//grid.editCell( nextRowID, 7, false);
-// 										//$('#' + ids + '_PREBASICPAY').attr('editable', true);
-// 										//$('#bottomList1').setColProp("PREBASICPAY",{editable:true});
-// 										$('#bottomList1').jqGrid('setCell', ids,  "PREBASICPAY", "", 'editable-cell');
-// 										$('#bottomList1').jqGrid('addClass','editable-cell');
-// 										$('#bottomList1').jqGrid('setCell', ids,  'PREBASICPAY', '', {editable:'0'});												
-// 									}else{
-// 										alert("ab"); // 여기가 수정이 되야 해요? 아니면 위에?위입니다
-// 										$('#bottomList1').jqGrid('addClass','not-editable-cell');
-// 										$('#bottomList1').jqGrid('setCell', ids,  'EMPLOYGUBUN', '', {editable:'1'});												
-// 										$('#bottomList1').jqGrid('selColProp', ids,  "EMPLOYGUBUN", "", 'not-editable-cell');
-// 									}
 								});								
-								
 							},
 							error:function(e){  
 								alert("[ERROR]매출 합계 데이터 호출 중 오류가 발생하였습니다.");
@@ -279,7 +252,6 @@
 				}]
 			}}
 			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
-//			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
 			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -314,20 +286,13 @@
 		        
 		        v_rightLastSel = id;
 			}
-			
-			//var cellData = $("#bottomList1").jqGrid('getRowData', id); //셀 전체 데이터 가져오기
-			
 		},
 		loadComplete: function(id) {
 			var ids = $(this).jqGrid('getDataIDs');
 			
 			ids.some(function(currentValue, index, array){
 				var tt = $("#bottomList1").jqGrid("getRowData", ids[index]);
-				//alert(tt.APPOINTBRANCHCODE);
-				//$(this).jqGrid('setCell', ids[index],  'PREBASICPAY', 'editable-cell'); // 특정 cell 수정 가능하게
 				$(this).jqGrid('setCell', ids[index],  'PREBASICPAY', 'not-editable-cell'); // 특정 cell 수정 못하게
-
-				//$(this).jqGrid('editCell', id, 10, false);
 			});
 			
 			
@@ -399,9 +364,6 @@
 		selChk = cellvalue;		
 		return "<input type=\"checkbox\"" + checked + "onclick=\"onClickTest('" + options.rowId + "');\"/>";
 		
-		
-		
-//		return "<input type='checkbox'" + (cellvalue == "Y" ? "checked='checked'" : "") + "onclick='onClickTest("+options.rowId +","+cellvalue+")'/>";
 	}
 	
 	function onClickTest(ids) {		
@@ -413,23 +375,6 @@
 		$("#searchButton").click(function(){
 			selectListInsaMst();
 		}); 
-		/*
-		$("#bottomDiv1").click(function(){
-			$("#table1").show();
-			$("#table2").hide();
-			var insacode = $("#INSACODE").val();
-			selectListEnaAppointItem(insacode);
-			v_rightLastSel = 0;
-		});		
-		
-		$("#bottomDiv2").click(function(){
-			$("#table1").hide();
-			$("#table2").show();
-			var insacode = $("#INSACODE").val();
-			selectListEnaTexPayerItem(insacode);
-			v_rightLastSel = 0;
-		}); 		
-		*/
 		$("#insaButton").click(function(){
 			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
 			var popOption = "width=760, height=240, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
@@ -457,11 +402,12 @@
 			dataType : 'json' , 
 			success: function(data){
 				var inHtml = "";
-//				inHtml += "<option value=''>전체</option>\n";
+				inHtml1 += "<option value='ALL'>전체</option>\n";
 				data.branchMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+					inHtml1 += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 				});
-				$("#S_BRANCHCODE").append(inHtml);
+				$("#S_BRANCHCODE").append(inHtml1);
 				$("#BRANCHCODE").append(inHtml);
 				f_selectListEnaDeptCode("0","");
 			},
@@ -500,13 +446,15 @@
 			},
 			success: function(data){
 				
-				var inHtml = "";
-//					inHtml += "<option value=''>전체</option>\n";
+				var inHtml = "";					
+					inHtml1 = "<option value='ALL'>전체</option>\n";						
+					
 				data.deptMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+					inHtml1 += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 				});
 				if(flag == "0"){
-					$("#S_DEPTCODE").append(inHtml);
+					$("#S_DEPTCODE").append(inHtml1);
 					$("#DEPTCODE").append(inHtml);					
 				}else if(flag == "1"){
 					$("#S_DEPTCODE").append(inHtml);					
@@ -515,7 +463,7 @@
 				}else if(flag == "3"){
 					$("#DEPTCODE").append(inHtml);					
 				}else if(flag == "4"){
-					$("#S_DEPTCODE").append(inHtml);
+					$("#S_DEPTCODE").append(inHtml1);
 					$("#DEPTCODE").append(inHtml);
 				}
 				if(deptcode != ""){
@@ -978,12 +926,7 @@
 				alert("그리드를 선택하셔야 합니다.");
 				
 				return false;
-			}
-			
-			//jqGrid SelectBox 는 뷰 모드 전에 값을 가져옴.
-//			var appointGubun = $("#bottomList1 [name=APPOINTGUBUN] option:selected").val();
-						
-			
+			}			
 			 
 			var bankId = $("#bottomList2 [name=BANKID] option:selected").val();
 			
@@ -991,10 +934,6 @@
 			
 			var rec = $("#bottomList2").getGridParam("reccount");
 			var cnt = 0
-			
-			//$("#bottomList2 input:checkbox[id='BASICACCT" + ids + "']").is(":checked",false);
-			
-			
 			$('#bottomList2').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 	
 			var cellData = $("#bottomList2").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기

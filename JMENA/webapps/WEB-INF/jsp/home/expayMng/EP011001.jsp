@@ -281,7 +281,7 @@
 			url: "/codeCom/branchMstList.do", 
 			dataType : 'json' , 
 			success: function(data){
-				var inHtml = "";
+				var inHtml = "<option value='ALL'>전체</option>\n";
 				data.branchMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 				});
@@ -308,7 +308,7 @@
 				BRANCHCODE : BRANCHCODE,
 			},
 			success: function(data){
-				var inHtml = "";
+				var inHtml = "<option value='ALL'>전체</option>\n";
 				data.deptMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 				});				
@@ -320,6 +320,12 @@
 		});
 	}
 	
+	$(function(){
+		$("#S_BRANCHCODE").change(function() {
+			f_selectListEnaDeptCode();
+		});
+	});
+	
 	
 	function f_selectEnaCode(CCODE){
 	   	$.ajax({ 
@@ -330,7 +336,7 @@
 				CCODE : CCODE,
 			},
 			success: function(data){
-				var inHtml = "";
+				var inHtml = "";				
 				data.dcodeList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 				});
