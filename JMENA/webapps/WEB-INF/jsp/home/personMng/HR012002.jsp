@@ -46,6 +46,7 @@
 			dataType : 'json' , 
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.branchMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 				});
@@ -78,6 +79,7 @@
 			},
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.deptMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 				});
@@ -223,11 +225,13 @@
 					<th width="120">지사</th>
 					<td width="140">
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:120px">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 					<th width="120">부서</th>
 					<td width="140">
 						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 					<th width="120">성명</th>

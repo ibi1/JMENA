@@ -47,6 +47,7 @@
 			dataType : 'json' , 
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.cityMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
 				});
@@ -80,6 +81,7 @@
 			},
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.cityDtlList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.BOROUGHCODE + "'>" + currentValue.BOROUGHNAME + "</option>\n";
 				});
@@ -204,11 +206,13 @@
 					<th width="120">지역구분</th>
 					<td width="150">
 						<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 					<th width="120">시/도 구분</th>
 					<td width="150">
 						<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:130px">
+							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 					<th width="120">주소 및 지번</th>

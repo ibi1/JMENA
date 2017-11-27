@@ -57,12 +57,12 @@
 				and t1.joindate between #S_JOINDATE_FR# and #S_JOINDATE_TO#
 			</isNotEmpty>
 		</isNotEmpty>
-		<isNotEmpty property="S_BRANCHCODE">
+		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
 			and t1.branchcode = #S_BRANCHCODE#
-		</isNotEmpty>
-		<isNotEmpty property="S_DEPTCODE">
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
 			and t1.deptcode = #S_DEPTCODE#
-		</isNotEmpty>
+		</isNotEqual>
 		<isNotEmpty property="S_KNAME">
 			and t1.kname like '%$S_KNAME$%'
 		</isNotEmpty>

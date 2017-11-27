@@ -70,12 +70,12 @@
 		<isNotEmpty property="S_JOINDATE">
 			and t1.joindate <![CDATA[ >= ]]>  #S_JOINDATE#
 		</isNotEmpty>
-		<isNotEmpty property="S_BRANCHCODE">
+		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
 			and t1.branchcode = #S_BRANCHCODE#
-		</isNotEmpty>
-		<isNotEmpty property="S_DEPTCODE">
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
 			and t1.deptcode = #S_DEPTCODE#
-		</isNotEmpty>
+		</isNotEqual>
 		and t1.retiredate is null
 		order by t1.joindate asc
 	</select>

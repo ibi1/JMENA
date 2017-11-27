@@ -59,24 +59,22 @@
 			AND PAYGUBUN ='003'
 			AND PAYDATE = (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003')) AS PAYAMT3,
             (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003') AS PAYDATE3,
-            (SELECT PAYAMT FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYAMT4,
-            (SELECT PAYDATE FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYDATE4,
+            (SELECT SUM(PAYAMT) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYAMT4,
+            (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYDATE4,
 			(SELECT SUM(PAYAMT) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYYN ='Y') AS JANPAYAMT,
 			<!-- (SELECT OPENYN FROM mm_salesopentb WHERE BUYID = T1.BUYID) AS OPENYN, -->
 			'Y' AS OPENYN,
 			T1.REMARK
 		FROM mm_buymst T1
 		WHERE 1=1
-		<isNotEmpty property="S_CITYCODE">
-			AND T1.CITYCODE = #S_CITYCODE#
+		<isNotEmpty property="LS_BUYDATE_FR">
+			<isNotEmpty property="LS_BUYDATE_TO">
+				AND T1.BUYDATE BETWEEN #LS_BUYDATE_FR# AND #LS_BUYDATE_TO#
+			</isNotEmpty>	
 		</isNotEmpty>
-		<isNotEmpty property="S_BOROUGHCODE">
-			AND T1.BOROUGHCODE = #S_BOROUGHCODE#
-		</isNotEmpty>
-		<isNotEmpty property="S_ADDRESS">
-			AND T1.ADDRESS LIKE '%$S_ADDRESS$%'
-		</isNotEmpty>
+		<isNotEqual property="BUYGUBUN" compareValue="ALL">
+			AND T1.BUYGUBUN = #BUYGUBUN#
+		</isNotEqual>
 		ORDER BY T1.CITYCODE, T1.BOROUGHCODE
 	</select>
-	
 </sqlMap>

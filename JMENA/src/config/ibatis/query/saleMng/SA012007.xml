@@ -44,12 +44,12 @@
 			t1.buydanga
 		from mm_buymst t1
 		where 1=1
-		<isNotEmpty property="S_CITYCODE">
+		<isNotEqual property="S_CITYCODE" compareValue="ALL">
 		    AND citycode = #S_CITYCODE#
-		</isNotEmpty>
-		<isNotEmpty property="S_BOROUGHCODE">
+		</isNotEqual>
+		<isNotEqual property="S_BOROUGHCODE" compareValue="ALL">
 		    AND boroughcode = #S_BOROUGHCODE#
-		</isNotEmpty>
+		</isNotEqual>
 		<isNotEmpty property="S_ADDRESS">
 		    AND address LIKE '%$S_ADDRESS$%'
 		</isNotEmpty>

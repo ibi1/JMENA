@@ -7,13 +7,9 @@
 <title>Insert title here</title>
 
 	<script type="text/javascript">
+		var auth_p = true;
+	
 		$(document).ready(function(){
-			
-			var S_CITYCODE = "";
-			var S_BOROUGHCODE = "";
-			var S_ADDRESS = "";
-			var auth_p = true;
-			
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -24,59 +20,32 @@
 				auth_p = false;
 			<% }%>
 			
-			$("#S_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+			$("#LS_BUYDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#LS_BUYDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			
-			
-			f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
-			f_selectListEnaCityCode();
-			f_selectListEnaBoroughCode();
+			f_selectListMM012001();
+			f_selectListEnaBuyGubnCode();
 		});
 	
 	
-		function f_selectListEnaCityCode(){
-			$("#S_CITYCODE").empty().data('options');
+		function f_selectListEnaBuyGubnCode(){
+			var CCODE = "014";	//매입구분
+			$("#BUYGUBUN").empty().data('options');
 		   	$.ajax({ 
 				type: 'POST' ,
-				url: "/codeCom/cityMstList.do", 
-				dataType : 'json' , 
-				success: function(data){
-					var inHtml = "";
-					data.cityMstList.forEach(function(currentValue, index, array){
-						inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
-					});
-					$("#S_CITYCODE").append(inHtml);
-					f_selectListEnaBoroughCode();
-				},
-				error:function(e){  
-					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
-				}  
-			});
-		}
-	
-		$(function(){
-			$("#S_CITYCODE").change(function() {
-				f_selectListEnaBoroughCode();
-			});
-		});
-		
-		
-		function f_selectListEnaBoroughCode(){
-			var CITYCODE = $("#S_CITYCODE").val();
-			$("#S_BOROUGHCODE").empty().data('options');
-	
-		   	$.ajax({ 
-				type: 'POST' ,
-				url: "/codeCom/cityDtlList.do", 
-				dataType : 'json' , 
+				url: "/codeCom/dcodeList.do", 
+				dataType : 'json' ,
 				data : {
-					CITYCODE : CITYCODE,
+					CCODE : CCODE,
 				},
 				success: function(data){
 					var inHtml = "";
-					data.cityDtlList.forEach(function(currentValue, index, array){
-						inHtml += "<option value='" + currentValue.BOROUGHCODE + "'>" + currentValue.BOROUGHNAME + "</option>\n";
+					data.dcodeList.forEach(function(currentValue, index, array){
+						if (currentValue.DCODE != '003') {
+							inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+						}
 					});
-					$("#S_BOROUGHCODE").append(inHtml);
+					$("#S_BUYGUBUN").append(inHtml);
 				},
 				error:function(e){  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -84,10 +53,8 @@
 			});
 		}
 		
-		function f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
-			S_ADDRESS = encodeURI(encodeURIComponent(S_ADDRESS));
-			
-			var url = "/home/selectListMM012001.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS;
+		function f_selectListMM012001(){
+			var url = "/home/selectListMM012001.do?LS_BUYDATE_FR=" + $("#LS_BUYDATE_FR").val() + "&LS_BUYDATE_TO=" + $("#LS_BUYDATE_TO").val() + "&S_BUYGUBUN=" + $("#S_BUYGUBUN").val();
 			
 	        // prepare the data
 	        var source = {
@@ -173,11 +140,7 @@
 	
 		$(function(){
 			$("#selectButton").click(function(){
-				var S_CITYCODE = $("#S_CITYCODE").val();
-				var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
-				var S_ADDRESS = $("#S_ADDRESS").val();
-				
-				f_selectListMM012001(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+				f_selectListMM012001();
 			});
 				
 			$("#excelButton").click(function () {
@@ -202,21 +165,17 @@
 			</table>
 		</div>
 		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<form name="searchForm" method="POST" action="" class="" >
+			<form name="MM012001">
 				<table>
 					<tr>
-						<th width="120">지역구분</th>
+						<th width="120">잔금일</th>
+						<td><input type="text" id="LS_BUYDATE_FR" name="LS_BUYDATE_FR" /> - <input type="text" id="LS_BUYDATE_TO" name="LS_BUYDATE_TO" /></td>
+						<th width="120">매입구분</th>
 						<td>
-							<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">
+							<select id="S_BUYGUBUN" name="S_BUYGUBUN" style="width:130px">
+								<option value="ALL" selected="selected">전체</option>
 							</select>
 						</td>
-						<th width="120">시/도</th>
-						<td>
-							<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:130px">
-							</select>
-						</td>
-						<th width="120">주소 및 지번</th>
-						<td><input type="text" id="S_ADDRESS" name="S_ADDRESS" /></td>
 					</tr>
 				</table>
 			</form>

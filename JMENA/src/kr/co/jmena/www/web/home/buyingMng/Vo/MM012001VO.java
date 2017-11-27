@@ -24,6 +24,9 @@ public class MM012001VO {
 	private String JANPAYAMT;
 	private String OPENYN;
 	private String REMARK;
+	private String LS_BUYDATE_FR;
+	private String LS_BUYDATE_TO;
+	private String BUYGUBUN;
 	
 
 	private String S_CITYCODE;
@@ -182,6 +185,24 @@ public class MM012001VO {
 	}
 	public void setS_ADDRESS(String S_ADDRESS) {
 		this.S_ADDRESS = S_ADDRESS;
+	}
+	public String getLS_BUYDATE_FR() {
+		return LS_BUYDATE_FR;
+	}
+	public String getLS_BUYDATE_TO() {
+		return LS_BUYDATE_TO;
+	}
+	public String getBUYGUBUN() {
+		return BUYGUBUN;
+	}
+	public void setLS_BUYDATE_FR(String LS_BUYDATE_FR) {
+		this.LS_BUYDATE_FR = LS_BUYDATE_FR;
+	}
+	public void setLS_BUYDATE_TO(String LS_BUYDATE_TO) {
+		this.LS_BUYDATE_TO = LS_BUYDATE_TO;
+	}
+	public void setBUYGUBUN(String BUYGUBUN) {
+		this.BUYGUBUN = BUYGUBUN;
 	}
 
 	
