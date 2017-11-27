@@ -72,7 +72,6 @@
 		//공통코드 가져오기
 		f_selectListEnaCityCode();		
 		f_selectListEnaBranchCode();
-		f_selectListEnaDeptCode();
 		f_selectEnaCode("007");
 		f_selectEnaCode("008");
 		f_selectEnaCode("013");
@@ -363,7 +362,7 @@
 		$("#popupButton").click(function(){
 			var popUrl = "/home/EP011001_1.do";
 			var popOption = "width=700, height=240, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-			window.open(popUrl,"인사정보 관리",popOption);
+			window.open(popUrl,"인사정보관리",popOption);
 		}); 
 	});
 	
@@ -376,7 +375,7 @@
 			
 			var popUrl = "/home/EP011001_2.do";
 			var popOption = "width=1120, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-			window.open(popUrl,"신고인 관리",popOption);
+			window.open(popUrl,"신고인관리",popOption);
 		}); 
 	});
 	

@@ -61,7 +61,7 @@
 		f_selectListEnaGradeCode();
 		f_selectListEnaDutyCode();
 		$("#APPOINTBRANCH").val("");
-				
+		selectRecoidCode();
 		selectListInsaMst();
 		selectListEnaAppointItem(INSACODE);
 		selectListEnaTexPayerItem(INSACODE);
@@ -69,11 +69,11 @@
 
 
 	function selectListInsaMst(){	
-		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용		
 		if($("#S_BRANCHCODE").val() == "ALL" && $("#S_DEPTCODE").val() == "ALL" && $("#S_KNAME").val() == "" && $("#S_JUMINID").val() == ""){
 			alert("조회조건을 입력해 주세요");
 			return;
 		}
+		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용		
 		$('#leftList').jqGrid({
 			//caption: '인사관리', 
 			url:"/home/selectListEnaInsaMst.do" ,
@@ -233,8 +233,6 @@
 					fn:function(e){
 						var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 						var appointbranch = this.value;
-												
-						
 						$.ajax({ 
 							type: 'POST' ,
 							url: "/home/selectDeptGubun.do", 
@@ -381,7 +379,7 @@
 		$("#insaButton").click(function(){
 			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
 			var popOption = "width=760, height=240, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-			window.open(popUrl,"인사정보 관리",popOption);
+			window.open(popUrl,"인사정보관리",popOption);
 		}); 	
 	
 		$("#S_BRANCHCODE").change(function() {
@@ -582,7 +580,25 @@
 		return result;
 	   	
 	}
-		
+	
+	function selectRecoidCode(){
+		$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/insaMstList.do", 
+			dataType : 'json' , 
+			success: function(data){
+				var inHtml = "<option value=''>없음</option>";
+				data.insaMstList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
+				});
+				$("#RECOID").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
 	
 	$(function() {
 		$("#insertButton").click(function() {
@@ -622,9 +638,8 @@
 			if (confirm("저장하시겠습니까?") == true) {
 				//콤마 remove
 				f_commaInputData("remove");
-				
-				$("#REJOINYN").is(":checked") ? $("#REJOINYN").val("Y") : $("#REJOINYN").val("N");
-				var formData = $("#HR011001").serialize();
+				var rejoinyn = $("#REJOINYN").is(":checked") ? "Y" : "N";
+				var formData = $("#HR011001").serialize()+"&REJOINYN="+rejoinyn;
 
 			   	$.ajax({ 
 					type: 'POST' ,
@@ -768,45 +783,6 @@
 				
 				return false;
 			}
-			
-			
-// 			var i;
-// 			var beIndex = 0;
-// 				var dataIds = $("#bottomList1").jqGrid('getDataIDs');
-// 			for ( i =0; i<2; i++) {
-// 				if (i == 0) {
-// 					beIndex = 0;
-// 					dataIds.some(function(currentValue, index, array){
-// 						$("#bottomList1").jqGrid('setSelection',beIndex,false);
-// 						$("#bottomList1").jqGrid('setSelection',currentValue,true);
-						
-// 						//$("#bottomList1").jqGrid('setSelection',array[index],false);
-// 						//$('#bottomList1').jqGrid('saveRow',array[index],true,'clientArray'); //선택된 놈 뷰 모드로 변경	
-						
-// 						beIndex = currentValue;	
-			
-						
-// 					});
-// 				} else {
-// 					beIndex = 0;
-// 					dataIds.some(function(currentValue, index, array){
-// 						$("#bottomList1").jqGrid('setSelection',beIndex,false);
-// 						$("#bottomList1").jqGrid('setSelection',currentValue,true);
-// 						var t1 = $("#"+currentValue+"_APPOINTBRANCH").val(); //셀 전체 데이터 가져오기
-						 
-// 						//var t = cellData.;
-// 						alert(t1);
-						
-						
-// 						beIndex = currentValue;	
-						
-// 					});
-// 				}
-// 			}
-			
-			
-					
-			
 			
 			var msg = "";
 			if ($("#S_FLAG_B1").val() == "I") {
@@ -1240,7 +1216,7 @@
 					<th width="120">추천인</th>
 					<td colspan="3">
 						<select id="RECOID" name="RECOID">
-							<option value="recoId">insaCode</option>
+							<!-- <option value="recoId">insaCode</option> -->
 						</select>
 					</td>
 				</tr>

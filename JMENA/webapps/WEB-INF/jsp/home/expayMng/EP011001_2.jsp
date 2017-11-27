@@ -83,29 +83,28 @@
 	$(document).ready(function(){
 		
 		$("#SALEID").val($("#SALEID",opener.document).val());
-		$("#PAYSEQ").val($("#PAYSEQ",opener.document).val());
-		$("#S_PAYSEQ").val($("#PAYSEQ",opener.document).val());
+//		$("#PAYSEQ").val($("#PAYSEQ",opener.document).val());
+//		$("#S_PAYSEQ").val($("#PAYSEQ",opener.document).val());
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 150, height: 25 });
 		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 150, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		var SALEID = $("#SALEID",opener.document).val();
-		var PAYSEQ = $("#PAYSEQ",opener.document).val();
+//		var PAYSEQ = $("#PAYSEQ",opener.document).val();
 		
-		searchLeftList();
+		searchLeftList(SALEID);
 		searchbottomList();
 	})
 
 
 	
-	function searchLeftList(){
+	function searchLeftList(SALEID){
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#leftList').jqGrid({
 			caption: '수당지급 현황',
 			url:"/home/selectListEnaSudangMst.do" ,
 			mtype: 'POST',
 			postData : {
-				S_SALEID : $("#SALEID").val(),
-//				S_PAYSEQ : $("#S_PAYSEQ").val()
+				S_SALEID : SALEID
 			},				
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
@@ -189,7 +188,7 @@
 							type:'change',
 							fn:function(e){
 								if(this.value == ""){
-									alert("지급 금액을 입력 해 주세요.");
+									alert("신고 기준을 선택 해 주세요.");
 									return;
 								}else{
 									paycal();								
@@ -250,7 +249,6 @@
 		var jsonValue = $.parseJSON(data).dcodeList;
 		
 		var result = "<select>";
-			result += "<option value=''>선택</option>\n";
 		
 		jsonValue.some(function(currentValue, index, array){
 			result += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";

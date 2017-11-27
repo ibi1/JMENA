@@ -229,6 +229,10 @@
 	
 	$(function() {
 		$("#insertButton").click(function() {
+			if($("#S_BRANCHCODE").val() == "ALL" || $("#S_DEPTCODE").val() == "ALL"){
+				alert("지사와 부서를 모두 선택 해 주세요");
+				return;
+			}
 			if(confirm("생성하시겠습니까?") == true) {
 				$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 				$('#leftList').jqGrid({

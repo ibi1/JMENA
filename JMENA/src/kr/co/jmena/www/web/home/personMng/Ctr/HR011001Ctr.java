@@ -94,7 +94,6 @@ public class HR011001Ctr {
 			
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
-				
 				obj.put("INSACODE", lst.get(i).getINSACODE());
 				obj.put("KNAME", lst.get(i).getKNAME());
 				obj.put("JUMINID", lst.get(i).getJUMINID());
@@ -115,7 +114,7 @@ public class HR011001Ctr {
 				obj.put("JOINDATE", lst.get(i).getJOINDATE());
 				obj.put("REJOINYN", lst.get(i).getREJOINYN());
 				obj.put("RETIREDATE", lst.get(i).getRETIREDATE());
-				obj.put("RECOLID", lst.get(i).getRECOID());
+				obj.put("RECOID", lst.get(i).getRECOID());
 				obj.put("REMARK", lst.get(i).getREMARK());
 				
 				

@@ -81,20 +81,18 @@
 
 <script type="text/javascript">
 	
-	$(document).ready(function(){
+	$(document).ready(function(){		
 		var KNAME = $("#KNAME",opener.document).val();
 		var INSACODE = $("#INSACODE",opener.document).val();
+		$("#S_KNAME").val(KNAME);
+		$("#S_INSACODE").val(INSACODE);
 
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#S_INSACODE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 
-		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-
-		
-		$("#S_KNAME").val(KNAME);
-		$("#S_INSACODE").val(INSACODE);
-		
+		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });		
+		selectListInsaMst();
 		$("#searchButton").click(function(){
 			selectListInsaMst();
 		}); 
