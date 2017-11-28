@@ -38,6 +38,7 @@ public class EP011001VO {
 	
 	
 	private String TAXGUBUN;
+	private String TAXGUBUNNAME;
 	private String TAXINCOME;
 	private String TAXLOCAL;
 	private String SUPPLYTAX;
@@ -247,6 +248,12 @@ public class EP011001VO {
 	}
 	public void setTAXGUBUN(String tAXGUBUN) {
 		this.TAXGUBUN = tAXGUBUN;
+	}
+	public String getTAXGUBUNNAME() {
+		return TAXGUBUNNAME;
+	}
+	public void setTAXGUBUNNAME(String tAXGUBUNNAME) {
+		this.TAXGUBUNNAME = tAXGUBUNNAME;
 	}
 	public String getTAXINCOME() {
 		return TAXINCOME;

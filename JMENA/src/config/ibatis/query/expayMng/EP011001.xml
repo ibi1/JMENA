@@ -38,6 +38,7 @@
 		<result property="SUDANGRATE"				column="SUDANGRATE"/>
 		<result property="ADDRATE"					column="ADDRATE"/>
 		<result property="TAXGUBUN"					column="TAXGUBUN"/>
+		<result property="TAXGUBUNNAME"				column="TAXGUBUNNAME"/>
 		<result property="TAXINCOME"				column="TAXINCOME"/>
 		<result property="TAXLOCAL"					column="TAXLOCAL"/>
 		<result property="SUPPLYTAX"				column="SUPPLYTAX"/>
@@ -123,7 +124,8 @@
 	         (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
 	         T1.SUDANGRATE,
 	         T1.ADDRATE,
-	         (SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '013' AND DCODE = T1.TAXGUBUN) AS TAXGUBUN,
+	         T1.TAXGUBUN,
+	         (SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '013' AND DCODE = T1.TAXGUBUN) AS TAXGUBUNNAME,
 	         T1.TAXINCOME,
 	         T1.TAXLOCAL,
 	         T1.SUPPLYTAX,

@@ -108,7 +108,7 @@
 			},				
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
+			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액','신고기준코드', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
 			colModel:[  	
 				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
 				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
@@ -116,7 +116,8 @@
 				, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:100,		align:'center',	sortable:false}
 				, {name:"ADDRATE",		index:'ADDRATE',	width:100,		align:'center',	sortable:false}
 				, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
-				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center',	sortable:false, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
+				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center',	sortable:false, hidden:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode}}
+				, {name:"TAXGUBUNNAME",	index:'TAXGUBUNNAME',width:100,		align:'center',	sortable:false}
 				, {name:"TAXINCOME",	index:'TAXINCOME',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
 				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0}}
 				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:","}}

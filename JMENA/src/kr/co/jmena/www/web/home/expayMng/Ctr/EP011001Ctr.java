@@ -138,6 +138,7 @@ public class EP011001Ctr {
 				obj.put("SUDANGRATE", lst.get(i).getSUDANGRATE());
 				obj.put("ADDRATE", lst.get(i).getADDRATE());
 				obj.put("TAXGUBUN", lst.get(i).getTAXGUBUN());
+				obj.put("TAXGUBUNNAME", lst.get(i).getTAXGUBUNNAME());
 				obj.put("TAXINCOME", lst.get(i).getTAXINCOME());
 				obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
 				obj.put("SUPPLYTAX", lst.get(i).getSUPPLYTAX());
@@ -399,6 +400,7 @@ public class EP011001Ctr {
 	}	
 	
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/deleteEnaSudangPTb.do")
 	public ModelAndView deleteEnaSudangPTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP011001VO vo = new EP011001VO();
