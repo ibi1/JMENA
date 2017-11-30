@@ -1182,12 +1182,12 @@
 				<tr height="10px">
 				</tr>
 				<tr>
-					<th width="120">지역구분</th>
+					<th width="120">시/도 구분</th>
 					<td>
 						<select id="CITYCODE" name="CITYCODE">
 						</select>
 					</td>
-					<th width="120">시/도구분</th>
+					<th width="120">구/군 구분</th>
 					<td>
 						<select id="BOROUGHCODE" name="BOROUGHCODE">
 						</select>

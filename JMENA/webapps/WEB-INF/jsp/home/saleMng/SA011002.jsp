@@ -994,7 +994,7 @@
 					<th width="120">관리번호</th>
 					<td><input type="text" id="MANAGENO" name="MANAGENO" /></td>
 					<td width="30"><input type="button" id="searchManageNoPopButton"/></td>
-					<th width="120">지역구분</th>
+					<th width="120">시/도 구분</th>
 					<td>
 						<select id="CITYCODE" name="CITYCODE">
 							<option></option>
