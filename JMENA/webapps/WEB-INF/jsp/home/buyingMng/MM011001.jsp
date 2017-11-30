@@ -162,8 +162,9 @@
 		});
 		
 		
-		function f_selectListEnaBoroughCode(){
+		function f_selectListEnaBoroughCode(BOROUGHCODE){
 			var CITYCODE = $("#CITYCODE").val();
+			
 			$("#BOROUGHCODE").empty().data('options');
 	
 		   	$.ajax({ 
@@ -176,7 +177,9 @@
 				success: function(data){
 					var inHtml = "";
 					data.cityDtlList.forEach(function(currentValue, index, array){
-						inHtml += "<option value='" + currentValue.BOROUGHCODE + "'>" + currentValue.BOROUGHNAME + "</option>\n";
+						var selected = BOROUGHCODE == currentValue.BOROUGHCODE ? "selected='selected'" : "";
+						
+						inHtml += "<option value='" + currentValue.BOROUGHCODE + "' " + selected + ">" + currentValue.BOROUGHNAME + "</option>\n";
 					});
 					$("#BOROUGHCODE").append(inHtml);
 				},
@@ -277,7 +280,7 @@
 					$("#BUYGUBUN").val(selRowData.BUYGUBUN);
 					$("#MANAGENO").val(selRowData.MANAGENO);
 					$("#CITYCODE").val(selRowData.CITYCODE);
-					$("#BOROUGHCODE").val(selRowData.BOROUGHCODE);
+					//$("#BOROUGHCODE").val(selRowData.BOROUGHCODE);
 					$("#USETYPE").val(selRowData.USETYPE);
 					$("#ADDRESS").val(selRowData.ADDRESS);
 					$("#OWNERNAME").val(selRowData.OWNERNAME);
@@ -300,7 +303,7 @@
 					f_selectListEnaPayScheduleTb(selRowData.BUYID);
 					f_selectListEnaSalesOpenTb(selRowData.BUYID);
 	
-					f_selectListEnaBoroughCode();
+					f_selectListEnaBoroughCode(selRowData.BOROUGHCODE);
 					
 					//콤마 셋팅
 					f_commaInputData("click");
