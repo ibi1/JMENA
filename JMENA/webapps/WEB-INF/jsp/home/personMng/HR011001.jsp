@@ -227,7 +227,6 @@
 					}]	
 				}}
 //			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
-<<<<<<< Upstream, based on branch 'jmenaDev' of https://github.com/loveybh/JMENA.git
 			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
 				dataEvents:[{
 					type:'change',
@@ -259,7 +258,6 @@
 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' ,	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center',	sortable:false, editable:true}
 			, {name:"DEPTGUBUN",		index:'DEPTGUBUN',			width:100,		align:'center',	sortable:false, hidden:true }
-=======
 			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true
 				, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
 					dataEvents:[{
@@ -281,7 +279,6 @@
 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center'}
->>>>>>> 9d1816e 1
 		] ,
 		rowNum:10000000,
 		autowidth: true ,
