@@ -23,7 +23,15 @@ public class EP012002VO {
 	private String S_DEPTCODE;
 	private String S_KNAME;
 	
-	
+	private String PAYDATE;
+	private String CONNAME;
+	private String CONADDRESS;
+	private String CONPY;
+
+	private String EMPLOYGUBUN;
+
+	private String TAXAMT;
+
 	public String getBRANCHNAME() {
 		return this.BRANCHNAME;
 	}
@@ -84,7 +92,27 @@ public class EP012002VO {
 	public String getS_KNAME() {
 		return this.S_KNAME;
 	}
-	
+
+	public String getPAYDATE() {
+		return this.PAYDATE;
+	}
+	public String getCONNAME() {
+		return this.CONNAME;
+	}
+	public String getCONADDRESS() {
+		return this.CONADDRESS;
+	}
+	public String getCONPY() {
+		return this.CONPY;
+	}
+
+	public String getEMPLOYGUBUN() {
+		return this.EMPLOYGUBUN;
+	}
+
+	public String getTAXAMT() {
+		return this.TAXAMT;
+	}
 	
 	public void setBRANCHNAME(String BRANCHNAME) {
 		this.BRANCHNAME = BRANCHNAME;
@@ -147,6 +175,24 @@ public class EP012002VO {
 		this.S_KNAME = S_KNAME;
 	}
 	
+	public void setPAYDATE(String PAYDATE) {
+		this.PAYDATE = PAYDATE;
+	}
+	public void setCONNAME(String CONNAME) {
+		this.CONNAME = CONNAME;
+	}
+	public void setCONADDRESS(String CONADDRESS) {
+		this.CONADDRESS = CONADDRESS;
+	}
+	public void setCONPY(String CONPY) {
+		this.CONPY = CONPY;
+	}
+	public void setEMPLOYGUBUN(String EMPLOYGUBUN) {
+		this.EMPLOYGUBUN = EMPLOYGUBUN;
+	}
+	public void setTAXAMT(String TAXAMT) {
+		this.TAXAMT = TAXAMT;
+	}
 	
 	
 	

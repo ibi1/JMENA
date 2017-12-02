@@ -6,53 +6,36 @@
 	<typeAlias alias="EP012002VO" type="kr.co.jmena.www.web.home.expayMng.Vo.EP012002VO"/>
 
 	<resultMap id="EP012002Data" class="EP012002VO">
-		<result property="BRANCHNAME"	column="BRANCHNAME"/>
-		<result property="DEPTNAME"		column="DEPTNAME"/>
-		<result property="GRADENAME"	column="GRADENAME"/>
-		<result property="DUTYNAME"		column="DUTYNAME"/>
-		<result property="INSACODE"		column="INSACODE"/>
-		<result property="KNAME"		column="KNAME"/>
-		<result property="BASICAMT"		column="BASICAMT"/>
-		<result property="ACTAMT"		column="ACTAMT"/>
-		<result property="DAILYAMT"		column="DAILYAMT"/>
-		<result property="PRIZEAMT"		column="PRIZEAMT"/>
+		<result property="PAYDATE"		column="PAYDATE"/>
+
+		<result property="EMPLOYGUBUN"	column="EMPLOYGUBUN"/>
+		<result property="CONNAME"		column="CONNAME"/>
+		<result property="CONADDRESS"	column="CONADDRESS"/>
+		<result property="CONPY"		column="CONPY"/>
 		<result property="PAYAMT"		column="PAYAMT"/>
-		<result property="TOTAMT"		column="TOTAMT"/>
 		<result property="TAXINCOME"	column="TAXINCOME"/>
-		<result property="TAXLOCAL"		column="TAXLOCAL"/>
 		<result property="SUPPLYTAX"	column="SUPPLYTAX"/>
-		<result property="DEDUCTAMT"	column="DEDUCTAMT"/>		
+		<result property="TAXLOCAL"		column="TAXLOCAL"/>
+		<result property="DEDUCTAMT"	column="DEDUCTAMT"/>
 	</resultMap>
 
 
 	<select id="selectListEP012002" resultMap="EP012002Data">
 		select 
-			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname,
-			(select deptname from ba_deptmst where branchcode = t1.branchcode and deptcode = t1.deptcode) as deptname,
-			(select dcodename from sy_ccodedtl where ccode = '003' and dcode = t1.grade) as gradename,
-			(select dcodename from sy_ccodedtl where ccode = '004' and dcode = t1.duty) as dutyname,
-			t1.insacode,
-			(select kname from hr_insamst where insacode = t1.insacode) as kname,
-			t1.basicamt,
-			t1.actamt,
-			t1.dailyamt,
-			t1.prizeamt,
-			(select sum(payamt) from sa_sudangmst where insacode = t1.insacode) as payamt,
-            (t1.basicamt + (select sum(payamt) from sa_sudangmst where insacode = t1.insacode)) as totamt,
-			(t1.taxincome + (select sum(taxincome) from sa_sudangmst where insacode = t1.insacode)) as taxincome,
-			(t1.taxlocal + (select sum(taxlocal) from sa_sudangmst where insacode = t1.insacode)) as taxlocal,
-			(t1.supplytax + (select sum(supplytax) from sa_sudangmst where insacode = t1.insacode)) as supplytax,
-			(t1.deductamt + (select sum(deductamt) from sa_sudangmst where insacode = t1.insacode)) as deductamt
-		from sa_monthpaytb t1, 
-		(select kname, insacode from hr_insamst where 1=1 
-		<isNotEmpty property="S_KNAME">
-		    and t1.ipgumperson  LIKE '%$S_KNAME$%'
-		</isNotEmpty>
-		) t2
+			t2.paydate
+		    , t1.employgubun
+			, t3.conname
+			, t3.conaddress
+			, t3.conpy
+			, t2.payamt
+			, t2.taxincome
+			, t2.supplytax
+			, t2.taxlocal
+			, t2.deductamt
+		from 
+		hr_insamst t1, sa_sudangmst t2, sa_salemst t3
 		where 1=1
-		<isNotEmpty property="S_PAYDATE">
-		    and t1.yearmonth = #S_PAYDATE#
-		</isNotEmpty>
+		and t1.kname like '%$S_KNAME$%'
 		<isNotEqual property="S_BRANCHCODE" compareValue="">
 		    and t1.branchcode = #S_BRANCHCODE#
 		</isNotEqual>
@@ -60,6 +43,8 @@
 		    and t1.deptcode = #S_DEPTCODE#
 		</isNotEqual>
 		and t1.insacode = t2.insacode
+		and substring(DATE_FORMAT(t2.paydate, '%Y%m%d'), 1,6) = #S_PAYDATE#
+		and t2.saleid = t3.saleid
 
 	</select>
 	

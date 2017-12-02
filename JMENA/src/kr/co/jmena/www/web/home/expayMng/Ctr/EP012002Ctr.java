@@ -65,40 +65,32 @@ public class EP012002Ctr {
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 
-		if(!(request.getParameter("S_PAYDATE").equals("") && 
-				S_BRANCHCODE.equals("") && 
-				S_DEPTCODE.equals("") && 
-				request.getParameter("S_KNAME").equals(""))){
+		List<EP012002VO> lst = EP012002Biz.selectListEP012002(vo);
+		
+		System.out.println("******************************************");
+		System.out.println("size()"+lst.size());
 		
 		
-			List<EP012002VO> lst = EP012002Biz.selectListEP012002(vo);
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
 			
-			System.out.println("******************************************");
-			System.out.println("size()"+lst.size());
+			obj.put("PAYDATE",lst.get(i).getPAYDATE());
+			obj.put("CONNAME",lst.get(i).getCONNAME());
+			obj.put("CONADDRESS",lst.get(i).getCONADDRESS());
+			obj.put("CONPY",lst.get(i).getCONPY());
+			obj.put("PAYAMT",lst.get(i).getPAYAMT());
 			
-			
-			for (int i = 0; i < lst.size(); i++) {
-				JSONObject obj = new JSONObject();
-				
-				obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
-				obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
-				obj.put("GRADENAME",lst.get(i).getGRADENAME());
-				obj.put("DUTYNAME",lst.get(i).getDUTYNAME());
-				obj.put("INSACODE",lst.get(i).getINSACODE());
-				obj.put("KNAME",lst.get(i).getKNAME());
-				obj.put("BASICAMT",lst.get(i).getBASICAMT());
-				obj.put("ACTAMT",lst.get(i).getACTAMT());
-				obj.put("DAILYAMT",lst.get(i).getDAILYAMT());
-				obj.put("PRIZEAMT",lst.get(i).getPRIZEAMT());
-				obj.put("PAYAMT",lst.get(i).getPAYAMT());
-				obj.put("TOTAMT",lst.get(i).getTOTAMT());
-				obj.put("TAXINCOME",lst.get(i).getTAXINCOME());
-				obj.put("TAXLOCAL",lst.get(i).getTAXLOCAL());
-				obj.put("SUPPLYTAX",lst.get(i).getSUPPLYTAX());
-				obj.put("DEDUCTAMT",lst.get(i).getDEDUCTAMT());
-				
-				jCell.add(obj);
+			if(lst.get(i).getEMPLOYGUBUN().equals("F")){
+				obj.put("TAXAMT",lst.get(i).getTAXINCOME());
+			}else{
+				obj.put("TAXAMT",lst.get(i).getSUPPLYTAX());
 			}
+			
+			obj.put("TAXLOCAL",lst.get(i).getTAXLOCAL());
+			obj.put("DEDUCTAMT",lst.get(i).getDEDUCTAMT());
+			
+			
+			jCell.add(obj);
 		}
 		
 		json.put("rows", jCell);

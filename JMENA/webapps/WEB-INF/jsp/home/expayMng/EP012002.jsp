@@ -94,22 +94,15 @@
             datatype: "json",
             datafields: [
                          
-				{name:"BRANCHNAME",		type: 'string' },
-				{name:"DEPTNAME",		type: 'string' },
-				{name:"GRADENAME",		type: 'string' },
-				{name:"DUTYNAME",		type: 'string' },
-				{name:"INSACODE",		type: 'string' },
-				{name:"KNAME",			type: 'string' },
-				{name:"BASICAMT",		type: 'number' },
-				{name:"ACTAMT",			type: 'number' },
-				{name:"DAILYAMT",		type: 'number' },
-				{name:"PRIZEAMT",		type: 'number' },
+				{name:"PAYDATE",		type: 'string' },
+				{name:"CONNAME",		type: 'string' },
+				{name:"CONADDRESS",		type: 'string' },
+				{name:"CONPY",			type: 'number' },
 				{name:"PAYAMT",			type: 'number' },
-				{name:"TOTAMT",			type: 'number' },
-				{name:"TAXINCOME",		type: 'number' },
+				{name:"TAXAMT",			type: 'number' },
 				{name:"TAXLOCAL",		type: 'number' },
-				{name:"SUPPLYTAX",		type: 'number' },
 				{name:"DEDUCTAMT",		type: 'number' }
+
 			],
             root: "rows",
             //record: "records",
@@ -139,22 +132,16 @@
             editable: false,
             selectionmode: 'singlerow',
             columns: [
-				{ text: '지사', 		datafield: 'BRANCHNAME',	width: 100, cellsalign: 'center', align: 'center' },
-				{ text: '부서', 		datafield: 'DEPTNAME',		width: 100, cellsalign: 'center', align: 'center' },
-				{ text: '직위', 		datafield: 'GRADENAME',		width: 100, cellsalign: 'center', align: 'center' },
-				{ text: '직급', 		datafield: 'DUTYNAME',		width: 100, cellsalign: 'center', align: 'center' },
-				{ text: '사번', 		datafield: 'INSACODE',		width: 100, cellsalign: 'center', align: 'center' },
-				{ text: '성명', 		datafield: 'KNAME',			width: 120, cellsalign: 'center', align: 'center' },
-				{ text: '기본급', 		datafield: 'BASICAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '활동비', 		datafield: 'ACTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '일비', 		datafield: 'DAILYAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '시상금', 		datafield: 'PRIZEAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '수당금액', 	datafield: 'PAYAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '총지급액', 	datafield: 'TOTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '소득세', 		datafield: 'TAXINCOME',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '지방세', 		datafield: 'TAXLOCAL',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '부가가치세',	datafield: 'SUPPLYTAX',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '차감지급액',	datafield: 'DEDUCTAMT',		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'}
+                      
+   				{ text: '지급일', 			datafield: 'PAYDATE',		width: 100, cellsalign: 'center', align: 'center' },
+   				{ text: '고객', 			datafield: 'CONNAME',		width: 100, cellsalign: 'center', align: 'center' },
+   				{ text: '물건지', 			datafield: 'CONADDRESS',	width: 100, cellsalign: 'center', align: 'center' },
+   				{ text: '평수', 			datafield: 'CONPY',			width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
+   				{ text: '지급액', 			datafield: 'PAYAMT',		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+   				{ text: '소득세(부가세)', 	datafield: 'TAXAMT',		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+   				{ text: '주민세', 			datafield: 'TAXLOCAL',		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+   				{ text: '실지급액', 		datafield: 'DEDUCTAMT',		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'}
+    				
             ]
         });
 	}
@@ -167,13 +154,22 @@
 			var S_DEPTCODE = $("#S_DEPTCODE").val();
 			var S_KNAME = $("#S_KNAME").val();
 			
+			if(S_PAYDATE==""){
+				alert("지급년월을 입력하시기 바랍니다.");
+				return false;
+			}
+			if(S_KNAME==""){
+				alert("담당자를 입력하시기 바랍니다.");
+				return false;
+			}
+			
 			f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 		});
 		
 		
 		$("#excelButton").click(function () {
 			
-	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName1', true, null, true, null, 'utf-8');
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'monthsudang', true, null, true, null, 'utf-8');
 	        
 	    });
 		
