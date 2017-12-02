@@ -63,6 +63,7 @@ public class SA011001VO {
 	private String IPGUMID;
 	private String SEQ;
 	private String SUGUMAMT;
+	private String UNITCOST;
 
 	public String getBUYID(){
 		return this.BUYID;
@@ -430,6 +431,12 @@ public class SA011001VO {
 	}
 	public void setSALEID_PK(String SALEID_PK) {
 		this.SALEID_PK = SALEID_PK;
+	}
+	public String getUNITCOST() {
+		return UNITCOST;
+	}
+	public void setUNITCOST(String UNITCOST) {
+		this.UNITCOST = UNITCOST;
 	}
 
 	

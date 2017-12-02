@@ -24,7 +24,7 @@
 		<result property="BUNJANPY"			column="BUNJANPY"/>
 		<result property="BUYAMT"			column="BUYAMT"/>
 		<result property="BUYDANGA"			column="BUYDANGA"/>
-		<result property="SELLDANGA"		column="SELLDANGA"/>
+		<result property="UNITCOST"		column="UNITCOST"/>
 		<result property="REGYN"			column="REGYN"/>
 		<result property="REGDATE"			column="REGDATE"/>
 		<result property="REMARK"			column="REMARK"/>
@@ -58,37 +58,67 @@
 
 	<select id="selectListEnaBuyMst" resultMap="BuyMstData">
 		SELECT 
-			T1.BUYID,
-			T1.BUYDATE,
-			T1.BUYGUBUN,
-			T1.MANAGENO,
-			T1.CITYCODE,
-			(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
-			T1.BOROUGHCODE,
-			(SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T1.CITYCODE AND BOROUGHCODE = T1.BOROUGHCODE) AS BOROUGHNAME,
-			T1.USETYPE,
-			T1.ADDRESS,
-			T1.OWNERNAME,
-			T1.OWNERJUMINID,
-			T1.BUYM2,
-			T1.BUYPY,
-			'' BUNJANM2,
-			'' BUNJANPY,
-			T1.BUYAMT,
-			T1.BUYDANGA,
-			T1.SELLDANGA,
-			T1.REGYN,
-			T1.REGDATE,
-			T1.REMARK
-		FROM mm_buymst T1
+			A1.BUYID,
+			A1.BUYDATE,
+			A1.BUYGUBUN,
+			A1.MANAGENO,
+			A1.CITYCODE,
+			A1.CITYNAME,
+			A1.BOROUGHCODE,
+			A1.BOROUGHNAME,
+			A1.USETYPE,
+			A1.ADDRESS,
+			A1.OWNERNAME,
+			A1.OWNERJUMINID,
+			A1.BUYM2,
+			A1.BUYPY,
+			A1.CONJM2,
+			A1.BUNJANM2,
+			A1.BUNJANPY,
+			A1.BUYAMT,
+			A1.BUYDANGA,
+			A1.UNITCOST,
+			A1.REGYN,
+			A1.REGDATE,
+			A1.REMARK
+		FROM (
+			SELECT 
+				T1.BUYID,
+				T1.BUYDATE,
+				T1.BUYGUBUN,
+				T1.MANAGENO,
+				T1.CITYCODE,
+				(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
+				T1.BOROUGHCODE,
+				(SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T1.CITYCODE AND BOROUGHCODE = T1.BOROUGHCODE) AS BOROUGHNAME,
+				T1.USETYPE,
+				T1.ADDRESS,
+				T1.OWNERNAME,
+				T1.OWNERJUMINID,
+				T1.BUYM2,
+				T1.BUYPY,
+				CAST((T1.BUYM2 - ((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS DECIMAL(12, 0)) AS CONJM2,
+				'' BUNJANM2,
+				'' BUNJANPY,
+				T1.BUYAMT,
+				T1.BUYDANGA,
+				T1.UNITCOST,
+				T1.REGYN,
+				T1.REGDATE,
+				T1.REMARK
+			FROM mm_buymst T1
+		) A1
 		WHERE 1=1
 		<isNotEmpty property="LS_BUYDATE_FR">
 			<isNotEmpty property="LS_BUYDATE_TO">
-				AND T1.BUYDATE BETWEEN #LS_BUYDATE_FR# AND #LS_BUYDATE_TO#   
+				AND A1.BUYDATE BETWEEN #LS_BUYDATE_FR# AND #LS_BUYDATE_TO#   
 			</isNotEmpty>	
 		</isNotEmpty>
+		<isEmpty property="LS_ADDRESS">
+			AND A1.CONJM2 > 0
+		</isEmpty>
 		<isNotEmpty property="LS_ADDRESS">
-			AND T1.ADDRESS LIKE '%$LS_ADDRESS$%'   
+			AND A1.ADDRESS LIKE '%$LS_ADDRESS$%'   
 		</isNotEmpty>
 	</select>
 	
@@ -108,11 +138,11 @@
 			BUYPY = #BUYPY#,
 			BUYAMT = #BUYAMT#,
 			BUYDANGA = #BUYDANGA#,
-			<isNotEmpty property="SELLDANGA">
-			SELLDANGA = #SELLDANGA#,
+			<isNotEmpty property="UNITCOST">
+			UNITCOST = #UNITCOST#,
 			</isNotEmpty>
-			<isEmpty property="SELLDANGA">
-			SELLDANGA = NULL,
+			<isEmpty property="UNITCOST">
+			UNITCOST = NULL,
 			</isEmpty>
 			REGYN = #REGYN#,
 			<isEqual property="REGYN" compareValue="Y">
@@ -152,7 +182,7 @@
 			BUYPY,
 			BUYAMT,
 			BUYDANGA,
-			SELLDANGA,
+			UNITCOST,
 			REGYN,
 			<isEqual property="REGYN" compareValue="Y">
 			REGDATE,
@@ -175,10 +205,10 @@
 			#BUYPY#,
 			#BUYAMT#,
 			#BUYDANGA#,
-			<isNotEmpty property="SELLDANGA">
-			#SELLDANGA#,
+			<isNotEmpty property="UNITCOST">
+			#UNITCOST#,
 			</isNotEmpty>
-			<isEmpty property="SELLDANGA">
+			<isEmpty property="UNITCOST">
 			NULL,
 			</isEmpty>
 			#REGYN#,

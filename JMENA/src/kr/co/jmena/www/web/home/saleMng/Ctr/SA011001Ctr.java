@@ -120,6 +120,7 @@ public class SA011001Ctr {
 			obj.put("DCRATE", lst.get(i).getDCRATE());
 			obj.put("DCAMT", lst.get(i).getDCAMT());
 			obj.put("SELLAMT", lst.get(i).getSELLAMT());
+			obj.put("UNITCOST", lst.get(i).getUNITCOST());
 			obj.put("AGENCYAMT", lst.get(i).getAGENCYAMT());
 			obj.put("JOINYN", lst.get(i).getJOINYN());
 			obj.put("REGYN", lst.get(i).getREGYN());
@@ -165,6 +166,7 @@ public class SA011001Ctr {
 		vo.setDCRATE(request.getParameter("DCRATE"));
 		vo.setDCAMT(request.getParameter("DCAMT"));
 		vo.setSELLAMT(request.getParameter("SELLAMT"));
+		vo.setUNITCOST(request.getParameter("UNITCOST"));
 		vo.setAGENCYAMT(request.getParameter("AGENCYAMT"));
 		
 		HttpSession session = null;

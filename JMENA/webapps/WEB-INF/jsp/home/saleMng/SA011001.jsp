@@ -102,6 +102,7 @@
 			$("#CONPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 			$("#SALEAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#SALEDANGA").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#UNITCOST").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			$("#AGENCYAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#DCAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#DCRATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -254,7 +255,7 @@
 				colNames:['계약번호', '계약일자', 
 				          '관리번호', '지역구분', '지사구분', '주소', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
 				          '매출구분', '담당자', '매입번호', '계약자성명', '계약자주민번호', '계약자주소', 
-				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '위탁수수료', 
+				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '판매단가', '위탁수수료', 
 				          '공동명의구분', '등기여부', '등기일자', '해약여부', '해약일자'],
 				colModel:[
 					{name:"SALEID",			index:'SALEID',			width:100,	align:'center',	sortable:false,	hidden:true},
@@ -285,6 +286,7 @@
 					{name:"DCRATE",			index:'DCRATE',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"DCAMT",			index:'DCAMT',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"SELLAMT",		index:'SELLAMT',		width:100,	align:'center',	sortable:false,	hidden:true},
+					{name:"UNITCOST",		index:'UNITCOST',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"AGENCYAMT",		index:'AGENCYAMT',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"JOINYN",			index:'JOINYN',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"REGYN",			index:'REGYN',			width:100,	align:'center',	sortable:false,	hidden:true},
@@ -336,6 +338,7 @@
 					$("#CONPY").val(selRowData.CONPY);
 					$("#SALEAMT").val(selRowData.SALEAMT);
 					$("#SALEDANGA").val(selRowData.SALEDANGA);
+					$("#UNITCOST").val(selRowData.UNITCOST);
 					$("#AGENCYAMT").val(selRowData.AGENCYAMT);
 					$("#DCGUBUN").val(selRowData.DCGUBUN);
 					$("#DCRATE").val(selRowData.DCRATE);
@@ -662,6 +665,7 @@
 			$("#CONPY").val("");
 			$("#SALEAMT").val("");
 			$("#SALEDANGA").val("");
+			$("#UNITCOST").val("");
 			$("#AGENCYAMT").val("");
 			$("#DCGUBUN").change();
 			$("#DCRATE").val("");
@@ -1452,6 +1456,7 @@
 			inputComma("CONPY");
 			inputComma("SALEAMT");
 			inputComma("SALEDANGA");
+			inputComma("UNITCOST");
 			inputComma("DCAMT");
 			inputComma("SELLAMT");	
 		})
@@ -1466,6 +1471,7 @@
 				$("#CONPY").click();
 				$("#SALEAMT").click();
 				$("#SALEDANGA").click();
+				$("#UNITCOST").click();
 				$("#DCAMT").click();
 				$("#SELLAMT").click();
 			} else if (str == "remove") {
@@ -1477,6 +1483,7 @@
 				$("#CONPY").val(removeComma($("#CONPY").val()));
 				$("#SALEAMT").val(removeComma($("#SALEAMT").val()));
 				$("#SALEDANGA").val(removeComma($("#SALEDANGA").val()));
+				$("#UNITCOST").val(removeComma($("#UNITCOST").val()));
 				$("#DCAMT").val(removeComma($("#DCAMT").val()));
 				$("#SELLAMT").val(removeComma($("#SELLAMT").val()));
 			}
@@ -1598,8 +1605,10 @@
 					<td><input type="text" id="SALEDANGA" name="SALEDANGA" /></td>
 				</tr>
 				<tr>
+					<th width="120">판매단가</th>
+					<td colspan="2"><input type="text" id="UNITCOST" name="UNITCOST" /></td>
 					<th width="120">위탁수수료</th>
-					<td colspan="4"><input type="text" id="AGENCYAMT" name="AGENCYAMT" /></td>
+					<td><input type="text" id="AGENCYAMT" name="AGENCYAMT" /></td>
 				</tr>
 				<tr>
 					<th width="120">DC사항</th>

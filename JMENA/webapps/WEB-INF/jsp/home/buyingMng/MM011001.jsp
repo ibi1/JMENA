@@ -89,7 +89,7 @@
 			$("#BUNJANPY").jqxInput({theme: 'energyblue', height: 23, width: 70, disabled: true});
 			$("#BUYAMT").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			$("#BUYDANGA").jqxInput({theme: 'energyblue', height: 23, width: 150});
-			$("#SELLDANGA").jqxInput({theme: 'energyblue', height: 23, width: 150});
+			$("#UNITCOST").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
@@ -250,7 +250,7 @@
 					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'right',  sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"BUYDANGA",			index:'BUYDANGA',		width:100,	align:'center', sortable:false, hidden:true}
-					, {name:"SELLDANGA",		index:'SELLDANGA',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"UNITCOST",		index:'UNITCOST',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REGYN",			index:'REGYN',			width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REGDATE",			index:'REGDATE',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', sortable:false, hidden:true}
@@ -293,7 +293,7 @@
 					$("#BUNJANPY").val(selRowData.BUNJANPY);
 					$("#BUYAMT").val(selRowData.BUYAMT);
 					$("#BUYDANGA").val(selRowData.BUYDANGA);
-					$("#SELLDANGA").val(selRowData.SELLDANGA);
+					$("#UNITCOST").val(selRowData.UNITCOST);
 					$("input:radio[name=REGYN]:input[value=" + selRowData.REGYN + "]").attr("checked", true);
 					$("#REGDATE").val(selRowData.REGDATE);
 					$("#REMARK").val(selRowData.REMARK);
@@ -540,7 +540,7 @@
 			$("#BUNJANPY").val("");
 			$("#BUYAMT").val("");
 			$("#BUYDANGA").val("");
-			$("#SELLDANGA").val("");
+			$("#UNITCOST").val("");
 			$("input:radio[name=REGYN]:input[value=Y]").attr("checked", true);
 			$("#REGDATE").val("");
 			$("#REMARK").val("");
@@ -1083,17 +1083,34 @@
 					$("#mm_div2").text("매매단가");
 					
 					//일반일 경우만 지급 스케줄 관리 사용
-					$("#tab1InsertButton").jqxButton({disabled: false});
+					/* $("#tab1InsertButton").jqxButton({disabled: false});
 					$("#tab1DeleteButton").jqxButton({disabled: false});
-					$("#tab1SaveButton").jqxButton({disabled: false});
+					$("#tab1SaveButton").jqxButton({disabled: false}); */
 				} else { //위탁
 					$("#mm_div1").text("위탁매입");
 					$("#mm_div2").text("위탁매입단가");
 					
 					//위탁일 경우만 지급 스케줄 관리 미 사용
-					$("#tab1InsertButton").jqxButton({disabled: true});
+				/* 	$("#tab1InsertButton").jqxButton({disabled: true});
 					$("#tab1DeleteButton").jqxButton({disabled: true});
-					$("#tab1SaveButton").jqxButton({disabled: true});
+					$("#tab1SaveButton").jqxButton({disabled: true}); */
+				}
+			});
+		})
+		
+		$(function() {
+			$("#BUYM2").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13) {
+					//저장전 콤마 삭제
+					f_commaInputData("remove");
+					
+					var reBuyPy = parseFloat($("#BUYM2").val()) / 3.3;
+					
+					$("#BUYPY").val(reBuyPy.toFixed(2));
+					
+					//콤마 추가
+					f_commaInputData("click");
 				}
 			});
 		})
@@ -1108,7 +1125,7 @@
     		inputComma("BUNJANPY");
     		inputComma("BUYAMT");
     		inputComma("BUYDANGA");
-    		inputComma("SELLDANGA");
+    		inputComma("UNITCOST");
 		})
 		
 		function f_commaInputData(str) {
@@ -1121,7 +1138,7 @@
 				$("#BUNJANPY").click();
 				$("#BUYAMT").click();
 				$("#BUYDANGA").click();
-				$("#SELLDANGA").click();
+				$("#UNITCOST").click();
 			} else if (str == "remove") {
 				$("#BUYM2").val(removeComma($("#BUYM2").val()));
 				$("#BUYPY").val(removeComma($("#BUYPY").val()));
@@ -1131,7 +1148,7 @@
 				$("#BUNJANPY").val(removeComma($("#BUNJANPY").val()));
 				$("#BUYAMT").val(removeComma($("#BUYAMT").val()));
 				$("#BUYDANGA").val(removeComma($("#BUYDANGA").val()));
-				$("#SELLDANGA").val(removeComma($("#SELLDANGA").val()));
+				$("#UNITCOST").val(removeComma($("#UNITCOST").val()));
 			}
 			
 		}
@@ -1233,7 +1250,7 @@
 				</tr>
 				<tr>
 					<th width="120">판매단가</th>
-					<td colspan="3"><input type="text" id="SELLDANGA" name="SELLDANGA" /></td>
+					<td colspan="3"><input type="text" id="UNITCOST" name="UNITCOST" /></td>
 				</tr>
 				<tr>
 					<th width="120">등기일자</th>
