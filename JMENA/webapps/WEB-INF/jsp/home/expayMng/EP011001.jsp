@@ -91,8 +91,10 @@
 				S_SALEID : $("#S_SALEID").val(),
 				S_SALEDATESYM : $("#S_SALEDATESYM").val(),
 				S_SALEDATEEYM : $("#S_SALEDATEEYM").val(),
-				S_BRANCHCODE : $("#S_BRANCHCODE").val(),
-				S_DEPTCODE : $("#S_DEPTCODE").val(),
+				S_BRANCHCODE : "ALL",
+				S_DEPTCODE : "ALL",
+// 				S_BRANCHCODE : $("#S_BRANCHCODE").val(),
+// 				S_DEPTCODE : $("#S_DEPTCODE").val(),
 				S_SALERCD : $("#S_SALERCD").val()
 			},				
 			datatype:"json" ,			
@@ -151,7 +153,7 @@
 			onSelectRow: function(ids){
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#PAYDATE").val(selRowData.PAYDATE);
-//				$("#SALERCD").val(selRowData.SALERCD);
+				$("#SALERCD").val(selRowData.SALERCD);
 				$("#SALERNM").val(selRowData.SALERNM);
 				$("#SALEDATE").val(selRowData.SALEDATE);
 				$("#SALEID").val(selRowData.SALEID);
@@ -396,6 +398,9 @@
 	
 	
 	function paycal(){
+		var salercd = $("#SALERCD").val();
+		var insacode = $("#INSACODE").val();	
+		
 		$("#PAYAMT").val("0");
 		$("#TAXINCOME").val("0");
 		$("#TAXLOCAL").val("0");
@@ -403,14 +408,19 @@
 		$("#DEDUCTAMT").val("0");
 		
 		var deductamt = "0";
-		
+		var gijunAmt = "0";
 		//콤마 remove
 		f_commaInputData("remove");
 
 		var sellAmt = parseInt($("#SELLAMT").val());
 		var sudangrate = parseFloat($("#SUDANGRATE").val());
 		var addrate = parseFloat($("#ADDRATE").val());
-		var gijunAmt = sellAmt * (sudangrate + addrate) / 100;    //지급금액(기준금액)
+		if(salercd == insacode){
+			gijunAmt = sellAmt * (sudangrate + addrate) / 100;    //지급금액(기준금액)			
+		}else{
+			gijunAmt = (sellAmt * (sudangrate + addrate) / 100)//지급금액(기준금액)
+			gijunAmt = gijunAmt - (gijunAmt * 3.3 / 100);
+		}
 		
 		var taxgubun =$("#TAXGUBUN").val()
 		
@@ -615,29 +625,34 @@
 		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table width="99%" >
 				<tr>
-					<th width="120">지급년월</th>
-					<td colspan="3"><input type="text" id="S_SALEDATESYM" name="S_SALEDATESYM" /> ~ <input type="text" id="S_SALEDATEEYM" name="S_SALEDATEEYM" /></td>
+					 <!-- <th width="120">지급년월</th> -->
+					<!-- <td colspan="3"><input type="text" id="S_SALEDATESYM" name="S_SALEDATESYM" /> ~ <input type="text" id="S_SALEDATEEYM" name="S_SALEDATEEYM" /></td> -->
+					<td colspan="3"><input type="hidden" id="S_SALEDATESYM" name="S_SALEDATESYM" /><input type="hidden" id="S_SALEDATEEYM" name="S_SALEDATEEYM" /></td>
 				</tr>
 				<tr>
-					<th width="120">지사</th>
+					<!-- <th width="120">지사</th> -->
 					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE" >
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="display:none">
 							<option></option>
 						</select>
 					</td>
-					<th width="120">부서</th>
+					<!-- <th width="120">부서</th> -->
 					<td>
-						<select id="S_DEPTCODE" name="S_DEPTCODE">
+						<select id="S_DEPTCODE" name="S_DEPTCODE" style="display:none">
 							<option></option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th width="120">담당자</th>
+					<!-- <th width="120">담당자</th>
 					<td colspan="3">
 						<input type="text" id="S_SALERCD" name="S_SALERCD" />
 						<input type="hidden" id="S_SALEID" name="S_SALEID"/> 
-					</td>
+					</td> --> 
+					<td colspan="3">
+						<input type="hidden" id="S_SALERCD" name="S_SALERCD" />
+						<input type="hidden" id="S_SALEID" name="S_SALEID"/> 
+					</td> 
 						
 				</tr>
 			</table>
@@ -656,63 +671,63 @@
 				<tr>
 					<th width="120">매출구분</th>
 					<td colspan="3">
-						<select id="SALEGUBUN" name="SALEGUBUN" style="background-color: #e2e2e2;" readonly >
+						<select id="SALEGUBUN" name="SALEGUBUN" >
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th width="120">담당자</th>
-					<td><input type="hidden" id="SALERCD" name="SALERCD" style="background-color: #e2e2e2;" readonly />
-					<input type="text" id="SALERNM" name="SALERNM" style="background-color: #e2e2e2;" readonly/></td>
+					<td><input type="hidden" id="SALERCD" name="SALERCD"  />
+					<input type="text" id="SALERNM" name="SALERNM"/></td>
 					<th width="120">계약지사</th>
 					<td>
-						<select id="BRANCHCODE" name="BRANCHCODE" style="background-color: #e2e2e2;" readonly >
+						<select id="BRANCHCODE" name="BRANCHCODE" >
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th width="120">관리번호</th>
-					<td ><input type="text" id="MANAGENO" name="MANAGENO" style="background-color: #e2e2e2;" readonly/></td>
+					<td ><input type="text" id="MANAGENO" name="MANAGENO"/></td>
 					<th width="120">지역구분</th>
 					<td>
-						<select id="CITYCODE" name="CITYCODE" style="background-color: #e2e2e2;" readonly >
+						<select id="CITYCODE" name="CITYCODE"  >
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th width="120">주소</th>
-					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS" style="background-color: #e2e2e2;" readonly/></td>
+					<td colspan="3"><input type="text" id="ADDRESS" name="ADDRESS"/></td>
 				</tr>
 				<tr>
 					<th width="120">계약자 성명</th>
-					<td colspan="3"><input type="text" id="CONNAME" name="CONNAME" style="background-color: #e2e2e2;" readonly/></td>
+					<td colspan="3"><input type="text" id="CONNAME" name="CONNAME" /></td>
 				</tr>
 				<tr>
 					<th width="120">계약면적</th>
-					<td><input type="text" id="CONM2" name="CONM2" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
+					<td><input type="text" id="CONM2" name="CONM2" style="text-align:right;"/></td>
 					<th width="120">계약평수</th>
-					<td><input type="text" id="CONPY" name="CONPY" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
+					<td><input type="text" id="CONPY" name="CONPY" style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<th width="120">매매대금</th>
-					<td width="120"><input type="text" id="SALEAMT" name="SALEAMT" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
+					<td width="120"><input type="text" id="SALEAMT" name="SALEAMT" style="text-align:right;"/></td>
 					<th width="120">매매단가</th>
-					<td><input type="text" id="SALEDANGA" name="SALEDANGA" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
+					<td><input type="text" id="SALEDANGA" name="SALEDANGA" style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<th width="120">DC사항</th>
 					<td>
-						<select id="DCGUBUN" name="DCGUBUN" style="background-color: #e2e2e2;" readonly  >
+						<select id="DCGUBUN" name="DCGUBUN">
 						</select>
 					</td>
 					<th width="120">DC 율</th>
-					<td><input type="text" id="DCRATE" name="DCRATE" style="text-align:right; background-color: #e2e2e2;" readonly/> % </td>
+					<td><input type="text" id="DCRATE" name="DCRATE" style="text-align:right;"/> % </td>
 				</tr>
 				<tr>
 					<th width="120">DC금액</th>
-					<td><input type="text" id="DCAMT" name="DCAMT" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
+					<td><input type="text" id="DCAMT" name="DCAMT" style="text-align:right;"/></td>
 					<th width="120">실 판매가</th>
-					<td><input type="text" id="SELLAMT" name="SELLAMT" style="text-align:right; background-color: #e2e2e2;" readonly/></td>
+					<td><input type="text" id="SELLAMT" name="SELLAMT" style="text-align:right;"/></td>
 				</tr>
 			</table>
 		</div>
@@ -737,7 +752,7 @@
 					<th width="120">추가지급율(%)</th>
 					<td width="120"><input type="text" id="ADDRATE" name="ADDRATE" style="text-align:right;"/></td>
 					<th width="120">지급금액</th>
-					<td colspan="5"><input type="text" id="PAYAMT" name="PAYAMT" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td colspan="5"><input type="text" id="PAYAMT" name="PAYAMT" style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<th width="120">신고기준</th>				
@@ -745,13 +760,13 @@
 						<select id="TAXGUBUN" name="TAXGUBUN"></select>
 					</td>
 					<th width="120">사업소득세</th>
-					<td width="130"><input type="text" id="TAXINCOME" name="TAXINCOME" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td width="130"><input type="text" id="TAXINCOME" name="TAXINCOME" style="text-align:right; "/></td>
 					<th width="120">지방세</th>
-					<td width="130"><input type="text" id="TAXLOCAL" name="TAXLOCAL" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td width="130"><input type="text" id="TAXLOCAL" name="TAXLOCAL" style="text-align:right;" /></td>
 					<th width="120">부가가치세</th>
-					<td width="130"><input type="text" id="SUPPLYTAX" name="SUPPLYTAX" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td width="130"><input type="text" id="SUPPLYTAX" name="SUPPLYTAX" style="text-align:right;"/></td>
 					<th width="120">차감지급액</th>
-					<td width="130"><input type="text" id="DEDUCTAMT" name="DEDUCTAMT" style="text-align:right; background-color: #e2e2e2;" readonly /></td>
+					<td width="130"><input type="text" id="DEDUCTAMT" name="DEDUCTAMT" style="text-align:right;"/></td>
 				</tr>
 				<tr>
 					<th width="120">비고</th>

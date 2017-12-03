@@ -142,7 +142,7 @@
 			</isNotEmpty>
 		</isNotEmpty>
 		<isEmpty property="S_SALEID">
-	 			AND DATE_FORMAT(T1.PAYDATE, '%Y-%m') BETWEEN #S_SALEDATESYM# AND #S_SALEDATEEYM#
+	 			<!-- AND DATE_FORMAT(T1.PAYDATE, '%Y-%m') BETWEEN #S_SALEDATESYM# AND #S_SALEDATEEYM# -->
 			<isNotEmpty property="S_SALERCD">
 	 			AND T1.SALERCD = #S_SALERCD# 
 			</isNotEmpty>

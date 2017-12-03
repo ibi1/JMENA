@@ -62,7 +62,8 @@
 		f_selectListEnaDutyCode();
 		$("#APPOINTBRANCH").val("");
 		selectRecoidCode();
-		selectListInsaMst();
+		setTimeout("selectListInsaMst()", 1000);
+//		selectListInsaMst();
 		selectListEnaAppointItem(INSACODE);
 		selectListEnaTexPayerItem(INSACODE);
 	})
@@ -185,7 +186,7 @@
 		loadtext: '로딩중...',
 		//cellEdit: true,
 		loadError:function(){alert("Error~!!!!");} ,
-		colNames:['사번','순번', '발령구분', '발령일자', '발령지사코드', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고','발령구분'] ,
+		colNames:['사번','순번', '발령구분', '발령일자', '발령지사코드', '발령지사', '발령부서','직급', '직책', '고용구분', '월정지급액', '비고','부서구분'] ,
 		colModel:[
 			  {name:"INSACODE",			index:'INSACODE',			width:100,		align:'center',	sortable:false, hidden:true}
 			, {name:"APPOINTSEQ",		index:'APPOINTSEQ',			width:100,		align:'center',	sortable:false, hidden:true}
@@ -258,27 +259,27 @@
 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' ,	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center',	sortable:false, editable:true}
 			, {name:"DEPTGUBUN",		index:'DEPTGUBUN',			width:100,		align:'center',	sortable:false, hidden:true }
-			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true
-				, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
-					dataEvents:[{
-						type:'change',
-						fn:function(e){
-							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-							var appointbranch = this.value;
+// 			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true
+// 				, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
+// 					dataEvents:[{
+// 						type:'change',
+// 						fn:function(e){
+// 							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+// 							var appointbranch = this.value;
 
-							alert("aaa");
-							$("#bottomList1").editCell(ids, 7, true);
-							$("#bottomList1").jqGrid('setCell', ids,  'PREBASICPAY, "", editable-cell'); // 특정 cell 수정 가능하게
+// 							alert("aaa");
+// 							$("#bottomList1").editCell(ids, 7, true);
+// 							$("#bottomList1").jqGrid('setCell', ids,  'PREBASICPAY, "", editable-cell'); // 특정 cell 수정 가능하게
 
-						}
-					}]
-				}}
-			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
-//			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
-			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
-			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
-			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center'}
+// 						}
+// 					}]
+// 				}}
+// 			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
+// //			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
+// 			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
+// 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
+// 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+// 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center'}
 		] ,
 		rowNum:10000000,
 		autowidth: true ,
@@ -370,8 +371,10 @@
 			        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 			        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
 
-			        v_rightLastSel = id;
+			        v_rightLastSel = id;			        
 				}
+				
+				
 			} ,
 			loadComplete: function() {			
 			},
@@ -385,12 +388,12 @@
 		var checked =  (cellvalue == "Y" ? "checked=checked" : "");
 		selChk = cellvalue;		
 		return "<input type=\"checkbox\"" + checked + "onclick=\"onClickTest('" + options.rowId + "');\"/>";
-		
+//		return selChk;
 	}
 	
-	function onClickTest(ids) {		
-		$("#bottomList2").jqGrid('setSelection', ids, true);
-	}
+ 	function onClickTest(ids) {		
+ 		$("#bottomList2").jqGrid('setSelection', ids, true);
+ 	}
 	
 	
 	$(function(){
@@ -424,12 +427,12 @@
 			dataType : 'json' , 
 			success: function(data){
 				var inHtml = "";
-				var inHtml1 = "<option value='ALL'>전체</option>\n";
+//			var inHtml1 = "<option value='ALL'>전체</option>\n";
 				data.branchMstList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
-					inHtml1 += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
+//					inHtml1 += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 				});
-				$("#S_BRANCHCODE").append(inHtml1);
+				$("#S_BRANCHCODE").append(inHtml);
 				$("#BRANCHCODE").append(inHtml);
 				f_selectListEnaDeptCode("0","");
 				f_selectListEnaDeptCode("2","");
@@ -1155,7 +1158,7 @@
 					<th width="120">성명 / 사번</th>
 					<td>
 						<input type="text" id="KNAME" name="KNAME" />        
-						<input type="text" id="INSACODE" name="INSACODE" style="background-color: #e2e2e2;" maxlength="8" readonly/>
+						<input type="text" id="INSACODE" name="INSACODE" maxlength="8" readonly/>
 					</td>
 					<td colspan="2">
 						<input type="button" id='insaButton'/>

@@ -191,8 +191,15 @@
 				$("#S_DEPTCODE", parent.opener.document).val(selRowData.DEPTCODE);
 	 			$("#S_KNAME", parent.opener.document).val(selRowData.KNAME);
 // 				$("#S_INSACODE", parent.opener.document).val(selRowData.INSACODE);
-				$(opener.location).attr("href", "javascript:f_selectListEnaDeptCode('4','"+selRowData.DEPTCODE+"');");		
-//				$(opener.location).attr("href", "javascript:selectListInsaMst();");				
+				$(opener.location).attr("href", "javascript:f_selectListEnaDeptCode('4','"+selRowData.DEPTCODE+"');");
+				setTimeout($(opener.location).attr("href", "javascript:selectListInsaMst();"),800);
+//				selectListEnaAppointItem(INSACODE);
+//				selectListEnaTexPayerItem(INSACODE);
+				setTimeout($(opener.location).attr("href", "javascript:selectListEnaAppointItem("+selRowData.INSACODE+");"),500);
+				setTimeout($(opener.location).attr("href", "javascript:selectListEnaTexPayerItem("+selRowData.INSACODE+");"),500);
+//				$(opener.location).attr("href", "javascript:selectListEnaAppointItem("+selRowData.INSACODE+");");
+//				$(opener.location).attr("href", "javascript:selectListEnaTexPayerItem("+selRowData.INSACODE+");");
+//				$(opener.location).attr("href", "javascript:selectListInsaMst();");
 
 
 				window.self.close();
