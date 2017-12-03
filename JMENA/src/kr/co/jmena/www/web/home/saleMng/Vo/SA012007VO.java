@@ -20,6 +20,8 @@ public class SA012007VO {
 	private String S_BOROUGHCODE;
 	private String S_ADDRESS;
 	
+	private String S_SALEGUBUN;
+	
 	private String BUYID;
 	
 	
@@ -74,6 +76,9 @@ public class SA012007VO {
 	public String getBUYID() {
 		return this.BUYID;
 	}
+	public String getS_SALEGUBUN() {
+		return this.S_SALEGUBUN;
+	}
 	
 	public void setDCODENAME(String DCODENAME) {
 		this.DCODENAME = DCODENAME;
@@ -125,6 +130,9 @@ public class SA012007VO {
 	}
 	public void setBUYID(String BUYID) {
 		this.BUYID = BUYID;
+	}
+	public void setS_SALEGUBUN(String S_SALEGUBUN) {
+		this.S_SALEGUBUN = S_SALEGUBUN;
 	}
 
 

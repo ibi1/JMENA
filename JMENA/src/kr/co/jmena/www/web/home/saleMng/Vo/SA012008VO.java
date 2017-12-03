@@ -21,6 +21,10 @@ public class SA012008VO {
 	
 	private String S_CITYCODE;
 	private String S_BOROUGHCODE;
+	
+	private String S_BUYYEAR;
+	private String S_BUYMONTH;
+	
 	private String S_ADDRESS;
 	
 	public String getBUYID() {
@@ -80,6 +84,13 @@ public class SA012008VO {
 	public String getS_ADDRESS() {
 		return this.S_ADDRESS;
 	}
+
+	public String getS_BUYYEAR() {
+		return this.S_BUYYEAR;
+	}
+	public String getS_BUYMONTH() {
+		return this.S_BUYMONTH;
+	}
 	
 	public void setBUYID(String BUYID) {
 		this.BUYID = BUYID;
@@ -137,6 +148,12 @@ public class SA012008VO {
 	}
 	public void setS_ADDRESS(String S_ADDRESS) {
 		this.S_ADDRESS = S_ADDRESS;
+	}
+	public void setS_BUYYEAR(String S_BUYYEAR) {
+		this.S_BUYYEAR = S_BUYYEAR;
+	}
+	public void setS_BUYMONTH(String S_BUYMONTH) {
+		this.S_BUYMONTH = S_BUYMONTH;
 	}
 
 	

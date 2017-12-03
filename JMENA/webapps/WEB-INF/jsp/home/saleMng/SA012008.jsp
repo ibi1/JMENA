@@ -14,10 +14,21 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		var date = new Date();
+		
+		var yyyy = date.getFullYear();
+		var mm = date.getMonth() + 1;
 		
 		var S_CITYCODE = "";
 		var S_BOROUGHCODE = "";
 		var S_ADDRESS = "";
+		
+		var S_BUYYEAR = yyyy;
+		var S_BUYMONTH = addZero(mm);
+		
+		$("#S_BUYYEAR").val(S_BUYYEAR);
+		$("#S_BUYMONTH").val(S_BUYMONTH);
+		
 		var auth_p = true;
 
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -34,10 +45,34 @@
 		
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
+		f_selectListBuyYear();
 		
-		f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		
 	});
+
+	function addZero(n) {
+		return n < 10 ? "0" + n : n;
+	}
+	
+	function f_selectListBuyYear(){
+		var today = new Date();
+		var nowYear = today.getFullYear();		
+		var selectedVal = "";
+		$("#S_BUYYEAR").empty().data('options');
+		
+		var inHtml = "";
+		for (i=(nowYear - 20); i < (nowYear + 20) ; i++) {
+			if(i == nowYear){
+				selectedVal = "selected";
+			}else{
+				selectedVal = "";
+			}
+			inHtml += "<option value='" + i + "' "+selectedVal+" >" + i + " 년</option>\n";
+		}
+		
+		$("#S_BUYYEAR").append(inHtml);
+	}
 	
 	function f_selectListEnaCityCode(){
 		$("#S_CITYCODE").empty().data('options');
@@ -65,6 +100,7 @@
 		$("#S_CITYCODE").change(function() {
 			f_selectListEnaBoroughCode();
 		});
+		
 	});
 	
 	
@@ -93,10 +129,10 @@
 		});
 	}
 	
-	function f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
+	function f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
 		S_ADDRESS = encodeURI(encodeURIComponent(S_ADDRESS));
 
-		var url = "/home/selectListSA012008.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS;
+		var url = "/home/selectListSA012008.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS + "&S_BUYYEAR=" + S_BUYYEAR + "&S_BUYMONTH=" + S_BUYMONTH;
 		
         // prepare the data
         var source = {
@@ -175,8 +211,10 @@
 			var S_CITYCODE = $("#S_CITYCODE").val();
 			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
 			var S_ADDRESS = $("#S_ADDRESS").val();
+			var S_BUYYEAR = $("#S_BUYYEAR").val();
+			var S_BUYMONTH = $("#S_BUYMONTH").val();
 			
-			f_selectListSA012008(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+			f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		});
 		
 		$("#excelButton").click(function () {
@@ -203,6 +241,27 @@
 		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
+					<th width="120">매입년월</th>
+					<td width="150">
+					
+						<select id="S_BUYYEAR" name="S_BUYYEAR">
+						</select>
+						<select id="S_BUYMONTH" name="S_BUYMONTH">
+							<option value="01" selected="selected">1월</option>
+							<option value="02">2월</option>
+							<option value="03">3월</option>
+							<option value="04">4월</option>
+							<option value="05">5월</option>
+							<option value="06">6월</option>
+							<option value="07">7월</option>
+							<option value="08">8월</option>
+							<option value="09">9월</option>
+							<option value="10">10월</option>
+							<option value="11">11월</option>
+							<option value="12">12월</option>
+						</select>
+					
+					</td>
 					<th width="120">지역구분</th>
 					<td width="150">
 						<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">

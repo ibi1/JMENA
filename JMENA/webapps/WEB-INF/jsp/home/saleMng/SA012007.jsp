@@ -34,6 +34,7 @@
 		
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
+		f_selectListEnaDCode();
 		
 		f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		
@@ -61,6 +62,31 @@
 	   	
 	}
 
+	//매출구분
+	function f_selectListEnaDCode(){
+		var CCODE = "007";
+		$("#S_SALEGUBUN").empty().data('options');
+		$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#S_SALEGUBUN").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
 	$(function(){
 		$("#S_CITYCODE").change(function() {
 			f_selectListEnaBoroughCode();
@@ -93,10 +119,10 @@
 		});
 	}
 	
-	function f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
+	function f_selectListSA012007(S_SALEGUBUN, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
 		S_ADDRESS = encodeURI(encodeURIComponent(S_ADDRESS));
 		
-		var url = "/home/selectListSA012007.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS;
+		var url = "/home/selectListSA012007.do?S_SALEGUBUN="+S_SALEGUBUN+"&S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS;
 		
         // prepare the data
         var source = {
@@ -171,8 +197,9 @@
 			var S_CITYCODE = $("#S_CITYCODE").val();
 			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
 			var S_ADDRESS = $("#S_ADDRESS").val();
+			var S_SALEGUBUN = $("#S_SALEGUBUN").val();
 			
-			f_selectListSA012007(S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+			f_selectListSA012007(S_SALEGUBUN, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		});
 
 		$("#excelButton").click(function () {
@@ -199,16 +226,19 @@
 		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
+					<th width="120">매출구분</th>
+					<td width="150">
+						<select id="S_SALEGUBUN" name="S_SALEGUBUN" style="width:100px">
+						</select>
+					</td>
 					<th width="120">지역구분</th>
 					<td width="150">
 						<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">
-							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 					<th width="120">시/도 구분</th>
 					<td width="150">
 						<select id="S_BOROUGHCODE" name="S_BOROUGHCODE" style="width:130px">
-							<option value="ALL" selected="selected">전체</option>
 						</select>
 					</td>
 					<th width="120">주소 및 지번</th>

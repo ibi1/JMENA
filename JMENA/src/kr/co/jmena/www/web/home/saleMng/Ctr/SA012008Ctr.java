@@ -59,79 +59,79 @@ public class SA012008Ctr {
 		
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
+		String S_BUYYEAR = request.getParameter("S_BUYYEAR") + request.getParameter("S_BUYMONTH");  
+		
+		vo.setS_BUYYEAR(S_BUYYEAR);
+		
 		vo.setS_ADDRESS(S_ADDRESS);
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		
-		if(!(request.getParameter("S_CITYCODE").equals("") && 
-				request.getParameter("S_BOROUGHCODE").equals(""))){
+		List<SA012008VO> lst = SA012008Biz.selectListSA012008(vo);
 		
-			List<SA012008VO> lst = SA012008Biz.selectListSA012008(vo);
+		System.out.println("******************************************");
+		System.out.println("size()"+lst.size());
+		
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
 			
-			System.out.println("******************************************");
-			System.out.println("size()"+lst.size());
-			
-			
-			for (int i = 0; i < lst.size(); i++) {
-				JSONObject obj = new JSONObject();
-				
-				vo1.setBUYID(lst.get(i).getBUYID());
+			vo1.setBUYID(lst.get(i).getBUYID());
 	
-				List<SA012008VO> lst2 = SA012008Biz.selectListSA012008_2(vo1);
-				if(lst2.size() > 0){
-					for (int j = 0; j < lst2.size(); j++) {
-						if(j == 0){
-							obj.put("BUYGUBUN",lst.get(i).getBUYGUBUN());
-							obj.put("OWNERNAME",lst.get(i).getOWNERNAME());
-							obj.put("OWNERJUMINID",lst.get(i).getOWNERJUMINID());
-							obj.put("ADDRESS",lst.get(i).getADDRESS());
-							obj.put("BUYM2",lst.get(i).getBUYM2());
-							obj.put("REGDATE1",lst.get(i).getREGDATE1());
-							obj.put("BUYAMT",lst.get(i).getBUYAMT());
-							
-						}else{
-							obj.put("BUYGUBUN","");
-							obj.put("OWNERNAME","");
-							obj.put("OWNERJUMINID","");
-							obj.put("ADDRESS","");
-							obj.put("BUYM2","");
-							obj.put("REGDATE1","");
-							obj.put("BUYAMT","");
-							
-						}
-						obj.put("SELLSEQ",lst2.get(j).getSELLSEQ());
-						obj.put("CONNAME",lst2.get(j).getCONNAME());
-						obj.put("CONJUMINID",lst2.get(j).getCONJUMINID());
-						obj.put("CONM2",lst2.get(j).getCONM2());
-						obj.put("REGDATE2",lst2.get(j).getREGDATE2());
-						obj.put("SALEAMT",lst2.get(j).getSALEAMT());
-						obj.put("REMNM2",lst2.get(j).getREMNM2());
-						obj.put("REMNAMT",lst2.get(j).getREMNAMT());
+			List<SA012008VO> lst2 = SA012008Biz.selectListSA012008_2(vo1);
+			if(lst2.size() > 0){
+				for (int j = 0; j < lst2.size(); j++) {
+					if(j == 0){
+						obj.put("BUYGUBUN",lst.get(i).getBUYGUBUN());
+						obj.put("OWNERNAME",lst.get(i).getOWNERNAME());
+						obj.put("OWNERJUMINID",lst.get(i).getOWNERJUMINID());
+						obj.put("ADDRESS",lst.get(i).getADDRESS());
+						obj.put("BUYM2",lst.get(i).getBUYM2());
+						obj.put("REGDATE1",lst.get(i).getREGDATE1());
+						obj.put("BUYAMT",lst.get(i).getBUYAMT());
 						
-						jCell.add(obj);
+					}else{
+						obj.put("BUYGUBUN","");
+						obj.put("OWNERNAME","");
+						obj.put("OWNERJUMINID","");
+						obj.put("ADDRESS","");
+						obj.put("BUYM2","");
+						obj.put("REGDATE1","");
+						obj.put("BUYAMT","");
+						
 					}
-				}else{
-					obj.put("BUYGUBUN",lst.get(i).getBUYGUBUN());
-					obj.put("OWNERNAME",lst.get(i).getOWNERNAME());
-					obj.put("OWNERJUMINID",lst.get(i).getOWNERJUMINID());
-					obj.put("ADDRESS",lst.get(i).getADDRESS());
-					obj.put("BUYM2",lst.get(i).getBUYM2());
-					obj.put("REGDATE1",lst.get(i).getREGDATE1());
-					obj.put("BUYAMT",lst.get(i).getBUYAMT());
-					obj.put("SELLSEQ","");
-					obj.put("CONNAME","");
-					obj.put("CONJUMINID","");
-					obj.put("CONM2","");
-					obj.put("REGDATE2","");
-					obj.put("SALEAMT","");
-					obj.put("REMNM2","");
-					obj.put("REMNAMT","");
+					obj.put("SELLSEQ",lst2.get(j).getSELLSEQ());
+					obj.put("CONNAME",lst2.get(j).getCONNAME());
+					obj.put("CONJUMINID",lst2.get(j).getCONJUMINID());
+					obj.put("CONM2",lst2.get(j).getCONM2());
+					obj.put("REGDATE2",lst2.get(j).getREGDATE2());
+					obj.put("SALEAMT",lst2.get(j).getSALEAMT());
+					obj.put("REMNM2",lst2.get(j).getREMNM2());
+					obj.put("REMNAMT",lst2.get(j).getREMNAMT());
 					
 					jCell.add(obj);
 				}
+			}else{
+				obj.put("BUYGUBUN",lst.get(i).getBUYGUBUN());
+				obj.put("OWNERNAME",lst.get(i).getOWNERNAME());
+				obj.put("OWNERJUMINID",lst.get(i).getOWNERJUMINID());
+				obj.put("ADDRESS",lst.get(i).getADDRESS());
+				obj.put("BUYM2",lst.get(i).getBUYM2());
+				obj.put("REGDATE1",lst.get(i).getREGDATE1());
+				obj.put("BUYAMT",lst.get(i).getBUYAMT());
+				obj.put("SELLSEQ","");
+				obj.put("CONNAME","");
+				obj.put("CONJUMINID","");
+				obj.put("CONM2","");
+				obj.put("REGDATE2","");
+				obj.put("SALEAMT","");
+				obj.put("REMNM2","");
+				obj.put("REMNAMT","");
 				
+				jCell.add(obj);
 			}
+				
 		}
 		
 		json.put("rows", jCell);

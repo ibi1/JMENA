@@ -45,7 +45,7 @@
 		and t1.insacode = t2.insacode
 		and substring(DATE_FORMAT(t2.paydate, '%Y%m%d'), 1,6) = #S_PAYDATE#
 		and t2.saleid = t3.saleid
-
+		order by t2.paydate
 	</select>
 	
 	
