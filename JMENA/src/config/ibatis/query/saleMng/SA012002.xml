@@ -71,7 +71,7 @@
 		    BRANCHCODE, 
 		    (SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T3.BRANCHCODE) AS BRANCHNAME, 
 		    DEPTCODE,
-		    (SELECT DEPTNAME FROM ba_deptmst WHERE BRANCHCODE = T3.BRANCHCODE AND DEPTCODE = T3.DEPTCODE) AS DEPTNAME
+		    (SELECT kname FROM hr_insamst WHERE BRANCHCODE = T3.BRANCHCODE AND DEPTCODE = T3.DEPTCODE and duty='002') AS DEPTNAME 
 		    FROM hr_insamst T3
 		    WHERE 1=1
 		<isNotEqual property="S_BRANCHCODE" compareValue="">
@@ -83,18 +83,19 @@
 		<isNotEmpty property="S_KNAME">
 		    AND KNAME LIKE '%$S_KNAME$%'
 		</isNotEmpty>
-		    ) T2
+		    ) T2, (select buyid from mm_payscheduletb where 1=1 and paygubun = '005' and payyn <![CDATA[ <> ]]> 'Y') T4   
 		WHERE 1=1
+		and T1.buyid = T4.buyid
 		AND T1.SALERCD = T2.INSACODE
-		<isNotEmpty property="S_DCODE">
+		<isNotEqual property="S_DCODE" compareValue="">
 		AND T1.SALEGUBUN = #S_DCODE#
-		</isNotEmpty> 
+		</isNotEqual> 
 		<isNotEmpty property="S_SALEDATE_FR">
 			<isNotEmpty property="S_SALEDATE_TO">
 				AND T1.SALEDATE BETWEEN #S_SALEDATE_FR# AND #S_SALEDATE_TO#
 			</isNotEmpty>
 		</isNotEmpty> 
-		
+		order by T2.BRANCHCODE, T2.DEPTCODE, T1.SALEDATE
 	</select>
 	
 	

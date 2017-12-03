@@ -62,6 +62,7 @@ public class SA012002Ctr {
 		
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
 		String S_DEPTCODE = ("ALL".equals(request.getParameter("S_DEPTCODE"))) ? "" : request.getParameter("S_DEPTCODE");
+		String S_DCODE = ("ALL".equals(request.getParameter("S_DCODE"))) ? "" : request.getParameter("S_DCODE");
 		
 		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
 		
@@ -69,7 +70,7 @@ public class SA012002Ctr {
 		vo.setS_SALEDATE_TO(request.getParameter("S_SALEDATE_TO"));
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_DEPTCODE(S_DEPTCODE);
-		vo.setS_DCODE(request.getParameter("S_DCODE"));
+		vo.setS_DCODE(S_DCODE);
 		vo.setS_KNAME(S_KNAME);
 		
 		

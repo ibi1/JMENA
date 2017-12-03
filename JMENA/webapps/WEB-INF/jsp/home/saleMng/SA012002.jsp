@@ -109,6 +109,7 @@
 			},
 			success: function(data){
 				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
 				data.dcodeList.forEach(function(currentValue, index, array){
 					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
 				});
@@ -192,7 +193,7 @@
 				{ text: '지사코드', 		datafield: "BRANCHCODE",	width: 100, cellsalign: 'center', hidden:true},
 				{ text: '지사', 			datafield: "BRANCHNAME",	width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '부서코드', 		datafield: "DEPTCODE",		width: 100, cellsalign: 'center', hidden:true},
-				{ text: '부서', 			datafield: "DEPTNAME",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '실장명', 			datafield: "DEPTNAME",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '계약일', 			datafield: "SALEDATE",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '매출구분', 		datafield: "DCODENAME",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '계약번호', 		datafield: "SALEID",		width: 100, cellsalign: 'center', align: 'center'},
