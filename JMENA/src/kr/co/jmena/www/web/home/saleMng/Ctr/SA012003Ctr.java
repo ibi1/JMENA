@@ -62,13 +62,18 @@ public class SA012003Ctr {
 		
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
 		String S_DEPTCODE = ("ALL".equals(request.getParameter("S_DEPTCODE"))) ? "" : request.getParameter("S_DEPTCODE");
+		String S_DCODE = ("ALL".equals(request.getParameter("S_DCODE"))) ? "" : request.getParameter("S_DCODE");
 		
 		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
+		System.out.println("******************************************");
+		System.out.println("request.getParameter(S_DCODE)"+request.getParameter("S_DCODE"));
+		System.out.println("S_DCODE"+S_DCODE);
 		
 		vo.setS_SALEDATE_FR(request.getParameter("S_SALEDATE_FR"));
 		vo.setS_SALEDATE_TO(request.getParameter("S_SALEDATE_TO"));
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_DEPTCODE(S_DEPTCODE);
+		vo.setS_DCODE(S_DCODE);
 		vo.setS_KNAME(S_KNAME);
 
 		JSONArray jCell = new JSONArray();

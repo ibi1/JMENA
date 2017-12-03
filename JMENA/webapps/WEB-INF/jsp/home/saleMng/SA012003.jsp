@@ -19,6 +19,7 @@
 		var S_SALEDATE_TO = "";
 		var S_BRANCHCODE = "";
 		var S_DEPTCODE = "";
+		var S_DCODE = "";
 		var S_KNAME = "";
 		var auth_p = true;
 
@@ -38,8 +39,9 @@
 		
 		f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
+		f_selectListEnaDCode();
 		
-		f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+		f_selectListSA012003(S_DCODE, S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 	});
 	
 	function f_selectListEnaBranchCode(){
@@ -96,12 +98,36 @@
 	}
 
 	
-	function f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
+	function f_selectListEnaDCode(){
+		var CCODE = "007";
+	   	$.ajax({ 
+			type: 'POST' ,
+			url: "/codeCom/dcodeList.do", 
+			dataType : 'json' ,
+			data : {
+				CCODE : CCODE,
+			},
+			success: function(data){
+				var inHtml = "";
+				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
+				data.dcodeList.forEach(function(currentValue, index, array){
+					inHtml += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+				});
+				$("#S_DCODE").append(inHtml);
+			},
+			error:function(e){  
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}  
+		});
+	}
+	
+	function f_selectListSA012003(S_DCODE, S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME){
 		S_KNAME = encodeURI(encodeURIComponent(S_KNAME));
 		
 		var url = "/home/selectListSA012003.do?S_SALEDATE_FR=" + S_SALEDATE_FR + "&S_SALEDATE_TO=" + S_SALEDATE_TO 
 		+ "&S_BRANCHCODE=" + S_BRANCHCODE
 		+ "&S_DEPTCODE=" + S_DEPTCODE
+		+ "&S_DCODE=" + S_DCODE
 		+ "&S_KNAME=" + S_KNAME;
 		
         // prepare the data
@@ -165,7 +191,7 @@
             columns: [
                       
 				{ text: '지사', 		datafield: "BRANCHNAME",	width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '부서', 		datafield: "DEPTNAME",		width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '실장명', 		datafield: "DEPTNAME",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '계약일', 		datafield: "SALEDATE",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '계약번호', 	datafield: "SALEID",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '담당자', 		datafield: "KNAME",			width: 150, cellsalign: 'center', align: 'center'},
@@ -202,6 +228,7 @@
 			var S_SALEDATE_TO = $("#S_SALEDATE_TO").val();
 			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
 			var S_DEPTCODE = $("#S_DEPTCODE").val();
+			var S_DCODE = $("#S_DCODE").val();
 			var S_KNAME = $("#S_KNAME").val();
 			
 			if (S_SALEDATE_FR == "" || S_SALEDATE_TO == "") {
@@ -211,7 +238,7 @@
 				return false;
 			}
 			
-			f_selectListSA012003(S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
+			f_selectListSA012003(S_DCODE, S_SALEDATE_FR, S_SALEDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
 		});
 		
 		$("#excelButton").click(function () {
@@ -241,7 +268,12 @@
 			<table>
 				<tr>
 					<th width="120">매출기간</th>
-					<td colspan="5"><input type="text" id="S_SALEDATE_FR" name="S_SALEDATE_FR" /> ~ <input type="text" id="S_SALEDATE_TO" name="S_SALEDATE_TO" /></td>
+					<td><input type="text" id="S_SALEDATE_FR" name="S_SALEDATE_FR" /> ~ <input type="text" id="S_SALEDATE_TO" name="S_SALEDATE_TO" /></td>
+					<th width="120">매출구분</th>
+					<td colspan="3">
+						<select id="S_DCODE" name="S_DCODE">
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<th width="120">지사</th>

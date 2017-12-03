@@ -35,6 +35,9 @@ public class SA012003VO {
 	private String S_KNAME;
 	
 	
+	private String S_DCODE;
+
+	
 	public String getBRANCHNAME() {
 		return this.BRANCHNAME;
 	}
@@ -122,6 +125,9 @@ public class SA012003VO {
 	}
 	public String getS_KNAME() {
 		return this.S_KNAME;
+	}
+	public String getS_DCODE() {
+		return this.S_DCODE;
 	}
 	
 	public void setBRANCHNAME(String BRANCHNAME) {
@@ -211,6 +217,9 @@ public class SA012003VO {
 	}
 	public void setS_KNAME(String S_KNAME) {
 		this.S_KNAME = S_KNAME;
+	}
+	public void setS_DCODE(String S_DCODE) {
+		this.S_DCODE = S_DCODE;
 	}
 	
 }
