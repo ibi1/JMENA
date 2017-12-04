@@ -67,16 +67,28 @@ function setComma(num) {
     } else {
     	reData = str + "." + numArr[1];
     }
-    return reData ;
+    return reData;
 }
 
 // 콤마 빼기
-function removeComma(n){
-	if (n == null || n == "") {
-		return n;
+function removeComma(num){
+	if (num == null || num == "") {
+		return num;
 	}
 	
- 	str = parseInt(n.replace(/,/g, ""));
+	var numArr =num.split(".");
+	
+	if(numArr[0]<1000){
+		return num;
+	}
+	
+ 	str = parseInt(numArr[0].replace(/,/g, ""));
 
-  	return str;  
+ 	var reData;
+    if (numArr.length == 1) {
+    	reData = str;
+    } else {
+    	reData = str + "." + numArr[1];
+    }
+    return reData;
  }
