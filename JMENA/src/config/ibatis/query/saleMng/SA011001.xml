@@ -167,8 +167,14 @@
 			SALEAMT = #SALEAMT#,
 			SALEDANGA = #SALEDANGA#,
 			DCGUBUN = #DCGUBUN#,
-			DCRATE = #DCRATE#,
-			DCAMT = #DCAMT#,
+			<isNotEqual property="DCGUBUN" compareValue="000">
+				DCRATE = #DCRATE#,
+				DCAMT = #DCAMT#,
+			</isNotEqual>
+			<isEqual property="DCGUBUN" compareValue="000">
+				DCRATE = NULL,
+				DCAMT = NULL,
+			</isEqual>
 			SELLAMT = #SELLAMT#,
 			<isNotEmpty property="UNITCOST">
 			UNITCOST = #UNITCOST#,
@@ -241,8 +247,14 @@
 			#SALEAMT#,
 			#SALEDANGA#,
 			#DCGUBUN#,
+			<isNotEqual property="DCGUBUN" compareValue="000">
 			#DCRATE#,
 			#DCAMT#,
+			</isNotEqual>
+			<isEqual property="DCGUBUN" compareValue="000">
+			NULL,
+			NULL,
+			</isEqual>
 			#SELLAMT#,
 			<isNotEmpty property="UNITCOST">
 			#UNITCOST#,

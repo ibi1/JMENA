@@ -15,27 +15,12 @@
 		var v_rightLastSel_3 = 0;		//오른쪽 그리드 선택 tab3
 		var auth_i = true;
 		var auth_d = true;
-		function addZero(n) {
-			return n < 10 ? "0" + n : n;
-		}
-		
-		function dateInput(n) {
-			var date = new Date();
-			
-			date.setMonth(date.getMonth() - n);
-			
-			var yyyy = date.getFullYear();
-			var mm = date.getMonth() + 1;
-			var dd = date.getDate();
-			
-			return yyyy + "-" + addZero(mm) + "-" + addZero(dd);
-		}
 		
 		$(document).ready(function(){
 			$("#S_FLAG_L").val("I");
 			$("#S_FLAG_R_2").val("I");
 			
-			$("#SL_SALEDATE_FR").val(dateInput(3));
+			$("#SL_SALEDATE_FR").val(dateInput(1));
 			$("#SL_SALEDATE_TO").val(dateInput(0));
 			
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -795,18 +780,22 @@
 					}
 				}
 				
-				if ($("#DCAMT").val() == "") {
-					alert("DC금액을 입력하셔야 합니다.");
+				if($("#DCGUBUN").val() != "000") {
+					if ($("#DCRATE").val() == "") {
+						alert("DC율을 입력하셔야 합니다.");
+						
+						$("#DCRATE").focus();
+						return false;
+					}
 					
-					$("#DCAMT").focus();
-					return false;
-				}
-				
-				if ($("#DCAMT").val() == "") {
-					alert("DC금액을 입력하셔야 합니다.");
-					
-					$("#DCAMT").focus();
-					return false;
+					if ($("#DCAMT").val() == "") {
+						alert("DC금액을 입력하셔야 합니다.");
+						
+						$("#DCAMT").focus();
+						return false;
+					}
+				} else {
+					alert("DC사항이 'DC없음'일 경우 'DC율 및 DC금액'은 저장되지 않습니다.");
 				}
 				
 				if ($("#SELLAMT").val() == "") {
@@ -1489,6 +1478,42 @@
 			}
 			
 		}
+		
+		//단가 계산(dc금액 , 실 판매가)
+		function f_dangaRule() {
+			f_commaInputData("remove");
+			
+			var dcamt;
+			var saleamt = parseFloat($("#SALEAMT").val());
+			var dcrate = parseFloat($("#DCRATE").val());
+			
+			if($("#DCGUBUN").val() != "000") {	//dc 있음
+				dcamt = saleamt.toFixed(0) * (dcrate / 100);
+				$("#DCAMT").val(dcamt.toFixed(0));
+				
+				$("#SELLAMT").val(saleamt.toFixed(0) - dcamt.toFixed(0));
+			} else {	//dc없음
+				$("#SELLAMT").val(saleamt.toFixed(0));
+			}
+			
+			f_commaInputData("click");
+		}
+		
+		$(function() {
+			$("#SALEAMT").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13) {
+					f_dangaRule();
+				}
+			});
+			
+			$("#DCRATE").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13) {
+					f_dangaRule();
+				}
+			});
+		})
 	</script>
 </head>
 <body>
@@ -1600,7 +1625,7 @@
 				</tr>
 				<tr>
 					<th width="120">매매대금</th>
-					<td colspan="2"><input type="text" id="SALEAMT" name="SALEAMT" /></td>
+					<td colspan="2"><input type="text" id="SALEAMT" name="SALEAMT"/></td>
 					<th width="120">매매단가</th>
 					<td><input type="text" id="SALEDANGA" name="SALEDANGA" /></td>
 				</tr>

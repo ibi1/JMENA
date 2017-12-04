@@ -15,26 +15,10 @@
 		var auth_i = true;
 		var auth_d = true;
 
-		function addZero(n) {
-			return n < 10 ? "0" + n : n;
-		}
-		
-		function dateInput(n) {
-			var date = new Date();
-			
-			date.setMonth(date.getMonth() - n);
-			
-			var yyyy = date.getFullYear();
-			var mm = date.getMonth() + 1;
-			var dd = date.getDate();
-			
-			return yyyy + "-" + addZero(mm) + "-" + addZero(dd);
-		}
-		
 		$(document).ready(function(){
 			$("#S_FLAG_L").val("I");
 			
-			$("#LS_BUYDATE_FR").val(dateInput(3));
+			$("#LS_BUYDATE_FR").val(dateInput(1));
 			$("#LS_BUYDATE_TO").val(dateInput(0));
 			
 			$('#bottomTabs').jqxTabs({theme: 'bootstrap', autoHeight: false, width: 680});

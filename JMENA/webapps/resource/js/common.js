@@ -1,3 +1,19 @@
+function addZero(n) {
+	return n < 10 ? "0" + n : n;
+}
+
+function dateInput(n) {
+	var date = new Date();
+	
+	date.setMonth(date.getMonth() - n);
+	
+	var yyyy = date.getFullYear();
+	var mm = date.getMonth() + 1;
+	var dd = date.getDate();
+	
+	return yyyy + "-" + addZero(mm) + "-" + addZero(dd);
+}
+
 //금액관련 콤마(,)처리 와 숫자만 입력
 function inputComma(id) {
 	var selector="input[id="+id+"]";
