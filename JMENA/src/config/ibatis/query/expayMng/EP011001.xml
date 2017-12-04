@@ -262,6 +262,11 @@
 												     AND T3.INSACODE = #INSACODE#) 
 				 		       AND deptname = '임원')
 			 )
+			 OR
+			 (T1.INSACODE = (SELECT RECOID
+			                   FROM hr_insamst I
+							  WHERE INSACODE = #INSACODE#)
+			 )
 		 )
 	</select>		
 		
