@@ -414,6 +414,7 @@ public class HR011001Ctr {
 			jData.put("PAYERNAME", lst.get(i).getPAYERNAME());
 			jData.put("PAYERID", lst.get(i).getPAYERID());
 			jData.put("BANKID", lst.get(i).getBANKID());
+			jData.put("BANKNAME", lst.get(i).getBANKNAME());
 			jData.put("ACCTNO", lst.get(i).getACCTNO());
 			jData.put("ACCTOWNER", lst.get(i).getACCTOWNER());
 			jData.put("BASICACCT", lst.get(i).getBASICACCT());

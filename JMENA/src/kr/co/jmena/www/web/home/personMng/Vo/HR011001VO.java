@@ -33,6 +33,7 @@ public class HR011001VO {
 	private String APPOINTGUBUN;
 	private String APPOINTSEQ;
 	private String BANKID;
+	private String BANKNAME;
 	private String BRANCHNAME;
 	private String DEPTNAME;
 	private String ITEMSEQ;
@@ -313,5 +314,11 @@ public class HR011001VO {
 	}
 	public void setDEPTGUBUN(String dEPTGUBUN) {
 		this.DEPTGUBUN = dEPTGUBUN;
+	}
+	public String getBANKNAME() {
+		return BANKNAME;
+	}
+	public void setBANKNAME(String bANKNAME) {
+		this.BANKNAME = bANKNAME;
 	}	
 }

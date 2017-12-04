@@ -71,6 +71,19 @@ public class EP011001Ctr {
 	}
 	
 	
+	/**
+	 * @name 수당수령인 추가 팝업 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/EP011001_3.do")
+	public ModelAndView EP011001_3(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		return new ModelAndView("home/expayMng/EP011001_3");
+	}	
+	
 	
 	/**
 	 * @name 수당관리 화면 - 수당관리 그리드
@@ -396,6 +409,7 @@ public class EP011001Ctr {
 				obj.put("SUPPLYTAX", lst.get(i).getSUPPLYTAX());
 				obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());
 				obj.put("BANKID", lst.get(i).getBANKID());
+				obj.put("BANKNAME", lst.get(i).getBANKNAME());
 				obj.put("ACCTNO", lst.get(i).getACCTNO());
 				obj.put("ACCTOWNER", lst.get(i).getACCTOWNER());
 				obj.put("REMARK", lst.get(i).getREMARK());

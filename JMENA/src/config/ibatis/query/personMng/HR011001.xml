@@ -77,6 +77,7 @@
 		<result property="PAYERNAME" 	column="PAYERNAME"/>
 		<result property="PAYERID" 		column="PAYERID"/>
 		<result property="BANKID" 		column="BANKID"/>
+		<result property="BANKNAME" 	column="BANKNAME"/>
 		<result property="ACCTNO" 		column="ACCTNO"/>
 		<result property="ACCTOWNER" 	column="ACCTOWNER"/>
 		<result property="BASICACCT" 	column="BASICACCT"/>
@@ -335,7 +336,8 @@
 			T1.ITEMSEQ,
 			T1.PAYERNAME,
 			CONCAT(SUBSTR(T1.PAYERID, 1, 6),  '-' , SUBSTR(T1.PAYERID, 7, 13)) AS PAYERID,
-			(SELECT BANKNAME FROM sy_bankmst WHERE BANKCODE = T1.BANKID) AS BANKID,
+			(SELECT BANKNAME FROM sy_bankmst WHERE BANKCODE = T1.BANKID) AS BANKNAME,
+			T1.BANKID,
 			T1.ACCTNO,
 			T1.ACCTOWNER,
 			T1.BASICACCT,

@@ -342,7 +342,7 @@
 				,{name:"ITEMSEQ",		index:'ITEMSEQ',		width:100,		align:'center',	sortable:false, hidden:true}
 				,{name:"PAYERNAME",		index:'PAYERNAME',		width:100,		align:'center',	sortable:false, editable:true}
 				,{name:"PAYERID",		index:'PAYERID',		width:120,		align:'center',	sortable:false, editable:true}
-				,{name:"BANKID",		index:'BANKID',			width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
+				,{name:"BANKNAME",		index:'BANKNAME',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
 				,{name:"ACCTNO",		index:'ACCTNO',			width:100,		align:'center',	sortable:false, editable:true}
 				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center',	sortable:false, editable:true}
 				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center',	sortable:false, sortable:false, editable: true, formatter:test, edittype:'checkbox', editoptions:{value:"Y:N"}}			
@@ -941,7 +941,7 @@
 				return false;
 			}			
 			 
-			var bankId = $("#bottomList2 [name=BANKID] option:selected").val();
+			var bankId = $("#bottomList2 [name=BANKNAME] option:selected").val();
 			
 			var basicAcct = $("#bottomList2 [name=BASICACCT]").is(":checked") ? "Y" : "N";
 			
@@ -974,7 +974,7 @@
 				alert("거래은행을 선택하셔야 합니다.");
 			
 				$('#rightList').jqGrid('editRow', ids, true);
-				$("#"+ids+"BANKID").focus();
+				$("#"+ids+"BANKNAME").focus();
 			
 				return false;
 			}

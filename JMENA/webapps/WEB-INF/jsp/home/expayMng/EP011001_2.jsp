@@ -147,6 +147,7 @@
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#SALEID").val(selRowData.SALEID);
 				$("#PAYSEQ").val(selRowData.PAYSEQ);								
+				$("#INSACODE").val(selRowData.INSACODE);								
 				searchbottomList(selRowData.SALEID,selRowData.PAYSEQ);
 				
 			} ,
@@ -171,10 +172,10 @@
 			},			
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['성명', '주민번호','대표자명', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '거래은행', '계좌번호','계좌주','판매번호','순번','신고인순번','비고'],
+			colNames:['성명', '주민번호','대표자명', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액','거래은행코드' ,'거래은행', '계좌번호','계좌주','판매번호','순번','신고인순번','비고'],
 			colModel:[  	
-				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center',	sortable:false, editable:true}
-				, {name:"PAYERID",		index:'PAYERID',		width:120,		align:'center',	sortable:false, editable:true}
+				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center',	sortable:false}
+				, {name:"PAYERID",		index:'PAYERID',		width:120,		align:'center',	sortable:false}
 				, {name:"SAUPOWNER",	index:'SAUPOWNER',		width:80,		align:'center',	sortable:false, editable:true}
 				, {name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right' ,	sortable:false,  editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
  					editoptions:{
@@ -203,9 +204,10 @@
 				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right' ,	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right' ,	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right' ,	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"BANKID",		index:'BANKID',		width:80,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectEnaBankCode}}
-				, {name:"ACCTNO",		index:'ACCTNO',		width:80,		align:'center',	sortable:false, editable:true}
-				, {name:"ACCTOWNER",	index:'ACCTOWNER',	width:80,		align:'center',	sortable:false, editable:true}
+				, {name:"BANKID",		index:'BANKID',		width:80,		align:'center',	sortable:false, hidden:true}
+				, {name:"BANKNAME",		index:'BANKNAME',	width:80,		align:'center',	sortable:false}
+				, {name:"ACCTNO",		index:'ACCTNO',		width:80,		align:'center',	sortable:false}
+				, {name:"ACCTOWNER",	index:'ACCTOWNER',	width:80,		align:'center',	sortable:false}
 				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false, hidden:true}
 				, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center',	sortable:false, hidden:true}
 				, {name:"REGISTERSEQ",	index:'REGISTERSEQ',width:60,		align:'center',	sortable:false, hidden:true}
@@ -325,6 +327,11 @@
 			}		
 			
 	 		$("#bottomList").jqGrid("addRow", 0);
+	 		
+			var popUrl = "/home/EP011001_3.do";
+			var popOption = "width=1120, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			window.open(popUrl,"수당수령인추가",popOption);
+			
 				
 		});
 	})
@@ -340,7 +347,7 @@
 			}	
 			
 			var taxGubun = $("#bottomList [name=TAXGUBUN] option:selected").val();
-			var bankId = $("#bottomList [name=BANKID] option:selected").val();
+//			var bankId = $("#bottomList [name=BANKID] option:selected").val();
 			
 			$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 	
@@ -392,7 +399,7 @@
 				return false;
 			}
 			
-			if (bankId == "") {
+			if (cellData.BANKID == "") {
 				alert("거래은행을 선택하셔야 합니다.");
 			
 				$('#rightList').jqGrid('editRow', ids, true);
@@ -434,7 +441,7 @@
 				               "&TAXLOCAL=" + cellData.TAXLOCAL + 
 				               "&SUPPLYTAX=" + cellData.SUPPLYTAX + 
 				               "&DEDUCTAMT=" + cellData.DEDUCTAMT + 
-				               "&BANKID=" + bankId+
+				               "&BANKID=" + cellData.BANKID+
 				               "&ACCTNO=" + cellData.ACCTNO+
 				               "&ACCTOWNER=" + cellData.ACCTOWNER+
 				               "&REMARK=" + cellData.REMARK;								
@@ -529,6 +536,7 @@
 			<input type="hidden" id="S_FLAG" name="S_FLAG" />
 			<input type="hidden" id="SALEID" name="SALEID" />
 			<input type="hidden" id="PAYSEQ" name="PAYSEQ" />
+			<input type="hidden" id="INSACODE" name="INSACODE" />
 			<input type="hidden" id="S_PAYSEQ" name="S_PAYSEQ" />
 			<input type="hidden" id="REGISTERSEQ" name="REGISTERSEQ" />
 			<table id="bottomList" width="98%"></table>

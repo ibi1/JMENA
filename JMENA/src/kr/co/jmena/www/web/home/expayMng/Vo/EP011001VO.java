@@ -49,6 +49,7 @@ public class EP011001VO {
 	private String ACCTNO;
 	private String ACCTOWNER;
 	private String BANKID;
+	private String BANKNAME;
 	private String DEPTCODE;
 	private String DUTY;
 	private String GRADE;
@@ -375,6 +376,12 @@ public class EP011001VO {
 	}
 	public void setUSERID(String uSERID) {
 		this.USERID = uSERID;
+	}
+	public String getBANKNAME() {
+		return BANKNAME;
+	}
+	public void setBANKNAME(String bANKNAME) {
+		this.BANKNAME = bANKNAME;
 	}
 
 }

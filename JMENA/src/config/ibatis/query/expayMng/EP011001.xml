@@ -105,6 +105,7 @@
 		<result property="SUPPLYTAX"				column="SUPPLYTAX"/>
 		<result property="DEDUCTAMT"				column="DEDUCTAMT"/>
 		<result property="BANKID"					column="BANKID"/>
+		<result property="BANKNAME"					column="BANKNAME"/>
 		<result property="ACCTNO"					column="ACCTNO"/>
 		<result property="ACCTOWNER"				column="ACCTOWNER"/>
 		<result property="REMARK"					column="REMARK"/>				
@@ -375,7 +376,8 @@
 			T1.TAXLOCAL,
 			T1.SUPPLYTAX,
 			T1.DEDUCTAMT,
-			(SELECT BANKNAME FROM sy_bankmst WHERE BANKCODE = T1.BANKID) AS BANKID,			
+			(SELECT BANKNAME FROM sy_bankmst WHERE BANKCODE = T1.BANKID) AS BANKNAME,			
+			T1.BANKID,			
 			T1.ACCTNO,
 			T1.ACCTOWNER,
 			T1.REMARK
