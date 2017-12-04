@@ -717,6 +717,8 @@ public class SA011001Ctr {
 	@RequestMapping("/home/selectListEnaBuyMstPopup.do")
 	public ModelAndView selectListEnaBuyMstPopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MM011001VO vo = new MM011001VO();
+		
+		vo.setBUYGUBUN(request.getParameter("BUYGUBUN"));
 
 		List<MM011001VO> lst = SA011001Biz.selectListEnaBuyMstPopup(vo);
 		

@@ -244,8 +244,8 @@
 					, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center', sortable:false}
 					, {name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center', sortable:false}
 					, {name:"OWNERJUMINID",		index:'OWNERJUMINID',	width:100,	align:'center', sortable:false, hidden:true}
-					, {name:"BUYM2",			index:'BUYM2',			width:100,	align:'center', sortable:false}
-					, {name:"BUYPY",			index:'BUYPY',			width:100,	align:'center', sortable:false}
+					, {name:"BUYM2",			index:'BUYM2',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"BUYPY",			index:'BUYPY',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"BUNJANM2",			index:'BUNJANM2',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'right',  sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -676,6 +676,10 @@
 						$("#REGYN").focus();
 						return false;
 					}
+				}
+				
+				if($("#MANAGENO").val() == "") {
+					alert("관리번호를 입력 안하셨을 경우 계약번호로 자동 저장됩니다.");
 				}
 				
 				var msg = "";

@@ -15,10 +15,12 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
-			f_selectListEnaBuyMstPopup();
+			var BUYGUBUN = $("#SALEGUBUN",opener.document).val();
+			
+			f_selectListEnaBuyMstPopup(BUYGUBUN);
 		});
 		
-		function f_selectListEnaBuyMstPopup(){
+		function f_selectListEnaBuyMstPopup(BUYGUBUN){
 			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 			
 			$('#leftList').jqGrid({
@@ -27,6 +29,7 @@
 				datatype:"json",
 				mtype: 'POST',
 				postData : {
+					BUYGUBUN : BUYGUBUN
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},

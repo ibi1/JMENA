@@ -127,7 +127,12 @@
 		SET
 			BUYDATE = #BUYDATE#,
 			BUYGUBUN = #BUYGUBUN#,
-			MANAGENO = #MANAGENO#,
+			<isNotEmpty property="MANAGENO">
+				MANAGENO = #MANAGENO#,	
+			</isNotEmpty>
+			<isEmpty property="MANAGENO">
+				MANAGENO = #BUYID#,
+			</isEmpty>
 			CITYCODE = #CITYCODE#,
 			BOROUGHCODE = #BOROUGHCODE#,
 			USETYPE = #USETYPE#,
@@ -194,7 +199,12 @@
 			#BUYID_PK#,
 			#BUYDATE#,
 			#BUYGUBUN#,
-			#MANAGENO#,
+			<isNotEmpty property="MANAGENO">
+				#MANAGENO#,
+			</isNotEmpty>
+			<isEmpty property="MANAGENO">
+				#BUYID_PK#,
+			</isEmpty>
 			#CITYCODE#,
 			#BOROUGHCODE#,
 			#ADDRESS#,
@@ -393,7 +403,7 @@
 		SELECT 
 			T1.BUYID,
 			T1.BUYDATE,
-			T1.BUYGUBUN,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '007' AND DCODE = T1.BUYGUBUN) AS BUYGUBUN,
 			T1.MANAGENO,
 			T1.CITYCODE,
 			(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
@@ -409,6 +419,7 @@
 			'' BUNJANPY,
 			T1.BUYAMT,
 			T1.BUYDANGA,
+			T1.UNITCOST,
 			T1.REGYN,
 			T1.REGDATE,
 			T1.REMARK

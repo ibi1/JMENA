@@ -595,6 +595,7 @@
 			FROM mm_buymst T1
 			WHERE 1=1) A1
 		WHERE 1=1
+		AND A1.BUYGUBUN = #BUYGUBUN#
 		AND A1.CONJM2 > 0
 		ORDER BY A1.BUYID
 	</select>
