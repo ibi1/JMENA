@@ -178,6 +178,14 @@
 			var S_KNAME = $("#S_KNAME").val();
 			var S_JUMINID = $("#S_JUMINID").val();
 			
+			if (S_JOINDATE_FR == "" || S_JOINDATE_TO == "") {
+				alert("입사기간을 입력하셔야합니다.");
+				
+				$("#S_JOINDATE_FR").focus();				
+				return false;
+			}
+			
+			
 			f_selectListHR012001(S_JOINDATE_FR, S_JOINDATE_TO, S_BRANCHCODE, S_DEPTCODE, S_KNAME, S_JUMINID);
 		});
 		
