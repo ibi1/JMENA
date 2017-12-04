@@ -32,6 +32,18 @@ public class EP011001Biz {
 		return lst;
 	}
 	
+	public List<EP011001VO> selectEnaSudangMstList(EP011001VO vo) throws Exception {
+		List<EP011001VO> lst = null;
+		
+		try {
+			lst = EP011001Dao.selectEnaSudangMstList(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+	
 	public int selectDataEnaSudangMst(EP011001VO vo) throws Exception {
 		int cnt = 0;
 		

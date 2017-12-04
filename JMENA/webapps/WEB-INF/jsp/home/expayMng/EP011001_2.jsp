@@ -83,28 +83,30 @@
 	$(document).ready(function(){
 		
 		$("#SALEID").val($("#SALEID",opener.document).val());
+//		$("#INSACODE").val($("#INSACODE",opener.document).val());
 //		$("#PAYSEQ").val($("#PAYSEQ",opener.document).val());
 //		$("#S_PAYSEQ").val($("#PAYSEQ",opener.document).val());
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 150, height: 25 });
 		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 150, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		var SALEID = $("#SALEID",opener.document).val();
-//		var PAYSEQ = $("#PAYSEQ",opener.document).val();
+		var INSACODE = $("#INSACODE",opener.document).val();
 		
-		searchLeftList(SALEID);
+		searchLeftList(SALEID,INSACODE);
 		searchbottomList();
 	})
 
 
 	
-	function searchLeftList(SALEID){
+	function searchLeftList(SALEID,INSACODE){
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#leftList').jqGrid({
 			caption: '수당지급 현황',
-			url:"/home/selectListEnaSudangMst.do" ,
+			url:"/home/selectEnaSudangMstList.do" ,
 			mtype: 'POST',
 			postData : {
-				S_SALEID : SALEID
+				S_SALEID : SALEID,
+				INSACODE : INSACODE
 			},				
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,

@@ -68,7 +68,7 @@
 		
 		$('#S_SALEDATESYM').val(today);
 		$('#S_SALEDATEEYM').val(today);
-		
+		var insacode = "";
 		//공통코드 가져오기
 		f_selectListEnaCityCode();		
 		f_selectListEnaBranchCode();
@@ -77,7 +77,7 @@
 		f_selectEnaCode("013");
 		//공통코드 가져오기 끝		
 		selectListEnaSudangMst();
-		searchbottomList();
+		searchbottomList(insacode);
 		
 	});
 
@@ -184,14 +184,13 @@
 				$("#KNAME").val(selRowData.KNAME);
 				$("#S_SALEID").val(selRowData.SALEID);
 				$("#PAYSEQ").val(selRowData.PAYSEQ);
-				searchbottomList();
+				searchbottomList(selRowData.INSACODE);
 
 				//콤마 set
 				f_commaInputData("click");
 			} ,
 			
 			loadComplete: function(ids) {
-				searchbottomList();
 			},			
 			hidegrid: false
 		});
@@ -200,14 +199,15 @@
 	
 	
 	
-	function searchbottomList(){
+	function searchbottomList(insacode){
 		$('#bottomList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#bottomList').jqGrid({
 			//caption: '수당지급관리'
-			url:"/home/selectListEnaSudangMst.do" ,
+			url:"/home/selectEnaSudangMstList.do" ,
 			mtype: 'POST',
 			postData : {
-				S_SALEID : $("#S_SALEID").val()
+				S_SALEID : $("#S_SALEID").val(),
+				INSACODE : insacode			
 			},					
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,

@@ -31,6 +31,14 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 	}	
 
 	
+	@SuppressWarnings("unchecked")
+	public List<EP011001VO> selectEnaSudangMstList(EP011001VO vo) throws DataAccessException {
+		List<EP011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectEnaSudangMstList", vo);
+		
+		return lst;
+	}	
 	
 	public int selectDataEnaSudangMst(EP011001VO vo) throws DataAccessException {
 		int cnt = (int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectDataEnaSudangMst", vo);

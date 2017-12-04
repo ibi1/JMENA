@@ -49,6 +49,48 @@
 		
 	</resultMap>
 	
+	<resultMap id="EP011001Datalist" class="EP011001VO">
+		<result property="PAYDATE"					column="PAYDATE"/>
+		<result property="PAYSEQ"					column="PAYSEQ"/>
+		<result property="SALERCD"					column="SALERCD"/>
+		<result property="SALERNM"					column="SALERNM"/>
+		<result property="INSACODE"					column="INSACODE"/>
+		<result property="KNAME"					column="KNAME"/>
+		<result property="SELLAMT"					column="SELLAMT"/>
+		<result property="PAYAMT"					column="PAYAMT"/>
+		<result property="TAXAMT"					column="TAXAMT"/>
+		<result property="DEDUCTAMT"				column="DEDUCTAMT"/>
+	
+		<result property="SALEDATE"					column="SALEDATE"/>
+		<result property="SALEID"					column="SALEID"	/>
+		<result property="SALEGUBUN"				column="SALEGUBUN"/>
+		<result property="BRANCHCODE"				column="BRANCHCODE"/>		
+		<result property="MANAGENO"					column="MANAGENO"/>
+		<result property="CITYCODE"					column="CITYCODE"/>
+		<result property="ADDRESS"					column="ADDRESS"/>
+		<result property="CONNAME"					column="CONNAME"	/>
+		<result property="CONM2"					column="CONM2"/>
+		<result property="CONPY"					column="CONPY"/>
+		<result property="SALEAMT"					column="SALEAMT"/>
+		<result property="SALEDANGA"				column="SALEDANGA"/>
+		<result property="DCGUBUN"					column="DCGUBUN"/>
+		<result property="DCRATE"					column="DCRATE"/>
+		<result property="DCAMT"					column="DCAMT"/>
+		<result property="SELLAMT"					column="SELLAMT"/>
+		<result property="SUDANGRATE"				column="SUDANGRATE"/>
+		<result property="ADDRATE"					column="ADDRATE"/>
+		<result property="TAXGUBUN"					column="TAXGUBUN"/>
+		<result property="TAXGUBUNNAME"				column="TAXGUBUNNAME"/>
+		<result property="TAXINCOME"				column="TAXINCOME"/>
+		<result property="TAXLOCAL"					column="TAXLOCAL"/>
+		<result property="SUPPLYTAX"				column="SUPPLYTAX"/>
+		<result property="REGISTERNUM"				column="REGISTERNUM"/>
+		<result property="GRADE"					column="GRADE"/>
+		<result property="DUTY"						column="DUTY"/>
+		<result property="REMARK"					column="REMARK"/>
+		
+	</resultMap>
+	
 	<resultMap id="EP011001Datas" class="EP011001VO">
 		<result property="SALEID"					column="SALEID"	/>
 		<result property="PAYSEQ"					column="PAYSEQ"/>
@@ -154,6 +196,73 @@
 			</isNotEqual>
 		</isEmpty>		
 		ORDER BY T1.SALEID ASC, T1.PAYSEQ
+	</select>		
+	
+	
+
+	<select id="selectEnaSudangMstList" resultMap="EP011001Datalist">
+	
+	  SELECT T1.SALEID,
+	  		 T1.PAYSEQ,
+	         T1.PAYDATE,
+	  		 T1.INSACODE,
+	  		 (SELECT KNAME FROM hr_insamst WHERE INSACODE = T1.INSACODE) AS KNAME,
+	  		 (SELECT SALERCD FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALERCD,
+	  		 (SELECT KNAME FROM sa_salemst S, hr_insamst I WHERE S.SALEID = T1.SALEID AND I.INSACODE = S.SALERCD) AS SALERNM,
+	  		 (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
+	  		 T1.PAYAMT,
+	  		 T1.PAYAMT - T1.DEDUCTAMT AS TAXAMT,
+	  		 T1.DEDUCTAMT,
+	  		 (SELECT SALEDATE FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEDATE,	         
+	         (SELECT SALEGUBUN FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEGUBUN,         
+			 T1.BRANCHCODE,
+			 (SELECT MANAGENO FROM mm_buymst M, sa_salemst S WHERE M.BUYID = S.BUYID AND S.SALEID = T1.SALEID) AS MANAGENO,
+			 (SELECT CITYCODE FROM mm_buymst M, sa_salemst S WHERE M.BUYID = S.BUYID AND S.SALEID = T1.SALEID) AS CITYCODE,
+			 (SELECT ADDRESS FROM mm_buymst M, sa_salemst S WHERE M.BUYID = S.BUYID AND S.SALEID = T1.SALEID) AS ADDRESS,
+	         (SELECT CONNAME FROM sa_salemst WHERE SALEID = T1.SALEID) AS CONNAME,
+			 (SELECT CONM2 FROM sa_salemst WHERE SALEID = T1.SALEID) AS CONM2,
+			 (SELECT CONPY FROM sa_salemst WHERE SALEID = T1.SALEID) AS CONPY,
+	         (SELECT SALEAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SALEAMT,
+			 (SELECT SALEDANGA FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SALEDANGA,
+	         (SELECT DCGUBUN FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCGUBUN,
+	         (SELECT DCRATE FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCRATE,
+	         (SELECT DCAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCAMT,
+	         (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
+	         T1.SUDANGRATE,
+	         T1.ADDRATE,
+	         T1.TAXGUBUN,
+	         (SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '013' AND DCODE = T1.TAXGUBUN) AS TAXGUBUNNAME,
+	         T1.TAXINCOME,
+	         T1.TAXLOCAL,
+	         T1.SUPPLYTAX,
+	         T1.REMARK,
+	         (SELECT IFNULL(count(T2.PAYSEQ),0) FROM sa_sudangpayertb T2 WHERE T1.SALEID = T2.SALEID AND T1.PAYSEQ = T2.PAYSEQ) AS REGISTERNUM,
+	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='003' AND I.GRADE = C.DCODE ) as GRADE,
+	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='004' AND I.DUTY = C.DCODE ) as DUTY
+	    FROM sa_sudangmst T1
+	   WHERE 1 = 1
+	 	AND T1.SALEID = #S_SALEID# 
+	 	AND (T1.INSACODE = #INSACODE#
+		      OR
+			 (T1.BRANCHCODE = (SELECT T2.BRANCHCODE 
+		                  		 FROM sa_sudangmst T2
+						  		WHERE T2.SALEID = #S_SALEID#
+								  AND T2.INSACODE = #INSACODE#
+							  )
+			  AND T1.GRADE = '015'
+			 )
+			 OR
+			 (
+			 
+			 T1.DEPTCODE = (SELECT deptcode
+           				      FROM ba_deptmst
+           	   			     WHERE branchcode =  (SELECT T3.BRANCHCODE 
+												    FROM sa_sudangmst T3
+												   WHERE T3.SALEID = #S_SALEID#
+												     AND T3.INSACODE = #INSACODE#) 
+				 		       AND deptname = '임원')
+			 )
+		 )
 	</select>		
 		
 	<select id="selectDataEnaSudangMst" resultClass="java.lang.Integer">

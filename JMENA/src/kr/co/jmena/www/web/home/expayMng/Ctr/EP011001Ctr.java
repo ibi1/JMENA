@@ -160,6 +160,91 @@ public class EP011001Ctr {
 	
 	}	
 	
+	
+	
+	/**
+	 * @name 수당관리 화면 - 수당지급 관리
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	
+	@SuppressWarnings({ "unchecked" })
+	@RequestMapping("/home/selectEnaSudangMstList.do")
+	public ModelAndView selectEnaSudangMstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		EP011001VO vo = new EP011001VO();
+		System.out.println("/home/selectEnaSudangMstList.do");
+		
+		vo.setS_SALEID(request.getParameter("S_SALEID"));
+		vo.setINSACODE(request.getParameter("INSACODE"));		
+		
+		List<EP011001VO> lst = EP011001Biz.selectEnaSudangMstList(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		
+		if(lst.size() > 0){
+			
+			for (int i = 0; i < lst.size(); i++) {
+				
+				JSONObject obj = new JSONObject();			
+				
+				
+				obj.put("PAYDATE", lst.get(i).getPAYDATE());
+				obj.put("PAYSEQ", lst.get(i).getPAYSEQ());
+				obj.put("SALERCD", lst.get(i).getSALERCD());
+				obj.put("SALERNM", lst.get(i).getSALERNM());
+				obj.put("INSACODE", lst.get(i).getINSACODE());
+				obj.put("KNAME", lst.get(i).getKNAME());
+				obj.put("SELLAMT", lst.get(i).getSELLAMT());
+				obj.put("PAYAMT", lst.get(i).getPAYAMT());
+				obj.put("TAXAMT", lst.get(i).getTAXAMT());
+				obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());
+				
+				obj.put("SALEDATE", lst.get(i).getSALEDATE());
+				obj.put("SALEID", lst.get(i).getSALEID());
+				obj.put("SALEGUBUN", lst.get(i).getSALEGUBUN());
+				obj.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
+				obj.put("MANAGENO", lst.get(i).getMANAGENO());
+				obj.put("CITYCODE", lst.get(i).getCITYCODE());
+				obj.put("ADDRESS", lst.get(i).getADDRESS());
+				obj.put("CONNAME", lst.get(i).getCONNAME());
+				obj.put("CONM2", lst.get(i).getCONM2());
+				obj.put("CONPY", lst.get(i).getCONPY());
+				obj.put("SALEAMT", lst.get(i).getSALEAMT());
+				obj.put("SALEDANGA", lst.get(i).getSALEDANGA());
+				obj.put("DCGUBUN", lst.get(i).getDCGUBUN());
+				obj.put("DCRATE", lst.get(i).getDCRATE());
+				obj.put("DCAMT", lst.get(i).getDCAMT());
+				obj.put("SELLAMT", lst.get(i).getSELLAMT());
+								
+				obj.put("SUDANGRATE", lst.get(i).getSUDANGRATE());
+				obj.put("ADDRATE", lst.get(i).getADDRATE());
+				obj.put("TAXGUBUN", lst.get(i).getTAXGUBUN());
+				obj.put("TAXGUBUNNAME", lst.get(i).getTAXGUBUNNAME());
+				obj.put("TAXINCOME", lst.get(i).getTAXINCOME());
+				obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
+				obj.put("SUPPLYTAX", lst.get(i).getSUPPLYTAX());
+				obj.put("REMARK", lst.get(i).getREMARK());
+				obj.put("REGISTERNUM", lst.get(i).getREGISTERNUM());
+				obj.put("GRADE", lst.get(i).getGRADE());
+				obj.put("DUTY", lst.get(i).getDUTY());
+				
+				jCell.add(obj);
+			}
+		}
+		
+		json.put("rows", jCell);
+		
+		System.out.println("json==>"+json.get("rows"));
+		logger.debug("[selectEnaSudangMstList]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	
+	}	
+	
 
 	
 	/**
