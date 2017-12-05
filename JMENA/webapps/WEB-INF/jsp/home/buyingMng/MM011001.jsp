@@ -1233,7 +1233,7 @@
 				<tr>
 					<th width="120"><div id="mm_div1">매매대금</div></th>
 					<td><input type="text" id="BUYAMT" name="BUYAMT" /></td>
-					<th width="120"><div id="mm_div2">매매단가</div></th>
+					<th width="120"><div id="mm_div2">매입단가</div></th>
 					<td><input type="text" id="BUYDANGA" name="BUYDANGA" /></td>
 				</tr>
 				<tr>
