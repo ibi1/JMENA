@@ -166,10 +166,10 @@
 		</div>
 		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<form name="MM012001">
-				<table>
+				<table  width="99%">
 					<tr>
 						<th width="120">잔금일</th>
-						<td><input type="text" id="LS_BUYDATE_FR" name="LS_BUYDATE_FR" /> - <input type="text" id="LS_BUYDATE_TO" name="LS_BUYDATE_TO" /></td>
+						<td width="250"><input type="text" id="LS_BUYDATE_FR" name="LS_BUYDATE_FR" /> - <input type="text" id="LS_BUYDATE_TO" name="LS_BUYDATE_TO" /></td>
 						<th width="120">매입구분</th>
 						<td>
 							<select id="S_BUYGUBUN" name="S_BUYGUBUN" style="width:130px">
