@@ -1089,7 +1089,7 @@
 		$(function() {
 			$("#BUYM2").keydown(function() {
 				var keyCode = window.event.keyCode;
-				if(keyCode==13) {
+				if(keyCode==13 || keyCode==9) {
 					//저장전 콤마 삭제
 					f_commaInputData("remove");
 					

@@ -1502,14 +1502,14 @@
 		$(function() {
 			$("#SALEAMT").keydown(function() {
 				var keyCode = window.event.keyCode;
-				if(keyCode==13) {
+				if(keyCode==13 || keyCode==9) {
 					f_dangaRule();
 				}
 			});
 			
 			$("#DCRATE").keydown(function() {
 				var keyCode = window.event.keyCode;
-				if(keyCode==13) {
+				if(keyCode==13 || keyCode==9) {
 					f_dangaRule();
 				}
 			});
