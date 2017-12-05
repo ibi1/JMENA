@@ -23,7 +23,7 @@
 		<result property="CONJM2"		column="CONJM2"/>
 		<result property="CONBPY"		column="CONBPY"/>
 		<result property="CONJPY"		column="CONJPY"/>
-		<result property="UNITCOST"		column="UNITCOST"/>
+		<result property="PMDANGA"		column="PMDANGA"/>
 		<result property="BUYDANGA"		column="BUYDANGA"/>
 	</resultMap>
 	
@@ -571,7 +571,7 @@
 			A1.ADDRESS,
 			A1.OWNERNAME,
 			A1.OWNERJUMINID,
-			A1.UNITCOST,
+			A1.PMDANGA,
 			A1.BUYDANGA,
 			A1.CONBM2,
 			A1.CONJM2,
@@ -591,7 +591,7 @@
 				T1.ADDRESS,
 				T1.OWNERNAME,
 				T1.OWNERJUMINID,
-				T1.UNITCOST,
+				T1.PMDANGA,
 				T1.BUYDANGA,
 				CAST(((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID)) AS DECIMAL(12, 2)) AS CONBM2,
 				CAST((T1.BUYM2 - ((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS DECIMAL(12, 2)) AS CONJM2,

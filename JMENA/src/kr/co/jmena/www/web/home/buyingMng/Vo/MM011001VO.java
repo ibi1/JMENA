@@ -41,7 +41,7 @@ public class MM011001VO {
 	private String CONJM2;
 	private String CONBPY;
 	private String CONJPY;
-	private String UNITCOST;
+	private String PMDANGA;
 	private String CITYNAME;
 	private String BOROUGHCODE;
 	private String BOROUGHNAME;
@@ -407,12 +407,12 @@ public class MM011001VO {
 		this.BUYID_PK = BUYID_PK;
 	}
 
-	public String getUNITCOST() {
-		return UNITCOST;
+	public String getPMDANGA() {
+		return PMDANGA;
 	}
 
-	public void setUNITCOST(String UNITCOST) {
-		this.UNITCOST = UNITCOST;
+	public void setPMDANGA(String PMDANGA) {
+		this.PMDANGA = PMDANGA;
 	}
 	
 }

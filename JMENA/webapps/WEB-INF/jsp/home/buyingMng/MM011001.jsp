@@ -73,7 +73,7 @@
 			$("#BUNJANPY").jqxInput({theme: 'energyblue', height: 23, width: 70, disabled: true});
 			$("#BUYAMT").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			$("#BUYDANGA").jqxInput({theme: 'energyblue', height: 23, width: 150});
-			$("#UNITCOST").jqxInput({theme: 'energyblue', height: 23, width: 150});
+			$("#PMDANGA").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
@@ -234,7 +234,7 @@
 					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'right',  sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"BUYDANGA",			index:'BUYDANGA',		width:100,	align:'center', sortable:false, hidden:true}
-					, {name:"UNITCOST",		index:'UNITCOST',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"PMDANGA",		index:'PMDANGA',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REGYN",			index:'REGYN',			width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REGDATE",			index:'REGDATE',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', sortable:false, hidden:true}
@@ -277,7 +277,7 @@
 					$("#BUNJANPY").val(selRowData.BUNJANPY);
 					$("#BUYAMT").val(selRowData.BUYAMT);
 					$("#BUYDANGA").val(selRowData.BUYDANGA);
-					$("#UNITCOST").val(selRowData.UNITCOST);
+					$("#PMDANGA").val(selRowData.PMDANGA);
 					$("input:radio[name=REGYN]:input[value=" + selRowData.REGYN + "]").attr("checked", true);
 					$("#REGDATE").val(selRowData.REGDATE);
 					$("#REMARK").val(selRowData.REMARK);
@@ -524,7 +524,7 @@
 			$("#BUNJANPY").val("");
 			$("#BUYAMT").val("");
 			$("#BUYDANGA").val("");
-			$("#UNITCOST").val("");
+			$("#PMDANGA").val("");
 			$("input:radio[name=REGYN]:input[value=Y]").attr("checked", true);
 			$("#REGDATE").val("");
 			$("#REMARK").val("");
@@ -1113,7 +1113,7 @@
     		inputComma("BUNJANPY");
     		inputComma("BUYAMT");
     		inputComma("BUYDANGA");
-    		inputComma("UNITCOST");
+    		inputComma("PMDANGA");
 		})
 		
 		function f_commaInputData(str) {
@@ -1126,7 +1126,7 @@
 				$("#BUNJANPY").click();
 				$("#BUYAMT").click();
 				$("#BUYDANGA").click();
-				$("#UNITCOST").click();
+				$("#PMDANGA").click();
 			} else if (str == "remove") {
 				$("#BUYM2").val(removeComma($("#BUYM2").val()));
 				$("#BUYPY").val(removeComma($("#BUYPY").val()));
@@ -1136,7 +1136,7 @@
 				$("#BUNJANPY").val(removeComma($("#BUNJANPY").val()));
 				$("#BUYAMT").val(removeComma($("#BUYAMT").val()));
 				$("#BUYDANGA").val(removeComma($("#BUYDANGA").val()));
-				$("#UNITCOST").val(removeComma($("#UNITCOST").val()));
+				$("#PMDANGA").val(removeComma($("#PMDANGA").val()));
 			}
 			
 		}
@@ -1238,7 +1238,7 @@
 				</tr>
 				<tr>
 					<th width="120">판매단가</th>
-					<td colspan="3"><input type="text" id="UNITCOST" name="UNITCOST" /></td>
+					<td colspan="3"><input type="text" id="PMDANGA" name="PMDANGA" /></td>
 				</tr>
 				<tr>
 					<th width="120">등기일자</th>
