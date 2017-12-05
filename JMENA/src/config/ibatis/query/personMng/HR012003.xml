@@ -38,6 +38,15 @@
 		
 	</resultMap>
 
+	<resultMap id="HR012003Data3" class="HR012003VO">
+		<result property="SUMCNT1"	column="SUMCNT1"/>
+		<result property="SUMCNT2"	column="SUMCNT2"/>
+		<result property="SUMCNT3"	column="SUMCNT3"/>
+		<result property="SUMCNT4"	column="SUMCNT4"/>
+		<result property="SUMCNT5"	column="SUMCNT5"/>
+		
+	</resultMap>
+
 
 	<select id="selectListHR012003" resultMap="HR012003Data">
 		select 
@@ -96,6 +105,80 @@
 		</isNotEmpty>
 		and t1.retiredate is not null
 		order by t1.joindate asc
+	</select>
+
+	<select id="selectpersonCnt" resultMap="HR012003Data3">
+		select 		
+			(select	COUNT(INSACODE)	from hr_insamst t1
+		where 1=1
+        and duty = '003'
+		<isNotEmpty property="S_JOINDATE">
+			and t1.joindate <![CDATA[ >= ]]>  #S_JOINDATE#
+		</isNotEmpty>
+		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
+			and t1.branchcode = #S_BRANCHCODE#
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
+			and t1.deptcode = #S_DEPTCODE#
+		</isNotEqual>
+		and t1.retiredate is null ) AS SUMCNT1
+        ,
+		(select	COUNT(INSACODE)	from hr_insamst t1
+		where 1=1
+        and duty = '002'
+		<isNotEmpty property="S_JOINDATE">
+			and t1.joindate <![CDATA[ >= ]]>  #S_JOINDATE#
+		</isNotEmpty>
+		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
+			and t1.branchcode = #S_BRANCHCODE#
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
+			and t1.deptcode = #S_DEPTCODE#
+		</isNotEqual>
+		and t1.retiredate is null ) AS SUMCNT2
+        ,
+		(select	COUNT(INSACODE)	from hr_insamst t1
+		where 1=1
+        and duty not in ('003', '002', '012')
+		<isNotEmpty property="S_JOINDATE">
+			and t1.joindate <![CDATA[ >= ]]>  #S_JOINDATE#
+		</isNotEmpty>
+		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
+			and t1.branchcode = #S_BRANCHCODE#
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
+			and t1.deptcode = #S_DEPTCODE#
+		</isNotEqual>
+		and t1.retiredate is null ) AS SUMCNT3
+        ,
+		(select	COUNT(INSACODE)	from hr_insamst t1
+		where 1=1
+        and duty = '012'
+		<isNotEmpty property="S_JOINDATE">
+			and t1.joindate <![CDATA[ >= ]]>  #S_JOINDATE#
+		</isNotEmpty>
+		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
+			and t1.branchcode = #S_BRANCHCODE#
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
+			and t1.deptcode = #S_DEPTCODE#
+		</isNotEqual>
+		and t1.retiredate is null ) AS SUMCNT4
+		,(select COUNT(INSACODE) from hr_insamst t1
+		where 1=1
+		<isNotEmpty property="S_JOINDATE">
+			and t1.joindate <![CDATA[ >= ]]>  #S_JOINDATE#
+		</isNotEmpty>
+		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
+			and t1.branchcode = #S_BRANCHCODE#
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
+			and t1.deptcode = #S_DEPTCODE#
+		</isNotEqual>
+		and t1.retiredate is null ) AS SUMCNT5
+        
+		from dual
+		
 	</select>
 	
 </sqlMap>

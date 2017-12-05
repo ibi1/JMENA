@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.jmena.www.web.codeCom.Vo.BankVO;
 import kr.co.jmena.www.web.home.personMng.Biz.HR012003Biz;
 import kr.co.jmena.www.web.home.personMng.Vo.HR012003VO;
 
@@ -173,4 +174,44 @@ public class HR012003Ctr {
 		return new ModelAndView("jsonView", json);
 	}
 
+	
+	/**
+	 * sy_bankmst 테이블 리스트 가져오기 (은행 코드 관리)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/personCnt.do")
+	public ModelAndView personCnt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HR012003VO vo = new HR012003VO();
+		
+		vo.setS_JOINDATE(request.getParameter("S_JOINDATE"));
+		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
+		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
+		
+		List<HR012003VO> lst = HR012003Biz.selectpersonCnt(vo);
+		
+		JSONArray jsonArr = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject jData = new JSONObject();
+			jData.put("SUMCNT1", lst.get(i).getSUMCNT1());
+			jData.put("SUMCNT2", lst.get(i).getSUMCNT2());
+			jData.put("SUMCNT3", lst.get(i).getSUMCNT3());
+			jData.put("SUMCNT4", lst.get(i).getSUMCNT4());
+			jData.put("SUMCNT5", lst.get(i).getSUMCNT5());
+			
+			jsonArr.add(i, jData);
+		}
+		
+		json.put("personCnt", jsonArr);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	
+	
 }

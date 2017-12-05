@@ -43,7 +43,9 @@
 		t1.buypy - (select sum(conpy) from sa_salemst where buyid = t1.buyid) as remnpy,    
 		t1.buydanga
 		from mm_buymst t1, 
-		(select buyid, paygubun, payyn from mm_payscheduletb where 1=1 and paygubun = '005' and payyn <![CDATA[ <> ]]> 'Y') t2
+		
+		(select DISTINCT buyid from mm_payscheduletb where 1=1 and !(paygubun = '005' and payyn = 'Y')) t2
+		
 		where 1=1
 		<isNotEqual property="S_SALEGUBUN" compareValue="ALL">
 		and t1.buygubun = #S_SALEGUBUN#

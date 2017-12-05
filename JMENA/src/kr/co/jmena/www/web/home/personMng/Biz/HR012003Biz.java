@@ -43,5 +43,17 @@ public class HR012003Biz {
 		
 		return lst;
 	}
+
+	public List<HR012003VO> selectpersonCnt(HR012003VO vo) throws Exception {
+		List<HR012003VO> lst = null;
+
+		try {
+			lst = HR012003Dao.selectpersonCnt(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
 	
 }

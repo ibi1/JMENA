@@ -192,6 +192,35 @@
 			var S_DEPTCODE = $("#S_DEPTCODE").val();
 			
 			f_selectListHR012003(S_JOINDATE, S_BRANCHCODE, S_DEPTCODE);
+			
+			
+		   	$.ajax({ 
+				type: 'POST' ,
+				url: "/home/personCnt.do", 
+				dataType : 'json' , 
+				data : {
+					S_JOINDATE : S_JOINDATE,
+					S_BRANCHCODE : S_BRANCHCODE,
+					S_DEPTCODE : S_DEPTCODE
+				},
+				success: function(data){
+					console.log(JSON.stringify(data.personCnt));
+					
+					data.personCnt.forEach(function(currentValue, index, array){
+						$("#SUMCNT1").val(currentValue.SUMCNT1);
+						$("#SUMCNT2").val(currentValue.SUMCNT2);
+						$("#SUMCNT3").val(currentValue.SUMCNT3);
+						$("#SUMCNT4").val(currentValue.SUMCNT4);
+						$("#SUMCNT5").val(currentValue.SUMCNT5);
+					});
+					
+				},
+				error:function(e){  
+					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+				}  
+			});
+			
+			
 		});
 
 		$("#excelButton").click(function () {

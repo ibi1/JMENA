@@ -31,6 +31,13 @@ public class HR012003VO {
 	private String S_BRANCHCODE;
 	private String S_DEPTCODE;
 	
+	private String SUMCNT1;
+	private String SUMCNT2;
+	private String SUMCNT3;
+	private String SUMCNT4;
+	private String SUMCNT5;
+	
+	
 	
 	public String getBRANCHCODE() {
 		return this.BRANCHCODE;
@@ -112,6 +119,21 @@ public class HR012003VO {
 	}
 	public String getS_DEPTCODE() {
 		return this.S_DEPTCODE;
+	}
+	public String getSUMCNT1() {
+		return this.SUMCNT1;
+	}
+	public String getSUMCNT2() {
+		return this.SUMCNT2;
+	}
+	public String getSUMCNT3() {
+		return this.SUMCNT3;
+	}
+	public String getSUMCNT4() {
+		return this.SUMCNT4;
+	}
+	public String getSUMCNT5() {
+		return this.SUMCNT5;
 	}
 	
 	
@@ -195,6 +217,21 @@ public class HR012003VO {
 	}
 	public void setS_DEPTCODE(String S_DEPTCODE) {
 		this.S_DEPTCODE = S_DEPTCODE;
+	}
+	public void setSUMCNT1(String SUMCNT1) {
+		this.SUMCNT1 = SUMCNT1;
+	}
+	public void setSUMCNT2(String SUMCNT2) {
+		this.SUMCNT2 = SUMCNT2;
+	}
+	public void setSUMCNT3(String SUMCNT3) {
+		this.SUMCNT3 = SUMCNT3;
+	}
+	public void setSUMCNT4(String SUMCNT4) {
+		this.SUMCNT4 = SUMCNT4;
+	}
+	public void setSUMCNT5(String SUMCNT5) {
+		this.SUMCNT5 = SUMCNT5;
 	}
 	
 	
