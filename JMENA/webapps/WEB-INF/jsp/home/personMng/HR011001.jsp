@@ -345,7 +345,21 @@
 				,{name:"BANKNAME",		index:'BANKNAME',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
 				,{name:"ACCTNO",		index:'ACCTNO',			width:100,		align:'center',	sortable:false, editable:true}
 				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center',	sortable:false, editable:true}
-				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center',	sortable:false, sortable:false, editable: true, formatter:test, edittype:'checkbox', editoptions:{value:"Y:N"}}			
+				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center',	sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N",			
+				dataEvents:[{					
+					type:'change',
+					fn:function(e){						
+						 if ($(this).is(':checked')) {
+							 var ids = $("#bottomList2").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+ 							 var rows = $("#bottomList2").getGridParam("reccount");				
+ 							 for(var i = 1; i < rows+1; i++){	 							
+ 	 							$('#bottomList2').jqGrid('setCell', i, 'BASICACCT', 'false',{}); 	 							
+ 	 						 }
+ 							 $('#bottomList2').jqGrid('setCell', ids, 'BASICACCT', 'true',{});
+						 }
+					}
+				}]
+				}}
 				,{name:"REMARK",		index:'REMARK',			width:100,		align:'center',	sortable:false, editable:true}
 			] ,
 			rowNum:10000000,
@@ -385,13 +399,13 @@
 	var selChk = "";
 	
 	function test(cellvalue, options, rowObject) {
-		var checked =  (cellvalue == "Y" ? "checked=checked" : "");
-		selChk = cellvalue;		
+		var checked =  (cellvalue == "Y" ? " checked=checked" : "");
+		selChk = cellvalue;
 		return "<input type=\"checkbox\"" + checked + "onclick=\"onClickTest('" + options.rowId + "');\"/>";
 //		return selChk;
 	}
 	
- 	function onClickTest(ids) {		
+ 	function onClickTest(ids) {
  		$("#bottomList2").jqGrid('setSelection', ids, true);
  	}
 	
@@ -934,13 +948,28 @@
 	$(function() {
 		$("#saveB2Button").click(function() {
 			var ids = $("#bottomList2").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-			
 			if (ids == null || ids == "") {
 				alert("그리드를 선택하셔야 합니다.");
 				
 				return false;
 			}			
-			 
+			var cnt = 0;
+		 	var rows = $("#bottomList2").getGridParam("reccount");				
+			for(var i = 1; i < rows+1; i++){
+				if($("#bottomList2").jqGrid('getCell',i,'BASICACCT') == "Y"){
+					cnt++;
+				}				 	 							
+			}
+			
+			if(cnt == 0){
+				alert("기본계좌를 선택해 주세요");
+				return false; 
+			}
+			if(cnt > 1){
+				alert("기본계좌를 하나만 선택해 주세요");
+				return false; 
+			}
+
 			var bankId = $("#bottomList2 [name=BANKNAME] option:selected").val();
 			
 			var basicAcct = $("#bottomList2 [name=BASICACCT]").is(":checked") ? "Y" : "N";
