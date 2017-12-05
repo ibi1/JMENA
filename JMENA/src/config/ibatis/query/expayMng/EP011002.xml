@@ -90,6 +90,7 @@
 		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
 			AND T1.DEPTCODE = #S_DEPTCODE#
 		</isNotEqual>
+     ORDER BY T1.YEARMONTH,T1.PAYDATE,T1.BRANCHCODE,T1.DEPTCODE,T1.GRADE,T1.DUTY
 	</select>
 
 	<select id="selectListEnaMonthPayMstCrt" resultMap="EP011002Datas">
