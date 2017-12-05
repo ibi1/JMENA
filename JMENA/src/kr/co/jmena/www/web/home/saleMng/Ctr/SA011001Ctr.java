@@ -127,6 +127,7 @@ public class SA011001Ctr {
 			obj.put("REGDATE", lst.get(i).getREGDATE());
 			obj.put("CANCELYN", lst.get(i).getCANCELYN());
 			obj.put("CANCELDATE", lst.get(i).getCANCELDATE());
+			obj.put("BUYDANGA", lst.get(i).getBUYDANGA());
 			
 			jCell.add(obj);
 			
@@ -166,7 +167,6 @@ public class SA011001Ctr {
 		vo.setDCRATE(request.getParameter("DCRATE"));
 		vo.setDCAMT(request.getParameter("DCAMT"));
 		vo.setSELLAMT(request.getParameter("SELLAMT"));
-		vo.setUNITCOST(request.getParameter("UNITCOST"));
 		vo.setAGENCYAMT(request.getParameter("AGENCYAMT"));
 		
 		HttpSession session = null;
@@ -744,6 +744,8 @@ public class SA011001Ctr {
 			obj.put("CONJM2", lst.get(i).getCONJM2());
 			obj.put("CONBPY", lst.get(i).getCONBPY());
 			obj.put("CONJPY", lst.get(i).getCONJPY());
+			obj.put("UNITCOST", lst.get(i).getUNITCOST());
+			obj.put("BUYDANGA", lst.get(i).getBUYDANGA());
 			
 			jCell.add(obj);
 			

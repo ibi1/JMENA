@@ -19,11 +19,11 @@ function inputComma(id) {
 	var selector="input[id="+id+"]";
 	
 	$(selector).keypress(function(event) {
-		if (event.which && (event.which < 48 || event.widch > 57) && (event.which != 45 && event.which != 46)) {
+		if (event.which && (event.which < 48 || event.widch > 57) && (event.which != 45 && event.which != 46) && event.which == 9) {
 			event.preventDefault();
 		}
 	}).keyup(function() {
-		if (event.which && (event.which < 48 || event.widch > 57) && (event.which != 45 && event.which != 46)) {
+		if (event.which && (event.which < 48 || event.widch > 57) && (event.which != 45 && event.which != 46) && event.which == 9) {
 			event.preventDefault();
 		} else {
 			if( $(this).val() != null && $(this).val() != '' ) {
@@ -41,7 +41,14 @@ function inputComma(id) {
 
 //콤마 넣기
 function setComma(num) {
-	var numArr =num.split(".");
+	var minusFlag = false;
+	
+	var numArr = num.split(".");
+	
+	if (numArr[0][0] == "-") { 
+		numArr[0] *= -1;
+		minusFlag = true;
+	}
 	
 	if(numArr[0]<1000){
 		return num;
@@ -67,6 +74,11 @@ function setComma(num) {
     } else {
     	reData = str + "." + numArr[1];
     }
+    
+    if (minusFlag == true) {
+    	reData = "-" + reData;
+    }
+    
     return reData;
 }
 
@@ -82,13 +94,14 @@ function removeComma(num){
 		return num;
 	}
 	
- 	str = parseInt(numArr[0].replace(/,/g, ""));
-
+	str = parseInt(numArr[0].replace(/,/g, ""));
+	
  	var reData;
     if (numArr.length == 1) {
     	reData = str;
     } else {
     	reData = str + "." + numArr[1];
     }
+    
     return reData;
  }

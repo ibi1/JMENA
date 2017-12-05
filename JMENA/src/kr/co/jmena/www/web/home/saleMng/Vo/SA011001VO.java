@@ -64,6 +64,7 @@ public class SA011001VO {
 	private String SEQ;
 	private String SUGUMAMT;
 	private String UNITCOST;
+	private String BUYDANGA;
 
 	public String getBUYID(){
 		return this.BUYID;
@@ -437,6 +438,12 @@ public class SA011001VO {
 	}
 	public void setUNITCOST(String UNITCOST) {
 		this.UNITCOST = UNITCOST;
+	}
+	public String getBUYDANGA() {
+		return BUYDANGA;
+	}
+	public void setBUYDANGA(String BUYDANGA) {
+		this.BUYDANGA = BUYDANGA;
 	}
 
 	

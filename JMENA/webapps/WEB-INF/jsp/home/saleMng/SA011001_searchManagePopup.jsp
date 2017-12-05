@@ -36,7 +36,7 @@
 				colNames:['매입번호', '매입일자', '매입구분', '관리번호', '지역코드',
 				          '지역구분', '시/도코드', '시/도구분',  '지목', '주소',
 				          '원지주 성명', '주민번호', '분양면적', '잔여면적', '분양평수',
-				          '잔여평수'],
+				          '잔여평수', '판매단가', '매입단가'],
 				colModel:[
 					{name:"BUYID",				index:'BUYID',			width:100,	align:'center', sortable:false}
 					, {name:"BUYDATE",			index:'BUYDATE',		width:100,	align:'center', sortable:false}
@@ -54,6 +54,8 @@
 					, {name:"CONJM2",			index:'CONJM2',			width:100,	align:'center', sortable:false}
 					, {name:"CONBPY",			index:'CONBPY',			width:100,	align:'center', sortable:false}
 					, {name:"CONJPY",			index:'CONJPY',			width:100,	align:'center', sortable:false}
+					, {name:"UNITCOST",			index:'UNITCOST',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"BUYDANGA",			index:'BUYDANGA',		width:100,	align:'center', sortable:false, hidden:true}
 				],
 				rowNum:10000000,
 				autowidth: true,
@@ -82,6 +84,17 @@
 					$("#CONJM2",opener.document).val(selRowData.CONJM2);
 					$("#CONBPY",opener.document).val(selRowData.CONBPY);
 					$("#CONJPY",opener.document).val(selRowData.CONJPY);
+					//매입의 판매단가를 매출의 매매단가로 넣기
+					$("#SALEDANGA",opener.document).val(selRowData.UNITCOST);
+					
+					//위탁일 경우 위탁수수료 계산을 위해 필요함
+					$("#BUYDANGA",opener.document).val(selRowData.BUYDANGA);
+					
+					$("#CONBM2",opener.document).click();
+					$("#CONJM2",opener.document).click();
+					$("#CONBPY",opener.document).click();
+					$("#CONJPY",opener.document).click();
+					$("#SALEDANGA",opener.document).click();
 					
 					self.close();
 				},

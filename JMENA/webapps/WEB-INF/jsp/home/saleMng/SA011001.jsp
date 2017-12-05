@@ -87,7 +87,6 @@
 			$("#CONPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 			$("#SALEAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#SALEDANGA").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-			$("#UNITCOST").jqxInput({theme: 'energyblue', height: 23, width: 150});
 			$("#AGENCYAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#DCAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#DCRATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -240,8 +239,8 @@
 				colNames:['계약번호', '계약일자', 
 				          '관리번호', '지역구분', '지사구분', '주소', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
 				          '매출구분', '담당자', '매입번호', '계약자성명', '계약자주민번호', '계약자주소', 
-				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '판매단가', '위탁수수료', 
-				          '공동명의구분', '등기여부', '등기일자', '해약여부', '해약일자'],
+				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '위탁수수료', 
+				          '공동명의구분', '등기여부', '등기일자', '해약여부', '해약일자', '매입단가'],
 				colModel:[
 					{name:"SALEID",			index:'SALEID',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"SALEDATE",		index:'SALEDATE',		width:100,	align:'center',	sortable:false},
@@ -271,13 +270,13 @@
 					{name:"DCRATE",			index:'DCRATE',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"DCAMT",			index:'DCAMT',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"SELLAMT",		index:'SELLAMT',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"UNITCOST",		index:'UNITCOST',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"AGENCYAMT",		index:'AGENCYAMT',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"JOINYN",			index:'JOINYN',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"REGYN",			index:'REGYN',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"REGDATE",		index:'REGDATE',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CANCELYN",		index:'CANCELYN',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CANCELDATE",		index:'CANCELDATE',		width:100,	align:'center',	sortable:false,	hidden:true}
+					{name:"CANCELDATE",		index:'CANCELDATE',		width:100,	align:'center',	sortable:false,	hidden:true},
+					{name:"BUYDANGA",		index:'BUYDANGA',		width:100,	align:'center',	sortable:false,	hidden:true}
 				],
 				rowNum:10000000,
 				autowidth: true,
@@ -323,13 +322,13 @@
 					$("#CONPY").val(selRowData.CONPY);
 					$("#SALEAMT").val(selRowData.SALEAMT);
 					$("#SALEDANGA").val(selRowData.SALEDANGA);
-					$("#UNITCOST").val(selRowData.UNITCOST);
 					$("#AGENCYAMT").val(selRowData.AGENCYAMT);
 					$("#DCGUBUN").val(selRowData.DCGUBUN);
 					$("#DCRATE").val(selRowData.DCRATE);
 					$("#DCAMT").val(selRowData.DCAMT);
 					$("#SELLAMT").val(selRowData.SELLAMT);
 					$("#REMARK").val(selRowData.REMARK);
+					$("#BUYDANGA").val(selRowData.BUYDANGA);
 					
 					if (selRowData.SALEGUBUN == "001") {	//일반
 						$("#AGENCYAMT").jqxInput({ disabled: true });
@@ -650,13 +649,13 @@
 			$("#CONPY").val("");
 			$("#SALEAMT").val("");
 			$("#SALEDANGA").val("");
-			$("#UNITCOST").val("");
 			$("#AGENCYAMT").val("");
 			$("#DCGUBUN").change();
 			$("#DCRATE").val("");
 			$("#DCAMT").val("");
 			$("#SELLAMT").val("");
 			$("#REMARK").val("");
+			$("#BUYDANGA").val("");
 			
 			$('#bottomList1').jqGrid('clearGridData');
 			$('#bottomList2').jqGrid('clearGridData');
@@ -1445,9 +1444,9 @@
 			inputComma("CONPY");
 			inputComma("SALEAMT");
 			inputComma("SALEDANGA");
-			inputComma("UNITCOST");
 			inputComma("DCAMT");
-			inputComma("SELLAMT");	
+			inputComma("SELLAMT");
+			inputComma("AGENCYAMT");
 		})
 		
 		function f_commaInputData(str) {
@@ -1460,9 +1459,9 @@
 				$("#CONPY").click();
 				$("#SALEAMT").click();
 				$("#SALEDANGA").click();
-				$("#UNITCOST").click();
 				$("#DCAMT").click();
 				$("#SELLAMT").click();
+				$("#AGENCYAMT").click();
 			} else if (str == "remove") {
 				$("#CONBM2").val(removeComma($("#CONBM2").val()));
 				$("#CONJM2").val(removeComma($("#CONJM2").val()));
@@ -1472,9 +1471,9 @@
 				$("#CONPY").val(removeComma($("#CONPY").val()));
 				$("#SALEAMT").val(removeComma($("#SALEAMT").val()));
 				$("#SALEDANGA").val(removeComma($("#SALEDANGA").val()));
-				$("#UNITCOST").val(removeComma($("#UNITCOST").val()));
 				$("#DCAMT").val(removeComma($("#DCAMT").val()));
 				$("#SELLAMT").val(removeComma($("#SELLAMT").val()));
+				$("#AGENCYAMT").val(removeComma($("#AGENCYAMT").val()));
 			}
 			
 		}
@@ -1511,6 +1510,56 @@
 				var keyCode = window.event.keyCode;
 				if(keyCode==13 || keyCode==9) {
 					f_dangaRule();
+				}
+			});
+		})
+		
+		//위탁일 경우 위탁 수수료 계산
+		function f_agencyAmtRule() {
+			f_commaInputData("remove");
+			
+			//위탁일 경우
+			if($("#SALEGUBUN").val() == "002") {
+				//(((매입단가 -매출단가) * 0.8) * 평수) - DC 금액
+				var agencyAmt = 0;
+				
+				var buydanga = ($("#BUYDANGA").val() == "") ? 0 : parseFloat($("#BUYDANGA").val());
+				var saledanga = ($("#SALEDANGA").val() == "") ? 0 : parseFloat($("#SALEDANGA").val());
+				var conpy = ($("#CONPY").val() == "") ? 0 : parseFloat($("#CONPY").val());
+				
+				agencyAmt = (((buydanga.toFixed(0) - saledanga.toFixed(0)) * 0.8) * conpy.toFixed(2));
+				
+				if($("#DCGUBUN").val() != "000") {	//dc 있음
+					var dcamt = ($("#DCAMT").val() == "") ? 0 :parseFloat($("#DCAMT").val());
+				
+					agencyAmt -= dcamt.toFixed(0);
+				}
+				
+				$("#AGENCYAMT").val(agencyAmt);
+			}
+			
+			f_commaInputData("click");
+		}
+		
+		$(function() {
+			$("#SALEDANGA").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					f_agencyAmtRule();
+				}
+			});
+			
+			$("#CONPY").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					f_agencyAmtRule();
+				}
+			});
+			
+			$("#DCAMT").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					f_agencyAmtRule();
 				}
 			});
 		})
@@ -1630,10 +1679,8 @@
 					<td><input type="text" id="SALEDANGA" name="SALEDANGA" /></td>
 				</tr>
 				<tr>
-					<th width="120">판매단가</th>
-					<td colspan="2"><input type="text" id="UNITCOST" name="UNITCOST" /></td>
 					<th width="120">위탁수수료</th>
-					<td><input type="text" id="AGENCYAMT" name="AGENCYAMT" /></td>
+					<td colspan="4"><input type="text" id="AGENCYAMT" name="AGENCYAMT" /></td>
 				</tr>
 				<tr>
 					<th width="120">DC사항</th>
@@ -1658,6 +1705,7 @@
 			</table>
 		</div>
 		</form>
+		<input type="hidden" id="BUYDANGA" name="BUYDANGA" />
 		<div id="bottomDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<input type="hidden" id="S_FLAG_R_1" name="S_FLAG_R_1" />
 			<input type="hidden" id="S_FLAG_R_2" name="S_FLAG_R_2" />
