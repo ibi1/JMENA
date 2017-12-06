@@ -152,7 +152,9 @@
 				
 			} ,
 			loadComplete: function(ids) {
-				
+				//전체 카운트
+				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+				$("#leftListCount").html(countRow);
 			},	
 			hidegrid: false
 		});
@@ -244,7 +246,11 @@
 			        v_rightLastSel = id;
 				}
 			} ,
-			
+			loadComplete: function(ids) {
+				//전체 카운트
+				var countRow = $("#bottomList").jqGrid('getGridParam', 'records');
+				$("#bottomListCount").html(countRow);
+			},	
 			hidegrid: false
 		});
 	}	
@@ -523,6 +529,7 @@
 <body>	
 	<div id="contents" style="width:100%;" align="center">
 		<div id="leftDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList" width="98%"></table>
 		</div>
 		<table align="right">
@@ -539,6 +546,7 @@
 			<input type="hidden" id="INSACODE" name="INSACODE" />
 			<input type="hidden" id="S_PAYSEQ" name="S_PAYSEQ" />
 			<input type="hidden" id="REGISTERSEQ" name="REGISTERSEQ" />
+			<div align="right">총 건수 : <font color="red"><sapn id="bottomListCount"></sapn></font>건</div>
 			<table id="bottomList" width="98%"></table>
 		</div>				
 	</div>

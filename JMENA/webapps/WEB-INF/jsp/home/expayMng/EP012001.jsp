@@ -129,6 +129,8 @@
             downloadComplete: function (data, status, xhr) {
             },
             loadComplete: function (data) {
+            	var countRow = $('#mainList1').jqxGrid('getrows');
+            	$("#mainList1Count").html(countRow.length);
             },
             loadError: function (xhr, status, error) { alert("Error~~!"); }
         });
@@ -138,7 +140,7 @@
         	theme: 'energyblue',
         	sorttogglestates: 0,
         	sortable: false,
-            width: '98%',
+            width: '100%',
             source: dataAdapter,                
             pageable: false,
             autoheight: false,
@@ -201,6 +203,8 @@
             downloadComplete: function (data, status, xhr) {
             },
             loadComplete: function (data) {
+            	var countRow = $('#mainList2').jqxGrid('getrows');
+            	$("#mainList2Count").html(countRow.length);
             },
             loadError: function (xhr, status, error) { alert("Error~~!"); }
         });
@@ -210,7 +214,7 @@
         	theme: 'energyblue',
         	sorttogglestates: 0,
         	sortable: false,
-            width: '98%',
+            width: '100%',
             source: dataAdapter,                
             pageable: false,
             autoheight: false,
@@ -332,8 +336,10 @@
 					<td colspan="7"><input type="radio" id="TAXGUBUN" name="TAXGUBUN" value="001"/> 사업소득세   <input type="radio" id="TAXGUBUN" name="TAXGUBUN" value="002"/> 부가가치세 </td>
 				</tr>
 			</table><br/>
-			<div id="mainList1" width="98%"></div>
-			<div id="mainList2" width="98%"></div>
+			<div align="right">총 건수 : <font color="red"><sapn id="mainList1Count"></sapn></font>건</div>
+			<div id="mainList1"></div>
+			<div align="right">총 건수 : <font color="red"><sapn id="mainList2Count"></sapn></font>건</div>
+			<div id="mainList2"></div>
 		</div>
 	</div>
 </body>

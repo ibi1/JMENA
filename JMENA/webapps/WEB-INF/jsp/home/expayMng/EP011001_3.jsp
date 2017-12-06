@@ -125,7 +125,10 @@
 			onSelectRow: function(id){
 				
 			} ,
-			loadComplete: function() {			
+			loadComplete: function() {
+				//전체 카운트
+				var countRow = $("#bottomList").jqGrid('getGridParam', 'records');
+				$("#bottomListCount").html(countRow);
 			},
 			ondblClickRow: function(ids){
 				var selRowData = $(this).jqGrid('getRowData', ids);				
@@ -144,6 +147,7 @@
 <body>
 	<div id="contents" style="width:800px;" align="center">
 		<div id="leftDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<div align="right">총 건수 : <font color="red"><sapn id="bottomListCount"></sapn></font>건</div>
 			<table id="bottomList" width="98%"></table>
 		</div>
 	</div>

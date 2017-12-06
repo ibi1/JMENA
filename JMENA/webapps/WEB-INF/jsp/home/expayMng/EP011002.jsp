@@ -110,6 +110,11 @@
 			onSelectRow: function(id){
 				
 			} ,
+			loadComplete: function(id) {
+				//전체 카운트
+				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+				$("#leftListCount").html(countRow);
+			},
 			hidegrid: false
 		});
 	}
@@ -346,7 +351,9 @@
 						  	
 					} ,
 					loadComplete: function(id) {
-						
+						//전체 카운트
+						var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+						$("#leftListCount").html(countRow);
 					},	
 					hidegrid: false
 				});
@@ -596,7 +603,8 @@
 						</select>
 					</td>
 				</tr>
-			</table>			
+			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>			
 			<table id="leftList" style="display:inline;"></table>
 		</div>
 	</div>
