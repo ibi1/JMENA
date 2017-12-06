@@ -335,6 +335,10 @@
 					f_commaInputData("click");
 				} ,
 				loadComplete: function(ids) {
+					//전체 카운트
+					var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+					$("#leftListCount").html(countRow);
+					
 					var saleId = $("#SALEID").val();
 					
 					var ids = jQuery("#leftList").jqGrid('getDataIDs');
@@ -403,6 +407,11 @@
 				        v_rightLastSel = id;
 					}
 				} ,
+				loadComplete: function(id) {
+					//전체 카운트
+					var countRow = $("#bottomList").jqGrid('getGridParam', 'records');
+					$("#bottomListCount").html(countRow);
+				},
 				hidegrid: false
 			});
 		}
@@ -682,7 +691,7 @@
 				
 				//팝업
 				var popUrl = "/home/SA011002_searchPopup.do";	//팝업창에 출력될 페이지 UR
-				var popOption = "width=1200, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				var popOption = "width=1300, height=600, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 				window.open(popUrl,"매출관리-소비대차",popOption);
 			});
 		})
@@ -697,7 +706,7 @@
 				
 				//팝업
 				var popUrl = "/home/SA011002_searchManagePopup.do";	//팝업창에 출력될 페이지 UR
-				var popOption = "width=1200, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				var popOption = "width=1300, height=600, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 				window.open(popUrl,"매출관리-소비대차",popOption);
 			});
 		})
@@ -942,6 +951,7 @@
 					<td><input type="text" id="SL_CONADDRESS" name="SL_CONADDRESS" onkeydown="f_selectButton();" /></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
@@ -1096,6 +1106,7 @@
 					</td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="bottomListCount"></sapn></font>건</div>
 			<table id="bottomList"></table>
 		</div>
 	</div>	

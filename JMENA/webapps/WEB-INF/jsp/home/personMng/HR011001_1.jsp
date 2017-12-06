@@ -204,7 +204,10 @@
 
 				window.self.close();
 			} ,
-			loadComplete: function() {				
+			loadComplete: function() {
+				//전체 카운트
+				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+				$("#leftListCount").html(countRow);
 			},			
 			hidegrid: false
 		});		
@@ -225,6 +228,7 @@
 					<td><input type="button" value="조회" id='searchButton' /></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList" width="98%"></table>
 		</div>
 		

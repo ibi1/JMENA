@@ -383,6 +383,10 @@
 					f_commaInputData("click");
 				} ,
 				loadComplete: function(ids) {
+					//전체 카운트
+					var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+					$("#leftListCount").html(countRow);
+					
 					var saleId = $("#SALEID").val();
 					
 					var ids = jQuery("#leftList").jqGrid('getDataIDs');
@@ -453,6 +457,10 @@
 					}
 				},
 				loadComplete: function() {
+					//전체 카운트
+					var countRow = $("#bottomList1").jqGrid('getGridParam', 'records');
+					$("#bottomList1Count").html(countRow);
+					
 					var tot = 0;
 					
 					var ids = $(this).jqGrid('getDataIDs');
@@ -539,6 +547,11 @@
 				        v_rightLastSel_2 = id;
 					}
 				} ,
+				loadComplete: function(id) {
+					//전체 카운트
+					var countRow = $("#bottomList2").jqGrid('getGridParam', 'records');
+					$("#bottomList2Count").html(countRow);
+				},
 				hidegrid: false
 			});
 		}
@@ -588,7 +601,7 @@
 				sortname: 'SALESEQ' ,
 				viewrecords: true ,
 				sortorder:'asc' ,
-				width: "50%" ,
+				width: "96%" ,
 				jsonReader: {
 					repeatitems: false
 				},
@@ -607,6 +620,11 @@
 				        v_rightLastSel_3 = id;
 					}
 				} ,
+				loadComplete: function(id) {
+					//전체 카운트
+					var countRow = $("#bottomList3").jqGrid('getGridParam', 'records');
+					$("#bottomList3Count").html(countRow);
+				},
 				hidegrid: false ,
 			});
 		}
@@ -872,7 +890,7 @@
 				
 				//팝업
 				var popUrl = "/home/SA011001_searchPopup.do";	//팝업창에 출력될 페이지 UR
-				var popOption = "width=1200, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				var popOption = "width=1300, height=600, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 				window.open(popUrl,"매출관리",popOption);
 			});
 		})
@@ -887,16 +905,20 @@
 				
 				//팝업
 				var popUrl = "/home/SA011001_searchManagePopup.do";	//팝업창에 출력될 페이지 UR
-				var popOption = "width=1200, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				var popOption = "width=1300, height=600, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 				window.open(popUrl,"매출관리",popOption);
 			});
 		})
 		
 		$(function() {
-			$('#bottomTabs').on('tabclick', function (event) { 
-				$("#bottomList1").trigger("reloadGrid");
-				$("#bottomList2").trigger("reloadGrid");
-				$("#bottomList3").trigger("reloadGrid");
+			$('#bottomTabs').on('tabclick', function (event) {
+				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				if (ids != null && ids != "") {
+					$("#bottomList1").trigger("reloadGrid");
+					$("#bottomList2").trigger("reloadGrid");
+					$("#bottomList3").trigger("reloadGrid");
+				}
 			}); 
 		}) 
 		
@@ -1609,6 +1631,7 @@
 					<td><input type="text" id="SL_ADDRESS" name="SL_ADDRESS" onkeydown="f_selectButton();"/></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
@@ -1732,6 +1755,7 @@
 				</ul>
 				<div>
 					<div id="bottom1Div">
+						<div align="right">총 건수 : <font color="red"><sapn id="bottomList1Count"></sapn></font>건</div>
 						<table id="bottomList1"></table>
 						<table >
 							<tr>
@@ -1758,6 +1782,7 @@
 								<td><input type="text" id="REGDATE" name="REGDATE" /></td>
 							</tr>
 						</table>
+						<div align="right">총 건수 : <font color="red"><sapn id="bottomList2Count"></sapn></font>건</div>
 						<table id="bottomList2"></table>
 						<table align="right">
 							<tr>
@@ -1770,6 +1795,7 @@
 				</div>
 				<div>
 					<div id="bottom3Div">
+						<div align="right">총 건수 : <font color="red"><sapn id="bottomList3Count"></sapn></font>건</div>
 						<table id="bottomList3"></table>
 						<table align="right">
 							<tr>

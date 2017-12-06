@@ -171,6 +171,10 @@
 				
 			} ,
 			loadComplete: function() {
+				//전체 카운트
+				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+				$("#leftListCount").html(countRow);
+				
 				$("#S_INSACODE").val("");
 			},			
 			hidegrid: false
@@ -229,7 +233,8 @@
 							});
 						}
 					}]	
-				}}
+				}
+			}
 //			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
 			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
 				dataEvents:[{
@@ -293,12 +298,14 @@
 
 		},
 		loadComplete: function(id) {
+			//전체 카운트
+			var countRow = $("#bottomList1").jqGrid('getGridParam', 'records');
+			$("#bottomList1Count").html(countRow);
+			
 			var ids = $(this).jqGrid('getDataIDs');
-			
-			
-		},		
+		},
 		hidegrid: false
-		});	
+		});
 		
 	}	
 	
@@ -367,7 +374,10 @@
 				
 				
 			} ,
-			loadComplete: function() {			
+			loadComplete: function() {	
+				//전체 카운트
+				var countRow = $("#bottomList2").jqGrid('getGridParam', 'records');
+				$("#bottomList2Count").html(countRow);
 			},
 			hidegrid: false
 		});
@@ -1099,8 +1109,12 @@
 		
 	$(function() {
 			$('#bottomTabs').on('tabclick', function (event) { 
-				$("#bottomList1").trigger("reloadGrid");
-				$("#bottomList2").trigger("reloadGrid");
+				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				if (ids != null && ids != "") {
+					$("#bottomList1").trigger("reloadGrid");
+					$("#bottomList2").trigger("reloadGrid");
+				}
 			}); 
 		})
 		
@@ -1156,6 +1170,7 @@
 				</tr>
 			</table>
 			<br/>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList" width="98%"></table>
 		</div>
 		<div id="rightDiv" style="width:58%;  float:left; padding: 10px" align="left">
@@ -1268,6 +1283,7 @@
 			</ul>
 			<div>
 				<div id="bottomDiv1">
+					<div align="right">총 건수 : <font color="red"><sapn id="bottomList1Count"></sapn></font>건</div>
 					<table id="bottomList1"></table>
 					<table  width="100%">
 						<tr>
@@ -1280,6 +1296,7 @@
 			</div>
 			<div>
 				<div id="bottomDiv2">
+					<div align="right">총 건수 : <font color="red"><sapn id="bottomList2Count"></sapn></font>건</div>
 					<table id="bottomList2"></table>
 					<table  width="100%">
 						<tr>

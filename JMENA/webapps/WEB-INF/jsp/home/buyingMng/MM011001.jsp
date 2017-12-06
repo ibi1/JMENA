@@ -540,6 +540,7 @@
 			$("input:radio[name=REGYN]:input[value=Y]").attr("checked", true);
 			$("#REGDATE").val("");
 			$("#REMARK").val("");
+			$("#PAYTOTAL").val("");
 			
 			$('#rightList1').jqGrid('clearGridData');
 			$('#rightList2').jqGrid('clearGridData');
@@ -762,9 +763,13 @@
 		})
 		
 		$(function() {
-			$('#bottomTabs').on('tabclick', function (event) { 
-				$("#rightList1").trigger("reloadGrid");
-				$("#rightList2").trigger("reloadGrid");
+			$('#bottomTabs').on('tabclick', function (event) {
+				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+				
+				if (ids != null && ids != "") {
+					$("#rightList1").trigger("reloadGrid");
+					$("#rightList2").trigger("reloadGrid");
+				}
 			}); 
 		}) 
 		
@@ -1126,6 +1131,7 @@
     		inputComma("BUYAMT");
     		inputComma("BUYDANGA");
     		inputComma("PMDANGA");
+    		inputComma("PAYTOTAL");
 		})
 		
 		function f_commaInputData(str) {
@@ -1139,6 +1145,7 @@
 				$("#BUYAMT").click();
 				$("#BUYDANGA").click();
 				$("#PMDANGA").click();
+				$("#PAYTOTAL").click();
 			} else if (str == "remove") {
 				$("#BUYM2").val(removeComma($("#BUYM2").val()));
 				$("#BUYPY").val(removeComma($("#BUYPY").val()));
@@ -1149,6 +1156,7 @@
 				$("#BUYAMT").val(removeComma($("#BUYAMT").val()));
 				$("#BUYDANGA").val(removeComma($("#BUYDANGA").val()));
 				$("#PMDANGA").val(removeComma($("#PMDANGA").val()));
+				$("#PAYTOTAL").val(removeComma($("#PAYTOTAL").val()));
 			}
 			
 		}
