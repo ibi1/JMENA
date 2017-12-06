@@ -20,10 +20,9 @@
 	var day = dt.getDate();
 	var year = dt.getFullYear();
 	var yearMonth = year + "" + month;
-	var today = year + "-" + month + "-" + day;
 	
 	$("#S_YEARMONTH").val(yearMonth);
-	$("#S_PAYDATE").val(today);
+	$("#S_PAYDATE").val(dateInput(0));
 
 	$(document).ready(function(){
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
