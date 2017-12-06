@@ -14,7 +14,9 @@
 
 <script type="text/javascript">
 	var v_rightLastSel = 0;
-	
+	var v_branchCode;
+	var v_appointdept;
+	var appointbranch;
 	$(document).ready(function(){
 		var INSACODE = "";
 		var BRANCHCODE = "";
@@ -62,10 +64,11 @@
 		f_selectListEnaDutyCode();
 		$("#APPOINTBRANCH").val("");
 		selectRecoidCode();
-		setTimeout("selectListInsaMst()", 1000);
+		setTimeout("selectListInsaMst();", 1000);
 //		selectListInsaMst();
 		selectListEnaAppointItem(INSACODE);
 		selectListEnaTexPayerItem(INSACODE);
+
 	})
 
 
@@ -163,6 +166,9 @@
 				
 				//콤마 set
 				f_commaInputData("click");
+				
+				
+				
 			} ,
 			loadComplete: function() {
 				$("#S_INSACODE").val("");
@@ -171,7 +177,7 @@
 		});		
 	}
 
-	var v_branchCode;
+
 	function selectListEnaAppointItem(INSACODE){
 		$('#bottomList1').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		
@@ -201,7 +207,7 @@
 						type:'change',
 						fn:function(e){
 							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-							var appointbranch = this.value;
+							appointbranch = this.value;
 							
 							$.ajax({ 
 								type: 'POST' ,
@@ -210,30 +216,26 @@
 								data : {
 									BRANCHCODE : appointbranch
 								},
-								success: function(data){
-									var inHtml = "";
-									inHtml += "<select>"; 
+								success: function(data){									
+									var inHtml = ""; 
 									data.deptMstList.forEach(function(currentValue, index, array){
 										inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 									});
-									inHtml += "</select>";
-									
-									$("select#"+ids+"_APPOINTDEPT").html(inHtml);
+									$("#"+ids+"_APPOINTDEPT").html(inHtml);
 								},
 								error:function(e){  
-									alert("[ERROR]매출 합계 데이터 호출 중 오류가 발생하였습니다.");
+									alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
 								}  
 							});
 						}
 					}]	
 				}}
-//			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true}			
+//			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
 			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
 				dataEvents:[{
 					type:'change',
 					fn:function(e){
 						var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-						var appointbranch = this.value;
 						$.ajax({ 
 							type: 'POST' ,
 							url: "/home/selectDeptGubun.do", 
@@ -247,7 +249,7 @@
 								});								
 							},
 							error:function(e){  
-								alert("[ERROR]매출 합계 데이터 호출 중 오류가 발생하였습니다.");
+								//alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
 							}  
 						});
 					}
@@ -259,27 +261,6 @@
 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' ,	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center',	sortable:false, editable:true}
 			, {name:"DEPTGUBUN",		index:'DEPTGUBUN',			width:100,		align:'center',	sortable:false, hidden:true }
-// 			, {name:"APPOINTDEPT",		index:'APPOINTDEPT',		width:100,		align:'center', editable:true
-// 				, edittype:'select',  editoptions:{dataUrl:"/codeCom/deptMstList.do?BRANCHCODE="+v_branchCode, buildSelect:f_selectListEnaDeptCode1,
-// 					dataEvents:[{
-// 						type:'change',
-// 						fn:function(e){
-// 							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-// 							var appointbranch = this.value;
-
-// 							alert("aaa");
-// 							$("#bottomList1").editCell(ids, 7, true);
-// 							$("#bottomList1").jqGrid('setCell', ids,  'PREBASICPAY, "", editable-cell'); // 특정 cell 수정 가능하게
-
-// 						}
-// 					}]
-// 				}}
-// 			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
-// //			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode}}
-// 			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center', editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
-// 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center', editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
-// 			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' , editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-// 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center'}
 		] ,
 		rowNum:10000000,
 		autowidth: true ,
@@ -293,7 +274,7 @@
 			repeatitems: false
 		},
 		//, height: '100%'
-		onSelectRow : function(id) {
+		onSelectRow : function(id) {			
 			if (id > 0) {
 				$("#S_FLAG_B1").val("U");
 			} else {
@@ -309,14 +290,10 @@
 		        
 		        v_rightLastSel = id;
 			}
+
 		},
 		loadComplete: function(id) {
 			var ids = $(this).jqGrid('getDataIDs');
-			
-			ids.some(function(currentValue, index, array){
-				var tt = $("#bottomList1").jqGrid("getRowData", ids[index]);
-				$(this).jqGrid('setCell', ids[index],  'PREBASICPAY', 'not-editable-cell'); // 특정 cell 수정 못하게
-			});
 			
 			
 		},		
@@ -324,7 +301,7 @@
 		});	
 		
 	}	
-
+	
 	function selectListEnaTexPayerItem(INSACODE){
 		$('#bottomList2').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#bottomList2').jqGrid({
@@ -579,6 +556,7 @@
 	}
 	
  	function f_selectListEnaDeptCode1(data){
+ 	
 		var jsonValue = $.parseJSON(data).deptMstList;
 		
 		var result = "<select>";
@@ -588,7 +566,7 @@
 		});
 		
 		result +="</select>";
-		return result;
+		return result;	
 	}		 
 	
 	function f_selectListEnaBankCode(data){
