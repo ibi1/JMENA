@@ -352,6 +352,10 @@
 					f_commaInputData("click");
 				} ,
 				loadComplete: function(ids) {
+					//전체 카운트
+					var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+					$("#leftListCount").html(countRow);
+					
 					var ipgumid = $("#IPGUMID").val();
 					
 					var ids = jQuery("#leftList").jqGrid('getDataIDs');
@@ -428,6 +432,11 @@
 					}
 					
 				} ,
+				loadComplete: function(id) {
+					//전체 카운트
+					var countRow = $("#bottomList").jqGrid('getGridParam', 'records');
+					$("#bottomListCount").html(countRow);
+				},
 				hidegrid: false
 			});
 		}
@@ -795,6 +804,7 @@
 					<td><input type="text" id="SL_IPGUMAMT" name="SL_IPGUMAMT" /></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
@@ -880,6 +890,7 @@
 			</table>
 			<br />
 			<br />
+			<div align="right">총 건수 : <font color="red"><sapn id="bottomListCount"></sapn></font>건</div>
 			<table id="bottomList"></table>
 			<table id="dtlData">
 				<tr>

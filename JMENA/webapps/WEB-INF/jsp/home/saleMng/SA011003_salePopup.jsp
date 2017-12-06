@@ -153,7 +153,9 @@
 					self.close();
 				},
 				loadComplete: function(ids) {
-					
+					//전체 카운트
+					var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+					$("#leftListCount").html(countRow);
 				},
 				hidegrid: false
 			});
@@ -180,6 +182,7 @@
 			</table>
 		</div>
 		<div id="leftDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 	</div>

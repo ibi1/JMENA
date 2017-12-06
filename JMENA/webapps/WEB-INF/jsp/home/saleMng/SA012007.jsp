@@ -154,6 +154,8 @@
             downloadComplete: function (data, status, xhr) {
             },
             loadComplete: function (data) {
+            	var countRow = $('#mainList').jqxGrid('getrows');
+            	$("#mainListCount").html(countRow.length);
             },
             loadError: function (xhr, status, error) { alert("Error~~!"); }
         });
@@ -163,7 +165,7 @@
         	theme: 'energyblue',
         	sorttogglestates: 0,
         	sortable: false,
-            width: '98%',
+            width: '100%',
             source: dataAdapter,                
             pageable: false,
             autoheight: false,
@@ -246,8 +248,8 @@
 				</tr>
 			</table>
 			<br/>
-			<table id="mainList" width="98%"></table>
-			<div id="mainNav"></div>
+			<div align="right">총 건수 : <font color="red"><sapn id="mainListCount"></sapn></font>건</div>
+			<div id="mainList"></div>
 		</div>
 	</div>
 </body>
