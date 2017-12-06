@@ -87,6 +87,10 @@
 					f_selectCcodeDtl();
 				} ,
 				loadComplete: function() {
+					//전체 카운트
+					var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+					$("#leftListCount").html(countRow);
+					
 					v_rightLastSel = 0;
 					
 					$("#S_CCODENAME_L").val("");
@@ -167,7 +171,9 @@
 					}
 				} ,
 				loadComplete: function() {
-					
+					//전체 카운트
+					var countRow = $("#bottomList").jqGrid('getGridParam', 'records');
+					$("#bottomListCount").html(countRow);
 				},
 				hidegrid: false
 			});
@@ -406,6 +412,7 @@
 					<td><input type="text" id="S_CCODENAME_L" name="S_CCODENAME_L" onkeydown="f_selectKeyCcodeMst();"/></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
@@ -432,6 +439,7 @@
 			</table>
 			<br />
 			<br />
+			<div align="right">총 건수 : <font color="red"><sapn id="bottomListCount"></sapn></font>건</div>
 			<table id="bottomList"></table>
 		</div>
 	</div>

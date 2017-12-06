@@ -83,6 +83,10 @@
 				f_selectListEnaCityDtl(selRowData.CITYCODE);
 			},
 			loadComplete : function() {
+				//전체 카운트
+				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+				$("#leftListCount").html(countRow);
+				
 				v_rightLastSel = 0;
 				
 				var cityCode = $("#RS_CITYCODE").val();
@@ -149,6 +153,11 @@
 
 			        v_rightLastSel = id;
 				}
+			},
+			loadComplete : function() {
+				//전체 카운트
+				var countRow = $("#rightList").jqGrid('getGridParam', 'records');
+				$("#rightListCount").html(countRow);
 			},
 			hidegrid: false
 		});
@@ -365,6 +374,7 @@
 			</table>
 		</div>
 		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:58%; float:left; padding: 10px" align="left">
@@ -395,6 +405,7 @@
 			</table>
 			<br />
 			<br />
+			<div align="right">총 건수 : <font color="red"><sapn id="rightListCount"></sapn></font>건</div>
 			<table id="rightList"></table>
 		</div>
 	</div>

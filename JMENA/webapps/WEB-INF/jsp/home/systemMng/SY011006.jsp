@@ -78,7 +78,9 @@
 					}
 				} ,
 				loadComplete: function() {
-					
+					//전체 카운트
+					var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+					$("#leftListCount").html(countRow);
 				},
 				hidegrid: false
 			});
@@ -192,6 +194,7 @@
 					<td><input type="text" id="S_BANKNAME" name="S_BANKNAME" onkeydown="f_selectKeyBankMst();"/></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 	</div>

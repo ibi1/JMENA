@@ -218,6 +218,10 @@
 						$("#S_SORTKEY").val(selRowData.SORTKEY);
 					} ,
 					loadComplete: function() {
+						//전체 카운트
+						var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+						$("#leftListCount").html(countRow);
+						
 						if($("#S_PGMID_R").val() != "") {
 							var ids = $("#leftList").jqGrid('getDataIDs');
 			
@@ -397,8 +401,8 @@
 					<td><input type="text" id="S_PGMNAME_L" name="S_PGMNAME_L" /></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
-			<div id="leftNav"></div>
 		</div>
 		<div id="rightDiv" style="width:38%; float:left; padding: 10px" align="left">
 			<form id="SY011002">

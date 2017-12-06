@@ -215,6 +215,10 @@
 						f_selectUserPgmAuthTb();
 					} ,
 					loadComplete: function() {
+						//전체 카운트
+						var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+						$("#leftListCount").html(countRow);
+						
 						v_selectUserId = "";	//초기화
 						$("#SYSIDCOMBO").val("ALL").attr("selected", "selected").trigger("change");
 						$('#rightList').jqGrid("clearGridData", true);
@@ -275,7 +279,9 @@
 		
 					} ,
 					loadComplete: function() {
-					
+						//전체 카운트
+						var countRow = $("#rightList").jqGrid('getGridParam', 'records');
+						$("#rightListCount").html(countRow);
 					},
 					hidegrid: false
 				});
@@ -353,6 +359,7 @@
 					<td><input type="text" id="S_USERNAME" name="S_USERNAME" onkeydown="f_selectUserList();"/></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 		<div id="rightDiv" style="width:64%; float:left; padding: 10px" align="left">
@@ -381,6 +388,7 @@
 					</td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="rightListCount"></sapn></font>건</div>
 			<table id="rightList"></table>
 		</div>
 	</div>
