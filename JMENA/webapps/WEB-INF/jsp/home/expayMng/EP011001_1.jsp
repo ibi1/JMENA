@@ -160,7 +160,7 @@
 				$("#SALEDATE", parent.opener.document).val(selRowData.SALEDATE);
 				$("#SALEID", parent.opener.document).val(selRowData.SALEID);
 				$("#SALEGUBUN", parent.opener.document).val(selRowData.SALEGUBUN);
-				$("#SALERCD1", parent.opener.document).val(selRowData.SALERCD);
+				$("#SALERCD", parent.opener.document).val(selRowData.SALERCD);
 				$("#SALERNM", parent.opener.document).val(selRowData.SALERNM);
 				$("#BRANCHCODE", parent.opener.document).val(selRowData.BRANCHCODE);
 				$("#MANAGENO", parent.opener.document).val(selRowData.MANAGENO);

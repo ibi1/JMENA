@@ -412,23 +412,23 @@
 		//콤마 remove
 		f_commaInputData("remove");
 
-		var sellAmt = parseInt($("#SELLAMT").val());
+		var seleAmt = parseInt($("#SALEAMT").val());
 		var sudangrate = parseFloat($("#SUDANGRATE").val());
 		var addrate = parseFloat($("#ADDRATE").val());
 		if(salercd == insacode){
-			gijunAmt = sellAmt * (sudangrate + addrate) / 100;    //지급금액(기준금액)			
+			gijunAmt = seleAmt * (sudangrate + addrate) / 100;    //지급금액(기준금액)			
 		}else{
-			gijunAmt = (sellAmt * (sudangrate + addrate) / 100)//지급금액(기준금액)
+			gijunAmt = (seleAmt * (sudangrate + addrate) / 100)//지급금액(기준금액)
 			gijunAmt = gijunAmt - (gijunAmt * 3.3 / 100);
 		}
 		
-		var taxgubun =$("#TAXGUBUN").val()
-		
+		gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
 		
 		$("#PAYAMT").val(gijunAmt);
 		
+		var taxgubun =$("#TAXGUBUN").val()
+		
 		if(taxgubun == "001"){
-			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
 			$("#PAYAMT").val(gijunAmt);
 			var taxincome = gijunAmt * 3 / 100;    //사업소득세
 			var taxlocal = taxincome * 10 / 100;    //지방세
@@ -437,8 +437,7 @@
 			$("#TAXINCOME").val(taxincome);
 			$("#TAXLOCAL").val(taxlocal);
 			deductamt = gijunAmt - taxincome - taxlocal;
-		}else if (taxgubun == "002"){
-			
+		}else if (taxgubun == "002"){			
 			var supply = gijunAmt/1.1;
 			supply = Math.ceil(supply/10) * 10; //공급가
 			var supplytax = supply * 10 / 100;    //부가가치세
@@ -488,7 +487,8 @@
 				f_commaInputData("remove");
 				
 				var saleId =  $("#SALEID").val();
-				var formData = $("#EP011001").serialize()+"&SALEID=" + saleId;
+				var paySeq =  $("#PAYSEQ").val();
+				var formData = $("#EP011001").serialize()+"&SALEID=" + saleId+"&PAYSEQ=" + paySeq;
 
 			   	$.ajax({ 
 					type: 'POST' ,
@@ -527,7 +527,7 @@
 			var insacode = $("#INSACODE").val();
 			if (confirm(msg) == true) {
 				var formData = "SALEID=" + $("#SALEID").val()+
-								"PAYSEQ=" + $("#PAYSEQ").val() ;
+								"&PAYSEQ=" + $("#PAYSEQ").val() ;
 				
 				$.ajax({ 
 					type: 'POST' ,
@@ -739,8 +739,8 @@
 					<td width="120"><input type="text" id="PAYDATE" name="PAYDATE"> </td>
 					<th width="120">담당자 성명</th>
 					<td colspan="2">
-						<input type="text" id="INSACODE" name="INSACODE"/>
 						<input type="text" id="KNAME" name="KNAME"/>
+						<input type="text" id="INSACODE" name="INSACODE"/>
 					</td>
 					<td colspan="5">
 						<input type="button" id='insaButton'/>
