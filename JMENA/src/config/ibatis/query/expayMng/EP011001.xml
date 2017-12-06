@@ -148,7 +148,7 @@
 	  		 (SELECT KNAME FROM sa_salemst S, hr_insamst I WHERE S.SALEID = T1.SALEID AND I.INSACODE = S.SALERCD) AS SALERNM,
 	  		 (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
 	  		 T1.PAYAMT,
-	  		 T1.PAYAMT - T1.DEDUCTAMT AS TAXAMT,
+	  		 (T1.TAXINCOME + T1.TAXLOCAL + T1.SUPPLYTAX) AS TAXAMT,
 	  		 T1.DEDUCTAMT,
 	  		 (SELECT SALEDATE FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEDATE,	         
 	         (SELECT SALEGUBUN FROM sa_salemst WHERE SALEID = T1.SALEID) AS SALEGUBUN,         
@@ -176,16 +176,17 @@
 	         (SELECT IFNULL(count(T2.PAYSEQ),0) FROM sa_sudangpayertb T2 WHERE T1.SALEID = T2.SALEID AND T1.PAYSEQ = T2.PAYSEQ) AS REGISTERNUM,
 	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='003' AND I.GRADE = C.DCODE ) as GRADE,
 	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='004' AND I.DUTY = C.DCODE ) as DUTY
-	    FROM sa_sudangmst T1
-	   WHERE 1 = 1
- 		<isNotEmpty property="S_SALEID">
+	    FROM sa_sudangmst T1, sa_salemst T2
+	   WHERE T1.SALEID = T2.SALEID
+	     AND T1.INSACODE = T2.SALERCD
+<!--  		<isNotEmpty property="S_SALEID">
 	 		AND T1.SALEID = #S_SALEID# 
 	 		<isNotEmpty property="S_PAYSEQ">
 	 			AND T1.PAYSEQ = #S_PAYSEQ# 
 			</isNotEmpty>
 		</isNotEmpty>
 		<isEmpty property="S_SALEID">
-	 			<!-- AND DATE_FORMAT(T1.PAYDATE, '%Y-%m') BETWEEN #S_SALEDATESYM# AND #S_SALEDATEEYM# -->
+	 			AND DATE_FORMAT(T1.PAYDATE, '%Y-%m') BETWEEN #S_SALEDATESYM# AND #S_SALEDATEEYM#
 			<isNotEmpty property="S_SALERCD">
 	 			AND T1.SALERCD = #S_SALERCD# 
 			</isNotEmpty>
@@ -195,7 +196,7 @@
 			<isNotEqual property="S_DEPTCODE" compareValue="ALL">
 	 			AND T1.DEPTCODE = #S_DEPTCODE# 
 			</isNotEqual>
-		</isEmpty>		
+		</isEmpty>	 -->	
 		ORDER BY T1.SALEID ASC, T1.PAYSEQ
 	</select>		
 	

@@ -175,8 +175,8 @@
 				$("#DCRATE", parent.opener.document).val(selRowData.DCRATE);
 				$("#DCAMT", parent.opener.document).val(selRowData.DCAMT);
 				$("#SELLAMT", parent.opener.document).val(selRowData.SELLAMT);
-				$("#S_SALEID", parent.opener.document).val(selRowData.SALEID);
-				$(opener.location).attr("href", "javascript:selectListEnaSudangMst();");
+//				$("#S_SALEID", parent.opener.document).val(selRowData.SALEID);
+//				$(opener.location).attr("href", "javascript:selectListEnaSudangMst();");
 
 				window.self.close();
 
