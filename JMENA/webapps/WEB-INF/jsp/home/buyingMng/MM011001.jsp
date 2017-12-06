@@ -293,6 +293,10 @@
 					f_commaInputData("click");
 				} ,
 				loadComplete: function(ids) {
+					//전체 카운트
+					var countRow = $("#leftList").jqGrid('getGridParam', 'records');
+					$("#leftListCount").html(countRow);
+					
 					var buyId = $("#BUYID").val();
 					
 					var ids = jQuery("#leftList").jqGrid('getDataIDs');
@@ -360,6 +364,10 @@
 					}
 				},
 				loadComplete: function() {
+					//전체 카운트
+					var countRow = $("#rightList1").jqGrid('getGridParam', 'records');
+					$("#rightList1Count").html(countRow);
+					
 					var tot = 0;
 					
 					var ids = $(this).jqGrid('getDataIDs');
@@ -442,6 +450,10 @@
 					}
 				},
 				loadComplete: function() {
+					//전체 카운트
+					var countRow = $("#rightList2").jqGrid('getGridParam', 'records');
+					$("#rightList2Count").html(countRow);
+					
 					var hm2_tot = 0;	//홀딩 분양면적
 					var hpy_tot = 0;	//홀딩 분양평수
 					var sale_m2_tot = 0;	//매출 분양면적
@@ -744,7 +756,7 @@
 				
 				//팝업
 				var popUrl = "/home/MM011001_searchPopup.do";	//팝업창에 출력될 페이지 UR
-				var popOption = "width=1200, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				var popOption = "width=1300, height=600, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 				window.open(popUrl,"매입관리",popOption);
 			});
 		})
@@ -1165,6 +1177,7 @@
 					<td><input type="text" id="LS_ADDRESS" name="LS_ADDRESS" onkeydown="f_selectButton();" /></td>
 				</tr>
 			</table>
+			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
 		</div>
 		<div id="bottomDiv"  style="width:58%; float:left; padding: 10px" align="left">
@@ -1265,6 +1278,7 @@
 					</ul>
 					<div>
 						<div id="right1Div">
+							<div align="right">총 건수 : <font color="red"><sapn id="rightList1Count"></sapn></font>건</div>
 							<table id="rightList1"></table>
 							<table width="100%">
 								<tr>
@@ -1278,6 +1292,7 @@
 						</div>
 					</div>
 					<div>
+						<div align="right">총 건수 : <font color="red"><sapn id="rightList2Count"></sapn></font>건</div>
 						<table id="rightList2"></table>
 						<table align="right">
 							<tr>
