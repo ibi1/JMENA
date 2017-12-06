@@ -309,6 +309,7 @@ public class SA011001Ctr {
 		vo.setDEPOSITGUBUN(request.getParameter("DEPOSITGUBUN"));
 		vo.setDEPOSITDATE(request.getParameter("DEPOSITDATE"));
 		vo.setDEPOSITAMT(request.getParameter("DEPOSITAMT"));
+		vo.setDEPOSITYN(request.getParameter("DEPOSITYN"));
 		vo.setREMARK(request.getParameter("REMARK"));
 		
 		HttpSession session = null;

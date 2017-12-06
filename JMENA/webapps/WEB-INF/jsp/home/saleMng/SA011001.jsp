@@ -992,6 +992,17 @@
 					return false;
 				}
 				
+				if (cellData.DEPOSITYN == "Y") {
+					if (cellData.SUGUMAMT == "") {
+						alert("입금처리된 금액이 없습니다.");
+						
+						$('#bottomList1').jqGrid('editRow', v_rightLastSel_1, true);
+						$("#"+ids+"_DEPOSITYN").focus();
+						
+						return false;
+					}
+				}
+
 				var msg = "";
 				if ($("#S_FLAG_R_1").val() == "I") {
 					msg = "저장하시겠습니까?";
@@ -999,12 +1010,14 @@
 					msg = "수정하시겠습니까?"
 				}
 				if (confirm(msg) == true) {
+					
 					var formData = "S_FLAG_R_1=" + $("#S_FLAG_R_1").val() + 
 					"&SALEID=" + $("#SALEID").val() + 
 					"&IPGUMSEQ=" + cellData.IPGUMSEQ + 
 					"&DEPOSITGUBUN=" + depositGubun + 
 					"&DEPOSITDATE=" + cellData.DEPOSITDATE + 
 					"&DEPOSITAMT=" + cellData.DEPOSITAMT + 
+					"&DEPOSITYN=" + cellData.DEPOSITYN + 
 					"&REMARK=" + cellData.REMARK;
 					
 					$.ajax({ 
