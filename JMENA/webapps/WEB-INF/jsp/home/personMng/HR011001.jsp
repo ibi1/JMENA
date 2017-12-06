@@ -399,7 +399,10 @@
 	
 	$(function(){
 		$("#searchButton").click(function(){
+			var insacode = "";
 			selectListInsaMst();
+			selectListEnaAppointItem(insacode);
+			selectListEnaTexPayerItem(insacode);			
 		}); 
 		$("#insaButton").click(function(){
 			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
