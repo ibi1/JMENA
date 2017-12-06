@@ -42,12 +42,13 @@
 	</resultMap>
 
 	<resultMap id="SA012001Data4" class="SA012001VO">
-		<result property="AMT1" 			column="AMT1"/>
-		<result property="AMT2" 			column="AMT2"/>
-		<result property="AMT3" 			column="AMT3"/>
-		<result property="AMT4" 			column="AMT4"/>
-		<result property="AMT5" 			column="AMT5"/>
 		<result property="AMT6" 			column="AMT6"/>
+		<result property="AMT5" 			column="AMT5"/>
+		<result property="AMT4" 			column="AMT4"/>
+		<result property="AMT3" 			column="AMT3"/>
+		<result property="AMT2" 			column="AMT2"/>
+		<result property="AMT1" 			column="AMT1"/>
+		<result property="AMT0" 			column="AMT0"/>
 		<result property="TOTAMT" 			column="TOTAMT"/>
 	</resultMap>
 
@@ -57,7 +58,7 @@
 			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname,
 			t1.deptcode,
 			(select deptname from ba_deptmst where branchcode = t1.branchcode and deptcode = t1.deptcode) as deptname,
-			(select dcodename from sy_ccodedtl where ccode = '004' and dcode = t1.duty) as duty,
+			(select dcodename from sy_ccodedtl where ccode = '003' and dcode = t1.grade) as duty,
 			t1.insacode,
 			t1.kname,
 		    t1.joindate,
@@ -71,6 +72,7 @@
 			and t1.kname like '%$S_KNAME$%'
 		</isNotEmpty>
 		and t1.retiredate is null
+		order by branchcode, deptcode, duty, kname
 	</select>
 
 
@@ -156,6 +158,11 @@
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #S_SALEDATE_FR# and #S_SALEDATE_TO#
+			and t1.saleid = t2.saleid) as AMT0,
+			(select sum(t2.sellamt) TOTAMT from sa_salemst t1, sa_saledtl t2
+			where 1=1
+			and t1.salercd = #INSACODE#
+			and saledate between #M6_FR# and #S_SALEDATE_TO#
 			and t1.saleid = t2.saleid) as TOTAMT
 		from dual
 

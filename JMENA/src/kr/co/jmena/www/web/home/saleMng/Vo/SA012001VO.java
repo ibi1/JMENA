@@ -17,6 +17,7 @@ public class SA012001VO {
 	private String O_JOINDATE;
 	private String O_RETIREDATE;
 	private String O_EMPLOYGUBUN;
+	private String AMT0;
 	private String AMT1;
 	private String AMT2;
 	private String AMT3;
@@ -42,6 +43,8 @@ public class SA012001VO {
 	private String M5_TO;
 	private String M6_FR;
 	private String M6_TO;
+
+	
 	
 	public String getBRANCHCODE() {
 		return this.BRANCHCODE;
@@ -84,6 +87,9 @@ public class SA012001VO {
 	}
 	public String getO_EMPLOYGUBUN() {
 		return this.O_EMPLOYGUBUN;
+	}
+	public String getAMT0() {
+		return this.AMT0;
 	}
 	public String getAMT1() {
 		return this.AMT1;
@@ -196,6 +202,9 @@ public class SA012001VO {
 	}
 	public void setO_EMPLOYGUBUN(String O_EMPLOYGUBUN) {
 		this.O_EMPLOYGUBUN = O_EMPLOYGUBUN;
+	}
+	public void setAMT0(String amt0) {
+		this.AMT0 = amt0;
 	}
 	public void setAMT1(String AMT1) {
 		this.AMT1 = AMT1;

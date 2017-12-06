@@ -84,6 +84,7 @@
 				{name:"AMT3",				type: 'number' },
 				{name:"AMT2",				type: 'number' },
 				{name:"AMT1",				type: 'number' },
+				{name:"AMT0",				type: 'number' },
 				{name:"TOTAMT",				type: 'number' }
 				
             ],
@@ -129,12 +130,13 @@
 				{ text: '입사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center'},
 				{ text: '퇴사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center'},
 				{ text: '고용구분', 		columngroup: '전근무현황',	align: 'center',	datafield: 'O_EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
-				{ text: '기준월 이전 6개월 총합계', 				datafield: 'AMT6',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 이전 5개월 총합계', 				datafield: 'AMT5',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 이전 4개월 총합계', 				datafield: 'AMT4',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 이전 3개월 총합계', 				datafield: 'AMT3',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 이전 2개월 총합계', 				datafield: 'AMT2',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 이전 1개월 총합계', 				datafield: 'AMT1',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '기준월 6개월 전 실적', 				datafield: 'AMT6',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '기준월 5개월 전 실적', 				datafield: 'AMT5',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '기준월 4개월 전 실적', 				datafield: 'AMT4',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '기준월 3개월 전 실적', 				datafield: 'AMT3',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '기준월 2개월 전 실적', 				datafield: 'AMT2',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '기준월 1개월 전 실적', 				datafield: 'AMT1',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '기준월 실적', 			datafield: 'AMT0',		align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 				{ text: '합계', 			datafield: 'TOTAMT',		align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'}
 				
 			],

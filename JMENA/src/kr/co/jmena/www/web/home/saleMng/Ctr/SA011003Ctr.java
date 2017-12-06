@@ -300,7 +300,13 @@ public class SA011003Ctr {
 		vo.setIPGUMID(request.getParameter("IPGUMID"));
 		vo.setSALEID(request.getParameter("SALEID"));
 		vo.setIPGUMSEQ(request.getParameter("IPGUMSEQ"));
+		vo.setSEQ(request.getParameter("SEQ"));
 		vo.setSUGUMAMT(request.getParameter("SUGUMAMT"));
+		System.out.println("IPGUMID==>"+request.getParameter("IPGUMID"));
+		System.out.println("SALEID==>"+request.getParameter("SALEID"));
+		System.out.println("IPGUMSEQ==>"+request.getParameter("IPGUMSEQ"));
+		System.out.println("SEQ==>"+request.getParameter("SEQ"));
+		System.out.println("SUGUMAMT==>"+request.getParameter("SUGUMAMT"));
 		vo.setREMARK("");
 
 		HttpSession session = null;
@@ -356,7 +362,7 @@ public class SA011003Ctr {
 		String resultCode = "";
 		String resultMsg = "";
 		
-		if (SA011003Biz.deleteEnaIpgumDtl(vo) == true) {
+		if (SA011003Biz.deleteEnaIpgumDtl2(vo) == true) {
 			resultCode ="SUCCESS";
 			resultMsg = "정상적으로 삭제하였습니다.";
 		} else {

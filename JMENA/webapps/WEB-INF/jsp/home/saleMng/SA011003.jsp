@@ -449,7 +449,25 @@
 				f_selectListEnaIpgumDtl();
 				
 			});
+			$("#insertButton").click(function() {
+				var txtEle = $("#SA011003 input[type=text], select");
+				  
+				for(var i = 0; i < txtEle.length; i ++){
+					$(txtEle[i]).val("");
+				}
+				var txtEle2 = $("#leftDiv input[type=text], select");
+				  
+				for(var i = 0; i < txtEle2.length; i ++){
+					$(txtEle2[i]).val("");
+				}
 	
+				$("#S_FLAG_L").val("U");
+				$("#S_FLAG_D").val("U");
+				f_selectListEnaIpgumMst();
+				f_selectListEnaIpgumDtl();
+				$("#IPGUMDATE").focus();
+			});
+
 			$("#saveButton").click(function() {
 				
 				var msg = "";
@@ -473,12 +491,6 @@
 							if(data.rows[0].MSG == "success")
 							{
 								alert("저장이 완료되었습니다.");
-								var txtEle = $("#SA011003 input[type=text], select");
-								  
-								for(var i = 0; i < txtEle.length; i ++){
-									$(txtEle[i]).val("");
-								}
-
 								f_selectListEnaIpgumMst();
 							}else{
 								alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
@@ -590,7 +602,7 @@
 					"&SALEID=" + cellData.SALEID + 
 					"&IPGUMSEQ=" + cellData.IPGUMSEQ + 
 					"&SUGUMAMT=" + cellData.SUGUMAMT;
-					alert(formData);
+					//alert(formData);
 					$.ajax({ 
 						type: 'POST' ,
 						data: formData,
@@ -638,15 +650,15 @@
 					var formData = "IPGUMID=" + $("#IPGUMID").val() + 
 					"&SALEID=" + cellData.SALEID + 
 					"&IPGUMSEQ=" + cellData.IPGUMSEQ + 
+					"&SEQ=" + cellData.SEQ + 
 					"&SUGUMAMT=" + cellData.SUGUMAMT;
-					
 					$.ajax({ 
 						type: 'POST' ,
 						data: formData,
 						url: "/home/updateEnaIpgumDtl.do", 
 						dataType : 'json' , 
 						success: function(data){
-							$("#S_FLAG_R_1").val("U");
+							$("#S_FLAG_D").val("I");
 							
 							v_bottomCellId = 0;
 							
@@ -669,29 +681,6 @@
 			
 			
 		})
-
-		$("#insertButton").click(function() {
-			var txtEle = $("#SA011003 input[type=text], select");
-			  
-			for(var i = 0; i < txtEle.length; i ++){
-				$(txtEle[i]).val("");
-			}
-
-			var txtEle2 = $("#leftDiv input[type=text], select");
-			  
-			for(var i = 0; i < txtEle.length; i ++){
-				$(txtEle2[i]).val("");
-			}
-			
-			$("#S_FLAG_L").val("I");
-			$("#S_FLAG_D").val("I");
-			f_selectListEnaIpgumMst();
-			f_selectListEnaIpgumDtl();
-			
-			$("#IPGUMDATE").focus();
-			
-		});
-		
 		
 		function onEnterSubmit() {
 			var keyCode = window.event.keyCode;

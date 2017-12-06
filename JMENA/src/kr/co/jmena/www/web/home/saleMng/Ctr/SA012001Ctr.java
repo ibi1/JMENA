@@ -146,6 +146,7 @@ public class SA012001Ctr {
 	
 									List<SA012001VO> lst4 = SA012001Biz.selectListSA012001_4(vo4);
 									if(lst4.size() > 0){
+										obj.put("AMT0", lst4.get(0).getAMT0());
 										obj.put("AMT1", lst4.get(0).getAMT1());
 										obj.put("AMT2", lst4.get(0).getAMT2());
 										obj.put("AMT3", lst4.get(0).getAMT3());
@@ -154,6 +155,7 @@ public class SA012001Ctr {
 										obj.put("AMT6", lst4.get(0).getAMT6());
 										obj.put("TOTAMT", lst4.get(0).getTOTAMT());
 									}else{
+										obj.put("AMT0", "");
 										obj.put("AMT1", "");
 										obj.put("AMT2", "");
 										obj.put("AMT3", "");
@@ -164,6 +166,7 @@ public class SA012001Ctr {
 									}
 									
 								}else{
+									obj.put("AMT0", "");
 									obj.put("AMT1", "");
 									obj.put("AMT2", "");
 									obj.put("AMT3", "");
@@ -175,6 +178,7 @@ public class SA012001Ctr {
 								}
 								
 							}else{
+								obj.put("AMT0", "");
 								obj.put("AMT1", "");
 								obj.put("AMT2", "");
 								obj.put("AMT3", "");
@@ -241,6 +245,7 @@ public class SA012001Ctr {
 
 							List<SA012001VO> lst4 = SA012001Biz.selectListSA012001_4(vo4);
 							if(lst4.size() > 0){
+								obj.put("AMT0", lst4.get(0).getAMT0());
 								obj.put("AMT1", lst4.get(0).getAMT1());
 								obj.put("AMT2", lst4.get(0).getAMT2());
 								obj.put("AMT3", lst4.get(0).getAMT3());
@@ -249,6 +254,7 @@ public class SA012001Ctr {
 								obj.put("AMT6", lst4.get(0).getAMT6());
 								obj.put("TOTAMT", lst4.get(0).getTOTAMT());
 							}else{
+								obj.put("AMT0", "");
 								obj.put("AMT1", "");
 								obj.put("AMT2", "");
 								obj.put("AMT3", "");
@@ -259,6 +265,7 @@ public class SA012001Ctr {
 							}
 							
 						}else{
+							obj.put("AMT0", "");
 							obj.put("AMT1", "");
 							obj.put("AMT2", "");
 							obj.put("AMT3", "");
@@ -270,6 +277,7 @@ public class SA012001Ctr {
 						}
 						
 					}else{
+						obj.put("AMT0", "");
 						obj.put("AMT1", "");
 						obj.put("AMT2", "");
 						obj.put("AMT3", "");
