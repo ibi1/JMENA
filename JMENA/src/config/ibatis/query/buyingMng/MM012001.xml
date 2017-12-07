@@ -6,6 +6,7 @@
 	<typeAlias alias="MM012001VO" type="kr.co.jmena.www.web.home.buyingMng.Vo.MM012001VO"/>
 
 	<resultMap id="MM012001Data" class="MM012001VO">
+		<result property="BUYID"		column="BUYID"/>
 		<result property="CITYCODE"		column="CITYCODE"/>
 		<result property="CITYNAME"		column="CITYNAME"/>
 		<result property="BOROUGHCODE"	column="BOROUGHCODE"/>
@@ -30,8 +31,13 @@
 		<result property="REMARK"		column="REMARK"/>
 	</resultMap>
 
+	<resultMap id="MM012001Data1" class="MM012001VO">
+		<result property="OPENBRANCH" 		column="OPENBRANCH"/>
+	</resultMap>
+
 	<select id="selectListMM012001" resultMap="MM012001Data">
 		SELECT
+			BUYID,
 			CITYCODE,
 			CITYNAME,
 			BOROUGHCODE,
@@ -56,6 +62,7 @@
 			REMARK
 		FROM ( 
 			SELECT
+				T1.BUYID,
 				T1.CITYCODE,
 				(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
 				T1.BOROUGHCODE,
@@ -86,7 +93,8 @@
 	            (SELECT SUM(PAYAMT) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYAMT4,
 	            (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYDATE4,
 				(SELECT SUM(PAYAMT) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYYN ='Y') AS JANPAYAMT,
-				(SELECT OPENYN FROM mm_salesopentb WHERE BUYID = T1.BUYID) AS OPENYN,
+				<!-- (SELECT OPENYN FROM mm_salesopentb WHERE BUYID = T1.BUYID) AS OPENYN, -->
+				'Y' AS OPENYN,
 				T1.REMARK
 			FROM mm_buymst T1
 			WHERE 1=1
@@ -102,4 +110,15 @@
 		</isNotEmpty>
 		
 	</select>
+
+	<select id="selectListMM012001_1" resultMap="MM012001Data1">
+		select
+			(select branchname from ba_branchmst where branchcode = t1.branchcode) as OPENBRANCH
+		from mm_salesopentb t1
+		where 1=1
+		and t1.buyid = #BUYID# 
+		order by t1.buyid asc
+	</select>
+
+	
 </sqlMap>

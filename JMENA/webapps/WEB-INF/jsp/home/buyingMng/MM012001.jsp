@@ -134,7 +134,7 @@
 	              { text: '잔금액',		datafield: 'PAYAMT4', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 	              { text: '잔금일', 	datafield: 'PAYDATE4', 		width: 150, cellsalign: 'center', align: 'center' },
 	              { text: '잔금누계', 	datafield: 'JANPAYAMT', 	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '오픈여부', 	datafield: 'OPENYN', 		width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '오픈여부', 	datafield: 'OPENBRANCH', 	width: 150, cellsalign: 'center', align: 'center' },
 	              { text: '비고', 		datafield: 'REMARK', 		width: 250, cellsalign: 'center', align: 'center' }
 	            ]
 	        });

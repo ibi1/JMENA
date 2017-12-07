@@ -28,5 +28,13 @@ public class MM012001Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}
+
+	public List<MM012001VO> selectListMM012001_1(MM012001VO vo) throws DataAccessException {
+		List<MM012001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListMM012001_1", vo);
+		
+		return lst;
+	}
 	
 }

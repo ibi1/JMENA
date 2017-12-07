@@ -28,11 +28,28 @@ public class MM012001VO {
 	private String LS_BUYDATE_TO;
 	private String BUYGUBUN;
 	
-
+	private String BUYID;
+	
 	private String S_CITYCODE;
 	private String S_BOROUGHCODE;
 	private String S_ADDRESS;
 	
+	private String OPENBRANCH;
+	
+	
+	
+	public String getOPENBRANCH() {
+		return this.OPENBRANCH;
+	}
+	public void setOPENBRANCH(String OPENBRANCH) {
+		this.OPENBRANCH = OPENBRANCH;
+	}
+	public String getBUYID() {
+		return this.BUYID;
+	}
+	public void setBUYID(String BUYID) {
+		this.BUYID = BUYID;
+	}
 	public String getCITYCODE() {
 		return this.CITYCODE;
 	}

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM012001VO;
 import kr.co.jmena.www.web.home.buyingMng.Biz.MM012001Biz;
+import kr.co.jmena.www.web.home.saleMng.Vo.SA012007VO;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -124,14 +125,20 @@ public class MM012001Ctr {
 				
 			}
 			
-			
-			
-			
 			obj.put("PAYAMT4", lst.get(i).getPAYAMT4());
 			obj.put("PAYDATE4", lst.get(i).getPAYDATE4());
 			obj.put("JANPAYAMT", lst.get(i).getJANPAYAMT());
 			obj.put("OPENYN", lst.get(i).getOPENYN());
 			obj.put("REMARK", lst.get(i).getREMARK());
+			
+			MM012001VO vo2 = new MM012001VO();
+			vo2.setBUYID(lst.get(i).getBUYID());
+			List<MM012001VO> lst2 = MM012001Biz.selectListMM012001_1(vo2);
+			String OPENBRANCH = "";
+			for (int j = 0; j < lst2.size(); j++) {
+				OPENBRANCH = OPENBRANCH + lst2.get(j).getOPENBRANCH() + ",";
+			}
+			obj.put("OPENBRANCH", OPENBRANCH);
 
 			jCell.add(obj);
 		}
