@@ -1,6 +1,7 @@
 package kr.co.jmena.www.web.home.saleMng.Ctr;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -128,6 +129,7 @@ public class SA011001Ctr {
 			obj.put("CANCELYN", lst.get(i).getCANCELYN());
 			obj.put("CANCELDATE", lst.get(i).getCANCELDATE());
 			obj.put("BUYDANGA", lst.get(i).getBUYDANGA());
+			obj.put("SALERNAME", lst.get(i).getSALERNAME());
 			
 			jCell.add(obj);
 			
@@ -755,6 +757,29 @@ public class SA011001Ctr {
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListEnaBuyMstPopup]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	@RequestMapping("/home/selectHRInsamstBranchCode.do")
+	public ModelAndView selectHRInsamstBranchCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SA011001VO vo = new SA011001VO();
+		
+		vo.setSALERNAME(request.getParameter("SALERNAME"));
+		
+		List<SA011001VO> lst = SA011001Biz.selectHRInsamstBranchCode(vo);
+		
+		JSONObject json = new JSONObject();
+		
+		if (lst.size() > 0) {
+			json.put("RESULT", "FULL");
+			json.put("SALERCD", lst.get(0).getSALERCD());
+			json.put("BRANCHCODE", lst.get(0).getBRANCHCODE());
+		} else {
+			json.put("RESULT", "EMPTY");
+		}
+		
+		logger.debug("[selectHRInsamstBranchCode]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}

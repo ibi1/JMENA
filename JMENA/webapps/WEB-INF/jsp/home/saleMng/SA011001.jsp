@@ -92,15 +92,20 @@
 			$("#DCRATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 			$("#SELLAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
-			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});		
+			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});	
 			
+			
+			$("#SALERCD").jqxInput({theme: 'energyblue', height: 25, width: 93, minLength: 1, disabled: true });
+            $("#SALERNAME").jqxInput({theme: 'energyblue',  height: 25, width: 93, minLength: 1 });
+         
 			$("#SUGUMTOTAL").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
 			
 			$("#CITYCODE").attr("disabled", true);
+			$("#BRANCHNAME").attr("disabled", true);
 			
 			f_selectListEnaDCode();
 			f_selectListEnaCityCode();
-			f_selectListEnaSalerCode();
+			//f_selectListEnaSalerCode();
 			f_selectListEnaBranchCode();
 			f_selectListEnaDcGubun();
 			
@@ -120,6 +125,7 @@
 				dataType : 'json' , 
 				success: function(data){
 					var inHtml = "";
+					inHtml += "<option value=''></option>\n";
 					data.cityMstList.forEach(function(currentValue, index, array){
 						inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
 					});
@@ -130,7 +136,7 @@
 				}  
 			});
 		}
-	
+	/*
 		function f_selectListEnaSalerCode(){
 			$.ajax({ 
 				type: 'POST' ,
@@ -149,7 +155,7 @@
 				}  
 			});
 		}
-		
+		*/
 		//부서
 		function f_selectListEnaBranchCode(){
 			$("#BRANCHNAME").empty().data('options');
@@ -159,6 +165,7 @@
 				dataType : 'json' , 
 				success: function(data){
 					var inHtml = "";
+					inHtml += "<option value=''></option>\n";
 					data.branchMstList.forEach(function(currentValue, index, array){
 						inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 					});
@@ -236,35 +243,36 @@
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
-				colNames:['계약번호', '계약일자', 
-				          '관리번호', '지역구분', '지사구분', '주소', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
-				          '매출구분', '담당자', '매입번호', '계약자성명', '계약자주민번호', '계약자주소', 
-				          '계약자연락처', '계약면적', '계약평수', '비고', '매매금액', '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '위탁수수료', 
+				colNames:['담당자코드', '담당자', '계약자', '계약면적', '원지주성명', '계약일자', '주소', '계약평수', '매매금액',
+				          '계약번호', '관리번호', '지역구분', '지사구분', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
+				          '매출구분', '매입번호', '계약자주민번호', '계약자주소', 
+				          '계약자연락처',  '비고',  '매매단가', '할인구분', '할인율', '할인금액', '실판매가', '위탁수수료', 
 				          '공동명의구분', '등기여부', '등기일자', '해약여부', '해약일자', '매입단가'],
 				colModel:[
-					{name:"SALEID",			index:'SALEID',			width:100,	align:'center',	sortable:false,	hidden:true},
+					{name:"SALERCD",		index:'SALERCD',		width:100,	align:'center',	sortable:false, hidden:true},
+					{name:"SALERNAME",		index:'SALERNAME',		width:100,	align:'center',	sortable:false},
+					{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center',	sortable:false},
+					{name:"CONM2",			index:'CONM2',			width:100,	align:'center',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+					{name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center',	sortable:false},
 					{name:"SALEDATE",		index:'SALEDATE',		width:100,	align:'center',	sortable:false},
+					{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center',	sortable:false},
+					{name:"CONPY",			index:'CONPY',			width:100,	align:'center',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+					{name:"SALEAMT",		index:'SALEAMT',		width:100,	align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+					{name:"SALEID",			index:'SALEID',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"MANAGENO",		index:'MANAGENO',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CITYCODE",		index:'CITYCODE',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center',	sortable:false},
-					{name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center',	sortable:false},
 					{name:"OWNERJUMINID",	index:'OWNERJUMINID',	width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONBM2",			index:'CONBM2',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONJM2",			index:'CONJM2',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONBPY",			index:'CONBPY',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONJPY",			index:'CONJPY',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"SALEGUBUN",		index:'SALEGUBUN',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"SALERCD",		index:'SALERCD',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"BUYID",			index:'BUYID',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONJUMINID",		index:'CONJUMINID',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONADDRESS",		index:'CONADDRESS',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONTELNO",		index:'CONTELNO',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONM2",			index:'CONM2',			width:100,	align:'center',	sortable:false},
-					{name:"CONPY",			index:'CONPY',			width:100,	align:'center',	sortable:false},
 					{name:"REMARK",			index:'REMARK',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"SALEAMT",		index:'SALEAMT',		width:100,	align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 					{name:"SALEDANGA",		index:'SALEDANGA',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"DCGUBUN",		index:'DCGUBUN',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"DCRATE",			index:'DCRATE',			width:100,	align:'center',	sortable:false,	hidden:true},
@@ -304,6 +312,7 @@
 					$("#SALEID").val(selRowData.SALEID);
 					$("#SALEGUBUN").val(selRowData.SALEGUBUN);
 					$("#SALERCD").val(selRowData.SALERCD);
+					$("#SALERNAME").val(selRowData.SALERNAME);
 					$("#BRANCHNAME").val(selRowData.BRANCHCODE);
 					$("#MANAGENO").val(selRowData.MANAGENO);
 					$("#CITYCODE").val(selRowData.CITYCODE);
@@ -647,11 +656,12 @@
 			if (dF == "Y") $("#SALEDATE").val("");
 
 			$("#SALEID").val("");
-			$("#SALEGUBUN").change();
-			$("#SALERCD").change();
-			$("#BRANCHNAME").change();
+			$("#SALEGUBUN").val("");
+			$("#SALERCD").val("");
+			$("#SALERNAME").val("");
+			$("#BRANCHNAME").val("");
 			$("#MANAGENO").val("");
-			$("#CITYCODE").change();
+			$("#CITYCODE").val("");
 			$("#ADDRESS").val("");
 			$("#OWNERNAME").val("");
 			$("#OWNERJUMINID").val("");
@@ -668,7 +678,7 @@
 			$("#SALEAMT").val("");
 			$("#SALEDANGA").val("");
 			$("#AGENCYAMT").val("");
-			$("#DCGUBUN").change();
+			$("#DCGUBUN").val("");
 			$("#DCRATE").val("");
 			$("#DCAMT").val("");
 			$("#SELLAMT").val("");
@@ -742,6 +752,13 @@
 					alert("계약일자를 입력하셔야 합니다.");
 					
 					$("#SALEDATE").focus();
+					return false;
+				}
+				
+				if ($("#SALERCD").val() == "") {
+					alert("담당자를 입력하셔야 합니다.");
+					
+					$("#SALERNAME").focus();
 					return false;
 				}
 
@@ -1519,9 +1536,10 @@
 			
 			var dcamt;
 			var saleamt = parseFloat($("#SALEAMT").val());
-			var dcrate = parseFloat($("#DCRATE").val());
+			var dcrate = isNaN(parseFloat($("#DCRATE").val())) == true ? 0 : parseFloat($("#DCRATE").val());
 			
 			if($("#DCGUBUN").val() != "000") {	//dc 있음
+				
 				dcamt = saleamt.toFixed(0) * (dcrate / 100);
 				$("#DCAMT").val(dcamt.toFixed(0));
 				
@@ -1615,6 +1633,63 @@
 				}
 			});
 		})
+		
+		function f_saleAmtRule() {
+			//저장전 콤마 삭제
+			f_commaInputData("remove");
+			
+			var buyAmt = parseFloat($("#SALEDANGA").val()) * parseFloat($("#CONPY").val());
+			
+			$("#SALEAMT").val(buyAmt.toFixed(0));
+			
+			//콤마 추가
+			f_commaInputData("click");
+		}
+		
+		$(function() {
+			$("#SALEDANGA").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					f_saleAmtRule();
+				}
+			});
+		})
+		
+		$(function() {
+			$("#SALERNAME").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					if ($("#SALERNAME").val() == "") {
+						alert("담당자를 입력하셔야 합니다.");
+						
+						$("#SALERNAME").focus();
+						
+						return false;	
+					}
+					
+					$.ajax({ 
+						type: 'POST' ,
+						url: "/home/selectHRInsamstBranchCode.do", 
+						data : {
+							SALERNAME : $("#SALERNAME").val(),
+						},dataType : 'json' , 
+						success: function(data){
+							if (data.RESULT == "EMPTY") {
+								alert("조회된 담당자가 없습니다.");
+								$("#SALERCD").val("");
+								$("#BRANCHNAME").val("");
+							} else {
+								$("#SALERCD").val(data.SALERCD);
+								$("#BRANCHNAME").val(data.BRANCHCODE);
+							}
+						},
+						error:function(e){  
+							alert("[ERROR-SCRIPT]게약변동관리 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
 	</script>
 </head>
 <body>
@@ -1670,8 +1745,7 @@
 				<tr>
 					<th width="120">* 담당자</th>
 					<td colspan="2">
-						<select id="SALERCD" name="SALERCD">
-						</select>
+						<input type="text" id="SALERNAME" name="SALERNAME" /> <input type="text" id="SALERCD" name="SALERCD" />
 					</td>
 					<th width="120">계약지사</th>
 					<td>

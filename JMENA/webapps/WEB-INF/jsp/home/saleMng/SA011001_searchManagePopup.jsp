@@ -96,6 +96,12 @@
 					$("#CONJPY",opener.document).click();
 					$("#SALEDANGA",opener.document).click();
 					
+					//매매대금 계산
+					opener.f_saleAmtRule();
+					
+					//dc금액, 실판매가 계산
+					opener.f_dangaRule();
+					
 					self.close();
 				},
 				loadComplete: function(ids) {

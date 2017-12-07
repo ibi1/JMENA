@@ -65,6 +65,7 @@ public class SA011001VO {
 	private String SUGUMAMT;
 	private String PMDANGA;
 	private String BUYDANGA;
+	private String SALERNAME;
 
 	public String getBUYID(){
 		return this.BUYID;
@@ -444,6 +445,12 @@ public class SA011001VO {
 	}
 	public void setBUYDANGA(String BUYDANGA) {
 		this.BUYDANGA = BUYDANGA;
+	}
+	public String getSALERNAME() {
+		return SALERNAME;
+	}
+	public void setSALERNAME(String SALERNAME) {
+		this.SALERNAME = SALERNAME;
 	}
 
 	

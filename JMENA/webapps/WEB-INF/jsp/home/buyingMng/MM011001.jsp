@@ -1119,6 +1119,23 @@
 				}
 			});
 		})
+		
+		$(function() {
+			$("#BUYDANGA").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					//저장전 콤마 삭제
+					f_commaInputData("remove");
+					
+					var buyAmt = parseFloat($("#BUYDANGA").val()) * parseFloat($("#BUYPY").val());
+					
+					$("#BUYAMT").val(buyAmt.toFixed(0));
+					
+					//콤마 추가
+					f_commaInputData("click");
+				}
+			});
+		})
  
 		//콤마셋팅
 		$(function() {

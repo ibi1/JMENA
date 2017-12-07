@@ -1,6 +1,8 @@
 package kr.co.jmena.www.web.home.saleMng.Biz;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -313,6 +315,18 @@ public class SA011001Biz {
 
 		try {
 			lst = SA011001Dao.selectListEnaBuyMstPopup(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
+	
+	public List<SA011001VO> selectHRInsamstBranchCode(SA011001VO vo) throws Exception {
+		List<SA011001VO> lst = null;
+		
+		try {
+			lst = SA011001Dao.selectHRInsamstBranchCode(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}

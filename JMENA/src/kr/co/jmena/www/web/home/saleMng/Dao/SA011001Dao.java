@@ -1,6 +1,8 @@
 package kr.co.jmena.www.web.home.saleMng.Dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.saleMng.Vo.SA011001VO;
@@ -244,6 +246,14 @@ public class SA011001Dao extends SqlMapClientDaoSupport {
 		List<MM011001VO> lst = null;	
 		
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaBuyMstPopup", vo);
+		
+		return lst;
+	}
+	
+	public List<SA011001VO> selectHRInsamstBranchCode(SA011001VO vo) throws DataAccessException {
+		List<SA011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectHRInsamstBranchCode", vo);
 		
 		return lst;
 	}
