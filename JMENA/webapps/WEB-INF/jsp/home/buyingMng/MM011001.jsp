@@ -639,7 +639,7 @@
 				}
 				
 				if ($("#BUYPY").val() == "") {
-					alert("계약면적을 입력하셔야 합니다.");
+					alert("계약평수를 입력하셔야 합니다.");
 					
 					$("#BUYPY").focus();
 					return false;
