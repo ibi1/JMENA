@@ -99,10 +99,34 @@ public class MM012001Ctr {
 			obj.put("BUYAMT", lst.get(i).getBUYAMT());
 			obj.put("PAYAMT1", lst.get(i).getPAYAMT1());
 			obj.put("PAYDATE1", lst.get(i).getPAYDATE1());
-			obj.put("PAYAMT2", lst.get(i).getPAYAMT2());
-			obj.put("PAYDATE2", lst.get(i).getPAYDATE2());
-			obj.put("PAYAMT3", lst.get(i).getPAYAMT3());
-			obj.put("PAYDATE3", lst.get(i).getPAYDATE3());
+			
+			String payDate2 = "";
+			if(!(null == lst.get(i).getPAYDATE2())){
+				payDate2 = lst.get(i).getPAYDATE2().toString();
+			}
+			String payDate3 = "";
+			if(!(null == lst.get(i).getPAYDATE3())){
+				payDate3 = lst.get(i).getPAYDATE3().toString();
+			}
+			
+			if(payDate2.equals(payDate3)){
+				
+				obj.put("PAYAMT2", lst.get(i).getPAYAMT2());
+				obj.put("PAYDATE2", lst.get(i).getPAYDATE2());
+				obj.put("PAYAMT3", "");
+				obj.put("PAYDATE3", "");
+				
+			}else{
+				obj.put("PAYAMT2", lst.get(i).getPAYAMT2());
+				obj.put("PAYDATE2", lst.get(i).getPAYDATE2());
+				obj.put("PAYAMT3", lst.get(i).getPAYAMT3());
+				obj.put("PAYDATE3", lst.get(i).getPAYDATE3());
+				
+			}
+			
+			
+			
+			
 			obj.put("PAYAMT4", lst.get(i).getPAYAMT4());
 			obj.put("PAYDATE4", lst.get(i).getPAYDATE4());
 			obj.put("JANPAYAMT", lst.get(i).getJANPAYAMT());
