@@ -854,6 +854,7 @@
 				if (confirm(msg) == true) {
 					$("#MANAGENO").jqxInput({disabled: false});
 					$('#SALEID').jqxInput({disabled: false });
+					$('#SALERCD').jqxInput({disabled: false });
 					
 					//저장전 콤마 삭제
 					f_commaInputData("remove");
@@ -866,6 +867,8 @@
 						success: function(data){
 							$('#SALEID').jqxInput({disabled: true });
 							$("#MANAGENO").jqxInput({disabled: true});
+							$("#SALERCD").jqxInput({disabled: true});
+							
 							alert(data.resultMsg);
 							
 							if (data.resultCode == "SUCCESS") {
