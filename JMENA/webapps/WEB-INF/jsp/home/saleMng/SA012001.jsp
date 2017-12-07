@@ -107,7 +107,7 @@
 		// initialize jqxGrid
         $("#mainList").jqxGrid({
         	theme: 'energyblue',
-        	sorttogglestates: 0,
+        	//sorttogglestates: 0,
         	sortable: false,
             width: '100%',
             source: dataAdapter,                
@@ -117,12 +117,24 @@
             enabletooltips: true,
             editable: false,
             selectionmode: 'singlerow',
+            
+            groupable: true,
+
+            showgroupaggregates: true,
+
+            showstatusbar: true,
+
+            showaggregates: true,
+
+            statusbarheight: 25,
+
+            groups: ['DEPTNAME'],
             columns: [
                       
-				{ text: '지사코드', 		datafield: 'BRANCHCODE',	align: 'center',	width: 100, cellsalign: 'center', hidden:true},
-				{ text: '지사', 			datafield: 'BRANCHNAME',	align: 'center',	width: 100, cellsalign: 'center'},
-				{ text: '부서코드', 		datafield: 'DEPTCODE',		align: 'center',	width: 100, cellsalign: 'center', hidden:true},
-				{ text: '부서', 			datafield: 'DEPTNAME',		align: 'center',	width: 100, cellsalign: 'center'},
+				{ text: '지사코드', 		datafield: 'BRANCHCODE',	align: 'center',	width: 100, cellsalign: 'center', hidden:true, groupable: true},
+				{ text: '지사', 			datafield: 'BRANCHNAME',	align: 'center',	width: 100, cellsalign: 'center', groupable: true, aggregates: ["count"]},
+				{ text: '부서코드', 		datafield: 'DEPTCODE',		align: 'center',	width: 100, cellsalign: 'center', hidden:true, groupable: true},
+				{ text: '부서', 			datafield: 'DEPTNAME',		align: 'center',	width: 100, cellsalign: 'center', groupable: true, aggregates: ["count"]},
 				{ text: '직급', 			datafield: 'DUTY',			align: 'center',	width: 100, cellsalign: 'center'},
 				{ text: '성명', 			datafield: 'KNAME',			align: 'center',	width: 150, cellsalign: 'center'},
 				{ text: '입사일', 			datafield: 'JOINDATE',		align: 'center',	width: 150, cellsalign: 'center'},
@@ -132,14 +144,28 @@
 				{ text: '입사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center'},
 				{ text: '퇴사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center'},
 				{ text: '고용구분', 		columngroup: '전근무현황',	align: 'center',	datafield: 'O_EMPLOYGUBUN',		width: 100, cellsalign: 'center'},
-				{ text: '기준월 6개월 전 실적', 				datafield: 'AMT6',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 5개월 전 실적', 				datafield: 'AMT5',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 4개월 전 실적', 				datafield: 'AMT4',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 3개월 전 실적', 				datafield: 'AMT3',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 2개월 전 실적', 				datafield: 'AMT2',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 1개월 전 실적', 				datafield: 'AMT1',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '기준월 실적', 			datafield: 'AMT0',		align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '합계', 			datafield: 'TOTAMT',		align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'}
+				{ text: '기준월 6개월 전 실적', 				datafield: 'AMT6',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0', aggregates: ["sum"]},
+				{ text: '기준월 5개월 전 실적', 				datafield: 'AMT5',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0', aggregates: ["sum"]},
+				{ text: '기준월 4개월 전 실적', 				datafield: 'AMT4',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0', aggregates: ["sum"]},
+				{ text: '기준월 3개월 전 실적', 				datafield: 'AMT3',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0', aggregates: ["sum"]},
+				{ text: '기준월 2개월 전 실적', 				datafield: 'AMT2',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0', aggregates: ["sum"]},
+				{ text: '기준월 1개월 전 실적', 				datafield: 'AMT1',			align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0', aggregates: ["sum"]},
+				{ text: '기준월 실적', 			datafield: 'AMT0',		align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0', aggregates: ["sum"]},
+				{ text: '합계', 			datafield: 'TOTAMT',		align: 'center',	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0', aggregates: ["sum"],
+					cellsrenderer: function (row, column, value, defaultRender, column, rowData) {
+                        if (value.toString().indexOf("Sum") >= 0) {
+                            return defaultRender.replace("Sum", "Total");
+                        }
+                    },
+                    aggregatesrenderer: function (aggregates, column, element) {
+
+                        var renderstring = '<div style="position: relative; margin-top: 4px; margin-right:5px; text-align: right; overflow: hidden;">' + "Total" + ': ' + aggregates.sum + '</div>';
+
+                        return renderstring;
+
+                    }
+				
+				}
 				
 			],
             columngroups: [
