@@ -275,21 +275,19 @@
 
 	<select id="selectListEanSalePopup" resultMap="saleMstDataList">
 		select 
-			saleid
-			,(select saledate from sa_salemst where 1=1 and saleid = t2.saleid) as saledate
-			,(select (select dcodename from sy_ccodedtl where ccode = '007' and dcode = salegubun) as dcodename from sa_salemst where 1=1 and saleid = t2.saleid) as salegubun
-			,(select conname from sa_salemst where 1=1 and saleid = t2.saleid) as conname
-			,(select contelno from sa_salemst where 1=1 and saleid = t2.saleid) as contelno
-			,(select conaddress from sa_salemst where 1=1 and saleid = t2.saleid) as conaddress
-			,(select conm2 from sa_salemst where 1=1 and saleid = t2.saleid) as conm2
-			,(select conpy from sa_salemst where 1=1 and saleid = t2.saleid) as conpy
-			,(select sellamt from sa_saledtl where 1=1 and saleid = t2.saleid) as sellamt
-			,(select (select dcodename from sy_ccodedtl where ccode = '009' and dcode = depositgubun) as depositgubun  from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositgubun
-			,(select depositdate from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositdate
-			,(select depositamt from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositamt
-			,t2.sugumamt
-            ,t2.seq
-            ,t2.ipgumseq
+			t1.saleid
+			, t1.saledate
+			, (select dcodename from sy_ccodedtl where ccode = '007' and dcode = t1.SaleGubun) as SaleGubun
+			, t1.ConName
+			, t1.ConTelNo
+			, t1.ConAddress
+			, t1.ConM2
+			, t1.ConPY
+			, t2.SellAmt
+			, (select dcodename from sy_ccodedtl where ccode = '009' and dcode = t3.DepositGubun) as DepositGubun
+			, t3.DepositDate
+			, t3.DepositAmt
+			, t3.IpgumSeq
 		FROM sa_salemst t1, sa_saledtl t2, sa_ipgumscheduletb t3
 		WHERE 1=1
 			AND t1.SALEDATE = #SALEDATE#

@@ -21,6 +21,7 @@
             padding: 3px;
             box-sizing: border-box;
             margin: 0;
+            font-size: 13px;
         }
         th
         {
@@ -125,7 +126,7 @@
 				jsonReader: {
 					repeatitems: false
 				},
-				height: '360px',
+				height: '340px',
 				onSelectRow: function(ids) {
 					
 				} ,
@@ -172,7 +173,7 @@
 	</script>
 </head>
 <body>
-	<div id="contents" style="width:800px;" align="center">
+	<div id="contents" style="width:810px;" align="center">
 		<div id="topDiv" style="width:98%; float:left;padding: 10px" align="left">
 			<table width="98%">
 				<tr>
