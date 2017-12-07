@@ -126,7 +126,7 @@
 				jsonReader: {
 					repeatitems: false
 				},
-				height: '340px',
+				height: '300px',
 				onSelectRow: function(ids) {
 					
 				} ,
