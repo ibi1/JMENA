@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.expayMng.Dao.EP011002Dao;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011002VO;
-import kr.co.jmena.www.web.home.systemMng.Vo.SY011004VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -103,7 +102,7 @@ public class EP011002Biz {
 				for (String ym : yearmonthArr) {
 					EP011002VO vo = new EP011002VO();
 					//저장 사용자아이디 지정
-					vo.setUSERID(userId);
+					vo.setUSERID(sessionUserId);
 //					vo.setUSERIDSESSION(sessionUserId);
 					
 					//각 값들 배열에서 지정

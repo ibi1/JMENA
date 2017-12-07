@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>인사 기본 정보 관리</title>
 
 	<link rel="stylesheet" href="/resource/css/jquery-ui.css" />
 	<link rel="stylesheet" href="/resource/css/ui.jqgrid.css" />
@@ -16,7 +16,6 @@
 	var v_rightLastSel = 0;
 	var v_branchCode;
 	var v_appointdept;
-	var appointbranch;
 	$(document).ready(function(){
 		var INSACODE = "";
 		var BRANCHCODE = "";
@@ -211,7 +210,7 @@
 						type:'change',
 						fn:function(e){
 							var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-							appointbranch = this.value;
+							var appointbranch = this.value;
 							
 							$.ajax({ 
 								type: 'POST' ,
@@ -289,6 +288,29 @@
 			//발령지사에서 키 값 가져오기
 			v_branchCode = $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCHCODE;
 			
+			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+//			var cellData = $("#bottomList1 [name=APPOINTBRANCHCODE] option:selected").val();
+				$.ajax({ 
+					type: 'POST' ,
+					url: "/codeCom/deptMstList.do", 
+					dataType : 'json' ,
+					data : {
+						BRANCHCODE : v_branchCode
+					},
+					success: function(data){
+						var inHtml = "<select>";
+						data.deptMstList.forEach(function(currentValue, index, array){
+							inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+						});
+						inHtml += "</select>";
+						$("#"+ids+"_APPOINTDEPT").html(inHtml);
+					},
+					error:function(e){  
+						alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
+					}  
+				});				
+			
+			
 			if( v_rightLastSel != id ){
 		        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 		        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
@@ -297,12 +319,11 @@
 			}
 
 		},
-		loadComplete: function(id) {
+		loadComplete: function() {
 			//전체 카운트
 			var countRow = $("#bottomList1").jqGrid('getGridParam', 'records');
-			$("#bottomList1Count").html(countRow);
+			$("#bottomList1Count").html(countRow);			
 			
-			var ids = $(this).jqGrid('getDataIDs');
 		},
 		hidegrid: false
 		});

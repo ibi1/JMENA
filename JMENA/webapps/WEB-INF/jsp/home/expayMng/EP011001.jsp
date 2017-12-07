@@ -30,7 +30,7 @@
 		
 		
 		$("#popupButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
-		$("#insaButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
+//		$("#insaButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 		
 		
 		$("#S_SALEDATESYM").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -210,7 +210,8 @@
 			mtype: 'POST',
 			postData : {
 				S_SALEID : $("#S_SALEID").val(),
-				INSACODE : insacode			
+				INSACODE : insacode,
+				FLAG     :  ""
 			},					
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
@@ -249,8 +250,14 @@
 			},
 			//height: '100%' ,
 			onSelectRow: function(ids){
-				var selRowData = $(this).jqGrid('getRowData', ids);
+//				var selRowData = $(this).jqGrid('getRowData', ids);
 //				$("#PAYSEQ").val(selRowData.PAYSEQ);
+				if( v_rightLastSel != id ){
+					$(this).jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+			        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+			        v_rightLastSel = id;
+				}	
 			} ,
 			loadComplete: function(ids) {
 				//전체 카운트
@@ -366,6 +373,20 @@
 		});
 	}	
 	
+	function f_selectEnaCode1(data){
+		
+		var jsonValue = $.parseJSON(data).dcodeList;
+		
+		var result = "<select>";
+		
+		jsonValue.some(function(currentValue, index, array){
+			result += "<option value='" + currentValue.DCODE + "'>" + currentValue.DCODENAME + "</option>\n";
+		});
+		
+		result +="</select>";
+
+		return result;		
+	}	
 
 
 	$(function(){
@@ -459,6 +480,57 @@
 		f_commaInputData("click");
 	}
 	
+	function paycal2(){
+		var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+		
+		$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+		
+		var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기	
+		 		
+		$('#bottomList').jqGrid('editRow', ids, true);		
+		
+		var gijunAmt = 0;
+		
+		var seleAmt = $("#SALEAMT").val();
+		var sudangrate = parseFloat(cellData.SUDANGRATE); 
+		var addrate = parseFloat(cellData.ADDRATE); 
+		var taxgubun = cellData.TAXGUBUN; 
+
+		gijunAmt = (seleAmt * (sudangrate + addrate) / 100) //지급금액(기준금액)
+		gijunAmt = gijunAmt - (gijunAmt * 3.3 / 100);
+		$("#bottomList").setCell(ids,"PAYAMT",gijunAmt);
+ 		
+		var deductamt = "0";
+
+//		gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
+		
+//		$('#leftList').jqGrid('editRow', ids, true);
+
+		if(taxgubun == "001"){
+//			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
+			var taxincome = gijunAmt * 3 / 100;    //사업소득세
+			var taxlocal = taxincome * 10 / 100;    //지방세
+			taxincome = Math.floor(taxincome/10) * 10;
+			taxlocal = Math.floor(taxlocal/10) * 10;
+			$("#bottomList").setCell(ids,"TAXINCOME",taxincome);
+			$("#bottomList").setCell(ids,"TAXLOCAL",taxlocal);
+			$("#bottomList").setCell(ids,"SUPPLYTAX","0");
+			var deductamt = gijunAmt - taxincome - taxlocal;
+		}else if (taxgubun == "002"){
+			var supply = gijunAmt/1.1;
+			supply = Math.ceil(supply/10) * 10; //공급가
+			var supplytax = supply * 10 / 100;    //부가가치세
+			supplytax = Math.floor(supplytax/10) * 10;
+			$("#bottomList").setCell(ids,"TAXINCOME","0");
+			$("#bottomList").setCell(ids,"TAXLOCAL","0");
+			$("#bottomList").setCell(ids,"SUPPLYTAX",supplytax);
+			var deductamt = gijunAmt - supplytax;			
+		}
+		$("#bottomList").setCell(ids,"DEDUCTAMT",deductamt);
+		//콤마 remove
+		f_commaInputData("remove");
+	}		
+	
 	
 	$(function(){
 		$("#searchButton").click(function() {
@@ -468,9 +540,23 @@
 	
 	$(function(){
 		$("#insertButton").click(function() {
+			var saleId = $("#SALEID").val();
+			if(saleId == ""){
+				alert("매출을 선택 해 주세요");
+				return;
+			}
+			if(confirm("추가하시겠습니까?") != true){
+				selectListEnaSudangMst();
+				return;
+			}
+			var salerCd = $("#SALERCD").val();
+			var salerNm = $("#SALERNM").val();
+			
+			$("#INSACODE").val(salerCd);
+			$("#KNAME").val(salerNm);
 			$("#PAYDATE").val("");
-			$("#INSACODE").val("");
-			$("#KNAME").val("");
+//			$("#INSACODE").val("");
+//			$("#KNAME").val("");
 			$("#SUDANGRATE").val("");
 			$("#ADDRATE").val("");
 			$("#TAXGUBUN").val("");
@@ -480,6 +566,93 @@
 			$("#PAYAMT").val("");
 			$("#DEDUCTAMT").val("");
 			$("#REMARK").val("");
+			
+			$('#bottomList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
+			$('#bottomList').jqGrid({
+				//caption: '수당지급관리'
+				url:"/home/selectEnaSudangMstInsert.do" ,
+				mtype: 'POST',
+				postData : {
+					S_SALEID : $("#S_SALEID").val(),
+					SALERCD : $("#SALERCD").val()
+				},					
+				datatype:"json" ,
+				loadError:function(){alert("Error~!!");} ,
+				colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준코드','신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
+				colModel:[  	
+					  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
+					, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
+					, {name:"KNAME",		index:'KNAME',		width:80,		align:'center',	sortable:false}
+					, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:110,		align:'center',	sortable:false, editable:true, editoptions:{
+						dataEvents:[{
+							type:'change',
+							fn:function(e){
+								paycal2();
+							}
+						}]						
+					}}
+					, {name:"ADDRATE",		index:'ADDRATE',	width:80,		align:'center',	sortable:false, editable:true, editoptions:{
+						dataEvents:[{
+							type:'change',
+							fn:function(e){
+								paycal2();
+							}
+						}]						
+					}}
+					, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
+					, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:100,		align:'center',	sortable:false, hidden:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode1}}
+					, {name:"TAXGUBUNNAME",	index:'TAXGUBUNNAME',width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode1
+						,dataEvents:[{
+							type:'change',
+							fn:function(e){
+								var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+								$("#bottomList").setCell(ids,"TAXGUBUN",this.value);
+								paycal2();
+							}
+						}]
+					}}
+					, {name:"TAXINCOME",	index:'TAXINCOME',	width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center',	sortable:false}
+					, {name:"REMARK",		index:'REMARK',		width:90,		align:'center',	sortable:false}
+					, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false, hidden:true}
+					, {name:"PAYSEQ",		index:'PAYSEQ',		width:60,		align:'center',	sortable:false, hidden:true}
+					, {name:"INSACODE",		index:'PAYERID',	width:60,		align:'center',	sortable:false, hidden:true}
+//					{name:"SYSID",			index:'SYSID',		width:60,		align:'center',	sortable:false,  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
+				] ,
+				rowNum:10000000,
+				autowidth: true ,
+				shrinkToFit: false,
+				rowList:[10,20,30] ,
+				sortname: 'SORTKEY' ,
+				viewrecords: true ,
+				sortorder:'asc' ,
+				width: "96%" ,
+				loadtext : "조회 중",
+				jsonReader: {
+					repeatitems: false
+				},
+				//height: '100%' ,
+				onSelectRow: function(id){
+					if( v_rightLastSel != id ){
+						$(this).jqGrid('saveRow',v_rightLastSel,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+				        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
+
+				        v_rightLastSel = id;
+					}					
+				} ,
+				loadComplete: function(ids) {
+					//전체 카운트
+					var countRow = $("#bottomList").jqGrid('getGridParam', 'records');
+					$("#bottomListCount").html(countRow);
+					
+					$("#S_SALEID").val("");
+					$("#PAYDATE").focus();
+				},					
+				hidegrid: false
+			});
 		}); 
 	});	
 	
@@ -492,38 +665,106 @@
 			if (confirm(msg) == true) {	
 				//콤마 remove
 				f_commaInputData("remove");
-				
-				var saleId =  $("#SALEID").val();
-				var paySeq =  $("#PAYSEQ").val();
-				var formData = $("#EP011001").serialize()+"&SALEID=" + saleId+"&PAYSEQ=" + paySeq;
+		
+				var dataIds = $("#bottomList").jqGrid('getDataIDs');			
 
-			   	$.ajax({ 
+				var len = dataIds.length;
+			
+				if (len == 0) {
+					alert("저장할 데이터가 없습니다.");
+				
+					return false;
+				}
+				if ($("#PAYDATE").val() == "") {
+					alert("지급일자를 입력하셔야 합니다.");
+					$("#PAYDATE").focus();
+				
+					return false;
+				}			
+				
+				//그리드 데이터를 배열에 저장
+				//
+				
+ 				var insacodeArr = [];
+ 				var sudangrateArr = [];
+ 				var addrateArr = [];
+ 				var payamtArr = [];
+ 				var taxgubunArr = [];
+				var taxincomeArr = [];
+				var taxlocalArr = [];
+				var supplytaxArr = [];
+				var deductamtArr = [];
+				var remarkArr = [];
+				
+				insacodeArr.push($("#INSACODE").val());
+				sudangrateArr.push($("#SUDANGRATE").val());
+				addrateArr.push($("#ADDRATE").val());
+				payamtArr.push($("#PAYAMT").val());
+				taxgubunArr.push($("#TAXGUBUN").val());
+				taxincomeArr.push($("#TAXINCOME").val());
+				taxlocalArr.push($("#TAXLOCAL").val());
+				supplytaxArr.push($("#SUPPLYTAX").val());
+				deductamtArr.push($("#DEDUCTAMT").val());
+				remarkArr.push($("#REMARK").val());
+				
+				dataIds.some(function(currentValue, index, array){					
+					$('#bottomList').jqGrid('saveRow',array[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경	
+					insacodeArr.push($("#bottomList").jqGrid('getCell', array[index], 'INSACODE'));				
+					sudangrateArr.push($("#bottomList").jqGrid('getCell', array[index], 'SUDANGRATE'));	
+					addrateArr.push($("#bottomList").jqGrid('getCell', array[index], 'ADDRATE'));	
+					payamtArr.push($("#bottomList").jqGrid('getCell', array[index], 'PAYAMT'));	
+					taxgubunArr.push($("#bottomList").jqGrid('getCell', array[index], 'TAXGUBUN'));	
+					taxincomeArr.push($("#bottomList").jqGrid('getCell', array[index], 'TAXINCOME'));	
+					taxlocalArr.push($("#bottomList").jqGrid('getCell', array[index], 'TAXLOCAL'));	
+					supplytaxArr.push($("#bottomList").jqGrid('getCell', array[index], 'SUPPLYTAX'));	
+					deductamtArr.push($("#bottomList").jqGrid('getCell', array[index], 'DEDUCTAMT'));	
+					remarkArr.push($("#bottomList").jqGrid('getCell', array[index], 'REMARK'));	
+				});  	 	
+			 	$.ajax({ 
 					type: 'POST' ,
 					url: "/home/updateEnaSudangMst.do", 
-					//dataType : 'json' , 
-					data : formData,
-					//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
+					data: {
+						'insacodeArr':insacodeArr, 
+// 							'branchcodeArr':branchcodeArr, 
+// 							'deptcodeArr':deptcodeArr, 
+// 							'gradeArr':gradeArr, 
+// 							'dutyArr':dutyArr,
+// 							'paydateArr':paydateArr,							
+						'sudangrateArr':sudangrateArr,
+						'addrateArr':addrateArr,
+						'payamtArr':payamtArr,							
+						'taxgubunArr':taxgubunArr,
+						'taxincomeArr':taxincomeArr,
+						'taxlocalArr':taxlocalArr,
+						'supplytaxArr':supplytaxArr,
+						'deductamtArr':deductamtArr,
+						'remarkArr':remarkArr,							
+						'SALEID' :  $("#SALEID").val(),
+						'PAYDATE' :  $("#PAYDATE").val()
+					},
+					dataType : 'json' , 
 					success: function(data){
 						if(data.rows[0].MSG == "success")
 						{
 							alert("저장이 완료되었습니다.");
-							$("#S_SALEID").val(saleId);
 							selectListEnaSudangMst();
+							searchbottomList($("#INSACODE").val());
 						}else{
 							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 						}
 
 						//콤마 set
 						f_commaInputData("click");
-
 						
 					},
 					error:function(e){  
 						alert("수당 정보를 저장하는 중 오류가 발생하였습니다.");
+						selectListEnaSudangMst();
+						searchbottomList($("#INSACODE").val());
 					}  
-				});
+				});				
 			}
-		}) 
+		})
 	})	
 		
 	
@@ -543,10 +784,9 @@
 					dataType : 'json' , 
 					success: function(data){
 						if(data.rows[0].MSG == "SUCCESS"){
-							$("#S_FLAG_B1").val("U");							
-							v_rightLastSel = 0;
 							alert("삭제가 완료되었습니다.");
 							selectListEnaAppointItem(insacode);
+							v_rightLastSel = 0;							
 						}else{
 							alert("삭제 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 							
@@ -564,13 +804,13 @@
 		});
 	})		
 	
-	$(function(){	
-		$("#insaButton").click(function(){
-			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
-			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-			window.open(popUrl,"인사정보 관리",popOption);
-		}); 		
-	})
+// 	$(function(){	
+// 		$("#insaButton").click(function(){
+// 			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
+// 			var popOption = "width=1100, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+// 			window.open(popUrl,"인사정보 관리",popOption);
+// 		}); 		
+// 	})	
 	
 	
 	$(function() {
@@ -751,7 +991,7 @@
 						<input type="text" id="INSACODE" name="INSACODE"/>
 					</td>
 					<td colspan="5">
-						<input type="button" id='insaButton'/>
+						<!-- <input type="hidden" id='insaButton'/> -->
 					</td>
 				</tr>
 				<tr>

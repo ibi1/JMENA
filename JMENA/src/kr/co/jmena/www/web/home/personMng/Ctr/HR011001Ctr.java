@@ -149,7 +149,6 @@ public class HR011001Ctr {
 		}
 		json.put("rows", jCell);
 		
-		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListSY021001]" + json);
 		
 		return new ModelAndView("jsonView", json);
@@ -228,10 +227,7 @@ public class HR011001Ctr {
 		jCell.add(obj);
 		json.put("rows", jCell);
 		
-		System.out.println("updateCnt==>"+updateCnt);
-		System.out.println("insertCnt==>"+insertCnt);
 		
-		System.out.println("json==>"+json);
 		
 		return new ModelAndView("jsonView", json);	
 	}
@@ -260,7 +256,6 @@ public class HR011001Ctr {
 		JSONObject json = new JSONObject();
 		
 		for (int i = 0; i < lst.size(); i++) {
-			//System.out.println(lst.get(i).getSYSID());
 			JSONObject jData = new JSONObject();			
 			
 			jData.put("INSACODE", lst.get(i).getINSACODE());
@@ -303,7 +298,6 @@ public class HR011001Ctr {
 		
 		int updateCnt = 0;
 		int insertCnt = 0;
-		System.out.println("APPOINTSEQ      =              "   + request.getParameter("APPOINTSEQ"));
 		vo.setINSACODE(request.getParameter("INSACODE"));		
 		vo.setAPPOINTSEQ(request.getParameter("APPOINTSEQ"));
 		vo.setAPPOINTGUBUN(request.getParameter("APPOINTGUBUN"));
@@ -349,10 +343,7 @@ public class HR011001Ctr {
 		jCell.add(obj);
 		json.put("rows", jCell);
 		
-		System.out.println("updateCnt==>"+updateCnt);
-		System.out.println("insertCnt==>"+insertCnt);
 		
-		System.out.println("json==>"+json);
 		
 		return new ModelAndView("jsonView", json);	
 	}	
@@ -407,7 +398,6 @@ public class HR011001Ctr {
 		
 		
 		for (int i = 0; i < lst.size(); i++) {
-			//System.out.println(lst.get(i).getSYSID());
 			JSONObject jData = new JSONObject();
 			jData.put("INSACODE", lst.get(i).getINSACODE());
 			jData.put("ITEMSEQ", lst.get(i).getITEMSEQ());
@@ -494,10 +484,7 @@ public class HR011001Ctr {
 		jCell.add(obj);
 		json.put("rows", jCell);
 		
-		System.out.println("updateCnt==>"+updateCnt);
-		System.out.println("insertCnt==>"+insertCnt);
 		
-		System.out.println("json==>"+json);
 		
 		return new ModelAndView("jsonView", json);	
 	}	
@@ -551,7 +538,6 @@ public class HR011001Ctr {
 		
 		
 		for (int i = 0; i < lst.size(); i++) {
-			//System.out.println(lst.get(i).getSYSID());
 			JSONObject jData = new JSONObject();
 			jData.put("DEPTGUBUN", lst.get(i).getDEPTGUBUN());
 			

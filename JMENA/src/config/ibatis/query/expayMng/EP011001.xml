@@ -91,6 +91,13 @@
 		
 	</resultMap>
 	
+	<resultMap id="EP011001DataInsertlist" class="EP011001VO">
+		<result property="INSACODE"					column="INSACODE"/>
+		<result property="KNAME"					column="KNAME"/>
+		<result property="GRADE"					column="GRADE"/>
+		<result property="DUTY"						column="DUTY"/>	
+	</resultMap>
+	
 	<resultMap id="EP011001Datas" class="EP011001VO">
 		<result property="SALEID"					column="SALEID"	/>
 		<result property="PAYSEQ"					column="PAYSEQ"/>
@@ -244,8 +251,11 @@
 	    FROM sa_sudangmst T1
 	   WHERE 1 = 1
 	 	AND T1.SALEID = #S_SALEID# 
-	 	AND (T1.INSACODE = #INSACODE#
+	 	AND (
+	 		<isEqual property="FLAG" compareValue="1">
+		 		T1.INSACODE = #INSACODE#	 		
 		      OR
+	 		</isEqual>
 			 (T1.BRANCHCODE = (SELECT T2.BRANCHCODE 
 		                  		 FROM sa_sudangmst T2
 						  		WHERE T2.SALEID = #S_SALEID#
@@ -271,6 +281,38 @@
 			 )
 		 )
 	</select>		
+	
+	<select id="selectEnaSudangMstInsert" resultMap="EP011001DataInsertlist">
+		
+	   select	T1.INSACODE, 
+	   			(select DCODENAME from sy_ccodedtl C WHERE C.CCODE='003' AND T1.GRADE = C.DCODE ) as GRADE,
+	            (select DCODENAME from sy_ccodedtl C WHERE C.CCODE='004' AND T1.DUTY = C.DCODE ) as DUTY,
+	            T1.KNAME	          
+	  	 from   hr_insamst T1  
+	 	where (T1.BRANCHCODE = (SELECT T2.BRANCHCODE 
+		                  		 FROM hr_insamst T2
+								WHERE T2.INSACODE = #SALERCD#
+							  )
+			  AND T1.GRADE = '007'
+			 )
+			 OR
+			 (			 
+			 T1.DEPTCODE = (SELECT DEPTCODE
+           				      FROM ba_deptmst
+           	   			     WHERE branchcode =  (SELECT T3.BRANCHCODE 
+												    FROM hr_insamst T3
+												   WHERE T3.INSACODE = #SALERCD#
+												 ) 
+				 		       AND DEPTNAME = '임원'
+						   )
+			 )
+			 OR
+			 (T1.INSACODE = (SELECT RECOID
+			                   FROM hr_insamst I
+							  WHERE INSACODE = #SALERCD#)
+			 )	
+	
+	</select>
 		
 	<select id="selectDataEnaSudangMst" resultClass="java.lang.Integer">
 		SELECT 
@@ -354,13 +396,15 @@
 	<delete id="deleteEnaSudangMst">
 		DELETE FROM sa_sudangmst
 		WHERE SALEID = #SALEID#
-		AND PAYSEQ = #PAYSEQ#
+<!-- 		AND PAYSEQ = #PAYSEQ# -->
 	</delete>
 
 	<delete id="deleteEnaSudangMstPTb">
 		DELETE FROM sa_sudangpayertb
 		WHERE SALEID = #SALEID#
-		AND PAYSEQ = #PAYSEQ#
+		  <isNotEmpty property="PAYSEQ">
+		  AND PAYSEQ = #PAYSEQ#
+		  </isNotEmpty>
 	</delete>
 	
 	<select id="selectListEnaSudangPTb" resultMap="EP011001Datas">

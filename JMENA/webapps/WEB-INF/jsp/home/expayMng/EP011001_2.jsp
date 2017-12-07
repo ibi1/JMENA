@@ -106,7 +106,8 @@
 			mtype: 'POST',
 			postData : {
 				S_SALEID : SALEID,
-				INSACODE : INSACODE
+				INSACODE : INSACODE,
+				FLAG     :  "1"
 			},				
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,

@@ -97,7 +97,6 @@ public class EP011001Ctr {
 	@RequestMapping("/home/selectListEnaSudangMst.do")
 	public ModelAndView selectListEnaSudangMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP011001VO vo = new EP011001VO();
-		System.out.println("/home/selectListEnaSudangMst.do");
 		
 		vo.setS_SALEID(request.getParameter("S_SALEID"));
 		vo.setS_PAYSEQ(request.getParameter("S_PAYSEQ"));
@@ -166,7 +165,6 @@ public class EP011001Ctr {
 		
 		json.put("rows", jCell);
 		
-		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListEnaSudangMst]" + json);
 		
 		return new ModelAndView("jsonView", json);
@@ -187,10 +185,10 @@ public class EP011001Ctr {
 	@RequestMapping("/home/selectEnaSudangMstList.do")
 	public ModelAndView selectEnaSudangMstList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP011001VO vo = new EP011001VO();
-		System.out.println("/home/selectEnaSudangMstList.do");
 		
 		vo.setS_SALEID(request.getParameter("S_SALEID"));
 		vo.setINSACODE(request.getParameter("INSACODE"));		
+		vo.setFLAG(request.getParameter("FLAG"));		
 		
 		List<EP011001VO> lst = EP011001Biz.selectEnaSudangMstList(vo);
 		
@@ -251,13 +249,69 @@ public class EP011001Ctr {
 		
 		json.put("rows", jCell);
 		
-		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectEnaSudangMstList]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	
 	}	
 	
+	
+	/**
+	 * @name 수당관리 화면 - 수당지급인 생성
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	
+	@SuppressWarnings({ "unchecked" })
+	@RequestMapping("/home/selectEnaSudangMstInsert.do")
+	public ModelAndView selectEnaSudangMstInsert(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		EP011001VO vo = new EP011001VO();
+		
+		vo.setS_SALEID(request.getParameter("S_SALEID"));
+		vo.setSALERCD(request.getParameter("SALERCD"));		
+		
+		List<EP011001VO> lst = EP011001Biz.selectEnaSudangMstInsert(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		
+		if(lst.size() > 0){
+			
+			for (int i = 0; i < lst.size(); i++) {
+				
+				JSONObject obj = new JSONObject();					
+				
+				obj.put("INSACODE", lst.get(i).getINSACODE());
+				obj.put("KNAME", lst.get(i).getKNAME());	
+				
+				obj.put("GRADE", lst.get(i).getGRADE());
+				obj.put("DUTY", lst.get(i).getDUTY());
+				
+				obj.put("SUDANGRATE","0");
+				obj.put("ADDRATE","0");
+				obj.put("PAYAMT","");
+				obj.put("TAXGUBUN","001");
+				obj.put("TAXINCOME","0");
+				obj.put("TAXLOCAL","0");
+				obj.put("SUPPLYTAX","0");
+				obj.put("DEDUCTAMT","0");
+				obj.put("REGISTERNUM","");
+				obj.put("REMARK","");
+				
+				jCell.add(obj);
+			}
+		}
+		
+		json.put("rows", jCell);
+		
+		logger.debug("[selectEnaSudangMstInsert]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	
+	}					
 
 	
 	/**
@@ -271,58 +325,21 @@ public class EP011001Ctr {
 	@RequestMapping("/home/updateEnaSudangMst.do")
 	public ModelAndView updateEnaSudangMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		EP011001VO vo = new EP011001VO();		
-		
-		int updateCnt = 0;
-		int insertCnt = 0;
-		
-		vo.setINSACODE(request.getParameter("INSACODE"));
-		vo.setKNAME(request.getParameter("KNAME"));
-		vo.setPAYDATE(request.getParameter("PAYDATE"));
-		vo.setSUDANGRATE(request.getParameter("SUDANGRATE"));
-		vo.setADDRATE(request.getParameter("ADDRATE"));
-		vo.setPAYAMT(request.getParameter("PAYAMT"));
-		vo.setTAXGUBUN(request.getParameter("TAXGUBUN"));
-		vo.setTAXINCOME(request.getParameter("TAXINCOME"));
-		vo.setTAXLOCAL(request.getParameter("TAXLOCAL"));
-		vo.setSUPPLYTAX(request.getParameter("SUPPLYTAX"));
-		vo.setDEDUCTAMT(request.getParameter("DEDUCTAMT"));
-		vo.setREMARK(request.getParameter("REMARK"));
-		vo.setSALEID(request.getParameter("SALEID"));
-		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
-
-		HttpSession session = null;
-		session = request.getSession(false);
-		vo.setUSERID((String)session.getAttribute("userId"));
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();		
 
 		JSONObject obj = new JSONObject();
-		
-		if (EP011001Biz.selectDataEnaSudangMst(vo) == 0) {
-			insertCnt = EP011001Biz.insertEnaSudangMst(vo);
-			if(insertCnt > 0){
+		logger.debug("[deleteEnaSudangMst        111111111111111111111111111]");
+		if (EP011001Biz.updateEnaSudangMst(request) == true) {
 				obj.put("MSG", "success");
-			}else{
-				obj.put("MSG", "error");
-			}			
 		}else{
-			updateCnt = EP011001Biz.updateEnaSudangMst(vo);
-			if(updateCnt > 0){
-				obj.put("MSG", "success");
-			}else{
 				obj.put("MSG", "error");
-			}
 		}
-
+		logger.debug("[deleteEnaSudangMst        22222222222222222222]");
 		jCell.add(obj);
 		json.put("rows", jCell);
 		
-		System.out.println("updateCnt==>"+updateCnt);
-		System.out.println("insertCnt==>"+insertCnt);
-		
-		System.out.println("json==>"+json);
 		
 		return new ModelAndView("jsonView", json);	
 	}
@@ -343,15 +360,13 @@ public class EP011001Ctr {
 		String resultMsg = "";
 		
 		if (EP011001Biz.deleteEnaSudangMst(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
 			if (EP011001Biz.deleteEnaSudangMstPTb(vo) == true) {
 				resultCode ="SUCCESS";
 				resultMsg = "정상적으로 삭제하였습니다.";
-			}else{
-				resultCode ="FAILED";
-				resultMsg = "[ERROR] 신고인 삭제 중 오류가 발생하였습니다.";
 			}
-			
-		} else {
+		}else{
 			 resultCode ="FAILED";
 			 resultMsg = "[ERROR] 수당관리 삭제 중 오류가 발생하였습니다.";
 		}
@@ -378,7 +393,6 @@ public class EP011001Ctr {
 	public ModelAndView selectListEnaSudangPTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP011001VO vo = new EP011001VO();
 		
-		System.out.println("/home/selectListEnaSudangPTb.do");
 		
 		vo.setSALEID(request.getParameter("SALEID"));
 		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
@@ -420,7 +434,6 @@ public class EP011001Ctr {
 	
 		json.put("rows", jCell);
 		
-		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListEnaSudangPTb]" + json);
 		
 		return new ModelAndView("jsonView", json);
@@ -490,10 +503,7 @@ public class EP011001Ctr {
 		jCell.add(obj);
 		json.put("rows", jCell);
 		
-		System.out.println("updateCnt==>"+updateCnt);
-		System.out.println("insertCnt==>"+insertCnt);
 		
-		System.out.println("json==>"+json);
 		
 		return new ModelAndView("jsonView", json);	
 	}	
@@ -541,12 +551,9 @@ public class EP011001Ctr {
 	@RequestMapping("/home/selectListEnaSaleSudangList.do")
 	public ModelAndView selectListEnaSaleSudangList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP011001VO vo = new EP011001VO();
-		System.out.println("/home/selectListEnaSaleSudangList.do");
 		
 		vo.setSALEID(request.getParameter("SALEID"));
 		vo.setSALEDATE(request.getParameter("SALEDATE"));
-		System.out.println("request.getParameter(SALEID)             =   "      +   request.getParameter("SALEID") );
-		System.out.println("request.getParameter(SALEDATE)             =   "      +   request.getParameter("SALEDATE") );
 		
 		
 		List<EP011001VO> lst = EP011001Biz.selectListEnaSaleSudangList(vo);
@@ -610,7 +617,6 @@ public class EP011001Ctr {
 		}
 		json.put("rows", jCell);
 		
-		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListEnaSaleSudangList]" + json);
 		
 		return new ModelAndView("jsonView", json);

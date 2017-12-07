@@ -546,7 +546,7 @@
 		$("#leftList").setCell(ids,"TOTALAMT",gijunAmt);
 		
 		if(taxgubun == "001"){			
-			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
+//			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
 			var taxincome = gijunAmt * 3 / 100;    //사업소득세
 			var taxlocal = taxincome * 10 / 100;    //지방세
 			taxincome = Math.floor(taxincome/10) * 10;

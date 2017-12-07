@@ -165,7 +165,7 @@
 			#BANKID#,
 			#ACCTNO#,
 			#ACCTOWNER#,
-			'admin',
+			#USERID#,
 			SYSDATE()
 		)
 	</insert>
@@ -191,7 +191,7 @@
 			BANKID = #BANKID#,
 			ACCTNO = #ACCTNO#,
 			ACCTOWNER = #ACCTOWNER#,
-			UPDATEUSER = 'admin',
+			UPDATEUSER = #USERID#,
 			UPDATEDATE = SYSDATE()
 		WHERE YEARMONTH = #YEARMONTH#
 		AND INSACODE = #INSACODE#

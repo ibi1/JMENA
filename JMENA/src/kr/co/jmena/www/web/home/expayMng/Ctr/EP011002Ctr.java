@@ -204,9 +204,10 @@ public class EP011002Ctr {
 		}
 	
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/insertEnaMonthPayMst.do")
 	public ModelAndView insertEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		boolean chkFlag = false;
+		
 		JSONObject json = new JSONObject();
 		
 		JSONArray jCell = new JSONArray();

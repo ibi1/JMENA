@@ -62,6 +62,7 @@ public class EP011001VO {
 	private String REGISTERNUM;	
 	private String KNAME;	
 	private String USERID;
+	private String FLAG;
 	
 	
 	public String getS_SALEID() {
@@ -382,6 +383,12 @@ public class EP011001VO {
 	}
 	public void setBANKNAME(String bANKNAME) {
 		this.BANKNAME = bANKNAME;
+	}
+	public String getFLAG() {
+		return FLAG;
+	}
+	public void setFLAG(String fLAG) {
+		this.FLAG = fLAG;
 	}
 
 }
