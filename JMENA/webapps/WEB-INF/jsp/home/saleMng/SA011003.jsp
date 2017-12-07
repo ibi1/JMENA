@@ -574,7 +574,7 @@
 				
 				//팝업
 				var popUrl = "/home/SA011003_salePopup.do";	//팝업창에 출력될 페이지 UR
-				var popOption = "width=730, height=440, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+				var popOption = "width=830, height=440, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 				window.open(popUrl,"매출조회",popOption);
 				
 			});

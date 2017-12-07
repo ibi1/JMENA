@@ -105,14 +105,14 @@
 		select 
 			saleid
 			,(select saledate from sa_salemst where 1=1 and saleid = t2.saleid) as saledate
-			,(select salegubun from sa_salemst where 1=1 and saleid = t2.saleid) as salegubun
+			,(select (select dcodename from sy_ccodedtl where ccode = '007' and dcode = salegubun) as salegubun from sa_salemst where 1=1 and saleid = t2.saleid) as salegubun
 			,(select conname from sa_salemst where 1=1 and saleid = t2.saleid) as conname
 			,(select contelno from sa_salemst where 1=1 and saleid = t2.saleid) as contelno
 			,(select conaddress from sa_salemst where 1=1 and saleid = t2.saleid) as conaddress
 			,(select conm2 from sa_salemst where 1=1 and saleid = t2.saleid) as conm2
 			,(select conpy from sa_salemst where 1=1 and saleid = t2.saleid) as conpy
 			,(select sellamt from sa_saledtl where 1=1 and saleid = t2.saleid) as sellamt
-			,(select depositgubun from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositgubun
+			,(select (select dcodename from sy_ccodedtl where ccode = '009' and dcode = depositgubun) as depositgubun from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositgubun
 			,(select depositdate from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositdate
 			,(select depositamt from sa_ipgumscheduletb where 1=1 and saleid = t2.saleid and ipgumseq = t2.ipgumseq) as depositamt
 			,t2.sugumamt
@@ -277,14 +277,14 @@
 		select 
 			t1.saleid
 			, t1.saledate
-			, t1.SaleGubun
+			, (select dcodename from sy_ccodedtl where ccode = '007' and dcode = t1.SaleGubun) as SaleGubun
 			, t1.ConName
 			, t1.ConTelNo
 			, t1.ConAddress
 			, t1.ConM2
 			, t1.ConPY
 			, t2.SellAmt
-			, t3.DepositGubun
+			, (select dcodename from sy_ccodedtl where ccode = '009' and dcode = t3.DepositGubun) as DepositGubun
 			, t3.DepositDate
 			, t3.DepositAmt
 			, t3.IpgumSeq
