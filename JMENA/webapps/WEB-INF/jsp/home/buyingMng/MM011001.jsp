@@ -1110,7 +1110,7 @@
 					//저장전 콤마 삭제
 					f_commaInputData("remove");
 					
-					var reBuyPy = parseFloat($("#BUYM2").val()) / 3.3;
+					var reBuyPy = parseFloat($("#BUYM2").val()) * 0.3025;
 					
 					$("#BUYPY").val(reBuyPy.toFixed(2));
 					

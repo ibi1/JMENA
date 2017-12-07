@@ -1598,6 +1598,23 @@
 				}
 			});
 		})
+		
+		$(function() {
+			$("#CONM2").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					//저장전 콤마 삭제
+					f_commaInputData("remove");
+					
+					var reBuyPy = parseFloat($("#CONM2").val()) * 0.3025;
+					
+					$("#CONPY").val(reBuyPy.toFixed(2));
+					
+					//콤마 추가
+					f_commaInputData("click");
+				}
+			});
+		})
 	</script>
 </head>
 <body>
