@@ -65,9 +65,9 @@ public class SA012003Ctr {
 		String S_DCODE = ("ALL".equals(request.getParameter("S_DCODE"))) ? "" : request.getParameter("S_DCODE");
 		
 		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
-		System.out.println("******************************************");
-		System.out.println("request.getParameter(S_DCODE)"+request.getParameter("S_DCODE"));
-		System.out.println("S_DCODE"+S_DCODE);
+//		System.out.println("******************************************");
+//		System.out.println("request.getParameter(S_DCODE)"+request.getParameter("S_DCODE"));
+//		System.out.println("S_DCODE"+S_DCODE);
 		
 		vo.setS_SALEDATE_FR(request.getParameter("S_SALEDATE_FR"));
 		vo.setS_SALEDATE_TO(request.getParameter("S_SALEDATE_TO"));
@@ -84,8 +84,8 @@ public class SA012003Ctr {
 		
 			List<SA012003VO> lst = SA012003Biz.selectListSA012003(vo);
 			
-			System.out.println("******************************************");
-			System.out.println("size()"+lst.size());
+//			System.out.println("******************************************");
+//			System.out.println("size()"+lst.size());
 			
 			
 			for (int i = 0; i < lst.size(); i++) {
