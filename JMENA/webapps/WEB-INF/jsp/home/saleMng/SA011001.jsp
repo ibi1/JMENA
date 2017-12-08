@@ -252,21 +252,21 @@
 					{name:"SALERCD",		index:'SALERCD',		width:100,	align:'center',	sortable:false, hidden:true},
 					{name:"SALERNAME",		index:'SALERNAME',		width:100,	align:'center',	sortable:false},
 					{name:"CONNAME",		index:'CONNAME',		width:100,	align:'center',	sortable:false},
-					{name:"CONM2",			index:'CONM2',			width:100,	align:'center',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+					{name:"CONM2",			index:'CONM2',			width:100,	align:'center',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}},
 					{name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center',	sortable:false},
 					{name:"SALEDATE",		index:'SALEDATE',		width:100,	align:'center',	sortable:false},
 					{name:"ADDRESS",		index:'ADDRESS',		width:100,	align:'center',	sortable:false},
-					{name:"CONPY",			index:'CONPY',			width:100,	align:'center',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
+					{name:"CONPY",			index:'CONPY',			width:100,	align:'center',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}},
 					{name:"SALEAMT",		index:'SALEAMT',		width:100,	align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}},
 					{name:"SALEID",			index:'SALEID',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"MANAGENO",		index:'MANAGENO',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CITYCODE",		index:'CITYCODE',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"OWNERJUMINID",	index:'OWNERJUMINID',	width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONBM2",			index:'CONBM2',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONJM2",			index:'CONJM2',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONBPY",			index:'CONBPY',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONJPY",			index:'CONJPY',			width:100,	align:'center',	sortable:false,	hidden:true},
+					{name:"CONBM2",			index:'CONBM2',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
+					{name:"CONJM2",			index:'CONJM2',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
+					{name:"CONBPY",			index:'CONBPY',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
+					{name:"CONJPY",			index:'CONJPY',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
 					{name:"SALEGUBUN",		index:'SALEGUBUN',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"BUYID",			index:'BUYID',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONJUMINID",		index:'CONJUMINID',		width:100,	align:'center',	sortable:false,	hidden:true},
@@ -520,8 +520,8 @@
 					, {name:"JOINTNAME",		index:'JOINTNAME',		width:100,	align:'center', sortable:false, editable:true}
 					, {name:"JOINTJUMINID",		index:'JOINTJUMINID',	width:100,	align:'center', sortable:false, editable:true}
 					, {name:"JOINTTELNO",		index:'JOINTTELNO',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"OCCUM2",			index:'OCCUM2',			width:100,	align:'center', sortable:false, editable:true}
-					, {name:"OCCUPY",			index:'OCCUPY',			width:100,	align:'center', sortable:false, editable:true}
+					, {name:"OCCUM2",			index:'OCCUM2',			width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"OCCUPY",			index:'OCCUPY',			width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
 					, {name:"SALEAMT",			index:'SALEAMT',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"SELLDANGA",		index:'SELLDANGA',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"DCGUBUN",			index:'DCGUBUN',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=008", buildSelect:f_selectListEnaDcGubunCode} }
@@ -597,10 +597,10 @@
 					, {name:"SALESEQ",	index:'SALESEQ',	width:100,	align:'center', sortable:false, editable:true, hidden:true}
 					, {name:"CHGDATE",	index:'CHGDATE',	width:100,	align:'center', sortable:false, editable:true}
 					, {name:"CHGGUBUN",	index:'CHGGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=010", buildSelect:f_selectListEnaChgGubunCode} }
-					, {name:"PREM2",	index:'PREM2',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"PREPY",	index:'PREPY',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"CHGM2",	index:'CHGM2',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"CHGPY",	index:'CHGPY',		width:100,	align:'center', sortable:false, editable:true}
+					, {name:"PREM2",	index:'PREM2',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"PREPY",	index:'PREPY',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"CHGM2",	index:'CHGM2',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"CHGPY",	index:'CHGPY',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
 					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', sortable:false, editable:true}
 				] ,
 				rowNum:10000000,

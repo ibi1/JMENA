@@ -47,10 +47,10 @@
 					, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center', sortable:false}
 					, {name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center', sortable:false}
 					, {name:"OWNERJUMINID",		index:'OWNERJUMINID',	width:100,	align:'center', sortable:false}
-					, {name:"CONBM2",			index:'CONBM2',			width:100,	align:'center', sortable:false}
-					, {name:"CONJM2",			index:'CONJM2',			width:100,	align:'center', sortable:false}
-					, {name:"CONBPY",			index:'CONBPY',			width:100,	align:'center', sortable:false}
-					, {name:"CONJPY",			index:'CONJPY',			width:100,	align:'center', sortable:false}
+					, {name:"CONBM2",			index:'CONBM2',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"CONJM2",			index:'CONJM2',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"CONBPY",			index:'CONBPY',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"CONJPY",			index:'CONJPY',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
 				],
 				rowNum:10000000,
 				autowidth: true,

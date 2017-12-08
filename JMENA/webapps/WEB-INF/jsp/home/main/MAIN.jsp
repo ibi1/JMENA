@@ -97,10 +97,10 @@
 	 	$(document).ready(function(){
 	 		$("#logoutButton").jqxButton({theme: 'light', width: 60, height: 25 });
 	 		
-	 		$("#messageNotification").jqxNotification({ theme: 'bootstrap',
+	 		/* $("#messageNotification").jqxNotification({ theme: 'bootstrap',
                 width: 400, position: "top-right", opacity: 0.9,
                 autoOpen: true, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 10000, template: "info"
-            });
+            }); */
 	 		
 	 		var TreeMenu = "";
 
@@ -318,13 +318,13 @@
 	    	</div>
 		</div>
 		<!--Notifications-->
-		<div id="messageNotification">
+		<!-- <div id="messageNotification">
 	        <div>
             	현재 작업 중에 있습니다. <br/>
             	빠른 시일 내에 모든 페이지가 오픈될 예정입니다.<br/>
             	감사합니다.<br/>
             	* 이 메시지는 10초 뒤 자동으로 사라집니다.
         	</div>
-    	</div>
+    	</div> -->
 	</body>
 </html>

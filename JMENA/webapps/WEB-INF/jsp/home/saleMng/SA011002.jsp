@@ -238,18 +238,18 @@
 					{name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center',	sortable:false, hidden:true},
 					{name:"OWNERJUMINID",	index:'OWNERJUMINID',	width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONBM2",			index:'CONBM2',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONJM2",			index:'CONJM2',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONBPY",			index:'CONBPY',			width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONJPY",			index:'CONJPY',			width:100,	align:'center',	sortable:false,	hidden:true},
+					{name:"CONBM2",			index:'CONBM2',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
+					{name:"CONJM2",			index:'CONJM2',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
+					{name:"CONBPY",			index:'CONBPY',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
+					{name:"CONJPY",			index:'CONJPY',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
 					{name:"SALEGUBUN",		index:'SALEGUBUN',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"SALERCD",		index:'SALERCD',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"BUYID",			index:'BUYID',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONJUMINID",		index:'CONJUMINID',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONADDRESS",		index:'CONADDRESS',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONTELNO",		index:'CONTELNO',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"CONM2",			index:'CONM2',			width:100,	align:'center',	sortable:false, hidden:true},
-					{name:"CONPY",			index:'CONPY',			width:100,	align:'center',	sortable:false, hidden:true},
+					{name:"CONM2",			index:'CONM2',			width:100,	align:'center',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
+					{name:"CONPY",			index:'CONPY',			width:100,	align:'center',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
 					{name:"REMARK",			index:'REMARK',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"BRROWPERIOD",	index:'BRROWPERIOD',	width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"PERIODGUBUN",	index:'PERIODGUBUN',	width:100,	align:'center',	sortable:false,	hidden:true},
@@ -376,8 +376,8 @@
 					, {name:"JOINTNAME",	index:'JOINTNAME',		width:100,	align:'center', sortable:false, editable:true}
 					, {name:"JOINTJUMINID",	index:'JOINTJUMINID',	width:100,	align:'center', sortable:false, editable:true}
 					, {name:"JOINTTELNO",	index:'JOINTTELNO',	width:100,	align:'center', sortable:false, editable:true}
-					, {name:"OCCUM2",	index:'OCCUM2',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"OCCUPY",	index:'OCCUPY',		width:100,	align:'center', sortable:false, editable:true}
+					, {name:"OCCUM2",	index:'OCCUM2',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"OCCUPY",	index:'OCCUPY',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
 					, {name:"PAPERREGYN",	index:'PAPERREGYN',		width:100,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 					, {name:"REMARK",	index:'REMARK',		width:100,	align:'center', sortable:false, editable:true}
 				] ,

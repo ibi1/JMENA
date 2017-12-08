@@ -62,6 +62,15 @@
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) login();
 		}
+		
+		$(function() {
+			$("#USERID").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13) {
+					$("#PASSWORD").focus();
+				}
+			});
+		})
 	</script>
 <title>JMENA</title>
 </head>

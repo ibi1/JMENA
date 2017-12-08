@@ -228,10 +228,10 @@
 					, {name:"ADDRESS",			index:'ADDRESS',		width:100,	align:'center', sortable:false}
 					, {name:"OWNERNAME",		index:'OWNERNAME',		width:100,	align:'center', sortable:false}
 					, {name:"OWNERJUMINID",		index:'OWNERJUMINID',	width:100,	align:'center', sortable:false, hidden:true}
-					, {name:"BUYM2",			index:'BUYM2',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					, {name:"BUYPY",			index:'BUYPY',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-					, {name:"BUNJANM2",			index:'BUNJANM2',		width:100,	align:'center', sortable:false, hidden:true}
-					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', sortable:false, hidden:true}
+					, {name:"BUYM2",			index:'BUYM2',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"BUYPY",			index:'BUYPY',			width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"BUNJANM2",			index:'BUNJANM2',		width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true}
+					, {name:"BUNJANPY",			index:'BUNJANPY',		width:100,	align:'center', sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true}
 					, {name:"BUYAMT",			index:'BUYAMT',			width:100,	align:'right',  sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"BUYDANGA",			index:'BUYDANGA',		width:100,	align:'center', sortable:false, hidden:true}
 					, {name:"PMDANGA",		index:'PMDANGA',		width:100,	align:'center', sortable:false, hidden:true}
@@ -416,10 +416,10 @@
 				colModel:[
 					{name:"BUYID",	index:'BUYID',		width:100,	align:'center', sortable:false, editable:true, hidden: true}
 					, {name:"BRANCHCODE",		index:'BRANCHCODE',		width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode}}
-					, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center', sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					, {name:"HOLDINGM2",	index:'HOLDINGM2',		width:100,	align:'center', sortable:false, editable:true}
-					, {name:"HOLDINGPY",	index:'HOLDINGPY',		width:100,	align:'center', sortable:false, editable:true}
+					, {name:"OPENYN",		index:'OPENYN',			width:100,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"HOLDINGYN",	index:'HOLDINGYN',		width:100,	align:'center', sortable:false, editable:true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
+					, {name:"HOLDINGM2",	index:'HOLDINGM2',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
+					, {name:"HOLDINGPY",	index:'HOLDINGPY',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
 					, {name:"HOLDINGDATE",	index:'HOLDINGDATE',	width:100,	align:'center', sortable:false, editable:true}
 					, {name:"REMARK",		index:'REMARK',			width:100,	align:'center', sortable:false, editable:true}
 				],
@@ -485,11 +485,18 @@
 							//콤마 remove
 							f_commaInputData("remove");
 							
-							$("#BUNYM2").val(parseFloat(sale_m2_tot) + parseFloat(hm2_tot));
-							$("#BUNYPY").val(parseFloat(sale_py_tot) + parseFloat(hpy_tot));
+							var buyM2 = parseFloat($("#BUYM2").val());
+							var buyPy = parseFloat($("#BUYPY").val());
+							var bunyM2 = parseFloat(sale_m2_tot) + parseFloat(hm2_tot);
+							var bunyPy = parseFloat(sale_py_tot) + parseFloat(hpy_tot);
+							var bunJanM2 = buyM2.toFixed(2) - bunyM2.toFixed(2);
+							var bunJanPy = buyPy.toFixed(2) - bunyPy.toFixed(2);
 							
-							$("#BUNJANM2").val(eval($("#BUYM2").val() - $("#BUNYM2").val()));
-							$("#BUNJANPY").val(eval($("#BUYPY").val() - $("#BUNYPY").val()));
+							$("#BUNYM2").val(bunyM2.toFixed(2));
+							$("#BUNYPY").val(bunyPy.toFixed(2));
+							
+							$("#BUNJANM2").val(bunJanM2.toFixed(2));
+							$("#BUNJANPY").val(bunJanPy.toFixed(2));
 							
 							//콤마 set
 							f_commaInputData("click");
