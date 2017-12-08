@@ -433,7 +433,7 @@
 					, {name:"IPGUMSEQ",			index:'IPGUMSEQ',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
 					, {name:"DEPOSITGUBUN",		index:'DEPOSITGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=009", buildSelect:f_selectListEnaIpgumGubunCode} }
 					, {name:"DEPOSITDATE",		index:'DEPOSITDATE',	width:100,	align:'center', sortable:false, editable:true}
-					, {name:"DEPOSITAMT",		index:'DEPOSITAMT',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+					, {name:"DEPOSITAMT",		index:'DEPOSITAMT',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{decimalSeparator:",", thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"SUGUMAMT",			index:'SUGUMAMT',		width:100,	align:'right', sortable:false, editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"DEPOSITYN",		index:'DEPOSITYN',		width:100,	align:'center', sortable:false, editable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
 					, {name:"REMARK",			index:'REMARK',			width:100,	align:'center', sortable:false, editable:true}
@@ -1579,11 +1579,11 @@
 				//(((매입단가 -매출단가) * 0.8) * 평수) - DC 금액
 				var agencyAmt = 0;
 				
-				var buydanga = ($("#BUYDANGA").val() == "") ? 0 : parseFloat($("#BUYDANGA").val());
-				var saledanga = ($("#SALEDANGA").val() == "") ? 0 : parseFloat($("#SALEDANGA").val());
+				var buydanga = ($("#BUYDANGA").val() == "") ? 0 : parseFloat($("#BUYDANGA").val());	//매입단가
+				var saledanga = ($("#SALEDANGA").val() == "") ? 0 : parseFloat($("#SALEDANGA").val());	//매출단가
 				var conpy = ($("#CONPY").val() == "") ? 0 : parseFloat($("#CONPY").val());
 				
-				agencyAmt = (((buydanga.toFixed(0) - saledanga.toFixed(0)) * 0.8) * conpy.toFixed(2));
+				agencyAmt = (((saledanga.toFixed(0) - buydanga.toFixed(0)) * 0.8) * conpy.toFixed(2));
 				
 				if($("#DCGUBUN").val() != "000") {	//dc 있음
 					var dcamt = ($("#DCAMT").val() == "") ? 0 :parseFloat($("#DCAMT").val());
@@ -1629,7 +1629,7 @@
 					
 					var reBuyPy = parseFloat($("#CONM2").val()) * 0.3025;
 					
-					$("#CONPY").val(reBuyPy.toFixed(2));
+					$("#CONPY").val(reBuyPy.toFixed(1));
 					
 					//콤마 추가
 					f_commaInputData("click");
