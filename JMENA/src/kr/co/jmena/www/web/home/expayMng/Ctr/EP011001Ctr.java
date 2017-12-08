@@ -579,31 +579,32 @@ public class EP011001Ctr {
 				
 				jCell.add(obj);			
 			}
-		}else{
-			JSONObject obj = new JSONObject();
-			obj.put("SALEDATE", "");
-			obj.put("SALEID", "");
-			obj.put("SALERNM", "");
-			obj.put("SALEAMT", "");
-			obj.put("CONNAME", "");
-			obj.put("SALEGUBUN", "");
-			obj.put("SALERCD", "");
-			obj.put("BRANCHCODE", "");
-			obj.put("MANAGENO", "");
-			obj.put("CITYCODE", "");
-			obj.put("ADDRESS", "");
-			obj.put("CONM2", "");
-			obj.put("CONPY", "");
-			obj.put("SALEAMT", "");
-			obj.put("SALEDANGA", "");
-			obj.put("DCGUBUN", "");
-			obj.put("DCRATE", "");
-			obj.put("DCAMT", "");
-			obj.put("SELLAMT", "");
-			
-			jCell.add(obj);
-			
 		}
+//		else{
+//			JSONObject obj = new JSONObject();
+//			obj.put("SALEDATE", "");
+//			obj.put("SALEID", "");
+//			obj.put("SALERNM", "");
+//			obj.put("SALEAMT", "");
+//			obj.put("CONNAME", "");
+//			obj.put("SALEGUBUN", "");
+//			obj.put("SALERCD", "");
+//			obj.put("BRANCHCODE", "");
+//			obj.put("MANAGENO", "");
+//			obj.put("CITYCODE", "");
+//			obj.put("ADDRESS", "");
+//			obj.put("CONM2", "");
+//			obj.put("CONPY", "");
+//			obj.put("SALEAMT", "");
+//			obj.put("SALEDANGA", "");
+//			obj.put("DCGUBUN", "");
+//			obj.put("DCRATE", "");
+//			obj.put("DCAMT", "");
+//			obj.put("SELLAMT", "");
+//			
+//			jCell.add(obj);
+//			
+//		}
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListEnaSaleSudangList]" + json);

@@ -191,7 +191,6 @@
 				//콤마 set
 				f_commaInputData("click");
 			} ,
-			
 			loadComplete: function(ids) {
 				//전체 카운트
 				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
@@ -428,11 +427,11 @@
 	
 	$(function(){
 		$("#payerButton").click(function(){
-			if($("#SALEID").val() == ""){
-				alert("매출을 선택해 주세요");
-				return;
-			}
-			
+			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기			
+ 			if (ids == null || ids == "") {
+ 				alert("수당그리드를 선택해 주세요");
+ 				return;
+ 			}
 			var popUrl = "/home/EP011001_2.do";
 			var popOption = "width=1120, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"신고인관리",popOption);
