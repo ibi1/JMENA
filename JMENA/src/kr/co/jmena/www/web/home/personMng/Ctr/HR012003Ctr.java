@@ -68,8 +68,6 @@ public class HR012003Ctr {
 
 			List<HR012003VO> lst = HR012003Biz.selectListHR012003(vo);
 			
-			System.out.println("******************************************");
-			System.out.println("size()"+lst.size());
 			
 			
 			for (int i = 0; i < lst.size(); i++) {

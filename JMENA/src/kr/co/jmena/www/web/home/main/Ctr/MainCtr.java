@@ -109,7 +109,6 @@ public class MainCtr {
 		JSONObject json = new JSONObject();
 		
 		for (int i = 0; i < lst.size(); i++) {
-			//System.out.println(lst.get(i).getSYSID());
 			JSONObject jData = new JSONObject();
 			jData.put("SYSID", lst.get(i).getSYSID());
 			jData.put("SYSNAME", lst.get(i).getSYSNAME());

@@ -67,8 +67,6 @@ public class EP012002Ctr {
 
 		List<EP012002VO> lst = EP012002Biz.selectListEP012002(vo);
 		
-		System.out.println("******************************************");
-		System.out.println("size()"+lst.size());
 		
 		
 		for (int i = 0; i < lst.size(); i++) {

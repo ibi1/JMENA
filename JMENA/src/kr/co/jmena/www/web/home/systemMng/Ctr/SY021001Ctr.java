@@ -100,7 +100,6 @@ public class SY021001Ctr {
 		}
 		json.put("rows", jCell);
 		
-//		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListSY021001]" + json);
 		
 		return new ModelAndView("jsonView", json);	
@@ -167,12 +166,7 @@ public class SY021001Ctr {
 			jCell.add(obj);
 			json.put("rows", jCell);
 		}
-		
-//		System.out.println("updateCnt==>"+updateCnt);
-//		System.out.println("insertCnt==>"+insertCnt);
-//		
-//		System.out.println("json==>"+json);
-		
+				
 		return new ModelAndView("jsonView", json);	
 	}
 	

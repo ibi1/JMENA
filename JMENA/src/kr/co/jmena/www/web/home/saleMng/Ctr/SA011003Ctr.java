@@ -95,7 +95,6 @@ public class SA011003Ctr {
 		}
 		json.put("rows", jCell);
 		
-		//System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListSA011003]" + json);
 		
 		return new ModelAndView("jsonView", json);	
@@ -144,7 +143,6 @@ public class SA011003Ctr {
 		}
 		json.put("rows", jCell);
 		
-		//System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListSA011003]" + json);
 		
 		return new ModelAndView("jsonView", json);	
@@ -187,24 +185,6 @@ public class SA011003Ctr {
 		session = request.getSession(false);
 		vo.setUSERID((String)session.getAttribute("userId"));
 		
-//		System.out.println("***************************************************");
-//		System.out.println("IPGUMDATE==>"+request.getParameter("IPGUMDATE"));
-//		System.out.println("IPGUMTYPE==>"+request.getParameter("IPGUMTYPE"));
-//		System.out.println("IPGUMGUBUN==>"+request.getParameter("IPGUMGUBUN"));
-//		System.out.println("BANKGUBUN==>"+request.getParameter("BANKGUBUN"));
-//		System.out.println("IPGUMPERSON==>"+request.getParameter("IPGUMPERSON"));
-//		System.out.println("IPGUMAMT==>"+request.getParameter("IPGUMAMT"));
-//		System.out.println("SUGUMAMT==>"+request.getParameter("SUGUMAMT"));
-//		System.out.println("JANAMT==>"+request.getParameter("JANAMT"));
-//		System.out.println("BRANCHNAME==>"+request.getParameter("BRANCHNAME"));
-//		System.out.println("KNAME==>"+request.getParameter("KNAME"));
-//		System.out.println("ADDRESS==>"+request.getParameter("ADDRESS"));
-//		System.out.println("CONNAME==>"+request.getParameter("CONNAME"));
-//		System.out.println("CONPY==>"+request.getParameter("CONPY"));
-//		System.out.println("REMARK==>"+request.getParameter("REMARK"));
-//
-//		System.out.println("***************************************************");
-		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();		
 
@@ -228,12 +208,7 @@ public class SA011003Ctr {
 
 		jCell.add(obj);
 		json.put("rows", jCell);
-		
-//		System.out.println("updateCnt==>"+updateCnt);
-//		System.out.println("insertCnt==>"+insertCnt);
-//		
-//		System.out.println("json==>"+json);
-		
+			
 		return new ModelAndView("jsonView", json);	
 
 	
@@ -302,11 +277,7 @@ public class SA011003Ctr {
 		vo.setIPGUMSEQ(request.getParameter("IPGUMSEQ"));
 		vo.setSEQ(request.getParameter("SEQ"));
 		vo.setSUGUMAMT(request.getParameter("SUGUMAMT"));
-//		System.out.println("IPGUMID==>"+request.getParameter("IPGUMID"));
-//		System.out.println("SALEID==>"+request.getParameter("SALEID"));
-//		System.out.println("IPGUMSEQ==>"+request.getParameter("IPGUMSEQ"));
-//		System.out.println("SEQ==>"+request.getParameter("SEQ"));
-//		System.out.println("SUGUMAMT==>"+request.getParameter("SUGUMAMT"));
+
 		vo.setREMARK("");
 
 		HttpSession session = null;
@@ -336,12 +307,7 @@ public class SA011003Ctr {
 
 		jCell.add(obj);
 		json.put("rows", jCell);
-		
-//		System.out.println("updateCnt==>"+updateCnt);
-//		System.out.println("insertCnt==>"+insertCnt);
-//		
-//		System.out.println("json==>"+json);
-		
+				
 		return new ModelAndView("jsonView", json);	
 
 	

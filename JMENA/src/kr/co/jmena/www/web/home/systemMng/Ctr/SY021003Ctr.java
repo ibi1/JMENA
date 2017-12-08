@@ -89,11 +89,9 @@ public class SY021003Ctr {
 		SY021003VO vo = new SY021003VO();
 		
 		vo.setCITYCODE(request.getParameter("CITYCODE"));
-//		System.out.println("CITYCODE====>"+request.getParameter("CITYCODE"));
 		
 		List<SY021003VO> lst = SY021003Biz.selectListEnaCityDtl(vo);
 		
-//		System.out.println("lst.size()====>"+lst.size());
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();

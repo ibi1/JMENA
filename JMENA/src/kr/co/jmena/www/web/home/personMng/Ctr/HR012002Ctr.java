@@ -80,16 +80,12 @@ public class HR012002Ctr {
 		
 			List<HR012002VO> lst = HR012002Biz.selectListHR012002(vo);
 			
-			System.out.println("******************************************");
-			System.out.println("size()"+lst.size());
 			
 			
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
 				
 				vo1.setINSACODE(lst.get(i).getINSACODE());
-				System.out.println("******************************************");
-				System.out.println("lst.get(i).getINSACODE()==>"+lst.get(i).getINSACODE());
 				
 				List<HR012002VO> lst2 = HR012002Biz.selectListHR012002_2(vo1);
 				if(lst2.size() > 0){
@@ -112,10 +108,6 @@ public class HR012002Ctr {
 							vo2.setINSACODE(lst.get(i).getINSACODE());
 							vo2.setO_JOINDATE(lst.get(i).getJOINDATE());
 							vo2.setO_RETIREDATE(lst.get(i).getRETIREDATE());
-							System.out.println("******************************************");
-							System.out.println("lst.get(i).getINSACODE()==>"+lst.get(i).getINSACODE());
-							System.out.println("lst2.get(j).getO_JOINDATE()==>"+lst2.get(j).getO_JOINDATE());
-							System.out.println("lst2.get(j).getO_RETIREDATE()==>"+lst2.get(j).getO_RETIREDATE());
 							
 							List<HR012002VO> lst3 = HR012002Biz.selectListHR012002_3(vo2);
 							if(lst3.size() > 0){
@@ -151,10 +143,6 @@ public class HR012002Ctr {
 						vo3.setINSACODE(lst.get(i).getINSACODE());
 						vo3.setO_JOINDATE(lst2.get(j).getO_JOINDATE());
 						vo3.setO_RETIREDATE(lst2.get(j).getO_RETIREDATE());
-						System.out.println("******************************************");
-						System.out.println("lst.get(i).getINSACODE()==>"+lst.get(i).getINSACODE());
-						System.out.println("lst2.get(j).getO_JOINDATE()==>"+lst2.get(j).getO_JOINDATE());
-						System.out.println("lst2.get(j).getO_RETIREDATE()==>"+lst2.get(j).getO_RETIREDATE());
 						
 						List<HR012002VO> lst4 = HR012002Biz.selectListHR012002_3(vo3);
 						if(lst4.size() > 0){

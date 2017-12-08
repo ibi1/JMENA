@@ -77,8 +77,6 @@ public class SA012005Ctr {
 			
 			List<SA012005VO> lst = SA012005Biz.selectListSA012005(vo);
 			
-//			System.out.println("******************************************");
-//			System.out.println("size()"+lst.size());
 			
 			
 			for (int i = 0; i < lst.size(); i++) {

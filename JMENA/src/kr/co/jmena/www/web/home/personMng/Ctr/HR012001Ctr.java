@@ -70,15 +70,11 @@ public class HR012001Ctr {
 
 		List<HR012001VO> lst = HR012001Biz.selectListHR012001(vo);
 		
-		System.out.println("******************************************");
-		System.out.println("size()==>"+lst.size());
 		
 		
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = new JSONObject();
 			
-			System.out.println("******************************************");
-			System.out.println("lst.get(i).getINSACODE()==>"+lst.get(i).getINSACODE());
 			vo1.setINSACODE(lst.get(i).getINSACODE());
 			
 			List<HR012001VO> lst2 = HR012001Biz.selectListHR012001_2(vo1);
@@ -120,10 +116,6 @@ public class HR012001Ctr {
 					vo2.setINSACODE(lst.get(i).getINSACODE());
 					vo2.setO_JOINDATE(lst2.get(j).getO_JOINDATE());
 					vo2.setO_RETIREDATE(lst2.get(j).getO_RETIREDATE());
-					System.out.println("******************************************");
-					System.out.println("lst.get(i).getINSACODE()==>"+lst.get(i).getINSACODE());
-					System.out.println("lst2.get(j).getO_JOINDATE()==>"+lst2.get(j).getO_JOINDATE());
-					System.out.println("lst2.get(j).getO_RETIREDATE()==>"+lst2.get(j).getO_RETIREDATE());
 					
 					List<HR012001VO> lst3 = HR012001Biz.selectListHR012001_3(vo2);
 					if(lst3.size() > 0){

@@ -99,7 +99,6 @@ public class EP011002Ctr {
 				jCell.add(obj);
 			}
 		}else{
-			System.out.println("데이터 없음");
 //			JSONObject obj = new JSONObject();
 //			
 //			obj.put("YEARMONTH", "");
@@ -128,7 +127,6 @@ public class EP011002Ctr {
 		}
 		json.put("rows", jCell);
 		
-		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListEnaMonthPayMst]" + json);
 		
 		return new ModelAndView("jsonView", json);
@@ -196,7 +194,6 @@ public class EP011002Ctr {
 			}
 			json.put("rows", jCell);
 		}
-		System.out.println("json==>"+json.get("rows"));
 		logger.debug("[selectListSY021001]" + json);
 		
 		return new ModelAndView("jsonView", json);
@@ -221,9 +218,6 @@ public class EP011002Ctr {
 		jCell.add(obj);
 		json.put("rows", jCell);
 		
-		System.out.println("json==>"+json);
-		
-
 		logger.debug("[insertEnaMonthPayMst]" + json);
 		
 		return new ModelAndView("jsonView", json);
@@ -281,8 +275,6 @@ public class EP011002Ctr {
 		}
 		jCell.add(obj);
 		json.put("rows", jCell);
-		
-		System.out.println("json==>"+json);
 		
 		return new ModelAndView("jsonView", json);	
 	}

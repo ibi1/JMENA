@@ -288,21 +288,6 @@ public class SA012001Ctr {
 					}					
 				}
 				
-//				System.out.println("******************************************");
-//				System.out.println("lst1.size()==>"+lst1.size());
-//				System.out.println("******************************************");
-//				System.out.println("lst1 DATA==>"+lst1.get(i).toString());
-//				System.out.println("lst1 DATA==>"+lst1.get(i).getBRANCHCODE());
-//				System.out.println("lst1 DATA==>"+lst1.get(i).getBRANCHNAME());
-//				System.out.println("lst1 DATA==>"+lst1.get(i).getDEPTCODE());
-//				System.out.println("lst1 DATA==>"+lst1.get(i).getDEPTNAME());
-//				System.out.println("lst1 DATA==>"+lst1.get(i).getDUTY());
-//				System.out.println("lst1 DATA==>"+lst1.get(i).getKNAME());
-//				System.out.println("lst1 DATA==>"+lst1.get(i).getJOINDATE());
-//				System.out.println("lst1 DATA==>"+lst1.get(i).getRETIREDATE());
-//				System.out.println("******************************************");
-//				System.out.println("obj==>"+obj.toJSONString());
-//				System.out.println("******************************************");
 				jCell.add(obj);
 
 				

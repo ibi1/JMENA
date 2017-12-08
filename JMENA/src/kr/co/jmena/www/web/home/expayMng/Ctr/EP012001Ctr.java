@@ -73,8 +73,6 @@ public class EP012001Ctr {
 		
 			List<EP012001VO> lst = EP012001Biz.selectListEP012001(vo);
 			
-			System.out.println("******************************************");
-			System.out.println("size()"+lst.size());
 			
 			
 			for (int i = 0; i < lst.size(); i++) {
@@ -124,8 +122,6 @@ public class EP012001Ctr {
 
 		List<EP012001VO> lst = EP012001Biz.selectListEP012001_2(vo);
 		
-		System.out.println("******************************************");
-		System.out.println("size()"+lst.size());
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
