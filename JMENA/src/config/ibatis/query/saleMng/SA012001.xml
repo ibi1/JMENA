@@ -124,42 +124,42 @@
 
 	<select id="selectListSA012001_4" resultMap="SA012001Data4">
 		select 
-			(select sum(t2.sellamt) AMT6 from sa_salemst t1, sa_saledtl t2
+			(select IFNULL(sum(t2.sellamt), 0) AMT6 from sa_salemst t1, sa_saledtl t2
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #M6_FR# and #M6_TO#
 			and t1.saleid = t2.saleid) as AMT6, 
-			(select  sum(t2.sellamt) AMT5 from sa_salemst t1, sa_saledtl t2
+			(select  IFNULL(sum(t2.sellamt), 0) AMT5 from sa_salemst t1, sa_saledtl t2
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #M5_FR# and #M5_TO#
 			and t1.saleid = t2.saleid) as AMT5, 
-			(select sum(t2.sellamt) AMT4 from sa_salemst t1, sa_saledtl t2
+			(select IFNULL(sum(t2.sellamt), 0) AMT4 from sa_salemst t1, sa_saledtl t2
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #M4_FR# and #M4_TO#
 			and t1.saleid = t2.saleid) as AMT4, 
-			(select sum(t2.sellamt) AMT3 from sa_salemst t1, sa_saledtl t2
+			(select IFNULL(sum(t2.sellamt), 0) AMT3 from sa_salemst t1, sa_saledtl t2
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #M3_FR# and #M3_TO#
 			and t1.saleid = t2.saleid) as AMT3, 
-			(select sum(t2.sellamt) AMT2 from sa_salemst t1, sa_saledtl t2
+			(select IFNULL(sum(t2.sellamt), 0) AMT2 from sa_salemst t1, sa_saledtl t2
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #M2_FR# and #M2_TO#
 			and t1.saleid = t2.saleid) as AMT2, 
-			(select sum(t2.sellamt) AMT1 from sa_salemst t1, sa_saledtl t2
+			(select IFNULL(sum(t2.sellamt), 0) AMT1 from sa_salemst t1, sa_saledtl t2
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #M1_FR# and #M1_TO#
 			and t1.saleid = t2.saleid) as AMT1, 
-			(select sum(t2.sellamt) TOTAMT from sa_salemst t1, sa_saledtl t2
+			(select IFNULL(sum(t2.sellamt), 0) TOTAMT from sa_salemst t1, sa_saledtl t2
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #S_SALEDATE_FR# and #S_SALEDATE_TO#
 			and t1.saleid = t2.saleid) as AMT0,
-			(select sum(t2.sellamt) TOTAMT from sa_salemst t1, sa_saledtl t2
+			(select IFNULL(sum(t2.sellamt), 0) TOTAMT from sa_salemst t1, sa_saledtl t2
 			where 1=1
 			and t1.salercd = #INSACODE#
 			and saledate between #M6_FR# and #S_SALEDATE_TO#
