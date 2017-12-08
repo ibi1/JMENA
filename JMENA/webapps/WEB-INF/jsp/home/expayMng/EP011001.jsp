@@ -719,63 +719,61 @@
 	
 	$(function(){
 		$("#saveButton").click(function(){
-			
-			var msg = "저장하시겠습니까?";
-			if (confirm(msg) == true) {	
-				//콤마 remove
-				f_commaInputData("remove");
-		
-				var dataIds = $("#bottomList").jqGrid('getDataIDs');			
+			//콤마 remove
+			f_commaInputData("remove");
+	
+			var dataIds = $("#bottomList").jqGrid('getDataIDs');			
 
-				var len = dataIds.length;
+			var len = dataIds.length;
+		
+			if (len == 0) {
+				alert("저장할 데이터가 없습니다.");
 			
-				if (len == 0) {
-					alert("저장할 데이터가 없습니다.");
-				
-					return false;
-				}
-				if ($("#PAYDATE").val() == "") {
-					alert("지급일자를 입력하셔야 합니다.");
-					$("#PAYDATE").focus();
-				
-					return false;
-				}
-				
-				if ($("#KNAME").val() == "") {
-					alert("담당자를 입력하셔야 합니다.");
-					$("#KNAME").focus();
-				
-					return false;
-				}	
-				
-				if ($("#INSACODE").val() == "") {
-					alert("사번를 입력하셔야 합니다.");
-					$("#INSACODE").focus();
-				
-					return false;
-				}	
-				
-				if ($("#SUDANGRATE").val() == "") {
-					alert("수당지급율 입력하셔야 합니다.");
-					$("#SUDANGRATE").focus();
-				
-					return false;
-				}	
-				if ($("#ADDRATE").val() == "") {
-					alert("추가지급율 입력하셔야 합니다.");
-					$("#ADDRATE").focus();
-				
-					return false;
-				}	
-				if ($("#TAXGUBUN").val() == "") {
-					alert("신고기준을 선택하셔야 합니다.");
-					$("#TAXGUBUN").focus();
-				
-					return false;
-				}		
+				return false;
+			}
+			if ($("#PAYDATE").val() == "") {
+				alert("지급일자를 입력하셔야 합니다.");
+				$("#PAYDATE").focus();
+			
+				return false;
+			}
+			
+			if ($("#KNAME").val() == "") {
+				alert("담당자를 입력하셔야 합니다.");
+				$("#KNAME").focus();
+			
+				return false;
+			}	
+			
+			if ($("#INSACODE").val() == "") {
+				alert("사번를 입력하셔야 합니다.");
+				$("#INSACODE").focus();
+			
+				return false;
+			}	
+			
+			if ($("#SUDANGRATE").val() == "") {
+				alert("수당지급율 입력하셔야 합니다.");
+				$("#SUDANGRATE").focus();
+			
+				return false;
+			}	
+			if ($("#ADDRATE").val() == "") {
+				alert("추가지급율 입력하셔야 합니다.");
+				$("#ADDRATE").focus();
+			
+				return false;
+			}	
+			if ($("#TAXGUBUN").val() == "") {
+				alert("신고기준을 선택하셔야 합니다.");
+				$("#TAXGUBUN").focus();
+			
+				return false;
+			}		
 				
 				//그리드 데이터를 배열에 저장
-				
+			var msg = "저장하시겠습니까?";
+			if (confirm(msg) == true) {		
  				var insacodeArr = [];
  				var sudangrateArr = [];
  				var addrateArr = [];
@@ -860,7 +858,11 @@
 	
 	$(function() {
 		$("#deleteButton").click(function() {
-			
+			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기			
+ 			if (ids == null || ids == "") {
+ 				alert("삭제할 데이터가 없습니다.");
+ 				return;
+ 			}
 			var msg = "삭제하시겠습니까?";
 			if (confirm(msg) == true) {
 				var formData = "SALEID=" + $("#SALEID").val()				
