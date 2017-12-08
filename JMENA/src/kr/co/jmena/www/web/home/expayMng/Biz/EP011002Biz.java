@@ -66,77 +66,73 @@ public class EP011002Biz {
 			delVo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));			
 			delVo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));			
 			
-			
-			
-			logger.debug("[insertEnaMonthPayMst.length                   biz]");
 			EP011002Dao.deleteEnaMonthPayMstAll(delVo);
-			logger.debug("[insertEnaMonthPayMst.length                   biz1]");
 
-				//Insert Array
-				String yearmonthArr[] = request.getParameterValues("yearmonthArr[]");
-				logger.debug("[yearmonthArr.length]");
-				String paydateArr[] = request.getParameterValues("paydateArr[]");
-				String branchcodeArr[] = request.getParameterValues("branchcodeArr[]");
-				String deptcodeArr[] = request.getParameterValues("deptcodeArr[]");
-				String gradeArr[] = request.getParameterValues("gradeArr[]");
-				String dutyArr[] = request.getParameterValues("dutyArr[]");
-				String insacodeArr[] = request.getParameterValues("insacodeArr[]");
-				String knameArr[] = request.getParameterValues("knameArr[]");
-				String basicamtArr[] = request.getParameterValues("basicamtArr[]");
-				String actamtArr[] = request.getParameterValues("actamtArr[]");
-				String dailyamtArr[] = request.getParameterValues("dailyamtArr[]");
-				String prizeamtArr[] = request.getParameterValues("prizeamtArr[]");
-				String totalamtArr[] = request.getParameterValues("totalamtArr[]");
-				String taxgubunArr[] = request.getParameterValues("taxgubunArr[]");
-				String taxincomeArr[] = request.getParameterValues("taxincomeArr[]");
-				String taxlocalArr[] = request.getParameterValues("taxlocalArr[]");
-				String supplytaxArr[] = request.getParameterValues("supplytaxArr[]");
-				String deductamtArr[] = request.getParameterValues("deductamtArr[]");
-				String bankidArr[] = request.getParameterValues("bankidArr[]");
-				String acctnoArr[] = request.getParameterValues("acctnoArr[]");
-				String acctownerArr[] = request.getParameterValues("acctownerArr[]");				
-				logger.debug("[yearmonthArr.length]" + yearmonthArr);
-				
-				
-				int cnt = 0;
-				for (String ym : yearmonthArr) {
-					EP011002VO vo = new EP011002VO();
-					//저장 사용자아이디 지정
-					vo.setUSERID(sessionUserId);
+			//Insert Array
+			String yearmonthArr[] = request.getParameterValues("yearmonthArr[]");
+			logger.debug("[yearmonthArr.length]");
+			String paydateArr[] = request.getParameterValues("paydateArr[]");
+			String branchcodeArr[] = request.getParameterValues("branchcodeArr[]");
+			String deptcodeArr[] = request.getParameterValues("deptcodeArr[]");
+			String gradeArr[] = request.getParameterValues("gradeArr[]");
+			String dutyArr[] = request.getParameterValues("dutyArr[]");
+			String insacodeArr[] = request.getParameterValues("insacodeArr[]");
+			String knameArr[] = request.getParameterValues("knameArr[]");
+			String basicamtArr[] = request.getParameterValues("basicamtArr[]");
+			String actamtArr[] = request.getParameterValues("actamtArr[]");
+			String dailyamtArr[] = request.getParameterValues("dailyamtArr[]");
+			String prizeamtArr[] = request.getParameterValues("prizeamtArr[]");
+			String totalamtArr[] = request.getParameterValues("totalamtArr[]");
+			String taxgubunArr[] = request.getParameterValues("taxgubunArr[]");
+			String taxincomeArr[] = request.getParameterValues("taxincomeArr[]");
+			String taxlocalArr[] = request.getParameterValues("taxlocalArr[]");
+			String supplytaxArr[] = request.getParameterValues("supplytaxArr[]");
+			String deductamtArr[] = request.getParameterValues("deductamtArr[]");
+			String bankidArr[] = request.getParameterValues("bankidArr[]");
+			String acctnoArr[] = request.getParameterValues("acctnoArr[]");
+			String acctownerArr[] = request.getParameterValues("acctownerArr[]");				
+			logger.debug("[yearmonthArr.length]" + yearmonthArr);
+			
+			
+			int cnt = 0;
+			for (String ym : yearmonthArr) {
+				EP011002VO vo = new EP011002VO();
+				//저장 사용자아이디 지정
+				vo.setUSERID(sessionUserId);
 //					vo.setUSERIDSESSION(sessionUserId);
-					
-					//각 값들 배열에서 지정
-					vo.setYEARMONTH(yearmonthArr[cnt]);
-					vo.setPAYDATE(paydateArr[cnt]);
-					vo.setBRANCHCODE(branchcodeArr[cnt]);
-					vo.setDEPTCODE(deptcodeArr[cnt]);
-					vo.setGRADE(gradeArr[cnt]);
-					vo.setDUTY(dutyArr[cnt]);
-					vo.setINSACODE(insacodeArr[cnt]);
-					vo.setKNAME(knameArr[cnt]);
-					vo.setBASICAMT(basicamtArr[cnt]);
-					vo.setACTAMT(actamtArr[cnt]);
-					vo.setDAILYAMT(dailyamtArr[cnt]);
-					vo.setPRIZEAMT(prizeamtArr[cnt]);
-					vo.setTOTALAMT(totalamtArr[cnt]);
-					vo.setTAXGUBUN(taxgubunArr[cnt]);
-					vo.setTAXINCOME(taxincomeArr[cnt]);
-					vo.setTAXLOCAL(taxlocalArr[cnt]);
-					vo.setSUPPLYTAX(supplytaxArr[cnt]);
-					vo.setDEDUCTAMT(deductamtArr[cnt]);
-					vo.setBANKID(bankidArr[cnt]);
-					vo.setACCTNO(acctnoArr[cnt]);
-					vo.setACCTOWNER(acctownerArr[cnt]);
-					
-					chkFlag = EP011002Dao.insertEnaMonthPayMst(vo);
-					
-					if (chkFlag = false) {
-						break;
-					} else {
-						cnt++;
-						chkFlag = true;
-					}
+				
+				//각 값들 배열에서 지정
+				vo.setYEARMONTH(yearmonthArr[cnt]);
+				vo.setPAYDATE(paydateArr[cnt]);
+				vo.setBRANCHCODE(branchcodeArr[cnt]);
+				vo.setDEPTCODE(deptcodeArr[cnt]);
+				vo.setGRADE(gradeArr[cnt]);
+				vo.setDUTY(dutyArr[cnt]);
+				vo.setINSACODE(insacodeArr[cnt]);
+				vo.setKNAME(knameArr[cnt]);
+				vo.setBASICAMT(basicamtArr[cnt]);
+				vo.setACTAMT(actamtArr[cnt]);
+				vo.setDAILYAMT(dailyamtArr[cnt]);
+				vo.setPRIZEAMT(prizeamtArr[cnt]);
+				vo.setTOTALAMT(totalamtArr[cnt]);
+				vo.setTAXGUBUN(taxgubunArr[cnt]);
+				vo.setTAXINCOME(taxincomeArr[cnt]);
+				vo.setTAXLOCAL(taxlocalArr[cnt]);
+				vo.setSUPPLYTAX(supplytaxArr[cnt]);
+				vo.setDEDUCTAMT(deductamtArr[cnt]);
+				vo.setBANKID(bankidArr[cnt]);
+				vo.setACCTNO(acctnoArr[cnt]);
+				vo.setACCTOWNER(acctownerArr[cnt]);
+				
+				chkFlag = EP011002Dao.insertEnaMonthPayMst(vo);
+				
+				if (chkFlag = false) {
+					break;
+				} else {
+					cnt++;
+					chkFlag = true;
 				}
+			}
 			
 		} catch (Exception e) {
 			throw e;

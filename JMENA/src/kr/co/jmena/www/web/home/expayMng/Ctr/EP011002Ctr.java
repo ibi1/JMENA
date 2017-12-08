@@ -79,6 +79,10 @@ public class EP011002Ctr {
 				obj.put("DEPTCODE", lst.get(i).getDEPTCODE());
 				obj.put("GRADE", lst.get(i).getGRADE());
 				obj.put("DUTY", lst.get(i).getDUTY());
+				obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
+				obj.put("DEPTNAME", lst.get(i).getDEPTNAME());
+				obj.put("GRADENAME", lst.get(i).getGRADENAME());
+				obj.put("DUTYNAME", lst.get(i).getDUTYNAME());
 				obj.put("INSACODE", lst.get(i).getINSACODE());
 				obj.put("KNAME", lst.get(i).getKNAME());
 				obj.put("PAYDATE", lst.get(i).getPAYDATE());
@@ -88,6 +92,7 @@ public class EP011002Ctr {
 				obj.put("DAILYAMT", lst.get(i).getDAILYAMT());
 				obj.put("TOTALAMT", lst.get(i).getTOTALAMT());
 				obj.put("TAXGUBUN", lst.get(i).getTAXGUBUN());
+				obj.put("TAXGUBUNNM", lst.get(i).getTAXGUBUNNM());
 				obj.put("TAXINCOME", lst.get(i).getTAXINCOME());
 				obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
 				obj.put("SUPPLYTAX", lst.get(i).getSUPPLYTAX());
@@ -180,7 +185,7 @@ public class EP011002Ctr {
 				obj.put("ACCTNO", lst.get(i).getACCTNO());
 				obj.put("ACCTOWNER", lst.get(i).getACCTOWNER());
 				obj.put("TAXGUBUN", "001");
-				obj.put("TAXGUBUNCODE", "");
+				obj.put("TAXGUBUNNM", "");
 				obj.put("ACTAMT", "0");
 				obj.put("PRIZEAMT", "0");
 				obj.put("DAILYAMT", "0");
@@ -284,27 +289,27 @@ public class EP011002Ctr {
 	@RequestMapping("/home/deleteEnaMonthPayMst.do")
 	public ModelAndView deleteEnaMonthPayMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EP011002VO vo = new EP011002VO();
+		
+		HttpSession session = null;
+		session = request.getSession(false);
+		vo.setUSERID((String)session.getAttribute("userId"));
 				
-		vo.setS_YEARMONTH(request.getParameter("S_YEARMONTH"));
-		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
-		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
+		vo.setYEARMONTH(request.getParameter("YEARMONTH"));
 		vo.setINSACODE(request.getParameter("INSACODE"));
 		
 		JSONObject json = new JSONObject();
 		
-		String resultCode = "";
-		String resultMsg = "";
+		JSONArray jCell = new JSONArray();
+
+		JSONObject obj = new JSONObject();
 		
 		if (EP011002Biz.deleteEnaMonthPayMst(vo) == true) {
-			resultCode ="SUCCESS";
-			resultMsg = "정상적으로 삭제하였습니다.";
-		} else {
-			 resultCode ="FAILED";
-			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+			obj.put("MSG", "success");
+		}else{
+			obj.put("MSG", "error");
 		}
-
-		json.put("resultCode", resultCode);
-		json.put("resultMsg", resultMsg);
+		jCell.add(obj);
+		json.put("rows", jCell);
 
 		logger.debug("[deleteEnaSudangPTb]" + json);
 		

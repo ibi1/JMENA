@@ -11,6 +11,7 @@
 
 </head>
 <script type="text/javascript">
+	var flag = "1";
 	var v_rightLastSel = 0;
 	
 	var dt = new Date();
@@ -68,14 +69,14 @@
 			colModel:[
 				 {name:"YEARMONTH",		index:'YEARMONTH',		width:100,		align:'center',	sortable:false}
 				,{name:"PAYDATE",		index:'PAYDATE',		width:100,		align:'center',	sortable:false}				
-				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:100,		align:'center',	sortable:false}
-				,{name:"DEPTCODE",		index:'DEPTCODE',		width:100,		align:'center',	sortable:false}
-				,{name:"GRADE",			index:'GRADE',			width:100,		align:'center',	sortable:false}
-				,{name:"DUTY",			index:'DUTY',			width:100,		align:'center',	sortable:false}
-				,{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,		align:'center',	sortable:false,hidden:true}
-				,{name:"DEPTNAME",		index:'DEPTNAME',		width:100,		align:'center',	sortable:false,hidden:true}
-				,{name:"GRADENAME",		index:'GRADENAME',		width:100,		align:'center',	sortable:false,hidden:true}
-				,{name:"DUTYNAME",		index:'DUTYNAME',		width:100,		align:'center',	sortable:false,hidden:true}
+				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:100,		align:'center',	sortable:false,hidden:true}
+				,{name:"DEPTCODE",		index:'DEPTCODE',		width:100,		align:'center',	sortable:false,hidden:true}
+				,{name:"GRADE",			index:'GRADE',			width:100,		align:'center',	sortable:false,hidden:true}
+				,{name:"DUTY",			index:'DUTY',			width:100,		align:'center',	sortable:false,hidden:true}
+				,{name:"BRANCHNAME",	index:'BRANCHNAME',		width:100,		align:'center',	sortable:false}
+				,{name:"DEPTNAME",		index:'DEPTNAME',		width:100,		align:'center',	sortable:false}
+				,{name:"GRADENAME",		index:'GRADENAME',		width:100,		align:'center',	sortable:false}
+				,{name:"DUTYNAME",		index:'DUTYNAME',		width:100,		align:'center',	sortable:false}
 				,{name:"INSACODE",		index:'INSACODE',		width:100,		align:'center',	sortable:false}
 				,{name:"KNAME",			index:'KNAME',			width:100,		align:'center',	sortable:false}
 				,{name:"BASICAMT",		index:'BASICAMT',		width:120,		align:'right',	sortable:false,formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -83,8 +84,8 @@
 				,{name:"DAILYAMT",		index:'DAILYAMT',		width:120,		align:'right',	sortable:false,formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"PRIZEAMT",		index:'PRIZEAMT',		width:120,		align:'right',	sortable:false,formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"TOTALAMT",		index:'TOTALAMT',		width:120,		align:'right',	sortable:false,formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:100,		align:'center',	sortable:false, edittype:'select',  editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:selectListEnaCode}}				
-				,{name:"TAXGUBUNCODE",	index:'TAXGUBUNCODE',	width:100,		align:'center',	sortable:false,hidden:true}
+				,{name:"TAXGUBUNNM",	index:'TAXGUBUNNM',		width:100,		align:'center',	sortable:false, edittype:'select',  editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:selectListEnaCode}}				
+				,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:100,		align:'center',	sortable:false,hidden:true}
 				,{name:"TAXINCOME",		index:'TAXINCOME',		width:120,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:120,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 				,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:120,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -113,6 +114,7 @@
 				//전체 카운트
 				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
 				$("#leftListCount").html(countRow);
+				flag = "1";
 			},
 			hidegrid: false
 		});
@@ -233,10 +235,20 @@
 	
 	$(function() {
 		$("#insertButton").click(function() {
+			if($("#S_YEARMONTH").val() == ""){
+				alert("지급년월을 입력 해 주세요");
+				return;
+			}
+			if($("#S_PAYDATE").val() == ""){
+				alert("지급일자를 입력 해 주세요");
+				return;
+			}
+			
 			if($("#S_BRANCHCODE").val() == "ALL" || $("#S_DEPTCODE").val() == "ALL"){
 				alert("지사와 부서를 모두 선택 해 주세요");
 				return;
-			}
+			}			
+			
 			if(confirm("생성하시겠습니까?") == true) {
 				$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 				$('#leftList').jqGrid({
@@ -307,7 +319,7 @@
 	 							}
 							}]					
 						}}
-						,{name:"TAXGUBUNCODE",		index:'TAXGUBUN',		width:100,		align:'center',	sortable:false,editable:true
+						,{name:"TAXGUBUNNM",		index:'TAXGUBUNNM',		width:100,		align:'center',	sortable:false,editable:true
 						, edittype:'select',  editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:selectListEnaCode
 							,dataEvents:[{
 								type:'change',
@@ -318,7 +330,7 @@
 								}
 							}]	
 						}}						
-						,{name:"TAXGUBUN",		index:'BANKID',			width:150,		align:'center',	sortable:false,hidden:true}
+						,{name:"TAXGUBUN",		index:'TAXGUBUN',		width:150,		align:'center',	sortable:false,hidden:true}
 						,{name:"TAXINCOME",		index:'TAXINCOME',		width:120,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 						,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:120,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 						,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:120,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -353,6 +365,7 @@
 						//전체 카운트
 						var countRow = $("#leftList").jqGrid('getGridParam', 'records');
 						$("#leftListCount").html(countRow);
+						flag = "";
 					},	
 					hidegrid: false
 				});
@@ -363,6 +376,10 @@
 	
 	$(function() {
 		$("#saveButton").click(function() {
+			if(flag != ""){
+				alert("급여를 생성 후 저장하세요");
+				return;
+			}
 
 			var dataIds = $("#leftList").jqGrid('getDataIDs');			
 
@@ -495,10 +512,8 @@
 			var cellData = $("#leftList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
 			var msg = "삭제하시겠습니까?";
 			if (confirm(msg) == true) {
-				var formData = "INSACODE=" + $("#INSACODE").val() + 
-							   "&S_YEARMONTH=" + $("#S_YEARMONTH").val() +
-							   "&S_BRANCHCODE=" + $("#S_BRANCHCODE").val() +
-							   "&S_DEPTCODE=" + $("#S_DEPTCODE").val();
+				var formData = "INSACODE=" + cellData.INSACODE + 
+							   "&YEARMONTH=" + cellData.YEARMONTH
 				$.ajax({ 
 					type: 'POST' ,
 					data: formData,
@@ -528,7 +543,7 @@
 		var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기		
 		
 
-		var taxgubun = $("#leftList [name=TAXGUBUNCODE] option:selected").val();
+		var taxgubun = $("#leftList [name=TAXGUBUNNM] option:selected").val();
 		
 		$('#leftList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 

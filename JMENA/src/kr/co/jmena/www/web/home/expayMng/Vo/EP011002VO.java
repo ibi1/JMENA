@@ -33,7 +33,7 @@ public class EP011002VO {
 	private String BANKNAME;
 	private String ACCTOWNER;
 	private String BASICPAY;
-	
+	private String TAXGUBUNNM;
 	private String KNAME;
 	
 	private String USERID;
@@ -232,6 +232,12 @@ public class EP011002VO {
 	}
 	public void setBANKNAME(String bANKNAME) {
 		this.BANKNAME = bANKNAME;
+	}
+	public String getTAXGUBUNNM() {
+		return TAXGUBUNNM;
+	}
+	public void setTAXGUBUNNM(String tAXGUBUNNM) {
+		this.TAXGUBUNNM = tAXGUBUNNM;
 	}
 	
 	

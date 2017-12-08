@@ -14,6 +14,10 @@
 		<result property="DEPTCODE"			column="DEPTCODE"/>
 		<result property="GRADE"			column="GRADE"/>
 		<result property="DUTY"				column="DUTY"/>
+		<result property="BRANCHNAME"		column="BRANCHNAME"/>
+		<result property="DEPTNAME"			column="DEPTNAME"/>
+		<result property="GRADENAME"		column="GRADENAME"/>
+		<result property="DUTYNAME"			column="DUTYNAME"/>
 		<result property="KNAME"			column="KNAME"/>
 		<result property="PAYDATE"			column="PAYDATE"/>
 		<result property="BASICAMT"			column="BASICAMT"/>
@@ -22,6 +26,7 @@
 		<result property="DAILYAMT"			column="DAILYAMT"/>
 		<result property="TOTALAMT"			column="TOTALAMT"/>
 		<result property="TAXGUBUN"			column="TAXGUBUN"/>
+		<result property="TAXGUBUNNM"		column="TAXGUBUNNM"/>
 		<result property="TAXINCOME"		column="TAXINCOME"/>
 		<result property="TAXLOCAL"			column="TAXLOCAL"/>
 		<result property="SUPPLYTAX"		column="SUPPLYTAX"/>
@@ -55,10 +60,14 @@
 	<select id="selectListEnaMonthPayMst" resultMap="EP011002Data">
 		SELECT 
 			T1.YEARMONTH,
-			(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHCODE,
-			(SELECT DEPTNAME FROM ba_deptmst WHERE BRANCHCODE = T1.BRANCHCODE AND DEPTCODE = T1.DEPTCODE) AS DEPTCODE,
-			(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '003' AND DCODE = T1.GRADE) AS GRADE,
-			(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '004' AND DCODE = T1.DUTY) AS DUTY,			
+			T1.BRANCHCODE,
+			T1.DEPTCODE,
+			T1.GRADE,
+			T1.DUTY,
+			(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,
+			(SELECT DEPTNAME FROM ba_deptmst WHERE BRANCHCODE = T1.BRANCHCODE AND DEPTCODE = T1.DEPTCODE) AS DEPTNAME,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '003' AND DCODE = T1.GRADE) AS GRADENAME,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE USEYN = 'Y' AND CCODE = '004' AND DCODE = T1.DUTY) AS DUTYNAME,			
 			T1.INSACODE,
 			(SELECT KNAME FROM hr_insamst WHERE INSACODE = T1.INSACODE) AS KNAME,
 			T1.PAYDATE,
@@ -67,13 +76,14 @@
 			T1.PRIZEAMT,
 			T1.DAILYAMT,
 			T1.TOTALAMT,
-			(SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '013' AND DCODE = T1.TAXGUBUN) AS TAXGUBUN,
+			T1.TAXGUBUN,
+			(SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '013' AND DCODE = T1.TAXGUBUN) AS TAXGUBUNNM,
 			T1.TAXINCOME,
 			T1.TAXLOCAL,
 			T1.SUPPLYTAX,
 			T1.DEDUCTAMT,
-			(SELECT BANKID FROM hr_taxpayeritem, sy_bankmst B WHERE INSACODE = T1.INSACODE AND BANKID = B.BANKCODE  AND BASICACCT = 'Y') AS BANKID,
-			(SELECT BANKNAME FROM hr_taxpayeritem, sy_bankmst B WHERE INSACODE = T1.INSACODE AND BANKID = B.BANKCODE  AND BASICACCT = 'Y') AS BANKNAME,
+			T1.BANKID,
+			(SELECT BANKNAME FROM sy_bankmst B WHERE T1.BANKID = B.BANKCODE) AS BANKNAME,
 			T1.ACCTNO,
 			T1.ACCTOWNER
 		FROM sa_monthpaytb T1
@@ -207,9 +217,7 @@
 	
 	<delete id="deleteEnaMonthPayMst">
 		DELETE FROM sa_monthpaytb 
-		WHERE YEARMONTH = #S_YEARMONTH#
-		AND BRANCHCODE = #S_BRANCHCODE#
-		AND DEPTCODE = #S_DEPTCODE#
+		WHERE YEARMONTH = #YEARMONTH#
 		AND INSACODE = #INSACODE#
 	</delete>	
 	
