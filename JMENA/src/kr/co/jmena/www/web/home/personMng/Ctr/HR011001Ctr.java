@@ -120,33 +120,34 @@ public class HR011001Ctr {
 				
 				jCell.add(obj);
 			}
-		}else{
-			JSONObject obj = new JSONObject();
-			
-			obj.put("INSACODE", "");
-			obj.put("KNAME", "");
-			obj.put("JUMINID", "");
-			obj.put("BIRTHDAYGUBUN", "");
-			obj.put("SAUPID", "");
-			obj.put("SAUPOWNER", "");
-			obj.put("ADDRESS", "");
-			obj.put("MOBILENO", "");
-			obj.put("TELNO", "");
-			obj.put("BRANCHCODE", "");
-			obj.put("DEPTCODE", "");
-			obj.put("BASICPAY", "");
-			obj.put("EMPLOYGUBUN", "");
-			obj.put("GRADE", "");
-			obj.put("DUTY", "");
-			obj.put("JOINDATE", "");
-			obj.put("REJOINYN", "");
-			obj.put("RETIREDATE", "");
-			obj.put("RECOLID", "");
-			obj.put("REMARK", "");
-			
-			jCell.add(obj);
-			
 		}
+//		else{
+//			JSONObject obj = new JSONObject();
+//			
+//			obj.put("INSACODE", "");
+//			obj.put("KNAME", "");
+//			obj.put("JUMINID", "");
+//			obj.put("BIRTHDAYGUBUN", "");
+//			obj.put("SAUPID", "");
+//			obj.put("SAUPOWNER", "");
+//			obj.put("ADDRESS", "");
+//			obj.put("MOBILENO", "");
+//			obj.put("TELNO", "");
+//			obj.put("BRANCHCODE", "");
+//			obj.put("DEPTCODE", "");
+//			obj.put("BASICPAY", "");
+//			obj.put("EMPLOYGUBUN", "");
+//			obj.put("GRADE", "");
+//			obj.put("DUTY", "");
+//			obj.put("JOINDATE", "");
+//			obj.put("REJOINYN", "");
+//			obj.put("RETIREDATE", "");
+//			obj.put("RECOLID", "");
+//			obj.put("REMARK", "");
+//			
+//			jCell.add(obj);
+//			
+//		}
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListSY021001]" + json);

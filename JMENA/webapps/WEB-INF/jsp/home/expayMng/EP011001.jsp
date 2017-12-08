@@ -194,7 +194,8 @@
 			loadComplete: function(ids) {
 				//전체 카운트
 				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
-				$("#leftListCount").html(countRow);				
+				$("#leftListCount").html(countRow);
+				
 			},			
 			hidegrid: false
 		});
@@ -570,8 +571,7 @@
 	
 	$(function(){
 		$("#searchButton").click(function() {
-			selectListEnaSudangMst();
-			searchbottomList("");
+			resetEnaSudang();
 		}); 
 	});	
 	
@@ -1049,7 +1049,7 @@
 				</tr>
 				<tr>
 					<th width="120">매매대금</th>
-					<td width="120"><input type="text" id="SALEAMT" name="SALEAMT" style="text-align:right;" /></td>
+					<td width="120"><input type="text" id="SALEAMT" name="SALEAMT" style="text-align:right;" readonly/></td>
 					<th width="120">매매단가</th>
 					<td><input type="text" id="SALEDANGA" name="SALEDANGA" style="text-align:right;" readonly/></td>
 				</tr>

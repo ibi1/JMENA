@@ -483,15 +483,15 @@
 	$(function() {
 		$("#deleteButton").click(function() {
 			
-			if ($("#S_FLAG").val() == "I") {
-				alert("추가 중 일 경우 삭제할 수 없습니다.");
-				return;
-			}
-			
 			var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 			
 			if (ids == null || ids == "") {
 				alert("그리드를 선택하셔야 합니다.");
+				return;
+			}
+			
+			if ($("#S_FLAG").val() == "I") {
+				alert("추가 중 일 경우 삭제할 수 없습니다.");
 				return;
 			}
 			

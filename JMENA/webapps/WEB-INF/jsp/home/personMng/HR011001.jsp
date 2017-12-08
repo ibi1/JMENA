@@ -422,8 +422,9 @@
 		$("#searchButton").click(function(){
 			var insacode = "";
 			selectListInsaMst();
-			selectListEnaAppointItem(insacode);
-			selectListEnaTexPayerItem(insacode);			
+			resetHrMst();
+//			selectListEnaAppointItem(insacode);
+//			selectListEnaTexPayerItem(insacode);			
 		}); 
 		$("#insaButton").click(function(){
 			var popUrl = "/home/HR011001_1.do";	//팝업창에 출력될 페이지 UR
@@ -652,29 +653,7 @@
 	
 	$(function() {
 		$("#insertButton").click(function() {
-			$("#INSACODE").val("");
-			$("#KNAME").val("");
-			$("#JUMINID1").val("");
-			$("#JUMINID2").val("");
-			$("input:radio[name=BIRTHDAYGUBUN]:input[value=S]").attr("checked", true);
-			$("#SAUPID1").val("");
-			$("#SAUPID2").val("");
-			$("#SAUPID3").val("");
-			$("#SAUPOWNER").val("");
-			$("#ADDRESS").val("");
-			$("#MOBILENO").val("");
-			$("#TELNO").val("");
-			$("#BRANCHCODE").val("");
-			$("#DEPTCODE").val("");
-			$("#BASICPAY").val("");	
-			$("input:radio[name=EMPLOYGUBUN]:input[value=R]").attr("checked", true);
-			$("#GRADE").val("");
-			$("#DUTY").val("");
-			$("#JOINDATE").val("");
-			$("#REJOINYN").attr('checked', false);
-			$("#RETIREDATE").val("");
-			$("#RECOID").val("");
-			$("#REMARK").val("");	
+			resetHrMst();
 			f_selectListEnaDeptCode("2","");
 			selectListEnaAppointItem("");				
 			selectListEnaTexPayerItem("");
@@ -683,8 +662,43 @@
 		});
 	})
 	
+	
+	function resetHrMst(){
+		$("#INSACODE").val("");
+		$("#KNAME").val("");
+		$("#JUMINID1").val("");
+		$("#JUMINID2").val("");
+		$("input:radio[name=BIRTHDAYGUBUN]:input[value=S]").attr("checked", true);
+		$("#SAUPID1").val("");
+		$("#SAUPID2").val("");
+		$("#SAUPID3").val("");
+		$("#SAUPOWNER").val("");
+		$("#ADDRESS").val("");
+		$("#MOBILENO").val("");
+		$("#TELNO").val("");
+		$("#BRANCHCODE").val("");
+		$("#DEPTCODE").val("");
+		$("#BASICPAY").val("");	
+		$("input:radio[name=EMPLOYGUBUN]:input[value=R]").attr("checked", true);
+		$("#GRADE").val("");
+		$("#DUTY").val("");
+		$("#JOINDATE").val("");
+		$("#REJOINYN").attr('checked', false);
+		$("#RETIREDATE").val("");
+		$("#RECOID").val("");
+		$("#REMARK").val("");	
+		selectListEnaAppointItem("");				
+		selectListEnaTexPayerItem("");
+	}
+	
 	$(function(){
 		$("#saveButton").click(function(){
+			if ($("#INSACODE").val() == "") {
+				alert("사번을 입력하셔야 합니다.");
+				$("#INSACODE").focus();			
+				return false;
+			}		
+			
 			if (confirm("저장하시겠습니까?") == true) {
 				//콤마 remove
 				f_commaInputData("remove");
@@ -703,6 +717,7 @@
 							{
 								alert("저장이 완료되었습니다.");
 								selectListInsaMst();
+								resetHrMst();
 							}else{
 								alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 							}
