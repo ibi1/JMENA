@@ -19,11 +19,11 @@ function inputComma(id) {
 	var selector="input[id="+id+"]";
 	
 	$(selector).keypress(function(event) {
-		if (event.which && (event.which < 48 || event.widch > 57) && (event.which != 45 && event.which != 46) && event.which == 9) {
+		if (event.which && (event.which < 48 || event.widch > 57) && (event.which != 45 && event.which != 46)) {
 			event.preventDefault();
 		}
 	}).keyup(function() {
-		if (event.which && (event.which < 48 || event.widch > 57) && (event.which != 45 && event.which != 46) && event.which == 9) {
+		if (event.which && (event.which < 48 || event.widch > 57) && (event.which != 45 && event.which != 46)) {
 			event.preventDefault();
 		} else {
 			if( $(this).val() != null && $(this).val() != '' ) {
