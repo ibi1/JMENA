@@ -206,7 +206,6 @@
 					S_DEPTCODE : S_DEPTCODE
 				},
 				success: function(data){
-					console.log(JSON.stringify(data.personCnt));
 					
 					data.personCnt.forEach(function(currentValue, index, array){
 						$("#SUMCNT1").val(currentValue.SUMCNT1);
