@@ -500,6 +500,12 @@
 							if(data.rows[0].MSG == "success")
 							{
 								alert("저장이 완료되었습니다.");
+								var txtEle = $("#SA011003 input[type=text], select");
+								  
+								for(var i = 0; i < txtEle.length; i ++){
+									$(txtEle[i]).val("");
+								}
+
 								f_selectListEnaIpgumMst();
 							}else{
 								alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
