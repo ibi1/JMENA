@@ -81,40 +81,14 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		var SALEDATE = $("#SALEDATE",opener.document).val();
-		var SALEID = $("#SALEID",opener.document).val();
-		$("#S_SALEDATE").val(SALEDATE);
-		$("#S_SALEID").val(SALEID);
-		
-		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		
-		$("#S_SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-		$("#S_SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-		
-		selectListEnaSaleSudangList();
-		
-
-		
-		$("#searchButton").click(function(){
-			selectListEnaSaleSudangList();
-		}); 
-		
-	})
-
-
-	function selectListEnaSaleSudangList(){
-		if($("#S_SALEID").val() == "" && $("#S_SALEDATE").val() == ""){
-			alert("검색 조건을 입력 해 주세요");
-			return;
-		}
+			
 		$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 		$('#leftList').jqGrid({
 			//caption: '수당관리'
 			url:"/home/selectListEnaSaleSudangList.do" ,
 			mtype: 'POST',
 			postData : {
-				SALEID : $("#S_SALEID").val(),
-				SALEDATE : $("#S_SALEDATE").val()
+				SALEDATE : $("#SALEDATE",opener.document).val()
 			},				
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
@@ -176,8 +150,12 @@
 				$("#DCAMT", parent.opener.document).val(selRowData.DCAMT);
 				$("#SELLAMT", parent.opener.document).val(selRowData.SELLAMT);
 //				$("#S_SALEID", parent.opener.document).val(selRowData.SALEID);
-//				$(opener.location).attr("href", "javascript:selectListEnaSudangMst();");
-
+				$("#INSACODE", parent.opener.document).val(selRowData.SALERCD);
+				$("#KNAME", parent.opener.document).val(selRowData.SALERNM);
+				$("#SUDANGRATE", parent.opener.document).val("0");
+				$("#ADDRATE", parent.opener.document).val("0");
+				$("#TAXGUBUN", parent.opener.document).val("001");
+				$(opener.location).attr("href", "javascript:insertSudangMst();");
 				window.self.close();
 
 			} ,
@@ -188,23 +166,22 @@
 			},
 			hidegrid: false
 		});
-	}	
-	
+	});
 
 
 </script>
 <body>
 	<div id="contents" style="width:98%;" align="center">
 		<div id="leftDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<table width="100%">
-				<tr>
+<!-- 			<table width="100%">
+ 				<tr>
 					<th width="120">계약일자</th>
 					<td width="120"><input type="text" class="inputName" id="S_SALEDATE" name="S_SALEDATE" /></td>
 					<th width="120">번호</th>
 					<td width="120"><input type="text" class="inputName" id="S_SALEID" name="S_SALEID" /></td>
 					<td align="right"><input type="button" value="조회" id='searchButton' /></td>
-				</tr>
-			</table>
+				</tr> 
+			</table> -->
 			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList" width="98%"></table>
 		</div>		

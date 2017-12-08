@@ -330,17 +330,15 @@ public class EP011001Ctr {
 		JSONObject json = new JSONObject();		
 
 		JSONObject obj = new JSONObject();
-		logger.debug("[deleteEnaSudangMst        111111111111111111111111111]");
 		if (EP011001Biz.updateEnaSudangMst(request) == true) {
-				obj.put("MSG", "success");
+				obj.put("MSG", "SUCCESS");
 		}else{
-				obj.put("MSG", "error");
+				obj.put("MSG", "ERROR");
 		}
-		logger.debug("[deleteEnaSudangMst        22222222222222222222]");
 		jCell.add(obj);
 		json.put("rows", jCell);
 		
-		
+		logger.debug("[updateEnaSudangMst]" + json);
 		return new ModelAndView("jsonView", json);	
 	}
 	
@@ -352,27 +350,18 @@ public class EP011001Ctr {
 		EP011001VO vo = new EP011001VO();
 				
 		vo.setSALEID(request.getParameter("SALEID"));
-		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
-		
+		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		
-		String resultCode = "";
-		String resultMsg = "";
-		
+		JSONObject obj = new JSONObject();
+		EP011001Biz.deleteEnaSudangMstPTb(vo);
 		if (EP011001Biz.deleteEnaSudangMst(vo) == true) {
-			resultCode ="SUCCESS";
-			resultMsg = "정상적으로 삭제하였습니다.";
-			if (EP011001Biz.deleteEnaSudangMstPTb(vo) == true) {
-				resultCode ="SUCCESS";
-				resultMsg = "정상적으로 삭제하였습니다.";
-			}
+			obj.put("MSG", "SUCCESS");
 		}else{
-			 resultCode ="FAILED";
-			 resultMsg = "[ERROR] 수당관리 삭제 중 오류가 발생하였습니다.";
+			obj.put("MSG", "ERROR");
 		}
-
-		json.put("resultCode", resultCode);
-		json.put("resultMsg", resultMsg);
+		jCell.add(obj);
+		json.put("rows", jCell);
 
 		logger.debug("[deleteEnaSudangMst]" + json);
 		

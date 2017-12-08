@@ -80,9 +80,7 @@
 
 <script type="text/javascript">
 	var v_rightLastSel = 0;
-	$(document).ready(function(){
-		
-		$("#SALEID").val($("#SALEID",opener.document).val());
+	$(document).ready(function(){		
 //		$("#INSACODE").val($("#INSACODE",opener.document).val());
 //		$("#PAYSEQ").val($("#PAYSEQ",opener.document).val());
 //		$("#S_PAYSEQ").val($("#PAYSEQ",opener.document).val());
@@ -466,11 +464,13 @@
 							searchbottomList();
 						}else{
 							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
+							searchbottomList();
 						}
 						
 					},
 					error:function(e){  
 						alert("신고인 관리를 저장하는 중 오류가 발생하였습니다.");
+						searchbottomList();
 					}  	
 				});
 			} else {
@@ -535,8 +535,8 @@
 		</div>
 		<table align="right">
 			<tr >
-				<td><input type="button" value="수당수령인 추가" id='insertButton' /></td>
-				<td><input type="button" value="수당수령인 삭제" id='deleteButton' /></td>
+				<td><input type="button" value="수당신고인 추가" id='insertButton' /></td>
+				<td><input type="button" value="수당신고인 삭제" id='deleteButton' /></td>
 				<td><input type="button" value="저장" id='saveButton' /></td>
 			</tr>
 		</table>

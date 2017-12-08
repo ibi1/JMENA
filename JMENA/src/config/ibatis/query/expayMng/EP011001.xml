@@ -402,9 +402,6 @@
 	<delete id="deleteEnaSudangMstPTb">
 		DELETE FROM sa_sudangpayertb
 		WHERE SALEID = #SALEID#
-		  <isNotEmpty property="PAYSEQ">
-		  AND PAYSEQ = #PAYSEQ#
-		  </isNotEmpty>
 	</delete>
 	
 	<select id="selectListEnaSudangPTb" resultMap="EP011001Datas">

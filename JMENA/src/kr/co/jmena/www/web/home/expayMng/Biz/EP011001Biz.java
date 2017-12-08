@@ -110,7 +110,7 @@ public class EP011001Biz {
 			
 			delVo.setSALEID(SALEID);
 			EP011001Dao.deleteEnaSudangMst(delVo);
-			EP011001Dao.deleteEnaSudangMst(delVo);
+			EP011001Dao.deleteEnaSudangMstPTb(delVo);
 				logger.debug("[yearmonthArr.length]" + insacodeArr);
 				
 				
