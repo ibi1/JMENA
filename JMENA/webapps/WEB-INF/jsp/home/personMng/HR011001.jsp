@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 	var v_rightLastSel = 0;
-	var v_branchCode = "00001";
+	var v_branchCode = "";
 	var v_appointdept;
 	$(document).ready(function(){
 		var INSACODE = "";
@@ -298,13 +298,18 @@
 						BRANCHCODE : v_branchCode
 					},
 					success: function(data){
+						$("#bottomList1").jqGrid('restoreRow',ids,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
+					        
 						$("#"+ids+"_APPOINTDEPT").empty().data('options');
 						var inHtml = "";
 						data.deptMstList.forEach(function(currentValue, index, array){
 							inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 						});
 						inHtml += "";
-						$("#"+ids+"_APPOINTDEPT").html(inHtml);
+						$("#"+ids+"_APPOINTDEPT").append(inHtml);
+						
+						$("#bottomList1").jqGrid('editRow',ids,false);  //해당 row가 수정모드(?)로 변경
+					     
 					},
 					error:function(e){  
 						alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
