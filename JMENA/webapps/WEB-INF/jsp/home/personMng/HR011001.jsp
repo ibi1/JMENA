@@ -698,7 +698,42 @@
 				$("#INSACODE").focus();			
 				return false;
 			}		
+			if ($("#KNAME").val() == "") {
+				alert("성명을 입력하셔야 합니다.");
+				$("#KNAME").focus();			
+				return false;
+			}				
+			if ($("#JUMINID1").val() == "") {
+				alert("주민번호를 입력하셔야 합니다.");
+				$("#JUMINID1").focus();			
+				return false;
+			}	
+			if ($("#JUMINID2").val() == "") {
+				alert("주민번호를 입력하셔야 합니다.");
+				$("#JUMINID2").focus();			
+				return false;
+			}	
+			var birth = $('input:radio[name=BIRTHDAYGUBUN]').is(':checked');
+			if (birth == "") {
+				alert("생일구분을 선택 하셔야 합니다.");
+				return false;
+			}					
+			if ($("#MOBILENO").val() == "") {
+				alert("핸드폰번호를 입력하셔야 합니다.");
+				$("#MOBILENO").focus();			
+				return false;
+			}		
 			
+			var employ = $('input:radio[name=EMPLOYGUBUN]').is(':checked');
+			if (employ == "") {
+				alert("고용구분을 선택 하셔야 합니다.");
+				return false;
+			}					
+			if ($("#JOINDATE").val() == "") {
+				alert("입사일을 입력하셔야 합니다.");
+				$("#JOINDATE").focus();			
+				return false;
+			}							
 			if (confirm("저장하시겠습니까?") == true) {
 				//콤마 remove
 				f_commaInputData("remove");
@@ -777,8 +812,6 @@
 			$('#bottomList1').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
 			var cellData = $("#bottomList1").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
-			alert(cellData.DEPTGUBUN);
-			alert(cellData.PREBASICPAY);
 			
 			if(cellData.PREBASICPAY == "" || cellData.PREBASICPAY == "0"){			
 			}else{
@@ -1219,7 +1252,7 @@
 					<th width="120">성명 / 사번</th>
 					<td>
 						<input type="text" id="KNAME" name="KNAME" />        
-						<input type="text" id="INSACODE" name="INSACODE" maxlength="8" readonly/>
+						<input type="text" id="INSACODE" name="INSACODE" maxlength="8"/>
 					</td>
 					<td colspan="2">
 						<input type="button" id='insaButton'/>
