@@ -1629,7 +1629,7 @@
 					
 					var reBuyPy = parseFloat($("#CONM2").val()) * 0.3025;
 					
-					$("#CONPY").val(reBuyPy.toFixed(1));
+					$("#CONPY").val(reBuyPy.toFixed(0));
 					
 					//콤마 추가
 					f_commaInputData("click");
