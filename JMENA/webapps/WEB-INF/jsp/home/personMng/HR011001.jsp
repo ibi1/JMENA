@@ -288,8 +288,8 @@
 			
 			//alert("v_branchCode==>"+v_branchCode);
 			
-// 			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-// 			var cellData = $("#bottomList1 [name=APPOINTBRANCHCODE] option:selected").val();
+ 			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+ 			
 				$.ajax({ 
 					type: 'POST' ,
 					url: "/codeCom/deptMstList.do", 
@@ -298,11 +298,12 @@
 						BRANCHCODE : v_branchCode
 					},
 					success: function(data){
-						var inHtml = "<select>";
+						$("#"+ids+"_APPOINTDEPT").empty().data('options');
+						var inHtml = "";
 						data.deptMstList.forEach(function(currentValue, index, array){
 							inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
 						});
-						inHtml += "</select>";
+						inHtml += "";
 						$("#"+ids+"_APPOINTDEPT").html(inHtml);
 					},
 					error:function(e){  
