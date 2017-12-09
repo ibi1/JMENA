@@ -297,31 +297,34 @@
 
 			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 			
-// 			alert("v_branchCode==>"+v_branchCode);
-// 			alert("v_deptName==>"+v_deptName);
+ 			//alert("v_branchCode==>"+v_branchCode);
+ 			setTimeout(function() {
+ 				$.ajax({ 
+ 					type: 'POST' ,
+ 					url: "/codeCom/deptMstList.do", 
+ 					dataType : 'json' ,
+ 					data : {
+ 						BRANCHCODE : v_branchCode
+ 					},
+ 					success: function(data){
+ 						$("#"+ids+"_APPOINTDEPT").empty().data('options');
+ 						var inHtml = "";
+ 						data.deptMstList.forEach(function(currentValue, index, array){
+ 							var selected = v_deptName == currentValue.DEPTNAME ? "selected='selected'" : "";
 
-			$.ajax({ 
-				type: 'POST' ,
-				url: "/codeCom/deptMstList.do", 
-				dataType : 'json' ,
-				data : {
-					BRANCHCODE : v_branchCode
-				},
-				success: function(data){
-					$("#"+ids+"_APPOINTDEPT").empty().data('options');
-					var inHtml = "";
-					data.deptMstList.forEach(function(currentValue, index, array){
-						var selected = v_deptName == currentValue.DEPTNAME ? "selected='selected'" : "";
+ 							inHtml += "<option value='" + currentValue.DEPTCODE + "' " + selected + ">" + currentValue.DEPTNAME + "</option>\n";
+ 						});
 
-						inHtml += "<option value='" + currentValue.DEPTCODE + "' " + selected + ">" + currentValue.DEPTNAME + "</option>\n";
-					});
+ 						$("#"+ids+"_APPOINTDEPT").append(inHtml); 
+ 					},
+ 					error:function(e){  
+ 						alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
+ 					}  
+ 				});	
+ 				
+ 				
+			}, 500);
 
-					$("#"+ids+"_APPOINTDEPT").append(inHtml); 
-				},
-				error:function(e){  
-					alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
-				}  
-			});	
 		},
 		loadComplete: function() {
 			//전체 카운트
