@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 	var v_rightLastSel = 0;
-	var v_branchCode;
+	var v_branchCode = "00001";
 	var v_appointdept;
 	$(document).ready(function(){
 		var INSACODE = "";
@@ -286,27 +286,29 @@
 			//발령지사에서 키 값 가져오기
 			v_branchCode = $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCHCODE;
 			
+			//alert("v_branchCode==>"+v_branchCode);
+			
 // 			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 // 			var cellData = $("#bottomList1 [name=APPOINTBRANCHCODE] option:selected").val();
-// 				$.ajax({ 
-// 					type: 'POST' ,
-// 					url: "/codeCom/deptMstList.do", 
-// 					dataType : 'json' ,
-// 					data : {
-// 						BRANCHCODE : v_branchCode
-// 					},
-// 					success: function(data){
-// 						var inHtml = "<select>";
-// 						data.deptMstList.forEach(function(currentValue, index, array){
-// 							inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
-// 						});
-// 						inHtml += "</select>";
-// 						$("#"+ids+"_APPOINTDEPT").html(inHtml);
-// 					},
-// 					error:function(e){  
-// 						alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
-// 					}  
-// 				});				
+				$.ajax({ 
+					type: 'POST' ,
+					url: "/codeCom/deptMstList.do", 
+					dataType : 'json' ,
+					data : {
+						BRANCHCODE : v_branchCode
+					},
+					success: function(data){
+						var inHtml = "<select>";
+						data.deptMstList.forEach(function(currentValue, index, array){
+							inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+						});
+						inHtml += "</select>";
+						$("#"+ids+"_APPOINTDEPT").html(inHtml);
+					},
+					error:function(e){  
+						alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
+					}  
+				});				
 			
 			
 			if( v_rightLastSel != id ){
