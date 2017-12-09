@@ -97,7 +97,8 @@
 				S_DEPTCODE : "ALL",
 // 				S_BRANCHCODE : $("#S_BRANCHCODE").val(),
 // 				S_DEPTCODE : $("#S_DEPTCODE").val(),
-				S_SALERCD : $("#S_SALERCD").val()
+				S_SALERCD : $("#S_SALERCD").val(),
+				FLAG     :  ""
 			},				
 			datatype:"json" ,			
 			loadError:function(){alert("Error~!!");} ,
@@ -222,19 +223,19 @@
 					  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
 						, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
 						, {name:"KNAME",		index:'KNAME',		width:80,		align:'center',	sortable:false}
-						, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:110,		align:'center',	sortable:false, editable:true, editoptions:{
+						, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:110,		align:'center',	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}, editoptions:{
 							dataEvents:[{
 								type:'change',
 								fn:function(e){
-									paycal2();
+									paycal2("1");
 								}
 							}]						
 						}}
-						, {name:"ADDRATE",		index:'ADDRATE',	width:80,		align:'center',	sortable:false, editable:true, editoptions:{
+						, {name:"ADDRATE",		index:'ADDRATE',	width:80,		align:'center',	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}, editoptions:{
 							dataEvents:[{
 								type:'change',
 								fn:function(e){
-									paycal2();
+									paycal2("1");
 								}
 							}]						
 						}}
@@ -246,14 +247,14 @@
 								fn:function(e){
 									var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 									$("#bottomList").setCell(ids,"TAXGUBUN",this.value);
-									paycal2();
+									paycal2("2");
 								}
 							}]
 						}}
-						, {name:"TAXINCOME",	index:'TAXINCOME',	width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-						, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-						, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-						, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+						, {name:"TAXINCOME",	index:'TAXINCOME',	width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
+						, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
+						, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
+						, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
 						, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center',	sortable:false}
 						, {name:"REMARK",		index:'REMARK',		width:90,		align:'center',	sortable:false}
 						, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false, hidden:true}
@@ -512,14 +513,12 @@
 		f_commaInputData("click");
 	}
 	
-	function paycal2(){
+	function paycal2(flag){
 		var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 		
 		$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 		
 		var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기	
-		 		
-		$('#bottomList').jqGrid('editRow', ids, true);		
 		
 		var gijunAmt = 0;
 		
@@ -564,6 +563,9 @@
 			var deductamt = gijunAmt - supplytax;			
 		}
 		$("#bottomList").setCell(ids,"DEDUCTAMT",deductamt);
+		if(flag == "2"){
+			$('#bottomList').jqGrid('editRow', ids, true);		
+		}
 		//콤마 remove
 		f_commaInputData("remove");
 	}		
@@ -672,10 +674,10 @@
 						}
 					}]
 				}}
-				, {name:"TAXINCOME",	index:'TAXINCOME',	width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
-				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+				, {name:"TAXINCOME",	index:'TAXINCOME',	width:100,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
+				, {name:"TAXLOCAL",		index:'TAXLOCAL',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
+				, {name:"SUPPLYTAX",	index:'SUPPLYTAX',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
+				, {name:"DEDUCTAMT",	index:'DEDUCTAMT',	width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
 				, {name:"REGISTERNUM",	index:'REGISTERNUM',width:60,		align:'center',	sortable:false}
 				, {name:"REMARK",		index:'REMARK',		width:90,		align:'center',	sortable:false}
 				, {name:"SALEID",		index:'SALEID',		width:60,		align:'center',	sortable:false, hidden:true}

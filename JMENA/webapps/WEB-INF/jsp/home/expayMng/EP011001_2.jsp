@@ -294,7 +294,7 @@
 		
 		
 		if(taxgubun == "001"){
-			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
+//			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
 			var taxincome = gijunAmt * 3 / 100;    //사업소득세
 			var taxlocal = taxincome * 10 / 100;    //지방세
 			taxincome = Math.floor(taxincome/10) * 10;
@@ -316,6 +316,13 @@
 			
 		}
 		$("#bottomList").setCell(ids,"DEDUCTAMT",deductamt);
+		
+		
+		
+		
+		
+		
+		
 	}
 				
 		
@@ -378,14 +385,14 @@
 				return false;
 			}
 
-			if (cellData.SAUPOWNER == "") {
-				alert("대표자명을 입력하셔야 합니다.");
+// 			if (cellData.SAUPOWNER == "") {
+// 				alert("대표자명을 입력하셔야 합니다.");
 			
-				$('#rightList').jqGrid('editRow', ids, true);
-				$("#"+ids+"SAUPOWNER").focus();
+// 				$('#rightList').jqGrid('editRow', ids, true);
+// 				$("#"+ids+"SAUPOWNER").focus();
 			
-				return false;
-			}
+// 				return false;
+// 			}
 			if (cellData.PAYAMT == "") {
 				alert("지급금액을 입력하셔야 합니다.");
 			

@@ -250,36 +250,11 @@
 	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='004' AND I.DUTY = C.DCODE ) as DUTY
 	    FROM sa_sudangmst T1
 	   WHERE 1 = 1
-	 	AND T1.SALEID = #S_SALEID# 
-	 	AND (
-	 		<isEqual property="FLAG" compareValue="1">
-		 		T1.INSACODE = #INSACODE#	 		
-		      OR
+	 	AND T1.SALEID = #S_SALEID# 	 	 
+	 		<isEqual property="FLAG" compareValue="">
+		 	AND	T1.INSACODE != #INSACODE#		      
 	 		</isEqual>
-			 (T1.BRANCHCODE = (SELECT T2.BRANCHCODE 
-		                  		 FROM sa_sudangmst T2
-						  		WHERE T2.SALEID = #S_SALEID#
-								  AND T2.INSACODE = #INSACODE#
-							  )
-			  AND T1.GRADE = '015'
-			 )
-			 OR
-			 (
-			 
-			 T1.DEPTCODE = (SELECT deptcode
-           				      FROM ba_deptmst
-           	   			     WHERE branchcode =  (SELECT T3.BRANCHCODE 
-												    FROM sa_sudangmst T3
-												   WHERE T3.SALEID = #S_SALEID#
-												     AND T3.INSACODE = #INSACODE#) 
-				 		       AND deptname = '임원')
-			 )
-			 OR
-			 (T1.INSACODE = (SELECT RECOID
-			                   FROM hr_insamst I
-							  WHERE INSACODE = #INSACODE#)
-			 )
-		 )
+		
 	</select>		
 	
 	<select id="selectEnaSudangMstInsert" resultMap="EP011001DataInsertlist">
@@ -293,6 +268,10 @@
 		                  		 FROM hr_insamst T2
 								WHERE T2.INSACODE = #SALERCD#
 							  )
+			  AND T1.DEPTCODE	= (SELECT T4.DEPTCODE 
+		                  			 FROM hr_insamst T4
+									WHERE T4.INSACODE = #SALERCD#
+							  	   )				  
 			  AND T1.GRADE = '007'
 			 )
 			 OR
