@@ -15,6 +15,7 @@
 <script type="text/javascript">
 	var v_rightLastSel = 0;
 	var v_branchCode = "";
+	var v_deptName = "";
 	var v_appointdept;
 	$(document).ready(function(){
 		var INSACODE = "";
@@ -282,48 +283,45 @@
 			} else {
 				$("#S_FLAG_B1").val("I");
 			}
-
-			//발령지사에서 키 값 가져오기
-			v_branchCode = $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCHCODE;
-			
-			//alert("v_branchCode==>"+v_branchCode);
-			
- 			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
- 			
-				$.ajax({ 
-					type: 'POST' ,
-					url: "/codeCom/deptMstList.do", 
-					dataType : 'json' ,
-					data : {
-						BRANCHCODE : v_branchCode
-					},
-					success: function(data){
-						$("#bottomList1").jqGrid('restoreRow',ids,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
-					        
-						$("#"+ids+"_APPOINTDEPT").empty().data('options');
-						var inHtml = "";
-						data.deptMstList.forEach(function(currentValue, index, array){
-							inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
-						});
-						inHtml += "";
-						$("#"+ids+"_APPOINTDEPT").append(inHtml);
-						
-						$("#bottomList1").jqGrid('editRow',ids,false);  //해당 row가 수정모드(?)로 변경
-					     
-					},
-					error:function(e){  
-						alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
-					}  
-				});				
-			
 			
 			if( v_rightLastSel != id ){
+				//발령지사에서 키 값 가져오기
+				v_branchCode = $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCHCODE;
+				v_deptName = $("#bottomList1").jqGrid('getRowData', id).APPOINTDEPT;
+
 		        $(this).jqGrid('restoreRow',v_rightLastSel,true);    //해당 row 가 수정모드에서 뷰모드(?)로 변경
 		        $(this).jqGrid('editRow',id,false);  //해당 row가 수정모드(?)로 변경
 		        
 		        v_rightLastSel = id;
 			}
 
+			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+// 			alert("v_branchCode==>"+v_branchCode);
+// 			alert("v_deptName==>"+v_deptName);
+
+			$.ajax({ 
+				type: 'POST' ,
+				url: "/codeCom/deptMstList.do", 
+				dataType : 'json' ,
+				data : {
+					BRANCHCODE : v_branchCode
+				},
+				success: function(data){
+					$("#"+ids+"_APPOINTDEPT").empty().data('options');
+					var inHtml = "";
+					data.deptMstList.forEach(function(currentValue, index, array){
+						var selected = v_deptName == currentValue.DEPTNAME ? "selected='selected'" : "";
+
+						inHtml += "<option value='" + currentValue.DEPTCODE + "' " + selected + ">" + currentValue.DEPTNAME + "</option>\n";
+					});
+
+					$("#"+ids+"_APPOINTDEPT").append(inHtml); 
+				},
+				error:function(e){  
+					alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
+				}  
+			});	
 		},
 		loadComplete: function() {
 			//전체 카운트
