@@ -11,6 +11,7 @@
 
 </head>
 <script type="text/javascript">
+	var v_rightLastSel=0;
 	$(document).ready(function(){
 		var dt = new Date();
 		// Display the month, day, and year. getMonth() returns a 0-based number.
@@ -154,6 +155,7 @@
 			},
 			//height: '100%' ,
 			onSelectRow: function(ids){
+				v_rightLastSel = 0;
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#PAYDATE").val(selRowData.PAYDATE);
 				$("#SALERCD").val(selRowData.SALERCD);
@@ -441,14 +443,33 @@
 	});
 	
 	
-	$("#SUDANGRATE").change(function() {
-		paycal();
-	});
+// 	$("#SUDANGRATE").change(function() {
+// 		paycal();
+// 	});	
 	
-	
-	$("#ADDRATE").change(function() {
-		paycal();
+	$("#SUDANGRATE").keydown(function() {
+		var keyCode = window.event.keyCode;
+		if(keyCode==13 || keyCode==9) {
+			//저장전 콤마 삭제
+			f_commaInputData("remove");
+			paycal();
+			f_commaInputData("click");
+		}
 	});
+
+// 	$("#ADDRATE").change(function() {
+// 		paycal();
+// 	});
+	
+	$("#ADDRATE").keydown(function() {
+		var keyCode = window.event.keyCode;
+		if(keyCode==13 || keyCode==9) {
+			//저장전 콤마 삭제
+			f_commaInputData("remove");
+			paycal();
+			f_commaInputData("click");		
+		}
+	});	
 	
 	$("#TAXGUBUN").change(function() {
 		paycal();
@@ -473,7 +494,12 @@
 		var seleAmt = parseInt($("#SALEAMT").val());
 		var sudangrate = parseFloat($("#SUDANGRATE").val());
 		var addrate = parseFloat($("#ADDRATE").val());
-		
+		if(isNaN(sudangrate) == true){
+			sudangrate=0
+		}
+		if(isNaN(addrate) == true){
+			addrate=0
+		}
 		gijunAmt = seleAmt * (sudangrate + addrate) / 100;    //지급금액(기준금액)
 			
 // 		if(salercd == insacode){
@@ -567,7 +593,7 @@
 			$('#bottomList').jqGrid('editRow', ids, true);		
 		}
 		//콤마 remove
-		f_commaInputData("remove");
+		f_commaInputData("click");
 	}		
 	
 	
@@ -837,6 +863,7 @@
 					success: function(data){
 						if(data.rows[0].MSG == "SUCCESS"){
 							alert("저장이 완료되었습니다.");
+							v_rightLastSel = 0;
 							resetEnaSudang();
 						}else{
 							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
