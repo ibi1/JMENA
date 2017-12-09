@@ -203,9 +203,7 @@
 			, {name:"APPOINTDATE",		index:'APPOINTDATE',		width:100,		align:'center',	sortable:false, editable:true}
 			, {name:"APPOINTBRANCHCODE",		index:'APPOINTBRANCHCODE',		width:100,		align:'center',	sortable:false, editable:true, hidden:true}
 			, {name:"APPOINTBRANCH",	index:'APPOINTBRANCH',		width:100,		align:'center',	sortable:false, editable:true
-				, formatter:function (cellvalue, options, rowObject) {
-					return cellvalue;
-				}, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1,
+				, edittype:'select',  editoptions:{dataUrl:"/codeCom/branchMstList.do", buildSelect:f_selectListEnaBranchCode1,
 					dataEvents:[{
 						type:'change',
 						fn:function(e){
@@ -262,7 +260,7 @@
 			, {name:"GRADE",			index:'GRADE',				width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=003", buildSelect:selectListEnaCode}}
 			, {name:"DUTY",				index:'DUTY',				width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=004", buildSelect:selectListEnaCode} }
 			, {name:"EMPLOYGUBUN",		index:'EMPLOYGUBUN',		width:100,		align:'center',	sortable:false, editable:true, formatter:'select', edittype:'select', editoptions:{value: "R:정규;F:프리"}}
-			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' ,	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
+			, {name:"PREBASICPAY",		index:'PREBASICPAY',		width:100,		align:'right' ,	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
 			, {name:"REMARK",			index:'REMARK',				width:100,		align:'center',	sortable:false, editable:true}
 			, {name:"DEPTGUBUN",		index:'DEPTGUBUN',			width:100,		align:'center',	sortable:false, hidden:true }
 		] ,
@@ -288,27 +286,27 @@
 			//발령지사에서 키 값 가져오기
 			v_branchCode = $("#bottomList1").jqGrid('getRowData', id).APPOINTBRANCHCODE;
 			
-			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-//			var cellData = $("#bottomList1 [name=APPOINTBRANCHCODE] option:selected").val();
-				$.ajax({ 
-					type: 'POST' ,
-					url: "/codeCom/deptMstList.do", 
-					dataType : 'json' ,
-					data : {
-						BRANCHCODE : v_branchCode
-					},
-					success: function(data){
-						var inHtml = "<select>";
-						data.deptMstList.forEach(function(currentValue, index, array){
-							inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
-						});
-						inHtml += "</select>";
-						$("#"+ids+"_APPOINTDEPT").html(inHtml);
-					},
-					error:function(e){  
-						alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
-					}  
-				});				
+// 			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+// 			var cellData = $("#bottomList1 [name=APPOINTBRANCHCODE] option:selected").val();
+// 				$.ajax({ 
+// 					type: 'POST' ,
+// 					url: "/codeCom/deptMstList.do", 
+// 					dataType : 'json' ,
+// 					data : {
+// 						BRANCHCODE : v_branchCode
+// 					},
+// 					success: function(data){
+// 						var inHtml = "<select>";
+// 						data.deptMstList.forEach(function(currentValue, index, array){
+// 							inHtml += "<option value='" + currentValue.DEPTCODE + "'>" + currentValue.DEPTNAME + "</option>\n";
+// 						});
+// 						inHtml += "</select>";
+// 						$("#"+ids+"_APPOINTDEPT").html(inHtml);
+// 					},
+// 					error:function(e){  
+// 						alert("[ERROR]발령부서 데이터 호출 중 오류가 발생하였습니다.");
+// 					}  
+// 				});				
 			
 			
 			if( v_rightLastSel != id ){
@@ -678,7 +676,7 @@
 		$("#TELNO").val("");
 		$("#BRANCHCODE").val("");
 		$("#DEPTCODE").val("");
-		$("#BASICPAY").val("");	
+		$("#BASICPAY").val("0");	
 		$("input:radio[name=EMPLOYGUBUN]:input[value=R]").attr("checked", true);
 		$("#GRADE").val("");
 		$("#DUTY").val("");
@@ -693,11 +691,6 @@
 	
 	$(function(){
 		$("#saveButton").click(function(){
-			if ($("#INSACODE").val() == "") {
-				alert("사번을 입력하셔야 합니다.");
-				$("#INSACODE").focus();			
-				return false;
-			}		
 			if ($("#KNAME").val() == "") {
 				alert("성명을 입력하셔야 합니다.");
 				$("#KNAME").focus();			
@@ -734,17 +727,22 @@
 				$("#JOINDATE").focus();			
 				return false;
 			}							
+			if ($("#BASICPAY").val() == "") {
+				$("#BASICPAY").val("0");
+			}
+			
+			var rejoinyn = $('input:checkbox[name=REJOINYN]').is(':checked') ? "Y" : "N";
+			
 			if (confirm("저장하시겠습니까?") == true) {
 				//콤마 remove
 				f_commaInputData("remove");
-				var rejoinyn = $("#REJOINYN").is(":checked") ? "Y" : "N";
-				var formData = $("#HR011001").serialize()+"&REJOINYN="+rejoinyn;
+
+				var formData = $("#HR011001").serialize()+"&REJOIN="+rejoinyn;
 
 			   	$.ajax({ 
 					type: 'POST' ,
-					url: "/home/updateEnaInsaMst.do", 
-					//dataType : 'json' ,
-					
+					url: "/home/updateEnaInsaMst.do",
+					//dataType : 'json' ,					
 						data : formData,
 						//contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
 						success: function(data){
@@ -812,18 +810,11 @@
 			$('#bottomList1').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
 			var cellData = $("#bottomList1").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
-			
-			if(cellData.PREBASICPAY == "" || cellData.PREBASICPAY == "0"){			
-			}else{
-				if (cellData.DEPTGUBUN != "001" ) {
-					alert("해당 부서는 월정지급액을 입력 할 수 없습니다.");
-					return false;
-				}
-			}			
+
 			if (appointGubun == "") {
 				alert("발령구분을 선택하셔야 합니다.");
 				
-				$('#rightList').jqGrid('editRow', ids, true);
+				$('#bottomList1').jqGrid('editRow', ids, true);
 				$("#"+ids+"APPOINTGUBUN").focus();
 				
 				return false;
@@ -881,6 +872,25 @@
 				
 				return false;
 			}
+			
+			var basicpayFlag = true;
+			if(cellData.PREBASICPAY == "" || cellData.PREBASICPAY == "0"){			
+			}else{
+				if (cellData.DEPTGUBUN != "001" ) {					
+					basicpayFlag = false;
+				}
+			}			
+			if(basicpayFlag == false){
+				alert("해당 부서는 월정지급액을 입력 할 수 없습니다.");
+				$('#bottomList1').jqGrid('editRow', ids, true);
+				$("#"+ids+"PREBASICPAY").focus();
+				return false;
+			}		
+			
+			if (cellData.PREBASICPAY == "") {
+				$('#bottomList1').setCell(ids,"PREBASICPAY",0);
+			}
+			
 			
 			var msg = "";
 			if ($("#S_FLAG_B1").val() == "I") {
@@ -1012,27 +1022,11 @@
 				alert("그리드를 선택하셔야 합니다.");
 				
 				return false;
-			}			
-			var cnt = 0;
-		 	var rows = $("#bottomList2").getGridParam("reccount");				
-			for(var i = 1; i < rows+1; i++){
-				if($("#bottomList2").jqGrid('getCell',i,'BASICACCT') == "Y"){
-					cnt++;
-				}				 	 							
 			}
 			
-			if(cnt == 0){
-				alert("기본계좌를 선택해 주세요");
-				return false; 
-			}
-			if(cnt > 1){
-				alert("기본계좌를 하나만 선택해 주세요");
-				return false; 
-			}
-
-			var bankId = $("#bottomList2 [name=BANKNAME] option:selected").val();
+			var bankId = $("#bottomList2 [name=BANKNAME] option:selected").val();			
 			
-			var basicAcct = $("#bottomList2 [name=BASICACCT]").is(":checked") ? "Y" : "N";
+			var basicAcct = $("#bottomList2").getCell(ids,"BASICACCT");
 			
 			var rec = $("#bottomList2").getGridParam("reccount");
 			var cnt = 0
@@ -1053,7 +1047,7 @@
 			if (payerId == "") {
 				alert("주민번호를 입력하셔야 합니다.");
 			
-				$('#rightList').jqGrid('editRow', ids, true);
+				$('#bottomList2').jqGrid('editRow', ids, true);
 				$("#"+ids+"PAYERID").focus();
 			
 				return false;
@@ -1062,7 +1056,7 @@
 			if (bankId == "") {
 				alert("거래은행을 선택하셔야 합니다.");
 			
-				$('#rightList').jqGrid('editRow', ids, true);
+				$('#bottomList2').jqGrid('editRow', ids, true);
 				$("#"+ids+"BANKNAME").focus();
 			
 				return false;
@@ -1070,7 +1064,7 @@
 			if (cellData.ACCTNO == "") {
 				alert("계좌번호를 입력하셔야 합니다.");
 			
-				$('#rightList').jqGrid('editRow', ids, true);
+				$('#bottomList2').jqGrid('editRow', ids, true);
 				$("#"+ids+"ACCTNO").focus();
 			
 				return false;
@@ -1079,19 +1073,42 @@
 			if (cellData.ACCTOWNER == "") {
 				alert("계좌주를 입력하셔야 합니다.");
 			
-				$('#rightList').jqGrid('editRow', ids, true);
+				$('#bottomList2').jqGrid('editRow', ids, true);
 				$("#"+ids+"ACCTOWNER").focus();
 			
 				return false;
 			}
 			
-			
+			var cnt = 0;
+		 		
 			var msg = "";
 			if ($("#S_FLAG_B2").val() == "I") {
+				if ($("#bottomList2").jqGrid('getCell',ids,'BASICACCT') == "Y"){
+					cnt++;
+				}
 				msg = "저장하시겠습니까?";
 			} else {
-				msg = "수정하시겠습니까?"
+				msg = "수정하시겠습니까?";
 			}
+			
+			var rows = $("#bottomList2").getGridParam("reccount");
+			for(var i = 1; i < rows+1; i++){
+				if($("#bottomList2").jqGrid('getCell',i,'BASICACCT') == "Y"){
+					cnt++;
+				}				 	 							
+			}
+			
+			if(cnt == 0){
+				alert("기본계좌를 선택해 주세요");
+				$('#bottomList2').jqGrid('editRow', ids, true);
+				return false; 
+			}
+			if(cnt > 1){
+				alert("기본계좌를 하나만 선택해 주세요");
+				$('#bottomList2').jqGrid('editRow', ids, true);
+				return false; 
+			}	
+			
 			
 			var insacode = $("#INSACODE").val();
 			if (confirm(msg) == true) {
@@ -1252,7 +1269,7 @@
 					<th width="120">성명 / 사번</th>
 					<td>
 						<input type="text" id="KNAME" name="KNAME" />        
-						<input type="text" id="INSACODE" name="INSACODE" maxlength="8"/>
+						<input type="text" id="INSACODE" name="INSACODE" maxlength="8" readonly/>
 					</td>
 					<td colspan="2">
 						<input type="button" id='insaButton'/>
@@ -1324,7 +1341,7 @@
 					<th width="120">입사일</th>
 					<td><input type="text" id="JOINDATE" name="JOINDATE" /></td>
 					<th width="120">재입사여부</th>
-					<td><input type="checkbox" id="REJOINYN" name="REJOINYN" /></td>
+					<td><input type="checkbox" id="REJOINYN" name="REJOINYN"/></td>
 				</tr>
 				<tr>
 					<th width="120">퇴사일</th>

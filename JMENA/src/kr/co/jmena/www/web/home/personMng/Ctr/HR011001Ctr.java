@@ -195,7 +195,7 @@ public class HR011001Ctr {
 		vo.setGRADE(request.getParameter("GRADE"));
 		vo.setDUTY(request.getParameter("DUTY"));
 		vo.setJOINDATE(request.getParameter("JOINDATE"));
-		vo.setREJOINYN(request.getParameter("REJOINYN"));
+		vo.setREJOINYN(request.getParameter("REJOIN"));
 		vo.setRECOID(request.getParameter("RECOID"));
 		vo.setREMARK(request.getParameter("REMARK"));
 
