@@ -63,7 +63,7 @@
 			t1.ipgumdate,
 			t1.ipgumid,
 			t1.ipgumtype,
-			t1.ipgumgubun,
+			(select dcodename from sy_ccodedtl where ccode = '009' and dcode = t1.ipgumgubun) ipgumgubun,
 			t1.bankgubun,
 			t1.ipgumperson,
 			t1.ipgumamt,

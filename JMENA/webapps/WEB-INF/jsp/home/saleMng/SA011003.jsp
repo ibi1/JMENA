@@ -320,7 +320,8 @@
 				//height: '100%' ,
 				onSelectRow: function(ids){
 					v_bottomCellId = 0;
-					$("#S_FLAG_L").val("U");
+					$("#S_FLAG_L").val("I");
+					$("#S_FLAG_D").val("I");
 					var selRowData = $(this).jqGrid('getRowData', ids);
 					var IPGUMID = selRowData.IPGUMID;
 					
