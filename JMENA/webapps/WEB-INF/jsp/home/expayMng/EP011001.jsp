@@ -225,7 +225,7 @@
 					  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
 						, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
 						, {name:"KNAME",		index:'KNAME',		width:80,		align:'center',	sortable:false}
-						, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:110,		align:'center',	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}, editoptions:{
+						, {name:"SUDANGRATE",	index:'SUDANGRATE',	width:110,		align:'center',	sortable:false, editable:true, formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}, editoptions:{
 							dataEvents:[{
 								type:'change',
 								fn:function(e){
@@ -233,7 +233,7 @@
 								}
 							}]						
 						}}
-						, {name:"ADDRATE",		index:'ADDRATE',	width:80,		align:'center',	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}, editoptions:{
+						, {name:"ADDRATE",		index:'ADDRATE',	width:80,		align:'center',	sortable:false, editable:true,  formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}, editoptions:{
 							dataEvents:[{
 								type:'change',
 								fn:function(e){
@@ -545,9 +545,9 @@
 		$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 		
 		var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기	
+		 		
+		$('#bottomList').jqGrid('editRow', ids, true);	
 
-		$('#bottomList').jqGrid('editRow', ids, true);				
-		
 		var gijunAmt = 0;
 		
 		f_commaInputData("remove");
@@ -565,7 +565,6 @@
 		$("#bottomList").setCell(ids,"PAYAMT",gijunAmt);
  		
 		var deductamt = "0";
-
 //		gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
 		
 //		$('#leftList').jqGrid('editRow', ids, true);
@@ -591,7 +590,8 @@
 		}
 		$("#bottomList").setCell(ids,"DEDUCTAMT",deductamt);
 		if(flag == "2"){
-			$('#bottomList').jqGrid('editRow', ids, true);		
+//			$('#bottomList').jqGrid('editRow', ids, true);		
+//			$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 		}
 		//콤마 remove
 		f_commaInputData("click");
