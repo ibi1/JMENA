@@ -61,7 +61,8 @@
 	            datatype: "json",
 	            datafields: [
 	                         
-	                { name: 'CITYCODE', 	type: 'string' },
+					{ name: 'BUYID', 		type: 'string' },
+					{ name: 'CITYCODE', 	type: 'string' },
 	                { name: 'CITYNAME', 	type: 'string' },
 	                { name: 'BOROUGHCODE', 	type: 'string' },
 	                { name: 'BOROUGHNAME', 	type: 'string' },
@@ -86,7 +87,7 @@
 	            ],
 	            root: "rows",
 	            //record: "records",
-	            id: 'CITYCODE',
+	            id: 'BUYID',
 	            url: url
 	        };
 	
@@ -94,6 +95,7 @@
 	            downloadComplete: function (data, status, xhr) {
 	            },
 	            loadComplete: function (data) {
+	            	console.log(data.rows);
 	            	var countRow = $('#mainList').jqxGrid('getrows');
 	            	$("#mainListCount").html(countRow.length);
 	            },
@@ -114,7 +116,8 @@
 	            editable: false,
 	            selectionmode: 'singlerow',
 	            columns: [
-	              { text: '지역코드',	datafield: 'CITYCODE', 		width: 100, cellsalign: 'center', hidden: true, align: 'center' },
+   	              { text: '매입번호',	datafield: 'BUYID', 		width: 100, cellsalign: 'center', hidden: true, align: 'center' },
+   	              { text: '지역코드',	datafield: 'CITYCODE', 		width: 100, cellsalign: 'center', hidden: true, align: 'center' },
 	              { text: '지역',		datafield: 'CITYNAME', 		width: 130, cellsalign: 'center', align: 'center' },
 	              { text: '시/도코드',	datafield: 'BOROUGHCODE', 	width: 100, cellsalign: 'center', hidden: true, align: 'center' },
 	              { text: '시/도',		datafield: 'BOROUGHNAME', 	width: 130, cellsalign: 'center', align: 'center' },

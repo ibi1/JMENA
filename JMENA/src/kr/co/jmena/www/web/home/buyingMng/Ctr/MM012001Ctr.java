@@ -82,11 +82,12 @@ public class MM012001Ctr {
 		JSONObject json = new JSONObject();
 		
 		List<MM012001VO> lst = MM012001Biz.selectListMM012001(vo);
-		
+
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = new JSONObject();
 			
 			obj.put("id", i+1);
+			obj.put("BUYID", lst.get(i).getBUYID());
 			obj.put("CITYCODE", lst.get(i).getCITYCODE());
 			obj.put("CITYNAME", lst.get(i).getCITYNAME());
 			obj.put("BOROUGHCODE", lst.get(i).getBOROUGHCODE());
@@ -133,17 +134,18 @@ public class MM012001Ctr {
 			
 			MM012001VO vo2 = new MM012001VO();
 			vo2.setBUYID(lst.get(i).getBUYID());
+			
 			List<MM012001VO> lst2 = MM012001Biz.selectListMM012001_1(vo2);
 			String OPENBRANCH = "";
 			for (int j = 0; j < lst2.size(); j++) {
 				OPENBRANCH = OPENBRANCH + lst2.get(j).getOPENBRANCH() + ",";
 			}
 			obj.put("OPENBRANCH", OPENBRANCH);
-
+			
+			
 			jCell.add(obj);
 		}
 		
-		//json.put("records", lst.size());
 		json.put("rows", jCell);
 		
 		logger.debug("[selectListMM012001]" + json);
