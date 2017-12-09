@@ -545,19 +545,21 @@
 		$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 		
 		var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기	
+
+		$('#bottomList').jqGrid('editRow', ids, true);				
 		
 		var gijunAmt = 0;
+		
+		f_commaInputData("remove");
 		
 		var seleAmt = $("#SALEAMT").val();
 		var mstSudangrate = parseFloat($("#SUDANGRATE").val());
 		var sudangrate = parseFloat(cellData.SUDANGRATE); 
 		var addrate = parseFloat(cellData.ADDRATE); 
-		var taxgubun = cellData.TAXGUBUN; 
-		
+		var taxgubun = cellData.TAXGUBUN;
 		gijunAmt = seleAmt * mstSudangrate / 100;
 		var tax = gijunAmt * 3.3 / 100;
 		gijunAmt = gijunAmt - tax;
-
 		gijunAmt = (gijunAmt * (sudangrate + addrate) / 100) //지급금액(기준금액)
 		gijunAmt = Math.floor(gijunAmt/10) * 10;
 		$("#bottomList").setCell(ids,"PAYAMT",gijunAmt);
@@ -567,7 +569,6 @@
 //		gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
 		
 //		$('#leftList').jqGrid('editRow', ids, true);
-
 		if(taxgubun == "001"){
 //			gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
 			var taxincome = gijunAmt * 3 / 100;    //사업소득세
@@ -676,7 +677,7 @@
 					dataEvents:[{
 						type:'change',
 						fn:function(e){
-							paycal2();
+							paycal2("1");
 						}
 					}]						
 				}}
@@ -684,7 +685,7 @@
 					dataEvents:[{
 						type:'change',
 						fn:function(e){
-							paycal2();
+							paycal2("1");
 						}
 					}]						
 				}}
@@ -696,7 +697,7 @@
 						fn:function(e){
 							var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 							$("#bottomList").setCell(ids,"TAXGUBUN",this.value);
-							paycal2();
+							paycal2("2");
 						}
 					}]
 				}}
