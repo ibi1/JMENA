@@ -516,6 +516,8 @@
  		<isNotEmpty property="SALEDATE">
 	 		AND T1.SALEDATE = #SALEDATE# 
 		</isNotEmpty>
+			AND SALEID NOT IN (SELECT DISTINCT(SALEID)
+		                      	 FROM sa_sudangmst)
 		ORDER BY SALEID, SALEDATE
 	</select>	
 	
