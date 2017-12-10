@@ -297,8 +297,9 @@
 
 			var ids = $("#bottomList1").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 			
- 			//alert("v_branchCode==>"+v_branchCode);
+			
  			setTimeout(function() {
+ 				v_branchCode = $("#"+ids+"_APPOINTBRANCH").val();
  				$.ajax({ 
  					type: 'POST' ,
  					url: "/codeCom/deptMstList.do", 
