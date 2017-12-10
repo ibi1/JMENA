@@ -546,7 +546,7 @@
 		
 		var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기	
 		 		
-		$('#bottomList').jqGrid('editRow', ids, true);	
+		$('#bottomList').jqGrid('editRow', ids, false, 'clientArray');	
 
 		var gijunAmt = 0;
 		
