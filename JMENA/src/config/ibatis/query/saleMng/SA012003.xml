@@ -6,6 +6,8 @@
 	<typeAlias alias="SA012003VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA012003VO"/>
 
 	<resultMap id="SA012003Data" class="SA012003VO">
+		<result property="BRANCHCODE"		column="BRANCHCODE"/>
+		<result property="DEPTCODE"			column="DEPTCODE"/>
 		<result property="BRANCHNAME"		column="BRANCHNAME"/>
 		<result property="DEPTNAME"			column="DEPTNAME"/>
 		<result property="SALEDATE"			column="SALEDATE"/>
@@ -35,12 +37,16 @@
 	</resultMap>
 
 	<select id="selectListSA012003" resultMap="SA012003Data">
+	select *
+	from (
 		select
-			T2.BRANCHNAME,
-			T2.DEPTNAME,
+			(select BranchCode from hr_insamst where insacode = T1.SALERCD) as BranchCode,
+			(select branchname from ba_branchmst where branchcode = (select BranchCode from hr_insamst where insacode = T1.SALERCD)) as branchname,
+			(select deptcode from ba_deptmst where branchcode = (select BranchCode from hr_insamst where insacode = T1.SALERCD) and deptcode = (select deptcode from hr_insamst where insacode = T1.SALERCD)) as deptcode,
+			(select deptname from ba_deptmst where branchcode = (select BranchCode from hr_insamst where insacode = T1.SALERCD) and deptcode = (select deptcode from hr_insamst where insacode = T1.SALERCD)) as deptname,
 			T1.SALEDATE,
 			T1.SALEID,
-			T2.KNAME,
+			(select kname from hr_insamst where insacode = T1.SALEID) as KNAME,
 			T1.CONNAME,
 			T1.CONJUMINID,
 			(SELECT (
@@ -67,25 +73,7 @@
 			(SELECT PAYOWNER FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS PAYOWNER,
 			(SELECT REMARK FROM sa_salebdtl WHERE SALEID = T1.SALEID) AS REMARK
 		from sa_salemst T1,
-		(SELECT 
-			INSACODE,
-			KNAME,
-			BRANCHCODE, 
-			(SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T3.BRANCHCODE) AS BRANCHNAME, 
-			DEPTCODE,
-			(SELECT kname FROM hr_insamst WHERE BRANCHCODE = T3.BRANCHCODE AND DEPTCODE = T3.DEPTCODE and grade='015') AS DEPTNAME
-			FROM hr_insamst T3
-			WHERE 1=1
-		<isNotEqual property="S_BRANCHCODE" compareValue="">
-		    AND BRANCHCODE = #S_BRANCHCODE#
-		</isNotEqual>
-		<isNotEqual property="S_DEPTCODE" compareValue="">
-		    AND DEPTCODE = #S_DEPTCODE#
-		</isNotEqual>
-		<isNotEmpty property="S_KNAME">
-		    AND KNAME LIKE '%$S_KNAME$%'
-		</isNotEmpty>
-		) T2, (select buyid from mm_payscheduletb where 1=1 and paygubun = '005' and payyn <![CDATA[ <> ]]> 'Y') T4   
+		(select buyid from mm_payscheduletb where 1=1 and paygubun = '005' and payyn <![CDATA[ <> ]]> 'Y') T4   
 		where 1=1
 		and T1.buyid = T4.buyid
 		<isNotEqual property="S_DCODE" compareValue="">
@@ -95,8 +83,19 @@
 			<isNotEmpty property="S_SALEDATE_TO">
 				AND T1.SALEDATE BETWEEN #S_SALEDATE_FR# AND #S_SALEDATE_TO#
 			</isNotEmpty>
-		</isNotEmpty> 
-		ORDER BY T1.SALEID ASC
+		</isNotEmpty>
+		) AA
+		where 1=1
+ 		<isNotEqual property="S_BRANCHCODE" compareValue="">
+		    AND BRANCHCODE = #S_BRANCHCODE#
+		</isNotEqual>
+		<isNotEqual property="S_DEPTCODE" compareValue="">
+		    AND DEPTCODE = #S_DEPTCODE#
+		</isNotEqual>
+		<isNotEmpty property="S_KNAME">
+		    AND KNAME LIKE '%$S_KNAME$%'
+		</isNotEmpty>
+		ORDER BY SALEID ASC
 	</select>
 	
 </sqlMap>

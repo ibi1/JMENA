@@ -2,6 +2,8 @@ package kr.co.jmena.www.web.home.saleMng.Vo;
 
 public class SA012003VO {
 	
+	private String BRANCHCODE;
+	private String DEPTCODE;
 	private String BRANCHNAME;
 	private String DEPTNAME;
 	private String SALEDATE;
@@ -38,6 +40,14 @@ public class SA012003VO {
 	private String S_DCODE;
 
 	
+	
+	
+	public String getBRANCHCODE() {
+		return this.BRANCHCODE;
+	}
+	public String getDEPTCODE() {
+		return this.DEPTCODE;
+	}
 	public String getBRANCHNAME() {
 		return this.BRANCHNAME;
 	}
@@ -128,6 +138,13 @@ public class SA012003VO {
 	}
 	public String getS_DCODE() {
 		return this.S_DCODE;
+	}
+
+	public void setBRANCHCODE(String BRANCHCODE) {
+		this.BRANCHCODE = BRANCHCODE;
+	}
+	public void setDEPTCODE(String DEPTCODE) {
+		this.DEPTCODE = DEPTCODE;
 	}
 	
 	public void setBRANCHNAME(String BRANCHNAME) {

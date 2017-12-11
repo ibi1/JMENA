@@ -120,6 +120,7 @@
 		<isNotEmpty property="LS_ADDRESS">
 			AND A1.ADDRESS LIKE '%$LS_ADDRESS$%'   
 		</isNotEmpty>
+		order by A1.BUYDATE
 	</select>
 	
 	<update id="updateDataBuyMst">
