@@ -105,7 +105,7 @@
 			
 			f_selectListEnaDCode();
 			f_selectListEnaCityCode();
-			//f_selectListEnaSalerCode();
+			f_selectListEnaSalerCode();
 			f_selectListEnaBranchCode();
 			f_selectListEnaDcGubun();
 			
@@ -136,7 +136,7 @@
 				}  
 			});
 		}
-	/*
+	
 		function f_selectListEnaSalerCode(){
 			$.ajax({ 
 				type: 'POST' ,
@@ -147,7 +147,7 @@
 					data.insaMstList.forEach(function(currentValue, index, array){
 						inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
 					});
-					$("#SALERCD").append(inHtml);
+					//$("#SALERCD").append(inHtml);
 					$("#SL_SALERNAME").append(inHtml);
 				},
 				error:function(e){  
@@ -155,7 +155,7 @@
 				}  
 			});
 		}
-		*/
+		
 		//부서
 		function f_selectListEnaBranchCode(){
 			$("#BRANCHNAME").empty().data('options');
