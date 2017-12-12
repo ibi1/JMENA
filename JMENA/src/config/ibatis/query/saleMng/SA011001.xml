@@ -162,7 +162,11 @@
 			UNION ALL
 			SELECT SALEID 
 			FROM sa_ipgumscheduletb 
-			WHERE DEPOSITGUBUN = '004' AND DEPOSITYN = 'N'
+			WHERE 1=1 
+			<isEmpty property="ADDRESS">
+			AND DEPOSITGUBUN = '004' 
+			AND DEPOSITYN = 'N'
+			</isEmpty>
 			UNION ALL
 			SELECT IN2.SALEID 
 		    FROM (
