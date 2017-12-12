@@ -71,8 +71,8 @@
 				T1.OWNERNAME,
 				T1.BUYM2,
 				T1.BUYPY,
-	            (SELECT SUM(CONPY) FROM sa_salemst WHERE BUYID = T1.BUYID) AS BUNBUYPY,
-	            (T1.BUYPY - (SELECT SUM(CONPY) FROM sa_salemst WHERE BUYID = T1.BUYID)) AS JANBUYPY,
+	            (SELECT ifnull(SUM(CONPY), 0) FROM sa_salemst WHERE BUYID = T1.BUYID) AS BUNBUYPY,
+	            ifnull((T1.BUYPY - (SELECT SUM(CONPY) FROM sa_salemst WHERE BUYID = T1.BUYID)), 0) AS JANBUYPY,
 	            T1.BUYAMT,
 	            (SELECT PAYAMT FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003') AS PAYAMT1,
 	            (SELECT PAYDATE FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003') AS PAYDATE1,
@@ -96,8 +96,12 @@
 				<!-- (SELECT OPENYN FROM mm_salesopentb WHERE BUYID = T1.BUYID) AS OPENYN, -->
 				'Y' AS OPENYN,
 				T1.REMARK
-			FROM mm_buymst T1
-			WHERE 1=1
+			FROM mm_buymst T1 , 
+    		(select DISTINCT buyid from sa_salemst B, (select DISTINCT saleid from sa_ipgumscheduletb where 1=1 AND !(DEPOSITGUBUN = '004' AND DEPOSITYN = 'Y')) A
+				where 1=1 and B.SALEID = A.SALEID
+        	) T2
+			WHERE 1=1 
+    		and T1.buyid = T2.BUYID
 			<isNotEqual property="BUYGUBUN" compareValue="ALL">
 				AND T1.BUYGUBUN = #BUYGUBUN#
 			</isNotEqual>
