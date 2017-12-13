@@ -52,6 +52,8 @@ public class HR011001VO {
 	private String DEPTGUBUN;
 	
 	private String USERID;
+	
+	private String FLAG;
 		
 
 	public String getACCTNO(){
@@ -320,5 +322,11 @@ public class HR011001VO {
 	}
 	public void setBANKNAME(String bANKNAME) {
 		this.BANKNAME = bANKNAME;
+	}
+	public String getFLAG() {
+		return FLAG;
+	}
+	public void setFLAG(String fLAG) {
+		this.FLAG = fLAG;
 	}	
 }

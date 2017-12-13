@@ -131,7 +131,16 @@
 		<isNotEmpty property="S_INSACODE">
 			AND T1.INSACODE = #S_INSACODE#
 		</isNotEmpty>
+		<isNotEqual property="FLAG" compareValue="1">
+			AND RETIREDATE IS NULL
+		</isNotEqual>
+		<isEqual property="FLAG" compareValue="1">
+			<isEmpty property="S_KNAME">
+				AND RETIREDATE IS NULL
+			</isEmpty>
+		</isEqual>		
 		
+			
 		ORDER BY T1.INSACODE ASC
 	</select>
 

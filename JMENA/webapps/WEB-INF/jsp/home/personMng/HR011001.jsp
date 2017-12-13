@@ -87,7 +87,8 @@
 				S_DEPTCODE : $("#S_DEPTCODE").val(),
 				S_KNAME : $("#S_KNAME").val(),
 				S_JUMINID : $("#S_JUMINID").val(),
-				S_INSACODE : $("#S_INSACODE").val()				 
+				S_INSACODE : $("#S_INSACODE").val(),
+				FLAG		: "1"
 			},			
 			datatype:"json",		
 			loadError:function(){alert("Error~!!");},

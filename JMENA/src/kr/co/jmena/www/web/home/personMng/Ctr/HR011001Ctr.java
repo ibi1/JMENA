@@ -58,6 +58,19 @@ public class HR011001Ctr {
 		return new ModelAndView("home/personMng/HR011001_1");
 	}
 		
+	/**
+	 * @name 사원검색 화면2 수당에서 검색
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/HR011001_2.do")
+	public ModelAndView HR011001_2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		return new ModelAndView("home/personMng/HR011001_2");
+	}
+	
 	
 	/**
 	 * @name 인사관리 화면 - 인사관리 그리드
@@ -83,6 +96,7 @@ public class HR011001Ctr {
 		vo.setS_KNAME(s_kname);
 		vo.setS_JUMINID(s_juminid);
 		vo.setS_INSACODE(s_insacode);
+		vo.setFLAG(request.getParameter("FLAG"));
 		
 		List<HR011001VO> lst = HR011001Biz.selectListEnaInsaMst(vo);
 		
@@ -196,6 +210,7 @@ public class HR011001Ctr {
 		vo.setDUTY(request.getParameter("DUTY"));
 		vo.setJOINDATE(request.getParameter("JOINDATE"));
 		vo.setREJOINYN(request.getParameter("REJOIN"));
+		vo.setRETIREDATE(request.getParameter("RETIREDATE") == "" ?  null : request.getParameter("RETIREDATE"));
 		vo.setRECOID(request.getParameter("RECOID"));
 		vo.setREMARK(request.getParameter("REMARK"));
 
