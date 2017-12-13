@@ -91,6 +91,8 @@ public class HR011001Ctr {
 		String s_juminid = request.getParameter("S_JUMINID") != null ? request.getParameter("S_JUMINID") : ""; 
 		String s_insacode = request.getParameter("S_INSACODE") != null ? request.getParameter("S_INSACODE") : ""; 
 		
+		s_juminid = s_juminid.replace("-", "");
+		
 		vo.setS_BRANCHCODE(s_branchcode);
 		vo.setS_DEPTCODE(s_deptcode);
 		vo.setS_KNAME(s_kname);
