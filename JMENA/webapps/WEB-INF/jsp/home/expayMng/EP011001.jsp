@@ -20,6 +20,7 @@
 		var today = year + "-" + month;
 
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
@@ -601,7 +602,21 @@
 	$(function(){
 		$("#searchButton").click(function() {
 			resetEnaSudang();
-		}); 
+		});
+		
+		// 엑셀 버튼 클릭 이벤트
+		$("#excelButton").click(function() {
+			var url = "/home/selectEnaSudangMstSheet.do";
+			var sSailId = $.trim($("#SALEID").val());
+			var sPaySeq = $.trim($("#PAYSEQ").val());
+			
+			if(sSailId == "" || sPaySeq == "") {
+				alert("엑셀로 내려받기하실 데이터를 선택해주세요.");
+				return;
+			}
+			
+			location.href = url +"?saleId="+ sSailId + "&paySeq="+ sPaySeq;
+		});	
 	});	
 	
 	$(function(){
@@ -984,6 +999,7 @@
 			<table align="right">
 				<tr>
 					<td><input type="button" value="조회" id='searchButton' /></td>
+					<td><input type="button" value="엑셀" id='excelButton' /></td>
 					<td><input type="button" value="추가" id='insertButton' /></td>
 					<td><input type="button" value="삭제" id='deleteButton' /></td>
 					<td><input type="button" value="저장" id='saveButton' /></td>

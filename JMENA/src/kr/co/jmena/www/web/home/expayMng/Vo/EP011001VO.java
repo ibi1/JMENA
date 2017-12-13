@@ -15,6 +15,7 @@ public class EP011001VO {
 	private String SALEGUBUN;
 	private String SALERCD;
 	private String BRANCHCODE;
+	private String BRANCHNAME;
 	private String MANAGENO;
 	private String CITYCODE;
 	private String ADDRESS;
@@ -34,8 +35,7 @@ public class EP011001VO {
 	private String SUDANGRATE;
 	private String ADDRATE;
 	private String PAYAMT;
-	private String TAXAMT;
-	
+	private String TAXAMT;	
 	
 	private String TAXGUBUN;
 	private String TAXGUBUNNAME;
@@ -43,8 +43,7 @@ public class EP011001VO {
 	private String TAXLOCAL;
 	private String SUPPLYTAX;
 	private String DEDUCTAMT;
-	private String REMARK;
-	
+	private String REMARK;	
 	
 	private String ACCTNO;
 	private String ACCTOWNER;
@@ -52,8 +51,11 @@ public class EP011001VO {
 	private String BANKNAME;
 	private String DEPTCODE;
 	private String DUTY;
+	private String DUTYNAME;
 	private String GRADE;
+	private String GRADENAME;
 	private String INSACODE;
+	private String INSANAME;
 	private String PAYERID;
 	private String SAUPOWNER;
 	private String PAYERNAME;
@@ -62,8 +64,7 @@ public class EP011001VO {
 	private String REGISTERNUM;	
 	private String KNAME;	
 	private String USERID;
-	private String FLAG;
-	
+	private String FLAG;	
 	
 	public String getS_SALEID() {
 		return S_SALEID;
@@ -137,6 +138,12 @@ public class EP011001VO {
 	public void setBRANCHCODE(String bRANCHCODE) {
 		this.BRANCHCODE = bRANCHCODE;
 	}
+	public String getBRANCHNAME() {
+		return this.BRANCHNAME;
+	}
+	public void setBRANCHNAME(String bRANCHNAME) {
+		this.BRANCHNAME = bRANCHNAME;
+	}	
 	public String getMANAGENO() {
 		return MANAGENO;
 	}
@@ -317,17 +324,35 @@ public class EP011001VO {
 	public void setDUTY(String dUTY) {
 		this.DUTY = dUTY;
 	}
+	public String getDUTYNAME() {
+		return this.DUTYNAME;
+	}
+	public void setDUTYNAME(String dUTYNAME) {
+		this.DUTYNAME = dUTYNAME;
+	}
 	public String getGRADE() {
 		return GRADE;
 	}
 	public void setGRADE(String gRADE) {
 		this.GRADE = gRADE;
 	}
+	public String getGRADENAME() {
+		return this.GRADENAME;
+	}
+	public void setGRADENAME(String gRADENAME) {
+		this.GRADENAME = gRADENAME;
+	}	
 	public String getINSACODE() {
 		return INSACODE;
 	}
 	public void setINSACODE(String iNSACODE) {
 		this.INSACODE = iNSACODE;
+	}
+	public String getINSANAME() {
+		return this.INSANAME;
+	}	
+	public void setINSANAME(String iNSANAME) {
+		this.INSANAME = iNSANAME;
 	}
 	public String getPAYERID() {
 		return PAYERID;
@@ -390,5 +415,4 @@ public class EP011001VO {
 	public void setFLAG(String fLAG) {
 		this.FLAG = fLAG;
 	}
-
 }

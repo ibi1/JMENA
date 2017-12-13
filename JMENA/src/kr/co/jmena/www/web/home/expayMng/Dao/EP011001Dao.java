@@ -29,7 +29,6 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}	
-
 	
 	@SuppressWarnings("unchecked")
 	public List<EP011001VO> selectEnaSudangMstList(EP011001VO vo) throws DataAccessException {
@@ -55,6 +54,23 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 		return cnt;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<EP011001VO> selectEnaSudangMstSheet(EP011001VO vo) throws DataAccessException {
+		List<EP011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectEnaSudangMstSheet", vo);
+		
+		return lst;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<EP011001VO> selectEnaSudangMstSheetList(EP011001VO vo) throws DataAccessException {
+		List<EP011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectEnaSudangMstSheetList", vo);
+		
+		return lst;
+	}
 	
 	public boolean insertEnaSudangMst(EP011001VO vo) throws DataAccessException {
 		boolean chkFlag = false;

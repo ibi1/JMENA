@@ -82,8 +82,7 @@ public class EP011001Ctr {
 	public ModelAndView EP011001_3(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		return new ModelAndView("home/expayMng/EP011001_3");
-	}	
-	
+	}
 	
 	/**
 	 * @name 수당관리 화면 - 수당관리 그리드
@@ -170,8 +169,6 @@ public class EP011001Ctr {
 		return new ModelAndView("jsonView", json);
 	
 	}	
-	
-	
 	
 	/**
 	 * @name 수당관리 화면 - 수당지급 관리
@@ -342,7 +339,32 @@ public class EP011001Ctr {
 		return new ModelAndView("jsonView", json);	
 	}
 	
+	/**
+	 * @name 수당관리 화면 - 엑셀
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/home/selectEnaSudangMstSheet.do")
+	public ModelAndView selectEnaSudangMstSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		EP011001VO vo = new EP011001VO();
+		ModelAndView result = new ModelAndView();
+		
+		vo.setS_SALEID(request.getParameter("saleId"));
+		vo.setS_PAYSEQ(request.getParameter("paySeq"));		
+		
+		List<EP011001VO> Sheet = EP011001Biz.selectEnaSudangMstSheet(vo);
+		List<EP011001VO> SheetList = EP011001Biz.selectEnaSudangMstSheetList(vo);
+		
+		result.addObject("Sheet", Sheet);
+		result.addObject("SheetList", SheetList);
+		result.setViewName("home/expayMng/EP011001_4");
+		
+		return result;
+	}	
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/home/deleteEnaSudangMst.do")

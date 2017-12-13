@@ -69,7 +69,31 @@ public class EP011001Biz {
 		}
 		
 		return cnt;
+	}
+	
+	public List<EP011001VO> selectEnaSudangMstSheet(EP011001VO vo) throws Exception {
+		List<EP011001VO> lst = null;
+
+		try {
+			lst = EP011001Dao.selectEnaSudangMstSheet(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
 	}	
+	
+	public List<EP011001VO> selectEnaSudangMstSheetList(EP011001VO vo) throws Exception {
+		List<EP011001VO> lst = null;
+
+		try {
+			lst = EP011001Dao.selectEnaSudangMstSheetList(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
 	
 	@SuppressWarnings("unused")
 	public boolean updateEnaSudangMst(HttpServletRequest request) throws Exception {
