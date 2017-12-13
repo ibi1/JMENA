@@ -122,7 +122,7 @@
 	</select>
 	
 	<select id="selectListEanSaleMst" resultMap="saleMstDataList">
-		SELECT A1.* FROM (
+		SELECT distinct A1.* FROM (
 			SELECT
 				T3.MANAGENO, T3.CITYCODE, 
 				(SELECT IN1.BRANCHCODE FROM hr_insamst IN1 WHERE IN1.INSACODE = T1.SALERCD) AS BRANCHCODE, 

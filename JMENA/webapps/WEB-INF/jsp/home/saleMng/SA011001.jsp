@@ -478,7 +478,9 @@
 						var depositYn = $("#bottomList1").jqGrid('getCell', ids[index], 'DEPOSITYN');
 						
 						if (depositYn == "Y") {
-							tot += eval($("#bottomList1").jqGrid('getCell', ids[index], 'SUGUMAMT'));
+							var sugumAmt = parseInt($("#bottomList1").jqGrid('getCell', ids[index], 'SUGUMAMT'));
+							
+							tot += isNaN(sugumAmt) == true ? 0 : sugumAmt;
 			        	}        
 					});
 					
