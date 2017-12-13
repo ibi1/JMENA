@@ -36,83 +36,168 @@
 	</resultMap>
 
 	<select id="selectListMM012001" resultMap="MM012001Data">
-		SELECT
-			BUYID,
-			CITYCODE,
-			CITYNAME,
-			BOROUGHCODE,
-			BOROUGHNAME,
-			ADDRESS,
-			OWNERNAME,
-			BUYM2,
-			BUYPY,
-			BUNBUYPY,
-			JANBUYPY,
-			BUYAMT,
-			PAYAMT1,
-			PAYDATE1,
-			PAYAMT2,
-			PAYDATE2,
-			PAYAMT3,
-			PAYDATE3,
-			PAYAMT4,
-			PAYDATE4,
-			JANPAYAMT,
-			OPENYN,
-			REMARK
-		FROM ( 
-			SELECT
-				T1.BUYID,
-				T1.CITYCODE,
-				(SELECT CITYNAME FROM ba_citymst WHERE CITYCODE = T1.CITYCODE) AS CITYNAME,
-				T1.BOROUGHCODE,
-				(SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T1.CITYCODE AND BOROUGHCODE = T1.BOROUGHCODE ) AS BOROUGHNAME,
-				T1.ADDRESS,
-				T1.OWNERNAME,
-				T1.BUYM2,
-				T1.BUYPY,
-	            (SELECT ifnull(SUM(CONPY), 0) FROM sa_salemst WHERE BUYID = T1.BUYID) AS BUNBUYPY,
-	            ifnull((T1.BUYPY - (SELECT SUM(CONPY) FROM sa_salemst WHERE BUYID = T1.BUYID)), 0) AS JANBUYPY,
-	            T1.BUYAMT,
-	            (SELECT PAYAMT FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003') AS PAYAMT1,
-	            (SELECT PAYDATE FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='003') AS PAYDATE1,
-	            (SELECT PAYAMT
-				FROM mm_payscheduletb
-				WHERE 1=1
-				AND BUYID = T1.BUYID
-				AND PAYGUBUN ='004'
-				AND PAYDATE = (SELECT MIN(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004')) AS PAYAMT2,
-	            (SELECT MIN(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYDATE2,
-	            (SELECT PAYAMT
-				FROM mm_payscheduletb
-				WHERE 1=1
-				AND BUYID = T1.BUYID
-				AND PAYGUBUN ='004'
-				AND PAYDATE = (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004')) AS PAYAMT3,
-	            (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='004') AS PAYDATE3,
-	            (SELECT SUM(PAYAMT) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='005') AS PAYAMT4,
-	            (SELECT MAX(PAYDATE) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYGUBUN ='005') AS PAYDATE4,
-				(SELECT SUM(PAYAMT) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYYN ='Y') AS JANPAYAMT,
-				<!-- (SELECT OPENYN FROM mm_salesopentb WHERE BUYID = T1.BUYID) AS OPENYN, -->
-				'Y' AS OPENYN,
-				T1.REMARK
-			FROM mm_buymst T1 , 
-    		(select DISTINCT buyid from sa_salemst B, (select DISTINCT saleid from sa_ipgumscheduletb where 1=1 AND !(DEPOSITGUBUN = '004' AND DEPOSITYN = 'Y')) A
-				where 1=1 and B.SALEID = A.SALEID
-        	) T2
-			WHERE 1=1 
-    		and T1.buyid = T2.BUYID
-			<isNotEqual property="BUYGUBUN" compareValue="ALL">
-				AND T1.BUYGUBUN = #BUYGUBUN#
-			</isNotEqual>
-			ORDER BY T1.CITYCODE, T1.BOROUGHCODE) AA
-		WHERE 1=1
+		SELECT DISTINCT
+		    A1.*
+		FROM
+		    (SELECT 
+		        T1.BUYID,
+		            T1.CITYCODE,
+		            (SELECT 
+		                    CITYNAME
+		                FROM
+		                    ba_citymst
+		                WHERE
+		                    CITYCODE = T1.CITYCODE) AS CITYNAME,
+		            T1.BOROUGHCODE,
+		            (SELECT 
+		                    BOROUGHNAME
+		                FROM
+		                    ba_citydtl
+		                WHERE
+		                    CITYCODE = T1.CITYCODE
+		                        AND BOROUGHCODE = T1.BOROUGHCODE) AS BOROUGHNAME,
+		            T1.ADDRESS,
+		            T1.OWNERNAME,
+		            T1.BUYM2,
+		            T1.BUYPY,
+		            CAST(((SELECT 
+		                        IFNULL(SUM(IN4.CONPY), 0) AS CONPY
+		                    FROM
+		                        sa_salemst IN4
+		                    WHERE
+		                        IN4.BUYID = T1.BUYID) + (SELECT 
+		                        IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY
+		                    FROM
+		                        mm_salesopentb IN3
+		                    WHERE
+		                        IN3.BUYID = T1.BUYID))
+		                AS DECIMAL (12 , 2 )) AS BUNBUYPY,
+		            CAST(((SELECT 
+		                        IFNULL(IN2.BUYPY, 0) AS BUYPY
+		                    FROM
+		                        mm_buymst IN2
+		                    WHERE
+		                        IN2.BUYID = T1.BUYID) - ((SELECT 
+		                        IFNULL(SUM(IN4.CONPY), 0) AS CONPY
+		                    FROM
+		                        sa_salemst IN4
+		                    WHERE
+		                        IN4.BUYID = T1.BUYID) + (SELECT 
+		                        IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY
+		                    FROM
+		                        mm_salesopentb IN3
+		                    WHERE
+		                        IN3.BUYID = T1.BUYID)))
+		                AS DECIMAL (12 , 2 )) AS JANBUYPY,
+		            T1.BUYAMT,
+		            (SELECT 
+		                    PAYAMT
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    BUYID = T1.BUYID AND PAYGUBUN = '003') AS PAYAMT1,
+		            (SELECT 
+		                    PAYDATE
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    BUYID = T1.BUYID AND PAYGUBUN = '003') AS PAYDATE1,
+		            (SELECT 
+		                    PAYAMT
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    1 = 1 AND BUYID = T1.BUYID
+		                        AND PAYGUBUN = '004'
+		                        AND PAYDATE = (SELECT 
+		                            MIN(PAYDATE)
+		                        FROM
+		                            mm_payscheduletb
+		                        WHERE
+		                            BUYID = T1.BUYID AND PAYGUBUN = '004')) AS PAYAMT2,
+		            (SELECT 
+		                    MIN(PAYDATE)
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    BUYID = T1.BUYID AND PAYGUBUN = '004') AS PAYDATE2,
+		            (SELECT 
+		                    PAYAMT
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    1 = 1 AND BUYID = T1.BUYID
+		                        AND PAYGUBUN = '004'
+		                        AND PAYDATE = (SELECT 
+		                            MAX(PAYDATE)
+		                        FROM
+		                            mm_payscheduletb
+		                        WHERE
+		                            BUYID = T1.BUYID AND PAYGUBUN = '004')) AS PAYAMT3,
+		            (SELECT 
+		                    MAX(PAYDATE)
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    BUYID = T1.BUYID AND PAYGUBUN = '004') AS PAYDATE3,
+		            (SELECT 
+		                    SUM(PAYAMT)
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    BUYID = T1.BUYID AND PAYGUBUN = '005') AS PAYAMT4,
+		            (SELECT 
+		                    MAX(PAYDATE)
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    BUYID = T1.BUYID AND PAYGUBUN = '005') AS PAYDATE4,
+		            (SELECT 
+		                    SUM(PAYAMT)
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    BUYID = T1.BUYID AND PAYYN = 'Y') AS JANPAYAMT,
+		            'Y' AS OPENYN,
+		            T1.REMARK
+		    FROM
+		        mm_buymst T1
+		    WHERE
+		        1 = 1 
+		        <isNotEqual property="BUYGUBUN" compareValue="ALL">
+					AND T1.BUYGUBUN = #BUYGUBUN#
+				</isNotEqual>
+				ORDER BY T1.CITYCODE, T1.BOROUGHCODE
+		        ) A1
+		        INNER JOIN
+		    (SELECT 
+		        S1.BUYID
+		    FROM
+		        mm_buymst S1
+		    LEFT JOIN mm_payscheduletb S2 ON S1.BUYID = S2.BUYID
+		    WHERE
+		        S2.BUYID IS NULL UNION ALL SELECT 
+		        BUYID
+		    FROM
+		        mm_payscheduletb
+		    WHERE
+		        1 = 1 AND PAYGUBUN = '005'
+		            AND PAYYN = 'N' UNION ALL SELECT 
+		        IN2.BUYID
+		    FROM
+		        (SELECT 
+		        IN1.BUYID, MAX(IN1.PAYGUBUN) AS PAYGUBUN
+		    FROM
+		        mm_payscheduletb IN1
+		    GROUP BY IN1.BUYID) IN2
+		    WHERE
+		        IN2.PAYGUBUN != '005') A2 ON A1.BUYID = A2.BUYID
+		WHERE 1 = 1
 		<isNotEmpty property="LS_BUYDATE_FR">
 			<isNotEmpty property="LS_BUYDATE_TO">
-				AND AA.PAYDATE4 BETWEEN #LS_BUYDATE_FR# AND #LS_BUYDATE_TO#
+				AND A1.PAYDATE4 BETWEEN #LS_BUYDATE_FR# AND #LS_BUYDATE_TO#
 			</isNotEmpty>	
 		</isNotEmpty>
-		
 	</select>
 
 	<select id="selectListMM012001_1" resultMap="MM012001Data1">
