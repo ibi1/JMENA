@@ -158,7 +158,7 @@
 				{name:"SUGUMAMT",		type: 'number' },
 				{name:"REMNAMT",		type: 'number' },
 				{name:"IPGUMRATE",		type: 'number' },
-				{name:"REMARK",			type: 'number' }
+				{name:"REMARK",			type: 'string' }
 				
             ],
             root: "rows",
@@ -218,7 +218,7 @@
 				{ text: '입금총액', 		datafield: "SUGUMAMT",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 				{ text: '입금잔액', 		datafield: "REMNAMT",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 				{ text: '입금율(%)', 		datafield: "IPGUMRATE",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '비고', 			datafield: "REMARK",		width: 250, cellsalign: 'center', align: 'center'}
+				{ text: '비고', 			datafield: "REMARK",		width: 250, cellsalign: 'left', align: 'center'}
 				
 			]
         

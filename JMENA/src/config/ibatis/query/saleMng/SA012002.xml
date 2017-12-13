@@ -173,10 +173,11 @@
 		                    kname
 		                FROM
 		                    hr_insamst
-		                WHERE
-		                    BRANCHCODE = T3.BRANCHCODE
+		                WHERE 1 = 1 
+								AND RETIREDATE IS NULL
+		                    	AND BRANCHCODE = T3.BRANCHCODE
 		                        AND DEPTCODE = T3.DEPTCODE
-		                        AND grade = '015') AS DEPTNAME
+		                        AND grade = '007') AS DEPTNAME
 		    FROM
 		        hr_insamst T3
 		    WHERE
