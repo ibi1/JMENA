@@ -36,66 +36,196 @@
 	</resultMap>
 
 	<select id="selectListSA012002" resultMap="SA012002Data">
-		SELECT
-		T2.BRANCHCODE, 
-		T2.BRANCHNAME,
-		T2.DEPTCODE,
-		T2.DEPTNAME,
-		T1.SALEDATE,
-		(SELECT DCODENAME FROM sy_ccodedtl WHERE CCODE = '007' AND DCODE = T1.SALEGUBUN) AS DCODENAME,
-		T1.SALEID,
-		T2.KNAME,
-		T1.CONNAME,
-		(SELECT ADDRESS FROM mm_buymst WHERE BUYID = T1.BUYID) AS ADDRESS,
-		T1.CONM2,
-		T1.CONPY,
-		(SELECT SALEAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SALEAMT,
-		(SELECT SALEDANGA FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SALEDANGA,
-		(SELECT DCRATE FROM sa_saledtl WHERE SALEID = T1.SALEID) AS DCRATE,
-		(SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS SELLAMT,
-		(SELECT AGENCYAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) AS AGENCYAMT,
-		(SELECT SUM(DEPOSITAMT) FROM sa_ipgumscheduletb WHERE SALEID = T1.SALEID AND PAYGUBUN ='002') AS DEPOSITAMT1,
-		(SELECT SUM(DEPOSITAMT) FROM sa_ipgumscheduletb WHERE SALEID = T1.SALEID AND PAYGUBUN ='003') AS DEPOSITAMT2,
-		(SELECT SUM(DEPOSITAMT) FROM sa_ipgumscheduletb WHERE SALEID = T1.SALEID AND PAYGUBUN ='004') AS DEPOSITAMT3,
-		(SELECT SUM(SUGUMAMT) FROM sa_ipgumdtl WHERE SALEID = T1.SALEID AND PAYGUBUN ='002') AS SUGUMAMT1,
-		(SELECT SUM(SUGUMAMT) FROM sa_ipgumdtl WHERE SALEID = T1.SALEID AND PAYGUBUN ='003') AS SUGUMAMT2,
-		(SELECT SUM(SUGUMAMT) FROM sa_ipgumdtl WHERE SALEID = T1.SALEID AND PAYGUBUN ='004') AS SUGUMAMT3,
-		(SELECT SUM(SUGUMAMT) FROM sa_ipgumdtl WHERE SALEID = T1.SALEID) AS SUGUMAMT,
-		((SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID) - (SELECT SUM(SUGUMAMT) FROM sa_ipgumdtl WHERE SALEID = T1.SALEID) ) AS REMNAMT,
-		(((SELECT SUM(SUGUMAMT) FROM sa_ipgumdtl WHERE SALEID = T1.SALEID)  / (SELECT SELLAMT FROM sa_saledtl WHERE SALEID = T1.SALEID)) * 100)  AS IPGUMRATE,
-		T1.REMARK
-		FROM sa_salemst T1,
-		(SELECT 
-			INSACODE,
-		    KNAME,
-		    BRANCHCODE, 
-		    (SELECT BRANCHNAME FROM ba_branchmst WHERE BRANCHCODE = T3.BRANCHCODE) AS BRANCHNAME, 
-		    DEPTCODE,
-		    (SELECT kname FROM hr_insamst WHERE BRANCHCODE = T3.BRANCHCODE AND DEPTCODE = T3.DEPTCODE and grade='015') AS DEPTNAME 
-		    FROM hr_insamst T3
-		    WHERE 1=1
-		<isNotEqual property="S_BRANCHCODE" compareValue="">
-		    AND BRANCHCODE = #S_BRANCHCODE#
-		</isNotEqual>
-		<isNotEqual property="S_DEPTCODE" compareValue="">
-		    AND DEPTCODE = #S_DEPTCODE#
-		</isNotEqual>
-		<isNotEmpty property="S_KNAME">
-		    AND KNAME LIKE '%$S_KNAME$%'
-		</isNotEmpty>
-		    ) T2, (select DISTINCT buyid from mm_payscheduletb where 1=1 and !(paygubun = '005' and payyn = 'Y')) T4 
-		WHERE 1=1
-		and T1.buyid = T4.buyid
-		AND T1.SALERCD = T2.INSACODE
-		<isNotEqual property="S_DCODE" compareValue="">
-		AND T1.SALEGUBUN = #S_DCODE#
-		</isNotEqual> 
-		<isNotEmpty property="S_SALEDATE_FR">
-			<isNotEmpty property="S_SALEDATE_TO">
-				AND T1.SALEDATE BETWEEN #S_SALEDATE_FR# AND #S_SALEDATE_TO#
-			</isNotEmpty>
-		</isNotEmpty> 
-		order by T2.BRANCHCODE, T2.DEPTCODE, T1.SALEDATE
+		SELECT DISTINCT
+		    A1.*
+		FROM
+		    (SELECT 
+		        T2.BRANCHCODE,
+		            T2.BRANCHNAME,
+		            T2.DEPTCODE,
+		            T2.DEPTNAME,
+		            T1.SALEDATE,
+		            (SELECT 
+		                    DCODENAME
+		                FROM
+		                    sy_ccodedtl
+		                WHERE
+		                    CCODE = '007' AND DCODE = T1.SALEGUBUN) AS DCODENAME,
+		            T1.SALEID,
+		            T2.KNAME,
+		            T1.CONNAME,
+		            (SELECT 
+		                    ADDRESS
+		                FROM
+		                    mm_buymst
+		                WHERE
+		                    BUYID = T1.BUYID) AS ADDRESS,
+		            T1.CONM2,
+		            T1.CONPY,
+		            (SELECT 
+		                    SALEAMT
+		                FROM
+		                    sa_saledtl
+		                WHERE
+		                    SALEID = T1.SALEID) AS SALEAMT,
+		            (SELECT 
+		                    SALEDANGA
+		                FROM
+		                    sa_saledtl
+		                WHERE
+		                    SALEID = T1.SALEID) AS SALEDANGA,
+		            (SELECT 
+		                    DCRATE
+		                FROM
+		                    sa_saledtl
+		                WHERE
+		                    SALEID = T1.SALEID) AS DCRATE,
+		            (SELECT 
+		                    SELLAMT
+		                FROM
+		                    sa_saledtl
+		                WHERE
+		                    SALEID = T1.SALEID) AS SELLAMT,
+		            (SELECT 
+		                    AGENCYAMT
+		                FROM
+		                    sa_saledtl
+		                WHERE
+		                    SALEID = T1.SALEID) AS AGENCYAMT,
+		            (SELECT 
+		                    SUM(DEPOSITAMT)
+		                FROM
+		                    sa_ipgumscheduletb
+		                WHERE
+		                    SALEID = T1.SALEID AND PAYGUBUN = '002') AS DEPOSITAMT1,
+		            (SELECT 
+		                    SUM(DEPOSITAMT)
+		                FROM
+		                    sa_ipgumscheduletb
+		                WHERE
+		                    SALEID = T1.SALEID AND PAYGUBUN = '003') AS DEPOSITAMT2,
+		            (SELECT 
+		                    SUM(DEPOSITAMT)
+		                FROM
+		                    sa_ipgumscheduletb
+		                WHERE
+		                    SALEID = T1.SALEID AND PAYGUBUN = '004') AS DEPOSITAMT3,
+		            (SELECT 
+		                    SUM(SUGUMAMT)
+		                FROM
+		                    sa_ipgumdtl
+		                WHERE
+		                    SALEID = T1.SALEID AND PAYGUBUN = '002') AS SUGUMAMT1,
+		            (SELECT 
+		                    SUM(SUGUMAMT)
+		                FROM
+		                    sa_ipgumdtl
+		                WHERE
+		                    SALEID = T1.SALEID AND PAYGUBUN = '003') AS SUGUMAMT2,
+		            (SELECT 
+		                    SUM(SUGUMAMT)
+		                FROM
+		                    sa_ipgumdtl
+		                WHERE
+		                    SALEID = T1.SALEID AND PAYGUBUN = '004') AS SUGUMAMT3,
+		            (SELECT 
+		                    SUM(SUGUMAMT)
+		                FROM
+		                    sa_ipgumdtl
+		                WHERE
+		                    SALEID = T1.SALEID) AS SUGUMAMT,
+		            ((SELECT 
+		                    SELLAMT
+		                FROM
+		                    sa_saledtl
+		                WHERE
+		                    SALEID = T1.SALEID) - (SELECT 
+		                    SUM(SUGUMAMT)
+		                FROM
+		                    sa_ipgumdtl
+		                WHERE
+		                    SALEID = T1.SALEID)) AS REMNAMT,
+		            (((SELECT 
+		                    SUM(SUGUMAMT)
+		                FROM
+		                    sa_ipgumdtl
+		                WHERE
+		                    SALEID = T1.SALEID) / (SELECT 
+		                    SELLAMT
+		                FROM
+		                    sa_saledtl
+		                WHERE
+		                    SALEID = T1.SALEID)) * 100) AS IPGUMRATE,
+		            T1.REMARK
+		    FROM
+		        sa_salemst T1, (SELECT 
+		        INSACODE,
+		            KNAME,
+		            BRANCHCODE,
+		            (SELECT 
+		                    BRANCHNAME
+		                FROM
+		                    ba_branchmst
+		                WHERE
+		                    BRANCHCODE = T3.BRANCHCODE) AS BRANCHNAME,
+		            DEPTCODE,
+		            (SELECT 
+		                    kname
+		                FROM
+		                    hr_insamst
+		                WHERE
+		                    BRANCHCODE = T3.BRANCHCODE
+		                        AND DEPTCODE = T3.DEPTCODE
+		                        AND grade = '015') AS DEPTNAME
+		    FROM
+		        hr_insamst T3
+		    WHERE
+		        1 = 1
+		        <isNotEqual property="S_BRANCHCODE" compareValue="">
+				    AND BRANCHCODE = #S_BRANCHCODE#
+				</isNotEqual>
+				<isNotEqual property="S_DEPTCODE" compareValue="">
+				    AND DEPTCODE = #S_DEPTCODE#
+				</isNotEqual>
+				<isNotEmpty property="S_KNAME">
+				    AND KNAME LIKE '%$S_KNAME$%'
+				</isNotEmpty>
+		        ) T2
+		    WHERE
+		        1 = 1 AND T1.SALERCD = T2.INSACODE
+		        <isNotEqual property="S_DCODE" compareValue="">
+					AND T1.SALEGUBUN = #S_DCODE#
+				</isNotEqual> 
+				<isNotEmpty property="S_SALEDATE_FR">
+					<isNotEmpty property="S_SALEDATE_TO">
+						AND T1.SALEDATE BETWEEN #S_SALEDATE_FR# AND #S_SALEDATE_TO#
+					</isNotEmpty>
+				</isNotEmpty> 
+				ORDER BY T2.BRANCHCODE, T2.DEPTCODE, T1.SALEDATE
+		        ) A1
+		        INNER JOIN
+		    (SELECT 
+		        S1.SALEID
+		    FROM
+		        sa_salemst S1
+		    LEFT JOIN sa_ipgumscheduletb S2 ON S1.SALEID = S2.SALEID
+		    WHERE
+		        S2.SALEID IS NULL UNION ALL SELECT 
+		        SALEID
+		    FROM
+		        sa_ipgumscheduletb
+		    WHERE
+		        1 = 1 AND DEPOSITGUBUN = '004'
+		            AND DEPOSITYN = 'N' UNION ALL SELECT 
+		        IN2.SALEID
+		    FROM
+		        (SELECT 
+		        IN1.SALEID, MAX(IN1.DEPOSITGUBUN) AS DEPOSITGUBUN
+		    FROM
+		        sa_ipgumscheduletb IN1
+		    GROUP BY IN1.SALEID) IN2
+		    WHERE
+		        IN2.DEPOSITGUBUN != '004') A2 ON A1.SALEID = A2.SALEID
 	</select>
 	
 	

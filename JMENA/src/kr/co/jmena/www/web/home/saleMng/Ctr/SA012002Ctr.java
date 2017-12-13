@@ -102,7 +102,7 @@ public class SA012002Ctr {
 				obj.put("DCRATE",lst.get(i).getDCRATE());
 				obj.put("SELLAMT",lst.get(i).getSELLAMT());
 				obj.put("SALEDANGA",lst.get(i).getSALEDANGA());
-				obj.put("AGENCY_AMT",lst.get(i).getAGENCYAMT());
+				obj.put("AGENCYAMT",lst.get(i).getAGENCYAMT());
 				obj.put("DEPOSITAMT1",lst.get(i).getDEPOSITAMT1());
 				obj.put("DEPOSITAMT2",lst.get(i).getDEPOSITAMT2());
 				obj.put("DEPOSITAMT3",lst.get(i).getDEPOSITAMT3());
