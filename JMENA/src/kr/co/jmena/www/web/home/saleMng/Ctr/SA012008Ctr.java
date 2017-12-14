@@ -80,6 +80,7 @@ public class SA012008Ctr {
 			List<SA012008VO> lst2 = SA012008Biz.selectListSA012008_2(vo1);
 			if(lst2.size() > 0){
 				for (int j = 0; j < lst2.size(); j++) {
+					obj = new JSONObject();
 					if(j == 0){
 						obj.put("BUYGUBUN",lst.get(i).getBUYGUBUN());
 						obj.put("OWNERNAME",lst.get(i).getOWNERNAME());
@@ -111,6 +112,7 @@ public class SA012008Ctr {
 					jCell.add(obj);
 				}
 			}else{
+				obj = new JSONObject();
 				obj.put("BUYGUBUN",lst.get(i).getBUYGUBUN());
 				obj.put("OWNERNAME",lst.get(i).getOWNERNAME());
 				obj.put("OWNERJUMINID",lst.get(i).getOWNERJUMINID());

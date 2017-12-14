@@ -29,38 +29,53 @@
 	</resultMap>
 
 	<select id="selectListSA012007" resultMap="SA012007Data">
-		select    
-		t1.buyid,    
-		(select dcodename from sy_ccodedtl where ccode = '014' and dcode = t1.buygubun) as dcodename,    
-		(select cityname from ba_citymst where citycode = t1.citycode) as cityname,    
-		(select boroughname from ba_citydtl where citycode = t1.citycode and boroughcode = t1.boroughcode) as boroughname,    
-		t1.address,    
-		t1.buym2,    
-		t1.buypy,    
-		(select sum(conm2) from sa_salemst where buyid = t1.buyid) as conm2,    
-		(select sum(conpy) from sa_salemst where buyid = t1.buyid) as conpy,    
-		t1.buym2 - (select sum(conm2) from sa_salemst where buyid = t1.buyid) as remnm2,    
-		t1.buypy - (select sum(conpy) from sa_salemst where buyid = t1.buyid) as remnpy,    
-		t1.buydanga
-		from mm_buymst t1, 
-		
-		(select DISTINCT buyid from mm_payscheduletb where 1=1 and !(paygubun = '005' and payyn = 'Y')) t2
-		
+		select 
+			buyid,
+			dcodename,
+			cityname,
+			boroughname,
+			address,
+			buym2,
+			buypy,
+			conm2,
+			conpy,
+			remnm2,
+			remnpy,
+			buydanga
+		from (
+			select    
+				t1.buyid,    
+				(select dcodename from sy_ccodedtl where ccode = '014' and dcode = t1.buygubun) as dcodename,    
+				(select cityname from ba_citymst where citycode = t1.citycode) as cityname,    
+				(select boroughname from ba_citydtl where citycode = t1.citycode and boroughcode = t1.boroughcode) as boroughname,    
+				t1.address,    
+				t1.buym2,    
+				t1.buypy,    
+				CAST(((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID)) AS DECIMAL(12, 2)) AS conm2,
+				CAST(((SELECT IFNULL(IN2.BUYM2, 0) AS BUYM2 FROM mm_buymst IN2 WHERE IN2.BUYID = t1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID))) AS DECIMAL(12, 2)) AS remnm2,
+				CAST(((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID)) AS DECIMAL(12, 2)) AS conpy, 
+				CAST(((SELECT IFNULL(IN2.BUYPY, 0) AS BUYPY FROM mm_buymst IN2 WHERE IN2.BUYID = t1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID))) AS DECIMAL(12, 2)) AS remnpy,
+				t1.buydanga
+				from mm_buymst t1, 
+				(select DISTINCT buyid from mm_payscheduletb where 1=1 and !(paygubun = '005' and payyn = 'Y')) t2
+			where 1=1
+			<isNotEqual property="S_SALEGUBUN" compareValue="ALL">
+			and t1.buygubun = #S_SALEGUBUN#
+			</isNotEqual>
+			<isNotEqual property="S_CITYCODE" compareValue="ALL">
+			    AND t1.citycode = #S_CITYCODE#
+			</isNotEqual>
+			<isNotEqual property="S_BOROUGHCODE" compareValue="ALL">
+			    AND t1.boroughcode = #S_BOROUGHCODE#
+			</isNotEqual>
+			<isNotEmpty property="S_ADDRESS">
+			    AND t1.address LIKE '%$S_ADDRESS$%'
+			</isNotEmpty>
+				and t1.buyid = t2.buyid
+			order by t1.citycode, t1.boroughcode asc		
+		) A
 		where 1=1
-		<isNotEqual property="S_SALEGUBUN" compareValue="ALL">
-		and t1.buygubun = #S_SALEGUBUN#
-		</isNotEqual>
-		<isNotEqual property="S_CITYCODE" compareValue="ALL">
-		    AND t1.citycode = #S_CITYCODE#
-		</isNotEqual>
-		<isNotEqual property="S_BOROUGHCODE" compareValue="ALL">
-		    AND t1.boroughcode = #S_BOROUGHCODE#
-		</isNotEqual>
-		<isNotEmpty property="S_ADDRESS">
-		    AND t1.address LIKE '%$S_ADDRESS$%'
-		</isNotEmpty>
-		and t1.buyid = t2.buyid
-		order by t1.citycode, t1.boroughcode asc		
+		and remnpy > 0
 	</select>
 	
 
