@@ -29,3 +29,7 @@ JNDI Setting
 <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 	<property name="jndiName" value="java:/comp/env/jdbc/enaDS" />
 </bean>
+
+
+5. db권한
+grant all privileges on *.* to myuser@localhost identified by '비밀번호' with grant option;
