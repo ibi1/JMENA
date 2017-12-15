@@ -107,6 +107,7 @@ public class SA011002Ctr {
 			obj.put("REGDATE", lst.get(i).getREGDATE());
 			obj.put("CANCELYN", lst.get(i).getCANCELYN());
 			obj.put("CANCELDATE", lst.get(i).getCANCELDATE());
+			obj.put("SALERNAME", lst.get(i).getSALERNAME());
 			
 			jCell.add(obj);
 			

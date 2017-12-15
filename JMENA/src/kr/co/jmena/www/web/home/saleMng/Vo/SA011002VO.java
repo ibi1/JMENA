@@ -54,6 +54,7 @@ public class SA011002VO {
 	private String SALEGUBUN;
 	private String SL_SALEID;
 	private String SALEID_PK;
+	private String SALERNAME;
 	
 	
 	public String getSL_SALEID() {
@@ -369,6 +370,12 @@ public class SA011002VO {
 	}
 	public void setSALEID_PK(String SALEID_PK) {
 		this.SALEID_PK = SALEID_PK;
+	}
+	public String getSALERNAME() {
+		return SALERNAME;
+	}
+	public void setSALERNAME(String SALERNAME) {
+		this.SALERNAME = SALERNAME;
 	}
 
 	

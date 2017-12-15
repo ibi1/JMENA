@@ -78,9 +78,14 @@
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});		
 			
 			$("#CITYCODE").attr("disabled", true);
+			$("#BRANCHNAME").attr("disabled", true);
 			
 			$("input:radio[name=BRROWTYPE]:input[value=M]").attr("checked", true);
 			
+			$("#SALERCD").jqxInput({theme: 'energyblue', height: 25, width: 93, minLength: 1, disabled: true });
+            $("#SALERNAME").jqxInput({theme: 'energyblue',  height: 25, width: 93, minLength: 1 });
+         
+            
 			f_selectListEnaCityCode();
 			f_selectListEnaSalerCode();
 			f_selectListEnaBranchCode();
@@ -100,6 +105,7 @@
 				dataType : 'json' , 
 				success: function(data){
 					var inHtml = "";
+					inHtml += "<option value=''></option>\n";
 					data.cityMstList.forEach(function(currentValue, index, array){
 						inHtml += "<option value='" + currentValue.CITYCODE + "'>" + currentValue.CITYNAME + "</option>\n";
 					});
@@ -129,7 +135,7 @@
 					data.insaMstList.forEach(function(currentValue, index, array){
 						inHtml += "<option value='" + currentValue.INSACODE + "'>" + currentValue.KNAME + "</option>\n";
 					});
-					$("#SALERCD").append(inHtml);
+					//$("#SALERCD").append(inHtml);
 					$("#SL_SALERNAME").append(inHtml);
 				},
 				error:function(e){  
@@ -147,6 +153,7 @@
 				dataType : 'json' , 
 				success: function(data){
 					var inHtml = "";
+					inHtml += "<option value=''></option>\n";
 					data.branchMstList.forEach(function(currentValue, index, array){
 						inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 					});
@@ -220,7 +227,7 @@
 				loadError:function(){alert("Error~!!");},
 				colNames:['차입일자', '차입자', '주소', '차입대금', '차입형식', '지급이자금액', 
 				          '계약번호', '계약일자', '관리번호', '지역구분', '지사구분', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
-				          '매출구분', '담당자', '매입번호', '차입자주민번호', '차입자주소', 
+				          '매출구분', '담당자코드', '담당자', '매입번호', '차입자주민번호', '차입자주소', 
 				          '차입자연락처', '계약면적', '계약평수', '비고', 
 				          '차입기간', '차입기간구분', '만기일', '지급이율', '지급계좌', '지급은행', '연장여부', '연장일자', '해약여부', '해약일자',
 				          '계좌주', '공동명의구분', '등기여부', '등기일자'],
@@ -243,7 +250,8 @@
 					{name:"CONBPY",			index:'CONBPY',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
 					{name:"CONJPY",			index:'CONJPY',			width:100,	align:'center',	sortable:false,	formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}, hidden:true},
 					{name:"SALEGUBUN",		index:'SALEGUBUN',		width:100,	align:'center',	sortable:false,	hidden:true},
-					{name:"SALERCD",		index:'SALERCD',		width:100,	align:'center',	sortable:false,	hidden:true},
+					{name:"SALERCD",		index:'SALERCD',		width:100,	align:'center',	sortable:false, hidden:true},
+					{name:"SALERNAME",		index:'SALERNAME',		width:100,	align:'center',	sortable:false, hidden:true},
 					{name:"BUYID",			index:'BUYID',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONJUMINID",		index:'CONJUMINID',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"CONADDRESS",		index:'CONADDRESS',		width:100,	align:'center',	sortable:false,	hidden:true},
@@ -289,6 +297,7 @@
 					$("#SALEDATE").val(selRowData.SALEDATE);
 					$("#SALEID").val(selRowData.SALEID);
 					$("#SALERCD").val(selRowData.SALERCD);
+					$("#SALERNAME").val(selRowData.SALERNAME);
 					$("#BRANCHNAME").val(selRowData.BRANCHCODE);
 					$("#MANAGENO").val(selRowData.MANAGENO);
 					$("#CITYCODE").val(selRowData.CITYCODE);
@@ -420,10 +429,11 @@
 			if (dF == "Y") $("#SALEDATE").val("");
 
 			$("#SALEID").val("");
-			$("#SALERCD").change();
-			$("#BRANCHNAME").change();
+			$("#SALERCD").val("");
+			$("#SALERNAME").val("");
+			$("#BRANCHNAME").val("");
 			$("#MANAGENO").val("");
-			$("#CITYCODE").change();
+			$("#CITYCODE").val("");
 			$("#ADDRESS").val("");
 			$("#OWNERNAME").val("");
 			$("#OWNERJUMINID").val("");
@@ -441,11 +451,11 @@
 			$("input:radio[name=BRROWTYPE]:input[value=M]").attr("checked", true);
 			$("#BRROWAMT").val("");
 			$("#BRROWPERIOD").val("");
-			$("#PERIODGUBUN").change();
+			$("#PERIODGUBUN").val("");
 			$("#PAYRATE").val("");
 			$("#PAYAMT").val("");
 			$("#PAYACCOUNT").val("");
-			$("#PAYBANK").change();
+			$("#PAYBANK").val("");
 			$("#PAYOWNER").val("");
 			$("#BRROWDATE").val("");
 			$("#EXPIREDATE").val("");
@@ -520,6 +530,13 @@
 					alert("계약일자를 입력하셔야 합니다.");
 					
 					$("#SALEDATE").focus();
+					return false;
+				}
+				
+				if ($("#SALERCD").val() == "") {
+					alert("담당자를 입력하셔야 합니다.");
+					
+					$("#SALERNAME").focus();
 					return false;
 				}
 
@@ -640,6 +657,7 @@
 				if (confirm(msg) == true) {
 					$("#MANAGENO").jqxInput({disabled: false});
 					$('#SALEID').jqxInput({disabled: false });
+					$('#SALERCD').jqxInput({disabled: false });
 					
 					//콤마 remove
 					f_commaInputData("remove");
@@ -652,6 +670,8 @@
 						success: function(data){
 							$('#SALEID').jqxInput({disabled: true });
 							$("#MANAGENO").jqxInput({disabled: true});
+							$("#SALERCD").jqxInput({disabled: true});
+							
 							alert(data.resultMsg);
 							
 							if (data.resultCode == "SUCCESS") {
@@ -935,6 +955,42 @@
 				}
 			});
 		})
+		
+		$(function() {
+			$("#SALERNAME").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					if ($("#SALERNAME").val() == "") {
+						alert("담당자를 입력하셔야 합니다.");
+						
+						$("#SALERNAME").focus();
+						
+						return false;	
+					}
+					
+					$.ajax({ 
+						type: 'POST' ,
+						url: "/home/selectHRInsamstBranchCode.do", 
+						data : {
+							SALERNAME : $("#SALERNAME").val(),
+						},dataType : 'json' , 
+						success: function(data){
+							if (data.RESULT == "EMPTY") {
+								alert("조회된 담당자가 없습니다.");
+								$("#SALERCD").val("");
+								$("#BRANCHNAME").val("");
+							} else {
+								$("#SALERCD").val(data.SALERCD);
+								$("#BRANCHNAME").val(data.BRANCHCODE);
+							}
+						},
+						error:function(e){  
+							alert("[ERROR-SCRIPT]게약변동관리 저장  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
 	</script>
 </head>
 <body>
@@ -984,8 +1040,7 @@
 				<tr>
 					<th width="120">* 담당자</th>
 					<td colspan="2">
-						<select id="SALERCD" name="SALERCD">
-						</select>
+						<input type="text" id="SALERNAME" name="SALERNAME" /> <input type="text" id="SALERCD" name="SALERCD" />
 					</td>
 					<th width="120">계약지사</th>
 					<td>
