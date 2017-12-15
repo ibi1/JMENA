@@ -4,9 +4,8 @@
 
 <sqlMap namespace="EP011001">
 	<typeAlias alias="EP011001VO" type="kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO"/>
+	<typeAlias alias="HR011001VO" type="kr.co.jmena.www.web.home.personMng.Vo.HR011001VO"/>
 
-
-	
 	<resultMap id="EP011001Data" class="EP011001VO">
 		<result property="PAYDATE"					column="PAYDATE"/>
 		<result property="PAYSEQ"					column="PAYSEQ"/>
@@ -180,6 +179,17 @@
 		<result property="ACCTOWNER" column="ACCTOWNER"/>
 	</resultMap>
 	
+	<resultMap id="insaMstData" class="HR011001VO">
+		<result property="INSACODE" column="INSACODE"/>
+		<result property="KNAME" column="KNAME"/>
+		<result property="BRANCHCODE" column="BRANCHCODE"/>
+		<result property="BRANCHNAME" column="BRANCHNAME"/>
+		<result property="GRADE" column="GRADE"/>
+		<result property="GRADENAME" column="GRADENAME"/>
+		<result property="DUTY" column="DUTY"/>
+		<result property="DUTYNAME" column="DUTYNAME"/>
+	</resultMap>
+
 	<select id="selectListEnaSudangMst" resultMap="EP011001Data">
 	
 	  SELECT T1.SALEID,
@@ -288,7 +298,7 @@
 	 		<isEqual property="FLAG" compareValue="">
 		 	AND	T1.INSACODE != #INSACODE#		      
 	 		</isEqual>
-		
+		ORDER BY T1.GRADE ASC
 	</select>		
 	
 	<select id="selectEnaSudangMstInsert" resultMap="EP011001DataInsertlist">
@@ -607,6 +617,47 @@
 		ORDER BY SALEID, SALEDATE
 	</select>	
 	
+	<select id="selectListEanHRInsaMstPopup" resultMap="insaMstData">
+		SELECT
+			T1.INSACODE, 
+			T1.KNAME, 
+			T1.BRANCHCODE, 
+			(SELECT IN1.BRANCHNAME FROM ba_branchmst IN1 WHERE IN1.BRANCHCODE = T1.BRANCHCODE) AS BRANCHNAME,
+			GRADE, 
+			fn_codename('01', '003', T1.GRADE) AS GRADENAME,
+		    T1.DUTY,
+		    fn_codename('01', '004', T1.DUTY) AS DUTYNAME 
+		FROM hr_insamst T1
+		WHERE 1=1
+		AND T1.BRANCHCODE = #BRANCHCODE#
+		<isNotEmpty property="INSACODEARR">
+   			AND T1.INSACODE NOT IN 
+   			<iterate property="INSACODEARR" open="(" close=")" conjunction=",">
+    			#INSACODEARR[]#
+   			</iterate>
+   		</isNotEmpty>
+   		AND T1.RETIREDATE IS NULL
+   		ORDER BY T1.GRADE ASC
+	</select>
 	
+	<select id="selectDataEnaSudangMstPTbBottom" resultClass="java.lang.Integer">
+		SELECT COUNT(SALEID) AS CNT
+		FROM sa_sudangpayertb
+		WHERE 1 = 1
+		AND SALEID = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+	</select>
+	
+	<delete id="deleteDataEnaSudangMstPTbBottom">
+		DELETE FROM sa_sudangpayertb
+		WHERE SALEID = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+	</delete>
+	
+	<delete id="deleteDataEnaSudangMstBottom">
+		DELETE FROM sa_sudangmst
+		WHERE SALEID = #SALEID#
+		AND PAYSEQ = #PAYSEQ#
+	</delete>
 	
 </sqlMap>

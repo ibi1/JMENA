@@ -1554,6 +1554,10 @@
 			}
 			
 			f_commaInputData("click");
+			
+			if($("#SALEGUBUN").val() == "002") {
+				f_agencyAmtRule();
+			}
 		}
 		
 		$(function() {
@@ -1593,7 +1597,7 @@
 					agencyAmt -= dcamt.toFixed(0);
 				}
 				
-				$("#AGENCYAMT").val(agencyAmt);
+				$("#AGENCYAMT").val(Math.floor(agencyAmt/10000) * 10000); //천원단위 절사
 			}
 			
 			f_commaInputData("click");

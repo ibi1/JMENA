@@ -3,6 +3,7 @@ package kr.co.jmena.www.web.home.expayMng.Dao;
 import java.util.List;
 
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
+import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
@@ -163,7 +164,39 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEnaSaleSudangList", vo);
 		
 		return lst;
-	}			
+	}	
 	
+	@SuppressWarnings("unchecked")
+	public List<HR011001VO> selectListEanHRInsaMstPopup(HR011001VO vo) throws DataAccessException {
+		List<HR011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListEanHRInsaMstPopup", vo);
+		
+		return lst;
+	}	
+	
+	public boolean deleteDataEnaSudangMstPTbBottom(EP011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = 0;
+		
+		if ((int)getSqlMapClientTemplate().queryForObject(NAME_SPACE + "selectDataEnaSudangMstPTbBottom", vo) > 0) {
+			cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteDataEnaSudangMstPTbBottom", vo);
+		} else {
+			cnt = 1;
+		}
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
+	
+	public boolean deleteDataEnaSudangMstBottom(EP011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
+		
+		int cnt = (int)getSqlMapClientTemplate().delete(NAME_SPACE + "deleteDataEnaSudangMstBottom", vo);
+		
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
+	}
 		
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
 import kr.co.jmena.www.web.home.expayMng.Dao.EP011001Dao;
+import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -278,8 +279,42 @@ public class EP011001Biz {
 		}
 		
 		return lst;
-	}		
+	}
 	
+	public List<HR011001VO> selectListEanHRInsaMstPopup(HR011001VO vo) throws Exception {
+		List<HR011001VO> lst = null;
 
+		try {
+			lst = EP011001Dao.selectListEanHRInsaMstPopup(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}	
+	
+	public boolean deleteDataEnaSudangMstPTbBottom(EP011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = EP011001Dao.deleteDataEnaSudangMstPTbBottom(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}	
+	
+	public boolean deleteDataEnaSudangMstBottom(EP011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = EP011001Dao.deleteDataEnaSudangMstBottom(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
 	
 }

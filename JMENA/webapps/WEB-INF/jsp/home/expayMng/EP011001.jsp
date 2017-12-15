@@ -15,6 +15,8 @@
 	var auth_i = true;
 	
 	$(document).ready(function(){
+		$("#S_FLAG_L").val("I");
+		
 		var dt = new Date();
 		// Display the month, day, and year. getMonth() returns a 0-based number.
 		var month = dt.getMonth()+1;
@@ -27,9 +29,10 @@
 		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 
-// 		$("#insertB1Button").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
-// 		$("#deleteB1Button").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
-// 		$("#saveB1Button").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#tab1InsertButton").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
+		$("#tab1DeleteButton").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
+		$("#tab1SaveButton").jqxButton({ theme: 'energyblue', width: 120, height: 25 });
+		
 		$("#payerButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		
@@ -39,10 +42,15 @@
 		<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
 			$("#insertButton").hide();
 			$("#saveButton").hide();
+			$("#tab1InsertButton").hide();
+			$("#tab1SaveButton").hide();
+			$("#payerButton").hide();
+			
 			auth_i = false;
 		<% }%>
 		<%if ("N".equals(session.getAttribute("AUTH_D"))) { %>
 			$("#deleteButton").hide();
+			$("#tab1DeleteButton").hide();
 			auth_d = false;
 		<% }%>
 		<%if ("N".equals(session.getAttribute("AUTH_P"))) { %>
@@ -170,6 +178,7 @@
 			},
 			//height: '100%' ,
 			onSelectRow: function(ids){
+				$("#S_FLAG_L").val("U");
 				v_rightLastSel = 0;
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#PAYDATE").val(selRowData.PAYDATE);
@@ -235,7 +244,7 @@
 			},					
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준코드','신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
+			colNames:['직급', '직책', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준코드','신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
 			colModel:[  	
 					  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
 						, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
@@ -439,7 +448,7 @@
 				return;
 			}
 			var popUrl = "/home/EP011001_1.do";
-			var popOption = "width=700, height=240, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			var popOption = "width=1200, height=600, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"매출관리",popOption);
 		}); 
 	});
@@ -452,7 +461,7 @@
  				return;
  			}
 			var popUrl = "/home/EP011001_2.do";
-			var popOption = "width=1120, height=540, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			var popOption = "width=1200, height=600, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl,"신고인관리",popOption);
 		}); 
 	});
@@ -477,6 +486,7 @@
 				var taxGubunName = cellData.TAXGUBUNNAME;
 				$("#bottomList").jqGrid('setCell', ids[index], 'SUDANGRATE', $("#SUDANGRATE").val());
 				$("#bottomList").jqGrid('setSelection', ids[index], true);
+				//계산 식 실행
 				paycal2("1")
 				$('#bottomList').jqGrid('saveRow',ids[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경
 				
@@ -634,6 +644,8 @@
 	
 	$(function(){
 		$("#searchButton").click(function() {
+			$("#S_FLAG_L").val("I");
+			
 			resetEnaSudang();
 		});
 		
@@ -654,6 +666,7 @@
 	
 	$(function(){
 		$("#insertButton").click(function() {
+			$("#S_FLAG_L").val("I");
 			
 			var salerCd = $("#SALERCD").val();
 			var salerNm = $("#SALERNM").val();
@@ -667,6 +680,8 @@
 	
 	
 	function resetEnaSudang(){
+		$("#S_FLAG_L").val("I");
+		
 		$("#PAYDATE").val("");
 		$("#INSACODE").val("");
 		$("#KNAME").val("");
@@ -876,8 +891,13 @@
 				dataIds.some(function(currentValue, index, array){					
 					$('#bottomList').jqGrid('saveRow',array[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경	
 					insacodeArr.push($("#bottomList").jqGrid('getCell', array[index], 'INSACODE'));				
-					sudangrateArr.push($("#bottomList").jqGrid('getCell', array[index], 'SUDANGRATE'));	
-					addrateArr.push($("#bottomList").jqGrid('getCell', array[index], 'ADDRATE'));	
+					
+					var sudangRate = $("#bottomList").jqGrid('getCell', array[index], 'SUDANGRATE');
+					var addRate = $("#bottomList").jqGrid('getCell', array[index], 'ADDRATE');
+					
+					sudangrateArr.push(sudangRate == "" ? 0 : sudangRate);	
+					addrateArr.push(addRate == "" ? 0 : addRate);	
+					
 					payamtArr.push($("#bottomList").jqGrid('getCell', array[index], 'PAYAMT'));	
 					taxgubunArr.push($("#bottomList").jqGrid('getCell', array[index], 'TAXGUBUN'));	
 					taxincomeArr.push($("#bottomList").jqGrid('getCell', array[index], 'TAXINCOME'));	
@@ -980,6 +1000,73 @@
 // 			window.open(popUrl,"인사정보 관리",popOption);
 // 		}); 		
 // 	})	
+
+
+	$(function() {
+		$("#tab1InsertButton").click(function() {
+			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("선택된 수당기본 정보가 없습니다.");
+				
+				return false;
+			}
+			
+			$("#bottomList").jqGrid("addRow", 0);
+			
+			var popUrl = "/home/EP011001_5.do";
+			var popOption = "width=700, height=600, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			window.open(popUrl,"수당관리",popOption);
+			
+		});
+	})
+	
+	$(function() {
+		$("#tab1DeleteButton").click(function() {
+			var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids == null || ids == "") {
+				alert("선택된 수당수령인 정보가 없습니다.");
+				
+				return false;
+			}
+			
+			$('#bottomList').jqGrid('saveRow',ids,false,'clientArray'); //선택된 놈 뷰 모드로 변경
+
+			var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
+
+			if (confirm("삭제하시겠습니까?") == true) {
+				$.ajax({ 
+					type: 'POST' ,
+					data: "SALEID=" + cellData.SALEID + "&PAYSEQ=" + cellData.PAYSEQ,
+					url: "/home/deleteDataEnaSudangMstBottom.do", 
+					dataType : 'json' , 
+					success: function(data){
+						alert(data.resultMsg);
+						
+						$("#searchButton").click();
+					},
+					error:function(e){  
+						alert("[ERROR]입금스케줄관리 삭제  중 오류가 발생하였습니다.");
+					}  
+				});
+			} else {
+				$("#searchButton").click();
+			}
+		});
+	})
+	
+	$(function() {
+		$("#tab1SaveButton").click(function() {
+			if ($("#S_FLAG_L").val() == "I") {
+				alert("추가 시에는 저장할 수 없습니다.");
+				
+				return false;
+			}
+			
+			$("#saveButton").click();
+		});
+	})
 	
 	
 	$(function() {
@@ -1075,6 +1162,7 @@
 			</table>
 			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
+			<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
 		</div>
 		<div id="rightDiv" style="width:48%; float:left; padding: 10px" align="left">
 			<table >
@@ -1194,12 +1282,25 @@
 			</table>
 			</form>
 			<br />			
-			<br />			
-			<div align="right">총 건수 : <font color="red"><sapn id="bottomListCount"></sapn></font>건</div>
-			<table id="bottomList"></table>
-			<table align="right">
+			<br />
+			<table width="100%">
 				<tr>
-					<td><input type="button" value="신고인 관리" id='payerButton' /></td>
+					<td width="100%" align="right">
+						<input type="button" value="수당수령인 추가" id='tab1InsertButton' />
+						<input type="button" value="수당 수령인 삭제" id='tab1DeleteButton' />
+						<input type="button" value="저장" id='tab1SaveButton' />
+					</td>
+				</tr>
+				<tr>
+					<td>		
+						<div align="right">총 건수 : <font color="red"><sapn id="bottomListCount"></sapn></font>건</div>
+						<table id="bottomList"></table>
+						<table align="right">
+							<tr>
+								<td><input type="button" value="신고인 관리" id='payerButton' /></td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 			</table>			
 		</div>

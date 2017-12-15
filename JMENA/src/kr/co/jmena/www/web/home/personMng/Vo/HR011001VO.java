@@ -1,5 +1,7 @@
 package kr.co.jmena.www.web.home.personMng.Vo;
 
+import java.util.List;
+
 public class HR011001VO {
 	
 	private String INSACODE;
@@ -54,6 +56,10 @@ public class HR011001VO {
 	private String USERID;
 	
 	private String FLAG;
+	
+	private List<String> INSACODEARR;
+	private String GRADENAME;
+	private String DUTYNAME;
 		
 
 	public String getACCTNO(){
@@ -328,5 +334,23 @@ public class HR011001VO {
 	}
 	public void setFLAG(String fLAG) {
 		this.FLAG = fLAG;
+	}
+	public List<String> getINSACODEARR() {
+		return INSACODEARR;
+	}
+	public void setINSACODEARR(List<String> INSACODEARR) {
+		this.INSACODEARR = INSACODEARR;
+	}
+	public String getGRADENAME() {
+		return GRADENAME;
+	}
+	public String getDUTYNAME() {
+		return DUTYNAME;
+	}
+	public void setGRADENAME(String gRADENAME) {
+		this.GRADENAME = gRADENAME;
+	}
+	public void setDUTYNAME(String dUTYNAME) {
+		this.DUTYNAME = dUTYNAME;
 	}	
 }

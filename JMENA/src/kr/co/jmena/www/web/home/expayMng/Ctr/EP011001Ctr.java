@@ -1,5 +1,6 @@
 package kr.co.jmena.www.web.home.expayMng.Ctr;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.jmena.www.web.home.expayMng.Biz.EP011001Biz;
 import kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO;
+import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -388,7 +390,7 @@ public class EP011001Ctr {
 		logger.debug("[deleteEnaSudangMst]" + json);
 		
 		return new ModelAndView("jsonView", json);
-	}	
+	}
 		
 	
 	/**
@@ -633,7 +635,93 @@ public class EP011001Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	
-	}		
+	}	
 	
+	@RequestMapping("/home/EP011001_5.do")
+	public ModelAndView EP011001_5(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		return new ModelAndView("home/expayMng/EP011001_5");
+	}
+	
+	@RequestMapping("/home/selectListEanHRInsaMstPopup.do")
+	public ModelAndView selectListEanHRInsaMstPopup(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
+		String[] insacodeArr = request.getParameter("INSACODEARR").split("\\^");
+		
+		List<String> insacodeList = new ArrayList<String>();
+		
+		for (String insacode : insacodeArr) {
+			insacodeList.add(insacode);
+		}
+		
+		vo.setINSACODEARR(insacodeList);
+		
+		List<HR011001VO> lst = EP011001Biz.selectListEanHRInsaMstPopup(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		
+		if(lst.size() > 0){
+			
+			for (int i = 0; i < lst.size(); i++) {
+				
+				JSONObject obj = new JSONObject();
+				
+				obj.put("INSACODE", lst.get(i).getINSACODE());
+				obj.put("KNAME", lst.get(i).getKNAME());
+				obj.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
+				obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
+				obj.put("GRADE", lst.get(i).getGRADE());
+				obj.put("GRADENAME", lst.get(i).getGRADENAME());
+				obj.put("DUTY", lst.get(i).getDUTY());
+				obj.put("DUTYNAME", lst.get(i).getDUTYNAME());
+				
+				jCell.add(obj);			
+			}
+		}
+		
+		json.put("rows", jCell);
+		
+		logger.debug("[selectListEanHRInsaMstPopup]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	
+	@RequestMapping("/home/deleteDataEnaSudangMstBottom.do")
+	public ModelAndView deleteDataEnaSudangMstBottom(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		EP011001VO vo = new EP011001VO();
+				
+		vo.setSALEID(request.getParameter("SALEID"));
+		vo.setPAYSEQ(request.getParameter("PAYSEQ"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		if (EP011001Biz.deleteDataEnaSudangMstPTbBottom(vo) == true) {
+			if (EP011001Biz.deleteDataEnaSudangMstBottom(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 삭제하였습니다.";
+			} else {
+				resultCode ="FAILED";
+				 resultMsg = "[ERROR]선택된 수당수령인 삭제 중 오류가 발생하였습니다.";
+			}
+		} else {
+			 resultCode ="FAILED";
+			 resultMsg = "[ERROR]선택된 수당수령인의 수당신고인 삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataEnaSudangMstBottom]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}	
 	
 }
