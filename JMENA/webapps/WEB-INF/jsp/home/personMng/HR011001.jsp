@@ -17,6 +17,9 @@
 	var v_branchCode = "";
 	var v_deptName = "";
 	var v_appointdept;
+	var auth_i = true;
+	var auth_d = true;
+	
 	$(document).ready(function(){
 		$("#S_FLAG_L").val("I");
 		var INSACODE = "";
@@ -39,6 +42,22 @@
 
 		$("#insaButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 		
+		<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+			$("#insertButton").hide();
+			$("#saveButton").hide();
+			$("#insertB1Button").hide();
+			$("#saveB1Button").hide();
+			$("#insertB2Button").hide();
+			$("#saveB2Button").hide();
+			auth_i = false;
+		<% }%>
+		<%if ("N".equals(session.getAttribute("AUTH_D"))) { %>
+			$("#deleteButton").hide();
+			$("#deleteB1Button").hide();
+			$("#deleteB2Button").hide();
+			auth_d = false;
+		<% }%>
+	
 		
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});

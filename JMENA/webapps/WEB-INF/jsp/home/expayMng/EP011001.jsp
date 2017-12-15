@@ -12,6 +12,8 @@
 </head>
 <script type="text/javascript">
 	var v_rightLastSel=0;
+	var auth_i = true;
+	
 	$(document).ready(function(){
 		var dt = new Date();
 		// Display the month, day, and year. getMonth() returns a 0-based number.
@@ -34,6 +36,18 @@
 		$("#popupButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 //		$("#insaButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 		
+		<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+			$("#insertButton").hide();
+			$("#saveButton").hide();
+			auth_i = false;
+		<% }%>
+		<%if ("N".equals(session.getAttribute("AUTH_D"))) { %>
+			$("#deleteButton").hide();
+			auth_d = false;
+		<% }%>
+		<%if ("N".equals(session.getAttribute("AUTH_P"))) { %>
+			$("#excelButton").hide();
+		<% }%>
 		
 		$("#S_SALEDATESYM").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#S_SALEDATEEYM").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -243,7 +257,7 @@
 							}]						
 						}}
 						, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-						, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:100,		align:'center',	sortable:false, hidden:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode1}}
+						, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:100,		align:'center',	sortable:false, hidden:false, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode1}}
 						, {name:"TAXGUBUNNAME",	index:'TAXGUBUNNAME',width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode1
 							,dataEvents:[{
 								type:'change',
@@ -454,6 +468,25 @@
 			//저장전 콤마 삭제
 			f_commaInputData("remove");
 			paycal();
+			
+			//그리드 수당지급율 수정!
+			var ids = jQuery("#bottomList").jqGrid('getDataIDs');
+			
+			ids.some(function(currentValue, index, array){
+				var cellData = $("#bottomList").jqGrid('getRowData', ids[index]); //셀 전체 데이터 가져오기
+				var taxGubunName = cellData.TAXGUBUNNAME;
+				$("#bottomList").jqGrid('setCell', ids[index], 'SUDANGRATE', $("#SUDANGRATE").val());
+				$("#bottomList").jqGrid('setSelection', ids[index], true);
+				paycal2("1")
+				$('#bottomList').jqGrid('saveRow',ids[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경
+				
+				$("#bottomList").jqGrid("resetSelection");
+				$('#bottomList').jqGrid('setCell', ids[index], 'TAXGUBUNNAME', taxGubunName);
+				
+			});
+			$("#bottomList").jqGrid("resetSelection");
+			//$("#bottomList").jqGrid('setSelection', 0);
+					
 			f_commaInputData("click");
 		}
 	});
