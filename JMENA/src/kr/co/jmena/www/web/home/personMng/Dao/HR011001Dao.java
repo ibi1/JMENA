@@ -143,4 +143,13 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		if (cnt > 0) chkFlag = true;
 		return chkFlag;
 	}
+	
+	public List<HR011001VO> selectHRInsamst(HR011001VO vo) throws DataAccessException {
+		List<HR011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectHRInsamst", vo);
+		
+		return lst;
+	}	
+	
 }

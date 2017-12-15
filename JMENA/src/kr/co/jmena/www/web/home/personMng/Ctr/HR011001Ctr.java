@@ -594,4 +594,29 @@ public class HR011001Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}
+	
+	@RequestMapping("/home/selectHRInsamst.do")
+	public ModelAndView selectHRInsamst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setKNAME(request.getParameter("KNAME")); 
+		
+		List<HR011001VO> lst = HR011001Biz.selectHRInsamst(vo);
+		
+		JSONObject json = new JSONObject();
+		
+		if (lst.size() > 0) {
+			json.put("RESULT", "FULL");
+			json.put("RECOID", lst.get(0).getRECOID());
+			json.put("RECONAME", lst.get(0).getRECONAME());
+		} else {
+			json.put("RESULT", "EMPTY");
+		}
+		
+		logger.debug("[selectHRInsamstBranchCode]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
+	
+	
 }

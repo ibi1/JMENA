@@ -89,6 +89,11 @@
 		<result property="DEPTGUBUN" 	column="DEPTGUBUN"/>		
 	</resultMap>	
 	
+	<resultMap id="hrData" class="HR011001VO">
+		<result property="RECOID"		column="RECOID"/>
+		<result property="RECONAME"		column="RECONAME"/>
+	</resultMap>
+	
 	
 	<select id="selectListEnaInsaMst" resultMap="selectListEnaInsaMstData">
 		SELECT 
@@ -431,4 +436,16 @@
 		DELETE FROM hr_insamst
 		WHERE INSACODE = #INSACODE#
 	</delete>
+	
+	<select id="selectHRInsamst" resultMap="hrData">
+		SELECT
+			T1.INSACODE AS RECOID, 
+			T1.KNAME AS RECONAME
+		FROM
+			hr_insamst T1
+		WHERE 1=1
+		AND T1.RETIREDATE is null
+		AND T1.KNAME = #KNAME#
+	</select>
+	
 </sqlMap>

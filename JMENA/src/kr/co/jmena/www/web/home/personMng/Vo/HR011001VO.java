@@ -23,6 +23,7 @@ public class HR011001VO {
 	private String REJOINYN;
 	private String RETIREDATE;
 	private String RECOID;
+	private String RECONAME;
 	private String REMARK;	
 	
 	
@@ -45,6 +46,12 @@ public class HR011001VO {
 	private String BASICACCT;
 	
 	
+	public String getRECONAME() {
+		return this.RECONAME;
+	}
+	public void setRECONAME(String RECONAME) {
+		this.RECONAME = RECONAME;
+	}
 	private String S_BRANCHCODE;
 	private String S_DEPTCODE;
 	private String S_KNAME;

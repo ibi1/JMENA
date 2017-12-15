@@ -199,5 +199,17 @@ public class HR011001Biz {
 		
 		return chkFlag;
 	}
+
+	public List<HR011001VO> selectHRInsamst(HR011001VO vo) throws Exception {
+		List<HR011001VO> lst = null;
+
+		try {
+			lst = HR011001Dao.selectHRInsamst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
 	
 }

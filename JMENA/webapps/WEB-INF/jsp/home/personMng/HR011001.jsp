@@ -60,7 +60,7 @@
 	
 		
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
-		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+		$("#S_JUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 13});
 		$("#KNAME").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 		$("#INSACODE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#JUMINID1").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
@@ -76,15 +76,15 @@
 		$("#JOINDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#RETIREDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 350, minLength: 1});
+		$("#RECONAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		
-
 		$("#table1").show();
 		$("#table2").hide();
 		f_selectListEnaBranchCode("N");
 		f_selectListEnaGradeCode();
 		f_selectListEnaDutyCode();
 		$("#APPOINTBRANCH").val("");
-		selectRecoidCode();
+//		selectRecoidCode();
 		setTimeout("selectListInsaMst();", 1000);
 //		selectListInsaMst();
 		selectListEnaAppointItem(INSACODE);
@@ -181,7 +181,7 @@
 					$("#REJOINYN").attr('checked', false);
 				}
 				$("#RETIREDATE").val(selRowData.RETIREDATE);
-				$("#RECOID").val(selRowData.RECOID);
+				$("#RECONAME").val(selRowData.RECOID);
 				$("#REMARK").val(selRowData.REMARK);
 				f_selectListEnaDeptCode("2",selRowData.DEPTCODE);				
 				selectListEnaAppointItem(selRowData.INSACODE);				
@@ -777,7 +777,7 @@
 		$("#JOINDATE").val("");
 		$("#REJOINYN").attr('checked', false);
 		$("#RETIREDATE").val("");
-		$("#RECOID").val("");
+		$("#RECONAME").val("");
 		$("#REMARK").val("");	
 		selectListEnaAppointItem("");				
 		selectListEnaTexPayerItem("");
@@ -824,6 +824,10 @@
 			if ($("#BASICPAY").val() == "") {
 				$("#BASICPAY").val("0");
 			}
+			if ($("#RECONAME").val() == "") {
+				$("#RECOID").val("0");
+			}
+			
 			
 			var rejoinyn = $('input:checkbox[name=REJOINYN]').is(':checked') ? "Y" : "N";
 			
@@ -843,6 +847,7 @@
 							if(data.rows[0].MSG == "SUCCESS")
 							{
 								alert("저장이 완료되었습니다.");
+								resetHrMst();
 								selectListInsaMst();
 								//resetHrMst();
 							}else{
@@ -1291,28 +1296,65 @@
 		})	
 		
 	$(function() {
-			$('#bottomTabs').on('tabclick', function (event) { 
-				var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
-				
-				if (ids != null && ids != "") {
-					$("#bottomList1").trigger("reloadGrid");
-					$("#bottomList2").trigger("reloadGrid");
-				}
-			}); 
-		})
-		
-		$(function() {
-			inputComma("BASICPAY");
-
-		})
-		
-		function f_commaInputData(str) {
-			if (str == "click") {
-				$("#BASICPAY").click();
-			} else if (str == "remove") {
-				$("#BASICPAY").val(removeComma($("#BASICPAY").val()));
+		$('#bottomTabs').on('tabclick', function (event) { 
+			var ids = $("#leftList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
+			
+			if (ids != null && ids != "") {
+				$("#bottomList1").trigger("reloadGrid");
+				$("#bottomList2").trigger("reloadGrid");
 			}
+		}); 
+	})
+	
+	$(function() {
+		inputComma("BASICPAY");
+
+	})
+	
+	function f_commaInputData(str) {
+		if (str == "click") {
+			$("#BASICPAY").click();
+		} else if (str == "remove") {
+			$("#BASICPAY").val(removeComma($("#BASICPAY").val()));
 		}
+	}
+	
+	$(function() {
+		$("#RECONAME").keydown(function() {
+			var keyCode = window.event.keyCode;
+			if(keyCode==13 || keyCode==9) {
+				if ($("#RECONAME").val() == "") {
+					alert("추천인을 입력하셔야 합니다.");
+					
+					$("#RECONAME").focus();
+					
+					return false;	
+				}
+				
+				$.ajax({ 
+					type: 'POST' ,
+					url: "/home/selectHRInsamst.do", 
+					data : {
+						KNAME : $("#RECONAME").val(),
+					},dataType : 'json' , 
+					success: function(data){
+						if (data.RESULT == "EMPTY") {
+							alert("조회된 인사정보가 없습니다.");
+							$("#RECOID").val("");
+							$("#RECONAME").val("");
+						} else {
+							$("#RECOID").val(data.RECOID);
+							$("#RECONAME").val(data.RECONAME);
+						}
+					},
+					error:function(e){  
+						alert("[ERROR-SCRIPT]추천인 조회 중 오류가 발생하였습니다.");
+					}  
+				});
+			}
+		});
+	})
+	
 			
 </script>
 <body>
@@ -1446,9 +1488,8 @@
 				<tr>
 					<th width="120">추천인</th>
 					<td colspan="3">
-						<select id="RECOID" name="RECOID">
-							<!-- <option value="recoId">insaCode</option> -->
-						</select>
+						<input type="text" id="RECONAME" name="RECONAME" />
+						<input type="hidden" id="RECOID" name="RECOID" />
 					</td>
 				</tr>
 				<tr>
