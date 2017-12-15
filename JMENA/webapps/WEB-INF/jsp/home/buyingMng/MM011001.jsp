@@ -63,7 +63,7 @@
 			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 			$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 13});
 		
 			$("#BUYM2").jqxInput({theme: 'energyblue', height: 23, width: 70});
 			$("#BUYPY").jqxInput({theme: 'energyblue', height: 23, width: 70});

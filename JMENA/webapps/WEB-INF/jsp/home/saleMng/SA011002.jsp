@@ -59,7 +59,7 @@
 			$("#CONBPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONJPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-			$("#CONJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			$("#CONJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 13});
 			$("#CONTELNO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#CONADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
 			$("#CONM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
