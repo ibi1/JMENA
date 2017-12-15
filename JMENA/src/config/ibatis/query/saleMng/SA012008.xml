@@ -29,7 +29,7 @@
 
 	<select id="selectListSA012008" resultMap="SA012008Data1">
 		select
-			t1.buyid,
+			distinct t1.buyid,
 			(select dcodename from sy_ccodedtl where ccode = '014' and dcode = t1.buygubun) as buygubun,
 			t1.ownername,
 			t1.ownerjuminid,
@@ -37,8 +37,13 @@
 			t1.buym2,
 			t1.regdate as regdate1,
 			t1.buyamt
-		from mm_buymst t1
+		from mm_buymst t1, (select buyid from sa_salemst where 1=1
+		<isNotEqual property="S_BUYYEAR" compareValue="">
+		and	substring(DATE_FORMAT(saledate, '%Y%m%d'), 1,6) = #S_BUYYEAR#
+		</isNotEqual>
+		) t2
 		where 1=1
+		and t1.buyid = t2.buyid
         and regyn = 'Y'
 		<isNotEqual property="S_CITYCODE" compareValue="ALL">
 		    AND t1.citycode = #S_CITYCODE#
@@ -49,9 +54,6 @@
 		<isNotEmpty property="S_ADDRESS">
 		    AND t1.address LIKE '%$S_ADDRESS$%'
 		</isNotEmpty>
-		<isNotEqual property="S_BUYYEAR" compareValue="">
-		and substring(DATE_FORMAT(t1.buydate, '%Y%m%d'), 1,6) = #S_BUYYEAR#
-		</isNotEqual>
         order by t1.citycode, t1.boroughcode 
 	</select>
 
@@ -67,12 +69,12 @@
 		    (a.remnm2 * (a.buym2 / a.buyamt)) as remnamt
 		from 
 		(	select 
-				@RNUM := @RNUM + 1 as sellseq,
+				(SELECT KNAME FROM hr_insamst WHERE INSACODE = SALERCD) AS sellseq,
 				t1.conname,
 				t1.conjuminid,
 				t1.conm2,
 				t2.regdate as regdate2,
-				t2.saleamt,
+				t2.sellamt as saleamt,
 				((select buym2 from mm_buymst where buyid = #BUYID#) - (select sum(conm2) from sa_salemst where buyid = #BUYID#)) as remnm2,
 		        (select buym2 from mm_buymst where buyid = #BUYID#) as buym2,
 		        (select buyamt from mm_buymst where buyid = #BUYID#) as buyamt

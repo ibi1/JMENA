@@ -167,7 +167,7 @@
 		        <isNotEqual property="BUYGUBUN" compareValue="ALL">
 					AND T1.BUYGUBUN = #BUYGUBUN#
 				</isNotEqual>
-				ORDER BY T1.CITYCODE, T1.BOROUGHCODE
+				ORDER BY PAYDATE4, T1.CITYCODE, T1.BOROUGHCODE
 		        ) A1
 		        INNER JOIN
 		    (SELECT 
