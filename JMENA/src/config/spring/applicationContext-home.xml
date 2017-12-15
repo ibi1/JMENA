@@ -102,6 +102,9 @@
     <bean id="SA012009Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA012009Ctr" />
     <bean id="SA012009Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA012009Biz" />
     <bean id="SA012009Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA012009Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <bean id="SA012010Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA012010Ctr" />
+    <bean id="SA012010Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA012010Biz" />
+    <bean id="SA012010Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA012010Dao"  p:sqlMapClient-ref="sqlMapClient" />
     
     <!-- 시스템 및 메뉴 관리 -->
     <bean id="SY011001Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011001Ctr" />
