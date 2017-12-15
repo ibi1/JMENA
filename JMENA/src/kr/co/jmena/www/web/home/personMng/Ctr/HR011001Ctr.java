@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.personMng.Biz.HR011001Biz;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
+import kr.co.jmena.www.web.home.saleMng.Vo.SA011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY011001VO;
 import kr.co.jmena.www.web.home.systemMng.Vo.SY021002VO;
 
@@ -565,4 +566,32 @@ public class HR011001Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}	
+	
+	@RequestMapping("/home/deleteDataInsaMst.do")
+	public ModelAndView deleteDataInsaMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setINSACODE(request.getParameter("INSACODE"));
+		
+		JSONObject json = new JSONObject();
+		
+		String resultCode = "";
+		String resultMsg = "";
+		
+		
+		if (HR011001Biz.deleteDataInsaMst(vo) == true) {
+			resultCode ="SUCCESS";
+			resultMsg = "정상적으로 삭제하였습니다.";
+		} else {
+			resultCode ="FAILED";
+			resultMsg = "[ERROR]선택된 인사정보 삭제 중 오류가 발생하였습니다.";
+		}
+
+		json.put("resultCode", resultCode);
+		json.put("resultMsg", resultMsg);
+
+		logger.debug("[deleteDataInsaMst]" + json);
+		
+		return new ModelAndView("jsonView", json);
+	}
 }

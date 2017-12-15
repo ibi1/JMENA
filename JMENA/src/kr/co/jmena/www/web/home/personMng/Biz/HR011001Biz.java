@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import kr.co.jmena.www.web.home.buyingMng.Vo.MM011001VO;
 import kr.co.jmena.www.web.home.personMng.Dao.HR011001Dao;
 import kr.co.jmena.www.web.home.personMng.Vo.HR011001VO;
+import kr.co.jmena.www.web.home.saleMng.Vo.SA011001VO;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -187,5 +188,16 @@ public class HR011001Biz {
 		return lst;
 	}
 		
+	public boolean deleteDataInsaMst(HR011001VO vo) throws Exception {
+		boolean chkFlag = false;
+		
+		try {
+			chkFlag = HR011001Dao.deleteDataInsaMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return chkFlag;
+	}
 	
 }

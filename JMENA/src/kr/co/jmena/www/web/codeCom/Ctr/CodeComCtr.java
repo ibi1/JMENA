@@ -198,7 +198,9 @@ public class CodeComCtr {
 		
 		BranchVO vo = new BranchVO();
 		
-		List<BranchVO> lst = codeComBiz.selectBranchMstList();
+		vo.setUSEYN("Y".equals(request.getParameter("USEYN")) ? "Y" : "N");
+
+		List<BranchVO> lst = codeComBiz.selectBranchMstList(vo);
 		
 		JSONArray jsonArr = new JSONArray();
 		JSONObject json = new JSONObject();

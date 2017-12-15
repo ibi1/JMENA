@@ -74,7 +74,12 @@
 		FROM sy_ccodedtl
 		WHERE USEYN = 'Y' 
 		  AND CCODE = #CCODE#
-		ORDER BY SORTKEY
+		 <isEqual property="CCODE" compareValue="003">
+		 ORDER BY DCODE ASC
+		 </isEqual>
+		 <isNotEqual property="CCODE" compareValue="003">
+		 ORDER BY SORTKEY
+		 </isNotEqual>
 	</select>
 	
 	<select id="selectUserList" resultMap="userData">
@@ -105,6 +110,10 @@
 		SELECT 
 			BRANCHCODE, BRANCHNAME 
 		FROM ba_branchmst
+		WHERE 1=1
+		<isEqual property="USEYN" compareValue="Y">
+		AND USEYN = 'Y'
+		</isEqual>
 		ORDER BY BRANCHCODE
 	</select>
 

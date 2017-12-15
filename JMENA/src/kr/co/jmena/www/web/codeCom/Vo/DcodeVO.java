@@ -4,6 +4,7 @@ public class DcodeVO {
 	private String CCODE;
 	private String DCODE;
 	private String DCODENAME;
+	private String USEYN;
 	
 	public String getCCODE() {
 		return CCODE;
@@ -22,6 +23,12 @@ public class DcodeVO {
 	}
 	public void setDCODENAME(String DCODENAME) {
 		this.DCODENAME = DCODENAME;
+	}
+	public String getUSEYN() {
+		return USEYN;
+	}
+	public void setUSEYN(String USEYN) {
+		this.USEYN = USEYN;
 	}
 	
 }

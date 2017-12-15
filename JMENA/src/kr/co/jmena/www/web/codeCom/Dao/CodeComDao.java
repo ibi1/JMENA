@@ -63,10 +63,10 @@ public class CodeComDao extends SqlMapClientDaoSupport {
 		return lst;
 	}
 	
-	public List<BranchVO> selectBranchMstList() throws DataAccessException {
+	public List<BranchVO> selectBranchMstList(BranchVO vo) throws DataAccessException {
 		List<BranchVO> lst = null;
 		
-		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectBranchMstList");
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectBranchMstList", vo);
 		
 		return lst;
 	}

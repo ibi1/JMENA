@@ -90,11 +90,11 @@ public class CodeComBiz {
 		return lst;
 	}
 	
-	public List<BranchVO> selectBranchMstList() throws Exception {
+	public List<BranchVO> selectBranchMstList(BranchVO vo) throws Exception {
 		List<BranchVO> lst = null;
 
 		try {
-			lst = codeComDao.selectBranchMstList();
+			lst = codeComDao.selectBranchMstList(vo);
 		} catch ( Exception e ) {
 			throw e;
 		}

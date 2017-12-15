@@ -18,11 +18,13 @@
 	var v_deptName = "";
 	var v_appointdept;
 	$(document).ready(function(){
+		$("#S_FLAG_L").val("I");
 		var INSACODE = "";
 		var BRANCHCODE = "";
 		
 		$("#searchButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#insertButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#deleteButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#saveButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$('#bottomTabs').jqxTabs({theme: 'bootstrap', autoHeight: false, width: 1200});
@@ -59,7 +61,7 @@
 
 		$("#table1").show();
 		$("#table2").hide();
-		f_selectListEnaBranchCode();
+		f_selectListEnaBranchCode("N");
 		f_selectListEnaGradeCode();
 		f_selectListEnaDutyCode();
 		$("#APPOINTBRANCH").val("");
@@ -131,7 +133,9 @@
 				repeatitems: false
 			},
 			//height: '100%',
-			onSelectRow: function(ids){					
+			onSelectRow: function(ids){			
+				$("#S_FLAG_L").val("U");
+				
 				var selRowData = $(this).jqGrid('getRowData', ids);
 				$("#DEPTCODE").val(selRowData.DEPTCODE);
 				$("#INSACODE").val(selRowData.INSACODE);
@@ -177,6 +181,21 @@
 				$("#leftListCount").html(countRow);
 				
 				$("#S_INSACODE").val("");
+				
+				var insaCode = $("#INSACODE").val();
+				
+				var ids = jQuery("#leftList").jqGrid('getDataIDs');
+				
+				ids.some(function(currentValue, index, array){
+					var cellData = $("#leftList").jqGrid('getCell', ids[index], 'INSACODE');
+					if (cellData == insaCode) {
+						$("#S_FLAG_L").val("U");
+		        		$("#leftList").jqGrid('setSelection', ids[index]);
+		    			return true;
+		        	} else {
+		        		$("#S_FLAG_L").val("I");
+		        	}	        
+				});
 			},			
 			hidegrid: false
 		});		
@@ -429,9 +448,11 @@
 	
 	$(function(){
 		$("#searchButton").click(function(){
+			$("#S_FLAG_L").val("U");
 			var insacode = "";
-			selectListInsaMst();
+			f_selectListEnaBranchCode("N");
 			resetHrMst();
+			setTimeout("selectListInsaMst();", 500);
 //			selectListEnaAppointItem(insacode);
 //			selectListEnaTexPayerItem(insacode);			
 		}); 
@@ -454,12 +475,20 @@
 
 
 	
-	function f_selectListEnaBranchCode(){
-		$("#S_BRANCHCODE").empty().data('options');
-	   	$.ajax({ 
+	function f_selectListEnaBranchCode(USEYN){
+		
+		if (USEYN != 'Y') {
+			$("#S_BRANCHCODE").empty().data('options');
+		}
+		$("#BRANCHCODE").empty().data('options');
+	   	
+		$.ajax({ 
 			type: 'POST' ,
 			url: "/codeCom/branchMstList.do", 
-			dataType : 'json' , 
+			dataType : 'json' ,
+			data : {
+				USEYN : USEYN
+			},
 			success: function(data){
 				var inHtml = "";
 //			var inHtml1 = "<option value='ALL'>전체</option>\n";
@@ -467,8 +496,11 @@
 					inHtml += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 //					inHtml1 += "<option value='" + currentValue.BRANCHCODE + "'>" + currentValue.BRANCHNAME + "</option>\n";
 				});
-				$("#S_BRANCHCODE").append(inHtml);
+				if (USEYN != 'Y') {
+					$("#S_BRANCHCODE").append(inHtml);
+				}
 				$("#BRANCHCODE").append(inHtml);
+				
 				f_selectListEnaDeptCode("0","");
 				f_selectListEnaDeptCode("2","");
 			},
@@ -548,7 +580,7 @@
 			url: "/codeCom/dcodeList.do", 
 			dataType : 'json' ,
 			data : {
-				CCODE : CCODE,
+				CCODE : CCODE
 			},
 			success: function(data){
 				var inHtml = "";
@@ -662,15 +694,47 @@
 	
 	$(function() {
 		$("#insertButton").click(function() {
+			$("#S_FLAG_L").val("I");
+			setTimeout("selectListInsaMst();", 500);
 			resetHrMst();
+			f_selectListEnaBranchCode("Y");
 			f_selectListEnaDeptCode("2","");
 			selectListEnaAppointItem("");				
 			selectListEnaTexPayerItem("");
 			f_selectListEnaGradeCode();
 			f_selectListEnaDutyCode();
+			
+			$("#KNAME").focus();
+			
 		});
 	})
 	
+	$(function() {
+			$("#deleteButton").click(function() {
+				if ($("#S_FLAG_L").val() == "I") {
+					alert("데이터를 추가 중 일 경우 삭제 할 수 없습니다.");
+					
+					return false;
+				}
+				
+				if (confirm("삭제하시겠습니까?") == true) {
+					$.ajax({ 
+						type: 'POST' ,
+						data: "INSACODE=" + $("#INSACODE").val(),
+						url: "/home/deleteDataInsaMst.do", 
+						dataType : 'json' , 
+						success: function(data){
+							alert(data.resultMsg);
+							
+							$("#searchButton").click();
+						},
+						error:function(e){  
+							alert("[ERROR]인사관리 삭제  중 오류가 발생하였습니다.");
+						}  
+					});
+				}
+			});
+		})
 	
 	function resetHrMst(){
 		$("#INSACODE").val("");
@@ -761,7 +825,7 @@
 							{
 								alert("저장이 완료되었습니다.");
 								selectListInsaMst();
-								resetHrMst();
+								//resetHrMst();
 							}else{
 								alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 							}
@@ -1240,10 +1304,12 @@
 				<tr>
 					<td><input type="button" value="조회" id='searchButton' /></td>
 					<td><input type="button" value="추가" id='insertButton' /></td>
+					<td><input type="button" value="삭제" id='deleteButton' /></td>
 					<td><input type="button" value="저장" id='saveButton' /></td>
 				</tr>
 			</table>
 		</div>
+		<input type="hidden" id="S_FLAG_L" name="S_FLAG_L" />
 		<div id="leftDiv" style="width:38%; float:left; padding: 10px" align="left">
 			<table width="99%">
 				<tr>

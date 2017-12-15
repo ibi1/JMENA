@@ -141,7 +141,7 @@
 		</isEqual>		
 		
 			
-		ORDER BY T1.INSACODE ASC
+		ORDER BY T1.GRADE ASC
 	</select>
 
 
@@ -427,4 +427,8 @@
 		ORDER BY DEPTCODE
 	</select>
 
+	<delete id="deleteDataInsaMst">
+		DELETE FROM hr_insamst
+		WHERE INSACODE = #INSACODE#
+	</delete>
 </sqlMap>
