@@ -77,6 +77,7 @@
 		$("#RETIREDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 350, minLength: 1});
 		$("#RECONAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#RECOID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});
 		
 		$("#table1").show();
 		$("#table2").hide();
@@ -114,7 +115,7 @@
 			datatype:"json",		
 			loadError:function(){alert("Error~!!");},
 			colNames:['사번', '성명', '주민번호', '연락처', '지사코드','소속지사','부서코드','소속부서','생일구분'
-			          ,'사업자번호','대표자명','주소','기타연락처','월정지급액','고용구분','직급','직책','입사일','재입사여부','퇴사일','추천인사번','비고'],
+			          ,'사업자번호','대표자명','주소','기타연락처','월정지급액','고용구분','직급','직책','입사일','재입사여부','퇴사일','추천인사번', '추천인', '비고'],
 			colModel:[
 				{name:"INSACODE",			index:'INSACODE',		width:100,	align:'center',	sortable:false}
 				, {name:"KNAME",			index:'KNAME',			width:100,	align:'center',	sortable:false}
@@ -137,6 +138,7 @@
 				, {name:"REJOINYN",			index:'REJOINYN',		width:100,	align:'center',	sortable:false, hidden:true}
 				, {name:"RETIREDATE",		index:'RETIREDATE',		width:100,	align:'center',	sortable:false, hidden:true}
 				, {name:"RECOID",			index:'RECOID',			width:100,	align:'center',	sortable:false, hidden:true}
+				, {name:"RECONAME",			index:'RECONAME',			width:100,	align:'center',	sortable:false, hidden:true}
 				, {name:"REMARK",			index:'REMARK',			width:100,	align:'center',	sortable:false, hidden:true}
 			],
 			rowNum:10000000,
@@ -181,7 +183,8 @@
 					$("#REJOINYN").attr('checked', false);
 				}
 				$("#RETIREDATE").val(selRowData.RETIREDATE);
-				$("#RECONAME").val(selRowData.RECOID);
+				$("#RECOID").val(selRowData.RECOID);
+				$("#RECONAME").val(selRowData.RECONAME);
 				$("#REMARK").val(selRowData.REMARK);
 				f_selectListEnaDeptCode("2",selRowData.DEPTCODE);				
 				selectListEnaAppointItem(selRowData.INSACODE);				
@@ -778,6 +781,7 @@
 		$("#REJOINYN").attr('checked', false);
 		$("#RETIREDATE").val("");
 		$("#RECONAME").val("");
+		$("#RECOID").val("");
 		$("#REMARK").val("");	
 		selectListEnaAppointItem("");				
 		selectListEnaTexPayerItem("");
@@ -1339,7 +1343,7 @@
 					},dataType : 'json' , 
 					success: function(data){
 						if (data.RESULT == "EMPTY") {
-							alert("조회된 인사정보가 없습니다.");
+							alert("조회된 추천인 정보가 없습니다.");
 							$("#RECOID").val("");
 							$("#RECONAME").val("");
 						} else {
@@ -1489,7 +1493,7 @@
 					<th width="120">추천인</th>
 					<td colspan="3">
 						<input type="text" id="RECONAME" name="RECONAME" />
-						<input type="hidden" id="RECOID" name="RECOID" />
+						<input type="text" id="RECOID" name="RECOID" />
 					</td>
 				</tr>
 				<tr>

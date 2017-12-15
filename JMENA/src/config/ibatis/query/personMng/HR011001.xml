@@ -27,6 +27,7 @@
 		<result property="REJOINYN" 		column="REJOINYN"/>
 		<result property="RETIREDATE" 		column="RETIREDATE"/>
 		<result property="RECOID" 			column="RECOID"/>
+		<result property="RECONAME" 			column="RECONAME"/>
 		<result property="BASICPAY" 		column="BASICPAY"/>
 		<result property="REMARK" 			column="REMARK"/>
 	</resultMap>
@@ -118,6 +119,7 @@
 			T1.REJOINYN,
 			T1.RETIREDATE,
 			T1.RECOID,
+			(SELECT HR1.KNAME FROM hr_insamst HR1 WHERE HR1.INSACODE = T1.RECOID) AS RECONAME,
 			T1.REMARK
 		FROM hr_insamst T1
 		WHERE 1=1
@@ -173,6 +175,7 @@
 			T1.REJOINYN,
 			T1.RETIREDATE,
 			T1.RECOID,
+			(SELECT HR1.KNAME FROM hr_insamst HR1 WHERE HR1.INSACODE = T1.RECOID) AS RECONAME,
 			T1.REMARK
 		FROM hr_insamst T1
 		WHERE 1=1

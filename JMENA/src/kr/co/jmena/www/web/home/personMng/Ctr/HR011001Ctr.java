@@ -132,6 +132,7 @@ public class HR011001Ctr {
 				obj.put("REJOINYN", lst.get(i).getREJOINYN());
 				obj.put("RETIREDATE", lst.get(i).getRETIREDATE());
 				obj.put("RECOID", lst.get(i).getRECOID());
+				obj.put("RECONAME", lst.get(i).getRECONAME());
 				obj.put("REMARK", lst.get(i).getREMARK());
 				
 				
