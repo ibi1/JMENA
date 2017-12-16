@@ -266,7 +266,7 @@
 							}]						
 						}}
 						, {name:"PAYAMT",		index:'PAYAMT',		width:80,		align:'right',	sortable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: '0'}}
-						, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:100,		align:'center',	sortable:false, hidden:false, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode1}}
+						, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:100,		align:'center',	sortable:false, hidden:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode1}}
 						, {name:"TAXGUBUNNAME",	index:'TAXGUBUNNAME',width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode1
 							,dataEvents:[{
 								type:'change',
@@ -850,12 +850,7 @@
 			
 				return false;
 			}	
-			if ($("#ADDRATE").val() == "") {
-				alert("추가지급율 입력하셔야 합니다.");
-				$("#ADDRATE").focus();
 			
-				return false;
-			}	
 			if ($("#TAXGUBUN").val() == "") {
 				alert("신고기준을 선택하셔야 합니다.");
 				$("#TAXGUBUN").focus();
@@ -877,9 +872,10 @@
 				var deductamtArr = [];
 				var remarkArr = [];
 				
+				var addRateTmp = $("#ADDRATE").val() == "" ? 0 : $("#ADDRATE").val();
 				insacodeArr.push($("#INSACODE").val());
 				sudangrateArr.push($("#SUDANGRATE").val());
-				addrateArr.push($("#ADDRATE").val());
+				addrateArr.push(addRateTmp);
 				payamtArr.push($("#PAYAMT").val());
 				taxgubunArr.push($("#TAXGUBUN").val());
 				taxincomeArr.push($("#TAXINCOME").val());
