@@ -173,6 +173,8 @@
 		<result property="DEDUCTAMT" column="DEDUCTAMT"/>
 		<result property="REGISTERSEQ" column="REGISTERSEQ"/>
 		<result property="PAYERNAME" column="PAYERNAME"/>
+		<result property="PAYERID" column="PAYERID"/>
+		<result property="PAYERDEDUCTAMT" column="PAYERDEDUCTAMT"/>
 		<result property="BANKID" column="BANKID"/>
 		<result property="BANKNAME" column="BANKNAME"/>
 		<result property="ACCTNO" column="ACCTNO"/>
@@ -347,6 +349,7 @@
 	</select>
 	
 	<select id="selectEnaSudangMstSheet" resultMap="EP011001Sheet">
+		/* EP011001.selectEnaSudangMstSheet */
 		SELECT A.SALEID
 			, A.PAYSEQ
 		    , A.INSACODE
@@ -356,7 +359,7 @@
 		    , (SELECT ADDRESS FROM mm_buymst WHERE BUYID = B.BUYID) AS ADDRESS
 		    , B.CONNAME    
 		    , B.CONPY    
-		    , C.SALEAMT
+		    , FORMAT(C.SALEAMT, 0) AS SALEAMT
 		FROM sa_sudangmst A
 			INNER JOIN sa_salemst B
 				ON A.SALEID = B.SALEID
@@ -367,35 +370,78 @@
 	</select>
 
 	<select id="selectEnaSudangMstSheetList" resultMap="EP011001SheetList">
-		SELECT A.SALEID
-			, A.PAYSEQ
-		    , A.INSACODE
-		    , (SELECT KNAME FROM hr_insamst WHERE INSACODE = A.INSACODE) AS INSANAME
-		    , A.GRADE
-		    , fn_codename('01', '003', A.GRADE) AS GRADENAME
-		    , A.DUTY
-		    , fn_codename('01', '004', A.DUTY) AS DUTYNAME
-		    , A.SUDANGRATE
-    		, A.ADDRATE
-		    , A.PAYAMT
-		    , A.TAXGUBUN
-		    , fn_codename('01', '013', A.TAXGUBUN) AS TAXGUBUNNAME
-		    , A.TAXINCOME
-		    , A.TAXLOCAL
-		    , A.SUPPLYTAX
-		    , A.DEDUCTAMT
-			, B.REGISTERSEQ
-		    , IFNULL(B.PAYERNAME, '') AS PAYERNAME
-		    , B.BANKID
-		    , fn_codename('04', B.BANKID, NULL) AS BANKNAME
-		    , IFNULL(B.ACCTNO, '') AS ACCTNO
-		    , IFNULL(B.ACCTOWNER, '') AS ACCTOWNER
-		FROM sa_sudangmst A
-			LEFT OUTER JOIN sa_sudangpayertb B
-				ON A.SALEID = B.SALEID
-		        AND A.PAYSEQ = B.PAYSEQ
-		WHERE A.SALEID = #S_SALEID#
-		ORDER BY A.PAYSEQ ASC, B.REGISTERSEQ ASC
+		/* EP011001.selectEnaSudangMstSheetList */
+		SELECT *
+		FROM (
+			SELECT A.SALEID
+				, A.PAYSEQ
+				, A.INSACODE
+				, (SELECT KNAME FROM hr_insamst WHERE INSACODE = A.INSACODE) AS INSANAME
+				, A.GRADE
+				, fn_codename('01', '003', A.GRADE) AS GRADENAME
+				, A.DUTY
+				, fn_codename('01', '004', A.DUTY) AS DUTYNAME
+				, A.SUDANGRATE
+				, A.ADDRATE
+				, FORMAT(A.PAYAMT, 0) AS PAYAMT
+				, A.TAXGUBUN
+				, fn_codename('01', '013', A.TAXGUBUN) AS TAXGUBUNNAME
+				, FORMAT(A.TAXINCOME, 0) AS TAXINCOME
+				, FORMAT(A.TAXLOCAL, 0) AS TAXLOCAL
+				, FORMAT(A.SUPPLYTAX, 0) AS SUPPLYTAX
+				, FORMAT(A.DEDUCTAMT, 0) AS DEDUCTAMT
+				, B.REGISTERSEQ
+				, IFNULL(B.PAYERNAME, '') AS PAYERNAME
+				, IFNULL(fn_formatid(B.PAYERID), '') AS PAYERID
+				, IFNULL(FORMAT(B.DEDUCTAMT, 0), '') AS PAYERDEDUCTAMT
+				, B.BANKID
+				, fn_codename('04', B.BANKID, NULL) AS BANKNAME
+				, IFNULL(B.ACCTNO, '') AS ACCTNO
+				, IFNULL(B.ACCTOWNER, '') AS ACCTOWNER
+			FROM sa_sudangmst A
+				LEFT OUTER JOIN sa_sudangpayertb B
+					ON A.SALEID = B.SALEID
+					AND A.PAYSEQ = B.PAYSEQ
+			WHERE A.SALEID = #S_SALEID#
+				AND A.INSACODE = #INSACODE#
+			ORDER BY A.PAYSEQ ASC, B.REGISTERSEQ ASC
+		) T
+		UNION ALL
+		SELECT *
+		FROM (
+			SELECT A.SALEID
+				, A.PAYSEQ
+				, A.INSACODE
+				, (SELECT KNAME FROM hr_insamst WHERE INSACODE = A.INSACODE) AS INSANAME
+				, A.GRADE
+				, fn_codename('01', '003', A.GRADE) AS GRADENAME
+				, A.DUTY
+				, fn_codename('01', '004', A.DUTY) AS DUTYNAME
+				, A.SUDANGRATE
+				, A.ADDRATE
+				, FORMAT(A.PAYAMT, 0) AS PAYAMT
+				, A.TAXGUBUN
+				, fn_codename('01', '013', A.TAXGUBUN) AS TAXGUBUNNAME
+				, FORMAT(A.TAXINCOME, 0) AS TAXINCOME
+				, FORMAT(A.TAXLOCAL, 0) AS TAXLOCAL
+				, FORMAT(A.SUPPLYTAX, 0) AS SUPPLYTAX
+				, FORMAT(A.DEDUCTAMT, 0) AS DEDUCTAMT
+				, B.REGISTERSEQ
+				, IFNULL(B.PAYERNAME, '') AS PAYERNAME
+				, IFNULL(fn_formatid(B.PAYERID), '') AS PAYERID
+				, IFNULL(FORMAT(B.DEDUCTAMT, 0), '') AS PAYERDEDUCTAMT
+				, B.BANKID
+				, fn_codename('04', B.BANKID, NULL) AS BANKNAME
+				, IFNULL(B.ACCTNO, '') AS ACCTNO
+				, IFNULL(B.ACCTOWNER, '') AS ACCTOWNER
+			FROM sa_sudangmst A
+				LEFT OUTER JOIN sa_sudangpayertb B
+					ON A.SALEID = B.SALEID
+					AND A.PAYSEQ = B.PAYSEQ
+			WHERE A.SALEID = #S_SALEID#
+				AND A.INSACODE != #INSACODE#
+			ORDER BY A.GRADE ASC, A.PAYSEQ ASC, B.REGISTERSEQ ASC
+		) T 		
 	</select>					
 		
 	<insert id="insertEnaSudangMst">

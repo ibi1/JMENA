@@ -43,18 +43,22 @@ response.setHeader("Content-Disposition", "inline; filename=EP011001_"+ f.format
 	</table><br/>
 	<table border="1">
 		<tr>
+			<th rowspan="2">성명</th>
+			<th rowspan="2">직급</th>
+			<th rowspan="2">직책</th>
+			<th rowspan="2">수당지급율<br/>(%)</th>
+			<th rowspan="2">추가지급율<br/>(%)</th>
+			<th rowspan="2">지급금액</th>
+			<th rowspan="2">신고기준</th>
+			<th rowspan="2">사업소득세</th>
+			<th rowspan="2">지방세</th>
+			<th rowspan="2">부가가치세</th>
+			<th rowspan="2">차감지급액</th>
+			<th colspan="6">신고인</th>
+		</tr>
+		</tr>			
 			<th>성명</th>
-			<th>직책</th>
-			<th>직급</th>
-			<th>수당지급율(%)</th>
-			<th>추가지급율(%)</th>
-			<th>지급금액</th>
-			<th>신고기준</th>
-			<th>사업소득세</th>
-			<th>지방세</th>
-			<th>부가가치세</th>
-			<th>차감지급액</th>
-			<th>신고인 성명</th>
+			<th>주민번호</th>
 			<th>거래은행</th>
 			<th>계좌번호</th>
 			<th>계좌주</th>
@@ -77,17 +81,18 @@ response.setHeader("Content-Disposition", "inline; filename=EP011001_"+ f.format
 			<td align="right"><%=sheetList.get(i).getSUPPLYTAX()%></td>
 			<td align="right"><%=sheetList.get(i).getDEDUCTAMT()%></td>
 			<td><%=sheetList.get(i).getPAYERNAME()%></td>
+			<td><%=sheetList.get(i).getPAYERID()%></td>
 			<td><%=sheetList.get(i).getBANKNAME()%></td>
 			<td><%=sheetList.get(i).getACCTNO()%></td>
 			<td><%=sheetList.get(i).getACCTOWNER()%></td>
-			<td align="right"><%=sheetList.get(i).getDEDUCTAMT()%></td>
+			<td align="right"><%=sheetList.get(i).getPAYERDEDUCTAMT()%></td>
 		</tr>
 		<%
 			}
 		} else {
 		%>
 		<tr>
-			<td colspan="16">No data</td>
+			<td colspan="17">No data</td>
 		</tr>
 		<%
 		}

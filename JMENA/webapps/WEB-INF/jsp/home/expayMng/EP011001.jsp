@@ -654,13 +654,14 @@
 			var url = "/home/selectEnaSudangMstSheet.do";
 			var sSailId = $.trim($("#SALEID").val());
 			var sPaySeq = $.trim($("#PAYSEQ").val());
+			var sInsaCode = $.trim($("#INSACODE").val());
 			
-			if(sSailId == "" || sPaySeq == "") {
+			if(sSailId == "" || sPaySeq == "" || sInsaCode == "") {
 				alert("엑셀로 내려받기하실 데이터를 선택해주세요.");
 				return;
 			}
 			
-			location.href = url +"?saleId="+ sSailId + "&paySeq="+ sPaySeq;
+			location.href = url +"?saleId="+ sSailId + "&paySeq="+ sPaySeq +"&insaCode="+ sInsaCode;
 		});	
 	});	
 	

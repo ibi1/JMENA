@@ -64,7 +64,8 @@ public class EP011001VO {
 	private String REGISTERNUM;	
 	private String KNAME;	
 	private String USERID;
-	private String FLAG;	
+	private String FLAG;
+	private String PAYERDEDUCTAMT;
 	
 	public String getS_SALEID() {
 		return S_SALEID;
@@ -194,7 +195,7 @@ public class EP011001VO {
 	}
 	public String getDCGUBUN() {
 		return DCGUBUN;
-	}
+	}	
 	public void setDCGUBUN(String dCGUBUN) {
 		this.DCGUBUN = dCGUBUN;
 	}
@@ -414,5 +415,11 @@ public class EP011001VO {
 	}
 	public void setFLAG(String fLAG) {
 		this.FLAG = fLAG;
+	}
+	public String getPAYERDEDUCTAMT() {
+		return this.PAYERDEDUCTAMT;
+	}
+	public void setPAYERDEDUCTAMT(String pAYERDEDUCTAMT) {
+		this.PAYERDEDUCTAMT = pAYERDEDUCTAMT;
 	}
 }
