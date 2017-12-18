@@ -471,9 +471,9 @@
 	$(function(){
 		$("#searchButton").click(function(){
 			$("#S_FLAG_L").val("U");
-			var insacode = "";
-			f_selectListEnaBranchCode("N");
 			resetHrMst();
+//			var insacode = "";
+			//f_selectListEnaBranchCode("N");
 			setTimeout("selectListInsaMst();", 500);
 //			selectListEnaAppointItem(insacode);
 //			selectListEnaTexPayerItem(insacode);			
@@ -719,6 +719,11 @@
 			$("#S_FLAG_L").val("I");
 			setTimeout("selectListInsaMst();", 500);
 			resetHrMst();
+			$("#S_BRANCHCODE").val("");
+			$("#S_DEPTCODE").val("");
+			$("#inputName").val("");
+			$("#S_JUMINID").val("");
+
 			f_selectListEnaBranchCode("Y");
 			f_selectListEnaDeptCode("2","");
 			selectListEnaAppointItem("");				
@@ -759,6 +764,7 @@
 		})
 	
 	function resetHrMst(){
+				
 		$("#INSACODE").val("");
 		$("#KNAME").val("");
 		$("#JUMINID1").val("");
@@ -782,8 +788,9 @@
 		$("#RETIREDATE").val("");
 		$("#RECONAME").val("");
 		$("#RECOID").val("");
-		$("#REMARK").val("");	
-		selectListEnaAppointItem("");				
+		$("#REMARK").val("");
+
+		selectListEnaAppointItem("");
 		selectListEnaTexPayerItem("");
 	}
 	

@@ -226,7 +226,29 @@
 
 		$("#excelButton").click(function () {
 			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
-	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+			//$("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');
+			var url = "/home/HR012003_exportToExcel.do";
+			var S_JOINDATE = $.trim($("#S_JOINDATE").val());
+			var S_BRANCHCODE = $.trim($("#S_BRANCHCODE").val());
+			var S_DEPTCODE = $.trim($("#S_DEPTCODE").val());
+
+		   	$.ajax({ 
+				type: 'POST' ,
+				url: url, 
+				dataType : 'json' , 
+				data : {
+					S_JOINDATE : S_JOINDATE,
+					S_BRANCHCODE : S_BRANCHCODE,
+					S_DEPTCODE : S_DEPTCODE
+				},
+				success: function(data){
+					alert("엑셀 파일이 'C:\\ExcelDownLoad'경로에 정상다운로드 되었습니다.");
+				},
+				error:function(e){  
+					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+				}  
+			});
+			
 	    });
 		
 	})
