@@ -130,24 +130,17 @@
 			AND T1.DEPTCODE = #S_DEPTCODE#
 		</isNotEqual> 		
 		<isNotEmpty property="S_KNAME">
-			AND T1.KNAME LIKE CONCAT('%', #S_KNAME#, '%')
+			AND T1.KNAME LIKE '%$S_KNAME$%'
 		</isNotEmpty>
 		<isNotEmpty property="S_JUMINID">
-			AND T1.JUMINID LIKE CONCAT('%', #S_JUMINID#, '%') 
+			AND T1.JUMINID LIKE '%$S_JUMINID$%'
 		</isNotEmpty>
 		<isNotEmpty property="S_INSACODE">
 			AND T1.INSACODE = #S_INSACODE#
 		</isNotEmpty>
-		<isNotEqual property="FLAG" compareValue="1">
+		<isEmpty property="S_KNAME">
 			AND RETIREDATE IS NULL
-		</isNotEqual>
-		<isEqual property="FLAG" compareValue="1">
-			<isEmpty property="S_KNAME">
-				AND RETIREDATE IS NULL
-			</isEmpty>
-		</isEqual>		
-		
-			
+		</isEmpty>		
 		ORDER BY T1.GRADE ASC
 	</select>
 
