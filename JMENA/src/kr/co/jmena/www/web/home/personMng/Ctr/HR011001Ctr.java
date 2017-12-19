@@ -88,7 +88,7 @@ public class HR011001Ctr {
 		
 		String s_branchcode = request.getParameter("S_BRANCHCODE") != null ? request.getParameter("S_BRANCHCODE") : ""; 
 		String s_deptcode = request.getParameter("S_DEPTCODE") != null ? request.getParameter("S_DEPTCODE") : ""; 
-		String s_kname = request.getParameter("S_KNAME") != null ? request.getParameter("S_KNAME") : ""; 
+		String s_kname = request.getParameter("S_KNAME"); 
 		String s_juminid = request.getParameter("S_JUMINID") != null ? request.getParameter("S_JUMINID") : ""; 
 		String s_insacode = request.getParameter("S_INSACODE") != null ? request.getParameter("S_INSACODE") : ""; 
 		

@@ -247,13 +247,20 @@ public class HR012003Ctr {
 	           
             String fileName = "HR012003_exportToExcel.xlsx";
             
-            File folder = new File("C:\\ExcelDownLoad");
-
+            //Windwos (local)
+            //File folder = new File("C:\\ExcelDownLoad");
+            //Linux & Unix (Server
+            File folder = new File("//ExcelDownLoad");
+            
             if (!folder.exists()) {
             folder.mkdirs();
             }
             
-            String filePath = "C:\\ExcelDownLoad\\";
+            //Windwos (local)
+            //String filePath = "C:\\ExcelDownLoad\\";
+            //Linux & Unix (Server
+            String filePath = "//ExcelDownLoad//";
+            
             fileName = URLEncoder.encode(fileName,"UTF-8"); // UTF-8로 인코딩
            
             // SXSSFWorkbook 생성

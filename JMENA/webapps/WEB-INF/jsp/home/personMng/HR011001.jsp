@@ -843,6 +843,8 @@
 			var rejoinyn = $('input:checkbox[name=REJOINYN]').is(':checked') ? "Y" : "N";
 			
 			if (confirm("저장하시겠습니까?") == true) {
+				$('#RECOID').jqxInput({disabled: false });
+				
 				//콤마 remove
 				f_commaInputData("remove");
 
@@ -858,6 +860,8 @@
 							if(data.rows[0].MSG == "SUCCESS")
 							{
 								alert("저장이 완료되었습니다.");
+								$('#RECOID').jqxInput({disabled: true });
+								
 								resetHrMst();
 								selectListInsaMst();
 								//resetHrMst();
