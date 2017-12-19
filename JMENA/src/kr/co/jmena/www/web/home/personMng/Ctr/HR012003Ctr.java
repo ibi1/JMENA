@@ -249,29 +249,23 @@ public class HR012003Ctr {
 		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
 		
 		File down = null;
+		final String _SEP = File.separator;
 		
 		try {
 	           
             String fileName = "HR012003_exportToExcel.xlsx";
+            String webPath = _SEP + "WEB-INF" + _SEP + "ExcelDownLoad";
             
-            //Windwos (local)
-            //File folder = new File("C:\\ExcelDownLoad");
-            //Linux & Unix (Server
             ServletContext context = request.getServletContext();
-
             String appPath = context.getRealPath("/");
-
             
-            File folder = new File(appPath + File.separator + "WEB-INF" + File.separator + "ExcelDownLoad");
+            File folder = new File(appPath + webPath);
             
             if (!folder.exists()) {
             folder.mkdirs();
             }
             
-            //Windwos (local)
-            //String filePath = "C:\\ExcelDownLoad\\";
-            //Linux & Unix (Server
-            String filePath = appPath + File.separator + "WEB-INF" + File.separator + "ExcelDownLoad" + File.separator;
+            String filePath = appPath + webPath + _SEP;
             
             fileName = URLEncoder.encode(fileName,"UTF-8"); // UTF-8로 인코딩
            
