@@ -65,15 +65,12 @@
             datatype: "json",
             datafields: [
                          
-				{name:"BRANCHCODE",			type: 'string' },
 				{name:"BRANCHNAME",			type: 'string' },
-				{name:"DEPTCODE",			type: 'string' },
 				{name:"DEPTNAME",			type: 'string' },
 				{name:"DUTY",				type: 'string' },
 				{name:"KNAME",				type: 'string' },
 				{name:"JOINDATE",			type: 'string' },
 				{name:"RETIREDATE",			type: 'string' },
-				{name:"O_BRANCHCODE",		type: 'string' },
 				{name:"O_BRANCHNAME",		type: 'string' },
 				{name:"O_JOINDATE",			type: 'string' },
 				{name:"O_RETIREDATE",		type: 'string' },
@@ -131,15 +128,12 @@
             groups: ['DEPTNAME'],
             columns: [
                       
-				{ text: '지사코드', 		datafield: 'BRANCHCODE',	align: 'center',	width: 100, cellsalign: 'center', hidden:true, groupable: true},
 				{ text: '지사', 			datafield: 'BRANCHNAME',	align: 'center',	width: 100, cellsalign: 'center', groupable: true, aggregates: ["count"]},
-				{ text: '부서코드', 		datafield: 'DEPTCODE',		align: 'center',	width: 100, cellsalign: 'center', hidden:true, groupable: true},
 				{ text: '부서', 			datafield: 'DEPTNAME',		align: 'center',	width: 100, cellsalign: 'center', groupable: true, aggregates: ["count"]},
 				{ text: '직급', 			datafield: 'DUTY',			align: 'center',	width: 100, cellsalign: 'center'},
 				{ text: '성명', 			datafield: 'KNAME',			align: 'center',	width: 150, cellsalign: 'center'},
 				{ text: '입사일', 			datafield: 'JOINDATE',		align: 'center',	width: 150, cellsalign: 'center'},
 				{ text: '퇴사일', 			datafield: 'RETIREDATE',	align: 'center',	width: 150, cellsalign: 'center'},
-				{ text: '전근무지코드', 	columngroup: '전근무현황',	align: 'center',	datafield: 'O_BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
 				{ text: '전근무지', 		columngroup: '전근무현황',	align: 'center',	datafield: 'O_BRANCHNAME',		width: 150, cellsalign: 'center'},
 				{ text: '입사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center'},
 				{ text: '퇴사', 			columngroup: '전근무현황',	align: 'center',	datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center'},

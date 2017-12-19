@@ -61,10 +61,7 @@
 	            datatype: "json",
 	            datafields: [
 	                         
-					{ name: 'BUYID', 		type: 'string' },
-					{ name: 'CITYCODE', 	type: 'string' },
 	                { name: 'CITYNAME', 	type: 'string' },
-	                { name: 'BOROUGHCODE', 	type: 'string' },
 	                { name: 'BOROUGHNAME', 	type: 'string' },
 	                { name: 'ADDRESS', 		type: 'string' },
 	                { name: 'OWNERNAME', 	type: 'string' },
@@ -116,10 +113,7 @@
 	            editable: false,
 	            selectionmode: 'singlerow',
 	            columns: [
-   	              { text: '매입번호',	datafield: 'BUYID', 		width: 100, cellsalign: 'center', hidden: true, align: 'center' },
-   	              { text: '지역코드',	datafield: 'CITYCODE', 		width: 100, cellsalign: 'center', hidden: true, align: 'center' },
 	              { text: '지역',		datafield: 'CITYNAME', 		width: 130, cellsalign: 'center', align: 'center' },
-	              { text: '시/도코드',	datafield: 'BOROUGHCODE', 	width: 100, cellsalign: 'center', hidden: true, align: 'center' },
 	              { text: '시/도',		datafield: 'BOROUGHNAME', 	width: 130, cellsalign: 'center', align: 'center' },
 	              { text: '주소/지번',	datafield: 'ADDRESS', 		width: 200, cellsalign: 'center', align: 'center' },
 	              { text: '원지주',		datafield: 'OWNERNAME', 	width: 150, cellsalign: 'center', align: 'center' },

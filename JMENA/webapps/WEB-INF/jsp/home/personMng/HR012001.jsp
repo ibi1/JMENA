@@ -99,9 +99,7 @@
             datatype: "json",
             datafields: [
                          
-				{name:"BRANCHCODE",		type: 'string' },
 				{name:"BRANCHNAME",		type: 'string' },
-				{name:"DEPTCODE",		type: 'string' },
 				{name:"DEPTNAME",		type: 'string' },
 				{name:"GRADE",			type: 'string' },
 				{name:"DUTY",			type: 'string' },
@@ -148,9 +146,7 @@
             editable: false,
             selectionmode: 'singlerow',
             columns: [
-				{ text: '지사코드', 	datafield: 'BRANCHCODE',		width: 100, cellsalign: 'center', hidden:true},
 				{ text: '지사', 		datafield: 'BRANCHNAME',		width: 100, cellsalign: 'center', align:"center"},
-				{ text: '부서코드', 	datafield: 'DEPTCODE',			width: 100, cellsalign: 'center', hidden:true},
 				{ text: '부서', 		datafield: 'DEPTNAME',			width: 100, cellsalign: 'center', align:"center"},
 				{ text: '직위', 		datafield: 'GRADE',				width: 100, cellsalign: 'center', align:"center"},
 				{ text: '직급', 		datafield: 'DUTY',				width: 100, cellsalign: 'center', align:"center"},
