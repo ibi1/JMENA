@@ -15,8 +15,10 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
+			
 			var BRANCHCODE = $("#BRANCHCODE",opener.document).val();
 			var INSACODEARR = $("#INSACODE",opener.document).val();
+			var S_KNAME = "";
 			
 			var ids = jQuery("#bottomList",opener.document).jqGrid('getDataIDs');
 			
@@ -25,21 +27,21 @@
 				INSACODEARR += "^" + cellData.INSACODE;
 			});
 			
-			f_selectListEnaSaleMstPopup(BRANCHCODE, INSACODEARR);
+			f_selectListEnaSaleMstPopup(BRANCHCODE, INSACODEARR, S_KNAME);
 		});
 		
 		
-		obj.put("INSACODE", lst.get(i).getINSACODE());
-		obj.put("KNAME", lst.get(i).getKNAME());
-		obj.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
-		obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
-		obj.put("GRADE", lst.get(i).getGRADE());
-		obj.put("GRADENAME", lst.get(i).getGRADENAME());
-		obj.put("DUTY", lst.get(i).getDUTY());
-		obj.put("DUTYNAME", lst.get(i).getDUTYNAME());
+// 		obj.put("INSACODE", lst.get(i).getINSACODE());
+// 		obj.put("KNAME", lst.get(i).getKNAME());
+// 		obj.put("BRANCHCODE", lst.get(i).getBRANCHCODE());
+// 		obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
+// 		obj.put("GRADE", lst.get(i).getGRADE());
+// 		obj.put("GRADENAME", lst.get(i).getGRADENAME());
+// 		obj.put("DUTY", lst.get(i).getDUTY());
+// 		obj.put("DUTYNAME", lst.get(i).getDUTYNAME());
 		
 		//수당관리 수당수령인 메인 그리드 팝업
-		function f_selectListEnaSaleMstPopup(BRANCHCODE, INSACODEARR){
+		function f_selectListEnaSaleMstPopup(BRANCHCODE, INSACODEARR, S_KNAME){
 			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
 			
 			$('#leftList').jqGrid({
@@ -48,7 +50,8 @@
 				mtype: 'POST',
 				postData : {
 					BRANCHCODE : BRANCHCODE,
-					INSACODEARR : INSACODEARR
+					INSACODEARR : INSACODEARR,
+					S_KNAME : S_KNAME
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
@@ -103,10 +106,30 @@
 				hidegrid: false
 			});
 		}
+		
+		$(function() {
+			$("#S_KNAME").keydown(function() {
+				var keyCode = window.event.keyCode;
+				if(keyCode==13 || keyCode==9) {
+					var BRANCHCODE = $("#BRANCHCODE",opener.document).val();
+					var INSACODEARR = $("#INSACODE",opener.document).val();
+					var S_KNAME = $("#S_KNAME").val();
+					f_selectListEnaSaleMstPopup(BRANCHCODE, INSACODEARR, S_KNAME)
+				}
+			});
+		});
+		
 	</script>
 </head>
 <body>
 	<div id="contents" style="width:600px;" align="center">
+		<div id="leftDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
+				<tr>
+					<td>담당자 : <input type="text" class="inputName" id="S_KNAME" name="S_KNAME" /></td>
+				</tr> 
+			</table>
+		</div>
 		<div id="leftDiv" style="width:100%; float:left; padding: 10px" align="left">
 			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>

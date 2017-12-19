@@ -125,7 +125,7 @@
 		<isNotEmpty property="BRANCHCODE">
 			AND BRANCHCODE = #BRANCHCODE#
 		</isNotEmpty>
-		ORDER BY DEPTCODE
+		ORDER BY SORTKEY
 	</select>
 
 	<select id="selectInsaMstList" resultMap="insaMstData">

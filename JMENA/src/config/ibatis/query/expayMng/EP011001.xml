@@ -675,7 +675,9 @@
 		    fn_codename('01', '004', T1.DUTY) AS DUTYNAME 
 		FROM hr_insamst T1
 		WHERE 1=1
-		AND T1.BRANCHCODE = #BRANCHCODE#
+		<isNotEmpty property="S_KNAME">
+			AND T1.KNAME LIKE '%$S_KNAME$%'
+		</isNotEmpty>
 		<isNotEmpty property="INSACODEARR">
    			AND T1.INSACODE NOT IN 
    			<iterate property="INSACODEARR" open="(" close=")" conjunction=",">

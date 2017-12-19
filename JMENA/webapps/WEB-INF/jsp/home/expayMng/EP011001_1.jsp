@@ -93,7 +93,8 @@
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['계약일자', '번호','담당자성명', '매매금액', '계약자성명',
-			          '매출구분','담당자','관리번호','지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액','실판매가'],
+			          '매출구분','담당자','관리번호','지역구분','주소','계약자성명',
+			          '계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액','실판매가', '계약지사'],
 			colModel:[
 				 {name:"SALEDATE",		index:'PAYDATE',		width:120,		align:'center',	sortable:false}
 				,{name:"SALEID",		index:'SALEID',			width:150,		align:'center',	sortable:false}
@@ -115,6 +116,7 @@
 				,{name:"DCRATE",		index:'DCRATE',			width:100,		align:'center',	sortable:false, hidden:true}
 				,{name:"DCAMT",			index:'DCAMT',			width:100,		align:'center',	sortable:false, hidden:true}
 				,{name:"SELLAMT",		index:'SELLAMT',		width:100,		align:'center',	sortable:false, hidden:true}
+				,{name:"BRANCHCODE",	index:'BRANCHCODE',		width:100,		align:'center',	sortable:false, hidden:true}
 			] ,
 			rowNum:10000000,
 			autowidth: true ,
@@ -156,6 +158,7 @@
 				$("#ADDRATE", parent.opener.document).val("0");
 				$("#TAXGUBUN", parent.opener.document).val("001");
 				$(opener.location).attr("href", "javascript:insertSudangMst();");
+				
 				window.self.close();
 
 			} ,

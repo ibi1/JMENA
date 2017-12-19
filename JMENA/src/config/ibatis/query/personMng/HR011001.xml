@@ -123,15 +123,17 @@
 			T1.REMARK
 		FROM hr_insamst T1
 		WHERE 1=1
-		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">		
-			AND T1.BRANCHCODE = #S_BRANCHCODE#
-		</isNotEqual> 		
-		<isNotEqual property="S_DEPTCODE" compareValue="ALL">		
-			AND T1.DEPTCODE = #S_DEPTCODE#
-		</isNotEqual> 		
 		<isNotEmpty property="S_KNAME">
 			AND T1.KNAME LIKE '%$S_KNAME$%'
 		</isNotEmpty>
+		<isEmpty property="S_KNAME">
+			<isNotEqual property="S_BRANCHCODE" compareValue="ALL">		
+				AND T1.BRANCHCODE = #S_BRANCHCODE#
+			</isNotEqual> 		
+			<isNotEqual property="S_DEPTCODE" compareValue="ALL">		
+				AND T1.DEPTCODE = #S_DEPTCODE#
+			</isNotEqual> 		
+		</isEmpty>
 		<isNotEmpty property="S_JUMINID">
 			AND T1.JUMINID LIKE '%$S_JUMINID$%'
 		</isNotEmpty>

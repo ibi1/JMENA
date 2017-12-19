@@ -652,6 +652,9 @@ public class EP011001Ctr {
 		vo.setBRANCHCODE(request.getParameter("BRANCHCODE"));
 		String[] insacodeArr = request.getParameter("INSACODEARR").split("\\^");
 		
+		vo.setS_KNAME(request.getParameter("S_KNAME"));
+		
+		
 		List<String> insacodeList = new ArrayList<String>();
 		
 		for (String insacode : insacodeArr) {

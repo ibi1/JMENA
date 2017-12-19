@@ -44,6 +44,9 @@
 			type: 'POST' ,
 			url: "/codeCom/branchMstList.do", 
 			dataType : 'json' , 
+			data : {
+				USEYN : 'Y'
+			},
 			success: function(data){
 				var inHtml = "";
 				inHtml += "<option value='ALL' selected='selected'>전체</option>\n";
