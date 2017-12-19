@@ -732,7 +732,7 @@
 			},					
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['직책', '직급', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준코드','신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
+			colNames:['직급', '직책', '성명', '수당지급율(%)', '추가지급율(%)', '지급금액', '신고기준코드','신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액', '신고인 수', '비고','판매번호','순번','사번'],
 			colModel:[  	
 				  {name:"GRADE",		index:'GRADE',		width:80,		align:'center',	sortable:false}
 				, {name:"DUTY",			index:'DUTY',		width:80,		align:'center',	sortable:false}
