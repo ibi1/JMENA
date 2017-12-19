@@ -94,11 +94,6 @@ public class HR011001Ctr {
 		
 		s_juminid = s_juminid.replace("-", "");
 		
-		System.out.println("*******************************");
-		System.out.println("request Kname==>"+request.getParameter("S_KNAME"));
-		System.out.println("s_kname==>"+s_kname);
-		System.out.println("*******************************");
-		
 		vo.setS_BRANCHCODE(s_branchcode);
 		vo.setS_DEPTCODE(s_deptcode);
 		vo.setS_KNAME(s_kname);
