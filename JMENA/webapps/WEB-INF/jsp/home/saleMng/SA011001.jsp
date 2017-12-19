@@ -367,7 +367,7 @@
 						success: function(data){
 							var flag = (data.resultMsg == "Y") ? true : false;
 							
-							$("#insertButton").jqxButton({ disabled: flag });
+							//$("#insertButton").jqxButton({ disabled: flag });
 							$("#deleteButton").jqxButton({ disabled: flag });
 							$("#saveButton").jqxButton({ disabled: flag });
 					

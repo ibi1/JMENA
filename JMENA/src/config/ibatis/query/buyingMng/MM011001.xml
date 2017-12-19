@@ -394,10 +394,14 @@
 	</delete>
 	
 	<select id="selectSumSaleMst" resultMap="sumSaleMst">
-		SELECT 
-			IFNULL(CAST(SUM(CONM2) AS DECIMAL(12, 2)), 0) AS CONM2, IFNULL(CAST(SUM(CONPY) AS DECIMAL(12, 2)), 0) AS CONPY 
-		FROM sa_salemst 
-		WHERE BUYID = #BUYID#
+		/* MM011001.selectSumSaleMst */
+		SELECT IFNULL(CAST(SUM(A.CONM2) AS DECIMAL(12, 2)), 0) AS CONM2
+		    , IFNULL(CAST(SUM(A.CONPY) AS DECIMAL(12, 2)), 0) AS CONPY 
+		FROM sa_salemst A
+			LEFT OUTER JOIN sa_salehistorytb B
+				ON A.SALEID = B.SALEID
+		WHERE A.BUYID = #BUYID#
+			AND B.CHGGUBUN != '004';
 	</select>
 	
 	<select id="selectListMMBuyMstPopup" resultMap="BuyMstData">
