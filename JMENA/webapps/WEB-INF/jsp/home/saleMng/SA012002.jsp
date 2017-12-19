@@ -132,9 +132,7 @@
             datatype: "json",
             datafields: [
                          
-				{name:"BRANCHCODE",		type: 'string' },
 				{name:"BRANCHNAME",		type: 'string' },
-				{name:"DEPTCODE",		type: 'string' },
 				{name:"DEPTNAME",		type: 'string' },
 				{name:"SALEDATE",		type: 'string' },
 				{name:"DCODENAME",		type: 'string' },
@@ -192,9 +190,7 @@
             selectionmode: 'singlerow',
             columns: [
                       
-				{ text: '지사코드', 		datafield: "BRANCHCODE",	width: 100, cellsalign: 'center', hidden:true},
 				{ text: '지사', 			datafield: "BRANCHNAME",	width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '부서코드', 		datafield: "DEPTCODE",		width: 100, cellsalign: 'center', hidden:true},
 				{ text: '실장명', 			datafield: "DEPTNAME",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '계약일', 			datafield: "SALEDATE",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '매출구분', 		datafield: "DCODENAME",		width: 100, cellsalign: 'center', align: 'center'},
