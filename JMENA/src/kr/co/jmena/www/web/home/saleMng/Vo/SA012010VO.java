@@ -16,6 +16,7 @@ public class SA012010VO {
 	private String CONM2;
 	private String SALEAMT;
 	private String AGENCYAMT;
+	private String DEPOSITDATE;
 	private String OWNERNAME;
 	private String CITYCODE;
 	private String CITYNAME;
@@ -67,6 +68,9 @@ public class SA012010VO {
 	}
 	public String getAGENCYAMT() {
 		return this.AGENCYAMT;
+	}
+	public String getDEPOSITDATE() {
+		return this.DEPOSITDATE;
 	}
 	public String getOWNERNAME() {
 		return this.OWNERNAME;
@@ -142,6 +146,9 @@ public class SA012010VO {
 	}
 	public void setAGENCYAMT(String aGENCYAMT) {
 		this.AGENCYAMT = aGENCYAMT;
+	}
+	public void setDEPOSITDATE(String dEPOSITDATE) {
+		this.DEPOSITDATE = dEPOSITDATE;
 	}
 	public void setOWNERNAME(String oWNERNAME) {
 		this.OWNERNAME = oWNERNAME;

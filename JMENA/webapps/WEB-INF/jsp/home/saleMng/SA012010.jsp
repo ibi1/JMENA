@@ -102,8 +102,11 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	        var source = {
 	            datatype: "json",
 	            datafields: [
+					{name: "SALEID", type: "string"},
 					{name: "OWNERNAME", type: "string"},
+					{name: "DEPOSITDATE", type: "string"},
 					{name: "BRANCHNAME", type: "string"},
+					{name: "DEPTNAME", type: "string"},
 					{name: "KNAME", type: "string"},
 					{name: "MNGRNAME", type: "string"},
 					{name: "FULLADDRESS", type: "string"},
@@ -117,19 +120,15 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            id: 'SALEID',
 	            url: url
 	        };
-
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
-	            downloadComplete: function (data, status, xhr) {
-	            },
-	            loadComplete: function(data) {
-	            	var countRow = $('#mainList').jqxGrid('getrows');
-	            	$("#mainListCount").html(countRow.length);
+	            loadComplete: function(data) {	            	
+	            	var countRow = $('#grdList').jqxGrid('getrows');
+	            	$("#grdRowCount").html(countRow.length);
 	            },
 	            loadError: function (xhr, status, error) { alert("Error~~!"); }
 	        });
-	        
 			// initialize jqxGrid
-	        $("#mainList").jqxGrid({
+	        $("#grdList").jqxGrid({
 	        	theme: 'energyblue',
 	        	sorttogglestates: 0,
 	        	sortable: false,
@@ -142,17 +141,19 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            editable: false,
 	            selectionmode: 'singlerow',
 	            columns: [
-					{text: "원지주", datafield: "OWNERNAME", width: 110, cellsalign: "center", align: "center"},
+					{text: "판매번호", datafield: "SALEID", width: 100, cellsalign: "center", align: "center", hidden: true},
+					{text: "원지주", datafield: "OWNERNAME", width: 100, cellsalign: "center", align: "center"},
+					{text: "잔금완료일", datafield: "DEPOSITDATE", width: 100, cellsalign: "center", align: "center"},
 					{text: "지사", datafield: "BRANCHNAME", width: 100, cellsalign: "center", align: "center"},
-					{text: "담당", datafield: "KNAME", width: 110, cellsalign: "center", align: "center"},
-					{text: "실장", datafield: "MNGRNAME", width: 110, cellsalign: "center", align: "center"},
-					{text: "주소", datafield: "FULLADDRESS", width: 240, cellsalign: "center", align: "center"},
-					{text: "계약자", datafield: "CONNAME", width: 110, cellsalign: "center", align: "center"},
-					{text: "면적", datafield: "CONM2", width: 80, cellsalign: "right", align: "center", cellsformat: "f0"},
-					{text: "매매대금", datafield: "SALEAMT", width: 140, cellsalign: "right", align: "center", cellsformat: "f0"},
-					{text: "수수료", datafield: "AGENCYAMT", width: 140, cellsalign: "right", align: "center", cellsformat: "f0"}
+					{text: "부서", datafield: "DEPTNAME", width: 100, cellsalign: "center", align: "center"},
+					{text: "담당", datafield: "KNAME", width: 100, cellsalign: "center", align: "center"},
+					{text: "실장", datafield: "MNGRNAME", width: 100, cellsalign: "center", align: "center"},
+					{text: "주소", datafield: "FULLADDRESS", width: 240, cellsalign: "left", align: "center"},
+					{text: "계약자", datafield: "CONNAME", width: 100, cellsalign: "center", align: "center"},
+					{text: "면적", datafield: "CONM2", width: 80, cellsalign: "right", align: "center", cellsformat: "f"},
+					{text: "매매대금", datafield: "SALEAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
+					{text: "수수료", datafield: "AGENCYAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"}
 	            ]
-	          
 	        });			
 		}
 		
@@ -172,7 +173,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		});
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
-			$("#mainList").jqxGrid('exportdata', 'xls', 'SA012010_<%=f.format(currDate)%>', true, null, true, null, 'utf-8'); 	
+			$("#grdList").jqxGrid('exportdata', 'xls', 'SA012010_<%=f.format(currDate)%>', true, null, false, null, 'utf-8'); 	
 		});
 	});
 </script>
@@ -213,8 +214,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 				</tr>
 			</table>
 			<br/>
-			<div align="right">총 건수 : <font color="red"><sapn id="mainListCount"></sapn></font>건</div>
-			<div id="mainList"></div>
+			<div align="right">총 건수 : <font color="red"><sapn id="grdRowCount"></sapn></font>건</div>
+			<div id="grdList"></div>
 		</div>
 	</div>
 </body>

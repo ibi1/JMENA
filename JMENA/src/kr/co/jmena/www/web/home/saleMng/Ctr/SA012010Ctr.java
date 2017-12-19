@@ -69,8 +69,11 @@ public class SA012010Ctr {
 		for(int i = 0; i < lst.size(); i++) {
 			JSONObject obj = new JSONObject();
 			
+			obj.put("SALEID", lst.get(i).getSALEID());
 			obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
+			obj.put("DEPOSITDATE", lst.get(i).getDEPOSITDATE());
 			obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
+			obj.put("DEPTNAME", lst.get(i).getDEPTNAME());
 			obj.put("KNAME", lst.get(i).getKNAME());
 			obj.put("MNGRNAME", lst.get(i).getMNGRNAME());
 			obj.put("FULLADDRESS", lst.get(i).getCITYNAME() +" "+ lst.get(i).getBOROUGHNAME() +" "+ lst.get(i).getADDRESS());

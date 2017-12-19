@@ -14,6 +14,7 @@
 		<result property="CONM2" column="CONM2"/>
 		<result property="SALEAMT" column="SALEAMT"/>
 		<result property="AGENCYAMT" column="AGENCYAMT"/>
+		<result property="DEPOSITDATE" column="DEPOSITDATE"/>
 		<result property="OWNERNAME" column="OWNERNAME"/>
 		<result property="CITYCODE" column="CITYCODE"/>
 		<result property="CITYNAME" column="CITYNAME"/>
@@ -38,6 +39,7 @@
 		    , A.CONM2
 		    , B.SALEAMT
 		    , B.AGENCYAMT
+		    , C.DEPOSITDATE
 		    , D.OWNERNAME
 		    , D.CITYCODE
 		    , fn_codename('03', D.CITYCODE, NULL) AS CITYNAME
@@ -76,7 +78,7 @@
 		    <isNotEmpty property="S_KNAME">
 		    	AND E.KNAME LIKE '%$S_KNAME$%'
 		    </isNotEmpty>
-		ORDER BY D.OWNERNAME ASC, CITYNAME ASC, BOROUGHNAME ASC, ADDRESS ASC	
+		ORDER BY C.DEPOSITDATE ASC, D.OWNERNAME ASC, CITYNAME ASC, BOROUGHNAME ASC, ADDRESS ASC
 	</select>
 
 </sqlMap>
