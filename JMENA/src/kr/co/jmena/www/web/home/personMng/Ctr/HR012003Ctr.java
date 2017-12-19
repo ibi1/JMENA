@@ -1,12 +1,16 @@
 package kr.co.jmena.www.web.home.personMng.Ctr;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,6 +31,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -242,7 +247,9 @@ public class HR012003Ctr {
 		vo.setS_JOINDATE(request.getParameter("S_JOINDATE"));
 		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
 		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
-
+		
+		File down = null;
+		
 		try {
 	           
             String fileName = "HR012003_exportToExcel.xlsx";
@@ -250,7 +257,12 @@ public class HR012003Ctr {
             //Windwos (local)
             //File folder = new File("C:\\ExcelDownLoad");
             //Linux & Unix (Server
-            File folder = new File("//ExcelDownLoad");
+            ServletContext context = request.getServletContext();
+
+            String appPath = context.getRealPath("/");
+
+            
+            File folder = new File(appPath + File.separator + "WEB-INF" + File.separator + "ExcelDownLoad");
             
             if (!folder.exists()) {
             folder.mkdirs();
@@ -259,7 +271,7 @@ public class HR012003Ctr {
             //Windwos (local)
             //String filePath = "C:\\ExcelDownLoad\\";
             //Linux & Unix (Server
-            String filePath = "//ExcelDownLoad//";
+            String filePath = appPath + File.separator + "WEB-INF" + File.separator + "ExcelDownLoad" + File.separator;
             
             fileName = URLEncoder.encode(fileName,"UTF-8"); // UTF-8로 인코딩
            
@@ -404,18 +416,15 @@ public class HR012003Ctr {
 
             workbook.write(fileoutputstream);
             if (fileoutputstream != null) fileoutputstream.close();
-           
-			obj.put("MSG", "success");
-            
+
+            //이전에 엑셀 파일을 만든 후 서버에 저장하고 아래 파일에 서버에 저장한 놈을 가져온다.
+           down = new File(filePath+fileName);
         } catch (Exception e) {
-			obj.put("MSG", "error");
             throw e;
         }
 		
-		jCell.add(obj);
-		json.put("rows", jCell);
-		
-		return new ModelAndView("jsonView", json);
+		//downloadView로 해당 파일을 다운로드
+		return new ModelAndView("downloadView","downloadFile",down);
 	}
 
 	

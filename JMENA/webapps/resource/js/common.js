@@ -1,3 +1,20 @@
+jQuery.download = function(url, data, method){
+    // url과 data를 입력받음
+    if( url && data ){ 
+        // data 는  string 또는 array/object 를 파라미터로 받는다.
+        data = typeof data == 'string' ? data : jQuery.param(data);
+        // 파라미터를 form의  input으로 만든다.
+        var inputs = '';
+        jQuery.each(data.split('&'), function(){ 
+            var pair = this.split('=');
+            inputs+='<input type="hidden" name="'+ pair[0] +'" value="'+ pair[1] +'" />'; 
+        });
+        // request를 보낸다.
+        jQuery('<form action="'+ url +'" method="'+ (method||'post') +'">'+inputs+'</form>')
+        .appendTo('body').submit().remove();
+    };
+};
+
 function addZero(n) {
 	return n < 10 ? "0" + n : n;
 }
