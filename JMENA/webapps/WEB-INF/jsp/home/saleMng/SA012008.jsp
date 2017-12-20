@@ -243,7 +243,7 @@
 		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
 			<table>
 				<tr>
-					<th width="120">매출년월</th>
+					<th width="120">매출 등기이전 년월</th>
 					<td width="150">
 					
 						<select id="S_BUYYEAR" name="S_BUYYEAR">

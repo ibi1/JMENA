@@ -37,11 +37,16 @@
 			t1.buym2,
 			t1.regdate as regdate1,
 			t1.buyamt
-		from mm_buymst t1, (select buyid from sa_salemst where 1=1
+		from mm_buymst t1, (select buyid
+			from sa_salemst
+			where 1=1 
+			and SALEID = 
+			(select SALEID from sa_saledtl a
+			where 1=1
 		<isNotEqual property="S_BUYYEAR" compareValue="">
-		and	substring(DATE_FORMAT(saledate, '%Y%m%d'), 1,6) = #S_BUYYEAR#
+			and	substring(DATE_FORMAT(a.regdate, '%Y%m%d'), 1,6) = #S_BUYYEAR#
 		</isNotEqual>
-		) t2
+		)) t2
 		where 1=1
 		and t1.buyid = t2.buyid
         and regyn = 'Y'
@@ -73,7 +78,7 @@
 				t1.conname,
 				t1.conjuminid,
 				t1.conm2,
-				t2.regdate as regdate2,
+				ifnull(t2.regdate, "") as regdate2,
 				t2.sellamt as saleamt,
 				((select buym2 from mm_buymst where buyid = #BUYID#) - (select sum(conm2) from sa_salemst where buyid = #BUYID#)) as remnm2,
 		        (select buym2 from mm_buymst where buyid = #BUYID#) as buym2,
@@ -85,6 +90,9 @@
 			and t1.saleid = t2.saleid
 			order by saledate
 		) a
+		where 1=1
+		and a.regdate2 <![CDATA[ <> ]]> ""
+		
 	</select>
 	
 	
