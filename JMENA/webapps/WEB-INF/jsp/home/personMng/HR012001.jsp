@@ -192,7 +192,21 @@
 		
 		$("#excelButton").click(function () {
 			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
-	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	        //$("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');
+	        var url = "/home/HR012001_exportToExcel.do";
+			var S_JOINDATE_FR = $("#S_JOINDATE_FR").val();
+			var S_JOINDATE_TO = $("#S_JOINDATE_TO").val();
+			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
+			var S_DEPTCODE = $("#S_DEPTCODE").val();
+			var S_KNAME = $("#S_KNAME").val();
+			var S_JUMINID = $("#S_JUMINID").val();
+			
+			
+			var dataParam = "S_JOINDATE_FR=" + S_JOINDATE_FR + "&S_JOINDATE_TO=" + S_JOINDATE_TO + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE + "&S_KNAME=" + S_KNAME + "&S_JUMINID=" + S_JUMINID;
+			
+			//파일 다운로드 (common.js에 있음)
+			$.download(url, dataParam, 'post');			
+			
 	    });
 		
 	})
