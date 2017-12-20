@@ -30,6 +30,9 @@
     <bean id="MM012001Ctr" class="kr.co.jmena.www.web.home.buyingMng.Ctr.MM012001Ctr" />
     <bean id="MM012001Biz" class="kr.co.jmena.www.web.home.buyingMng.Biz.MM012001Biz" />
     <bean id="MM012001Dao" class="kr.co.jmena.www.web.home.buyingMng.Dao.MM012001Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <bean id="MM012002Ctr" class="kr.co.jmena.www.web.home.buyingMng.Ctr.MM012002Ctr" />
+    <bean id="MM012002Biz" class="kr.co.jmena.www.web.home.buyingMng.Biz.MM012002Biz" />
+    <bean id="MM012002Dao" class="kr.co.jmena.www.web.home.buyingMng.Dao.MM012002Dao"  p:sqlMapClient-ref="sqlMapClient" />
     
     <!-- 수당관리 -->   
     <bean id="EP011001Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP011001Ctr" />

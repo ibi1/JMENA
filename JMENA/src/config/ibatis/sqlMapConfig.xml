@@ -30,6 +30,7 @@
 	<!-- 매입관리 -->
 	<sqlMap resource="/config/ibatis/query/buyingMng/MM011001.xml" />
 	<sqlMap resource="/config/ibatis/query/buyingMng/MM012001.xml" />
+	<sqlMap resource="/config/ibatis/query/buyingMng/MM012002.xml" />
 
 	<!-- 수당관리 -->
 	<sqlMap resource="/config/ibatis/query/expayMng/EP011001.xml" />

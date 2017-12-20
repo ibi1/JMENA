@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MM012002">
+	<typeAlias alias="MM012002VO" type="kr.co.jmena.www.web.home.buyingMng.Vo.MM012002VO"/>
+
+	<resultMap id="MM012002Data" class="MM012002VO">
+		<result property="BUYID" column="BUYID"/>
+		<result property="BUYDATE" column="BUYDATE"/>
+		<result property="BUYGUBUN" column="BUYGUBUN"/>
+		<result property="BUYGUBUNNAME" column="BUYGUBUNNAME"/>
+		<result property="CITYCODE" column="CITYCODE"/>
+		<result property="CITYNAME" column="CITYNAME"/>
+		<result property="BOROUGHCODE" column="BOROUGHCODE"/>
+		<result property="BOROUGHNAME" column="BOROUGHNAME"/>
+		<result property="ADDRESS" column="ADDRESS"/>
+		<result property="OWNERNAME" column="OWNERNAME"/>
+		<result property="BUYM2" column="BUYM2"/>
+		<result property="BUYPY" column="BUYPY"/>
+		<result property="BUYAMT" column="BUYAMT"/>
+		<result property="BUYDANGA" column="BUYDANGA"/>
+		<result property="REGYN" column="REGYN"/>
+		<result property="REGNAME" column="REGNAME"/>
+		<result property="REGDATE" column="REGDATE"/>
+		<result property="CONM2" column="CONM2"/>
+		<result property="REMM2" column="REMM2"/>
+	</resultMap>
+
+	<select id="selectListMM012002" resultMap="MM012002Data">
+		/* MM012002.selectListMM012002 */
+		SELECT *
+		FROM (
+			SELECT BUYID
+				, BUYDATE
+				, BUYGUBUN
+				, fn_codename('01', '014', BUYGUBUN) AS BUYGUBUNNAME
+				, CITYCODE
+				, fn_codename('03', CITYCODE, NULL) AS CITYNAME
+				, BOROUGHCODE
+				, (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T.CITYCODE AND BOROUGHCODE = T.BOROUGHCODE) AS BOROUGHNAME
+				, ADDRESS
+				, OWNERNAME
+				, BUYM2
+				, BUYPY
+				, BUYAMT
+				, BUYDANGA
+				, REGYN
+				, CASE REGYN
+					WHEN 'Y' THEN '등기'
+		            WHEN 'N' THEN '미등기'
+		            ELSE ''
+				  END AS REGNAME
+				, REGDATE
+				, CAST((SELECT IFNULL(SUM(CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = T.BUYID AND B.CHGGUBUN != '004') AS DECIMAL(12, 2)) AS CONM2
+				, CAST(BUYM2 - (SELECT IFNULL(SUM(CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = T.BUYID AND B.CHGGUBUN != '004') AS DECIMAL(12, 2)) AS REMM2
+			FROM mm_buymst T
+		) S   
+		WHERE BUYDATE BETWEEN #S_BUYDATE_FR# AND #S_BUYDATE_TO#
+			<isNotEmpty property="S_BUYGUBUN">
+				<isNotEqual property="S_BUYGUBUN" compareValue="ALL">
+				AND BUYGUBUN = #S_BUYGUBUN#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="S_REGYN">
+				<isNotEqual property="S_REGYN" compareValue="ALL">
+					<isEqual property="S_REGYN" compareValue="R">
+					AND REMM2 > 0	
+					</isEqual>
+					<isNotEqual property="S_REGYN" compareValue="R">
+						AND REGYN = #S_REGYN#
+					</isNotEqual>	
+				</isNotEqual>
+			</isNotEmpty>
+		ORDER BY BUYDATE DESC
+	</select>
+
+</sqlMap>  
