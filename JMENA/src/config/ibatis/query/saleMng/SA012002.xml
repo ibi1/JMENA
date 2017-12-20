@@ -177,7 +177,7 @@
 								AND RETIREDATE IS NULL
 		                    	AND BRANCHCODE = T3.BRANCHCODE
 		                        AND DEPTCODE = T3.DEPTCODE
-		                        AND grade = '007') AS DEPTNAME
+		                        AND grade = '007' LIMIT 1) AS DEPTNAME
 		    FROM
 		        hr_insamst T3
 		    WHERE
