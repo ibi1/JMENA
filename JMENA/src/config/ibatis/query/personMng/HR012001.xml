@@ -34,43 +34,47 @@
 
 
 	<select id="selectListHR012001" resultMap="HR012001Data">
-		select 
-			t1.branchcode,
-			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname,
-			t1.deptcode,
-			(select deptname from ba_deptmst where branchcode = t1.branchcode and deptcode = t1.deptcode) as deptname,
-			(select dcodename from sy_ccodedtl where ccode = '003' and dcode = t1.grade) as grade,
-			(select dcodename from sy_ccodedtl where ccode = '004' and dcode = t1.duty) as duty,
-			(case t1.employgubun 
-				when 'R'  then '정규' 
-				when 'F'  then '프리'
-			end) as employgubun,
-			t1.insacode,
-			t1.kname,
-			(select kname from hr_insamst where insacode = t1.recoid) as reconame,
-			t1.joindate,
-			t1.remark
-		from hr_insamst t1
-		where 1=1
-		<isNotEmpty property="S_JOINDATE_FR">
-			<isNotEmpty property="S_JOINDATE_TO">
-				and t1.joindate between #S_JOINDATE_FR# and #S_JOINDATE_TO#
+		select * from (
+			select 
+				t1.branchcode,
+				(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname,
+				t1.deptcode,
+				(select deptname from ba_deptmst where branchcode = t1.branchcode and deptcode = t1.deptcode) as deptname,
+				(select sortkey from ba_deptmst where branchcode = t1.branchcode and deptcode = t1.deptcode) as deptsortkey,
+				(select dcodename from sy_ccodedtl where ccode = '003' and dcode = t1.grade) as grade,
+				(select dcodename from sy_ccodedtl where ccode = '004' and dcode = t1.duty) as duty,
+				(case t1.employgubun 
+					when 'R'  then '정규' 
+					when 'F'  then '프리'
+				end) as employgubun,
+				t1.insacode,
+				t1.kname,
+				(select kname from hr_insamst where insacode = t1.recoid) as reconame,
+				t1.joindate,
+				t1.remark
+			from hr_insamst t1
+			where 1=1
+			<isNotEmpty property="S_JOINDATE_FR">
+				<isNotEmpty property="S_JOINDATE_TO">
+					and t1.joindate between #S_JOINDATE_FR# and #S_JOINDATE_TO#
+				</isNotEmpty>
 			</isNotEmpty>
-		</isNotEmpty>
-		<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
-			and t1.branchcode = #S_BRANCHCODE#
-		</isNotEqual>
-		<isNotEqual property="S_DEPTCODE" compareValue="ALL">
-			and t1.deptcode = #S_DEPTCODE#
-		</isNotEqual>
-		<isNotEmpty property="S_KNAME">
-			and t1.kname like '%$S_KNAME$%'
-		</isNotEmpty>
-		<isNotEmpty property="S_JUMINID">
-			and t1.juminid '%$S_JUMINID$%' 
-		</isNotEmpty>
-		and t1.retiredate is NULL
-		order by t1.branchcode, t1.deptcode, t1.kname
+			<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
+				and t1.branchcode = #S_BRANCHCODE#
+			</isNotEqual>
+			<isNotEqual property="S_DEPTCODE" compareValue="ALL">
+				and t1.deptcode = #S_DEPTCODE#
+			</isNotEqual>
+			<isNotEmpty property="S_KNAME">
+				and t1.kname like '%$S_KNAME$%'
+			</isNotEmpty>
+			<isNotEmpty property="S_JUMINID">
+				and t1.juminid '%$S_JUMINID$%' 
+			</isNotEmpty>
+			and t1.retiredate is NULL
+		) A1
+		where 1=1
+		order by A1.branchcode, A1.deptsortkey
 	</select>
 
 	<select id="selectListHR012001_2" resultMap="HR012001Data2">

@@ -130,13 +130,15 @@ public class EP011001Biz {
 			String supplytaxArr[] = request.getParameterValues("supplytaxArr[]");
 			String deductamtArr[] = request.getParameterValues("deductamtArr[]");
 			String remarkArr[] = request.getParameterValues("remarkArr[]");
+			String payseqArr[] = request.getParameterValues("payseqArr[]");
 			String SALEID = request.getParameter("SALEID");
 			String PAYDATE = request.getParameter("PAYDATE");
 			
 			delVo.setSALEID(SALEID);
-			EP011001Dao.deleteEnaSudangMst(delVo);
-			EP011001Dao.deleteEnaSudangMstPTb(delVo);
-				logger.debug("[yearmonthArr.length]" + insacodeArr);
+			//EP011001Dao.deleteEnaSudangMst(delVo);
+			//EP011001Dao.deleteEnaSudangMstPTb(delVo);
+				
+			logger.debug("[yearmonthArr.length]" + insacodeArr);
 				
 				
 				int cnt = 0;
@@ -162,9 +164,17 @@ public class EP011001Biz {
 					vo.setTAXLOCAL(taxlocalArr[cnt]);
 					vo.setSUPPLYTAX(supplytaxArr[cnt]);
 					vo.setDEDUCTAMT(deductamtArr[cnt]);
-					vo.setREMARK(remarkArr[cnt]);					
+					vo.setREMARK(remarkArr[cnt]);
+					vo.setPAYSEQ(payseqArr[cnt]);
 					
-					chkFlag = EP011001Dao.insertEnaSudangMst(vo);
+					//기존 값 있는지 체크
+					if (EP011001Dao.selectDataEnaSudangMst(vo) > 0) {
+						//기존 데이터면 update
+						chkFlag = EP011001Dao.updateEnaSudangMst(vo);
+					} else {
+						//신규 데이터면 insert
+						chkFlag = EP011001Dao.insertEnaSudangMst(vo);
+					}
 					
 					if (chkFlag = false) {
 						break;

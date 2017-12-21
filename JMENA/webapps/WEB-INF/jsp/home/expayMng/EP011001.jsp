@@ -223,6 +223,21 @@
 				var countRow = $("#leftList").jqGrid('getGridParam', 'records');
 				$("#leftListCount").html(countRow);
 				
+				var saleId = $("#SALEID").val();
+				
+				var ids = jQuery("#leftList").jqGrid('getDataIDs');
+				
+				ids.some(function(currentValue, index, array){
+					var cellData = $("#leftList").jqGrid('getCell', ids[index], 'SALEID');
+					if (cellData == saleId) {
+						$("#S_FLAG_L").val("U");
+		        		$("#leftList").jqGrid('setSelection', ids[index]);
+		    			return true;
+		        	} else {
+		        		$("#S_FLAG_L").val("I");
+		        	}	        
+				});
+				
 			},			
 			hidegrid: false
 		});
@@ -872,6 +887,7 @@
 				var supplytaxArr = [];
 				var deductamtArr = [];
 				var remarkArr = [];
+				var payseqArr = [];
 				
 				var addRateTmp = $("#ADDRATE").val() == "" ? 0 : $("#ADDRATE").val();
 				insacodeArr.push($("#INSACODE").val());
@@ -884,6 +900,7 @@
 				supplytaxArr.push($("#SUPPLYTAX").val());
 				deductamtArr.push($("#DEDUCTAMT").val());
 				remarkArr.push($("#REMARK").val());
+				payseqArr.push($("#PAYSEQ").val());
 				
 				dataIds.some(function(currentValue, index, array){					
 					$('#bottomList').jqGrid('saveRow',array[index],false,'clientArray'); //선택된 놈 뷰 모드로 변경	
@@ -901,7 +918,8 @@
 					taxlocalArr.push($("#bottomList").jqGrid('getCell', array[index], 'TAXLOCAL'));	
 					supplytaxArr.push($("#bottomList").jqGrid('getCell', array[index], 'SUPPLYTAX'));	
 					deductamtArr.push($("#bottomList").jqGrid('getCell', array[index], 'DEDUCTAMT'));	
-					remarkArr.push($("#bottomList").jqGrid('getCell', array[index], 'REMARK'));	
+					remarkArr.push($("#bottomList").jqGrid('getCell', array[index], 'REMARK'));
+					payseqArr.push($("#bottomList").jqGrid('getCell', array[index], 'PAYSEQ'));
 				});  	 	
 			 	$.ajax({ 
 					type: 'POST' ,
@@ -921,7 +939,8 @@
 						'taxlocalArr':taxlocalArr,
 						'supplytaxArr':supplytaxArr,
 						'deductamtArr':deductamtArr,
-						'remarkArr':remarkArr,							
+						'remarkArr':remarkArr,	
+						'payseqArr':payseqArr,
 						'SALEID' :  $("#SALEID").val(),
 						'PAYDATE' :  $("#PAYDATE").val()
 					},
@@ -930,7 +949,8 @@
 						if(data.rows[0].MSG == "SUCCESS"){
 							alert("저장이 완료되었습니다.");
 							v_rightLastSel = 0;
-							resetEnaSudang();
+							selectListEnaSudangMst();
+							//resetEnaSudang();
 						}else{
 							alert("저장 중 오류가 발생하였습니다.\n\n입력 내용을 확인하세요.");
 							selectListEnaSudangMst();

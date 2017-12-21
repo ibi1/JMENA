@@ -40,7 +40,7 @@
 		from mm_buymst t1, (select buyid
 			from sa_salemst
 			where 1=1 
-			and SALEID = 
+			and SALEID in 
 			(select SALEID from sa_saledtl a
 			where 1=1
 		<isNotEqual property="S_BUYYEAR" compareValue="">

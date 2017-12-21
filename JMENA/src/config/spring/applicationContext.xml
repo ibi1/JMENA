@@ -31,6 +31,7 @@
 	<!-- JSONVIEW -->
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
 	 
+	<!-- Download View -->
 	<bean id="downloadView" class="kr.co.jmena.www.common.util.DownloadView" />
 
 	<!-- Resource Mapping -->
