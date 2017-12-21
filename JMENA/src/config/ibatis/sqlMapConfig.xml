@@ -53,6 +53,7 @@
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012008.xml" />
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012009.xml" />
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012010.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012011.xml" />
 
 	<!-- 시스템관리 -->
 	<sqlMap resource="/config/ibatis/query/systemMng/SY011001.xml" />
