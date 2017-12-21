@@ -237,13 +237,13 @@
 					<th width="120">지사</th>
 					<td width="140">
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:120px">
-							<option value="ALL" selected="selected">전체</option>
+							
 						</select>
 					</td>
 					<th width="120">부서</th>
 					<td width="140">
 						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
-							<option value="ALL" selected="selected">전체</option>
+							
 						</select>
 					</td>
 					<th width="120">성명</th>
