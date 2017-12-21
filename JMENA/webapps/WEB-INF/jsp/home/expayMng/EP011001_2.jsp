@@ -173,7 +173,7 @@
 			},			
 			datatype:"json" ,
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['성명', '주민번호','대표자명', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액','거래은행코드' ,'거래은행', '계좌번호','계좌주','판매번호','순번','신고인순번','비고'],
+			colNames:['성명', '주민번호(사업자)','대표자명', '지급금액', '신고기준', '사업소득세', '지방세', '부가가치세', '차감지급액','거래은행코드' ,'거래은행', '계좌번호','계좌주','판매번호','순번','신고인순번','비고'],
 			colModel:[  	
 				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center',	sortable:false}
 				, {name:"PAYERID",		index:'PAYERID',		width:120,		align:'center',	sortable:false}

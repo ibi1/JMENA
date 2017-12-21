@@ -391,7 +391,7 @@
 			datatype:"json" ,
 			loadtext: '로딩중...',
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['사번','순번','소득신고인', '주민번호', '거래은행', '계좌번호', '계좌주', '기본계좌', '비고'] ,
+			colNames:['사번','순번','소득신고인', '주민번호(사업자)', '거래은행', '계좌번호', '계좌주', '기본계좌', '비고'] ,
 			colModel:[
 				 {name:"INSACODE",		index:'INSACODE',		width:100,		align:'center',	sortable:false, hidden:true}
 				,{name:"ITEMSEQ",		index:'ITEMSEQ',		width:100,		align:'center',	sortable:false, hidden:true}
