@@ -73,6 +73,7 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 		return lst;
 	}
 	
+	
 	public boolean insertEnaSudangMst(EP011001VO vo) throws DataAccessException {
 		boolean chkFlag = false;
 		
@@ -82,12 +83,13 @@ public class EP011001Dao extends SqlMapClientDaoSupport {
 		return chkFlag;
 	}	
 	
-	public int updateEnaSudangMst(EP011001VO vo) throws DataAccessException {
-		int updateCnt = 0;
+	public boolean updateEnaSudangMst(EP011001VO vo) throws DataAccessException {
+		boolean chkFlag = false;
 		
-		updateCnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaSudangMst", vo);
+		int cnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateEnaSudangMst", vo);
 		
-		return updateCnt;
+		if (cnt > 0) chkFlag = true;
+		return chkFlag;
 	}	
 	
 	
