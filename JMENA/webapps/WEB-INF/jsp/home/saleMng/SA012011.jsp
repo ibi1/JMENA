@@ -17,13 +17,13 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		// 스타일 적용
 		$("#selectButton").jqxButton({width: 80, height: 25, theme: 'energyblue'});
 		$("#excelButton").jqxButton({width: 80, height: 25, theme: 'energyblue'});
-		$("#S_BUYDATE_FR").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
-		$("#S_BUYDATE_TO").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
+		$("#S_DEPOSITDATE_FR").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
+		$("#S_DEPOSITDATE_TO").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 10});
-		// 매출기간 초기화
+		// 기간 초기화 : 잔금입금일
 		init.setDate = function() {
-			$("#S_BUYDATE_FR").val(dateInput(1));
-			$("#S_BUYDATE_TO").val(dateInput(0));
+			$("#S_DEPOSITDATE_FR").val(dateInput(1));
+			$("#S_DEPOSITDATE_TO").val(dateInput(0));
 		}
 		// 지사 초기화
 		init.setBranch = function() {
@@ -97,8 +97,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		// 그리드 초기화
 		init.setGrid = function() {
 			var url = "/home/selectListSA012011.do"
-					+ "?S_BUYDATE_FR="+ $("#S_BUYDATE_FR").val()
-					+ "&S_BUYDATE_TO="+ $("#S_BUYDATE_TO").val()
+					+ "?S_DEPOSITDATE_FR="+ $("#S_DEPOSITDATE_FR").val()
+					+ "&S_DEPOSITDATE_TO="+ $("#S_DEPOSITDATE_TO").val()
 					+ "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
 					+ "&S_DEPTCODE="+ $("#S_DEPTCODE").val()
 					+ "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())))
@@ -120,7 +120,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{name: "SALEAMT", type: "number"},
 					{name: "DCAMT", type: "number"},
 					{name: "SELLAMT", type: "number"},
-					{name: "AGENCYAMT", type: "number"}
+					{name: "AGENCYAMT", type: "number"},
+					{name: "DEPOSITDATE", type: "string"}
 	            ],
 	            root: "rows",
 	            //record: "records",
@@ -160,7 +161,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{text: "매매가", datafield: "SALEAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "DC금액", datafield: "DCAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "실판매가", datafield: "SELLAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
-					{text: "위탁수수료", datafield: "AGENCYAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"}
+					{text: "위탁수수료", datafield: "AGENCYAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
+					{text: "잔금입금일", datafield: "DEPOSITDATE", width: 100, cellsalign: "center", align: "center"}
 	            ]
 	        });			
 		}
@@ -204,8 +206,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 				<tr>
 					<th width="120">기간</th>
 					<td colspan="5">
-						<input type="text" id="S_BUYDATE_FR" /> -
-						<input type="text" id="S_BUYDATE_TO" />
+						<input type="text" id="S_DEPOSITDATE_FR" /> -
+						<input type="text" id="S_DEPOSITDATE_TO" />
 					</td>
 				</tr>
 				<tr>

@@ -2,14 +2,14 @@ package kr.co.jmena.www.web.home.saleMng.Vo;
 
 public class SA012011VO {
 	
-	private String S_BUYDATE_FR;
-	private String S_BUYDATE_TO;
+	private String S_DEPOSITDATE_FR;
+	private String S_DEPOSITDATE_TO;
 	private String S_SALEGUBUN;
 	private String S_BRANCHCODE;
 	private String S_DEPTCODE;
-	private String S_KNAME;
-	
+	private String S_KNAME;	
 	private String SALEID;
+	private String DEPOSITDATE;
 	private String SALEDATE;
 	private String SALEGUBUN;	
 	private String SALEGUBUNNAME;
@@ -32,17 +32,17 @@ public class SA012011VO {
 	private String DEPTNAME;
 	private String MNGRNAME;
 	
-	public String getS_BUYDATE_FR() {
-		return this.S_BUYDATE_FR;
+	public String getS_DEPOSITDATE_FR() {
+		return this.S_DEPOSITDATE_FR;
 	}
-	public void setS_BUYDATE_FR(String s_BUYDATE_FR) {
-		this.S_BUYDATE_FR = s_BUYDATE_FR;
+	public void setS_DEPOSITDATE_FR(String S_DEPOSITDATE_FR) {
+		this.S_DEPOSITDATE_FR = S_DEPOSITDATE_FR;
 	}
-	public String getS_BUYDATE_TO() {
-		return this.S_BUYDATE_TO;
+	public String getS_DEPOSITDATE_TO() {
+		return this.S_DEPOSITDATE_TO;
 	}
-	public void setS_BUYDATE_TO(String s_BUYDATE_TO) {
-		this.S_BUYDATE_TO = s_BUYDATE_TO;
+	public void setS_DEPOSITDATE_TO(String S_DEPOSITDATE_TO) {
+		this.S_DEPOSITDATE_TO = S_DEPOSITDATE_TO;
 	}
 	public String getS_SALEGUBUN() {
 		return this.S_SALEGUBUN;
@@ -73,6 +73,12 @@ public class SA012011VO {
 	}
 	public void setSALEID(String sALEID) {
 		this.SALEID = sALEID;
+	}
+	public String getDEPOSITDATE() {
+		return this.DEPOSITDATE;
+	}
+	public void setDEPOSITDATE(String dEPOSITDATE) {
+		this.DEPOSITDATE = dEPOSITDATE;
 	}
 	public String getSALEDATE() {
 		return this.SALEDATE;
