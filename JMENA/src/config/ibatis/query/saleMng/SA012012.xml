@@ -7,6 +7,7 @@
 	
 	<resultMap class="SA012012VO" id="SA012012Data">
 		<result property="SALEID" column="SALEID"/>
+		<result property="DEPOSITDATE" column="DEPOSITDATE"/>
 		<result property="SALEDATE" column="SALEDATE"/>
 		<result property="SALEGUBUN" column="SALEGUBUN"/>
 		<result property="SALEGUBUNNAME" column="SALEGUBUNNAME"/>
@@ -16,9 +17,9 @@
 		<result property="CONPY" column="CONPY"/>
 		<result property="SALEDANGA" column="SALEDANGA"/>
 		<result property="SELLAMT" column="SELLAMT"/>
-		<result property="AGENCYAMT" column="AGENCYAMT"/>
-		
-		
+		<result property="REGYN" column="REGYN"/>
+		<result property="REGNAME" column="REGNAME"/>
+		<result property="REGDATE" column="REGDATE"/>
 		<result property="CITYCODE" column="CITYCODE"/>
 		<result property="CITYNAME" column="CITYNAME"/>
 		<result property="BOROUGHCODE" column="BOROUGHCODE"/>
@@ -35,56 +36,60 @@
 	<select id="selectListSA012012" resultMap="SA012012Data">
 		/* SA012012.selectListSA012012 */		
 		SELECT A.SALEID
-			, A.SALEDATE
-		    , A.SALEGUBUN
-		    , fn_codename('01', '007', A.SALEGUBUN) AS SALEGUBUNNAME
-			, A.SALERCD
-		    , A.CONNAME
-		    , A.CONM2
-		    , A.CONPY
-		    
-		    , B.SALEDANGA
-		    , B.SELLAMT		    
-		    , B.REGYN
-		    , CASE B.REGYN
+			, A.DEPOSITDATE
+			, B.SALEDATE
+			, B.SALEGUBUN
+			, fn_codename('01', '014', B.SALEGUBUN) AS SALEGUBUNNAME
+			, B.SALERCD
+			, B.CONNAME
+			, B.CONM2
+			, B.CONPY
+			, C.SALEDANGA
+			, C.SELLAMT
+			, C.REGYN
+			, CASE C.REGYN
 				WHEN 'Y' THEN '등기'
 				WHEN 'N' THEN '미등기'
 				ELSE ''
 			  END AS REGNAME
-		    , B.REGDATE
-		    , C.BUYGUBUN
-		    , fn_codename('01', '014', C.BUYGUBUN) AS BUYGUBUNNAME
-		    , C.CITYCODE
-		    , fn_codename('03', C.CITYCODE, NULL) AS CITYNAME
-		    , C.BOROUGHCODE
-		    , (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = C.CITYCODE AND BOROUGHCODE = C.BOROUGHCODE) AS BOROUGHNAME
-		    , C.ADDRESS    
-		    , D.KNAME
-		    , D.BRANCHCODE
-		    , fn_codename('02', D.BRANCHCODE, NULL) AS BRANCHNAME
-		    , D.DEPTCODE
-		    , fn_codename('05', D.DEPTCODE, NULL) AS DEPTNAME
-		    , (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = D.DEPTCODE AND GRADE = '007' AND DUTY = '002' LIMIT 1) AS MNGRNAME
-		FROM sa_salemst A
-			INNER JOIN sa_saledtl B
+			, C.REGDATE
+			, D.CITYCODE
+			, fn_codename('03', D.CITYCODE, NULL) AS CITYNAME
+			, D.BOROUGHCODE
+			, (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = D.CITYCODE AND BOROUGHCODE = D.BOROUGHCODE) AS BOROUGHNAME
+			, D.ADDRESS    
+			, E.KNAME
+			, E.BRANCHCODE
+			, fn_codename('02', E.BRANCHCODE, NULL) AS BRANCHNAME
+			, E.DEPTCODE
+			, fn_codename('05', E.DEPTCODE, NULL) AS DEPTNAME
+			, (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = E.DEPTCODE AND GRADE = '007' AND DUTY = '002' LIMIT 1) AS MNGRNAME
+		FROM (
+			SELECT *
+			FROM sa_ipgumscheduletb
+			WHERE DEPOSITGUBUN = '004'
+				AND DEPOSITYN = 'Y') A
+			INNER JOIN sa_salemst B
 				ON A.SALEID = B.SALEID
-			INNER JOIN mm_buymst C
-				ON A.BUYID = C.BUYID
-			LEFT OUTER JOIN hr_insamst D
-				ON A.SALERCD = D.INSACODE
+			INNER JOIN sa_saledtl C
+				ON B.SALEID = C.SALEID
+			INNER JOIN mm_buymst D
+				ON B.BUYID = D.BUYID
+			LEFT OUTER JOIN hr_insamst E
+				ON B.SALERCD = E.INSACODE
 		WHERE A.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
-			AND A.SALEDATE BETWEEN #S_SALEDATE_FR# AND #S_SALEDATE_TO#
+			AND A.DEPOSITDATE BETWEEN #S_DEPOSITDATE_FR# AND #S_DEPOSITDATE_TO#
+			<isNotEmpty property="S_SALEGUBUN">
+				<isNotEqual property="S_SALEGUBUN" compareValue="ALL">
+				AND B.SALEGUBUN  = #S_SALEGUBUN#
+				</isNotEqual>
+			</isNotEmpty>
 		    <isNotEmpty property="S_REGYN">
 		    	<isNotEqual property="S_REGYN" compareValue="ALL">
-		    	AND B.REGYN = #S_REGYN#
+		    	AND C.REGYN = #S_REGYN#
 		    	</isNotEqual>
 		    </isNotEmpty>
-		    <isNotEmpty property="S_BUYGUBUN">
-		    	<isNotEqual property="S_BUYGUBUN" compareValue="ALL">
-		    	AND C.BUYGUBUN = #S_BUYGUBUN#
-		    	</isNotEqual>
-		    </isNotEmpty>
-		ORDER BY B.REGDATE DESC	
+		ORDER BY C.REGDATE DESC
 	</select>
 
 </sqlMap>  
