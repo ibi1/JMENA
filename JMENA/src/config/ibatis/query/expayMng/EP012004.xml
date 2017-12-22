@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="EP012004">
+	<typeAlias alias="EP012004VO" type="kr.co.jmena.www.web.home.expayMng.Vo.EP012004VO"/>
+	
+	<resultMap class="EP012004VO" id="EP012004Data">
+		<result property="SALEID" column="SALEID"/>
+		<result property="PAYSEQ" column="PAYSEQ"/>
+		<result property="PAYDATE" column="PAYDATE"/>
+		<result property="REGISTERSEQ" column="REGISTERSEQ"/>
+		<result property="PAYERNAME" column="PAYERNAME"/>
+		<result property="PAYERID" column="PAYERID"/>
+		<result property="PAYAMT" column="PAYAMT"/>
+		<result property="TAXINCOME" column="TAXINCOME"/>
+		<result property="TAXLOCAL" column="TAXLOCAL"/>
+		<result property="SUPPLYTAX" column="SUPPLYTAX"/>
+		<result property="DEDUCTAMT" column="DEDUCTAMT"/>
+		<result property="SALERCD" column="SALERCD"/>
+		<result property="CONNAME" column="CONNAME"/>
+		<result property="CONPY" column="CONPY"/>
+		<result property="CITYNAME" column="CITYNAME"/>
+		<result property="BOROUGHCODE" column="BOROUGHCODE"/>
+		<result property="BOROUGHNAME" column="BOROUGHNAME"/>
+		<result property="ADDRESS" column="ADDRESS"/>
+		<result property="KNAME" column="KNAME"/>
+		<result property="BRANCHCODE" column="BRANCHCODE"/>
+		<result property="BRANCHNAME" column="BRANCHNAME"/>
+		<result property="DEPTCODE" column="DEPTCODE"/>
+		<result property="DEPTNAME" column="DEPTNAME"/>
+		<result property="MNGRNAME" column="MNGRNAME"/>
+	</resultMap>
+
+	<select id="selectListEP012004" resultMap="EP012004Data">
+		/* EP012004.selectListEP012004 */
+		SELECT A.SALEID
+			, A.PAYSEQ
+		    , A.PAYDATE
+		    , B.REGISTERSEQ
+		    , B.PAYERNAME
+		    , fn_formatid(B.PAYERID) AS PAYERID
+		    , B.PAYAMT
+		    , B.TAXINCOME
+		    , B.TAXLOCAL
+		    , B.SUPPLYTAX
+		    , B.DEDUCTAMT
+		    , C.SALERCD
+		    , C.CONNAME
+		    , C.CONPY
+		    , fn_codename('03', D.CITYCODE, NULL) AS CITYNAME
+		    , D.BOROUGHCODE
+		    , (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = D.CITYCODE AND BOROUGHCODE = D.BOROUGHCODE) AS BOROUGHNAME
+		    , D.ADDRESS    
+		    , E.KNAME
+		    , E.BRANCHCODE
+		    , fn_codename('02', E.BRANCHCODE, NULL) AS BRANCHNAME
+		    , E.DEPTCODE
+		    , fn_codename('05', E.DEPTCODE, NULL) AS DEPTNAME
+		    , (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = E.DEPTCODE AND GRADE = '007' AND DUTY = '002' LIMIT 1) AS MNGRNAME
+		FROM sa_sudangmst A
+			INNER JOIN sa_sudangpayertb B
+				ON A.SALEID = B.SALEID
+				AND A.PAYSEQ = B.PAYSEQ
+			INNER JOIN sa_salemst C
+				ON A.SALEID = C.SALEID
+			INNER JOIN mm_buymst D
+				ON C.BUYID = D.BUYID
+			LEFT OUTER JOIN hr_insamst E
+				ON C.SALERCD = E.INSACODE
+		WHERE A.PAYDATE BETWEEN #S_PAYDATE_FR# AND #S_PAYDATE_TO#
+			<isNotEmpty property="S_TAXGUBUN">
+				<isNotEqual property="S_TAXGUBUN" compareValue="ALL">
+				AND B.TAXGUBUN = #S_TAXGUBUN#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="S_BRANCHCODE">
+				<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
+				AND E.BRANCHCODE = #S_BRANCHCODE#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="S_DEPTCODE">
+				<isNotEqual property="S_DEPTCODE" compareValue="ALL">
+				AND E.DEPTCODE = #S_DEPTCODE#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="S_KNAME">
+			AND E.KNAME LIKT '%$S_KNAME$%'
+			</isNotEmpty>
+		ORDER BY C.SALERCD ASC, B.PAYERNAME ASC, A.PAYDATE
+	</select>
+
+</sqlMap>  

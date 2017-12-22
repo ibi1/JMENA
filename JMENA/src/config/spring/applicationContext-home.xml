@@ -51,6 +51,9 @@
     <bean id="EP012003Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012003Ctr" />
     <bean id="EP012003Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012003Biz" />
     <bean id="EP012003Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012003Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <bean id="EP012004Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012004Ctr" />
+    <bean id="EP012004Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012004Biz" />
+    <bean id="EP012004Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012004Dao"  p:sqlMapClient-ref="sqlMapClient" />
     
     <!-- 인사관리 -->
     <bean id="HR011001Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR011001Ctr" />
