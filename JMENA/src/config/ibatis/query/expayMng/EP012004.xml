@@ -67,7 +67,7 @@
 			INNER JOIN mm_buymst D
 				ON C.BUYID = D.BUYID
 			LEFT OUTER JOIN hr_insamst E
-				ON C.SALERCD = E.INSACODE
+				ON A.INSACODE = E.INSACODE
 		WHERE A.PAYDATE BETWEEN #S_PAYDATE_FR# AND #S_PAYDATE_TO#
 			<isNotEmpty property="S_TAXGUBUN">
 				<isNotEqual property="S_TAXGUBUN" compareValue="ALL">
@@ -87,7 +87,7 @@
 			<isNotEmpty property="S_KNAME">
 			AND E.KNAME LIKT '%$S_KNAME$%'
 			</isNotEmpty>
-		ORDER BY C.SALERCD ASC, B.PAYERNAME ASC, A.PAYDATE
+		ORDER BY A.INSACODE ASC, E.KNAME ASC, B.PAYERNAME ASC, A.PAYDATE ASC
 	</select>
 
 </sqlMap>  
