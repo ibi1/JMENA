@@ -11,60 +11,53 @@
 		maxSessions="128"
 		maxTransactions="64" 
 		useStatementNamespaces="true" />
-
-	<!-- sample -->
-	<!-- sqlMap resource="/config/ibatis/query/kr.co.jmena.www.sample.enasample.xml" /-->
 	
-	<!-- 공통코드 -->
-	<sqlMap resource="/config/ibatis/query/codeCom/CODECOM.xml" />
+	<!-- sqlMap resource="/config/ibatis/query/kr.co.jmena.www.sample.enasample.xml" /--><!-- sample -->	
 	
-	<!-- main -->
-	<sqlMap resource="/config/ibatis/query/main/MAIN.xml" />
+	<sqlMap resource="/config/ibatis/query/codeCom/CODECOM.xml" /><!-- 공통코드 -->
 	
-	<!-- 인사관리 -->
-	<sqlMap resource="/config/ibatis/query/personMng/HR011001.xml" />
-	<sqlMap resource="/config/ibatis/query/personMng/HR012001.xml" />
-	<sqlMap resource="/config/ibatis/query/personMng/HR012002.xml" />
-	<sqlMap resource="/config/ibatis/query/personMng/HR012003.xml" />
+	<sqlMap resource="/config/ibatis/query/main/MAIN.xml" /><!-- main -->
+	
+	<sqlMap resource="/config/ibatis/query/personMng/HR011001.xml" /><!-- 인사관리 : 인사 기본 정보 관리 -->
+	<sqlMap resource="/config/ibatis/query/personMng/HR012001.xml" /><!-- 인사관리 : 입사자 현황 -->
+	<sqlMap resource="/config/ibatis/query/personMng/HR012002.xml" /><!-- 인사관리 : 퇴사자 현황 -->
+	<sqlMap resource="/config/ibatis/query/personMng/HR012003.xml" /><!-- 인사관리 : 인원현황 -->
+	
+	<sqlMap resource="/config/ibatis/query/buyingMng/MM011001.xml" /><!-- 매입관리 : 매입 관리 -->  
+	<sqlMap resource="/config/ibatis/query/buyingMng/MM012001.xml" /><!-- 매입관리 : 원지주 잔금현황 -->
+	<sqlMap resource="/config/ibatis/query/buyingMng/MM012002.xml" /><!-- 매입관리 : 매입현황 -->
 
-	<!-- 매입관리 -->
-	<sqlMap resource="/config/ibatis/query/buyingMng/MM011001.xml" />
-	<sqlMap resource="/config/ibatis/query/buyingMng/MM012001.xml" />
-	<sqlMap resource="/config/ibatis/query/buyingMng/MM012002.xml" />
+	<sqlMap resource="/config/ibatis/query/expayMng/EP011001.xml" /><!-- 수당관리 : 수당관리 -->
+	<sqlMap resource="/config/ibatis/query/expayMng/EP011002.xml" /><!-- 수당관리 : 급여관리 -->
+	<sqlMap resource="/config/ibatis/query/expayMng/EP012001.xml" /><!-- 수당관리 : 월 소득 및 부가세 신고내역 -->
+	<sqlMap resource="/config/ibatis/query/expayMng/EP012002.xml" /><!-- 수당관리 : 월 수령액 확인서 -->
+	<sqlMap resource="/config/ibatis/query/expayMng/EP012003.xml" /><!-- 수당관리 : * -->
+	<sqlMap resource="/config/ibatis/query/expayMng/EP012004.xml" /><!-- 수당관리 : 소득세 및 부가세신고 현황 -->
 
-	<!-- 수당관리 -->
-	<sqlMap resource="/config/ibatis/query/expayMng/EP011001.xml" />
-	<sqlMap resource="/config/ibatis/query/expayMng/EP011002.xml" />
-	<sqlMap resource="/config/ibatis/query/expayMng/EP012001.xml" />
-	<sqlMap resource="/config/ibatis/query/expayMng/EP012002.xml" />
-	<sqlMap resource="/config/ibatis/query/expayMng/EP012003.xml" />
-	<sqlMap resource="/config/ibatis/query/expayMng/EP012004.xml" />
+	<sqlMap resource="/config/ibatis/query/saleMng/SA011001.xml" /><!-- 매출관리 : 매출관리 - 일반 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA011002.xml" /><!-- 매출관리 : 매출관리 - 소비대차 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA011003.xml" /><!-- 매출관리 : 입금관리 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012001.xml" /><!-- 매출관리 : 매출현황 - 담당자별 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012002.xml" /><!-- 매출관리 : 매출잔금현황 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012003.xml" /><!-- 매출관리 : 매출현황 - 소비대차 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012004.xml" /><!-- 매출관리 : 은행입금현황 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012005.xml" /><!-- 매출관리 : 입금처리현황 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012006.xml" /><!-- 매출관리 : 매출현황 - 잔금일기준 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012007.xml" /><!-- 매출관리 : 잔여 물건지 현황 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012008.xml" /><!-- 매출관리 : 재고장 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012009.xml" /><!-- 매출관리 : 지사 일보 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012010.xml" /><!-- 매출관리 : 위탁매출 - 위탁수수료 현황 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012011.xml" /><!-- 매출관리 : 매출현황 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012012.xml" /><!-- 매출관리 : 등기현황 -->
 
-	<!-- 매출관리 -->
-	<sqlMap resource="/config/ibatis/query/saleMng/SA011001.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA011002.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA011003.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012001.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012002.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012003.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012004.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012005.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012006.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012007.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012008.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012009.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012010.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012011.xml" />
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012012.xml" />
-
-	<!-- 시스템관리 -->
-	<sqlMap resource="/config/ibatis/query/systemMng/SY011001.xml" />
-	<sqlMap resource="/config/ibatis/query/systemMng/SY011002.xml" />
-	<sqlMap resource="/config/ibatis/query/systemMng/SY011003.xml" />
-	<sqlMap resource="/config/ibatis/query/systemMng/SY011004.xml" />
-	<sqlMap resource="/config/ibatis/query/systemMng/SY011005.xml" />
-	<sqlMap resource="/config/ibatis/query/systemMng/SY011006.xml" />
-	<sqlMap resource="/config/ibatis/query/systemMng/SY021001.xml" />
-	<sqlMap resource="/config/ibatis/query/systemMng/SY021002.xml" />
-	<sqlMap resource="/config/ibatis/query/systemMng/SY021003.xml" />
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011001.xml" /><!-- 시스템관리 : 시스템 및 메뉴 관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011002.xml" /><!-- 시스템관리 : 프로그램 관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011003.xml" /><!-- 시스템관리 : 사용자 관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011004.xml" /><!-- 시스템관리 : 사용자 권한 관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011005.xml" /><!-- 시스템관리 : 공통코드 관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY011006.xml" /><!-- 시스템관리 : 금융기관 관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY021001.xml" /><!-- 시스템관리 : 사업자 관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY021002.xml" /><!-- 시스템관리 : 지사 및 부서 관리 -->
+	<sqlMap resource="/config/ibatis/query/systemMng/SY021003.xml" /><!-- 시스템관리 : 지역 관리 -->
+	
 </sqlMapConfig>
