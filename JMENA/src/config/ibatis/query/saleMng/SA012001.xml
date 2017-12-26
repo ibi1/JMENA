@@ -53,6 +53,7 @@
 	</resultMap>
 
 	<select id="selectListSA012001_1" resultMap="SA012001Data1">
+		/* SA012001.selectListSA012001_1 */
 		select 
 			t1.branchcode,
 			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname,
@@ -72,7 +73,7 @@
 			and t1.kname like '%$S_KNAME$%'
 		</isNotEmpty>
 		and t1.retiredate is null
-		order by branchcode, deptcode, duty, kname
+		order by branchcode, deptcode, t1.grade, kname
 	</select>
 
 
@@ -96,6 +97,7 @@
 	</select>
 
 	<select id="selectListSA012001_3" resultMap="SA012001Data3">
+		/* SA012001.selectListSA012001_3 */
 		select 
 			concat(t1.a, '01') M1_FR,
 			concat(t1.a, '31') M1_TO,
@@ -111,62 +113,141 @@
 			concat(t1.f, '31') M6_TO
 		from (
 			select 
-			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -1 month) as char)),'-', ''),1, 6) from dual) as a,
-			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -2 month) as char)),'-', ''),1, 6) from dual) as b,
-			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -3 month) as char)),'-', ''),1, 6) from dual) as c,
-			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -4 month) as char)),'-', ''),1, 6) from dual) as d,
-			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -5 month) as char)),'-', ''),1, 6) from dual) as e,
-			    (select substr(replace(( cast(date_add(#S_SALEDATE_FR#, interval -6 month) as char)),'-', ''),1, 6) from dual) as f
+			    (select substr(replace(( cast(date_add(#S_DEPOSITDATE_FR#, interval -1 month) as char)),'-', ''),1, 6) from dual) as a,
+			    (select substr(replace(( cast(date_add(#S_DEPOSITDATE_FR#, interval -2 month) as char)),'-', ''),1, 6) from dual) as b,
+			    (select substr(replace(( cast(date_add(#S_DEPOSITDATE_FR#, interval -3 month) as char)),'-', ''),1, 6) from dual) as c,
+			    (select substr(replace(( cast(date_add(#S_DEPOSITDATE_FR#, interval -4 month) as char)),'-', ''),1, 6) from dual) as d,
+			    (select substr(replace(( cast(date_add(#S_DEPOSITDATE_FR#, interval -5 month) as char)),'-', ''),1, 6) from dual) as e,
+			    (select substr(replace(( cast(date_add(#S_DEPOSITDATE_FR#, interval -6 month) as char)),'-', ''),1, 6) from dual) as f
 			from dual
 		)t1
 	</select>
 
 
 	<select id="selectListSA012001_4" resultMap="SA012001Data4">
-		select 
-			(select IFNULL(sum(t2.sellamt), 0) AMT6 from sa_salemst t1, sa_saledtl t2
-			where 1=1
-			and t1.salercd = #INSACODE#
-			and saledate between #M6_FR# and #M6_TO#
-			and t1.saleid = t2.saleid) as AMT6, 
-			(select  IFNULL(sum(t2.sellamt), 0) AMT5 from sa_salemst t1, sa_saledtl t2
-			where 1=1
-			and t1.salercd = #INSACODE#
-			and saledate between #M5_FR# and #M5_TO#
-			and t1.saleid = t2.saleid) as AMT5, 
-			(select IFNULL(sum(t2.sellamt), 0) AMT4 from sa_salemst t1, sa_saledtl t2
-			where 1=1
-			and t1.salercd = #INSACODE#
-			and saledate between #M4_FR# and #M4_TO#
-			and t1.saleid = t2.saleid) as AMT4, 
-			(select IFNULL(sum(t2.sellamt), 0) AMT3 from sa_salemst t1, sa_saledtl t2
-			where 1=1
-			and t1.salercd = #INSACODE#
-			and saledate between #M3_FR# and #M3_TO#
-			and t1.saleid = t2.saleid) as AMT3, 
-			(select IFNULL(sum(t2.sellamt), 0) AMT2 from sa_salemst t1, sa_saledtl t2
-			where 1=1
-			and t1.salercd = #INSACODE#
-			and saledate between #M2_FR# and #M2_TO#
-			and t1.saleid = t2.saleid) as AMT2, 
-			(select IFNULL(sum(t2.sellamt), 0) AMT1 from sa_salemst t1, sa_saledtl t2
-			where 1=1
-			and t1.salercd = #INSACODE#
-			and saledate between #M1_FR# and #M1_TO#
-			and t1.saleid = t2.saleid) as AMT1, 
-			(select IFNULL(sum(t2.sellamt), 0) TOTAMT from sa_salemst t1, sa_saledtl t2
-			where 1=1
-			and t1.salercd = #INSACODE#
-			and saledate between #S_SALEDATE_FR# and #S_SALEDATE_TO#
-			and t1.saleid = t2.saleid) as AMT0,
-			(select IFNULL(sum(t2.sellamt), 0) TOTAMT from sa_salemst t1, sa_saledtl t2
-			where 1=1
-			and t1.salercd = #INSACODE#
-			and saledate between #M6_FR# and #S_SALEDATE_TO#
-			and t1.saleid = t2.saleid) as TOTAMT
-		from dual
-
-
+		/* SA012001.selectListSA012001_4 */
+		SELECT 
+			(
+			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT6 
+			FROM (
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+			    AND DEPOSITYN = 'Y') T1
+			    INNER JOIN sa_salemst T2
+					ON T1.SALEID = T2.SALEID
+				INNER JOIN sa_saledtl T3
+					ON T2.SALEID = T3.SALEID
+			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+				AND T1.DEPOSITDATE BETWEEN #M6_FR# AND #M6_TO#
+				AND T2.SALERCD = #INSACODE#
+			) AS AMT6
+			, (
+			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT5 
+			FROM (
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+			    AND DEPOSITYN = 'Y') T1
+			    INNER JOIN sa_salemst T2
+					ON T1.SALEID = T2.SALEID
+				INNER JOIN sa_saledtl T3
+					ON T2.SALEID = T3.SALEID
+			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+				AND T1.DEPOSITDATE BETWEEN #M5_FR# AND #M5_TO#
+				AND T2.SALERCD = #INSACODE#
+			) AS AMT5
+			, (
+			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT4 
+			FROM (
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+			    AND DEPOSITYN = 'Y') T1
+			    INNER JOIN sa_salemst T2
+					ON T1.SALEID = T2.SALEID
+				INNER JOIN sa_saledtl T3
+					ON T2.SALEID = T3.SALEID
+			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+				AND T1.DEPOSITDATE BETWEEN #M4_FR# AND #M4_TO#
+				AND T2.SALERCD = #INSACODE#
+			) AS AMT4
+			, (
+			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT3 
+			FROM (
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+			    AND DEPOSITYN = 'Y') T1
+			    INNER JOIN sa_salemst T2
+					ON T1.SALEID = T2.SALEID
+				INNER JOIN sa_saledtl T3
+					ON T2.SALEID = T3.SALEID
+			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+				AND T1.DEPOSITDATE BETWEEN #M3_FR# AND #M3_TO#
+				AND T2.SALERCD = #INSACODE#
+			) AS AMT3
+			, (
+			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT2 
+			FROM (
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+			    AND DEPOSITYN = 'Y') T1
+			    INNER JOIN sa_salemst T2
+					ON T1.SALEID = T2.SALEID
+				INNER JOIN sa_saledtl T3
+					ON T2.SALEID = T3.SALEID
+			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+				AND T1.DEPOSITDATE BETWEEN #M2_FR# AND #M2_TO#
+				AND T2.SALERCD = #INSACODE#
+			) AS AMT2
+			, (
+			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT1 
+			FROM (
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+			    AND DEPOSITYN = 'Y') T1
+			    INNER JOIN sa_salemst T2
+					ON T1.SALEID = T2.SALEID
+				INNER JOIN sa_saledtl T3
+					ON T2.SALEID = T3.SALEID
+			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+				AND T1.DEPOSITDATE BETWEEN #M1_FR# AND #M1_TO#
+				AND T2.SALERCD = #INSACODE#
+			) AS AMT1
+			, (
+			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT0
+			FROM (
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+			    AND DEPOSITYN = 'Y') T1
+			    INNER JOIN sa_salemst T2
+					ON T1.SALEID = T2.SALEID
+				INNER JOIN sa_saledtl T3
+					ON T2.SALEID = T3.SALEID
+			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+				AND T1.DEPOSITDATE BETWEEN #S_DEPOSITDATE_FR# AND #S_DEPOSITDATE_TO#
+				AND T2.SALERCD = #INSACODE#
+			) AS AMT0
+			, (
+			SELECT IFNULL(SUM(T3.SELLAMT), 0) TOTAMT 
+			FROM (
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+			    AND DEPOSITYN = 'Y') T1
+			    INNER JOIN sa_salemst T2
+					ON T1.SALEID = T2.SALEID
+				INNER JOIN sa_saledtl T3
+					ON T2.SALEID = T3.SALEID
+			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+				AND T1.DEPOSITDATE BETWEEN #M6_FR# AND #S_DEPOSITDATE_TO#
+				AND T2.SALERCD = #INSACODE#
+			) AS TOTAMT
+		FROM DUAL
 	</select>
 		
 </sqlMap>

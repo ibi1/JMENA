@@ -78,41 +78,36 @@ public class SA012001Ctr {
 		SA012001VO vo4 = new SA012001VO();
 		
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
-		
-		String S_SALEDATE = request.getParameter("S_SALEDATE");
-		String S_SALEDATE_FR = "";
-		String S_SALEDATE_TO = "";
-		if(!(S_SALEDATE.equals(null) || S_SALEDATE == "" )){
-			S_SALEDATE = (S_SALEDATE.replaceAll("/", "")).substring(0, 6);
-			
-			S_SALEDATE_FR = S_SALEDATE+"01";
-			S_SALEDATE_TO = S_SALEDATE+"31";
+		String S_DEPOSITDATE = request.getParameter("S_DEPOSITDATE");
+		String S_DEPOSITDATE_FR = "";
+		String S_DEPOSITDATE_TO = "";
+
+		if(!(S_DEPOSITDATE.equals(null) || S_DEPOSITDATE == "" )) {
+			S_DEPOSITDATE_FR = S_DEPOSITDATE + "-01";
+			S_DEPOSITDATE_TO = S_DEPOSITDATE + "-31";
 		}
 
 		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
 		
-		vo1.setS_BRANCHCODE(S_BRANCHCODE);
-		
+		vo1.setS_BRANCHCODE(S_BRANCHCODE);		
 		vo1.setS_KNAME(S_KNAME);
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 
-		if(!(request.getParameter("S_SALEDATE").equals(""))){
+		if(!(request.getParameter("S_DEPOSITDATE").equals(""))){
 		
 			List<SA012001VO> lst1 = SA012001Biz.selectListSA012001_1(vo1);
 			
 			for (int i = 0; i < lst1.size(); i++) {
-				JSONObject obj = new JSONObject();
-	
+				JSONObject obj = new JSONObject();	
 				
 				vo2.setINSACODE(lst1.get(i).getINSACODE());
 				
-				
-				vo3.setS_SALEDATE_FR(S_SALEDATE_FR);
-				vo3.setS_SALEDATE_TO(S_SALEDATE_TO);
-				
+				vo3.setS_DEPOSITDATE_FR(S_DEPOSITDATE_FR);
+				vo3.setS_DEPOSITDATE_TO(S_DEPOSITDATE_TO);				
 				vo3.setINSACODE(lst1.get(i).getINSACODE());
+				
 				vo4.setINSACODE(lst1.get(i).getINSACODE());
 				
 				List<SA012001VO> lst2 = SA012001Biz.selectListSA012001_2(vo2);
@@ -130,12 +125,12 @@ public class SA012001Ctr {
 							obj.put("JOINDATE", lst1.get(i).getJOINDATE());
 							obj.put("RETIREDATE", lst1.get(i).getRETIREDATE());
 							
-							if(!(S_SALEDATE.equals(null) || S_SALEDATE == "" )){
+							if(!(S_DEPOSITDATE.equals(null) || S_DEPOSITDATE == "" )){
 								List<SA012001VO> lst3 = SA012001Biz.selectListSA012001_3(vo3);
 								if(lst3.size() > 0){
 	
-									vo4.setS_SALEDATE_FR(S_SALEDATE_FR);
-									vo4.setS_SALEDATE_TO(S_SALEDATE_TO);
+									vo4.setS_DEPOSITDATE_FR(S_DEPOSITDATE_FR);
+									vo4.setS_DEPOSITDATE_TO(S_DEPOSITDATE_TO);
 									vo4.setM1_FR(lst3.get(0).getM1_FR());
 									vo4.setM1_TO(lst3.get(0).getM1_TO());
 									vo4.setM2_FR(lst3.get(0).getM2_FR());
@@ -178,8 +173,7 @@ public class SA012001Ctr {
 									obj.put("AMT4", "");
 									obj.put("AMT5", "");
 									obj.put("AMT6", "");
-									obj.put("TOTAMT", "");
-									
+									obj.put("TOTAMT", "");									
 								}
 								
 							}else{
@@ -209,8 +203,7 @@ public class SA012001Ctr {
 						obj.put("O_JOINDATE", lst2.get(j).getO_JOINDATE());
 						obj.put("O_RETIREDATE", lst2.get(j).getO_RETIREDATE());
 						obj.put("O_EMPLOYGUBUN", lst2.get(j).getO_EMPLOYGUBUN());
-						jCell.add(obj);
-						
+						jCell.add(obj);						
 					}
 					
 				}else{
@@ -229,12 +222,12 @@ public class SA012001Ctr {
 					obj.put("O_RETIREDATE", "");
 					obj.put("O_EMPLOYGUBUN", "");
 
-					if(!(S_SALEDATE.equals(null) || S_SALEDATE == "" )){
+					if(!(S_DEPOSITDATE.equals(null) || S_DEPOSITDATE == "" )){
 						List<SA012001VO> lst3 = SA012001Biz.selectListSA012001_3(vo3);
 						if(lst3.size() > 0){
 
-							vo4.setS_SALEDATE_FR(S_SALEDATE_FR);
-							vo4.setS_SALEDATE_TO(S_SALEDATE_TO);
+							vo4.setS_DEPOSITDATE_FR(S_DEPOSITDATE_FR);
+							vo4.setS_DEPOSITDATE_TO(S_DEPOSITDATE_TO);
 							vo4.setM1_FR(lst3.get(0).getM1_FR());
 							vo4.setM1_TO(lst3.get(0).getM1_TO());
 							vo4.setM2_FR(lst3.get(0).getM2_FR());
@@ -293,12 +286,9 @@ public class SA012001Ctr {
 					}					
 				}
 				
-				jCell.add(obj);
-
-				
+				jCell.add(obj);				
 			}
 		}
-
 		
 		json.put("rows", jCell);
 		
@@ -330,14 +320,13 @@ public class SA012001Ctr {
 		
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
 		
-		String S_SALEDATE = request.getParameter("S_SALEDATE");
-		String S_SALEDATE_FR = "";
-		String S_SALEDATE_TO = "";
-		if(!(S_SALEDATE.equals(null) || S_SALEDATE == "" )){
-			S_SALEDATE = (S_SALEDATE.replaceAll("/", "")).substring(0, 6);
-			
-			S_SALEDATE_FR = S_SALEDATE+"01";
-			S_SALEDATE_TO = S_SALEDATE+"31";
+		String S_DEPOSITDATE = request.getParameter("S_DEPOSITDATE");
+		String S_DEPOSITDATE_FR = "";
+		String S_DEPOSITDATE_TO = "";
+		
+		if(!(S_DEPOSITDATE.equals(null) || S_DEPOSITDATE == "" )) {
+			S_DEPOSITDATE_FR = S_DEPOSITDATE + "-01";
+			S_DEPOSITDATE_TO = S_DEPOSITDATE + "-31";
 		}
 
 		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
@@ -404,8 +393,8 @@ public class SA012001Ctr {
 				
 				vo2.setINSACODE(lst1.get(i).getINSACODE());
 				
-				vo3.setS_SALEDATE_FR(S_SALEDATE_FR);
-				vo3.setS_SALEDATE_TO(S_SALEDATE_TO);
+				vo3.setS_DEPOSITDATE_FR(S_DEPOSITDATE_FR);
+				vo3.setS_DEPOSITDATE_TO(S_DEPOSITDATE_TO);
 				
 				vo3.setINSACODE(lst1.get(i).getINSACODE());
 				vo4.setINSACODE(lst1.get(i).getINSACODE());
@@ -425,12 +414,12 @@ public class SA012001Ctr {
 							vo5.setJOINDATE(lst1.get(i).getJOINDATE());
 							vo5.setRETIREDATE(lst1.get(i).getRETIREDATE());
 							
-							if(!(S_SALEDATE.equals(null) || S_SALEDATE == "" )){
+							if(!(S_DEPOSITDATE.equals(null) || S_DEPOSITDATE == "" )){
 								List<SA012001VO> lst3 = SA012001Biz.selectListSA012001_3(vo3);
 								if(lst3.size() > 0){
 	
-									vo4.setS_SALEDATE_FR(S_SALEDATE_FR);
-									vo4.setS_SALEDATE_TO(S_SALEDATE_TO);
+									vo4.setS_DEPOSITDATE_FR(S_DEPOSITDATE_FR);
+									vo4.setS_DEPOSITDATE_TO(S_DEPOSITDATE_TO);
 									vo4.setM1_FR(lst3.get(0).getM1_FR());
 									vo4.setM1_TO(lst3.get(0).getM1_TO());
 									vo4.setM2_FR(lst3.get(0).getM2_FR());
@@ -524,12 +513,12 @@ public class SA012001Ctr {
 					vo5.setO_RETIREDATE("");
 					vo5.setO_EMPLOYGUBUN("");
 
-					if(!(S_SALEDATE.equals(null) || S_SALEDATE == "" )){
+					if(!(S_DEPOSITDATE.equals(null) || S_DEPOSITDATE == "" )){
 						List<SA012001VO> lst3 = SA012001Biz.selectListSA012001_3(vo3);
 						if(lst3.size() > 0){
 
-							vo4.setS_SALEDATE_FR(S_SALEDATE_FR);
-							vo4.setS_SALEDATE_TO(S_SALEDATE_TO);
+							vo4.setS_DEPOSITDATE_FR(S_DEPOSITDATE_FR);
+							vo4.setS_DEPOSITDATE_TO(S_DEPOSITDATE_TO);
 							vo4.setM1_FR(lst3.get(0).getM1_FR());
 							vo4.setM1_TO(lst3.get(0).getM1_TO());
 							vo4.setM2_FR(lst3.get(0).getM2_FR());
@@ -627,13 +616,13 @@ public class SA012001Ctr {
         header.createCell(7).setCellValue("입사");
         header.createCell(8).setCellValue("퇴사");
         header.createCell(9).setCellValue("고용구분");
-        header.createCell(10).setCellValue("기준월 6개월 전 실적");
-        header.createCell(11).setCellValue("기준월 5개월 전 실적");
-        header.createCell(12).setCellValue("기준월 4개월 전 실적");
-        header.createCell(13).setCellValue("기준월 3개월 전 실적");
-        header.createCell(14).setCellValue("기준월 2개월 전 실적");
-        header.createCell(15).setCellValue("기준월 1개월 전 실적");
-        header.createCell(16).setCellValue("기준월 실적");
+        header.createCell(10).setCellValue("6개월 전 실적");
+        header.createCell(11).setCellValue("5개월 전 실적");
+        header.createCell(12).setCellValue("4개월 전 실적");
+        header.createCell(13).setCellValue("3개월 전 실적");
+        header.createCell(14).setCellValue("2개월 전 실적");
+        header.createCell(15).setCellValue("1개월 전 실적");
+        header.createCell(16).setCellValue("당월 실적");
         header.createCell(17).setCellValue("합계");
         
     }
