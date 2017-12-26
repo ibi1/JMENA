@@ -22,7 +22,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		
-		// 매출기간-년도 초기화
+		// 년도 초기화 : 잔금입금일
 		init.setYear = function() {
 			var sTemp = "";
 			for(var y = year; y >= 2017; y--) {
@@ -30,7 +30,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			}
 			$("#S_YEAR").append(sTemp);
 		}
-		// 매출기간-월 초기화
+		// 월 초기화 : 잔금입금일
 		init.setMonth = function() {
 			var sTemp = "";
 			for(var m = 1; m <= 12; m++) {
@@ -93,7 +93,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			if(sMonth.length == 1) sMonth = "0"+ sMonth;
 			
 			var url = "/home/selectListSA012010.do"
-					+ "?S_SALEDATE="+ $("#S_YEAR").val() +"-"+ sMonth
+					+ "?S_DEPOSITDATE="+ $("#S_YEAR").val() +"-"+ sMonth
 					+ "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
 					+ "&S_DEPTCODE="+ $("#S_DEPTCODE").val()
 					+ "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())));
@@ -112,12 +112,10 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{name: "FULLADDRESS", type: "string"},
 					{name: "CONNAME", type: "string"},
 					{name: "CONM2", type: "number"},
-					{name: "SALEAMT", type: "number"},
+					{name: "SELLAMT", type: "number"},
 					{name: "AGENCYAMT", type: "number"}
 	            ],
 	            root: "rows",
-	            //record: "records",
-	            id: 'SALEID',
 	            url: url
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
@@ -151,7 +149,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{text: "주소", datafield: "FULLADDRESS", width: 240, cellsalign: "left", align: "center"},
 					{text: "계약자", datafield: "CONNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "면적", datafield: "CONM2", width: 80, cellsalign: "right", align: "center", cellsformat: "f"},
-					{text: "매매대금", datafield: "SALEAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
+					{text: "매매대금", datafield: "SELLAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "수수료", datafield: "AGENCYAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"}
 	            ]
 	        });			

@@ -245,7 +245,23 @@
 		
 		$("#excelButton").click(function () {
 			//dataType String , fileName(optional) String , exportHeader Boolean, rows Array, exportHiddenColumns Boolean, serverURL String, charSet String 
-	        $("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');           
+	        //$("#mainList").jqxGrid('exportdata', 'xls', 'EnglishFileName', true, null, true, null, 'utf-8');
+			
+	        var url = "/home/SA012003_exportToExcel.do";
+			var S_SALEDATE_FR = $("#S_SALEDATE_FR").val();
+			var S_SALEDATE_TO = $("#S_SALEDATE_TO").val();
+			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
+			var S_DEPTCODE = $("#S_DEPTCODE").val();
+			var S_DCODE = $("#S_DCODE").val();
+			var S_KNAME = $("#S_KNAME").val();
+			
+			
+			var dataParam = "S_SALEDATE_FR=" + S_SALEDATE_FR + "&S_SALEDATE_TO=" + S_SALEDATE_TO + "&S_BRANCHCODE=" + S_BRANCHCODE + "&S_DEPTCODE=" + S_DEPTCODE + "&S_KNAME=" + S_KNAME + "&S_DCODE=" + S_DCODE;
+			
+			//파일 다운로드 (common.js에 있음)
+			$.download(url, dataParam, 'post');			
+			
+			
 	    });
 		
 	})

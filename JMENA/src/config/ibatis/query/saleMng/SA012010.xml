@@ -12,7 +12,7 @@
 		<result property="BUYID" column="BUYID"/>
 		<result property="CONNAME" column="CONNAME"/>
 		<result property="CONM2" column="CONM2"/>
-		<result property="SALEAMT" column="SALEAMT"/>
+		<result property="SELLAMT" column="SELLAMT"/>
 		<result property="AGENCYAMT" column="AGENCYAMT"/>
 		<result property="DEPOSITDATE" column="DEPOSITDATE"/>
 		<result property="OWNERNAME" column="OWNERNAME"/>
@@ -32,14 +32,14 @@
 	<select id="selectListSA012010" resultMap="SA012010Data">
 		/* SA012010.selectListSA012010 */
 		SELECT A.SALEID
-			, A.SALEDATE
-			, A.SALERCD    
-		    , A.BUYID
-		    , A.CONNAME
-		    , A.CONM2
-		    , B.SALEAMT
-		    , B.AGENCYAMT
-		    , C.DEPOSITDATE
+			, A.DEPOSITDATE
+			, B.SALEDATE
+			, B.SALERCD    
+		    , B.BUYID
+		    , B.CONNAME
+		    , B.CONM2
+		    , C.SELLAMT
+		    , C.AGENCYAMT
 		    , D.OWNERNAME
 		    , D.CITYCODE
 		    , fn_codename('03', D.CITYCODE, NULL) AS CITYNAME
@@ -52,19 +52,22 @@
 		    , E.DEPTCODE
 		    , fn_codename('05', E.DEPTCODE, NULL) AS DEPTNAME
 		    , (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = E.DEPTCODE AND GRADE = '007' AND DUTY = '002' LIMIT 1) AS MNGRNAME
-		FROM sa_salemst A
-			INNER JOIN sa_saledtl B
+		FROM (
+			SELECT *
+			FROM sa_ipgumscheduletb
+			WHERE DEPOSITGUBUN = '004'
+		    AND DEPOSITYN = 'Y') A 
+			INNER JOIN sa_salemst B
 				ON A.SALEID = B.SALEID
-			INNER JOIN sa_ipgumscheduletb C
-				ON A.SALEID = C.SALEID
+			INNER JOIN sa_saledtl C
+				ON B.SALEID = C.SALEID
 			INNER JOIN mm_buymst D
-				ON A.BUYID = D.BUYID
+				ON B.BUYID = D.BUYID
 			LEFT OUTER JOIN hr_insamst E
-				ON A.SALERCD = E.INSACODE
-		WHERE A.SALEDATE BETWEEN STR_TO_DATE(#S_SALEDATE_FR#, '%Y-%m-%D') AND STR_TO_DATE(#S_SALEDATE_TO#, '%Y-%m-%D')
-			AND A.SALEGUBUN = '002'
-		    AND C.DEPOSITGUBUN = '004'
-		    AND C.DEPOSITYN = 'Y'
+				ON B.SALERCD = E.INSACODE
+		WHERE A.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			AND A.DEPOSITDATE BETWEEN STR_TO_DATE(#S_DEPOSITDATE_FR#, '%Y-%m-%D') AND STR_TO_DATE(#S_DEPOSITDATE_TO#, '%Y-%m-%D')
+			AND B.SALEGUBUN = '002'
 		    <isNotEmpty property="S_BRANCHCODE">
 		    	<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
 		    	AND E.BRANCHCODE = #S_BRANCHCODE#
@@ -78,7 +81,7 @@
 		    <isNotEmpty property="S_KNAME">
 		    	AND E.KNAME LIKE '%$S_KNAME$%'
 		    </isNotEmpty>
-		ORDER BY C.DEPOSITDATE ASC, D.OWNERNAME ASC, CITYNAME ASC, BOROUGHNAME ASC, ADDRESS ASC
+		ORDER BY A.DEPOSITDATE ASC, D.OWNERNAME ASC, CITYNAME ASC, BOROUGHNAME ASC, ADDRESS ASC
 	</select>
 
 </sqlMap>

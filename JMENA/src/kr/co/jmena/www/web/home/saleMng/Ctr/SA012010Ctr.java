@@ -50,13 +50,13 @@ public class SA012010Ctr {
 	public ModelAndView selectListSA012010(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA012010VO vo = new SA012010VO();
 		
-		String S_SALEDATE = request.getParameter("S_SALEDATE");
+		String S_DEPOSITDATE = request.getParameter("S_DEPOSITDATE");
 		String S_BRANCHCODE = request.getParameter("S_BRANCHCODE");
 		String S_DEPTCODE = request.getParameter("S_DEPTCODE");
 		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
 		
-		vo.setS_SALEDATE_FR(S_SALEDATE +"-01");
-		vo.setS_SALEDATE_TO(S_SALEDATE +"-31");
+		vo.setS_DEPOSITDATE_FR(S_DEPOSITDATE +"-01");
+		vo.setS_DEPOSITDATE_TO(S_DEPOSITDATE +"-31");
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_DEPTCODE(S_DEPTCODE);
 		vo.setS_KNAME(S_KNAME);
@@ -70,8 +70,9 @@ public class SA012010Ctr {
 			JSONObject obj = new JSONObject();
 			
 			obj.put("SALEID", lst.get(i).getSALEID());
-			obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
 			obj.put("DEPOSITDATE", lst.get(i).getDEPOSITDATE());
+			obj.put("SALEDATE", lst.get(i).getSALEDATE());
+			obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
 			obj.put("BRANCHNAME", lst.get(i).getBRANCHNAME());
 			obj.put("DEPTNAME", lst.get(i).getDEPTNAME());
 			obj.put("KNAME", lst.get(i).getKNAME());
@@ -79,7 +80,7 @@ public class SA012010Ctr {
 			obj.put("FULLADDRESS", lst.get(i).getCITYNAME() +" "+ lst.get(i).getBOROUGHNAME() +" "+ lst.get(i).getADDRESS());
 			obj.put("CONNAME", lst.get(i).getCONNAME());
 			obj.put("CONM2", lst.get(i).getCONM2());
-			obj.put("SALEAMT", lst.get(i).getSALEAMT());
+			obj.put("SELLAMT", lst.get(i).getSELLAMT());
 			obj.put("AGENCYAMT", lst.get(i).getAGENCYAMT());
 			
 			jCell.add(obj);
