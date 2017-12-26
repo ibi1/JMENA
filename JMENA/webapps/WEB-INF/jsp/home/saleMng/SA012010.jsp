@@ -17,16 +17,17 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	var month = date.getMonth() + 1;
 
 	$(document).ready(function() {
-		
+		// 스타일 적용
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-		
 		// 년도 초기화 : 잔금입금일
 		init.setYear = function() {
 			var sTemp = "";
-			for(var y = year; y >= 2017; y--) {
-				sTemp += "<option value=\""+ y +"\">"+ y +"년</opton>";	
+			for(var y = year + 1; y >= 2013; y--) {
+				sTemp += "<option value=\""+ y +"\"";
+					if(y == year) sTemp += " selected=\"selected\"";
+				sTemp += ">"+ y +"년</opton>";	
 			}
 			$("#S_YEAR").append(sTemp);
 		}
