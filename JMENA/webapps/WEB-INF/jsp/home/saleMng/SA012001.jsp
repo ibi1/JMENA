@@ -5,7 +5,46 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>매출현황 - 담당자별</title>
 </head>
-
+<body>
+	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table width="99%">
+				<tr>
+					<td align="right">
+						<input type="button" value="조회" id='selectButton' />
+						<input type="button" value="엑셀" id='excelButton' />
+						<!-- <input type="button" value="출력" id='printButton' /> -->
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
+				<tr>
+					<th width="120">기준월</th>
+					<td colspan="3">
+						<select id="S_YEAR"></select>
+						<select id="S_MONTH"></select>
+					</td>
+				</tr>
+				<tr>
+					<th width="120">지사</th>
+					<td width="150">
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:100px">
+							<option value="ALL" selected="selected">전체</option>
+						</select>
+					</td>
+					<th width="120">담당자명</th>
+					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
+				</tr>
+			</table>
+			<br/>
+			<div align="right">총 건수 : <font color="red"><sapn id="mainListCount"></sapn></font>건</div>
+			<div id="mainList"></div>
+		</div>
+	</div>
+</body>
+</html>
 <script type="text/javascript">
 	var init = {};
 	var date = new Date();
@@ -16,13 +55,11 @@
 		// 스타일 적용
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 10});
 		// 권한설정
 		init.setAuth = function() {
 			<%if("N".equals(session.getAttribute("AUTH_P"))) {%>
 			$("#excelButton").hide();
-			$("#printButton").hide();
 			<%}%>
 		}
 		// 년도 초기화 : 잔금입금일
@@ -123,7 +160,8 @@
 	            altrows: true,
 	            enabletooltips: true,
 	            editable: false,
-	            selectionmode: 'singlerow',	            
+	            selectionmode: 'singlerow',
+	            columnsresize: true,
 	            groupable: true,
 	            showgroupaggregates: true,
 	            showstatusbar: true,
@@ -167,6 +205,7 @@
 	        });
 		}
 		
+		init.setAuth();
 		init.setYear();
 		init.setMonth();
 		init.setBranch();
@@ -205,44 +244,3 @@
 	    });
 	});
 </script>
-
-<body>
-	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<table width="99%">
-				<tr>
-					<td align="right">
-						<input type="button" value="조회" id='selectButton' />
-						<input type="button" value="엑셀" id='excelButton' />
-						<input type="button" value="출력" id='printButton' />
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<table>
-				<tr>
-					<th width="120">기준월</th>
-					<td colspan="3">
-						<select id="S_YEAR"></select>
-						<select id="S_MONTH"></select>
-					</td>
-				</tr>
-				<tr>
-					<th width="120">지사</th>
-					<td width="150">
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:100px">
-							<option value="ALL" selected="selected">전체</option>
-						</select>
-					</td>
-					<th width="120">담당자명</th>
-					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
-				</tr>
-			</table>
-			<br/>
-			<div align="right">총 건수 : <font color="red"><sapn id="mainListCount"></sapn></font>건</div>
-			<div id="mainList"></div>
-		</div>
-	</div>
-</body>
-</html>
