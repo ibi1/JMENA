@@ -2,23 +2,33 @@ package kr.co.jmena.www.web.home.saleMng.Vo;
 
 public class SA012002VO {
 	
-	private String BRANCHCODE;
-	private String BRANCHNAME;
-	private String DEPTCODE;
-	private String DEPTNAME;
-	private String SALEDATE;
-	private String DCODENAME;
+	private String S_SALEDATE_FR;
+	private String S_SALEDATE_TO;
+	private String S_SALEGUBUN;
+	private String S_BRANCHCODE;
+	private String S_DEPTCODE;	
+	private String S_KNAME;
+	
 	private String SALEID;
-	private String KNAME;
+	private String SALEDATE;
+	private String SALEGUBUN;
+	private String SALEGUBUNNAME;
+	private String SALERCD;
 	private String CONNAME;
-	private String ADDRESS;
 	private String CONM2;
 	private String CONPY;
+	private String REMARK;
 	private String SALEAMT;
+	private String SALEDANGA;
 	private String DCRATE;
 	private String SELLAMT;
-	private String SALEDANGA;
 	private String AGENCYAMT;
+	private String ADDRESS;
+	private String KNAME;
+	private String BRANCHCODE;
+	private String BRANCHNAME;
+	private String MNGRNAME;
+	private String DEPOSITDATE;
 	private String DEPOSITAMT1;
 	private String DEPOSITAMT2;
 	private String DEPOSITAMT3;
@@ -28,217 +38,215 @@ public class SA012002VO {
 	private String SUGUMAMT;
 	private String REMNAMT;
 	private String IPGUMRATE;
-	private String REMARK;
-	
-	
-	private String S_SALEDATE_FR;
-	private String S_SALEDATE_TO;
-	private String S_BRANCHCODE;
-	private String S_DEPTCODE;
-	private String S_DCODE;
-	private String S_KNAME;
-	
-	
-	public String getBRANCHNAME() {
-		return this.BRANCHNAME;
-	}
-	public String getBRANCHCODE() {
-		return this.BRANCHCODE;
-	}
-	public String getDEPTNAME() {
-		return this.DEPTNAME;
-	}
-	public String getDEPTCODE() {
-		return this.DEPTCODE;
-	}
-	public String getSALEDATE() {
-		return this.SALEDATE;
-	}
-	public String getDCODENAME() {
-		return this.DCODENAME;
-	}
-	public String getSALEID() {
-		return this.SALEID;
-	}
-	public String getKNAME() {
-		return this.KNAME;
-	}
-	public String getCONNAME() {
-		return this.CONNAME;
-	}
-	public String getADDRESS() {
-		return this.ADDRESS;
-	}
-	public String getCONM2() {
-		return this.CONM2;
-	}
-	public String getCONPY() {
-		return this.CONPY;
-	}
-	public String getSALEAMT() {
-		return this.SALEAMT;
-	}
-	public String getDCRATE() {
-		return this.DCRATE;
-	}
-	public String getSELLAMT() {
-		return this.SELLAMT;
-	}
-	public String getSALEDANGA() {
-		return this.SALEDANGA;
-	}
-	public String getAGENCYAMT() {
-		return this.AGENCYAMT;
-	}
-	public String getDEPOSITAMT1() {
-		return this.DEPOSITAMT1;
-	}
-	public String getDEPOSITAMT2() {
-		return this.DEPOSITAMT2;
-	}
-	public String getDEPOSITAMT3() {
-		return this.DEPOSITAMT3;
-	}
-	public String getSUGUMAMT1() {
-		return this.SUGUMAMT1;
-	}
-	public String getSUGUMAMT2() {
-		return this.SUGUMAMT2;
-	}
-	public String getSUGUMAMT3() {
-		return this.SUGUMAMT3;
-	}
-	public String getSUGUMAMT() {
-		return this.SUGUMAMT;
-	}
-	public String getREMNAMT() {
-		return this.REMNAMT;
-	}
-	public String getIPGUMRATE() {
-		return this.IPGUMRATE;
-	}
-	public String getREMARK() {
-		return this.REMARK;
-	}
 	
 	public String getS_SALEDATE_FR() {
 		return this.S_SALEDATE_FR;
 	}
+	public void setS_SALEDATE_FR(String s_SALEDATE_FR) {
+		this.S_SALEDATE_FR = s_SALEDATE_FR;
+	}
 	public String getS_SALEDATE_TO() {
 		return this.S_SALEDATE_TO;
+	}
+	public void setS_SALEDATE_TO(String s_SALEDATE_TO) {
+		this.S_SALEDATE_TO = s_SALEDATE_TO;
+	}
+	public String getS_SALEGUBUN() {
+		return this.S_SALEGUBUN;
+	}
+	public void setS_SALEGUBUN(String s_SALEGUBUN) {
+		this.S_SALEGUBUN = s_SALEGUBUN;
 	}
 	public String getS_BRANCHCODE() {
 		return this.S_BRANCHCODE;
 	}
+	public void setS_BRANCHCODE(String s_BRANCHCODE) {
+		this.S_BRANCHCODE = s_BRANCHCODE;
+	}
 	public String getS_DEPTCODE() {
 		return this.S_DEPTCODE;
 	}
-	public String getS_DCODE() {
-		return this.S_DCODE;
+	public void setS_DEPTCODE(String s_DEPTCODE) {
+		this.S_DEPTCODE = s_DEPTCODE;
 	}
 	public String getS_KNAME() {
 		return this.S_KNAME;
 	}
-	
-	public void setBRANCHNAME(String BRANCHNAME) {
-		this.BRANCHNAME = BRANCHNAME;
+	public void setS_KNAME(String s_KNAME) {
+		this.S_KNAME = s_KNAME;
 	}
-	public void setBRANCHCODE(String BRANCHCODE) {
-		this.BRANCHCODE = BRANCHCODE;
+	public String getSALEID() {
+		return this.SALEID;
 	}
-	public void setDEPTNAME(String DEPTNAME) {
-		this.DEPTNAME = DEPTNAME;
+	public void setSALEID(String sALEID) {
+		this.SALEID = sALEID;
 	}
-	public void setDEPTCODE(String DEPTCODE) {
-		this.DEPTCODE = DEPTCODE;
+	public String getSALEDATE() {
+		return this.SALEDATE;
 	}
-	public void setSALEDATE(String SALEDATE) {
-		this.SALEDATE = SALEDATE;
+	public void setSALEDATE(String sALEDATE) {
+		this.SALEDATE = sALEDATE;
 	}
-	public void setDCODENAME(String DCODENAME) {
-		this.DCODENAME = DCODENAME;
+	public String getSALEGUBUN() {
+		return this.SALEGUBUN;
 	}
-	public void setSALEID(String SALEID) {
-		this.SALEID = SALEID;
+	public void setSALEGUBUN(String sALEGUBUN) {
+		this.SALEGUBUN = sALEGUBUN;
 	}
-	public void setKNAME(String KNAME) {
-		this.KNAME = KNAME;
+	public String getSALEGUBUNNAME() {
+		return this.SALEGUBUNNAME;
 	}
-	public void setCONNAME(String CONNAME) {
-		this.CONNAME = CONNAME;
+	public void setSALEGUBUNNAME(String sALEGUBUNNAME) {
+		this.SALEGUBUNNAME = sALEGUBUNNAME;
 	}
-	public void setADDRESS(String ADDRESS) {
-		this.ADDRESS = ADDRESS;
+	public String getSALERCD() {
+		return this.SALERCD;
 	}
-	public void setCONM2(String CONM2) {
-		this.CONM2 = CONM2;
+	public void setSALERCD(String sALERCD) {
+		this.SALERCD = sALERCD;
 	}
-	public void setCONPY(String CONPY) {
-		this.CONPY = CONPY;
+	public String getCONNAME() {
+		return this.CONNAME;
 	}
-	public void setSALEAMT(String SALEAMT) {
-		this.SALEAMT = SALEAMT;
+	public void setCONNAME(String cONNAME) {
+		this.CONNAME = cONNAME;
 	}
-	public void setDCRATE(String DCRATE) {
-		this.DCRATE = DCRATE;
+	public String getCONM2() {
+		return this.CONM2;
 	}
-	public void setSELLAMT(String SELLAMT) {
-		this.SELLAMT = SELLAMT;
+	public void setCONM2(String cONM2) {
+		this.CONM2 = cONM2;
 	}
-	public void setSALEDANGA(String SALEDANGA) {
-		this.SALEDANGA = SALEDANGA;
+	public String getCONPY() {
+		return this.CONPY;
 	}
-	public void setAGENCYAMT(String AGENCYAMT) {
-		this.AGENCYAMT = AGENCYAMT;
+	public void setCONPY(String cONPY) {
+		this.CONPY = cONPY;
 	}
-	public void setDEPOSITAMT1(String DEPOSITAMT1) {
-		this.DEPOSITAMT1 = DEPOSITAMT1;
+	public String getREMARK() {
+		return this.REMARK;
 	}
-	public void setDEPOSITAMT2(String DEPOSITAMT2) {
-		this.DEPOSITAMT2 = DEPOSITAMT2;
+	public void setREMARK(String rEMARK) {
+		this.REMARK = rEMARK;
 	}
-	public void setDEPOSITAMT3(String DEPOSITAMT3) {
-		this.DEPOSITAMT3 = DEPOSITAMT3;
+	public String getSALEAMT() {
+		return this.SALEAMT;
 	}
-	public void setSUGUMAMT1(String SUGUMAMT1) {
-		this.SUGUMAMT1 = SUGUMAMT1;
+	public void setSALEAMT(String sALEAMT) {
+		this.SALEAMT = sALEAMT;
 	}
-	public void setSUGUMAMT2(String SUGUMAMT2) {
-		this.SUGUMAMT2 = SUGUMAMT2;
+	public String getSALEDANGA() {
+		return this.SALEDANGA;
 	}
-	public void setSUGUMAMT3(String SUGUMAMT3) {
-		this.SUGUMAMT3 = SUGUMAMT3;
+	public void setSALEDANGA(String sALEDANGA) {
+		this.SALEDANGA = sALEDANGA;
 	}
-	public void setSUGUMAMT(String SUGUMAMT) {
-		this.SUGUMAMT = SUGUMAMT;
+	public String getDCRATE() {
+		return this.DCRATE;
 	}
-	public void setREMNAMT(String REMNAMT) {
-		this.REMNAMT = REMNAMT;
+	public void setDCRATE(String dCRATE) {
+		this.DCRATE = dCRATE;
 	}
-	public void setIPGUMRATE(String IPGUMRATE) {
-		this.IPGUMRATE = IPGUMRATE;
+	public String getSELLAMT() {
+		return this.SELLAMT;
 	}
-	public void setREMARK(String REMARK) {
-		this.REMARK = REMARK;
+	public void setSELLAMT(String sELLAMT) {
+		this.SELLAMT = sELLAMT;
 	}
-
-	public void setS_SALEDATE_FR(String S_SALEDATE_FR) {
-		this.S_SALEDATE_FR = S_SALEDATE_FR;
+	public String getAGENCYAMT() {
+		return this.AGENCYAMT;
 	}
-	public void setS_SALEDATE_TO(String S_SALEDATE_TO) {
-		this.S_SALEDATE_TO = S_SALEDATE_TO;
+	public void setAGENCYAMT(String aGENCYAMT) {
+		this.AGENCYAMT = aGENCYAMT;
 	}
-	public void setS_BRANCHCODE(String S_BRANCHCODE) {
-		this.S_BRANCHCODE = S_BRANCHCODE;
+	public String getADDRESS() {
+		return this.ADDRESS;
 	}
-	public void setS_DEPTCODE(String S_DEPTCODE) {
-		this.S_DEPTCODE = S_DEPTCODE;
+	public void setADDRESS(String aDDRESS) {
+		this.ADDRESS = aDDRESS;
 	}
-	public void setS_DCODE(String S_DCODE) {
-		this.S_DCODE = S_DCODE;
+	public String getKNAME() {
+		return this.KNAME;
 	}
-	public void setS_KNAME(String S_KNAME) {
-		this.S_KNAME = S_KNAME;
+	public void setKNAME(String kNAME) {
+		this.KNAME = kNAME;
 	}
-	
+	public String getBRANCHCODE() {
+		return this.BRANCHCODE;
+	}
+	public void setBRANCHCODE(String bRANCHCODE) {
+		this.BRANCHCODE = bRANCHCODE;
+	}
+	public String getBRANCHNAME() {
+		return this.BRANCHNAME;
+	}
+	public void setBRANCHNAME(String bRANCHNAME) {
+		this.BRANCHNAME = bRANCHNAME;
+	}
+	public String getMNGRNAME() {
+		return this.MNGRNAME;
+	}
+	public void setMNGRNAME(String mNGRNAME) {
+		this.MNGRNAME = mNGRNAME;
+	}
+	public String getDEPOSITDATE() {
+		return this.DEPOSITDATE;
+	}
+	public void setDEPOSITDATE(String dEPOSITDATE) {
+		this.DEPOSITDATE = dEPOSITDATE;
+	}
+	public String getDEPOSITAMT1() {
+		return this.DEPOSITAMT1;
+	}
+	public void setDEPOSITAMT1(String dEPOSITAMT1) {
+		this.DEPOSITAMT1 = dEPOSITAMT1;
+	}
+	public String getDEPOSITAMT2() {
+		return this.DEPOSITAMT2;
+	}
+	public void setDEPOSITAMT2(String dEPOSITAMT2) {
+		this.DEPOSITAMT2 = dEPOSITAMT2;
+	}
+	public String getDEPOSITAMT3() {
+		return this.DEPOSITAMT3;
+	}
+	public void setDEPOSITAMT3(String dEPOSITAMT3) {
+		this.DEPOSITAMT3 = dEPOSITAMT3;
+	}
+	public String getSUGUMAMT1() {
+		return this.SUGUMAMT1;
+	}
+	public void setSUGUMAMT1(String sUGUMAMT1) {
+		this.SUGUMAMT1 = sUGUMAMT1;
+	}
+	public String getSUGUMAMT2() {
+		return this.SUGUMAMT2;
+	}
+	public void setSUGUMAMT2(String sUGUMAMT2) {
+		this.SUGUMAMT2 = sUGUMAMT2;
+	}
+	public String getSUGUMAMT3() {
+		return this.SUGUMAMT3;
+	}
+	public void setSUGUMAMT3(String sUGUMAMT3) {
+		this.SUGUMAMT3 = sUGUMAMT3;
+	}
+	public String getSUGUMAMT() {
+		return this.SUGUMAMT;
+	}
+	public void setSUGUMAMT(String sUGUMAMT) {
+		this.SUGUMAMT = sUGUMAMT;
+	}
+	public String getREMNAMT() {
+		return this.REMNAMT;
+	}
+	public void setREMNAMT(String rEMNAMT) {
+		this.REMNAMT = rEMNAMT;
+	}
+	public String getIPGUMRATE() {
+		return this.IPGUMRATE;
+	}
+	public void setIPGUMRATE(String iPGUMRATE) {
+		this.IPGUMRATE = iPGUMRATE;
+	}
 }

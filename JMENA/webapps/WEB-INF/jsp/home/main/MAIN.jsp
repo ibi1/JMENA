@@ -71,7 +71,8 @@
 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxdata.export.js"></script> 
     <script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.export.js"></script> 
 	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.grouping.js"></script> 
-	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.aggregates.js"></script> 
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.aggregates.js"></script>
+	<script type="text/javascript" src="/resource/jqwidgets-ver5.4.0/jqwidgets/jqxgrid.columnsresize.js"></script> 
 	<script type="text/javascript" src="/resource/js/common.js"></script>
 	
 	<script type="text/javascript" src="/resource/js/i18n/grid.locale-kr.js"></script>

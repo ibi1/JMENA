@@ -65,39 +65,36 @@ public class SA012002Ctr {
 	public ModelAndView selectListEnaBuyMstP(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA012002VO vo = new SA012002VO();
 		
-		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
-		String S_DEPTCODE = ("ALL".equals(request.getParameter("S_DEPTCODE"))) ? "" : request.getParameter("S_DEPTCODE");
-		String S_DCODE = ("ALL".equals(request.getParameter("S_DCODE"))) ? "" : request.getParameter("S_DCODE");
+		String S_SALEDATE_FR = request.getParameter("S_SALEDATE_FR");
+		String S_SALEDATE_TO = request.getParameter("S_SALEDATE_TO");
+		String S_SALEGUBUN = request.getParameter("S_SALEGUBUN");
+		String S_BRANCHCODE = request.getParameter("S_BRANCHCODE");
+		String S_DEPTCODE = request.getParameter("S_DEPTCODE");		
+		String S_KNAME = URLDecoder.decode(request.getParameter("S_KNAME"), "UTF-8");
 		
-		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
-		
-		vo.setS_SALEDATE_FR(request.getParameter("S_SALEDATE_FR"));
-		vo.setS_SALEDATE_TO(request.getParameter("S_SALEDATE_TO"));
+		vo.setS_SALEDATE_FR(S_SALEDATE_FR);
+		vo.setS_SALEDATE_TO(S_SALEDATE_TO);
+		vo.setS_SALEGUBUN(S_SALEGUBUN);
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_DEPTCODE(S_DEPTCODE);
-		vo.setS_DCODE(S_DCODE);
 		vo.setS_KNAME(S_KNAME);
-		
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 
-		if(!(request.getParameter("S_SALEDATE_FR").equals("") && 
-				request.getParameter("S_SALEDATE_TO").equals(""))){
+		if(!(request.getParameter("S_SALEDATE_FR").equals("") && request.getParameter("S_SALEDATE_TO").equals(""))) {
 			
 			List<SA012002VO> lst = SA012002Biz.selectListSA012002(vo);
-			
 			
 			for (int i = 0; i < lst.size(); i++) {
 				JSONObject obj = new JSONObject();
 				
 				obj.put("BRANCHCODE",lst.get(i).getBRANCHCODE());
-				obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());
-				obj.put("DEPTCODE",lst.get(i).getDEPTCODE());
-				obj.put("DEPTNAME",lst.get(i).getDEPTNAME());
+				obj.put("BRANCHNAME",lst.get(i).getBRANCHNAME());				
+				obj.put("MNGRNAME",lst.get(i).getMNGRNAME());
 				obj.put("SALEDATE",lst.get(i).getSALEDATE());
-				obj.put("DCODENAME",lst.get(i).getDCODENAME());
-				obj.put("SALEID",lst.get(i).getSALEID());
+				obj.put("SALEGUBUNNAME",lst.get(i).getSALEGUBUNNAME());
+				obj.put("DEPOSITDATE",lst.get(i).getDEPOSITDATE());
 				obj.put("KNAME",lst.get(i).getKNAME());
 				obj.put("CONNAME",lst.get(i).getCONNAME());
 				obj.put("ADDRESS",lst.get(i).getADDRESS());
@@ -125,7 +122,7 @@ public class SA012002Ctr {
 		
 		json.put("rows", jCell);
 		
-		logger.debug("[selectListSysMst]" + json);
+		logger.debug("[selectListEnaBuyMstP]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}
@@ -147,17 +144,18 @@ public class SA012002Ctr {
 		SA012002VO vo = new SA012002VO();
 		SA012002VO vo1 = new SA012002VO();
 		
-		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
-		String S_DEPTCODE = ("ALL".equals(request.getParameter("S_DEPTCODE"))) ? "" : request.getParameter("S_DEPTCODE");
-		String S_DCODE = ("ALL".equals(request.getParameter("S_DCODE"))) ? "" : request.getParameter("S_DCODE");
+		String S_SALEDATE_FR = request.getParameter("S_SALEDATE_FR");
+		String S_SALEDATE_TO = request.getParameter("S_SALEDATE_TO");
+		String S_SALEGUBUN = request.getParameter("S_SALEGUBUN");
+		String S_BRANCHCODE = request.getParameter("S_BRANCHCODE");
+		String S_DEPTCODE = request.getParameter("S_DEPTCODE");		
+		String S_KNAME = URLDecoder.decode(request.getParameter("S_KNAME"), "UTF-8");
 		
-		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
-		
-		vo.setS_SALEDATE_FR(request.getParameter("S_SALEDATE_FR"));
-		vo.setS_SALEDATE_TO(request.getParameter("S_SALEDATE_TO"));
+		vo.setS_SALEDATE_FR(S_SALEDATE_FR);
+		vo.setS_SALEDATE_TO(S_SALEDATE_TO);
+		vo.setS_SALEGUBUN(S_SALEGUBUN);
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_DEPTCODE(S_DEPTCODE);
-		vo.setS_DCODE(S_DCODE);
 		vo.setS_KNAME(S_KNAME);
 		
 		File down = null;
@@ -220,11 +218,10 @@ public class SA012002Ctr {
 				
 				vo1.setBRANCHCODE(lst.get(i).getBRANCHCODE());
 				vo1.setBRANCHNAME(lst.get(i).getBRANCHNAME());
-				vo1.setDEPTCODE(lst.get(i).getDEPTCODE());
-				vo1.setDEPTNAME(lst.get(i).getDEPTNAME());
+				vo1.setMNGRNAME(lst.get(i).getMNGRNAME());
 				vo1.setSALEDATE(lst.get(i).getSALEDATE());
-				vo1.setDCODENAME(lst.get(i).getDCODENAME());
-				vo1.setSALEID(lst.get(i).getSALEID());
+				vo1.setSALEGUBUNNAME(lst.get(i).getSALEGUBUNNAME());
+				vo1.setDEPOSITDATE(lst.get(i).getDEPOSITDATE());
 				vo1.setKNAME(lst.get(i).getKNAME());
 				vo1.setCONNAME(lst.get(i).getCONNAME());
 				vo1.setADDRESS(lst.get(i).getADDRESS());
@@ -277,15 +274,15 @@ public class SA012002Ctr {
         header.createCell(0).setCellValue("지사");
         header.createCell(1).setCellValue("실장명");
         header.createCell(2).setCellValue("계약일");
-        header.createCell(3).setCellValue("매출구분");
-		header.createCell(4).setCellValue("계약번호");
+        header.createCell(3).setCellValue("구분");
+		header.createCell(4).setCellValue("잔금일");
 		header.createCell(5).setCellValue("담당자");
 		header.createCell(6).setCellValue("고객명");
 		header.createCell(7).setCellValue("주소");
-		header.createCell(8).setCellValue("계약면적");
-		header.createCell(9).setCellValue("계약평수");
+		header.createCell(8).setCellValue("면적");
+		header.createCell(9).setCellValue("평수");
 		header.createCell(10).setCellValue("원 판매가");
-		header.createCell(11).setCellValue("할인율(%)");
+		header.createCell(11).setCellValue("(%)");
 		header.createCell(12).setCellValue("실판매가");
 		header.createCell(13).setCellValue("평단가");
 		header.createCell(14).setCellValue("위탁수수료");
@@ -294,11 +291,10 @@ public class SA012002Ctr {
 		header.createCell(17).setCellValue("잔금");
 		header.createCell(18).setCellValue("계약입금액");
 		header.createCell(19).setCellValue("중도입금액");
-		header.createCell(20).setCellValue("잔금입금액");
-		header.createCell(21).setCellValue("입금총액");
-		header.createCell(22).setCellValue("입금잔액");
-		header.createCell(23).setCellValue("입금율(%)");
-		header.createCell(24).setCellValue("비고");
+		header.createCell(20).setCellValue("입금총액");
+		header.createCell(21).setCellValue("입금잔액");
+		header.createCell(22).setCellValue("입금율(%)");
+		header.createCell(23).setCellValue("비고");
         
     }
 
@@ -327,17 +323,16 @@ public class SA012002Ctr {
         header.getCell(21).setCellStyle(style);
         header.getCell(22).setCellStyle(style);
         header.getCell(23).setCellStyle(style);
-        header.getCell(24).setCellStyle(style);
     }
 
 
     private void setEachRow(SXSSFRow aRow, SA012002VO sa012002vo) {
 
         aRow.createCell(0).setCellValue(sa012002vo.getBRANCHNAME());
-        aRow.createCell(1).setCellValue(sa012002vo.getDEPTNAME());
+        aRow.createCell(1).setCellValue(sa012002vo.getMNGRNAME());
         aRow.createCell(2).setCellValue(sa012002vo.getSALEDATE());
-        aRow.createCell(3).setCellValue(sa012002vo.getDCODENAME());
-        aRow.createCell(4).setCellValue(sa012002vo.getSALEID());
+        aRow.createCell(3).setCellValue(sa012002vo.getSALEGUBUNNAME());
+        aRow.createCell(4).setCellValue(sa012002vo.getDEPOSITDATE());
         aRow.createCell(5).setCellValue(sa012002vo.getKNAME());
         aRow.createCell(6).setCellValue(sa012002vo.getCONNAME());
         aRow.createCell(7).setCellValue(sa012002vo.getADDRESS());
@@ -353,11 +348,10 @@ public class SA012002Ctr {
         aRow.createCell(17).setCellValue(sa012002vo.getDEPOSITAMT3());
         aRow.createCell(18).setCellValue(sa012002vo.getSUGUMAMT1());
         aRow.createCell(19).setCellValue(sa012002vo.getSUGUMAMT2());
-        aRow.createCell(20).setCellValue(sa012002vo.getSUGUMAMT3());
-        aRow.createCell(21).setCellValue(sa012002vo.getSUGUMAMT());
-        aRow.createCell(22).setCellValue(sa012002vo.getREMNAMT());
-        aRow.createCell(23).setCellValue(sa012002vo.getIPGUMRATE());
-        aRow.createCell(24).setCellValue(sa012002vo.getREMARK());
+        aRow.createCell(20).setCellValue(sa012002vo.getSUGUMAMT());
+        aRow.createCell(21).setCellValue(sa012002vo.getREMNAMT());
+        aRow.createCell(22).setCellValue(sa012002vo.getIPGUMRATE());
+        aRow.createCell(23).setCellValue(sa012002vo.getREMARK());
         
     }
 	
