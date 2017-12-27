@@ -231,7 +231,7 @@
 		)
 		VALUES(
 			#IPGUMID#,
-			(SELECT IFNULL(MAX(SEQ),0) +1 FROM sa_ipgumdtl S WHERE IPGUMID = #IPGUMID#),
+			(SELECT IFNULL(MAX(CAST(SEQ AS unsigned)), 0) + 1 FROM sa_ipgumdtl S WHERE IPGUMID = #IPGUMID#),
 			#SALEID#,
 			#IPGUMSEQ#,
 		<isNotEmpty property="SUGUMAMT">
