@@ -76,6 +76,7 @@ public class SA012008Ctr {
 			JSONObject obj = new JSONObject();
 			
 			vo1.setBUYID(lst.get(i).getBUYID());
+			vo1.setS_BUYYEAR(S_BUYYEAR);
 	
 			List<SA012008VO> lst2 = SA012008Biz.selectListSA012008_2(vo1);
 			if(lst2.size() > 0){

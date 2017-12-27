@@ -92,6 +92,7 @@
 		) a
 		where 1=1
 		and a.regdate2 <![CDATA[ <> ]]> ""
+		and substring(DATE_FORMAT(a.regdate2, '%Y%m%d'), 1,6) = #S_BUYYEAR#
 		
 	</select>
 	
