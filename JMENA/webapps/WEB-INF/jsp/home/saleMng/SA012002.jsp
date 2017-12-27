@@ -150,7 +150,7 @@
 					+ "&S_SALEDATE_TO="+ $("#S_SALEDATE_TO").val()
 					+ "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
 					+ "&S_DEPTCODE="+ $("#S_DEPTCODE").val()
-					+ "&S_DCODE="+ $("#S_SALEGUBUN").val()
+					+ "&S_SALEGUBUN="+ $("#S_SALEGUBUN").val()
 					+ "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())));
 			
 	        // prepare the data
@@ -265,7 +265,7 @@
 						  + "&S_SALEDATE_TO="+ $("#S_SALEDATE_TO").val()
 						  + "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
 						  + "&S_DEPTCODE="+ $("#S_DEPTCODE").val()
-						  + "&S_DCODE="+ $("#S_SALEGUBUN").val()
+						  + "&S_SALEGUBUN="+ $("#S_SALEGUBUN").val()
 						  + "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())));			
 			//파일 다운로드 (common.js에 있음)
 			$.download(url, dataParam, 'post');	

@@ -89,6 +89,11 @@
 					AND B.SALEDATE BETWEEN #S_SALEDATE_FR# AND #S_SALEDATE_TO#
 					</isNotEmpty>
 				</isNotEmpty>
+				<isNotEmpty property="S_SALEGUBUN">
+					<isNotEqual property="S_SALEGUBUN" compareValue="ALL">
+					AND B.SALEGUBUN = #S_SALEGUBUN#	
+					</isNotEqual>
+				</isNotEmpty>
 				<isNotEmpty property="S_BRANCHCODE">
 					<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
 					AND E.BRANCHCODE = #S_BRANCHCODE#
