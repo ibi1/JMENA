@@ -568,7 +568,8 @@
 // 			gijunAmt = gijunAmt - (gijunAmt * 3.3 / 100);
 // 		}
 		
-		gijunAmt =  Math.floor(gijunAmt / 10000) * 10000;
+		gijunAmt =  Math.floor(gijunAmt / 1000) * 1000;
+		// 100원단위 절사
 		
 		$("#PAYAMT").val(gijunAmt);
 		

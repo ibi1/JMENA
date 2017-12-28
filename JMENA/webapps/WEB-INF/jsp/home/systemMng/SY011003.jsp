@@ -92,6 +92,7 @@
 						$("#S_MOBILENO").val(selRowData.MOBILENO);
 						
 						f_selectUserSysTb();
+						$("#S_FLAG").val("U");
 					} ,
 					loadComplete: function() {
 						//전체 카운트
