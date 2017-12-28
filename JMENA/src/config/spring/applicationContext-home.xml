@@ -22,6 +22,43 @@
     <bean id="mainBiz" class="kr.co.jmena.www.web.home.main.Biz.MainBiz" />
     <bean id="mainDao" class="kr.co.jmena.www.web.home.main.Dao.MainDao"  p:sqlMapClient-ref="sqlMapClient" />
     
+    <!-- 시스템관리 : 시스템 및 메뉴 관리 -->
+    <bean id="SY011001Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011001Ctr" />
+    <bean id="SY011001Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011001Biz" />
+    <bean id="SY011001Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011001Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 시스템관리 : 프로그램 관리 -->
+    <bean id="SY011002Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011002Ctr" />
+    <bean id="SY011002Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011002Biz" />
+    <bean id="SY011002Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011002Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 시스템관리 : 사용자 관리 -->
+    <bean id="SY011003Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011003Ctr" />
+    <bean id="SY011003Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011003Biz" />
+    <bean id="SY011003Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011003Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 시스템관리 : 사용자 권한 관리 -->
+    <bean id="SY011004Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011004Ctr" />
+    <bean id="SY011004Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011004Biz" />
+    <bean id="SY011004Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011004Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 시스템관리 : 공통코드 관리 -->
+    <bean id="SY011005Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011005Ctr" />
+    <bean id="SY011005Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011005Biz" />
+    <bean id="SY011005Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011005Dao"  p:sqlMapClient-ref="sqlMapClient" />
+	<!-- 시스템관리 : 금융기관 관리 -->
+    <bean id="SY011006Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011006Ctr" />
+    <bean id="SY011006Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011006Biz" />
+    <bean id="SY011006Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011006Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 시스템관리 : 사업자 관리 -->
+    <bean id="SY021001Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY021001Ctr" />
+    <bean id="SY021001Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY021001Biz" />
+    <bean id="SY021001Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY021001Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 시스템관리 : 지사 및 부서 관리 -->
+    <bean id="SY021002Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY021002Ctr" />
+    <bean id="SY021002Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY021002Biz" />
+    <bean id="SY021002Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY021002Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 시스템관리 : 지역 관리 -->
+    <bean id="SY021003Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY021003Ctr" />
+    <bean id="SY021003Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY021003Biz" />
+    <bean id="SY021003Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY021003Dao"  p:sqlMapClient-ref="sqlMapClient" />    
+    
     <!-- 매입관리 : 매입 관리 -->   
     <bean id="MM011001Ctr" class="kr.co.jmena.www.web.home.buyingMng.Ctr.MM011001Ctr" />
     <bean id="MM011001Biz" class="kr.co.jmena.www.web.home.buyingMng.Biz.MM011001Biz" />
@@ -34,48 +71,6 @@
     <bean id="MM012002Ctr" class="kr.co.jmena.www.web.home.buyingMng.Ctr.MM012002Ctr" />
     <bean id="MM012002Biz" class="kr.co.jmena.www.web.home.buyingMng.Biz.MM012002Biz" />
     <bean id="MM012002Dao" class="kr.co.jmena.www.web.home.buyingMng.Dao.MM012002Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    
-    <!-- 수당관리 : 수당관리 -->   
-    <bean id="EP011001Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP011001Ctr" />
-    <bean id="EP011001Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP011001Biz" />
-    <bean id="EP011001Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP011001Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 수당관리 : 급여관리 -->
-    <bean id="EP011002Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP011002Ctr" />
-    <bean id="EP011002Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP011002Biz" />
-    <bean id="EP011002Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP011002Dao"  p:sqlMapClient-ref="sqlMapClient" />
-	<!-- 수당관리 : 월 소득 및 부가세 신고내역 -->
-    <bean id="EP012001Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012001Ctr" />
-    <bean id="EP012001Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012001Biz" />
-    <bean id="EP012001Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012001Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 수당관리 : 월 수령액 확인서 -->
-    <bean id="EP012002Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012002Ctr" />
-    <bean id="EP012002Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012002Biz" />
-    <bean id="EP012002Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012002Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 수당관리 : * -->
-    <bean id="EP012003Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012003Ctr" />
-    <bean id="EP012003Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012003Biz" />
-    <bean id="EP012003Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012003Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 수당관리 : 소득세 및 부가세신고 현황 -->  
-    <bean id="EP012004Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012004Ctr" />
-    <bean id="EP012004Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012004Biz" />
-    <bean id="EP012004Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012004Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    
-    <!-- 인사관리 : 인사 기본 정보 관리 -->
-    <bean id="HR011001Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR011001Ctr" />
-    <bean id="HR011001Biz" class="kr.co.jmena.www.web.home.personMng.Biz.HR011001Biz" />
-    <bean id="HR011001Dao" class="kr.co.jmena.www.web.home.personMng.Dao.HR011001Dao"  p:sqlMapClient-ref="sqlMapClient" />
-	<!-- 인사관리 : 입사자 현황 -->
-    <bean id="HR012001Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR012001Ctr" />
-    <bean id="HR012001Biz" class="kr.co.jmena.www.web.home.personMng.Biz.HR012001Biz" />
-    <bean id="HR012001Dao" class="kr.co.jmena.www.web.home.personMng.Dao.HR012001Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 인사관리 : 퇴사자 현황 -->
-    <bean id="HR012002Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR012002Ctr" />
-    <bean id="HR012002Biz" class="kr.co.jmena.www.web.home.personMng.Biz.HR012002Biz" />
-    <bean id="HR012002Dao" class="kr.co.jmena.www.web.home.personMng.Dao.HR012002Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 인사관리 : 인원현황 -->
-    <bean id="HR012003Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR012003Ctr" />
-    <bean id="HR012003Biz" class="kr.co.jmena.www.web.home.personMng.Biz.HR012003Biz" />
-    <bean id="HR012003Dao" class="kr.co.jmena.www.web.home.personMng.Dao.HR012003Dao"  p:sqlMapClient-ref="sqlMapClient" />
 
 	<!-- 매출관리 : 매출관리 - 일반 -->
     <bean id="SA011001Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA011001Ctr" />
@@ -89,6 +84,10 @@
     <bean id="SA011003Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA011003Ctr" />
     <bean id="SA011003Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA011003Biz" />
     <bean id="SA011003Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA011003Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 매출관리 : (신)입금관리 -->
+    <bean id="SA011004Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA011004Ctr" />
+    <bean id="SA011004Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA011004Biz" />
+    <bean id="SA011004Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA011004Dao" />
 	<!-- 매출관리 : 매출현황 - 담당자별 -->
     <bean id="SA012001Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA012001Ctr" />
     <bean id="SA012001Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA012001Biz" />
@@ -137,42 +136,47 @@
     <bean id="SA012012Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA012012Ctr" />
     <bean id="SA012012Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA012012Biz" />
     <bean id="SA012012Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA012012Dao"  p:sqlMapClient-ref="sqlMapClient" />
+        
+    <!-- 수당관리 : 수당관리 -->   
+    <bean id="EP011001Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP011001Ctr" />
+    <bean id="EP011001Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP011001Biz" />
+    <bean id="EP011001Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP011001Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 수당관리 : 급여관리 -->
+    <bean id="EP011002Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP011002Ctr" />
+    <bean id="EP011002Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP011002Biz" />
+    <bean id="EP011002Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP011002Dao"  p:sqlMapClient-ref="sqlMapClient" />
+	<!-- 수당관리 : 월 소득 및 부가세 신고내역 -->
+    <bean id="EP012001Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012001Ctr" />
+    <bean id="EP012001Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012001Biz" />
+    <bean id="EP012001Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012001Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 수당관리 : 월 수령액 확인서 -->
+    <bean id="EP012002Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012002Ctr" />
+    <bean id="EP012002Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012002Biz" />
+    <bean id="EP012002Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012002Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 수당관리 : * -->
+    <bean id="EP012003Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012003Ctr" />
+    <bean id="EP012003Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012003Biz" />
+    <bean id="EP012003Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012003Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 수당관리 : 소득세 및 부가세신고 현황 -->  
+    <bean id="EP012004Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP012004Ctr" />
+    <bean id="EP012004Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP012004Biz" />
+    <bean id="EP012004Dao" class="kr.co.jmena.www.web.home.expayMng.Dao.EP012004Dao"  p:sqlMapClient-ref="sqlMapClient" />
     
-    <!-- 시스템관리 : 시스템 및 메뉴 관리 -->
-    <bean id="SY011001Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011001Ctr" />
-    <bean id="SY011001Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011001Biz" />
-    <bean id="SY011001Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011001Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 시스템관리 : 프로그램 관리 -->
-    <bean id="SY011002Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011002Ctr" />
-    <bean id="SY011002Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011002Biz" />
-    <bean id="SY011002Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011002Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 시스템관리 : 사용자 관리 -->
-    <bean id="SY011003Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011003Ctr" />
-    <bean id="SY011003Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011003Biz" />
-    <bean id="SY011003Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011003Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 시스템관리 : 사용자 권한 관리 -->
-    <bean id="SY011004Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011004Ctr" />
-    <bean id="SY011004Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011004Biz" />
-    <bean id="SY011004Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011004Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 시스템관리 : 공통코드 관리 -->
-    <bean id="SY011005Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011005Ctr" />
-    <bean id="SY011005Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011005Biz" />
-    <bean id="SY011005Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011005Dao"  p:sqlMapClient-ref="sqlMapClient" />
-	<!-- 시스템관리 : 금융기관 관리 -->
-    <bean id="SY011006Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY011006Ctr" />
-    <bean id="SY011006Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY011006Biz" />
-    <bean id="SY011006Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY011006Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 시스템관리 : 사업자 관리 -->
-    <bean id="SY021001Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY021001Ctr" />
-    <bean id="SY021001Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY021001Biz" />
-    <bean id="SY021001Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY021001Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 시스템관리 : 지사 및 부서 관리 -->
-    <bean id="SY021002Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY021002Ctr" />
-    <bean id="SY021002Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY021002Biz" />
-    <bean id="SY021002Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY021002Dao"  p:sqlMapClient-ref="sqlMapClient" />
-    <!-- 시스템관리 : 지역 관리 -->
-    <bean id="SY021003Ctr" class="kr.co.jmena.www.web.home.systemMng.Ctr.SY021003Ctr" />
-    <bean id="SY021003Biz" class="kr.co.jmena.www.web.home.systemMng.Biz.SY021003Biz" />
-    <bean id="SY021003Dao" class="kr.co.jmena.www.web.home.systemMng.Dao.SY021003Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 인사관리 : 인사 기본 정보 관리 -->
+    <bean id="HR011001Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR011001Ctr" />
+    <bean id="HR011001Biz" class="kr.co.jmena.www.web.home.personMng.Biz.HR011001Biz" />
+    <bean id="HR011001Dao" class="kr.co.jmena.www.web.home.personMng.Dao.HR011001Dao"  p:sqlMapClient-ref="sqlMapClient" />
+	<!-- 인사관리 : 입사자 현황 -->
+    <bean id="HR012001Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR012001Ctr" />
+    <bean id="HR012001Biz" class="kr.co.jmena.www.web.home.personMng.Biz.HR012001Biz" />
+    <bean id="HR012001Dao" class="kr.co.jmena.www.web.home.personMng.Dao.HR012001Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 인사관리 : 퇴사자 현황 -->
+    <bean id="HR012002Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR012002Ctr" />
+    <bean id="HR012002Biz" class="kr.co.jmena.www.web.home.personMng.Biz.HR012002Biz" />
+    <bean id="HR012002Dao" class="kr.co.jmena.www.web.home.personMng.Dao.HR012002Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 인사관리 : 인원현황 -->
+    <bean id="HR012003Ctr" class="kr.co.jmena.www.web.home.personMng.Ctr.HR012003Ctr" />
+    <bean id="HR012003Biz" class="kr.co.jmena.www.web.home.personMng.Biz.HR012003Biz" />
+    <bean id="HR012003Dao" class="kr.co.jmena.www.web.home.personMng.Dao.HR012003Dao"  p:sqlMapClient-ref="sqlMapClient" />
 
 </beans>
