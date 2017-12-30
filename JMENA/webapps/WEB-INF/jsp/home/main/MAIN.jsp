@@ -90,7 +90,6 @@
 						alert("[ERROR-SCRIPT]권한 조회 중 오류가 발생하였습니다.");
 					}
 					
-					
 					$("#center").load("/home/" + PGMID + ".do");
 				},
 				error:function(e){  
