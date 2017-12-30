@@ -21,6 +21,8 @@
 	var day = dt.getDate();
 	var year = dt.getFullYear();
 	var yearMonth = year + "" + month;
+	var auth_i = true;
+	var auth_d = true;
 	
 	$("#S_YEARMONTH").val(yearMonth);
 	$("#S_PAYDATE").val(dateInput(0));
@@ -33,6 +35,17 @@
 		
 		$("#S_YEARMONTH").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 110, minLength: 1});
+		
+		<%if ("N".equals(session.getAttribute("AUTH_I"))) { %>
+			$("#insertButton").hide();
+			$("#saveButton").hide();
+			
+			auth_i = false;
+		<% }%>
+		<%if ("N".equals(session.getAttribute("AUTH_D"))) { %>
+			$("#deleteButton").hide();
+			auth_d = false;
+		<% }%>
 		
 		f_selectListEnaBranchCode();
 		
