@@ -89,6 +89,8 @@
 					if (data.returnCode == "FAILED") {
 						alert("[ERROR-SCRIPT]권한 조회 중 오류가 발생하였습니다.");
 					}
+					
+					$("#center").load("/home/" + PGMID + ".do");
 				},
 				error:function(e){  
 					alert("[ERROR]프로그램 권한 호출 중 오류가 발생하였습니다.");
@@ -113,10 +115,10 @@
 				var item = $('#tree').jqxTree('getItem', args.element);
 				var value = item.value; 
 
-				//권한가져오기
+				//권한가져오기 후 화면이동
 	 			f_selectPgmAuth(value);
 	 			
-				$("#center").load("/home/" + value + ".do");
+				// $("#center").load("/home/" + value + ".do");
 		  	});
 	 		
 	 		$('#tabs').on('tabclick', function (event) { 
@@ -257,7 +259,7 @@
     	                
     	                f_selectPgmAuth(item.value);
     	                
-    	                $("#center").load("/home/" + item.value + ".do");
+    	               // $("#center").load("/home/" + item.value + ".do");
     				},
     				error:function(e){  
     					alert("[ERROR]Tree Menu 호출 중 오류가 발생하였습니다");
