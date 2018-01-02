@@ -4,4 +4,127 @@
   
 <sqlMap namespace="SA011004">
 
+	<select id="selectListIpgumMst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		/* SA011004.selectListIpgumMst */
+		SELECT *
+		FROM (
+			SELECT A.IPGUMID
+				, A.IPGUMDATE
+			    , A.IPGUMTYPE
+			    , A.IPGUMGUBUN
+			    , fn_codename('01', '009', A.IPGUMGUBUN) AS IPGUMGUBUNNAME
+			    , A.BANKGUBUN
+			    , A.IPGUMAMT
+			    , A.REMARK
+			    , A.IPGUMPERSON
+			    , A.BRANCHCODE
+			    , A.SALERCD
+			    , B.KNAME
+			    , (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl WHERE IPGUMID = A.IPGUMID) AS SUGUMAMT
+			    , (A.IPGUMAMT - (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl WHERE IPGUMID = A.IPGUMID)) AS JANAMT
+			FROM sa_ipgummst A
+				LEFT OUTER JOIN hr_insamst B
+					ON A.SALERCD = B.INSACODE
+			WHERE 1 = 1
+				<isNotEmpty property="S_IPGUMDATE_FR">
+					<isNotEmpty property="S_IPGUMDATE_TO">
+					AND A.IPGUMDATE BETWEEN #S_IPGUMDATE_FR# AND #S_IPGUMDATE_TO#
+					</isNotEmpty>
+				</isNotEmpty>
+				<isNotEmpty property="S_IPGUMGUBUN">
+					<isNotEqual property="S_IPGUMGUBUN" compareValue="ALL">
+					AND A.IPGUMGUBUN = #S_IPGUMGUBUN#
+					</isNotEqual>
+				</isNotEmpty>
+				<isNotEmpty property="S_BANKGUBUN">
+					<isNotEqual property="S_BANKGUBUN" compareValue="ALL">
+			    	AND A.BANKGUBUN = #S_BANKGUBUN#
+			    	</isNotEqual>
+			    </isNotEmpty>
+			    <isNotEmpty property="S_IPGUMAMT">
+			    AND A.IPGUMAMT = #S_IPGUMAMT#
+				</isNotEmpty>
+				<isNotEmpty property="S_KNAME">
+			    AND B.KNAME LIKE '%$S_KNAME$%'
+			    </isNotEmpty>
+		) T
+		<isNotEmpty property="S_DEALYN">
+			<isEqual property="S_DEALYN" compareValue="Y">
+			WHERE JANAMT = 0
+			</isEqual>
+			<isEqual property="S_DEALYN" compareValue="N">
+			WHERE JANAMT > 0
+			</isEqual>
+		</isNotEmpty>
+		ORDER BY IPGUMID ASC
+	</select>
+	
+	<select id="selectOneInsamst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		/* SA011004.selectOneInsamst */
+		SELECT INSACODE
+		    , BRANCHCODE
+		    , DEPTCODE
+		FROM hr_insamst
+		WHERE RETIREDATE IS NULL
+			AND KNAME = #S_KNAME#
+		ORDER BY INSACODE ASC
+	</select>
+	
+	<insert id="insertIpgumMst" parameterClass="java.util.HashMap">
+		/* SA011004.insertIpgumMst */
+		INSERT INTO sa_ipgummst(
+			IPGUMID
+			, IPGUMDATE
+			, IPGUMTYPE
+			, IPGUMGUBUN
+			, BANKGUBUN
+			, IPGUMAMT
+			, REMARK
+			, INSERTUSER
+			, IPGUMPERSON
+			, BRANCHCODE
+			, SALERCD
+		) VALUES(
+			(
+		    SELECT CONCAT('IC', DATE_FORMAT(CURDATE(), '%y%m'), LPAD(IFNULL(MAX(CAST(RIGHT(IPGUMID, 4) AS unsigned)), 0) + 1, 4, '0'))
+			FROM sa_ipgummst T
+			WHERE IPGUMID LIKE CONCAT('IC', DATE_FORMAT(CURDATE(), '%y%m'), '____')
+		    )
+			, #IPGUMDATE#
+			, #IPGUMTYPE#
+			, #IPGUMGUBUN#
+			, #BANKGUBUN#
+			, #IPGUMAMT#
+			, #REMARK#
+			, #USERID#
+			, #IPGUMPERSON#
+			, #BRANCHCODE#
+			, #SALERCD#
+		)	
+	</insert>
+	
+	<update id="updateIpgumMst" parameterClass="java.util.HashMap">
+		/* SA011004.updateIpgumMst */
+		UPDATE sa_ipgummst SET
+			IPGUMDATE = #IPGUMDATE#
+			, IPGUMTYPE = #IPGUMTYPE#
+			, IPGUMGUBUN = #IPGUMGUBUN#
+			, BANKGUBUN = #BANKGUBUN#
+			, IPGUMAMT = #IPGUMAMT#
+			, REMARK = #REMARK#
+			, UPDATEUSER = #USERID#
+		    , UPDATEDATE = NOW()
+			, IPGUMPERSON = #IPGUMPERSON#
+			, BRANCHCODE = #BRANCHCODE#
+			, SALERCD = #SALERCD#
+		WHERE IPGUMID = #IPGUMID#	
+	</update>
+	
+	<delete id="deleteIpgumMst" parameterClass="java.util.HashMap">
+		/* SA011004.deleteIpgumMst */
+		DELETE
+		FROM sa_ipgummst
+		WHERE IPGUMID = #IPGUMID#
+	</delete>
+
 </sqlMap>  
