@@ -270,8 +270,9 @@
 					root: "rows",
 					repeatitems: false
 				},
-				loadError: function(xhr, status, error) {
-					alert("[ERROR]"+ error);
+				loadtext: "로딩중...",
+				loadError: function(x, s, e) {
+					alert("[ERROR]"+ e);
 				},
 				loadComplete: function(data) {
 					var rCount = $("#leftGrid").jqGrid("getGridParam", "records");
@@ -354,6 +355,10 @@
 				if(pKname == "") alert("담당자명을 입력해주세요.");
 				else fnSearchSaler(pKname);
 			}
+		});
+		// 비고 입력 키 이벤트
+		$("#REMARK").on("keydown", function(e) {
+			if(e.keyCode == 13) $("#saveButton").trigger("click");
 		});
 	});
 	
