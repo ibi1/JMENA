@@ -8,17 +8,69 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>매입현황</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>매입현황</title>
+</head>
+<body>
+	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table width="99%">
+				<tr>
+					<td align="right">
+						<input type="button" value="조회" id="selectButton" />
+						<input type="button" value="엑셀" id="excelButton" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
+				<tr>
+					<th width="120">매출기간</th>
+					<td>
+						<input type="text" id="S_BUYDATE_FR" /> -
+						<input type="text" id="S_BUYDATE_TO" />
+					</td>
+				</tr>
+				<tr>
+					<th width="120">검색기준</th>
+					<td>
+						<select id="S_BUYGUBUN" style="width:120px"></select>
+					</td>
+				</tr>
+				<tr>
+					<th width="120">검색기준</th>
+					<td>
+						<select id="S_REGYN" style="width:120px"></select>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<div align="right" style="padding-top:10px; padding-bottom:3px">
+				총 건수 : <font color="red"><sapn id="mainGridCount"></sapn></font>건
+			</div>
+			<div id="mainGrid"></div>
+		</div>
+	</div>
+</body>
+</html>
 <script type="text/javascript">
 	var init = {};
 
 	$(document).ready(function() {
 		// 스타일 적용
-		$("#selectButton").jqxButton({width: 80, height: 25, theme: 'energyblue'});
-		$("#excelButton").jqxButton({width: 80, height: 25, theme: 'energyblue'});
-		$("#S_BUYDATE_FR").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
-		$("#S_BUYDATE_TO").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
+		$("#selectButton, #excelButton").jqxButton({width: 80, height: 25, theme: 'energyblue'});
+		$("#S_BUYDATE_FR, #S_BUYDATE_TO").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
+		// 버튼권한 설정
+		init.setAuth = function() {
+			<%if("N".equals(session.getAttribute("AUTH_I"))) {%>
+			<%}%>
+			<%if("N".equals(session.getAttribute("AUTH_D"))) {%>
+			<%}%>
+			<%if("N".equals(session.getAttribute("AUTH_P"))) {%>
+			$("#excelButton").hide();
+			<%}%>
+		}
 		// 매출기간 초기화
 		init.setDate = function() {
 			$("#S_BUYDATE_FR").val(dateInput(1));
@@ -58,16 +110,23 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			$("#S_REGYN").append(sTemp);
 		}
 		// 그리드 초기화
-		init.setGrid = function() {
+		init.setMainGrid = function() {
 			var url = "/home/selectListMM012002.do"
 					+ "?S_BUYDATE_FR="+ $("#S_BUYDATE_FR").val()
 					+ "&S_BUYDATE_TO="+ $("#S_BUYDATE_TO").val()
 					+ "&S_BUYGUBUN="+ $("#S_BUYGUBUN").val()
 					+ "&S_REGYN="+ $("#S_REGYN").val();
-			
-	        // prepare the data
+			var param = {
+				S_BUYDATE_FR: $("#S_BUYDATE_FR").val(),
+				S_BUYDATE_TO: $("#S_BUYDATE_TO").val(),
+				S_BUYGUBUN: $("#S_BUYGUBUN").val(),
+				S_REGYN: $("#S_REGYN").val()
+			};
 	        var source = {
-	            datatype: "json",
+	        	type: "POST",
+	        	url: "/home/selectListBuyMst.do",
+	        	data: JSON.stringify(param),
+	        	datatype: "json",
 	            datafields: [
 					{name: "BUYID", type: "string"},
 					{name: "BUYGUBUNNAME", type: "string"},
@@ -83,20 +142,22 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{name: "CONM2", type: "number"},
 					{name: "REMM2", type: "number"}
 	            ],
-	            root: "rows",
-	            //record: "records",
-	            id: 'BUYID',
-	            url: url
+	            root: "rows"
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
+	        	contentType: "application/json;charset=UTF-8",
 	            loadComplete: function(data) {	            	
-	            	var countRow = $('#grdList').jqxGrid('getrows');
-	            	$("#grdRowCount").html(countRow.length);
+	            	var countRow = $("#mainGrid").jqxGrid("getrows");
+	            	$("#mainGridCount").html(countRow.length);
 	            },
-	            loadError: function (xhr, status, error) { alert("Error~~!"); }
+	            loadError: function(x, s, e) {
+	            	alert("[ERROR]"+ e);
+	            	console.info(x);
+	            	console.info(s);
+	            	console.info(e);
+	            }
 	        });
-			// initialize jqxGrid
-	        $("#grdList").jqxGrid({
+	        $("#mainGrid").jqxGrid({
 	        	theme: 'energyblue',
 	        	sorttogglestates: 0,
 	        	sortable: false,
@@ -126,62 +187,19 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	        });			
 		}
 		
+		init.setAuth();
 		init.setDate();
 		init.setBuyGubun();
 		init.setRegGubun();
-		init.setGrid();
+		init.setMainGrid();
 		
 		// 조회 버튼 클릭 이벤트
 		$("#selectButton").click(function() {
-			init.setGrid();	
+			init.setMainGrid();	
 		});
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
-			$("#grdList").jqxGrid('exportdata', 'xls', 'MM012002_<%=f.format(currDate)%>', true, null, false, null, 'utf-8'); 	
+			$("#mainGrid").jqxGrid('exportdata', 'xls', 'MM012002_<%=f.format(currDate)%>', true, null, false, null, 'utf-8'); 	
 		});
 	});
 </script>
-</head>
-
-<body>
-	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<table width="99%">
-				<tr>
-					<td align="right">
-						<input type="button" value="조회" id="selectButton" />
-						<input type="button" value="엑셀" id="excelButton" />
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<table>
-				<tr>
-					<th width="120">매출기간</th>
-					<td>
-						<input type="text" id="S_BUYDATE_FR" /> -
-						<input type="text" id="S_BUYDATE_TO" />
-					</td>
-				</tr>
-				<tr>
-					<th width="120">검색기준</th>
-					<td>
-						<select id="S_BUYGUBUN" style="width:100px"></select>
-						<!-- <div id="jqxComboBox"></div> -->
-					</td>
-				</tr>
-				<tr>
-					<th width="120">검색기준</th>
-					<td>
-						<select id="S_REGYN" style="width:100px"></select>
-					</td>
-				</tr>
-			</table>
-			<br/>
-			<div align="right">총 건수 : <font color="red"><sapn id="grdRowCount"></sapn></font>건</div>
-			<div id="grdList"></div>
-		</div>
-	</div>
-</body>
-</html>

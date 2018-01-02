@@ -56,7 +56,7 @@
 			WHERE JANAMT > 0
 			</isEqual>
 		</isNotEmpty>
-		ORDER BY IPGUMID ASC
+		ORDER BY IPGUMDATE DESC
 	</select>
 	
 	<select id="selectOneInsamst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
