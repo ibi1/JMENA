@@ -56,7 +56,12 @@
 				, CAST(BUYM2 - (SELECT IFNULL(SUM(CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = T.BUYID AND B.CHGGUBUN != '004') AS DECIMAL(12, 2)) AS REMM2
 			FROM mm_buymst T
 		) S   
-		WHERE BUYDATE BETWEEN #S_BUYDATE_FR# AND #S_BUYDATE_TO#
+		WHERE 1 = 1
+			<isNotEmpty property="S_BUYDATE_FR">
+				<isNotEmpty property="S_BUYDATE_TO">
+				AND BUYDATE BETWEEN #S_BUYDATE_FR# AND #S_BUYDATE_TO#	
+				</isNotEmpty>
+			</isNotEmpty>
 			<isNotEmpty property="S_BUYGUBUN">
 				<isNotEqual property="S_BUYGUBUN" compareValue="ALL">
 				AND BUYGUBUN = #S_BUYGUBUN#
@@ -74,5 +79,5 @@
 			</isNotEmpty>
 		ORDER BY BUYDATE DESC
 	</select>
-
+	
 </sqlMap>  

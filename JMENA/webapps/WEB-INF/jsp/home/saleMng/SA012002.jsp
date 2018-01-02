@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>매출잔금현황</title>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>매출잔금현황</title>
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
@@ -13,7 +13,6 @@
 					<td align="right">
 						<input type="button" value="조회" id="selectButton" />
 						<input type="button" value="엑셀" id="excelButton" />
-						<!-- <input type="button" value="출력" id="printButton" /> -->
 					</td>
 				</tr>
 			</table>
@@ -45,8 +44,10 @@
 				</tr>
 			</table>
 			<br/>
-			<div align="right">총 건수 : <font color="red"><sapn id="mainListCount"></sapn></font>건</div>
-			<div id="mainList"></div>
+			<div align="right" style="padding-top:10px; padding-bottom:3px">
+				총 건수 : <font color="red"><sapn id="mainGridCount"></sapn></font>건
+			</div>
+			<div id="mainGrid"></div>
 		</div>
 	</div>
 </body>
@@ -56,13 +57,15 @@
 	
 	$(document).ready(function() {
 		// 스타일 적용
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#S_SALEDATE_FR").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
-		$("#S_SALEDATE_TO").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
-		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 10});
-		// 권한설정
+		$("#selectButton, #excelButton").jqxButton({theme: 'energyblue', width: 80, height: 25});
+		$("#S_SALEDATE_FR, #S_SALEDATE_TO").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});		
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150});
+		// 버튼권한 설정
 		init.setAuth = function() {
+			<%if("N".equals(session.getAttribute("AUTH_I"))) {%>
+			<%}%>
+			<%if("N".equals(session.getAttribute("AUTH_D"))) {%>
+			<%}%>
 			<%if("N".equals(session.getAttribute("AUTH_P"))) {%>
 			$("#excelButton").hide();
 			<%}%>
@@ -103,9 +106,7 @@
 					type: "POST",
 					url: "/codeCom/deptMstList.do", 
 					dataType : "json", 
-					data : {
-						BRANCHCODE : c,
-					},
+					data : {BRANCHCODE : c},
 					success: function(data) {
 						var sTemp = "";
 						data.deptMstList.forEach(function(currentValue, index, array) {
@@ -188,13 +189,15 @@
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
 	            loadComplete: function (data) {
-	            	var countRow = $('#mainList').jqxGrid('getrows');
-	            	$("#mainListCount").html(countRow.length);
+	            	var countRow = $('#mainGrid').jqxGrid('getrows');
+	            	$("#mainGridCount").html(countRow.length);
 	            },
-	            loadError: function (xhr, status, error) { alert("Error~~!"); }
+	            loadError: function(x, s, e) {
+	            	alert("[ERROR]"+ e);
+	            }
 	        });
 			// initialize jqxGrid
-	        $("#mainList").jqxGrid({
+	        $("#mainGrid").jqxGrid({
 	        	theme: 'energyblue',
 	        	sorttogglestates: 0,
 	        	sortable: false,
@@ -217,7 +220,7 @@
 					{ text: '고객명', datafield: "CONNAME", width: 100, cellsalign: 'center', align: 'center'},
 					{ text: '주소', datafield: "ADDRESS", width: 240, cellsalign: 'left', align: 'center'},
 					{ text: '면적', datafield: "CONM2", width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
-					{ text: '평수', datafield: "CONPY", width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+					{ text: '평수', datafield: "CONPY", width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
 					{ text: '원 판매가', datafield: "SALEAMT", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 					{ text: '(%)', datafield: "DCRATE", width: 80, cellsalign: 'right', align: 'center'},
 					{ text: '실판매가', datafield: "SELLAMT", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
@@ -250,12 +253,21 @@
 		});
 		// 조회 버튼 클릭 이벤트
 		$("#selectButton").click(function() {
-			//*** 정규식으로 입력값 체크
+			if($("#S_SALEDATE_FR").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("매출기간을 입력해주세요.");
+				$("#S_SALEDATE_FR").focus();
+				return;
+			}
+			if($("#S_SALEDATE_TO").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("매출기간을 입력해주세요.");
+				$("#S_SALEDATE_TO").focus();
+				return;
+			}
 			init.setGrid();	
 		});
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
-			if($.trim($("#mainListCount").html()) == 0) {
+			if($.trim($("#mainGridCount").html()) == 0) {
 	        	alert("다운로드 할 데이터가 없습니다.");
 	        	return;	
 	        }

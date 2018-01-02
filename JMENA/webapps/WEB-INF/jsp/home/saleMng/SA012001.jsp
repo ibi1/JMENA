@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>매출현황 - 담당자별</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>매출현황 - 담당자별</title>
 </head>
 <body>
 	<div id="contents" style="width:1200px;" align="center">
@@ -11,9 +11,8 @@
 			<table width="99%">
 				<tr>
 					<td align="right">
-						<input type="button" value="조회" id='selectButton' />
-						<input type="button" value="엑셀" id='excelButton' />
-						<!-- <input type="button" value="출력" id='printButton' /> -->
+						<input type="button" value="조회" id="selectButton" />
+						<input type="button" value="엑셀" id="excelButton" />
 					</td>
 				</tr>
 			</table>
@@ -29,17 +28,15 @@
 				</tr>
 				<tr>
 					<th width="120">지사</th>
-					<td width="150">
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:100px">
-							<option value="ALL" selected="selected">전체</option>
-						</select>
-					</td>
+					<td width="150"><select id="S_BRANCHCODE" style="width:120px"></select></td>
 					<th width="120">담당자명</th>
-					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
+					<td><input type="text" id="S_KNAME" /></td>
 				</tr>
 			</table>
 			<br/>
-			<div align="right">총 건수 : <font color="red"><sapn id="mainListCount"></sapn></font>건</div>
+			<div align="right" style="padding-top:10px; padding-bottom:3px">
+				총 건수 : <font color="red"><sapn id="mainListCount"></sapn></font>건
+			</div>
 			<div id="mainList"></div>
 		</div>
 	</div>
@@ -53,11 +50,14 @@
 
 	$(document).ready(function() {
 		// 스타일 적용
-		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 10});
-		// 권한설정
+		$("#selectButton, #excelButton").jqxButton({theme: 'energyblue', width: 80, height: 25});
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150});
+		// 버튼권한 설정
 		init.setAuth = function() {
+			<%if("N".equals(session.getAttribute("AUTH_I"))) {%>
+			<%}%>
+			<%if("N".equals(session.getAttribute("AUTH_D"))) {%>
+			<%}%>
 			<%if("N".equals(session.getAttribute("AUTH_P"))) {%>
 			$("#excelButton").hide();
 			<%}%>
@@ -147,7 +147,9 @@
 	            	$("#mainListCount").html(countRow.length);
 	            	$('#mainList').jqxGrid('expandallgroups');
 	            },
-	            loadError: function (xhr, status, error) { alert("Error~~!"); }
+	            loadError: function(x, s, e) {
+	            	alert("[ERROR]"+ e);
+	            }
 	        });
 			// initialize jqxGrid
 	        $("#mainList").jqxGrid({

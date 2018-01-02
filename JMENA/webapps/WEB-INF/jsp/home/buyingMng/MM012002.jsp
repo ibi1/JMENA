@@ -111,11 +111,6 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		}
 		// 그리드 초기화
 		init.setMainGrid = function() {
-			var url = "/home/selectListMM012002.do"
-					+ "?S_BUYDATE_FR="+ $("#S_BUYDATE_FR").val()
-					+ "&S_BUYDATE_TO="+ $("#S_BUYDATE_TO").val()
-					+ "&S_BUYGUBUN="+ $("#S_BUYGUBUN").val()
-					+ "&S_REGYN="+ $("#S_REGYN").val();
 			var param = {
 				S_BUYDATE_FR: $("#S_BUYDATE_FR").val(),
 				S_BUYDATE_TO: $("#S_BUYDATE_TO").val(),
@@ -124,8 +119,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			};
 	        var source = {
 	        	type: "POST",
-	        	url: "/home/selectListBuyMst.do",
-	        	data: JSON.stringify(param),
+	        	url: "/home/selectListMM012002.do",
+	        	data: param,
 	        	datatype: "json",
 	            datafields: [
 					{name: "BUYID", type: "string"},
@@ -145,16 +140,12 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            root: "rows"
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
-	        	contentType: "application/json;charset=UTF-8",
 	            loadComplete: function(data) {	            	
 	            	var countRow = $("#mainGrid").jqxGrid("getrows");
 	            	$("#mainGridCount").html(countRow.length);
 	            },
 	            loadError: function(x, s, e) {
 	            	alert("[ERROR]"+ e);
-	            	console.info(x);
-	            	console.info(s);
-	            	console.info(e);
 	            }
 	        });
 	        $("#mainGrid").jqxGrid({
@@ -169,6 +160,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            enabletooltips: true,
 	            editable: false,
 	            selectionmode: 'singlerow',
+	            columnsresize: true,
 	            columns: [
 					{text: "구매번호", datafield: "BUYID", width: 100, cellsalign: "center", align: "center", hidden: true},
 					{text: "매입구분", datafield: "BUYGUBUNNAME", width: 80, cellsalign: "center", align: "center"},
