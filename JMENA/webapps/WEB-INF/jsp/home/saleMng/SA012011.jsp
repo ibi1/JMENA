@@ -8,18 +8,68 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>매출현황</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>매출현황</title>
+</head>
+<body>
+	<div id="contents" style="width:1200px;" align="center">
+		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table width="99%">
+				<tr>
+					<td align="right">
+						<input type="button" value="조회" id="selectButton" />
+						<input type="button" value="엑셀" id="excelButton" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
+			<table>
+				<tr>
+					<th width="120">기간</th>
+					<td colspan="5">
+						<input type="text" id="S_DEPOSITDATE_FR" /> - <input type="text" id="S_DEPOSITDATE_TO" />
+					</td>
+				</tr>
+				<tr>
+					<th width="120">지사</th>
+					<td width="150"><select id="S_BRANCHCODE" style="width:120px"></select></td>
+					<th width="120">부서</th>
+					<td width="150"><select id="S_DEPTCODE" style="width:120px"></select></td>
+					<th width="120">담당자명</th>
+					<td width="150"><input type="text" id="S_KNAME" /></td>
+				</tr>
+				<tr>
+					<th width="120">검색기준</th>
+					<td colspan="5"><select id="S_SALEGUBUN" style="width:120px"></select></td>
+				</tr>
+			</table>
+			<div align="right" style="padding-top:10px; padding-bottom:3px">
+				총 건수 : <font color="red"><sapn id="mainGridCount"></sapn></font>건
+			</div>
+			<div id="mainGrid"></div>
+		</div>
+	</div>
+</body>
+</html>
 <script type="text/javascript">
 	var init = {};
 
 	$(document).ready(function() {
 		// 스타일 적용
-		$("#selectButton").jqxButton({width: 80, height: 25, theme: 'energyblue'});
-		$("#excelButton").jqxButton({width: 80, height: 25, theme: 'energyblue'});
-		$("#S_DEPOSITDATE_FR").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
-		$("#S_DEPOSITDATE_TO").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});
-		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 10});
+		$("#selectButton, #excelButton").jqxButton({theme: 'energyblue', width: 80, height: 25});
+		$("#S_DEPOSITDATE_FR, #S_DEPOSITDATE_TO").jqxMaskedInput({theme: 'energyblue', width: 90, height: 25, mask: '####-##-##'});
+		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150});
+		// 버튼권한 설정
+		init.setAuth = function() {
+			<%if("N".equals(session.getAttribute("AUTH_I"))) {%>
+			<%}%>
+			<%if("N".equals(session.getAttribute("AUTH_D"))) {%>
+			<%}%>
+			<%if("N".equals(session.getAttribute("AUTH_P"))) {%>
+			$("#excelButton").hide();
+			<%}%>
+		}
 		// 기간 초기화 : 잔금입금일
 		init.setDate = function() {
 			$("#S_DEPOSITDATE_FR").val(dateInput(1));
@@ -33,7 +83,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			$.ajax({ 
 				type: "POST",
 				url: "/codeCom/branchMstList.do", 
-				dataType : "json", 
+				dataType: "json", 
 				success: function(data) {
 					var sTemp = "";
 					data.branchMstList.forEach(function(currentValue, index, array) {
@@ -41,7 +91,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					});
 					$("#S_BRANCHCODE").append(sTemp);
 				},
-				error:function(e) {  
+				error: function(e) {  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 				}  
 			});
@@ -55,10 +105,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			   	$.ajax({ 
 					type: "POST",
 					url: "/codeCom/deptMstList.do", 
-					dataType : "json", 
-					data : {
-						BRANCHCODE : c,
-					},
+					dataType: "json", 
+					data : {BRANCHCODE : c},
 					success: function(data) {
 						var sTemp = "";
 						data.deptMstList.forEach(function(currentValue, index, array) {
@@ -66,7 +114,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 						});
 						$("#S_DEPTCODE").append(sTemp);
 					},
-					error:function(e) {  
+					error: function(e) {  
 						alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 					}  
 				});
@@ -89,23 +137,25 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					});
 					$("#S_SALEGUBUN").append(sTemp);
 				},
-				error:function(e) {  
+				error: function(e) {  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 				}  
 			});
 		}
 		// 그리드 초기화
 		init.setGrid = function() {
-			var url = "/home/selectListSA012011.do"
-					+ "?S_DEPOSITDATE_FR="+ $("#S_DEPOSITDATE_FR").val()
-					+ "&S_DEPOSITDATE_TO="+ $("#S_DEPOSITDATE_TO").val()
-					+ "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
-					+ "&S_DEPTCODE="+ $("#S_DEPTCODE").val()
-					+ "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())))
-					+ "&S_SALEGUBUN="+ $("#S_SALEGUBUN").val();
-			
-	        // prepare the data
+	        var param = {
+	        	S_DEPOSITDATE_FR: $("#S_DEPOSITDATE_FR").val().replace(/[^0-9-]/g, ""),
+	        	S_DEPOSITDATE_TO: $("#S_DEPOSITDATE_TO").val().replace(/[^0-9-]/g, ""),
+	        	S_BRANCHCODE: $("#S_BRANCHCODE").val(),
+	        	S_DEPTCODE: $("#S_DEPTCODE").val(),
+	        	S_KNAME: $.trim($("#S_KNAME").val()),
+	        	S_SALEGUBUN: $("#S_SALEGUBUN").val()
+	        };
 	        var source = {
+        		type: "POST",
+	        	url: "/home/selectListSA012011.do",
+	        	data: param,
 	            datatype: "json",
 	            datafields: [
 					{name: "SALEID", type: "string"},
@@ -123,20 +173,18 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{name: "AGENCYAMT", type: "number"},
 					{name: "DEPOSITDATE", type: "string"}
 	            ],
-	            root: "rows",
-	            //record: "records",
-	            id: 'BUYID',
-	            url: url
+	            root: "rows"
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
 	            loadComplete: function(data) {	            	
-	            	var countRow = $('#grdList').jqxGrid('getrows');
-	            	$("#grdRowCount").html(countRow.length);
+	            	var countRow = $("#mainGrid").jqxGrid("getrows");
+	            	$("#mainGridCount").html(countRow.length);
 	            },
-	            loadError: function (xhr, status, error) { alert("Error~~!"); }
+	            loadError: function(x, s, e) {
+	            	alert("[ERROR]"+ e);
+	            }
 	        });
-			// initialize jqxGrid
-	        $("#grdList").jqxGrid({
+	        $("#mainGrid").jqxGrid({
 	        	theme: 'energyblue',
 	        	sorttogglestates: 0,
 	        	sortable: false,
@@ -147,7 +195,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            altrows: true,
 	            enabletooltips: true,
 	            editable: false,
-	            selectionmode: 'singlerow',	            
+	            selectionmode: 'singlerow',
+	            columnsresize: true,
 	            columns: [
 					{text: "판매번호", datafield: "SALEID", width: 100, cellsalign: "center", align: "center", hidden: true},
 					{text: "매출구분", datafield: "SALEGUBUNNAME", width: 80, cellsalign: "center", align: "center"},
@@ -157,7 +206,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{text: "실장", datafield: "MNGRNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "고객", datafield: "CONNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "물건지", datafield: "FULLADDRESS", width: 240, cellsalign: "left", align: "center"},
-					{text: "평수", datafield: "CONPY", width: 80, cellsalign: "right", align: "center", cellsformat: "f"},
+					{text: "평수", datafield: "CONPY", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
 					{text: "매매가", datafield: "SALEAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "DC금액", datafield: "DCAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "실판매가", datafield: "SELLAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
@@ -167,6 +216,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	        });			
 		}
 		
+		init.setAuth();
 		init.setDate();
 		init.setBranch();
 		init.setDept();
@@ -179,60 +229,21 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		});
 		// 조회 버튼 클릭 이벤트
 		$("#selectButton").click(function() {
+			if($("#S_DEPOSITDATE_FR").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("기간을 입력해주세요.");
+				$("#S_DEPOSITDATE_FR").focus();
+				return;
+			}
+			if($("#S_DEPOSITDATE_TO").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("기간을 입력해주세요.");
+				$("#S_DEPOSITDATE_TO").focus();
+				return;
+			}
 			init.setGrid();	
 		});
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
-			$("#grdList").jqxGrid('exportdata', 'xls', 'SA012011_<%=f.format(currDate)%>', true, null, false, null, 'utf-8'); 	
+			$("#mainGrid").jqxGrid('exportdata', 'xls', 'SA012011_<%=f.format(currDate)%>', true, null, false, null, 'utf-8'); 	
 		});
 	});
 </script>
-</head>
-
-<body>
-	<div id="contents" style="width:1200px;" align="center">
-		<div id="topDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<table width="99%">
-				<tr>
-					<td align="right">
-						<input type="button" value="조회" id="selectButton" />
-						<input type="button" value="엑셀" id="excelButton" />
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="mainDiv" style="width:98%; float:left; padding: 10px" align="left">
-			<table>
-				<tr>
-					<th width="120">기간</th>
-					<td colspan="5">
-						<input type="text" id="S_DEPOSITDATE_FR" /> -
-						<input type="text" id="S_DEPOSITDATE_TO" />
-					</td>
-				</tr>
-				<tr>
-					<th width="120">지사</th>
-					<td width="150">
-						<select id="S_BRANCHCODE" style="width:120px"></select>
-					</td>
-					<th width="120">부서</th>
-					<td width="150">
-						<select id="S_DEPTCODE" style="width:120px"></select>
-					</td>
-					<th width="120">담당자명</th>
-					<td width="150"><input type="text" id="S_KNAME" /></td>
-				</tr>
-				<tr>
-					<th width="120">검색기준</th>
-					<td colspan="5">
-						<select id="S_SALEGUBUN" style="width:120px"></select>
-					</td>
-				</tr>
-			</table>
-			<br/>
-			<div align="right">총 건수 : <font color="red"><sapn id="grdRowCount"></sapn></font>건</div>
-			<div id="grdList"></div>
-		</div>
-	</div>
-</body>
-</html>

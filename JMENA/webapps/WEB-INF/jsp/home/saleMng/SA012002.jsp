@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
+<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>매출잔금현황</title>
 </head>
@@ -22,8 +22,7 @@
 				<tr>
 					<th width="120">매출기간</th>
 					<td width="200">
-						<input type="text" id="S_SALEDATE_FR" /> -
-						<input type="text" id="S_SALEDATE_TO" />
+						<input type="text" id="S_SALEDATE_FR" /> - <input type="text" id="S_SALEDATE_TO" />
 					</td>
 					<th width="120">지사</th>
 					<td width="170">
@@ -36,14 +35,11 @@
 				</tr>
 				<tr>
 					<th width="120">매출구분</th>
-					<td>
-						<select id="S_SALEGUBUN" style="width:120px"></select>
-					</td>
+					<td><select id="S_SALEGUBUN" style="width:120px"></select></td>
 					<th width="120">담당자명</th>
 					<td colspan="3"><input type="text" id="S_KNAME" /></td>
 				</tr>
 			</table>
-			<br/>
 			<div align="right" style="padding-top:10px; padding-bottom:3px">
 				총 건수 : <font color="red"><sapn id="mainGridCount"></sapn></font>건
 			</div>
@@ -58,7 +54,7 @@
 	$(document).ready(function() {
 		// 스타일 적용
 		$("#selectButton, #excelButton").jqxButton({theme: 'energyblue', width: 80, height: 25});
-		$("#S_SALEDATE_FR, #S_SALEDATE_TO").jqxMaskedInput({width: '90px', height: '25px', mask: '####-##-##', theme: 'energyblue'});		
+		$("#S_SALEDATE_FR, #S_SALEDATE_TO").jqxMaskedInput({theme: 'energyblue', width: 90, height: 25, mask: '####-##-##'});	
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150});
 		// 버튼권한 설정
 		init.setAuth = function() {
@@ -83,7 +79,7 @@
 			$.ajax({ 
 				type: "POST",
 				url: "/codeCom/branchMstList.do", 
-				dataType : "json", 
+				dataType: "json", 
 				success: function(data) {
 					var sTemp = "";
 					data.branchMstList.forEach(function(currentValue, index, array) {
@@ -91,7 +87,7 @@
 					});
 					$("#S_BRANCHCODE").append(sTemp);
 				},
-				error:function(e) {  
+				error: function(e) {  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 				}  
 			});
@@ -105,8 +101,8 @@
 			   	$.ajax({ 
 					type: "POST",
 					url: "/codeCom/deptMstList.do", 
-					dataType : "json", 
-					data : {BRANCHCODE : c},
+					dataType: "json", 
+					data: {BRANCHCODE : c},
 					success: function(data) {
 						var sTemp = "";
 						data.deptMstList.forEach(function(currentValue, index, array) {
@@ -114,7 +110,7 @@
 						});
 						$("#S_DEPTCODE").append(sTemp);
 					},
-					error:function(e) {  
+					error: function(e) {  
 						alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 					}  
 				});
@@ -128,7 +124,7 @@
 			$.ajax({ 
 				type: "POST" ,
 				url: "/codeCom/dcodeList.do", 
-				dataType : "json",
+				dataType: "json",
 				data : {CCODE : "007"},
 				success: function(data) {
 					var sTemp = "";
@@ -137,25 +133,25 @@
 					});
 					$("#S_SALEGUBUN").append(sTemp);
 				},
-				error:function(e) {  
+				error: function(e) {  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 				}  
 			});
 		}
 		// 그리드 초기화
 		init.setGrid = function() {
-			S_KNAME = encodeURI(encodeURIComponent(S_KNAME));
-			
-			var url = "/home/selectListSA012002.do"
-					+ "?S_SALEDATE_FR="+ $("#S_SALEDATE_FR").val()
-					+ "&S_SALEDATE_TO="+ $("#S_SALEDATE_TO").val()
-					+ "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
-					+ "&S_DEPTCODE="+ $("#S_DEPTCODE").val()
-					+ "&S_SALEGUBUN="+ $("#S_SALEGUBUN").val()
-					+ "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())));
-			
-	        // prepare the data
+			var param = {
+				S_SALEDATE_FR: $("#S_SALEDATE_FR").val().replace(/[^0-9-]/g, ""),
+				S_SALEDATE_TO: $("#S_SALEDATE_TO").val().replace(/[^0-9-]/g, ""),
+				S_BRANCHCODE: $("#S_BRANCHCODE").val(),
+				S_DEPTCODE: $("#S_DEPTCODE").val(),
+				S_SALEGUBUN: $("#S_SALEGUBUN").val(),
+				S_KNAME: $.trim($("#S_KNAME").val())
+			};
 	        var source = {
+        		type: "POST",
+	        	url: "/home/selectListSA012002.do",
+	        	data: param,
 	            datatype: "json",
 	            datafields: [
 					{name:"BRANCHNAME",		type: 'string' },
@@ -184,19 +180,17 @@
 					{name:"IPGUMRATE",		type: 'number' },
 					{name:"REMARK",			type: 'string' }
 	            ],
-	            root: "rows",
-	            url: url
+	            root: "rows"
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
 	            loadComplete: function (data) {
-	            	var countRow = $('#mainGrid').jqxGrid('getrows');
+	            	var countRow = $("#mainGrid").jqxGrid("getrows");
 	            	$("#mainGridCount").html(countRow.length);
 	            },
 	            loadError: function(x, s, e) {
 	            	alert("[ERROR]"+ e);
 	            }
 	        });
-			// initialize jqxGrid
 	        $("#mainGrid").jqxGrid({
 	        	theme: 'energyblue',
 	        	sorttogglestates: 0,
@@ -273,14 +267,16 @@
 	        }
 			
 			var url = "/home/SA012002_exportToExcel.do";
-			var dataParam = "S_SALEDATE_FR="+ $("#S_SALEDATE_FR").val()
-						  + "&S_SALEDATE_TO="+ $("#S_SALEDATE_TO").val()
-						  + "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
-						  + "&S_DEPTCODE="+ $("#S_DEPTCODE").val()
-						  + "&S_SALEGUBUN="+ $("#S_SALEGUBUN").val()
-						  + "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())));			
+			var param = {
+				S_SALEDATE_FR: $("#S_SALEDATE_FR").val().replace(/[^0-9-]/g, ""),
+				S_SALEDATE_TO: $("#S_SALEDATE_TO").val().replace(/[^0-9-]/g, ""),
+				S_BRANCHCODE: $("#S_BRANCHCODE").val(),
+				S_DEPTCODE: $("#S_DEPTCODE").val(),
+				S_SALEGUBUN: $("#S_SALEGUBUN").val(),
+				S_KNAME: $.trim($("#S_KNAME").val())
+			};
 			//파일 다운로드 (common.js에 있음)
-			$.download(url, dataParam, 'post');	
+			$.download(url, param, 'post');	
 		});
 	})
 </script>

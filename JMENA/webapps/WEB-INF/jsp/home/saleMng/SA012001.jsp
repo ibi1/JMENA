@@ -33,7 +33,6 @@
 					<td><input type="text" id="S_KNAME" /></td>
 				</tr>
 			</table>
-			<br/>
 			<div align="right" style="padding-top:10px; padding-bottom:3px">
 				총 건수 : <font color="red"><sapn id="mainListCount"></sapn></font>건
 			</div>
@@ -86,9 +85,9 @@
 			$("#S_BRANCHCODE").append("<option value=\"ALL\" selected=\"selected\">전체</option>");
 			
 			$.ajax({ 
-				type: 'POST' ,
+				type: "POST",
 				url: "/codeCom/branchMstList.do", 
-				dataType : 'json' , 
+				dataType: "json",
 				success: function(data) {
 					var sTemp = "";
 					data.branchMstList.forEach(function(currentValue, index, array) {
@@ -96,7 +95,7 @@
 					});
 					$("#S_BRANCHCODE").append(sTemp);
 				},
-				error:function(e) {  
+				error: function(e) {  
 					alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
 				}  
 			});
@@ -108,14 +107,16 @@
 			var sDepositdate = "";
 			
 			if(sYear != "" && sMonth != "") sDepositdate = sYear +"-"+ sMonth;
-			
-			var url = "/home/selectListSA012001.do"
-					+ "?S_DEPOSITDATE="+ sDepositdate
-					+ "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
-					+ "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())));
-			
-	        // prepare the data
+ 			
+	        var param = {
+	        	S_DEPOSITDATE: sDepositdate,
+	        	S_BRANCHCODE: $("#S_BRANCHCODE").val(),
+	        	S_KNAME: $.trim($("#S_KNAME").val())
+	        };
 	        var source = {
+        		type: "POST",
+	        	url: "/home/selectListSA012001.do",
+	        	data: param,
 	            datatype: "json",
 	            datafields: [
 					{name:"BRANCHNAME", type: 'string'},
@@ -137,21 +138,18 @@
 					{name:"AMT0", type: 'number'},
 					{name:"TOTAMT", type: 'number'}
 	            ],
-	            root: "rows",
-	            id: 'CITYCODE',
-	            url: url
+	            root: "rows"
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
 	            loadComplete: function (data) {
-	            	var countRow = $('#mainList').jqxGrid('getrows');
+	            	var countRow = $("#mainList").jqxGrid("getrows");
 	            	$("#mainListCount").html(countRow.length);
-	            	$('#mainList').jqxGrid('expandallgroups');
+	            	$("#mainList").jqxGrid("expandallgroups");
 	            },
 	            loadError: function(x, s, e) {
 	            	alert("[ERROR]"+ e);
 	            }
 	        });
-			// initialize jqxGrid
 	        $("#mainList").jqxGrid({
 	        	theme: 'energyblue',
 	        	sortable: false,
@@ -238,11 +236,13 @@
 			if(sYear != "" && sMonth != "") sDepositdate = sYear +"-"+ sMonth;
 	        
 			var url = "/home/SA012001_exportToExcel.do";
-	        var dataParam = "S_DEPOSITDATE="+ sDepositdate
-						  + "&S_BRANCHCODE="+ $("#S_BRANCHCODE").val()
-						  + "&S_KNAME="+ encodeURI(encodeURIComponent($.trim($("#S_KNAME").val())));
+	        var param = {
+	        	S_DEPOSITDATE: sDepositdate,
+	        	S_BRANCHCODE: $("#S_BRANCHCODE").val(),
+	        	S_KNAME: $.trim($("#S_KNAME").val())
+	        };
 			//파일 다운로드 (common.js에 있음)
-			$.download(url, dataParam, 'post');	
+			$.download(url, param, 'post');
 	    });
 	});
 </script>

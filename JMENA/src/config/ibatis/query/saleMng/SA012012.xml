@@ -78,7 +78,11 @@
 			LEFT OUTER JOIN hr_insamst E
 				ON B.SALERCD = E.INSACODE
 		WHERE A.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
-			AND A.DEPOSITDATE BETWEEN #S_DEPOSITDATE_FR# AND #S_DEPOSITDATE_TO#
+			<isNotEmpty property="S_DEPOSITDATE_FR">
+				<isNotEmpty property="S_DEPOSITDATE_TO">
+				AND A.DEPOSITDATE BETWEEN #S_DEPOSITDATE_FR# AND #S_DEPOSITDATE_TO#
+				</isNotEmpty>
+			</isNotEmpty>			
 			<isNotEmpty property="S_SALEGUBUN">
 				<isNotEqual property="S_SALEGUBUN" compareValue="ALL">
 				AND B.SALEGUBUN  = #S_SALEGUBUN#
