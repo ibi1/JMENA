@@ -128,7 +128,7 @@
 			loadError:function(){alert("Error~!!");} ,
 			colNames:['지급일','지급순번','담당자','담당자성명', '매출금액', '지급금액', '세액', '차감지급액','계약일자','번호','매출구분','계약지사','관리자번호',
 			          '지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액', //'실판매가' ,
-			          '수당지급율','추가지급율','신고기준','사업소득세','지방세','부가가치세','비고','매출담당자','매출담당자성명','신고인수'],
+			          '수당지급율','추가지급율','신고기준','사업소득세','지방세','부가가치세','비고','매출담당자','매출담당자성명','신고인수', '직급'],
 			colModel:[
 				 {name:"PAYDATE",		index:'PAYDATE',		width:80,		align:'center',	sortable:false}
 				,{name:"PAYSEQ",		index:'PAYSEQ',			width:80,		align:'center',	sortable:false, hidden:true}
@@ -163,6 +163,7 @@
 				,{name:"SALERCD",		index:'SALERCD',		width:60,		align:'center',	sortable:false, hidden:true}
 				,{name:"SALERNM",		index:'SALERNM',		width:60,		align:'center',	sortable:false, hidden:true}
 				,{name:"REGISTERNUM",	index:'REGISTERNUM',	width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"DUTY",			index:'DUTY',			width:60,		align:'center',	sortable:false, hidden:true}
 			] ,
 			rowNum:10000000,
 			autowidth: true ,
@@ -213,6 +214,9 @@
 				$("#KNAME").val(selRowData.KNAME);
 				$("#S_SALEID").val(selRowData.SALEID);
 				$("#PAYSEQ").val(selRowData.PAYSEQ);
+				
+				$("#DUTY").val(selRowData.DUTY);
+				
 				searchbottomList(selRowData.INSACODE);
 
 				//콤마 set
@@ -616,6 +620,14 @@
 		var mstSudangrate = parseFloat($("#SUDANGRATE").val());
 		var sudangrate = parseFloat(cellData.SUDANGRATE); 
 		var addrate = parseFloat(cellData.ADDRATE); 
+		
+		if(isNaN(sudangrate) == true){
+			sudangrate=0
+		}
+		if(isNaN(addrate) == true){
+			addrate=0
+		}		
+		
 		var taxgubun = cellData.TAXGUBUN;
 		gijunAmt = seleAmt * mstSudangrate / 100;
 		var tax = gijunAmt * 3.3 / 100;
@@ -1263,8 +1275,9 @@
 					<td width="120"><input type="text" id="PAYDATE" name="PAYDATE"> </td>
 					<th width="120">담당자 성명</th>
 					<td colspan="2">
-						<input type="text" id="KNAME" name="KNAME"/>
-						<input type="text" id="INSACODE" name="INSACODE"/>
+						<input type="text" id="KNAME" 		name="KNAME"/>
+						<input type="text" id="INSACODE" 	name="INSACODE"/>
+						<input type="text" id="DUTY" 		name="DUTY"/>
 					</td>
 					<td colspan="5">
 						<!-- <input type="hidden" id='insaButton'/> -->

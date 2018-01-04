@@ -18,8 +18,11 @@
 			
 			var BRANCHCODE = $("#BRANCHCODE",opener.document).val();
 			var INSACODEARR = $("#INSACODE",opener.document).val();
+			var DUTY = $("#DUTY",opener.document).val();
 			var S_KNAME = "";
-			
+			if(DUTY=='임원'){
+				INSACODEARR = "";
+			}
 			var ids = jQuery("#bottomList",opener.document).jqGrid('getDataIDs');
 			
 			ids.some(function(currentValue, index, array){
