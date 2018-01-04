@@ -683,12 +683,6 @@
 		<isNotEmpty property="S_KNAME">
 			AND T1.KNAME LIKE '%$S_KNAME$%'
 		</isNotEmpty>
-		<isNotEmpty property="INSACODEARR">
-   			AND T1.INSACODE NOT IN 
-   			<iterate property="INSACODEARR" open="(" close=")" conjunction=",">
-    			#INSACODEARR[]#
-   			</iterate>
-   		</isNotEmpty>
    		AND T1.RETIREDATE IS NULL
    		ORDER BY T1.GRADE ASC
 	</select>
