@@ -88,6 +88,10 @@
     <bean id="SA011004Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA011004Ctr" />
     <bean id="SA011004Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA011004Biz" />
     <bean id="SA011004Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA011004Dao" p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 매출관리 : (신)매출관리 - 일반 -->
+	<bean id="SA011005Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA011005Ctr" />
+    <bean id="SA011005Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA011005Biz" />
+    <bean id="SA011005Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA011005Dao" p:sqlMapClient-ref="sqlMapClient" />
 	<!-- 매출관리 : 매출현황 - 담당자별 -->
     <bean id="SA012001Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA012001Ctr" />
     <bean id="SA012001Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA012001Biz" />

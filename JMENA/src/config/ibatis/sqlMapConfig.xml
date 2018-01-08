@@ -36,6 +36,7 @@
 	<sqlMap resource="/config/ibatis/query/saleMng/SA011002.xml" /><!-- 매출관리 : 매출관리 - 소비대차 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA011003.xml" /><!-- 매출관리 : 입금관리 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA011004.xml" /><!-- 매출관리 : (신)입금관리 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA011005.xml" /><!-- 매출관리 : (신)매출관리 - 일반 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012001.xml" /><!-- 매출관리 : 매출현황 - 담당자별 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012002.xml" /><!-- 매출관리 : 매출잔금현황 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012003.xml" /><!-- 매출관리 : 매출현황 - 소비대차 -->
