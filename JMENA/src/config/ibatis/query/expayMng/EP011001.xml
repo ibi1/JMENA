@@ -234,6 +234,7 @@
 	    FROM sa_sudangmst T1, sa_salemst T2
 	   WHERE T1.SALEID = T2.SALEID
 	     AND T1.INSACODE = T2.SALERCD
+	     AND (T1.PAYSEQ = '1' OR T1.PAYSEQ = '001')
 <!--  		<isNotEmpty property="S_SALEID">
 	 		AND T1.SALEID = #S_SALEID# 
 	 		<isNotEmpty property="S_PAYSEQ">
@@ -298,7 +299,7 @@
 	   WHERE 1 = 1
 	 	AND T1.SALEID = #S_SALEID# 	 	 
 	 		<isEqual property="FLAG" compareValue="">
-		 	AND	T1.INSACODE != #INSACODE#		      
+		 	AND (T1.PAYSEQ != '1' AND T1.PAYSEQ != '001')		      
 	 		</isEqual>
 		ORDER BY T1.GRADE ASC
 	</select>		
@@ -346,6 +347,7 @@
 		WHERE 1=1
 		AND T1.SALEID = #SALEID#
 		AND T1.INSACODE = #INSACODE#
+		AND T1.PAYSEQ = #PAYSEQ#
 	</select>
 	
 	<select id="selectEnaSudangMstSheet" resultMap="EP011001Sheet">
@@ -469,7 +471,7 @@
 		)
 		VALUES(
 			#SALEID#,
-			(SELECT IFNULL(MAX(PAYSEQ),0) +1 FROM sa_sudangmst s WHERE SALEID = #SALEID#),
+			(SELECT LPAD(IFNULL(MAX(s.PAYSEQ),0) +1, 3, 0) AS PAYSEQ FROM sa_sudangmst s WHERE s.SALEID = #SALEID#),
 			#INSACODE#,
 			(SELECT BRANCHCODE FROM hr_insamst WHERE INSACODE = #INSACODE#),
 			(SELECT DEPTCODE FROM hr_insamst WHERE INSACODE = #INSACODE#),
@@ -582,7 +584,7 @@
 		VALUES(
 			#SALEID#,
 			#PAYSEQ#,
-			(SELECT IFNULL(MAX(REGISTERSEQ),0) +1 FROM sa_sudangpayertb s WHERE SALEID = #SALEID# AND PAYSEQ = #PAYSEQ#),
+			(SELECT LPAD(IFNULL(MAX(REGISTERSEQ),0) + 1, 3, 0) FROM sa_sudangpayertb s WHERE SALEID = #SALEID# AND PAYSEQ = #PAYSEQ#),
 			#PAYERNAME#,
 			#PAYERID#,
 			#SAUPOWNER#,
