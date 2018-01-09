@@ -23,6 +23,7 @@
 	</resultMap>
 
 	<select id="selectListSA012004" resultMap="SA012004Data">
+		/* SA012004.selectListSA012004 */
 		select
 			t1.ipgumdate,
 			(select branchname from ba_branchmst where branchcode = t1.branchcode) as branchname ,
@@ -38,7 +39,7 @@
 			t1.conpy,
 			t1.remark
 		from sa_ipgummst t1
-		where 1=1
+		where t1.R_IPGUMID IS NULL
 		<isNotEmpty property="S_IPGUMDATE_FR">
 			<isNotEmpty property="S_IPGUMDATE_TO">
 				AND t1.ipgumdate BETWEEN #S_IPGUMDATE_FR# AND #S_IPGUMDATE_TO#
