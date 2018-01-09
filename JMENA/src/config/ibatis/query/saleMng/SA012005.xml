@@ -29,6 +29,7 @@
 	</resultMap>
 
 	<select id="selectListSA012005" resultMap="SA012005Data1">
+		/* SA012005.selectListSA012005 */
 		select
 			t1.ipgumdate,
 			t1.IPGUMID,
@@ -38,7 +39,7 @@
 			(select sum(sugumamt) from sa_ipgumdtl where ipgumid = t1.ipgumid) as sumsugumamt,
             (t1.ipgumamt - (select sum(sugumamt) from sa_ipgumdtl where ipgumid = t1.ipgumid)) as jangumamt
 		from sa_ipgummst t1
-		where 1=1
+		where t1.R_IPGUMID IS NULL
 		<isNotEmpty property="S_IPGUMDATE_FR">
 			<isNotEmpty property="S_IPGUMDATE_TO">
 				AND t1.ipgumdate BETWEEN #S_IPGUMDATE_FR# AND #S_IPGUMDATE_TO#
