@@ -701,7 +701,7 @@
 				AND A.IPGUMSEQ = C.IPGUMSEQ
 		WHERE A.SALEID = #SALEID#
 			AND A.IPGUMSEQ = #IPGUMSEQ#
-		ORDER BY A.IPGUMID ASC, B.IPGUMDATE ASC
+		ORDER BY A.IPGUMID ASC
 	</select>
 		
 	<select id="selectListIpgumMst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
@@ -727,7 +727,8 @@
 			FROM sa_ipgummst A
 				LEFT OUTER JOIN hr_insamst B
 					ON A.SALERCD = B.INSACODE
-			WHERE 1 = 1
+			WHERE A.IPGUMGUBUN<![CDATA[ <> ]]>'005'
+				AND A.R_IPGUMID IS NULL
 				<isNotEmpty property="S_IPGUMDATE_FR">
 					<isNotEmpty property="S_IPGUMDATE_TO">
 					AND A.IPGUMDATE BETWEEN #S_IPGUMDATE_FR# AND #S_IPGUMDATE_TO#
@@ -751,7 +752,7 @@
 			    </isNotEmpty>
 		) T
 		WHERE REM_IPGUMAMT > 0
-		ORDER BY IPGUMDATE DESC
+		ORDER BY IPGUMID DESC
 	</select>
 	
 	<insert id="insertIpgumDtl" parameterClass="java.util.HashMap">

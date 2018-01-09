@@ -37,18 +37,49 @@ public class SA011004Ctr {
 	}
 	
 	/**
+	 * @name (신)입금관리 화면 > 입금목록(팝업)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/SA011004_v1.do")
+	public ModelAndView SA011004_v1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return new ModelAndView("home/saleMng/SA011004_1");
+	}
+	
+	/**
 	 * @name (신)입금관리 화면 : 조회
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/home/selectListIpgumMst.do")
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011004_s1.do")
 	public ModelAndView selectListIpgumMst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
 		List<Map<String, Object>> lst = new ArrayList<Map<String, Object>>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		lst = SA011004Biz.selectListIpgumMst(param);
+		
+		resultMap.put("rows", lst);
+		
+		return new ModelAndView("jsonView", resultMap);
+	}
+
+	/**
+	 * @name (신)입금관리 화면 > 입금목록(팝업) : 조회
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011004_s2.do")
+	public ModelAndView selectPopListIpgumMst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
+		List<Map<String, Object>> lst = new ArrayList<Map<String, Object>>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		lst = SA011004Biz.selectPopListIpgumMst(param);
 		
 		resultMap.put("rows", lst);
 		
@@ -62,7 +93,7 @@ public class SA011004Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/home/selectOneInsamst.do")
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011004_s3.do")
 	public ModelAndView selectOneInsamst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
 		List<Map<String, Object>> lst = new ArrayList<Map<String, Object>>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -81,7 +112,7 @@ public class SA011004Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/home/insertIpgumMst.do")
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011004_u1.do")
 	public ModelAndView insertIpgumMst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
 		int cnt = 0;
 		String msg = "error";
@@ -111,7 +142,7 @@ public class SA011004Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/home/updateIpgumMst.do")
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011004_u2.do")
 	public ModelAndView updateIpgumMst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
 		int cnt = 0;
 		String msg = "error";
@@ -141,7 +172,7 @@ public class SA011004Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/home/deleteIpgumMst.do")
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011004_u3.do")
 	public ModelAndView deleteIpgumMst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
 		int cnt = 0;
 		String msg = "error";

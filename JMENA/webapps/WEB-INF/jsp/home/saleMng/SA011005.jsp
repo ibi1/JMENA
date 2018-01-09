@@ -429,8 +429,8 @@
 				loadError:function(){alert("Error~!!");},
 				colNames:['판매번호', '입금순번', '입금구분', '입금일자', '입금예정금액', '입금처리금액', '입금여부', '입금처리',  '비고', '입금번호', '처리순번'],
 				colModel:[
-					{name:"SALEID",				index:'SALEID',			width:100,	align:'center', sortable:false, editable:true, hidden:true}
-					, {name:"IPGUMSEQ",			index:'IPGUMSEQ',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
+					{name:"SALEID",				index:'SALEID',			width:100,	align:'center', sortable:false, editable:false, hidden:true}
+					, {name:"IPGUMSEQ",			index:'IPGUMSEQ',		width:100,	align:'center', sortable:false, editable:false, hidden:true}
 					, {name:"DEPOSITGUBUN",		index:'DEPOSITGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=009", buildSelect:f_selectListEnaIpgumGubunCode} }
 					, {name:"DEPOSITDATE",		index:'DEPOSITDATE',	width:80,	align:'center', sortable:false, editable:true}
 					, {name:"DEPOSITAMT",		index:'DEPOSITAMT',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{decimalSeparator:",", thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
@@ -472,21 +472,21 @@
 					var countRow = $("#bottomList1").jqGrid('getGridParam', 'records');
 					$("#bottomList1Count").html(countRow);
 					
-					var tot = 0;
-					
 					var ids = $(this).jqGrid('getDataIDs');
+					var totSugumAmt = 0, totDipositAmt = 0;
 					
 					ids.some(function(currentValue, index, array){
 						var depositYn = $("#bottomList1").jqGrid('getCell', ids[index], 'DEPOSITYN');
+						var sugumAmt = $("#bottomList1").jqGrid('getCell', ids[index], 'SUGUMAMT');
 						
-						if (depositYn == "Y") {
-							var sugumAmt = parseInt($("#bottomList1").jqGrid('getCell', ids[index], 'SUGUMAMT'));
-							
-							tot += isNaN(sugumAmt) == true ? 0 : sugumAmt;
-			        	}        
+						if($.trim(sugumAmt) == "") sugumAmt = 0;
+						
+						totSugumAmt += parseInt(sugumAmt);
+						if (depositYn == "Y") totDipositAmt += parseInt(sugumAmt);     
 					});
 					
-					$("#SUGUMTOTAL").val(tot);
+					$("#SUGUMTOTAL").val(totDipositAmt);
+					$("#hdnSumSugumAmt").val(totSugumAmt);
 				},
 				gridComplete: function() {
 					var ids = $("#bottomList1").jqGrid("getDataIDs");
@@ -740,7 +740,10 @@
 					
 					return false;
 				}
-				
+				if (parseInt($("#hdnSumSugumAmt").val()) > 0) {
+					alert("입금처리금액이 있을 경우, 삭제가 불가합니다.");
+					return false;
+				}
 				if (confirm("삭제하시겠습니까?") == true) {
 					$.ajax({ 
 						type: 'POST' ,
@@ -1717,7 +1720,7 @@
 			var sTmpHtml = "<form id=\"dummy\">"
 						 + "<input type=\"hidden\" id=\"hdnSALEID\" value=\""+ oRowData.SALEID +"\">"
 						 + "<input type=\"hidden\" id=\"hdnIPGUMSEQ\" value=\""+ oRowData.IPGUMSEQ +"\">"
-						 + "</form>";
+						 + "</form>";			
 			$("#rightDiv > #dummy").remove();
 			$("#rightDiv").append(sTmpHtml);
 			
@@ -1887,7 +1890,10 @@
 						<table >
 							<tr>
 								<th width="120">입금합계</th>
-								<td><input type="text" id="SUGUMTOTAL" name="SUGUMTOTAL" /></td>
+								<td>
+									<input type="text" id="SUGUMTOTAL" name="SUGUMTOTAL" />
+									<input type="hidden" id="hdnSumSugumAmt" />
+								</td>
 								<td><input type="button" value="추가" id='tab1InsertButton' /></td>
 								<td><input type="button" value="삭제" id='tab1DeleteButton' /></td>
 								<td><input type="button" value="저장" id='tab1SaveButton' /></td>

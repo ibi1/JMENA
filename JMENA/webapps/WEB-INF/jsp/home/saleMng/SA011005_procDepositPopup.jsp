@@ -325,8 +325,8 @@
 		// 좌측 그리드 초기화
 		init.setLeftGrid = function() {
 			var param = {
-				"S_IPGUMDATE_FR": $("#S_IPGUMDATE_FR").val(),
-				"S_IPGUMDATE_TO": $("#S_IPGUMDATE_TO").val(),
+				"S_IPGUMDATE_FR": $("#S_IPGUMDATE_FR").val().replace(/[^0-9-]/g, ""),
+				"S_IPGUMDATE_TO": $("#S_IPGUMDATE_TO").val().replace(/[^0-9-]/g, ""),
 				"S_KNAME": $.trim($("#S_KNAME").val()),
 				"S_IPGUMGUBUN" : $("#S_IPGUMGUBUN").val(),
 				"S_BANKGUBUN": $("#S_BANKGUBUN").val(),
@@ -360,7 +360,7 @@
 			   	],
 			   	rowNum: -1,
 			   	autowidth: true,
-			   	gridview: true,
+			   	gridview: true,			   	
 				jsonReader: {
 					root: "rows",
 					repeatitems: false
@@ -374,7 +374,7 @@
 					$("#leftGridCount").text(rCount);
 				},
 				onSelectRow: function(rowid, status, e) {
-					rData = $(this).jqGrid("getRowData", rowid);
+					var rData = $(this).jqGrid("getRowData", rowid);
 					
 					$("#IPGUMDATE").val(rData.IPGUMDATE);
 					$("#IPGUMID").val(rData.IPGUMID);
@@ -401,6 +401,16 @@
 		
 		// 조회 버튼 클릭 이벤트
 		$("#selectButton").click(function() {
+			if($("#S_IPGUMDATE_FR").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("기간을 입력해주세요.");
+				$("#S_IPGUMDATE_FR").focus();
+				return;
+			}
+			if($("#S_IPGUMDATE_TO").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("기간을 입력해주세요.");
+				$("#S_IPGUMDATE_TO").focus();
+				return;
+			}
 			fnReset(init.setLeftGrid);
 		});
 		// 취소(삭제) 버튼 클릭 이벤트
@@ -416,7 +426,7 @@
 		});
 		// 저장 버튼 클릭 이벤트
 		$("#saveButton").click(function() {
-			if(fnValidate()) fnSave();
+			if(fnSaveValidation()) fnSave();
 		});
 		// 숫자 입력 키 이벤트
 		inputComma("S_IPGUMAMT");
@@ -430,7 +440,7 @@
 	// 입력 값 리셋
 	function fnReset(callback) {
 		$("#rightDiv input[type='text'], #rightDiv select").each(function(idx) {
-			if($(this).attr("id") == "IPGUMDATE") $("#IPGUMDATE").jqxMaskedInput("clear"); //$(this).val(dateInput(0));
+			if($(this).attr("id") == "IPGUMDATE") $("#IPGUMDATE").jqxMaskedInput("clear");
 			else $(this).val("");
 		});
 		$("#leftGrid").resetSelection();
@@ -438,7 +448,7 @@
 		if(typeof callback == "function") callback();
 	}
 	// 유효성 체크
-	function fnValidate() {
+	function fnSaveValidation() {
 		if($("#IPGUMID").val() == "") {
 			alert("입금 처리할 데이터를 그리드에서 선택해주세요.");
 			return false;
@@ -480,7 +490,7 @@
 						alert("저장이 완료되었습니다.");
 						$("#selectButton").trigger("click");
 						init.setTopGrid();
-						$(opener.location).attr("href", "javascript:f_selectListEnaIpgumScheduleTb(\""+ gSALEID +"\")");
+						window.opener.f_selectListEnaIpgumScheduleTb(gSALEID);
 					} else {
 						alert("저장 중 오류가 발생했습니다.");	
 					}
