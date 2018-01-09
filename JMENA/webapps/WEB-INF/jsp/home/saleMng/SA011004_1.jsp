@@ -140,7 +140,7 @@
 					$("#IPGUMDATE", opener.document).val(rData.IPGUMDATE);
 					$("#IPGUMTYPE", opener.document).val(rData.IPGUMTYPE);
 					$("#IPGUMGUBUN", opener.document).val("005");
-					$("#S_IPGUMID", opener.document).val(rData.IPGUMID);
+					$("#R_IPGUMID", opener.document).val(rData.IPGUMID);
 					$("#BANKGUBUN", opener.document).val(rData.BANKGUBUN);
 					$("#IPGUMPERSON", opener.document).val(rData.IPGUMPERSON);
 					$("#IPGUMAMT", opener.document).val(setComma(rData.IPGUMAMT));
