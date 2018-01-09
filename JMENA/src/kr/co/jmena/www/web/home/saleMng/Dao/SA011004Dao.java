@@ -27,6 +27,17 @@ public class SA011004Dao extends SqlMapClientDaoSupport{
 	}
 	
 	/**
+	 * (신)입금관리 > 입금목록(팝업) : 조회
+	 * @return
+	 * @throws DataAccessException
+	 */
+	public List<Map<String, Object>> selectPopListIpgumMst(Map<String, Object> param) throws DataAccessException {
+		List<Map<String, Object>> lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectPopListIpgumMst", param);
+		
+		return lst;
+	}	
+	
+	/**
 	 * (신)입금관리 : 담당자 조회
 	 * @return
 	 * @throws DataAccessException
@@ -42,12 +53,12 @@ public class SA011004Dao extends SqlMapClientDaoSupport{
 	 * @return
 	 * @throws DataAccessException
 	 */
-	public int insertIpgumMst(Map<String, Object> param) throws DataAccessException {
-		int cnt = 0;
+	public String insertIpgumMst(Map<String, Object> param) throws DataAccessException {
+		String sKey = "";
 		
-		cnt = getSqlMapClientTemplate().update(NAME_SPACE + "insertIpgumMst", param);
+		sKey = (String) getSqlMapClientTemplate().insert(NAME_SPACE + "insertIpgumMst", param);
 		
-		return cnt;
+		return sKey;
 	}
 	
 	/**
@@ -62,6 +73,19 @@ public class SA011004Dao extends SqlMapClientDaoSupport{
 		
 		return cnt;
 	}
+	
+	/**
+	 * (신)입금관리 : 추가 (환불 입금번호 Update)
+	 * @return
+	 * @throws DataAccessException
+	 */
+	public int updateRefundIpgumMst(Map<String, Object> param) throws DataAccessException {
+		int cnt = 0;
+		
+		cnt = getSqlMapClientTemplate().update(NAME_SPACE + "updateRefundIpgumMst", param);
+		
+		return cnt;
+	}	
 	
 	/**
 	 * (신)입금관리 : 삭제

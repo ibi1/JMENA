@@ -10,21 +10,24 @@
 		FROM (
 			SELECT A.IPGUMID
 				, A.IPGUMDATE
-			    , A.IPGUMTYPE
-			    , A.IPGUMGUBUN
-			    , fn_codename('01', '009', A.IPGUMGUBUN) AS IPGUMGUBUNNAME
-			    , A.BANKGUBUN
-			    , A.IPGUMAMT
-			    , A.REMARK
-			    , A.IPGUMPERSON
-			    , A.BRANCHCODE
-			    , A.SALERCD
-			    , B.KNAME
-			    , (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl WHERE IPGUMID = A.IPGUMID) AS SUGUMAMT
-			    , (A.IPGUMAMT - (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl WHERE IPGUMID = A.IPGUMID)) AS JANAMT
+				, A.IPGUMTYPE
+				, fn_codename('01', '012', A.IPGUMTYPE) AS NAME_IPGUMTYPE
+				, A.IPGUMGUBUN
+				, fn_codename('01', '009', A.IPGUMGUBUN) AS NAME_IPGUMGUBUN
+				, A.BANKGUBUN
+				, fn_codename('01', '015', A.BANKGUBUN) AS NAME_BANKGUBUN
+				, A.IPGUMAMT
+				, A.REMARK
+				, A.IPGUMPERSON
+				, A.BRANCHCODE
+				, A.SALERCD
+				, A.R_IPGUMID
+				, E.KNAME
+				, (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl WHERE IPGUMID = A.IPGUMID) AS SUM_SUGUMAMT
+				, (A.IPGUMAMT - (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl WHERE IPGUMID = A.IPGUMID)) AS REM_IPGUMAMT
 			FROM sa_ipgummst A
-				LEFT OUTER JOIN hr_insamst B
-					ON A.SALERCD = B.INSACODE
+				LEFT OUTER JOIN hr_insamst E
+					ON A.SALERCD = E.INSACODE
 			WHERE 1 = 1
 				<isNotEmpty property="S_IPGUMDATE_FR">
 					<isNotEmpty property="S_IPGUMDATE_TO">
@@ -45,19 +48,50 @@
 			    AND A.IPGUMAMT = #S_IPGUMAMT#
 				</isNotEmpty>
 				<isNotEmpty property="S_KNAME">
-			    AND B.KNAME LIKE '%$S_KNAME$%'
+			    AND E.KNAME LIKE '%$S_KNAME$%'
 			    </isNotEmpty>
 		) T
-		<isNotEmpty property="S_DEALYN">
-			<isEqual property="S_DEALYN" compareValue="Y">
-			WHERE JANAMT = 0
+		<isNotEmpty property="S_PROCYN">
+			<isEqual property="S_PROCYN" compareValue="Y">
+			WHERE REM_IPGUMAMT = 0
+				AND (IPGUMGUBUN<![CDATA[ <> ]]>'005' AND R_IPGUMID IS NULL)
 			</isEqual>
-			<isEqual property="S_DEALYN" compareValue="N">
-			WHERE JANAMT > 0
+			<isEqual property="S_PROCYN" compareValue="N">
+			WHERE REM_IPGUMAMT > 0
+				AND (IPGUMGUBUN<![CDATA[ <> ]]>'005' AND R_IPGUMID IS NULL)
 			</isEqual>
 		</isNotEmpty>
-		ORDER BY IPGUMDATE DESC
+		ORDER BY IPGUMID DESC
 	</select>
+	
+	<select id="selectPopListIpgumMst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		/* SA011004.selectPopListIpgumMst */
+		SELECT *
+		FROM (
+			SELECT A.IPGUMID
+				, A.IPGUMDATE
+				, A.IPGUMTYPE
+				, fn_codename('01', '012', A.IPGUMTYPE) AS NAME_IPGUMTYPE
+				, A.IPGUMGUBUN
+				, fn_codename('01', '009', A.IPGUMGUBUN) AS NAME_IPGUMGUBUN
+				, A.BANKGUBUN
+				, fn_codename('01', '015', A.BANKGUBUN) AS NAME_BANKGUBUN
+				, A.IPGUMAMT
+				, A.REMARK
+				, A.IPGUMPERSON
+				, A.R_IPGUMID
+				, (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl WHERE IPGUMID = A.IPGUMID) AS SUM_SUGUMAMT
+				, (A.IPGUMAMT - (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl WHERE IPGUMID = A.IPGUMID)) AS REM_IPGUMAMT
+			FROM sa_ipgummst A
+			WHERE A.IPGUMGUBUN<![CDATA[ <> ]]>'005'
+				AND A.R_IPGUMID IS NULL			
+				<isNotEmpty property="S_IPGUMDATE">
+				AND A.IPGUMDATE = #S_IPGUMDATE#
+				</isNotEmpty>
+		) T    
+		WHERE SUM_SUGUMAMT = 0
+		ORDER BY IPGUMID DESC
+	</select>	
 	
 	<select id="selectOneInsamst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
 		/* SA011004.selectOneInsamst */
@@ -71,6 +105,12 @@
 	</select>
 	
 	<insert id="insertIpgumMst" parameterClass="java.util.HashMap">
+		<selectKey keyProperty="IPGUMID" resultClass="String">
+			SELECT CONCAT('IC', DATE_FORMAT(CURDATE(), '%y%m'), LPAD(IFNULL(MAX(CAST(RIGHT(IPGUMID, 4) AS unsigned)), 0) + 1, 4, '0')) AS IPGUMID
+			FROM sa_ipgummst
+			WHERE IPGUMID LIKE CONCAT('IC', DATE_FORMAT(CURDATE(), '%y%m'), '____')
+		</selectKey>
+		
 		/* SA011004.insertIpgumMst */
 		INSERT INTO sa_ipgummst(
 			IPGUMID
@@ -118,6 +158,13 @@
 			, BRANCHCODE = #BRANCHCODE#
 			, SALERCD = #SALERCD#
 		WHERE IPGUMID = #IPGUMID#	
+	</update>
+	
+	<update id="updateRefundIpgumMst" parameterClass="java.util.HashMap">
+		/* SA011004.updateRefundIpgumMst */
+		UPDATE sa_ipgummst SET
+			R_IPGUMID = #IPGUMID#
+		WHERE IPGUMID = #R_IPGUMID#
 	</update>
 	
 	<delete id="deleteIpgumMst" parameterClass="java.util.HashMap">

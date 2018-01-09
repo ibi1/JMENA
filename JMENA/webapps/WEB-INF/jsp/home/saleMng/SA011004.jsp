@@ -42,9 +42,9 @@
 				<tr>
 					<th width="120">처리구분</th>
 					<td colspan="3">
-						<div style="float:left; padding-right:20px;"><input type="radio" name="S_DEALYN" id="radio1" value="" /><label for="radio1">전체</label></div>
-						<div style="float:left; padding-right:20px;"><input type="radio" name="S_DEALYN" id="radio2" value="Y" /><label for="radio2">처리</label></div>
-						<div style="float:left;"><input type="radio" name="S_DEALYN" id="radio3" value="N" checked /><label for="radio3">미처리</label></div>
+						<div style="float:left; padding-right:20px;"><input type="radio" name="S_PROCYN" id="radio1" value="" /><label for="radio1">전체</label></div>
+						<div style="float:left; padding-right:20px;"><input type="radio" name="S_PROCYN" id="radio2" value="Y" /><label for="radio2">처리</label></div>
+						<div style="float:left;"><input type="radio" name="S_PROCYN" id="radio3" value="N" checked /><label for="radio3">미처리</label></div>
 					</td>
 				</tr>
 			</table>
@@ -60,7 +60,7 @@
 					<td colspan="3">
 						<div style="float:left; padding-right:3px;"><input type="text" id="IPGUMDATE" /></div>
 						<div style="float:left; padding-right:3px;"><input type="text" id="IPGUMID" /></div>
-						<!-- <div style="float:left"><input type="button" id="searchButton" /></div> -->
+						<div style="float:left"><input type="button" id="searchButton" /></div>
 					</td>
 				</tr>
 				<tr>
@@ -69,7 +69,10 @@
 				</tr>
 				<tr>
 					<th width="120">입금구분</th>
-					<td colspan="3"><select id="IPGUMGUBUN" style="width:120px"></select></td>
+					<td colspan="3">
+						<div style="float:left; padding-right:3px;"><select id="IPGUMGUBUN" style="width:120px"></select></div>
+						<div style="float:left; padding-right:3px;"><input type="hidden" id="R_IPGUMID" /></div>
+					</td>
 				</tr>
 				<tr>
 					<th width="120">금융기관</th>
@@ -83,9 +86,9 @@
 				</tr>
 				<tr>
 					<th width="120">입금처리금액</th>
-					<td><input type="text" id="SUGUMAMT" /></td>
+					<td><input type="text" id="SUM_SUGUMAMT" /></td>
 					<th width="120">미처리잔액</th>
-					<td><input type="text" id="JANAMT" /></td>
+					<td><input type="text" id="REM_IPGUMAMT" /></td>
 				</tr>
 				<tr>					
 					<th width="120">담당자</th>
@@ -113,14 +116,14 @@
 	$(document).ready(function() {
 		// 스타일 적용
 		$("#selectButton, #insertButton, #deleteButton, #saveButton").jqxButton({theme: 'energyblue', width: 80, height: 25});
-		//$("#searchButton").jqxButton({theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay"});
+		$("#searchButton").jqxButton({theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay"});
 		$("#S_IPGUMDATE_FR, #S_IPGUMDATE_TO, #IPGUMDATE").jqxMaskedInput({theme: 'energyblue', width: 90, height: 25, mask: '####-##-##'});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', width: 150, height: 25});
 		$("#S_IPGUMAMT").jqxInput({theme: 'energyblue', width: 150, height: 25, rtl: true});
-		$("#IPGUMID").jqxInput({theme: 'energyblue', width: 100, height: 25, disabled: true});
+		$("#IPGUMID, #R_IPGUMID").jqxInput({theme: 'energyblue', width: 100, height: 25, disabled: true});
 		$("#IPGUMPERSON, #KNAME, #CONNAME").jqxInput({theme: 'energyblue', width: 100, height: 25});
 		$("#IPGUMAMT").jqxInput({theme: 'energyblue', width: 120, height: 25, rtl: true});
-		$("#SUGUMAMT, #JANAMT").jqxInput({theme: 'energyblue', width: 120, height: 25, rtl: true, disabled: true});
+		$("#SUM_SUGUMAMT, #REM_IPGUMAMT").jqxInput({theme: 'energyblue', width: 120, height: 25, rtl: true, disabled: true});
 		$("#SALERCD").jqxInput({theme: 'energyblue', width: 80, height: 25, disabled: true});
 		$("#REMARK").jqxInput({theme: 'energyblue', width: 300, height: 25});
 		// 버튼권한 설정
@@ -231,18 +234,18 @@
 		// 좌측 그리드 초기화
 		init.setLeftGrid = function() {
 			var param = {
-				"S_IPGUMDATE_FR": $("#S_IPGUMDATE_FR").val(),
-				"S_IPGUMDATE_TO": $("#S_IPGUMDATE_TO").val(),
+				"S_IPGUMDATE_FR": $("#S_IPGUMDATE_FR").val().replace(/[^0-9-]/g, ""),
+				"S_IPGUMDATE_TO": $("#S_IPGUMDATE_TO").val().replace(/[^0-9-]/g, ""),
 				"S_KNAME": $.trim($("#S_KNAME").val()),
 				"S_IPGUMGUBUN" : $("#S_IPGUMGUBUN").val(),
 				"S_BANKGUBUN": $("#S_BANKGUBUN").val(),
 				"S_IPGUMAMT": removeComma($("#S_IPGUMAMT").val()),
-				"S_DEALYN": $("input[name='S_DEALYN']:checked").val()
+				"S_PROCYN": $("input[name='S_PROCYN']:checked").val()
 			};
 			$("#leftGrid").jqGrid("GridUnload");
 			$("#leftGrid").jqGrid({
 				mtype: "POST",
-				url: "/home/selectListIpgumMst.do",
+				url: "/home/SA011004_s1.do",
 				postData : JSON.stringify(param),
 				ajaxGridOptions : {contentType: "application/json;charset=UTF-8"},
 				datatype: "json",
@@ -250,15 +253,18 @@
 			   		{label: "입금일자", name: "IPGUMDATE", sortable: false, width: 80, align: "center"},
 			   		{label: "입금인", name: "IPGUMPERSON", sortable: false, width: 60, align: "center"},
 			   		{label: "입금금액", name: "IPGUMAMT", sortable: false, width: 80, align: "right", formatter: "number", formatoptions: {thousandsSeparator: ",", defaulValue: ""}},
-			   		{label: "입금구분", name: "IPGUMGUBUNNAME", sortable: false, width: 60, align: "center"},
-			   		{label: "입금처리금액", name: "SUGUMAMT", sortable: false, width: 80, align: "right", formatter: "number", formatoptions: {thousandsSeparator: ",", defaulValue: ""}},		
-			   		{label: "미처리잔액", name: "JANAMT", sortable: false, width: 80, align: "right", formatter: "number", formatoptions: {thousandsSeparator: ",", defaulValue: ""}},
+			   		{label: "입금구분", name: "NAME_IPGUMGUBUN", sortable: false, width: 60, align: "center"},
+			   		{label: "입금처리금액", name: "SUM_SUGUMAMT", sortable: false, width: 80, align: "right", formatter: "number", formatoptions: {thousandsSeparator: ",", defaulValue: ""}},		
+			   		{label: "미처리잔액", name: "REM_IPGUMAMT", sortable: false, width: 80, align: "right", formatter: "number", formatoptions: {thousandsSeparator: ",", defaulValue: ""}},
 			   		{label: "입금번호", name: "IPGUMID", sortable: false, hidden: true},
 			   		{label: "입금형태(코드)", name: "IPGUMTYPE", sortable: false, hidden: true},
+			   		{label: "입금형태", name: "NAME_IPGUMTYPE", sortable: false, hidden: true},
 			   		{label: "입금구분(코드)", name: "IPGUMGUBUN", sortable: false, hidden: true},
 			   		{label: "입금은행(코드)", name: "BANKGUBUN", sortable: false, hidden: true},
+			   		{label: "입금은행", name: "NAME_BANKGUBUN", sortable: false, hidden: true},
 			   		{label: "비고", name: "REMARK", sortable: false, hidden: true},
 			   		{label: "입금인", name: "IPGUMPERSON", sortable: false, hidden: true},
+			   		{label: "환불 입금번호", name: "R_IPGUMID", sortable: false, hidden: true},
 			   		{label: "지사(코드)", name: "BRANCHCODE", sortable: false, hidden: true},
 			   		{label: "담당자(코드)", name: "SALERCD", sortable: false, hidden: true},
 			   		{label: "담당자", name: "KNAME", sortable: false, hidden: true}
@@ -279,17 +285,18 @@
 					$("#leftGridCount").text(rCount);
 				},
 				onSelectRow: function(rowid, status, e) {
-					rData = $(this).jqGrid("getRowData", rowid);
+					var rData = $(this).jqGrid("getRowData", rowid);
 					
 					$("#IPGUMDATE").val(rData.IPGUMDATE);
 					$("#IPGUMID").val(rData.IPGUMID);
 					$("#IPGUMTYPE").val(rData.IPGUMTYPE);
 					$("#IPGUMGUBUN").val(rData.IPGUMGUBUN);
+					$("#R_IPGUMID").val(rData.R_IPGUMID);
 					$("#BANKGUBUN").val(rData.BANKGUBUN);
 					$("#IPGUMPERSON").val(rData.IPGUMPERSON);
 					$("#IPGUMAMT").val(setComma(rData.IPGUMAMT));
-					$("#SUGUMAMT").val(setComma(rData.SUGUMAMT));
-					$("#JANAMT").val(setComma(rData.JANAMT));
+					$("#SUM_SUGUMAMT").val(setComma(rData.SUM_SUGUMAMT));
+					$("#REM_IPGUMAMT").val(setComma(rData.REM_IPGUMAMT));
 					$("#KNAME").val(rData.KNAME);
 					$("#SALERCD").val(rData.SALERCD);
 					$("#BRANCHCODE").val(rData.BRANCHCODE);
@@ -313,6 +320,16 @@
 		
 		// 조회 버튼 클릭 이벤트
 		$("#selectButton").click(function() {
+			if($("#S_IPGUMDATE_FR").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("기간을 입력해주세요.");
+				$("#S_IPGUMDATE_FR").focus();
+				return;
+			}
+			if($("#S_IPGUMDATE_TO").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("기간을 입력해주세요.");
+				$("#S_IPGUMDATE_TO").focus();
+				return;
+			}
 			fnReset(init.setLeftGrid);
 			$("#IPGUMTYPE").trigger("change");
 		});
@@ -323,16 +340,24 @@
 		});
 		// 삭제 버튼 클릭 이벤트
 		$("#deleteButton").click(function() {
-			var pIpgumId = $("#IPGUMID").val();
-			if(pIpgumId == "") {
-				alert("삭제할 데이터를 그리드에서 선택해주세요.");
-			} else fnDelete(pIpgumId);
+			if(fnDeleteValidation()) fnDelete();
 		});
 		// 저장 버튼 클릭 이벤트
 		$("#saveButton").click(function() {
-			if(fnValidate()) fnSave();
+			if(fnSaveValidation()) fnSave();
 		});
-		
+		// 찾기 버튼 클릭 이벤트
+		$("#searchButton").click(function() {
+			if($("#IPGUMDATE").val().replace(/[^0-9]/g, "").length < 8) {
+				alert("입금일자를 입력해주세요.");
+				$("#IPGUMDATE").focus();
+				return;
+			}
+			//팝업
+			var popUrl = "/home/SA011004_v1.do";	//팝업창에 출력될 페이지 UR
+			var popOption = "width=600, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+			window.open(popUrl,"입금목록",popOption);
+		});
 		// 입금형태 변경 이벤트
 		$("#IPGUMTYPE").on("change", function(e) {
 			if($(this).val() == "005") {	// 입금형태가 "보관대체금액"일 경우
@@ -377,7 +402,7 @@
 		var param = {S_KNAME: pKname};
 		$.ajax({ 
 			type: "POST",
-			url: "/home/selectOneInsamst.do",	
+			url: "/home/SA011004_s3.do",	
 			data : JSON.stringify(param),
 			contentType : "application/json;charset=UTF-8",
 			dataType : "json", 
@@ -397,8 +422,26 @@
 			}  
 		});
 	}
-	// 유효성 체크
-	function fnValidate() {
+	// 저장 유효성 체크
+	function fnSaveValidation() {
+		var sIpgumId = $("#IPGUMID").val();
+
+		if(sIpgumId != "") {
+			if($("#IPGUMGUBUN").val() == "005") {
+				alert("입금구분이 \"환불금\"일 경우, 수정이 불가합니다.");
+				return false;
+			}
+			if($("#R_IPGUMID").val() != "") {
+				alert("환불 처리된 입금정보는 수정이 불가합니다.");
+				return false;
+			}
+			var sSumSugumAmt = removeComma($("#SUM_SUGUMAMT").val());
+			if(parseInt(sSumSugumAmt) > 0) {
+				alert("입금처리금액이 있을 경우, 수정이 불가합니다.");
+				return false;
+			}
+		}
+		
 		if($("#IPGUMDATE").val().replace(/[^0-9]/g, "").length < 8) {
 			alert("입금일자를 입력해주세요.");
 			$("#IPGUMDATE").focus();
@@ -430,21 +473,26 @@
 			return false;
 		}
 		if($("#IPGUMGUBUN").val() == "005") {	// 입금구분이 "환불금"일 경우
+			if($("#R_IPGUMID").val() == "") {
+				alert("입금구분이 \"환불금\"일 경우, 단축버튼을 클릭하여 환불할 입금정보 선택해주십시오.");
+				return false;
+			}
 			if($("#SALERCD").val() == "") {
 				alert("입금구분이 \"환불금\"일 경우, 담당자는 필수 입력사항입니다.");
 				$("#KNAME").focus();
 				return false;
 			}
 		}
+		
 		return true;
 	}
 	// 저장
 	function fnSave() {
-		var url = "/home/insertIpgumMst.do";
+		var url = "/home/SA011004_u1.do";
 		var sAction = "저장";
 		
 		if($("#IPGUMID").val() != "") {
-			url = "/home/updateIpgumMst.do";
+			url = "/home/SA011004_u2.do";
 			sAction = "수정";
 		}
 		
@@ -453,6 +501,7 @@
 					IPGUMID: $("#IPGUMID").val(),
 					IPGUMDATE: $("#IPGUMDATE").val(),
 					IPGUMTYPE: $("#IPGUMTYPE").val(),
+					R_IPGUMID: $("#R_IPGUMID").val(),
 					IPGUMGUBUN: $("#IPGUMGUBUN").val(),
 					BANKGUBUN: $("#BANKGUBUN").val(),
 					IPGUMAMT: removeComma($("#IPGUMAMT").val()),
@@ -483,13 +532,37 @@
 			});
 		}
 	}
+	// 삭제 유효성 체크
+	function fnDeleteValidation() {
+		var sIpgumId = $("#IPGUMID").val();
+		
+		if(sIpgumId == "") {
+			alert("삭제할 데이터를 그리드에서 선택해주세요.");
+			return false;
+		}
+		if($("#IPGUMGUBUN").val() == "005") {
+			alert("입금구분이 \"환불금\"일 경우, 삭제가 불가합니다.");
+			return false;
+		}
+		if($("#R_IPGUMID").val() != "") {
+			alert("환불 처리된 입금정보는 삭제가 불가합니다.");
+			return false;
+		}
+		var sSumSugumAmt = removeComma($("#SUM_SUGUMAMT").val());
+		if(parseInt(sSumSugumAmt) > 0) {
+			alert("입금처리금액이 있을 경우, 삭제가 불가합니다.");
+			return false;
+		}
+		
+		return true;			
+	}	
 	// 삭제
-	function fnDelete(pIpgumId) {
+	function fnDelete() {
 		if(confirm("삭제하시겠습니까?")) {
-			var param = {IPGUMID: pIpgumId};
+			var param = {IPGUMID: $("#IPGUMID").val()};
 			$.ajax({
 				type: "POST",
-				url: "/home/deleteIpgumMst.do",	
+				url: "/home/SA011004_u3.do",	
 				data : JSON.stringify(param),
 				contentType : "application/json;charset=UTF-8",
 				dataType : "json", 

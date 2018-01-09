@@ -32,6 +32,18 @@ public class SA011004Biz {
 		return lst;
 	}
 
+	public List<Map<String, Object>> selectPopListIpgumMst(Map<String, Object> param) throws Exception {
+		List<Map<String, Object>> lst = null;
+		
+		try {
+			lst = SA011004Dao.selectPopListIpgumMst(param);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return lst;
+	}
+	
 	public List<Map<String, Object>> selectOneInsamst(Map<String, Object> param) throws Exception {
 		List<Map<String, Object>> lst = null;
 		
@@ -46,9 +58,19 @@ public class SA011004Biz {
 	
 	public int insertIpgumMst(Map<String, Object> param) throws Exception {
 		int cnt = 0;
+		String sKey = "";
 		
 		try {
-			cnt = SA011004Dao.insertIpgumMst(param);
+			sKey = SA011004Dao.insertIpgumMst(param);
+			
+			if(sKey.length() > 0) {
+				if (param.get("IPGUMGUBUN").equals("005")) {	// 입금구분이 "환불금"일 경우
+					param.put("IPGUMID", sKey);
+					cnt = SA011004Dao.updateRefundIpgumMst(param);
+				} else {
+					cnt = 1;
+				}
+			}
 		} catch (Exception e) {
 			throw e;
 		}
