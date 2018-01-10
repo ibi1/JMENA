@@ -101,6 +101,8 @@
 	}
 
 	function f_selectListEnaIpgumGubunCode(){
+		$("#S_IPGUMGUBUN").append("<option value=\"ALL\" selected=\"selected\">전체</option>");
+		
 		var CCODE = "009";
 	   	$.ajax({ 
 			type: 'POST' ,

@@ -51,9 +51,11 @@
 		<isNotEmpty property="S_SALERCD">
 		    AND t1.salercd = #S_SALERCD#
 		</isNotEmpty>
-		<isNotEmpty property="S_IPGUMGUBUN">
-		    AND t1.ipgumgubun = #S_IPGUMGUBUN#
-		</isNotEmpty>
+		<isNotEqual property="S_IPGUMGUBUN" compareValue="ALL">
+			<isNotEmpty property="S_IPGUMGUBUN">
+			    AND t1.ipgumgubun = #S_IPGUMGUBUN#
+			</isNotEmpty>
+		</isNotEqual>
 		<isNotEmpty property="S_IPGUMPERSON">
 		    AND t1.ipgumperson  LIKE '%$S_IPGUMPERSON$%' 
 		</isNotEmpty>
