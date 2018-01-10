@@ -486,7 +486,7 @@
 					});
 					
 					$("#SUGUMTOTAL").val(totDipositAmt);
-					$("#hdnSumSugumAmt").val(totSugumAmt);
+					$("#txtSumSugumAmt").val(totSugumAmt);
 				},
 				gridComplete: function() {
 					var ids = $("#bottomList1").jqGrid("getDataIDs");
@@ -740,8 +740,8 @@
 					
 					return false;
 				}
-				if (parseInt($("#hdnSumSugumAmt").val()) > 0) {
-					alert("입금처리금액이 있을 경우, 삭제가 불가합니다.");
+				if (parseInt($("#txtSumSugumAmt").val()) > 0) {
+					alert("입금처리금액이 있어 삭제가 불가합니다.");
 					return false;
 				}
 				if (confirm("삭제하시겠습니까?") == true) {
@@ -992,6 +992,14 @@
 				$('#bottomList1').jqGrid('saveRow',v_rightLastSel_1,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
 				var cellData = $("#bottomList1").jqGrid('getRowData', v_rightLastSel_1); //셀 전체 데이터 가져오기
+				var sugumAmt = cellData.SUGUMAMT;
+				
+				if($.trim(sugumAmt) == "") sugumAmt = 0;
+				
+				if(parseInt(sugumAmt) > 0) {
+					alert("입금처리금액이 있어 삭제가 불가합니다.");
+					return;
+				}			
 
 				if (confirm("삭제하시겠습니까?") == true) {
 					$.ajax({ 
@@ -1892,7 +1900,7 @@
 								<th width="120">입금합계</th>
 								<td>
 									<input type="text" id="SUGUMTOTAL" name="SUGUMTOTAL" />
-									<input type="hidden" id="hdnSumSugumAmt" />
+									<input type="text" id="txtSumSugumAmt" disabled="disabled" style="display:none" />
 								</td>
 								<td><input type="button" value="추가" id='tab1InsertButton' /></td>
 								<td><input type="button" value="삭제" id='tab1DeleteButton' /></td>

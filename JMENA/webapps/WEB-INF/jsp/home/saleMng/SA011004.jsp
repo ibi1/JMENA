@@ -70,8 +70,8 @@
 				<tr>
 					<th width="120">입금구분</th>
 					<td colspan="3">
-						<div style="float:left; padding-right:3px;"><select id="IPGUMGUBUN" style="width:120px"></select></div>
-						<div style="float:left; padding-right:3px;"><input type="hidden" id="R_IPGUMID" /></div>
+						<select id="IPGUMGUBUN" style="width:120px"></select>
+						<input type="text" id="R_IPGUMID" disabled="disabled" style="display:none" />
 					</td>
 				</tr>
 				<tr>
@@ -82,7 +82,10 @@
 				</tr>
 				<tr>
 					<th width="120">입금금액</th>
-					<td colspan="3"><input type="text" id="IPGUMAMT" /></td>
+					<td colspan="3">
+						<input type="text" id="IPGUMAMT" />
+						<input type="text" id="txtIpgumAmt" disabled="disabled" style="display:none" />
+					</td>
 				</tr>
 				<tr>
 					<th width="120">입금처리금액</th>
@@ -112,6 +115,7 @@
 </html>
 <script type="text/javascript">
 	var init = {};
+	var leftGridData = {};
 	
 	$(document).ready(function() {
 		// 스타일 적용
@@ -120,7 +124,7 @@
 		$("#S_IPGUMDATE_FR, #S_IPGUMDATE_TO, #IPGUMDATE").jqxMaskedInput({theme: 'energyblue', width: 90, height: 25, mask: '####-##-##'});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', width: 150, height: 25});
 		$("#S_IPGUMAMT").jqxInput({theme: 'energyblue', width: 150, height: 25, rtl: true});
-		$("#IPGUMID, #R_IPGUMID").jqxInput({theme: 'energyblue', width: 100, height: 25, disabled: true});
+		$("#IPGUMID").jqxInput({theme: 'energyblue', width: 100, height: 25, disabled: true});
 		$("#IPGUMPERSON, #KNAME, #CONNAME").jqxInput({theme: 'energyblue', width: 100, height: 25});
 		$("#IPGUMAMT").jqxInput({theme: 'energyblue', width: 120, height: 25, rtl: true});
 		$("#SUM_SUGUMAMT, #REM_IPGUMAMT").jqxInput({theme: 'energyblue', width: 120, height: 25, rtl: true, disabled: true});
@@ -285,22 +289,22 @@
 					$("#leftGridCount").text(rCount);
 				},
 				onSelectRow: function(rowid, status, e) {
-					var rData = $(this).jqGrid("getRowData", rowid);
+					leftGridData = $(this).jqGrid("getRowData", rowid);
 					
-					$("#IPGUMDATE").val(rData.IPGUMDATE);
-					$("#IPGUMID").val(rData.IPGUMID);
-					$("#IPGUMTYPE").val(rData.IPGUMTYPE);
-					$("#IPGUMGUBUN").val(rData.IPGUMGUBUN);
-					$("#R_IPGUMID").val(rData.R_IPGUMID);
-					$("#BANKGUBUN").val(rData.BANKGUBUN);
-					$("#IPGUMPERSON").val(rData.IPGUMPERSON);
-					$("#IPGUMAMT").val(setComma(rData.IPGUMAMT));
-					$("#SUM_SUGUMAMT").val(setComma(rData.SUM_SUGUMAMT));
-					$("#REM_IPGUMAMT").val(setComma(rData.REM_IPGUMAMT));
-					$("#KNAME").val(rData.KNAME);
-					$("#SALERCD").val(rData.SALERCD);
-					$("#BRANCHCODE").val(rData.BRANCHCODE);
-					$("#REMARK").val(rData.REMARK);
+					$("#IPGUMDATE").val(leftGridData.IPGUMDATE);
+					$("#IPGUMID").val(leftGridData.IPGUMID);
+					$("#IPGUMTYPE").val(leftGridData.IPGUMTYPE);
+					$("#IPGUMGUBUN").val(leftGridData.IPGUMGUBUN);
+					$("#R_IPGUMID").val(leftGridData.R_IPGUMID);
+					$("#BANKGUBUN").val(leftGridData.BANKGUBUN);
+					$("#IPGUMPERSON").val(leftGridData.IPGUMPERSON);
+					$("#IPGUMAMT").val(setComma(leftGridData.IPGUMAMT));
+					$("#SUM_SUGUMAMT").val(setComma(leftGridData.SUM_SUGUMAMT));
+					$("#REM_IPGUMAMT").val(setComma(leftGridData.REM_IPGUMAMT));
+					$("#KNAME").val(leftGridData.KNAME);
+					$("#SALERCD").val(leftGridData.SALERCD);
+					$("#BRANCHCODE").val(leftGridData.BRANCHCODE);
+					$("#REMARK").val(leftGridData.REMARK);
 					
 					$("#IPGUMTYPE").trigger("change");
 				}
@@ -393,7 +397,9 @@
 			if($(this).attr("id") == "IPGUMDATE") $(this).val(dateInput(0));
 			else $(this).val("");
 		});
+		
 		$("#leftGrid").resetSelection();
+		leftGridData = {};
 		
 		if(typeof callback == "function") callback();
 	}
@@ -424,20 +430,17 @@
 	}
 	// 저장 유효성 체크
 	function fnSaveValidation() {
-		var sIpgumId = $("#IPGUMID").val();
-
-		if(sIpgumId != "") {
-			if($("#IPGUMGUBUN").val() == "005") {
-				alert("입금구분이 \"환불금\"일 경우, 수정이 불가합니다.");
+		if(leftGridData.IPGUMID) {		// 입금번호가 있을 경우(수정)
+			if(leftGridData.IPGUMGUBUN == "005") {
+				alert("환불금으로 등록된 입금정보는 수정이 불가합니다.");
 				return false;
 			}
-			if($("#R_IPGUMID").val() != "") {
-				alert("환불 처리된 입금정보는 수정이 불가합니다.");
+			if(leftGridData.R_IPGUMID != "") {
+				alert("해당 입금정보는 환불 처리되어 수정이 불가합니다.");
 				return false;
 			}
-			var sSumSugumAmt = removeComma($("#SUM_SUGUMAMT").val());
-			if(parseInt(sSumSugumAmt) > 0) {
-				alert("입금처리금액이 있을 경우, 수정이 불가합니다.");
+			if(parseInt(leftGridData.SUM_SUGUMAMT) > 0) {
+				alert("입금처리금액이 있어 수정이 불가합니다.");
 				return false;
 			}
 		}
@@ -472,9 +475,17 @@
 			$("#IPGUMAMT").focus();
 			return false;
 		}
-		if($("#IPGUMGUBUN").val() == "005") {	// 입금구분이 "환불금"일 경우
+		
+		if($("#IPGUMGUBUN").val() == "005") {		// 입금구분이 "환불금"일 경우
 			if($("#R_IPGUMID").val() == "") {
 				alert("입금구분이 \"환불금\"일 경우, 단축버튼을 클릭하여 환불할 입금정보 선택해주십시오.");
+				return false;
+			}			
+		}
+		if($("#R_IPGUMID").val() !== "") {		// 환불 입금번호가 있을 경우
+			if($("#IPGUMAMT").val() != $("#txtIpgumAmt").val()) {
+				alert("분할 환불이 불가하여 입금금액은 변경할 수 없습니다.");
+				$("#IPGUMAMT").val($("#txtIpgumAmt").val());
 				return false;
 			}
 			if($("#SALERCD").val() == "") {
@@ -489,14 +500,14 @@
 	// 저장
 	function fnSave() {
 		var url = "/home/SA011004_u1.do";
-		var sAction = "저장";
+		var action = "저장";
 		
-		if($("#IPGUMID").val() != "") {
+		if(leftGridData.IPGUMID) {		// 입금번호가 있을 경우(수정)
 			url = "/home/SA011004_u2.do";
-			sAction = "수정";
+			action = "수정";
 		}
 		
-		if(confirm(sAction +"하시겠습니까?")) {
+		if(confirm(action +"하시겠습니까?")) {
 			var param = {
 					IPGUMID: $("#IPGUMID").val(),
 					IPGUMDATE: $("#IPGUMDATE").val(),
@@ -520,10 +531,10 @@
 					var receiveData = data.rows;
 					
 					if(receiveData.MSG == "success") {
-						alert(sAction +"이 완료되었습니다.");
+						alert(action +"이 완료되었습니다.");
 						$("#selectButton").trigger("click");
 					} else {
-						alert(sAction +"중 오류가 발생했습니다.");	
+						alert(action +" 중 오류가 발생했습니다.");	
 					}
 				},
 				error: function(x, s, e) {
@@ -534,25 +545,22 @@
 	}
 	// 삭제 유효성 체크
 	function fnDeleteValidation() {
-		var sIpgumId = $("#IPGUMID").val();
-		
-		if(sIpgumId == "") {
+		if(!leftGridData.IPGUMID) {
 			alert("삭제할 데이터를 그리드에서 선택해주세요.");
+			return false;	
+		}
+		if(leftGridData.IPGUMGUBUN == "005") {
+			alert("환불금으로 등록된 입금정보는 삭제가 불가합니다.");
 			return false;
 		}
-		if($("#IPGUMGUBUN").val() == "005") {
-			alert("입금구분이 \"환불금\"일 경우, 삭제가 불가합니다.");
+		if(leftGridData.R_IPGUMID != "") {
+			alert("해당 입금정보는 환불 처리되어 삭제가 불가합니다.");
 			return false;
 		}
-		if($("#R_IPGUMID").val() != "") {
-			alert("환불 처리된 입금정보는 삭제가 불가합니다.");
+		if(parseInt(leftGridData.SUM_SUGUMAMT) > 0) {
+			alert("입금처리금액이 있어 삭제가 불가합니다.");
 			return false;
-		}
-		var sSumSugumAmt = removeComma($("#SUM_SUGUMAMT").val());
-		if(parseInt(sSumSugumAmt) > 0) {
-			alert("입금처리금액이 있을 경우, 삭제가 불가합니다.");
-			return false;
-		}
+		}		
 		
 		return true;			
 	}	

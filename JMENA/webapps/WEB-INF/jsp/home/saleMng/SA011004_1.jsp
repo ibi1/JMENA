@@ -88,6 +88,7 @@
 </html>
 <script type="text/javascript">
 	var init = {};
+	var mainGridData = {};
 	var gIPGUMDATE = $("#IPGUMDATE", opener.document).val();
 	
 	$(document).ready(function() {
@@ -134,16 +135,19 @@
 					$("#mainGridCount").text(rCount);
 				},
 				ondblClickRow: function(rowid, iRow, iCol) {
-					var rData = $(this).jqGrid("getRowData", rowid);
+					mainGridData = $(this).jqGrid("getRowData", rowid);
 					
 					window.opener.fnReset();
-					$("#IPGUMDATE", opener.document).val(rData.IPGUMDATE);
-					$("#IPGUMTYPE", opener.document).val(rData.IPGUMTYPE);
+					
+					$("#IPGUMDATE", opener.document).val(mainGridData.IPGUMDATE);
+					$("#IPGUMTYPE", opener.document).val(mainGridData.IPGUMTYPE);
 					$("#IPGUMGUBUN", opener.document).val("005");
-					$("#R_IPGUMID", opener.document).val(rData.IPGUMID);
-					$("#BANKGUBUN", opener.document).val(rData.BANKGUBUN);
-					$("#IPGUMPERSON", opener.document).val(rData.IPGUMPERSON);
-					$("#IPGUMAMT", opener.document).val(setComma(rData.IPGUMAMT));
+					$("#R_IPGUMID", opener.document).val(mainGridData.IPGUMID);
+					$("#BANKGUBUN", opener.document).val(mainGridData.BANKGUBUN);
+					$("#IPGUMPERSON", opener.document).val(mainGridData.IPGUMPERSON);
+					$("#IPGUMAMT", opener.document).val(setComma(mainGridData.IPGUMAMT));
+					$("#txtIpgumAmt", opener.document).val(setComma(mainGridData.IPGUMAMT));
+					
 					window.self.close();
 				}
 			});			

@@ -185,6 +185,7 @@
 </html>
 <script type="text/javascript">
 	var init = {};
+	var leftGridData = {};
 	var gSALEID = $("#hdnSALEID", opener.document).val();
 	var gIPGUMSEQ = $("#hdnIPGUMSEQ", opener.document).val();
 	
@@ -290,7 +291,8 @@
 			   		{label: "입금형태(코드)", name: "IPGUMTYPE", sortable: false, hidden: true},
 			   		{label: "입금형태", name: "NAME_IPGUMTYPE", sortable: false, hidden: true},
 			   		{label: "입금구분(코드)", name: "IPGUMGUBUN", sortable: false, hidden: true},
-			   		{label: "입금은행(코드)", name: "BANKGUBUN", sortable: false, hidden: true}
+			   		{label: "입금은행(코드)", name: "BANKGUBUN", sortable: false, hidden: true},
+			   		{label: "입금여부", name: "DEPOSITYN", sortable: false, hidden: true}
 			   	],
 			   	rowNum: -1,
 			   	autowidth: true,
@@ -374,18 +376,18 @@
 					$("#leftGridCount").text(rCount);
 				},
 				onSelectRow: function(rowid, status, e) {
-					var rData = $(this).jqGrid("getRowData", rowid);
+					leftGridData = $(this).jqGrid("getRowData", rowid);
 					
-					$("#IPGUMDATE").val(rData.IPGUMDATE);
-					$("#IPGUMID").val(rData.IPGUMID);
-					$("#NAME_IPGUMTYPE").val(rData.NAME_IPGUMTYPE);
-					$("#NAME_IPGUMGUBUN").val(rData.NAME_IPGUMGUBUN);
-					$("#IPGUMGUBUN").val(rData.IPGUMGUBUN);
-					$("#NAME_BANKGUBUN").val(rData.NAME_BANKGUBUN);
-					$("#IPGUMPERSON").val(rData.IPGUMPERSON);
-					$("#IPGUMAMT").val(setComma(rData.IPGUMAMT));
-					$("#SUM_SUGUMAMT").val(setComma(rData.SUM_SUGUMAMT));
-					$("#REM_IPGUMAMT").val(setComma(rData.REM_IPGUMAMT));
+					$("#IPGUMDATE").val(leftGridData.IPGUMDATE);
+					$("#IPGUMID").val(leftGridData.IPGUMID);
+					$("#NAME_IPGUMTYPE").val(leftGridData.NAME_IPGUMTYPE);
+					$("#NAME_IPGUMGUBUN").val(leftGridData.NAME_IPGUMGUBUN);
+					$("#IPGUMGUBUN").val(leftGridData.IPGUMGUBUN);
+					$("#NAME_BANKGUBUN").val(leftGridData.NAME_BANKGUBUN);
+					$("#IPGUMPERSON").val(leftGridData.IPGUMPERSON);
+					$("#IPGUMAMT").val(setComma(leftGridData.IPGUMAMT));
+					$("#SUM_SUGUMAMT").val(setComma(leftGridData.SUM_SUGUMAMT));
+					$("#REM_IPGUMAMT").val(setComma(leftGridData.REM_IPGUMAMT));
 					
 					$("#SUGUMAMT").focus();
 				}
@@ -443,13 +445,15 @@
 			if($(this).attr("id") == "IPGUMDATE") $("#IPGUMDATE").jqxMaskedInput("clear");
 			else $(this).val("");
 		});
+		
 		$("#leftGrid").resetSelection();
+		leftGridData = {};
 		
 		if(typeof callback == "function") callback();
 	}
-	// 유효성 체크
+	// 저장 유효성 체크
 	function fnSaveValidation() {
-		if($("#IPGUMID").val() == "") {
+		if(!leftGridData.IPGUMID) {
 			alert("입금 처리할 데이터를 그리드에서 선택해주세요.");
 			return false;
 		}
@@ -459,7 +463,7 @@
 			return false;
 		}
 		if(removeComma($("#SUGUMAMT").val()) > removeComma($("#REM_IPGUMAMT").val())) {
-			alert("처리금액이 미처리잔액을 초과하였습니다.\n\n다시 입력해주세요.");
+			alert("처리금액이 미처리잔액을 초과하였습니다.\n다시 입력해주세요.");
 			$("#SUGUMAMT").val("");
 			$("#SUGUMAMT").focus();
 			return false;

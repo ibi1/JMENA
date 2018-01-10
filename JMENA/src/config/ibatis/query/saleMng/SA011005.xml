@@ -693,6 +693,7 @@
 		    , B.REMARK AS MST_REMARK
 		    , B.IPGUMPERSON
 		    , C.DEPOSITDATE
+		    , C.DEPOSITYN
 		FROM sa_ipgumdtl A
 			INNER JOIN sa_ipgummst B
 				ON A.IPGUMID = B.IPGUMID

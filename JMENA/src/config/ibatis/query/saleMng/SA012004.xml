@@ -33,7 +33,7 @@
 			t1.ipgumamt,
 			(select sum(sugumamt) from sa_ipgumdtl where ipgumid = t1.ipgumid) as sugumamt,
             (t1.ipgumamt - (select sum(sugumamt) from sa_ipgumdtl where ipgumid = t1.ipgumid)) as jangumamt,
-			(select bankname from sy_bankmst where bankcode = bankgubun) as bankname,
+			fn_codename('01', '015', t1.BANKGUBUN) as bankname,
 			(select dcodename from sy_ccodedtl where ccode = '012' and dcode = t1.ipgumtype) as ipgumtype,
 			t1.address,
 			t1.conpy,
