@@ -483,6 +483,11 @@
 			}			
 		}
 		if($("#R_IPGUMID").val() !== "") {		// 환불 입금번호가 있을 경우
+			if($("#IPGUMGUBUN").val() != "005") {
+				alert("환불 등록 중 입금구분은 변경할 수 없습니다.");
+				$("#IPGUMGUBUN").val("005");
+				return false;
+			}
 			if($("#IPGUMAMT").val() != $("#txtIpgumAmt").val()) {
 				alert("분할 환불이 불가하여 입금금액은 변경할 수 없습니다.");
 				$("#IPGUMAMT").val($("#txtIpgumAmt").val());
