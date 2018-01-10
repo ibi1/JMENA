@@ -364,7 +364,7 @@
 		});
 		// 입금형태 변경 이벤트
 		$("#IPGUMTYPE").on("change", function(e) {
-			if($(this).val() == "005") {	// 입금형태가 "보관대체금액"일 경우
+			if(leftGridData.IPGUMTYPE == "005" || $(this).val() == "005") {		// 입금형태가 "보관대체금액"일 경우
 				$("#deleteButton, #saveButton").jqxButton({disabled: true});
 			} else {
 				$("#deleteButton, #saveButton").jqxButton({disabled: false});
