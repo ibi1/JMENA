@@ -225,7 +225,7 @@
 					{ text: '잔금', datafield: "DEPOSITAMT3", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 					{ text: '계약입금액', datafield: "SUGUMAMT1", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 					{ text: '중도입금액', datafield: "SUGUMAMT2", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-					{ text: '잔금입금액', datafield: "SUGUMAMT3", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0', hidden: true},
+					{ text: '잔금입금액', datafield: "SUGUMAMT3", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 					{ text: '입금총액', datafield: "SUGUMAMT", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 					{ text: '입금잔액', datafield: "REMNAMT", width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 					{ text: '입금율(%)', datafield: "IPGUMRATE", width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
