@@ -766,7 +766,6 @@
 		    , SUGUMAMT
 		    , REMARK
 		    , INSERTUSER
-		    , PAYGUBUN
 		) VALUES (
 			#IPGUMID#
 		    , (
@@ -779,7 +778,6 @@
 		    , #SUGUMAMT#
 		    , #REMARK#
 		    , #USERID#
-		    , #PAYGUBUN#
 		)	
 	</insert>
 	
