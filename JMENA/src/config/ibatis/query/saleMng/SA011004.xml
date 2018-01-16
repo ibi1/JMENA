@@ -61,7 +61,7 @@
 				AND (IPGUMGUBUN<![CDATA[ <> ]]>'005' AND R_IPGUMID IS NULL)
 			</isEqual>
 		</isNotEmpty>
-		ORDER BY IPGUMID DESC
+		ORDER BY IPGUMDATE DESC, IPGUMID DESC
 	</select>
 	
 	<select id="selectPopListIpgumMst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
@@ -90,7 +90,7 @@
 				</isNotEmpty>
 		) T    
 		WHERE SUM_SUGUMAMT = 0
-		ORDER BY IPGUMID DESC
+		ORDER BY IPGUMDATE DESC, IPGUMID DESC
 	</select>	
 	
 	<select id="selectOneInsamst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
