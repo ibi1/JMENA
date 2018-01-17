@@ -73,7 +73,7 @@
 					AND (D.REFUNDYN = #S_REFUNDYN# OR D.REFUNDYN IS NULL)
 				</isEqual>
 			</isNotEmpty>
-		ORDER BY A.SALEID DESC
+		ORDER BY B.CHGDATE DESC, A.SALEID ASC
 	</select>
 	
 	<select id="selectOneIpgumDtl" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">

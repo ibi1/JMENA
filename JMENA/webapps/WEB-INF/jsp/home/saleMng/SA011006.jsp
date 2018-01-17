@@ -152,10 +152,16 @@
 					<td colspan="3"><input type="text" id="ACCTNO" /></td>
 				</tr>
 				<tr>
+					<th width="120">비고</th>
+					<td colspan="3"><input type="text" id="REFUND_REMARK" /></td>
+				</tr>
+			</table>
+			<table width="98%" style="border-radius: 5px; background-color:#F2F5F7; margin-top: 5px">
+				<tr>
 					<th width="120">보관 금액</th>
-					<td><input type="text" id="KEEPAMT" /></td>
+					<td width="140"><input type="text" id="KEEPAMT" /></td>
 					<th width="120">보관액 대체일</th>
-					<td>
+					<td width="140">
 						<input type="text" id="EXPORTDATE" />
 						<input type="button" id="exportButton" value="처리" />
 						<input type="text" id="EXPORTYN" disabled="disabled" style="display:none" />
@@ -164,10 +170,6 @@
 				<tr>
 					<th width="120">입금대체 번호</th>
 					<td colspan="3"><input type="text" id="IPGUMID" /></td>
-				</tr>
-				<tr>
-					<th width="120">비고</th>
-					<td colspan="3"><input type="text" id="REFUND_REMARK" /></td>
 				</tr>
 			</table>
 		</div>
@@ -298,7 +300,7 @@
 			   	],
 			   	rowNum: -1,
 			   	autowidth: true,
-			   	height: "490px",
+			   	height: "495px",
 			   	gridview: true,
 				jsonReader: {
 					root: "rows",
@@ -426,6 +428,9 @@
 			if($(this).attr("id") == "REFUNDDATE") $(this).val(dateInput(0));
 			else if($(this).attr("id") == "EXPORTDATE") $(this).jqxMaskedInput("clear");
 			else $(this).val("");
+		});
+		$("#rightDiv input[type='checkbox']").each(function(idx) {
+			$(this).prop("checked", false);
 		});
 		
 		$("#leftGrid").resetSelection();
