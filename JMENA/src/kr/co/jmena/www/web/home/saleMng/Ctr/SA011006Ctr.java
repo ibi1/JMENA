@@ -1,0 +1,206 @@
+package kr.co.jmena.www.web.home.saleMng.Ctr;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import kr.co.jmena.www.web.home.saleMng.Biz.SA011006Biz;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class SA011006Ctr {
+
+	@Resource(name = "SA011006Biz")
+	private SA011006Biz SA011006Biz;
+	
+	/**
+	 * @name 해약관리 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/home/SA011006.do")
+	public ModelAndView SA011006(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return new ModelAndView("home/saleMng/SA011006");
+	}
+	
+	/**
+	 * @name 해약관리 화면 : 조회
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011006_s1.do")
+	public ModelAndView selectListIpgumMst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
+		List<Map<String, Object>> lst = new ArrayList<Map<String, Object>>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		lst = SA011006Biz.selectListSaleMst(param);
+		
+		resultMap.put("rows", lst);
+		
+		return new ModelAndView("jsonView", resultMap);
+	}
+	
+	/**
+	 * @name 해약관리 화면 : 저장
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011006_u1.do")
+	public ModelAndView insertRefundTb(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
+		int cnt = 0;
+		String msg = "error";
+		HttpSession session = null;
+		session = request.getSession(false);
+		String userId = (String) session.getAttribute("userId");
+		
+		Map<String, Object> msgMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		param.put("USERID", userId);
+		
+		cnt = SA011006Biz.insertRefundTb(param);
+		
+		if(cnt > 0) msg = "success";
+		
+		msgMap.put("MSG", msg);
+		resultMap.put("rows",  msgMap);
+		
+		return new ModelAndView("jsonView", resultMap);
+	}
+	
+	/**
+	 * @name 해약관리 화면 : 수정
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011006_u2.do")
+	public ModelAndView updateRefundTb(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
+		int cnt = 0;
+		String msg = "error";
+		HttpSession session = null;
+		session = request.getSession(false);
+		String userId = (String) session.getAttribute("userId");
+		
+		Map<String, Object> msgMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		param.put("USERID", userId);
+		
+		cnt = SA011006Biz.updateRefundTb(param);
+		
+		if(cnt > 0) msg = "success";
+		
+		msgMap.put("MSG", msg);
+		resultMap.put("rows",  msgMap);
+		
+		return new ModelAndView("jsonView", resultMap);
+	}
+	
+	/**
+	 * @name 해약관리 화면 : 삭제
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011006_u3.do")
+	public ModelAndView deleteRefundTb(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
+		int cnt = 0;
+		String msg = "error";
+		
+		Map<String, Object> msgMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		cnt = SA011006Biz.deleteRefundTb(param);
+		
+		if(cnt > 0) msg = "success";
+		
+		msgMap.put("MSG", msg);
+		resultMap.put("rows",  msgMap);
+		
+		return new ModelAndView("jsonView", resultMap);
+	}	
+	
+	/**
+	 * @name 해약관리 화면 : 처리
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011006_u4.do")
+	public ModelAndView insertIpgumMst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
+		int cnt = 0;
+		String msg = "error";
+		HttpSession session = null;
+		session = request.getSession(false);
+		String userId = (String) session.getAttribute("userId");
+		
+		Map<String, Object> msgMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		param.put("USERID", userId);
+		
+		cnt = SA011006Biz.insertIpgumMst(param);
+		
+		if(cnt > 0) msg = "success";
+		
+		msgMap.put("MSG", msg);
+		resultMap.put("rows",  msgMap);
+		
+		return new ModelAndView("jsonView", resultMap);
+	}
+	
+	/**
+	 * @name 해약관리 화면 : 취소
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/home/SA011006_u5.do")
+	public ModelAndView deleteIpgumMst(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> param) throws Exception {
+		int cnt = 0;
+		String msg = "error";
+		HttpSession session = null;
+		session = request.getSession(false);
+		String userId = (String) session.getAttribute("userId");
+		
+		Map<String, Object> msgMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		param.put("USERID", userId);
+		
+		cnt = SA011006Biz.deleteIpgumMst(param);
+		
+		if(cnt > 0) {
+			msg = "success";
+		} else if (cnt == -1) {
+			msg = "abort";
+		}
+		
+		msgMap.put("MSG", msg);
+		resultMap.put("rows",  msgMap);
+		
+		return new ModelAndView("jsonView", resultMap);
+	}	
+}

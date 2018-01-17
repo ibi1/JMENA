@@ -92,6 +92,10 @@
 	<bean id="SA011005Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA011005Ctr" />
     <bean id="SA011005Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA011005Biz" />
     <bean id="SA011005Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA011005Dao" p:sqlMapClient-ref="sqlMapClient" />
+    <!-- 매출관리 : 해약관리 -->
+	<bean id="SA011006Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA011006Ctr" />
+    <bean id="SA011006Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA011006Biz" />
+    <bean id="SA011006Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA011006Dao" p:sqlMapClient-ref="sqlMapClient" />
 	<!-- 매출관리 : 매출현황 - 담당자별 -->
     <bean id="SA012001Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA012001Ctr" />
     <bean id="SA012001Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA012001Biz" />
@@ -140,7 +144,11 @@
     <bean id="SA012012Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA012012Ctr" />
     <bean id="SA012012Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA012012Biz" />
     <bean id="SA012012Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA012012Dao"  p:sqlMapClient-ref="sqlMapClient" />
-        
+    <!-- 매출관리 : 해약현황
+    <bean id="SA012013Ctr" class="kr.co.jmena.www.web.home.saleMng.Ctr.SA012013Ctr" />
+    <bean id="SA012013Biz" class="kr.co.jmena.www.web.home.saleMng.Biz.SA012013Biz" />
+    <bean id="SA012013Dao" class="kr.co.jmena.www.web.home.saleMng.Dao.SA012013Dao"  p:sqlMapClient-ref="sqlMapClient" />
+    -->    
     <!-- 수당관리 : 수당관리 -->   
     <bean id="EP011001Ctr" class="kr.co.jmena.www.web.home.expayMng.Ctr.EP011001Ctr" />
     <bean id="EP011001Biz" class="kr.co.jmena.www.web.home.expayMng.Biz.EP011001Biz" />

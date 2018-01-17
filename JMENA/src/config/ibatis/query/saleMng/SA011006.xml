@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+  
+<sqlMap namespace="SA011006">
+	
+	<select id="selectListSaleMst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		/* SA011006.selectListSaleMst */
+		SELECT A.SALEID
+			, A.SALEDATE
+		    , A.SALEGUBUN
+		    , fn_codename('01', '007', A.SALEGUBUN) AS NAME_SALEGUBUN
+		    , A.SALERCD		    
+		    , A.CONNAME
+		    , fn_formatnum('I', A.CONJUMINID) AS CONJUMINID
+		    , A.CONADDRESS
+		    , fn_formatnum('P', A.CONTELNO) AS CONTELNO
+		    , CAST(A.CONM2 AS DECIMAL(12, 2)) AS CONM2
+		    , CAST(A.CONPY AS DECIMAL(12, 2)) AS CONPY
+		    , A.REMARK AS SALE_REMARK
+		    , B.CHGDATE
+		    , C.SALEAMT
+		    , C.SALEDANGA
+		    , C.DCGUBUN
+		    , fn_codename('01', '008', C.DCGUBUN) AS NAME_DCGUBUN
+		    , C.DCRATE
+		    , C.DCAMT
+		    , C.SELLAMT
+		    , (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl S INNER JOIN sa_ipgumscheduletb T ON S.SALEID = T.SALEID AND S.IPGUMSEQ = T.IPGUMSEQ WHERE S.SALEID = A.SALEID AND T.DEPOSITGUBUN = '002') AS SUGUMAMT1		/* 계약금 */
+			, (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl S INNER JOIN sa_ipgumscheduletb T ON S.SALEID = T.SALEID AND S.IPGUMSEQ = T.IPGUMSEQ WHERE S.SALEID = A.SALEID AND T.DEPOSITGUBUN = '003') AS SUGUMAMT2		/* 중도금 */
+			, (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl S INNER JOIN sa_ipgumscheduletb T ON S.SALEID = T.SALEID AND S.IPGUMSEQ = T.IPGUMSEQ WHERE S.SALEID = A.SALEID AND T.DEPOSITGUBUN = '004') AS SUGUMAMT3		/* 잔금 */
+		    , (SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl S INNER JOIN sa_ipgumscheduletb T ON S.SALEID = T.SALEID AND S.IPGUMSEQ = T.IPGUMSEQ WHERE S.SALEID = A.SALEID AND T.DEPOSITGUBUN IN ('002', '003', '004')) AS SUM_SUGUMAMT
+		    , D.SALEID AS REFUND_SALEID
+		    , IFNULL(D.REFUNDAMT, 0) AS REFUNDAMT
+		    , D.REFUNDDATE
+		    , D.REFUNDYN
+		    , D.BANKGUBUN
+		    , fn_codename('04', D.BANKGUBUN, NULL) AS NAME_BANKGUBUN
+		    , D.ACCTOWNER
+		    , D.ACCTNO
+		    , ((SELECT IFNULL(SUM(SUGUMAMT), 0) FROM sa_ipgumdtl S INNER JOIN sa_ipgumscheduletb T ON S.SALEID = T.SALEID AND S.IPGUMSEQ = T.IPGUMSEQ WHERE S.SALEID = A.SALEID AND T.DEPOSITGUBUN IN ('002', '003', '004'))
+        		- IFNULL(D.REFUNDAMT, 0)) AS KEEPAMT
+		    , D.EXPORTDATE
+		    , D.EXPORTYN
+		    , D.IPGUMID
+		    , D.REMARK AS REFUND_REMARK
+		    , I.KNAME
+		    , I.BRANCHCODE
+		    , fn_codename('02', I.BRANCHCODE, NULL) AS NAME_BRANCHCODE
+		FROM sa_salemst A
+			INNER JOIN sa_salehistorytb B
+				ON A.SALEID = B.SALEID
+			INNER JOIN sa_saledtl C
+				ON A.SALEID = C.SALEID
+			LEFT OUTER JOIN sa_refundtb D
+				ON A.SALEID = D.SALEID    
+			LEFT OUTER JOIN hr_insamst I
+				ON A.SALERCD = I.INSACODE
+		WHERE B.CHGGUBUN = '004'	/* 계약변동구분 = 해약 */
+			<isNotEmpty property="S_CHGDATE_FR">
+				<isNotEmpty property="S_CHGDATE_TO">
+				AND B.CHGDATE BETWEEN #S_CHGDATE_FR# AND #S_CHGDATE_TO#
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="S_KNAME">
+			AND I.KNAME LIKE '%$S_KNAME$%'
+			</isNotEmpty>
+			<isNotEmpty property="S_REFUNDYN">
+				<isEqual property="S_REFUNDYN" compareValue="Y">
+					AND D.REFUNDYN = #S_REFUNDYN#
+				</isEqual>
+				<isEqual property="S_REFUNDYN" compareValue="N">
+					AND (D.REFUNDYN = #S_REFUNDYN# OR D.REFUNDYN IS NULL)
+				</isEqual>
+			</isNotEmpty>
+		ORDER BY A.SALEID DESC
+	</select>
+	
+	<select id="selectOneIpgumDtl" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		/* SA011006.selectOneIpgumDtl */
+		SELECT IPGUMID FROM sa_ipgumdtl WHERE IPGUMID = #IPGUMID#
+	</select>
+	
+	<insert id="insertRefundTb" parameterClass="java.util.HashMap">
+		/* SA011006.insertRefundTb */
+		INSERT INTO sa_refundtb(
+			SALEID
+			, REFUNDAMT
+			, REFUNDDATE
+			, REFUNDYN
+			, BANKGUBUN
+			, ACCTNO
+			, ACCTOWNER
+			, REMARK
+			, INSERTUSER
+		) VALUES(
+			#SALEID#
+			, #REFUNDAMT#
+			, #REFUNDDATE#
+			, #REFUNDYN#
+			, #BANKGUBUN#
+			, #ACCTNO#
+			, #ACCTOWNER#
+			, #REMARK#
+			, #USERID#
+		)
+	</insert>
+	
+	<insert id="insertRefundTbExport" parameterClass="java.util.HashMap">
+		/* SA011006.insertRefundTbExport */
+		INSERT INTO sa_refundtb(
+			SALEID
+			, ACCTOWNER
+			, KEEPAMT
+			, EXPORTDATE
+			, EXPORTYN
+			, IPGUMID
+			, REMARK
+			, INSERTUSER
+		) VALUES(
+			#SALEID#
+			, ''
+			, #KEEPAMT#
+			, #EXPORTDATE#
+			, #EXPORTYN#
+			, #IPGUMID#
+			, '입금 전액 보관금액으로 대체 처리'
+			, #USERID#
+		)
+	</insert>
+	
+	<update id="updateRefundTb" parameterClass="java.util.HashMap">
+		/* SA011006.updateRefundTb */
+		UPDATE sa_refundtb SET
+			REFUNDAMT = #REFUNDAMT#
+			, REFUNDDATE = #REFUNDDATE#
+			, REFUNDYN = #REFUNDYN#
+			, BANKGUBUN = #BANKGUBUN#
+			, ACCTNO = #ACCTNO#
+			, ACCTOWNER = #ACCTOWNER#
+			, REMARK = #REMARK#
+		    , UPDATEUSER = #USERID#
+		    , UPDATEDATE = NOW()
+		WHERE SALEID = #SALEID#
+	</update>	
+	
+	<insert id="insertIpgumMst" parameterClass="java.util.HashMap">
+		<selectKey keyProperty="IPGUMID" resultClass="String">
+			SELECT CONCAT('IC', DATE_FORMAT(CURDATE(), '%y%m'), LPAD(IFNULL(MAX(CAST(RIGHT(IPGUMID, 4) AS unsigned)), 0) + 1, 4, '0')) AS IPGUMID
+			FROM sa_ipgummst
+			WHERE IPGUMID LIKE CONCAT('IC', DATE_FORMAT(CURDATE(), '%y%m'), '____')
+		</selectKey>
+			
+		/* SA011006.insertIpgumMst */
+		INSERT INTO sa_ipgummst(
+			IPGUMID
+			, IPGUMDATE
+			, IPGUMTYPE
+			, IPGUMGUBUN
+			, BANKGUBUN
+			, IPGUMAMT
+			, REMARK
+			, INSERTUSER
+			, IPGUMPERSON
+			, BRANCHCODE
+			, SALERCD
+		) VALUES(
+			(
+		    SELECT CONCAT('IC', DATE_FORMAT(CURDATE(), '%y%m'), LPAD(IFNULL(MAX(CAST(RIGHT(IPGUMID, 4) AS unsigned)), 0) + 1, 4, '0'))
+			FROM sa_ipgummst T
+			WHERE IPGUMID LIKE CONCAT('IC', DATE_FORMAT(CURDATE(), '%y%m'), '____')
+		    )
+			, #IPGUMDATE#
+			, #IPGUMTYPE#
+			, #IPGUMGUBUN#
+			, #BANKGUBUN#
+			, #KEEPAMT#
+			, #REMARK#
+			, #USERID#
+			, #IPGUMPERSON#
+			, #BRANCHCODE#
+			, #SALERCD#
+		)	
+	</insert>
+	
+	<update id="updateRefundTbExport" parameterClass="java.util.HashMap">
+		/* SA011006.updateRefundTbExport */
+		UPDATE sa_refundtb SET
+			KEEPAMT = #KEEPAMT#
+			, EXPORTDATE = #EXPORTDATE#
+			, EXPORTYN = #EXPORTYN#
+			, IPGUMID = #IPGUMID#
+		    , UPDATEUSER = #USERID#
+		    , UPDATEDATE = NOW()
+		WHERE SALEID = #SALEID#
+	</update>
+	
+	<delete id="deleteIpgumMst" parameterClass="java.util.HashMap">
+		/* SA011006.deleteIpgumMst */
+		DELETE FROM sa_ipgummst WHERE IPGUMID = #IPGUMID#
+	</delete>
+	
+	<delete id="deleteRefundTb" parameterClass="java.util.HashMap">
+		/* SA011006.deleteRefundTb */
+		DELETE FROM sa_refundtb WHERE SALEID = #SALEID#
+	</delete>
+
+</sqlMap>
