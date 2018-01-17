@@ -258,6 +258,18 @@ public class SA011005Dao extends SqlMapClientDaoSupport {
 		return lst;
 	}
 	
+	
+	/**
+	 * (신)매출관리 > 계약변동관리(탭) : 삭제 (해약내역 조회)
+	 * @return
+	 * @throws DataAccessException
+	 */
+	public List<Map<String, Object>> selectOneRefundTb(SA011005VO vo) throws DataAccessException {
+		List<Map<String, Object>> lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectOneRefundTb", vo);
+		
+		return lst;
+	}
+	
 	/**
 	 * (신)매출관리 > 입금스케줄관리(탭) > 입금처리(팝업) > 매출 건별 입금처리 현황 : 조회
 	 * @return

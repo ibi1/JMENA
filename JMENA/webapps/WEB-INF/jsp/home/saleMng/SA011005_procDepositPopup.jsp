@@ -188,6 +188,7 @@
 	var leftGridData = {};
 	var gSALEID = $("#hdnSALEID", opener.document).val();
 	var gIPGUMSEQ = $("#hdnIPGUMSEQ", opener.document).val();
+	var gCANCELYN = $("#hdnCANCELYN", opener.document).val();
 	
 	$(document).ready(function() {
 		// 스타일 적용
@@ -211,6 +212,10 @@
 			<%}%>
 			<%if("N".equals(session.getAttribute("AUTH_P"))) {%>
 			<%}%>
+			
+			if(gCANCELYN == "Y") {		// 해약 매출일 경우
+				$("#deleteButton, #saveButton").jqxButton({disabled: true});		
+			}
 		}
 		// 입금기간 초기화
 		init.setDate = function() {
@@ -435,7 +440,9 @@
 		inputComma("SUGUMAMT");
 		// 비고 입력 키 이벤트
 		$("#REMARK").on("keydown", function(e) {
-			if(e.keyCode == 13) $("#saveButton").trigger("click");
+			if(e.keyCode == 13) {
+				if(!$("#saveButton").prop("disabled")) $("#saveButton").trigger("click");
+			}
 		});
 	});
 	

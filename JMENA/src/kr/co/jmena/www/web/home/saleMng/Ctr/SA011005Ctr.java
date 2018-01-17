@@ -88,6 +88,7 @@ public class SA011005Ctr {
 		vo.setSL_SALEDATE_TO(request.getParameter("SL_SALEDATE_TO"));
 		vo.setSALERCD(request.getParameter("SL_SALERNAME"));			//담당자
 		vo.setADDRESS(request.getParameter("SL_ADDRESS"));
+		vo.setSL_CANCELYN(request.getParameter("SL_CANCELYN"));
 		
 		List<SA011005VO> lst = SA011005Biz.selectListEanSaleMst(vo);
 		
@@ -549,6 +550,7 @@ public class SA011005Ctr {
 			obj.put("SALEID", lst.get(i).getSALEID());
 			obj.put("SALESEQ", lst.get(i).getSALESEQ());
 			obj.put("CHGGUBUN", lst.get(i).getCHGGUBUN());
+			obj.put("CHGGUBUNNAME", lst.get(i).getCHGGUBUNNAME());
 			obj.put("CHGDATE", lst.get(i).getCHGDATE());
 			obj.put("PREM2", lst.get(i).getPREM2());
 			obj.put("PREPY", lst.get(i).getPREPY());
@@ -624,6 +626,8 @@ public class SA011005Ctr {
 	public ModelAndView deleteDataEnaSaleHistoryTb(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA011005VO vo = new SA011005VO();
 		
+		String CHGGUBUN = request.getParameter("CHGGUBUN");		// 계약변동구분
+		
 		vo.setSALEID(request.getParameter("SALEID"));
 		vo.setSALESEQ(request.getParameter("SALESEQ"));
 		
@@ -632,12 +636,29 @@ public class SA011005Ctr {
 		String resultCode = "";
 		String resultMsg = "";
 		
-		if (SA011005Biz.deleteDataEnaSaleHistoryTb(vo) == true) {
-			resultCode ="SUCCESS";
-			resultMsg = "정상적으로 삭제하였습니다.";
+		if(CHGGUBUN.equals("004")) {		// 해약일 경우
+			
+			if(SA011005Biz.selectOneRefundTb(vo).size() > 0) {
+				resultCode = "ABORT";
+				resultMsg = "환불 내역이 존재합니다.\n해약관리에서 환불 내역을 삭제해주세요.";
+			} else {
+				if (SA011005Biz.deleteDataEnaSaleHistoryTb(vo) == true) {
+					resultCode ="SUCCESS";
+					resultMsg = "정상적으로 삭제하였습니다.";
+				} else {
+					 resultCode ="FAILED";
+					 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+				}
+			}
 		} else {
-			 resultCode ="FAILED";
-			 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+			
+			if (SA011005Biz.deleteDataEnaSaleHistoryTb(vo) == true) {
+				resultCode ="SUCCESS";
+				resultMsg = "정상적으로 삭제하였습니다.";
+			} else {
+				 resultCode ="FAILED";
+				 resultMsg = "[ERROR]삭제 중 오류가 발생하였습니다.";
+			}
 		}
 
 		json.put("resultCode", resultCode);

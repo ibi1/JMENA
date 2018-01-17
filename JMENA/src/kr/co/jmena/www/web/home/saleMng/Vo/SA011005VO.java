@@ -8,6 +8,7 @@ public class SA011005VO {
 	private String CANCELYN;
 	private String CHGDATE;
 	private String CHGGUBUN;
+	private String CHGGUBUNNAME;
 	private String CHGM2;
 	private String CHGPY;
 	private String CONADDRESS;
@@ -48,6 +49,7 @@ public class SA011005VO {
 	private String SELLDANGA;
 	private String SL_SALEDATE_FR;
 	private String SL_SALEDATE_TO;
+	private String SL_CANCELYN;
 	private String ADDRESS;
 	private String CONBM2;
 	private String CONJM2;
@@ -102,6 +104,12 @@ public class SA011005VO {
 	}
 	public void setCHGGUBUN(String cHGGUBUN) {
 		this.CHGGUBUN = cHGGUBUN;
+	}
+	public String getCHGGUBUNNAME() {
+		return this.CHGGUBUNNAME;
+	}
+	public void setCHGGUBUNNAME(String cHGGUBUNNAME) {
+		this.CHGGUBUNNAME = cHGGUBUNNAME;
 	}
 	public String getCHGM2() {
 		return this.CHGM2;
@@ -342,6 +350,12 @@ public class SA011005VO {
 	}
 	public void setSL_SALEDATE_TO(String sL_SALEDATE_TO) {
 		this.SL_SALEDATE_TO = sL_SALEDATE_TO;
+	}
+	public String getSL_CANCELYN() {
+		return this.SL_CANCELYN;
+	}
+	public void setSL_CANCELYN(String sL_CANCELYN) {
+		this.SL_CANCELYN = sL_CANCELYN;
 	}
 	public String getADDRESS() {
 		return this.ADDRESS;

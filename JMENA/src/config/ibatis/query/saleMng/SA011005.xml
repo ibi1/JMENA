@@ -97,15 +97,16 @@
 	</resultMap>
 	
 	<resultMap id="saleHistoryTbDataList" class="SA011005VO">
-		<result property="SALEID"		column="SALEID"/>
-		<result property="SALESEQ"		column="SALESEQ"/>
-		<result property="CHGGUBUN"		column="CHGGUBUN"/>
-		<result property="CHGDATE"		column="CHGDATE"/>
-		<result property="PREM2"		column="PREM2"/>
-		<result property="PREPY"		column="PREPY"/>
-		<result property="CHGM2"		column="CHGM2"/>
-		<result property="CHGPY"		column="CHGPY"/>
-		<result property="REMARK"		column="REMARK"/>
+		<result property="SALEID"			column="SALEID"/>
+		<result property="SALESEQ"			column="SALESEQ"/>
+		<result property="CHGGUBUN"			column="CHGGUBUN"/>
+		<result property="CHGGUBUNNAME"		column="CHGGUBUNNAME"/>
+		<result property="CHGDATE"			column="CHGDATE"/>
+		<result property="PREM2"			column="PREM2"/>
+		<result property="PREPY"			column="PREPY"/>
+		<result property="CHGM2"			column="CHGM2"/>
+		<result property="CHGPY"			column="CHGPY"/>
+		<result property="REMARK"			column="REMARK"/>
 	</resultMap>
 	
 	<resultMap id="hrData" class="SA011005VO">
@@ -178,6 +179,14 @@
 			WHERE IN2.DEPOSITGUBUN != '004'
 		) A2
 		ON A1.SALEID = A2.SALEID
+		<isNotEmpty property="SL_CANCELYN">
+			<isEqual property="SL_CANCELYN" compareValue="Y">
+			WHERE EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = A1.SALEID AND CHGGUBUN = '004')
+			</isEqual>
+			<isEqual property="SL_CANCELYN" compareValue="N">
+			WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = A1.SALEID AND CHGGUBUN = '004')
+			</isEqual>
+		</isNotEmpty>
 	</select>
 	
 	<update id="updateDataSaleMst">
@@ -489,8 +498,8 @@
 
 	<select id="selectListEnaSaleHistoryTb" resultMap="saleHistoryTbDataList">
 		SELECT 
-			T1.SALEID, T1.SALESEQ, 
-			(SELECT DCODENAME FROM sy_ccodedtl T2 WHERE T2.CCODE = '010' AND T2.DCODE = T1.CHGGUBUN) AS CHGGUBUN, 
+			T1.SALEID, T1.SALESEQ, T1.CHGGUBUN,
+			(SELECT DCODENAME FROM sy_ccodedtl T2 WHERE T2.CCODE = '010' AND T2.DCODE = T1.CHGGUBUN) AS CHGGUBUNNAME, 
 			T1.CHGDATE, T1.PREM2, T1.PREPY, T1.CHGM2, T1.CHGPY, T1.REMARK 
 		FROM sa_salehistorytb T1
 		WHERE T1.SALEID = #SALEID#
@@ -674,6 +683,11 @@
 		AND T1.KNAME = #SALERNAME#
 	</select>
 
+	<select id="selectOneRefundTb" resultClass="java.util.HashMap">
+		/* SA011005.selectOneRefundTb */
+		SELECT SALEID FROM sa_refundtb WHERE SALEID = #SALEID#
+	</select>
+	
 	<select id="selectListIpgumDtl" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
 		/* SA011005.selectListIpgumDtl */
 		SELECT A.IPGUMID
@@ -702,7 +716,7 @@
 				AND A.IPGUMSEQ = C.IPGUMSEQ
 		WHERE A.SALEID = #SALEID#
 			AND A.IPGUMSEQ = #IPGUMSEQ#
-		ORDER BY A.IPGUMID ASC
+		ORDER BY A.IPGUMID ASC, A.SEQ ASC
 	</select>
 		
 	<select id="selectListIpgumMst" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
@@ -753,7 +767,7 @@
 			    </isNotEmpty>
 		) T
 		WHERE REM_IPGUMAMT > 0
-		ORDER BY IPGUMID DESC
+		ORDER BY IPGUMDATE DESC, IPGUMID DESC
 	</select>
 	
 	<insert id="insertIpgumDtl" parameterClass="java.util.HashMap">

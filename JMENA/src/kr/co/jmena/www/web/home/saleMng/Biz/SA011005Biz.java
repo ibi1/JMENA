@@ -333,6 +333,18 @@ public class SA011005Biz {
 		
 		return lst;
 	}
+	
+	public List<Map<String, Object>> selectOneRefundTb(SA011005VO vo) throws Exception {
+		List<Map<String, Object>> lst = null;
+		
+		try {
+			lst = SA011005Dao.selectOneRefundTb(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return lst;
+	}
 
 	public List<Map<String, Object>> selectListIpgumDtl(Map<String, Object> param) throws Exception {
 		List<Map<String, Object>> lst = null;

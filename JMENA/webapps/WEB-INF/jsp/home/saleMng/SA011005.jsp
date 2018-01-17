@@ -15,6 +15,7 @@
 		var v_rightLastSel_3 = 0;		//오른쪽 그리드 선택 tab3
 		var auth_i = true;
 		var auth_d = true;
+		var g_cancelYn;		// 해약여부
 		
 		$(document).ready(function(){
 			$("#S_FLAG_L").val("I");
@@ -239,7 +240,8 @@
 					SL_SALEDATE_FR : $("#SL_SALEDATE_FR").val(),
 					SL_SALEDATE_TO : $("#SL_SALEDATE_TO").val(),
 					SL_SALERNAME : $("#SL_SALERNAME").val(),
-					SL_ADDRESS : $("#SL_ADDRESS").val()
+					SL_ADDRESS : $("#SL_ADDRESS").val(),
+					SL_CANCELYN : $("input[name='SL_CANCELYN']:checked").val()
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
@@ -297,7 +299,7 @@
 				jsonReader: {
 					repeatitems: false
 				},
-				height: '400px',
+				height: '350px',
 				onSelectRow: function(ids){
 					v_rightLastSel_1 = 0;
 					v_rightLastSel_2 = 0;
@@ -366,6 +368,7 @@
 						},
 						success: function(data){
 							var flag = (data.resultMsg == "Y") ? true : false;
+							g_cancelYn = data.resultMsg;
 							
 							//$("#insertButton").jqxButton({ disabled: flag });
 							$("#deleteButton").jqxButton({ disabled: flag });
@@ -380,7 +383,7 @@
 							$("#tab2SaveButton").jqxButton({ disabled: flag });
 							
 							$("#tab3InsertButton").jqxButton({ disabled: flag });
-							$("#tab3DeleteButton").jqxButton({ disabled: flag });
+							//$("#tab3DeleteButton").jqxButton({ disabled: flag });
 							$("#tab3SaveButton").jqxButton({ disabled: flag });
 						},
 						error:function(e){  
@@ -436,7 +439,6 @@
 					, {name:"DEPOSITAMT",		index:'DEPOSITAMT',		width:100,	align:'right', sortable:false, editable:true, formatter:'currency', formatoptions:{decimalSeparator:",", thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"SUGUMAMT",			index:'SUGUMAMT',		width:100,	align:'right', sortable:false, editable:false, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''}}
 					, {name:"DEPOSITYN",		index:'DEPOSITYN',		width:60,	align:'center', sortable:false, editable:false, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N"}}
-					//, {name:"입금처리",  width:100, align:'center', sortable:false, editable:true, edittype:'button', editoptions:{value:'입금처리'}}
 					, {name:"btnProcDeposit",  width:100, align:'center', sortable:false}
 					, {name:"REMARK",			index:'REMARK',			width:300,	align:'left', sortable:false, editable:true}
 					, {name:"IPGUMID",			index:'IPGUMID',		width:100,	align:'center', sortable:false, editable:false, hidden:true}
@@ -492,9 +494,7 @@
 					var ids = $("#bottomList1").jqGrid("getDataIDs");
 					
 					for(var i = 0; i < ids.length; i++) {
-						var sData = "<input type=\"button\" value=\"입금처리\" onclick=\"fnProcDepositPopup("+ ids[i] +");\">";
-						
-						$("#bottomList1").jqGrid("setCell", ids[i], "btnProcDeposit", sData);				
+						$("#bottomList1").jqGrid("setRowData", ids[i], {btnProcDeposit: "<input type=\"button\" value=\"입금처리\" onclick=\"fnProcDepositPopup("+ ids[i] +");\">"});
 						$("#bottomList1 input[type='button']").jqxButton({width: 60, height: 20});		// 스타일 적용
 					}
 				},
@@ -605,12 +605,13 @@
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");} ,
-				colNames:['판매번호', '이력순번', '변동일자', '변동구분', '직전 계약면적', '직전 계약평수', '변경면적', '변경평수', '비고'] ,
+				colNames:['판매번호', '이력순번', '변동일자', '변동구분(코드)', '변동구분', '직전 계약면적', '직전 계약평수', '변경면적', '변경평수', '비고'] ,
 				colModel:[
 					{name:"SALEID",		index:'SALEID',		width:100,	align:'center', sortable:false, editable:true, hidden:true}
 					, {name:"SALESEQ",	index:'SALESEQ',	width:100,	align:'center', sortable:false, editable:true, hidden:true}
 					, {name:"CHGDATE",	index:'CHGDATE',	width:100,	align:'center', sortable:false, editable:true}
-					, {name:"CHGGUBUN",	index:'CHGGUBUN',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=010", buildSelect:f_selectListEnaChgGubunCode} }
+					, {name:"CHGGUBUN",	index:'CHGGUBUN',	width:100,	align:'center', sortable:false, editable:true, hidden:true}
+					, {name:"CHGGUBUNNAME",	index:'CHGGUBUNNAME',	width:100,	align:'center', sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=010", buildSelect:f_selectListEnaChgGubunCode} }
 					, {name:"PREM2",	index:'PREM2',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
 					, {name:"PREPY",	index:'PREPY',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
 					, {name:"CHGM2",	index:'CHGM2',		width:100,	align:'center', sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 2,defaultValue: ''}}
@@ -909,7 +910,7 @@
 			var keyCode = window.event.keyCode;
 			if(keyCode==13) {
 				if (auth_i == true) {
-					$("#saveButton").click();
+					if(!$("#saveButton").prop("disabled")) $("#saveButton").click();
 				}
 			}
 		}
@@ -1366,7 +1367,7 @@
 				if (confirm("삭제하시겠습니까?") == true) {
 					$.ajax({ 
 						type: 'POST' ,
-						data: "SALEID=" + cellData.SALEID + "&SALESEQ=" + cellData.SALESEQ,
+						data: "SALEID=" + cellData.SALEID + "&SALESEQ=" + cellData.SALESEQ + "&CHGGUBUN=" + cellData.CHGGUBUN,
 						url: "/home/SA011005_deleteDataEnaSaleHistoryTb.do", 
 						dataType : 'json' , 
 						success: function(data){
@@ -1375,6 +1376,25 @@
 							v_rightLastSel_3 = 0;
 							
 							f_selectListEnaSaleHistoryTb($("#SALEID").val());
+							
+							if(data.resultCode == "SUCCESS" && cellData.CHGGUBUN == "004") {
+								var flag = false;
+								g_cancelYn = "N";
+								
+								$("#deleteButton").jqxButton({ disabled: flag });
+								$("#saveButton").jqxButton({ disabled: flag });
+						
+								$("#tab1InsertButton").jqxButton({ disabled: flag });
+								$("#tab1DeleteButton").jqxButton({ disabled: flag });
+								$("#tab1SaveButton").jqxButton({ disabled: flag });
+								
+								$("#tab2InsertButton").jqxButton({ disabled: flag });
+								$("#tab2DeleteButton").jqxButton({ disabled: flag });
+								$("#tab2SaveButton").jqxButton({ disabled: flag });
+								
+								$("#tab3InsertButton").jqxButton({ disabled: flag });
+								$("#tab3SaveButton").jqxButton({ disabled: flag });
+							}
 						},
 						error:function(e){  
 							alert("[ERROR-SCRIPT]게약변동관리 삭제  중 오류가 발생하였습니다.");
@@ -1391,7 +1411,7 @@
 			$("#tab3SaveButton").click(function() {
 				var ids = $("#bottomList3").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 				
-				var chgGubun =  $("#bottomList3 [name=CHGGUBUN] option:selected").val();
+				var chgGubun =  $("#bottomList3 [name=CHGGUBUNNAME] option:selected").val();
 
 				$('#bottomList3').jqGrid('saveRow',v_rightLastSel_3,false,'clientArray'); //선택된 놈 뷰 모드로 변경
 
@@ -1728,6 +1748,7 @@
 			var sTmpHtml = "<form id=\"dummy\">"
 						 + "<input type=\"hidden\" id=\"hdnSALEID\" value=\""+ oRowData.SALEID +"\">"
 						 + "<input type=\"hidden\" id=\"hdnIPGUMSEQ\" value=\""+ oRowData.IPGUMSEQ +"\">"
+						 + "<input type=\"hidden\" id=\"hdnCANCELYN\" value=\""+ g_cancelYn +"\">"
 						 + "</form>";			
 			$("#rightDiv > #dummy").remove();
 			$("#rightDiv").append(sTmpHtml);
@@ -1768,6 +1789,14 @@
 				<tr>
 					<th width="120">지번(주소)</th>
 					<td><input type="text" id="SL_ADDRESS" name="SL_ADDRESS" onkeydown="f_selectButton();"/></td>
+				</tr>
+				<tr>
+					<th width="120">계약구분</th>
+					<td>
+						<div style="float:left; padding-right:20px;"><input type="radio" name="SL_CANCELYN" id="radio1" value="" /><label for="radio1">전체</label></div>
+						<div style="float:left; padding-right:20px;"><input type="radio" name="SL_CANCELYN" id="radio2" value="Y" /><label for="radio2">해약</label></div>
+						<div style="float:left;"><input type="radio" name="SL_CANCELYN" id="radio3" value="N" checked /><label for="radio3">계약</label></div>
+					</td>
 				</tr>
 			</table>
 			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
