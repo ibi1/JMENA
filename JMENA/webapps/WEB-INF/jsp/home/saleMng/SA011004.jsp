@@ -387,7 +387,9 @@
 		});
 		// 비고 입력 키 이벤트
 		$("#REMARK").on("keydown", function(e) {
-			if(e.keyCode == 13) $("#saveButton").trigger("click");
+			if(e.keyCode == 13) {
+				if(!$("#saveButton").prop("disabled")) $("#saveButton").trigger("click");
+			}
 		});
 	});
 	
