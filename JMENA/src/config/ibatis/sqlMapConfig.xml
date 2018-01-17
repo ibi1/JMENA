@@ -50,7 +50,7 @@
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012010.xml" /><!-- 매출관리 : 위탁매출 - 위탁수수료 현황 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012011.xml" /><!-- 매출관리 : 매출현황 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012012.xml" /><!-- 매출관리 : 등기현황 -->
-	<!-- <sqlMap resource="/config/ibatis/query/saleMng/SA012013.xml" />매출관리 : 해약현황 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012013.xml" /><!-- 매출관리 : 해약현황 -->
 	
 	<sqlMap resource="/config/ibatis/query/expayMng/EP011001.xml" /><!-- 수당관리 : 수당관리 -->
 	<sqlMap resource="/config/ibatis/query/expayMng/EP011002.xml" /><!-- 수당관리 : 급여관리 -->
