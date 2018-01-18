@@ -45,7 +45,7 @@
 		<result property="GRADE"					column="GRADE"/>
 		<result property="DUTY"						column="DUTY"/>
 		<result property="REMARK"					column="REMARK"/>
-		
+		<result property="PAYYN"					column="PAYYN"/>
 	</resultMap>
 	
 	<resultMap id="EP011001Datalist" class="EP011001VO">
@@ -193,7 +193,7 @@
 	</resultMap>
 
 	<select id="selectListEnaSudangMst" resultMap="EP011001Data">
-	
+	  /* EP011001.selectListEnaSudangMst */
 	  SELECT T1.SALEID,
 	  		 T1.PAYSEQ,
 	         T1.PAYDATE,
@@ -227,14 +227,23 @@
 	         T1.TAXINCOME,
 	         T1.TAXLOCAL,
 	         T1.SUPPLYTAX,
-	         T1.REMARK,
+	         T1.REMARK,	         
 	         (SELECT IFNULL(count(T2.PAYSEQ),0) FROM sa_sudangpayertb T2 WHERE T1.SALEID = T2.SALEID AND T1.PAYSEQ = T2.PAYSEQ) AS REGISTERNUM,
 	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='003' AND I.GRADE = C.DCODE ) as GRADE,
-	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='004' AND I.DUTY = C.DCODE ) as DUTY
-	    FROM sa_sudangmst T1, sa_salemst T2
+	         (select DCODENAME from hr_insamst I, sy_ccodedtl C WHERE I.INSACODE = T1.INSACODE AND C.CCODE='004' AND I.DUTY = C.DCODE ) as DUTY,
+	         T1.PAYYN
+	   FROM sa_sudangmst T1, sa_salemst T2
 	   WHERE T1.SALEID = T2.SALEID
 	     AND T1.INSACODE = T2.SALERCD
 	     AND (T1.PAYSEQ = '1' OR T1.PAYSEQ = '001')
+	     <isNotEmpty property="S_PAYDATE_FR">
+	     	<isNotEmpty property="S_PAYDATE_TO">
+	     	AND T1.PAYDATE BETWEEN #S_PAYDATE_FR# AND #S_PAYDATE_TO#
+	     	</isNotEmpty>
+	     </isNotEmpty>
+	     <isNotEmpty property="S_PAYYN">
+	     	AND T1.PAYYN = #S_PAYYN#
+	     </isNotEmpty>
 <!--  		<isNotEmpty property="S_SALEID">
 	 		AND T1.SALEID = #S_SALEID# 
 	 		<isNotEmpty property="S_PAYSEQ">
@@ -253,7 +262,7 @@
 	 			AND T1.DEPTCODE = #S_DEPTCODE# 
 			</isNotEqual>
 		</isEmpty>	 -->	
-		ORDER BY T1.SALEID ASC, T1.PAYSEQ
+		ORDER BY T1.PAYDATE DESC, T1.SALEID ASC, T1.PAYSEQ ASC
 	</select>	
 
 	<select id="selectEnaSudangMstList" resultMap="EP011001Datalist">
@@ -305,13 +314,13 @@
 	</select>		
 	
 	<select id="selectEnaSudangMstInsert" resultMap="EP011001DataInsertlist">
-		
+	   /* EP011001.selectEnaSudangMstInsert */
 	   select	T1.INSACODE, 
 	   			(select DCODENAME from sy_ccodedtl C WHERE C.CCODE='003' AND T1.GRADE = C.DCODE ) as GRADE,
 	            (select DCODENAME from sy_ccodedtl C WHERE C.CCODE='004' AND T1.DUTY = C.DCODE ) as DUTY,
 	            T1.KNAME	          
 	  	 from   hr_insamst T1  
-	 	where (T1.BRANCHCODE = (SELECT T2.BRANCHCODE 
+	 	where ((T1.BRANCHCODE = (SELECT T2.BRANCHCODE 
 		                  		 FROM hr_insamst T2
 								WHERE T2.INSACODE = #SALERCD#
 							  )
@@ -336,8 +345,8 @@
 			 (T1.INSACODE = (SELECT RECOID
 			                   FROM hr_insamst I
 							  WHERE INSACODE = #SALERCD#)
-			 )	
-	
+			 ))
+			 AND T1.RETIREDATE IS NULL
 	</select>
 		
 	<select id="selectDataEnaSudangMst" resultClass="java.lang.Integer">
@@ -493,6 +502,7 @@
 	</insert>	
 	
 	<update id="updateEnaSudangMst">
+		/* EP011001.updateEnaSudangMst */
 		UPDATE sa_sudangmst
 		SET
 			INSACODE = #INSACODE#,
@@ -511,7 +521,8 @@
 			DEDUCTAMT = #DEDUCTAMT#,
 			REMARK = #REMARK#,
 			UPDATEUSER = #USERID#,
-			UPDATEDATE = NOW()
+			UPDATEDATE = NOW(),
+			PAYYN = #PAYYN#
 		WHERE SALEID  = #SALEID#
 		AND PAYSEQ = #PAYSEQ#
 	</update>
@@ -685,7 +696,7 @@
 		<isNotEmpty property="S_KNAME">
 			AND T1.KNAME LIKE '%$S_KNAME$%'
 		</isNotEmpty>
-   		AND T1.RETIREDATE IS NULL
+   		<!-- AND T1.RETIREDATE IS NULL -->
    		ORDER BY T1.GRADE ASC
 	</select>
 	

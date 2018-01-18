@@ -105,7 +105,10 @@ public class EP011001Ctr {
 		vo.setS_SALEDATESYM(request.getParameter("S_SALEDATESYM"));
 		vo.setS_SALEDATEEYM(request.getParameter("S_SALEDATEEYM"));
 		vo.setS_BRANCHCODE(request.getParameter("S_BRANCHCODE"));
-		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));		
+		vo.setS_DEPTCODE(request.getParameter("S_DEPTCODE"));
+		vo.setS_PAYDATE_FR(request.getParameter("S_PAYDATE_FR"));
+		vo.setS_PAYDATE_TO(request.getParameter("S_PAYDATE_TO"));
+		vo.setS_PAYYN(request.getParameter("S_PAYYN"));
 		
 		List<EP011001VO> lst = EP011001Biz.selectListEnaSudangMst(vo);
 		
@@ -155,10 +158,11 @@ public class EP011001Ctr {
 				obj.put("TAXINCOME", lst.get(i).getTAXINCOME());
 				obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
 				obj.put("SUPPLYTAX", lst.get(i).getSUPPLYTAX());
-				obj.put("REMARK", lst.get(i).getREMARK());
+				obj.put("REMARK", lst.get(i).getREMARK());				
 				obj.put("REGISTERNUM", lst.get(i).getREGISTERNUM());
 				obj.put("GRADE", lst.get(i).getGRADE());
 				obj.put("DUTY", lst.get(i).getDUTY());
+				obj.put("PAYYN", lst.get(i).getPAYYN());
 				
 				jCell.add(obj);
 			}

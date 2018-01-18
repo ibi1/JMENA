@@ -76,8 +76,9 @@
 		$("#DCAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#SELLAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-		$("#INSACODE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#INSACODE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#KNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+		$("#DUTY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 		$("#SUDANGRATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#ADDRATE").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 		$("#PAYAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -94,6 +95,10 @@
 		$("#DCGUBUN").attr("disabled", true);
 		$('#S_SALEDATESYM').val(today);
 		$('#S_SALEDATEEYM').val(today);
+		$("#S_PAYDATE_FR, #S_PAYDATE_TO").jqxMaskedInput({theme: 'energyblue', width: 90, height: 25, mask: '####-##-##'});
+		$("#S_PAYDATE_FR").val(dateInput(1));
+		$("#S_PAYDATE_TO").val(dateInput(0));
+		
 		var insacode = "";
 		//공통코드 가져오기
 		f_selectListEnaCityCode();		
@@ -122,13 +127,16 @@
 // 				S_BRANCHCODE : $("#S_BRANCHCODE").val(),
 // 				S_DEPTCODE : $("#S_DEPTCODE").val(),
 				S_SALERCD : $("#S_SALERCD").val(),
+				S_PAYDATE_FR: $("#S_PAYDATE_FR").val().replace(/[^0-9-]/g, ""),
+				S_PAYDATE_TO: $("#S_PAYDATE_TO").val().replace(/[^0-9-]/g, ""),
+				S_PAYYN: $("input[name='S_PAYYN']:checked").val(),
 				FLAG     :  ""
 			},				
 			datatype:"json" ,			
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['지급일','지급순번','담당자','담당자성명', '매출금액', '지급금액', '세액', '차감지급액','계약일자','번호','매출구분','계약지사','관리자번호',
+			colNames:['지급일','지급순번','담당자(코드)','담당자 성명', '매출금액', '지급금액', '세액', '차감지급액','계약일자','번호','매출구분','계약지사','관리자번호',
 			          '지역구분','주소','계약자성명','계약면적','계약평수','매매대금','매매단가','DC사항','DC율','DC금액', //'실판매가' ,
-			          '수당지급율','추가지급율','신고기준','사업소득세','지방세','부가가치세','비고','매출담당자','매출담당자성명','신고인수', '직급'],
+			          '수당지급율','추가지급율','신고기준','사업소득세','지방세','부가가치세','비고','매출담당자','매출담당자성명','신고인수', '직급', '송금여부'],
 			colModel:[
 				 {name:"PAYDATE",		index:'PAYDATE',		width:80,		align:'center',	sortable:false}
 				,{name:"PAYSEQ",		index:'PAYSEQ',			width:80,		align:'center',	sortable:false, hidden:true}
@@ -159,11 +167,12 @@
 				,{name:"TAXINCOME",		index:'TAXINCOME',		width:60,		align:'center',	sortable:false, hidden:true}
 				,{name:"TAXLOCAL",		index:'TAXLOCAL',		width:60,		align:'center',	sortable:false, hidden:true}
 				,{name:"SUPPLYTAX",		index:'SUPPLYTAX',		width:60,		align:'center',	sortable:false, hidden:true}
-				,{name:"REMARK",		index:'REMARK',			width:60,		align:'center',	sortable:false, hidden:true}	
+				,{name:"REMARK",		index:'REMARK',			width:60,		align:'center',	sortable:false, hidden:true}
 				,{name:"SALERCD",		index:'SALERCD',		width:60,		align:'center',	sortable:false, hidden:true}
 				,{name:"SALERNM",		index:'SALERNM',		width:60,		align:'center',	sortable:false, hidden:true}
 				,{name:"REGISTERNUM",	index:'REGISTERNUM',	width:60,		align:'center',	sortable:false, hidden:true}
 				,{name:"DUTY",			index:'DUTY',			width:60,		align:'center',	sortable:false, hidden:true}
+				,{name:"PAYYN",			index:'PAYYN',			width:60,		align:'center',	sortable:false, hidden:true}
 			] ,
 			rowNum:10000000,
 			autowidth: true ,
@@ -173,6 +182,7 @@
 			viewrecords: true ,
 			sortorder:'asc' ,
 			width: "96%" ,
+			height: "190px",
 			loadtext : "조회 중",
 			jsonReader: {
 				repeatitems: false
@@ -213,9 +223,9 @@
 				$("#INSACODE").val(selRowData.INSACODE);
 				$("#KNAME").val(selRowData.KNAME);
 				$("#S_SALEID").val(selRowData.SALEID);
-				$("#PAYSEQ").val(selRowData.PAYSEQ);
-				
-				$("#DUTY").val(selRowData.DUTY);
+				$("#PAYSEQ").val(selRowData.PAYSEQ);				
+				$("#DUTY").val(selRowData.DUTY);				
+				$("#PAYYN").prop("checked", selRowData.PAYYN == "Y" ? true : false);
 				
 				searchbottomList(selRowData.INSACODE);
 
@@ -741,7 +751,8 @@
 		$("#DCGUBUN").val("");
 		$("#DCRATE").val("");
 		$("#DCAMT").val("");
-		$("#SELLAMT").val("");	
+		$("#SELLAMT").val("");
+		$("#PAYYN").prop("checked", false);
 		
 		selectListEnaSudangMst();
 		searchbottomList("");
@@ -955,7 +966,8 @@
 						'remarkArr':remarkArr,	
 						'payseqArr':payseqArr,
 						'SALEID' :  $("#SALEID").val(),
-						'PAYDATE' :  $("#PAYDATE").val()
+						'PAYDATE' :  $("#PAYDATE").val(),
+						'PAYYN': $("#PAYYN").is(":checked") ? "Y" : "N"
 					},
 					dataType : 'json' , 
 					success: function(data){
@@ -1157,7 +1169,7 @@
 			</table>
 		</div>
 		<div id="leftDiv" style="width:48%; float:left; padding: 10px" align="left">
-			<table width="99%" >
+			<table width="99%" style="display:none">
 				<tr>
 					 <!-- <th width="120">지급년월</th> -->
 					<!-- <td colspan="3"><input type="text" id="S_SALEDATESYM" name="S_SALEDATESYM" /> ~ <input type="text" id="S_SALEDATEEYM" name="S_SALEDATEEYM" /></td> -->
@@ -1187,8 +1199,23 @@
 						<input type="hidden" id="S_SALERCD" name="S_SALERCD" />
 						<input type="hidden" id="S_SALEID" name="S_SALEID"/> 
 					</td> 
-						
 				</tr>
+			</table>
+			<table>
+				<tr>
+					<th width="120">지급기간</th>
+					<td>
+						<input type="text" id="S_PAYDATE_FR" /> - <input type="text" id="S_PAYDATE_TO" />
+					</td>
+				</tr>
+				<tr>
+					<th width="120">송금구분</th>
+					<td>
+						<div style="float:left; padding-right:20px;"><input type="radio" name="S_PAYYN" id="radio1" value="" /><label for="radio1">전체</label></div>
+						<div style="float:left; padding-right:20px;"><input type="radio" name="S_PAYYN" id="radio2" value="Y" /><label for="radio2">송금</label></div>
+						<div style="float:left;"><input type="radio" name="S_PAYYN" id="radio3" value="N" checked /><label for="radio3">미송금</label></div>
+					</td>
+				</tr>	
 			</table>
 			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
@@ -1274,22 +1301,24 @@
 					<th width="120">지급일자</th>
 					<td width="120"><input type="text" id="PAYDATE" name="PAYDATE"> </td>
 					<th width="120">담당자 성명</th>
-					<td colspan="2">
-						<input type="text" id="KNAME" 		name="KNAME"/>
-						<input type="text" id="INSACODE" 	name="INSACODE"/>
-						<input type="text" id="DUTY" 		name="DUTY"/>
+					<td colspan="3">
+						<input type="text" id="KNAME" name="KNAME" />
+						<input type="text" id="INSACODE" name="INSACODE" />
+						<input type="text" id="DUTY" name="DUTY" />
 					</td>
-					<td colspan="5">
+					<td colspan="4">
 						<!-- <input type="hidden" id='insaButton'/> -->
 					</td>
 				</tr>
 				<tr>
 					<th width="120">수당지급율(%)</th>
-					<td width="120"><input type="text" id="SUDANGRATE" name="SUDANGRATE" style="text-align:right;"/></td>
+					<td><input type="text" id="SUDANGRATE" name="SUDANGRATE" style="text-align:right;"/></td>
 					<th width="120">추가지급율(%)</th>
-					<td width="120"><input type="text" id="ADDRATE" name="ADDRATE" style="text-align:right;"/></td>
+					<td><input type="text" id="ADDRATE" name="ADDRATE" style="text-align:right;"/></td>
 					<th width="120">지급금액</th>
-					<td colspan="5"><input type="text" id="PAYAMT" name="PAYAMT" style="text-align:right;"/></td>
+					<td><input type="text" id="PAYAMT" name="PAYAMT" style="text-align:right;"/></td>
+					<th width="120">송금여부</th>
+					<td colspan="3"><input type="checkbox" id="PAYYN" /></td>
 				</tr>
 				<tr>
 					<th width="120">신고기준</th>				

@@ -9,6 +9,9 @@ public class EP011001VO {
 	private String S_SALEDATEEYM;
 	private String S_BRANCHCODE;
 	private String S_DEPTCODE;
+	private String S_PAYDATE_FR;
+	private String S_PAYDATE_TO;
+	private String S_PAYYN;
 	
 	private String SALEID;
 	private String SALEDATE;
@@ -43,7 +46,7 @@ public class EP011001VO {
 	private String TAXLOCAL;
 	private String SUPPLYTAX;
 	private String DEDUCTAMT;
-	private String REMARK;	
+	private String REMARK;
 	
 	private String ACCTNO;
 	private String ACCTOWNER;
@@ -66,6 +69,7 @@ public class EP011001VO {
 	private String USERID;
 	private String FLAG;
 	private String PAYERDEDUCTAMT;
+	private String PAYYN;
 	
 	public String getS_SALEID() {
 		return S_SALEID;
@@ -108,6 +112,24 @@ public class EP011001VO {
 	}
 	public void setS_DEPTCODE(String s_DEPTCODE) {
 		this.S_DEPTCODE = s_DEPTCODE;
+	}
+	public String getS_PAYDATE_FR() {
+		return this.S_PAYDATE_FR;
+	}
+	public void setS_PAYDATE_FR(String s_PAYDATE_FR) {
+		this.S_PAYDATE_FR = s_PAYDATE_FR;
+	}
+	public String getS_PAYDATE_TO() {
+		return this.S_PAYDATE_TO;
+	}
+	public void setS_PAYDATE_TO(String s_PAYDATE_TO) {
+		this.S_PAYDATE_TO = s_PAYDATE_TO;
+	}
+	public String getS_PAYYN() {
+		return this.S_PAYYN;
+	}
+	public void setS_PAYYN(String s_PAYYN) {
+		this.S_PAYYN = s_PAYYN;
 	}
 	public String getSALEID() {
 		return SALEID;
@@ -421,5 +443,11 @@ public class EP011001VO {
 	}
 	public void setPAYERDEDUCTAMT(String pAYERDEDUCTAMT) {
 		this.PAYERDEDUCTAMT = pAYERDEDUCTAMT;
+	}
+	public String getPAYYN() {
+		return this.PAYYN;
+	}
+	public void setPAYYN(String pAYYN) {
+		this.PAYYN = pAYYN;
 	}
 }

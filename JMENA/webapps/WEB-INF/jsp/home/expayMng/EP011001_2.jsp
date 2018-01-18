@@ -177,15 +177,22 @@
 			colModel:[  	
 				  {name:"PAYERNAME",	index:'PAYERNAME',		width:80,		align:'center',	sortable:false}
 				, {name:"PAYERID",		index:'PAYERID',		width:120,		align:'center',	sortable:false}
-				, {name:"SAUPOWNER",	index:'SAUPOWNER',		width:80,		align:'center',	sortable:false, editable:true}
-				, {name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right' ,	sortable:false,  editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
+				, {name:"SAUPOWNER",	index:'SAUPOWNER',		width:80,		align:'center',	sortable:false, editable:true, editoptions: {
+					dataEvents:[{
+						type: 'keydown',
+						fn: function(e) {
+							if(e.keyCode == 13) setPayAmt();
+						}
+					}]	
+				}}
+				, {name:"PAYAMT",		index:'PAYAMT',			width:80,		align:'right' ,	sortable:false, editable:true, formatter:'currency', formatoptions:{thousandsSeparator:",", decimalPlaces: 0,defaultValue: ''},
  					editoptions:{
  						dataEvents:[{
- 							type:'change',
- 							fn:function(e){
- 								paycal();
- 							}
-						}]
+								type:'change',
+								fn:function(e){
+									paycal();
+								}
+							}]
 					}}					
 				, {name:"TAXGUBUN",		index:'TAXGUBUN',	width:80,		align:'center',	sortable:false, editable:true
 					, edittype:'select', editoptions:{dataUrl:"/codeCom/dcodeList.do?CCODE=013", buildSelect:f_selectEnaCode,
@@ -284,6 +291,7 @@
 	
 	
 	function paycal(){
+		
 		var ids = $("#bottomList").jqGrid('getGridParam', 'selrow');	//선택아이디 가져오기
 		var cellData = $("#bottomList").jqGrid('getRowData', ids); //셀 전체 데이터 가져오기
 		
@@ -315,18 +323,16 @@
 			deductamt = gijunAmt - supplytax;
 			
 		}
-		$("#bottomList").setCell(ids,"DEDUCTAMT",deductamt);
-		
-		
-		
-		
-		
-		
-		
+		$("#bottomList").setCell(ids,"DEDUCTAMT",deductamt);		
 	}
 				
+	function setPayAmt() {
+		var ids = $("#leftList").jqGrid('getGridParam', 'selrow');		//선택아이디 가져오기
+		var cellData = $("#leftList").jqGrid('getRowData', ids); 		//셀 전체 데이터 가져오기
 		
-	
+		$("#bottomList input[name='PAYAMT']").val(cellData.PAYAMT);
+		paycal();
+	}
 	
 	$(function() {
 		$("#insertButton").click(function() {

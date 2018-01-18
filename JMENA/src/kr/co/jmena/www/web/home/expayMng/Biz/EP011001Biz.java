@@ -133,6 +133,7 @@ public class EP011001Biz {
 			String payseqArr[] = request.getParameterValues("payseqArr[]");
 			String SALEID = request.getParameter("SALEID");
 			String PAYDATE = request.getParameter("PAYDATE");
+			String PAYYN = request.getParameter("PAYYN");
 			
 			delVo.setSALEID(SALEID);
 			//EP011001Dao.deleteEnaSudangMst(delVo);
@@ -166,6 +167,7 @@ public class EP011001Biz {
 					vo.setDEDUCTAMT(deductamtArr[cnt]);
 					vo.setREMARK(remarkArr[cnt]);
 					vo.setPAYSEQ(payseqArr[cnt]);
+					vo.setPAYYN(PAYYN);
 					
 					//기존 값 있는지 체크
 					if (EP011001Dao.selectDataEnaSudangMst(vo) > 0) {
