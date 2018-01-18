@@ -368,23 +368,9 @@
 						},
 						success: function(data){
 							var flag = (data.resultMsg == "Y") ? true : false;
+							fnSetDisableButton(flag);
+							
 							g_cancelYn = data.resultMsg;
-							
-							//$("#insertButton").jqxButton({ disabled: flag });
-							$("#deleteButton").jqxButton({ disabled: flag });
-							$("#saveButton").jqxButton({ disabled: flag });
-					
-							$("#tab1InsertButton").jqxButton({ disabled: flag });
-							$("#tab1DeleteButton").jqxButton({ disabled: flag });
-							$("#tab1SaveButton").jqxButton({ disabled: flag });
-							
-							$("#tab2InsertButton").jqxButton({ disabled: flag });
-							$("#tab2DeleteButton").jqxButton({ disabled: flag });
-							$("#tab2SaveButton").jqxButton({ disabled: flag });
-							
-							$("#tab3InsertButton").jqxButton({ disabled: flag });
-							//$("#tab3DeleteButton").jqxButton({ disabled: flag });
-							$("#tab3SaveButton").jqxButton({ disabled: flag });
 						},
 						error:function(e){  
 							alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
@@ -703,6 +689,8 @@
 			$('#bottomList1').jqGrid('clearGridData');
 			$('#bottomList2').jqGrid('clearGridData');
 			$('#bottomList3').jqGrid('clearGridData');
+			
+			fnSetDisableButton();
 		}
 		
 		$(function() {
@@ -1377,23 +1365,9 @@
 							
 							f_selectListEnaSaleHistoryTb($("#SALEID").val());
 							
-							if(data.resultCode == "SUCCESS" && cellData.CHGGUBUN == "004") {
-								var flag = false;
+							if(data.resultCode == "SUCCESS" && cellData.CHGGUBUN == "004") {								
+								fnSetDisableButton(false);
 								g_cancelYn = "N";
-								
-								$("#deleteButton").jqxButton({ disabled: flag });
-								$("#saveButton").jqxButton({ disabled: flag });
-						
-								$("#tab1InsertButton").jqxButton({ disabled: flag });
-								$("#tab1DeleteButton").jqxButton({ disabled: flag });
-								$("#tab1SaveButton").jqxButton({ disabled: flag });
-								
-								$("#tab2InsertButton").jqxButton({ disabled: flag });
-								$("#tab2DeleteButton").jqxButton({ disabled: flag });
-								$("#tab2SaveButton").jqxButton({ disabled: flag });
-								
-								$("#tab3InsertButton").jqxButton({ disabled: flag });
-								$("#tab3SaveButton").jqxButton({ disabled: flag });
 							}
 						},
 						error:function(e){  
@@ -1757,6 +1731,28 @@
 			var popUrl = "/home/SA011005_v1.do";	//팝업창에 출력될 페이지 UR
 			var popOption = "width=1300, height=670, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 			window.open(popUrl, "입금처리", popOption);	
+		}
+		// 버튼 사용 설정
+		function fnSetDisableButton(b) {
+			var flag = false;
+			
+			if(typeof b === "boolean") flag = b;
+			
+			//$("#insertButton").jqxButton({ disabled: flag });
+			$("#deleteButton").jqxButton({ disabled: flag });
+			$("#saveButton").jqxButton({ disabled: flag });
+	
+			$("#tab1InsertButton").jqxButton({ disabled: flag });
+			$("#tab1DeleteButton").jqxButton({ disabled: flag });
+			$("#tab1SaveButton").jqxButton({ disabled: flag });
+			
+			$("#tab2InsertButton").jqxButton({ disabled: flag });
+			$("#tab2DeleteButton").jqxButton({ disabled: flag });
+			$("#tab2SaveButton").jqxButton({ disabled: flag });
+			
+			$("#tab3InsertButton").jqxButton({ disabled: flag });
+			//$("#tab3DeleteButton").jqxButton({ disabled: flag });
+			$("#tab3SaveButton").jqxButton({ disabled: flag });
 		}
 	</script>
 </head>
