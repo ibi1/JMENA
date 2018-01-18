@@ -31,6 +31,7 @@
 	<sqlMap resource="/config/ibatis/query/buyingMng/MM011001.xml" /><!-- 매입관리 : 매입 관리 -->  
 	<sqlMap resource="/config/ibatis/query/buyingMng/MM012001.xml" /><!-- 매입관리 : 원지주 잔금현황 -->
 	<sqlMap resource="/config/ibatis/query/buyingMng/MM012002.xml" /><!-- 매입관리 : 매입현황 -->
+	<sqlMap resource="/config/ibatis/query/buyingMng/MM012003.xml" /><!-- 매입관리 : 계약현황 -->
 
 	<sqlMap resource="/config/ibatis/query/saleMng/SA011001.xml" /><!-- 매출관리 : 매출관리 - 일반 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA011002.xml" /><!-- 매출관리 : 매출관리 - 소비대차 -->
@@ -50,7 +51,7 @@
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012010.xml" /><!-- 매출관리 : 위탁매출 - 위탁수수료 현황 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012011.xml" /><!-- 매출관리 : 매출현황 -->
 	<sqlMap resource="/config/ibatis/query/saleMng/SA012012.xml" /><!-- 매출관리 : 등기현황 -->
-	<sqlMap resource="/config/ibatis/query/saleMng/SA012013.xml" /><!-- 매출관리 : 해약현황 -->
+	<sqlMap resource="/config/ibatis/query/saleMng/SA012013.xml" /><!-- 매출관리 : 해약현황 -->	
 	
 	<sqlMap resource="/config/ibatis/query/expayMng/EP011001.xml" /><!-- 수당관리 : 수당관리 -->
 	<sqlMap resource="/config/ibatis/query/expayMng/EP011002.xml" /><!-- 수당관리 : 급여관리 -->
