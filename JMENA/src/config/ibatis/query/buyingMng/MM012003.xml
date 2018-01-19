@@ -12,11 +12,13 @@
 		<result property="ADDRESS" column="ADDRESS"/>
 		<result property="BUYM2" column="BUYM2"/>
 		<result property="BUYAMT" column="BUYAMT"/>
+	</resultMap>
+	
+	<resultMap class="MM012003VO" id="selectListSaleMst">
 		<result property="SALEID" column="SALEID"/>
 		<result property="SALEDATE" column="SALEDATE"/>
 		<result property="CONNAME" column="CONNAME"/>
 		<result property="CONM2" column="CONM2"/>
-		<result property="REMM2" column="REMM2"/>
 		<result property="DCRATE" column="DCRATE"/>
 		<result property="SELLAMT" column="SELLAMT"/>
 		<result property="DEPOSITDATE" column="DEPOSITDATE"/>
@@ -26,45 +28,52 @@
 	
 	<select id="selectListBuyMst" resultMap="selectListBuyMst">
 		/* MM012003.selectListBuyMst */
-		SELECT A.BUYID
-			, A.BUYDATE
-		    , A.OWNERNAME
-		    , A.ADDRESS
-		    , CAST(A.BUYM2 AS DECIMAL(12, 2)) AS BUYM2
-		    , A.BUYAMT
-		    , B.SALEID
-			, B.SALEDATE
-		    , B.CONNAME
-		    , CAST(B.CONM2 AS DECIMAL(12, 2)) AS CONM2
-		    , CAST((A.BUYM2 - B.CONM2) AS DECIMAL(12, 2)) AS REMM2
-		    , C.DCRATE
-		    , C.SELLAMT
-		    , (SELECT DEPOSITDATE FROM sa_ipgumscheduletb WHERE SALEID = B.SALEID AND DEPOSITGUBUN = '004' AND DEPOSITYN = 'Y') AS DEPOSITDATE
-		    , I.KNAME
-		    , I.BRANCHCODE
-		    , fn_codename('02', I.BRANCHCODE, NULL) AS NAME_BRANCHCODE
-		FROM mm_buymst A
-			LEFT OUTER JOIN (
-				SELECT *
-		        FROM sa_salemst T
-		        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
-				) B
-				ON A.BUYID = B.BUYID
-			INNER JOIN sa_saledtl C
-				ON B.SALEID = C.SALEID  
-			LEFT OUTER JOIN hr_insamst I
-				ON B.SALERCD = I.INSACODE        
-		WHERE 1 = 1  
+		SELECT BUYID
+			, BUYDATE
+		    , OWNERNAME
+		    , ADDRESS
+		    , IFNULL(BUYM2, 0) AS BUYM2
+		    , BUYAMT
+		FROM mm_buymst       
+		WHERE 1 = 1
 			<isNotEmpty property="S_BUYDATE_FR">
 				<isNotEmpty property="S_BUYDATE_TO">
-				AND A.BUYDATE BETWEEN #S_BUYDATE_FR# AND #S_BUYDATE_TO#
+				AND BUYDATE BETWEEN #S_BUYDATE_FR# AND #S_BUYDATE_TO#
 				</isNotEmpty>
 			</isNotEmpty>
 			<isNotEmpty property="S_BUYGUBUN">
 				<isNotEqual property="S_BUYGUBUN" compareValue="ALL">
-				AND A.BUYGUBUN = #S_BUYGUBUN#
+				AND BUYGUBUN = #S_BUYGUBUN#
 				</isNotEqual>
 			</isNotEmpty>
+			<isNotEmpty property="S_ADDRESS">
+			AND ADDRESS LIKE '%$S_ADDRESS$%'
+			</isNotEmpty>
+		ORDER BY BUYDATE DESC, BUYID ASC
+	</select>
+	
+	<select id="selectListSaleMst" resultMap="selectListSaleMst">
+		/* MM012003.selectListSaleMst */
+		SELECT A.SALEID
+			, A.SALEDATE
+		    , A.CONNAME
+		    , IFNULL(A.CONM2, 0) AS CONM2
+		    , B.DCRATE
+		    , B.SELLAMT
+		    , (SELECT DEPOSITDATE FROM sa_ipgumscheduletb WHERE SALEID = A.SALEID AND DEPOSITGUBUN = '004' AND DEPOSITYN = 'Y') AS DEPOSITDATE
+		    , I.KNAME
+		    , I.BRANCHCODE
+		    , fn_codename('02', I.BRANCHCODE, NULL) AS NAME_BRANCHCODE
+		FROM (
+			SELECT *
+			FROM sa_salemst T
+			WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			) A
+			INNER JOIN sa_saledtl B
+				ON A.SALEID = B.SALEID  
+			LEFT OUTER JOIN hr_insamst I
+				ON A.SALERCD = I.INSACODE        
+		WHERE A.BUYID = #S_BUYID#
 			<isNotEmpty property="S_BRANCHCODE">
 				<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
 				AND I.BRANCHCODE = #S_BRANCHCODE#
@@ -73,10 +82,7 @@
 			<isNotEmpty property="S_KNAME">
 			AND I.KNAME LIKE '%$S_KNAME$%'	
 			</isNotEmpty>
-			<isNotEmpty property="S_ADDRESS">
-			AND A.ADDRESS LIKE '%$S_ADDRESS$%'
-			</isNotEmpty>
-		ORDER BY A.BUYDATE DESC, B.SALEDATE DESC
+		ORDER BY A.SALEDATE DESC, A.SALEID ASC	
 	</select>
 
 </sqlMap>

@@ -61,29 +61,76 @@ public class MM012003Ctr {
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		
-		List<MM012003VO> lst = MM012003Biz.selectListBuyMst(vo);
+		List<MM012003VO> lst = MM012003Biz.selectListBuyMst(vo);		
 		
 		for(int i = 0; i < lst.size(); i++) {
-			JSONObject obj = new JSONObject();
 			
-			obj.put("BUYID", lst.get(i).getBUYID());
-			obj.put("BUYDATE", lst.get(i).getBUYDATE());
-			obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
-			obj.put("ADDRESS", lst.get(i).getADDRESS());
-			obj.put("BUYM2", lst.get(i).getBUYM2());
-			obj.put("BUYAMT", lst.get(i).getBUYAMT());
-			obj.put("SALEID", lst.get(i).getSALEID());
-			obj.put("SALEDATE", lst.get(i).getSALEDATE());
-			obj.put("CONNAME", lst.get(i).getCONNAME());
-			obj.put("CONM2", lst.get(i).getCONM2());
-			obj.put("REMM2", lst.get(i).getREMM2());
-			obj.put("DCRATE", lst.get(i).getDCRATE());
-			obj.put("SELLAMT", lst.get(i).getSELLAMT());
-			obj.put("DEPOSITDATE", lst.get(i).getDEPOSITDATE());
-			obj.put("KNAME", lst.get(i).getKNAME());
-			obj.put("NAME_BRANCHCODE", lst.get(i).getNAME_BRANCHCODE());
+			String S_BUYID = lst.get(i).getBUYID();
+			float BUYM2 = Float.parseFloat(lst.get(i).getBUYM2());
 			
-			jCell.add(obj);
+			vo.setS_BUYID(S_BUYID);
+			List<MM012003VO> s_lst = MM012003Biz.selectListSaleMst(vo);
+			
+			if(s_lst.size() > 0) {
+				
+				float REMM2 = BUYM2;
+				
+				for(int j = 0; j < s_lst.size(); j++) {
+					JSONObject obj = new JSONObject();
+					
+					if(j == 0) {
+						obj.put("BUYID", lst.get(i).getBUYID());
+						obj.put("BUYDATE", lst.get(i).getBUYDATE());
+						obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
+						obj.put("ADDRESS", lst.get(i).getADDRESS());
+						obj.put("BUYM2", lst.get(i).getBUYM2());
+						obj.put("BUYAMT", lst.get(i).getBUYAMT());
+					} else {
+						obj.put("BUYID", null);
+						obj.put("BUYDATE", null);
+						obj.put("OWNERNAME", null);
+						obj.put("ADDRESS", null);
+						obj.put("BUYM2", null);
+						obj.put("BUYAMT", null);
+					}
+					
+					REMM2 = REMM2 - Float.parseFloat(s_lst.get(j).getCONM2());
+					
+					obj.put("SALEID", s_lst.get(j).getSALEID());
+					obj.put("SALEDATE", s_lst.get(j).getSALEDATE());
+					obj.put("CONNAME", s_lst.get(j).getCONNAME());
+					obj.put("CONM2", s_lst.get(j).getCONM2());
+					obj.put("REMM2", REMM2);
+					obj.put("DCRATE", s_lst.get(j).getDCRATE());
+					obj.put("SELLAMT", s_lst.get(j).getSELLAMT());
+					obj.put("DEPOSITDATE", s_lst.get(j).getDEPOSITDATE());
+					obj.put("KNAME", s_lst.get(j).getKNAME());
+					obj.put("NAME_BRANCHCODE", s_lst.get(j).getNAME_BRANCHCODE());
+					
+					jCell.add(obj);
+				}
+			} else {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("BUYID", lst.get(i).getBUYID());
+				obj.put("BUYDATE", lst.get(i).getBUYDATE());
+				obj.put("OWNERNAME", lst.get(i).getOWNERNAME());
+				obj.put("ADDRESS", lst.get(i).getADDRESS());
+				obj.put("BUYM2", lst.get(i).getBUYM2());
+				obj.put("BUYAMT", lst.get(i).getBUYAMT());
+				obj.put("SALEID", null);
+				obj.put("SALEDATE", null);
+				obj.put("CONNAME", null);
+				obj.put("CONM2", null);
+				obj.put("REMM2", null);
+				obj.put("DCRATE", null);
+				obj.put("SELLAMT", null);
+				obj.put("DEPOSITDATE", null);
+				obj.put("KNAME", null);
+				obj.put("NAME_BRANCHCODE", null);
+				
+				jCell.add(obj);
+			}
 		}
 		
 		json.put("rows", jCell);

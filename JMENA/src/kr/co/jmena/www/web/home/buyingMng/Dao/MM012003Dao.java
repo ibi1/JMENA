@@ -17,7 +17,7 @@ public class MM012003Dao extends SqlMapClientDaoSupport {
 	private final String NAME_SPACE = "MM012003.";
 	
 	/**
-	 * 계약현황 : 조회
+	 * 계약현황 : 조회 (매입내역)
 	 * @return
 	 * @throws DataAccessException
 	 */
@@ -28,4 +28,17 @@ public class MM012003Dao extends SqlMapClientDaoSupport {
 		
 		return lst;
 	}
+	
+	/**
+	 * 계약현황 : 조회 (매출내역)
+	 * @return
+	 * @throws DataAccessException
+	 */
+	public List<MM012003VO> selectListSaleMst(MM012003VO vo) throws DataAccessException {
+		List<MM012003VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectListSaleMst", vo);
+		
+		return lst;
+	}	
 }

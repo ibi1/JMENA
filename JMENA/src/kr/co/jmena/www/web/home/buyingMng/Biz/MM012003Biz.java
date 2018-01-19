@@ -31,4 +31,16 @@ public class MM012003Biz {
 		
 		return lst;
 	}
+	
+	public List<MM012003VO> selectListSaleMst(MM012003VO vo) throws Exception {
+		List<MM012003VO> lst = null;
+		
+		try {
+			lst = MM012003Dao.selectListSaleMst(vo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return lst;
+	}	
 }
