@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -115,7 +116,7 @@ public class ExcelUtil {
 		
 		CellStyle bodyStyle = workbook.createCellStyle();
 		Font font = workbook.createFont();
-		//DataFormat format = workbook.createDataFormat();
+		DataFormat format = workbook.createDataFormat();
 		
 		font.setFontName("맑은 고딕");
 		font.setFontHeightInPoints((short)10);
@@ -127,7 +128,34 @@ public class ExcelUtil {
 		bodyStyle.setBorderRight(BorderStyle.THIN);
 		bodyStyle.setBorderBottom(BorderStyle.THIN);
 		bodyStyle.setBorderLeft(BorderStyle.THIN);
-		//bodyStyle.setDataFormat(format.getFormat("#,##0"));
+		bodyStyle.setDataFormat(format.getFormat("#,##0"));
+
+		cell.setCellType(CellType.NUMERIC);
+		cell.setCellStyle(bodyStyle);
+	}
+	
+	/**
+	 * 데이터(소수) Style
+	 * @param workbook
+	 * @param cell
+	 */
+	public void setDecimal(SXSSFWorkbook workbook, SXSSFCell cell) {
+		
+		CellStyle bodyStyle = workbook.createCellStyle();
+		Font font = workbook.createFont();
+		DataFormat format = workbook.createDataFormat();
+		
+		font.setFontName("맑은 고딕");
+		font.setFontHeightInPoints((short)10);
+		
+		bodyStyle.setFont(font);
+		bodyStyle.setAlignment(HorizontalAlignment.RIGHT);
+		bodyStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		bodyStyle.setBorderTop(BorderStyle.THIN);		
+		bodyStyle.setBorderRight(BorderStyle.THIN);
+		bodyStyle.setBorderBottom(BorderStyle.THIN);
+		bodyStyle.setBorderLeft(BorderStyle.THIN);
+		bodyStyle.setDataFormat(format.getFormat("#,##0.00"));
 
 		cell.setCellType(CellType.NUMERIC);
 		cell.setCellStyle(bodyStyle);
@@ -194,8 +222,19 @@ public class ExcelUtil {
 			if(data.get(i) == null) data.set(i, "");
 			
 			if(dataType.get(i).equals("number")) {
-				row.createCell(i).setCellValue(Double.parseDouble((String) data.get(i)));
+				if(data.get(i).toString().equals("")) {
+					row.createCell(i).setCellValue(data.get(i).toString());
+				} else {
+					row.createCell(i).setCellValue(Double.parseDouble(data.get(i).toString()));
+				}
 				setNumber(workbook, row.getCell(i));
+			} else if(dataType.get(i).equals("decimal")) {
+				if(data.get(i).toString().equals("")) {
+					row.createCell(i).setCellValue(data.get(i).toString());
+				} else {
+					row.createCell(i).setCellValue(Double.parseDouble(data.get(i).toString()));
+				}
+				setDecimal(workbook, row.getCell(i));
 			} else {
 				row.createCell(i).setCellValue(data.get(i).toString());
 				setString(workbook, row.getCell(i));

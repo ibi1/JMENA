@@ -144,9 +144,9 @@ public class MM012002Ctr {
 				data.add(lst.get(i).getNAME_CITYCODE() +" "+ lst.get(i).getBOROUGHNAME() +" "+ lst.get(i).getADDRESS());
 				dataType.add("string");
 				data.add(lst.get(i).getBUYM2());
-				dataType.add("number");
+				dataType.add("decimal");
 				data.add(lst.get(i).getBUYPY());
-				dataType.add("number");
+				dataType.add("decimal");
 				data.add(lst.get(i).getBUYDANGA());
 				dataType.add("number");
 				data.add(lst.get(i).getBUYAMT());
@@ -156,9 +156,9 @@ public class MM012002Ctr {
 				data.add(lst.get(i).getREGDATE());
 				dataType.add("string");
 				data.add(lst.get(i).getCONM2());
-				dataType.add("number");
+				dataType.add("decimal");
 				data.add(lst.get(i).getREMM2());
-				dataType.add("number");
+				dataType.add("decimal");
 				
 				// 엑셀 데이터 생성 
 				ex.MakeExcelBody(wb, data, dataType);
