@@ -18,11 +18,11 @@ public class MM012002Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
-	public List<MM012002VO> selectListMM012002(MM012002VO vo) throws Exception {
+	public List<MM012002VO> selectListBuyMst(MM012002VO vo) throws Exception {
 		List<MM012002VO> lst = null;
 		
 		try {
-			lst = MM012002Dao.selectListMM012002(vo);
+			lst = MM012002Dao.selectListBuyMst(vo);
 		} catch (Exception e) {
 			throw e;
 		}
