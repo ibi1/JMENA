@@ -165,7 +165,7 @@ public class MM012002Ctr {
 			}
 			
 			ServletContext context = request.getServletContext();
-			String filePath = context.getRealPath("/") + "WEB-INF\\ExcelDownLoad\\";
+			String filePath = context.getRealPath("/") +"WEB-INF"+ File.separator +"ExcelDownLoad"+ File.separator;
 			String fileName = "MM012002_exportToExcel";
 			
 			System.out.println(filePath);
