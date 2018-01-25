@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="application/vnd.ms-excel; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="kr.co.jmena.www.web.home.expayMng.Vo.EP011001VO" %>
 <%
 List<EP011001VO> sheet = (List)request.getAttribute("Sheet");
 List<EP011001VO> sheetList = (List)request.getAttribute("SheetList");
 
-//response.setHeader("Content-Type", "application/vnd.ms-excel; charset=UTF-8");
+response.setHeader("Content-Type", "application/vnd.ms-excel; charset=UTF-8");
 response.setHeader("Content-Disposition", "inline; filename=EP011001_exportToExcel.xls");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
