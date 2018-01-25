@@ -690,16 +690,16 @@
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
 			var url = "/home/selectEnaSudangMstSheet.do";
-			var sSailId = $.trim($("#SALEID").val());
-			var sPaySeq = $.trim($("#PAYSEQ").val());
-			var sInsaCode = $.trim($("#INSACODE").val());
+			var S_SALEID = $.trim($("#SALEID").val());
+			var S_PAYSEQ = $.trim($("#PAYSEQ").val());
+			var S_INSACODE = $.trim($("#INSACODE").val());
 			
-			if(sSailId == "" || sPaySeq == "" || sInsaCode == "") {
-				alert("엑셀로 내려받기하실 데이터를 선택해주세요.");
+			if(S_SALEID == "" || S_PAYSEQ == "" || S_INSACODE == "") {
+				alert("엑셀로 내려받을 데이터가 없습니다.");
 				return;
 			}
 			
-			location.href = url +"?saleId="+ sSailId + "&paySeq="+ sPaySeq +"&insaCode="+ sInsaCode;
+			location.href = url +"?S_SALEID="+ S_SALEID + "&S_PAYSEQ="+ S_PAYSEQ +"&S_INSACODE="+ S_INSACODE;
 		});	
 	});	
 	

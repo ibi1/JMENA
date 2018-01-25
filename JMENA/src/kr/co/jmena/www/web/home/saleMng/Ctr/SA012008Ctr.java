@@ -57,6 +57,7 @@ public class SA012008Ctr {
 		//String S_BOROUGHCODE = ("ALL".equals(request.getParameter("S_BOROUGHCODE"))) ? "" : request.getParameter("S_BOROUGHCODE");
 		String S_ADDRESS = (URLDecoder.decode(request.getParameter("S_ADDRESS"),"UTF-8"));
 		
+		vo.setS_BUYGUBUN(request.getParameter("S_BUYGUBUN"));
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
 		String S_BUYYEAR = request.getParameter("S_BUYYEAR") + request.getParameter("S_BUYMONTH");  

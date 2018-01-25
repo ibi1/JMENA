@@ -5,7 +5,7 @@
 <sqlMap namespace="EP012004">
 	<typeAlias alias="EP012004VO" type="kr.co.jmena.www.web.home.expayMng.Vo.EP012004VO"/>
 	
-	<resultMap class="EP012004VO" id="EP012004Data">
+	<resultMap class="EP012004VO" id="selectListSudangMst">
 		<result property="SALEID" column="SALEID"/>
 		<result property="PAYSEQ" column="PAYSEQ"/>
 		<result property="PAYDATE" column="PAYDATE"/>
@@ -17,47 +17,33 @@
 		<result property="TAXLOCAL" column="TAXLOCAL"/>
 		<result property="SUPPLYTAX" column="SUPPLYTAX"/>
 		<result property="DEDUCTAMT" column="DEDUCTAMT"/>
-		<result property="SALERCD" column="SALERCD"/>
 		<result property="CONNAME" column="CONNAME"/>
 		<result property="CONPY" column="CONPY"/>
 		<result property="CITYNAME" column="CITYNAME"/>
-		<result property="BOROUGHCODE" column="BOROUGHCODE"/>
 		<result property="BOROUGHNAME" column="BOROUGHNAME"/>
 		<result property="ADDRESS" column="ADDRESS"/>
 		<result property="KNAME" column="KNAME"/>
-		<result property="BRANCHCODE" column="BRANCHCODE"/>
-		<result property="BRANCHNAME" column="BRANCHNAME"/>
-		<result property="DEPTCODE" column="DEPTCODE"/>
-		<result property="DEPTNAME" column="DEPTNAME"/>
-		<result property="MNGRNAME" column="MNGRNAME"/>
-	</resultMap>
+	</resultMap>	
 
-	<select id="selectListEP012004" resultMap="EP012004Data">
-		/* EP012004.selectListEP012004 */
+	<select id="selectListSudangMst" resultMap="selectListSudangMst">
+		/* EP012004.selectListSudangMst*/
 		SELECT A.SALEID
 			, A.PAYSEQ
 		    , A.PAYDATE
 		    , B.REGISTERSEQ
 		    , B.PAYERNAME
-		    , fn_formatid(B.PAYERID) AS PAYERID
+		    , fn_formatnum('I', B.PAYERID) AS PAYERID
 		    , B.PAYAMT
 		    , B.TAXINCOME
 		    , B.TAXLOCAL
 		    , B.SUPPLYTAX
 		    , B.DEDUCTAMT
-		    , C.SALERCD
 		    , C.CONNAME
-		    , C.CONPY
+		    , CAST(C.CONPY AS DECIMAL(12, 2)) AS CONPY
 		    , fn_codename('03', D.CITYCODE, NULL) AS CITYNAME
-		    , D.BOROUGHCODE
 		    , (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = D.CITYCODE AND BOROUGHCODE = D.BOROUGHCODE) AS BOROUGHNAME
 		    , D.ADDRESS    
-		    , E.KNAME
-		    , E.BRANCHCODE
-		    , fn_codename('02', E.BRANCHCODE, NULL) AS BRANCHNAME
-		    , E.DEPTCODE
-		    , fn_codename('05', E.DEPTCODE, NULL) AS DEPTNAME
-		    , (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = E.DEPTCODE AND GRADE = '007' AND DUTY = '002' LIMIT 1) AS MNGRNAME
+		    , I.KNAME
 		FROM sa_sudangmst A
 			INNER JOIN sa_sudangpayertb B
 				ON A.SALEID = B.SALEID
@@ -66,9 +52,14 @@
 				ON A.SALEID = C.SALEID
 			INNER JOIN mm_buymst D
 				ON C.BUYID = D.BUYID
-			LEFT OUTER JOIN hr_insamst E
-				ON A.INSACODE = E.INSACODE
-		WHERE A.PAYDATE BETWEEN #S_PAYDATE_FR# AND #S_PAYDATE_TO#
+			LEFT OUTER JOIN hr_insamst I
+				ON A.INSACODE = I.INSACODE
+		WHERE 1 = 1
+			<isNotEmpty property="S_PAYDATE_FR">
+				<isNotEmpty property="S_PAYDATE_TO">	
+				AND A.PAYDATE BETWEEN #S_PAYDATE_FR# AND #S_PAYDATE_TO#
+				</isNotEmpty>
+			</isNotEmpty>
 			<isNotEmpty property="S_TAXGUBUN">
 				<isNotEqual property="S_TAXGUBUN" compareValue="ALL">
 				AND B.TAXGUBUN = #S_TAXGUBUN#
@@ -76,18 +67,18 @@
 			</isNotEmpty>
 			<isNotEmpty property="S_BRANCHCODE">
 				<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
-				AND E.BRANCHCODE = #S_BRANCHCODE#
+				AND I.BRANCHCODE = #S_BRANCHCODE#
 				</isNotEqual>
 			</isNotEmpty>
 			<isNotEmpty property="S_DEPTCODE">
 				<isNotEqual property="S_DEPTCODE" compareValue="ALL">
-				AND E.DEPTCODE = #S_DEPTCODE#
+				AND I.DEPTCODE = #S_DEPTCODE#
 				</isNotEqual>
 			</isNotEmpty>
 			<isNotEmpty property="S_KNAME">
-			AND E.KNAME LIKT '%$S_KNAME$%'
+			AND I.KNAME LIKE '%$S_KNAME$%'
 			</isNotEmpty>
-		ORDER BY A.INSACODE ASC, E.KNAME ASC, B.PAYERNAME ASC, A.PAYDATE ASC
-	</select>
+		ORDER BY A.INSACODE ASC, I.KNAME ASC, B.PAYERNAME ASC, A.PAYDATE ASC
+	</select>	
 
 </sqlMap>  

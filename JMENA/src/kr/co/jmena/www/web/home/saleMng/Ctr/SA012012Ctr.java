@@ -46,41 +46,43 @@ public class SA012012Ctr {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/home/selectListSA012012.do")
-	public ModelAndView selectListSA012012(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping("/home/SA012012_s1.do")
+	public ModelAndView selectListSaleMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SA012012VO vo = new SA012012VO();
 		
 		String S_DEPOSITDATE_FR = request.getParameter("S_DEPOSITDATE_FR");
 		String S_DEPOSITDATE_TO = request.getParameter("S_DEPOSITDATE_TO");		
 		String S_SALEGUBUN = request.getParameter("S_SALEGUBUN");
 		String S_REGYN = request.getParameter("S_REGYN");
+		String S_ADDRESS = request.getParameter("S_ADDRESS");
 		
 		vo.setS_DEPOSITDATE_FR(S_DEPOSITDATE_FR);
 		vo.setS_DEPOSITDATE_TO(S_DEPOSITDATE_TO);
 		vo.setS_SALEGUBUN(S_SALEGUBUN);
 		vo.setS_REGYN(S_REGYN);
+		vo.setS_ADDRESS(S_ADDRESS);
 		
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 		
-		List<SA012012VO> lst = SA012012Biz.selectListSA012012(vo);
+		List<SA012012VO> lst = SA012012Biz.selectListSaleMst(vo);
 		
 		for(int i = 0; i < lst.size(); i++) {
 			JSONObject obj = new JSONObject();
 			
-			obj.put("SALEID", lst.get(i).getSALEID());			
-			obj.put("SALEGUBUNNAME", lst.get(i).getSALEGUBUNNAME());
-			obj.put("KNAME", lst.get(i).getKNAME());
-			obj.put("MNGRNAME", lst.get(i).getMNGRNAME());
-			obj.put("CONNAME", lst.get(i).getCONNAME());
+			obj.put("SALEID", lst.get(i).getSALEID());
 			obj.put("SALEDATE", lst.get(i).getSALEDATE());
-			obj.put("FULLADDRESS", lst.get(i).getCITYNAME() +" "+ lst.get(i).getBOROUGHNAME() +" "+ lst.get(i).getADDRESS());
+			obj.put("NAME_SALEGUBUN", lst.get(i).getNAME_SALEGUBUN());
+			obj.put("CONNAME", lst.get(i).getCONNAME());
 			obj.put("CONM2", lst.get(i).getCONM2());
 			obj.put("CONPY", lst.get(i).getCONPY());
 			obj.put("SALEDANGA", lst.get(i).getSALEDANGA());
 			obj.put("SELLAMT", lst.get(i).getSELLAMT());
-			obj.put("REGNAME", lst.get(i).getREGNAME());
+			obj.put("NAME_REGYN", lst.get(i).getNAME_REGYN());
 			obj.put("REGDATE", lst.get(i).getREGDATE());
+			obj.put("FULLADDRESS", lst.get(i).getCITYNAME() +" "+ lst.get(i).getBOROUGHNAME() +" "+ lst.get(i).getADDRESS());
+			obj.put("KNAME", lst.get(i).getKNAME());
+			obj.put("MNGRNAME", lst.get(i).getMNGRNAME());			
 			
 			jCell.add(obj);
 		}

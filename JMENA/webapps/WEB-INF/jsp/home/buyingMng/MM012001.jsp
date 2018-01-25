@@ -12,11 +12,9 @@
 		$(document).ready(function(){
 			$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-			$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 			
 			<%if ("N".equals(session.getAttribute("AUTH_P"))) { %>
 				$("#excelButton").hide();
-				$("#printButton").hide();
 				auth_p = false;
 			<% }%>
 			
@@ -70,6 +68,7 @@
 	                { name: 'BUNBUYPY', 	type: 'number' },
 	                { name: 'JANBUYPY', 	type: 'number' },
 	                { name: 'BUYAMT',	 	type: 'number' },
+	                { name: 'PAYAMT',	 	type: 'number' },
 	                { name: 'PAYAMT1', 		type: 'number' },
 	                { name: 'PAYDATE1', 	type: 'string' },
 	                { name: 'PAYAMT2', 		type: 'number' },
@@ -78,7 +77,8 @@
 	                { name: 'PAYDATE3', 	type: 'string' },
 	                { name: 'PAYAMT4', 		type: 'number' },
 	                { name: 'PAYDATE4', 	type: 'string' },
-	                { name: 'JANPAYAMT', 	type: 'number' },
+	                { name: 'NONPAYAMT', 	type: 'number' },
+	                { name: 'SUBNONPAYAMT', type: 'number' },
 	                { name: 'OPENYN', 		type: 'string' },
 	                { name: 'REMARK', 		type: 'string' }
 	            ],
@@ -92,7 +92,6 @@
 	            downloadComplete: function (data, status, xhr) {
 	            },
 	            loadComplete: function (data) {
-	            	console.log(data.rows);
 	            	var countRow = $('#mainList').jqxGrid('getrows');
 	            	$("#mainListCount").html(countRow.length);
 	            },
@@ -112,27 +111,30 @@
 	            enabletooltips: true,
 	            editable: false,
 	            selectionmode: 'singlerow',
+	            columnsresize: true,
 	            columns: [
-	              { text: '지역',		datafield: 'CITYNAME', 		width: 130, cellsalign: 'center', align: 'center' },
-	              { text: '시/도',		datafield: 'BOROUGHNAME', 	width: 130, cellsalign: 'center', align: 'center' },
-	              { text: '주소/지번',	datafield: 'ADDRESS', 		width: 200, cellsalign: 'center', align: 'center' },
-	              { text: '원지주',		datafield: 'OWNERNAME', 	width: 150, cellsalign: 'center', align: 'center' },
-	              { text: '면적(m2)',	datafield: 'BUYM2', 		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
-	              { text: '평수',		datafield: 'BUYPY', 		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '분양평수',	datafield: 'BUNBUYPY', 		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '잔여평수',	datafield: 'JANBUYPY', 		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '매매대금',	datafield: 'BUYAMT', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '계약금',		datafield: 'PAYAMT1', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '계약일',		datafield: 'PAYDATE1', 		width: 150, cellsalign: 'center', align: 'center' },
-	              { text: '중도금1',	datafield: 'PAYAMT2', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '중도일1',	datafield: 'PAYDATE2', 		width: 150, cellsalign: 'center', align: 'center' },
-	              { text: '중도금2',	datafield: 'PAYAMT3', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '중도일2',	datafield: 'PAYDATE3', 		width: 150, cellsalign: 'center', align: 'center' },
-	              { text: '잔금액',		datafield: 'PAYAMT4', 		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '잔금일', 	datafield: 'PAYDATE4', 		width: 150, cellsalign: 'center', align: 'center' },
-	              { text: '잔금누계', 	datafield: 'JANPAYAMT', 	width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-	              { text: '오픈여부', 	datafield: 'OPENBRANCH', 	width: 150, cellsalign: 'center', align: 'center' },
-	              { text: '비고', 		datafield: 'REMARK', 		width: 250, cellsalign: 'center', align: 'center' }
+	              { text: '지역',		datafield: 'CITYNAME', 		width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '시/도',		datafield: 'BOROUGHNAME', 	width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '주소/지번',	datafield: 'ADDRESS', 		width: 200, cellsalign: 'left', align: 'center' },
+	              { text: '원지주',		datafield: 'OWNERNAME', 	width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '면적(m2)',	datafield: 'BUYM2', 		width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
+	              { text: '평수',		datafield: 'BUYPY', 		width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
+	              { text: '분양평수',	datafield: 'BUNBUYPY', 		width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
+	              { text: '잔여평수',	datafield: 'JANBUYPY', 		width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
+	              { text: '매매대금',	datafield: 'BUYAMT', 		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+	              { text: '계약금',		datafield: 'PAYAMT1', 		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+	              { text: '기지급금',	datafield: 'PAYAMT', 		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+	              { text: '계약일',		datafield: 'PAYDATE1', 		width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '중도금1',	datafield: 'PAYAMT2', 		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+	              { text: '중도일1',	datafield: 'PAYDATE2', 		width: 120, cellsalign: 'center', align: 'center' },
+	              { text: '중도금2',	datafield: 'PAYAMT3', 		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+	              { text: '중도일2',	datafield: 'PAYDATE3', 		width: 120, cellsalign: 'center', align: 'center' },
+	              { text: '잔금액',		datafield: 'PAYAMT4', 		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+	              { text: '잔금일', 	datafield: 'PAYDATE4', 		width: 100, cellsalign: 'center', align: 'center' },
+	              { text: '미지급액', 	datafield: 'NONPAYAMT', 	width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+	              { text: '잔금누계', 	datafield: 'SUBNONPAYAMT', 	width: 120, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+	              { text: '오픈여부', 	datafield: 'OPENBRANCH', 	width: 200, cellsalign: 'center', align: 'center' },
+	              { text: '비고', 		datafield: 'REMARK', 		width: 240, cellsalign: 'center', align: 'center' }
 	            ]
 	        });
 		}
@@ -158,7 +160,6 @@
 					<td align="right">
 						<input type="button" value="조회" id='selectButton' />
 						<input type="button" value="엑셀" id='excelButton' />
-						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>

@@ -19,6 +19,7 @@
 		var yyyy = date.getFullYear();
 		var mm = date.getMonth() + 1;
 		
+		var S_BUYGUBUN = "";
 		var S_CITYCODE = "";
 		var S_BOROUGHCODE = "";
 		var S_ADDRESS = "";
@@ -33,21 +34,20 @@
 
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		<%if ("N".equals(session.getAttribute("AUTH_P"))) { %>
 			$("#excelButton").hide();
-			$("#printButton").hide();
 			auth_p = false;
 		<% }%>
 		
 		$("#S_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 200, minLength: 1});
 		
+		f_selectListBuyGubun();
 		f_selectListEnaCityCode();
 		f_selectListEnaBoroughCode();
 		f_selectListBuyYear();
 		
-		f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+		f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_BUYGUBUN, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		
 	});
 
@@ -72,6 +72,30 @@
 		}
 		
 		$("#S_BUYYEAR").append(inHtml);
+	}
+	
+	function f_selectListBuyGubun() {
+		$("#S_BUYGUBUN").empty();
+		$("#S_BUYGUBUN").append("<option value=\"ALL\" selected=\"selected\">전체</option>");
+		
+		$.ajax({ 
+			type: "POST",
+			url: "/codeCom/dcodeList.do", 
+			dataType: "json",
+			data: {CCODE : "014"},
+			success: function(data) {
+				var sTemp = "";
+				data.dcodeList.forEach(function(currentValue, index, array) {
+					if(currentValue.DCODE != "003") {
+						sTemp += "<option value=\"" + currentValue.DCODE + "\">" + currentValue.DCODENAME + "</option>";
+					}
+				});
+				$("#S_BUYGUBUN").append(sTemp);
+			},
+			error: function(e) {
+				alert("[ERROR]System Menu Combo 호출 중 오류가 발생하였습니다.");
+			}
+		});
 	}
 	
 	function f_selectListEnaCityCode(){
@@ -129,10 +153,10 @@
 		});
 	}
 	
-	function f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
+	function f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_BUYGUBUN, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS){
 		S_ADDRESS = encodeURI(encodeURIComponent(S_ADDRESS));
 
-		var url = "/home/selectListSA012008.do?S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS + "&S_BUYYEAR=" + S_BUYYEAR + "&S_BUYMONTH=" + S_BUYMONTH;
+		var url = "/home/selectListSA012008.do?S_BUYGUBUN="+ S_BUYGUBUN +"&S_CITYCODE=" + S_CITYCODE + "&S_BOROUGHCODE=" + S_BOROUGHCODE + "&S_ADDRESS=" + S_ADDRESS + "&S_BUYYEAR=" + S_BUYYEAR + "&S_BUYMONTH=" + S_BUYMONTH;
 		
         // prepare the data
         var source = {
@@ -191,13 +215,13 @@
 				{ text: '매도자',		datafield: "OWNERNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '주민번호',		datafield: "OWNERJUMINID",		width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '주소/지번',	datafield: "ADDRESS",			width: 200, cellsalign: 'center', align: 'center'},
-				{ text: '면적(m2)',		datafield: "BUYM2",				width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '면적(m2)',		datafield: "BUYM2",				width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
 				{ text: '등기이전일',	datafield: "REGDATE1",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '매입금액',		datafield: "BUYAMT",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 				{ text: '담당자',		datafield: "SELLSEQ",			width: 80,  cellsalign: 'center', align: 'center'},
 				{ text: '매수자',		datafield: "CONNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '주민번호',		datafield: "CONJUMINID",		width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '계약면적',		datafield: "CONM2",				width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '계약면적',		datafield: "CONM2",				width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
 				{ text: '이전일',		datafield: "REGDATE2",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '실판매가',		datafield: "SALEAMT",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
 				{ text: '재고면적',		datafield: "REMNM2",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
@@ -210,13 +234,14 @@
 	$(function(){
 		$("#selectButton").click(function(){
 			
+			var S_BUYGUBUN = $("#S_BUYGUBUN").val();
 			var S_CITYCODE = $("#S_CITYCODE").val();
 			var S_BOROUGHCODE = $("#S_BOROUGHCODE").val();
 			var S_ADDRESS = $("#S_ADDRESS").val();
 			var S_BUYYEAR = $("#S_BUYYEAR").val();
 			var S_BUYMONTH = $("#S_BUYMONTH").val();
 			
-			f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
+			f_selectListSA012008(S_BUYYEAR, S_BUYMONTH, S_BUYGUBUN, S_CITYCODE, S_BOROUGHCODE, S_ADDRESS);
 		});
 		
 		$("#excelButton").click(function () {
@@ -235,7 +260,6 @@
 					<td align="right">
 						<input type="button" value="조회" id='selectButton' />
 						<input type="button" value="엑셀" id='excelButton' />
-						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -245,9 +269,7 @@
 				<tr>
 					<th width="120">매출 등기이전 년월</th>
 					<td width="150">
-					
-						<select id="S_BUYYEAR" name="S_BUYYEAR">
-						</select>
+						<select id="S_BUYYEAR" name="S_BUYYEAR"></select>
 						<select id="S_BUYMONTH" name="S_BUYMONTH">
 							<option value="01" selected="selected">1월</option>
 							<option value="02">2월</option>
@@ -262,8 +284,11 @@
 							<option value="11">11월</option>
 							<option value="12">12월</option>
 						</select>
-					
 					</td>
+					<th width="120">매입구분</th>
+					<td colspan="3"><select id="S_BUYGUBUN" style="width:120px"></select></td>
+				</tr>
+				<tr>
 					<th width="120">지역구분</th>
 					<td width="150">
 						<select id="S_CITYCODE" name="S_CITYCODE" style="width:130px">
@@ -277,7 +302,7 @@
 						</select>
 					</td>
 					<th width="120">주소 및 지번</th>
-					<td><input type="text" id="S_ADDRESS" name="S_ADDRESS" /></td>
+					<td width="150"><input type="text" id="S_ADDRESS" name="S_ADDRESS" /></td>
 				</tr>
 			</table>
 			<br/>

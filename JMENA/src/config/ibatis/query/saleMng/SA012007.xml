@@ -18,6 +18,7 @@
 		<result property="REMNM2" 		column="REMNM2"/>
 		<result property="REMNPY" 		column="REMNPY"/>
 		<result property="BUYDANGA" 	column="BUYDANGA"/>
+		<result property="PMDANGA" 		column="PMDANGA"/>
 	</resultMap>
 
 	<resultMap id="SA012007Data1" class="SA012007VO">
@@ -29,6 +30,7 @@
 	</resultMap>
 
 	<select id="selectListSA012007" resultMap="SA012007Data">
+		/* SA012007.selectListSA012007 */
 		select 
 			buyid,
 			dcodename,
@@ -41,7 +43,8 @@
 			conpy,
 			remnm2,
 			remnpy,
-			buydanga
+			buydanga,
+			PMDANGA
 		from (
 			select    
 				t1.buyid,    
@@ -51,11 +54,12 @@
 				t1.address,    
 				t1.buym2,    
 				t1.buypy,    
-				CAST(((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID)) AS DECIMAL(12, 2)) AS conm2,
-				CAST(((SELECT IFNULL(IN2.BUYM2, 0) AS BUYM2 FROM mm_buymst IN2 WHERE IN2.BUYID = t1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID))) AS DECIMAL(12, 2)) AS remnm2,
-				CAST(((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID)) AS DECIMAL(12, 2)) AS conpy, 
-				CAST(((SELECT IFNULL(IN2.BUYPY, 0) AS BUYPY FROM mm_buymst IN2 WHERE IN2.BUYID = t1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID))) AS DECIMAL(12, 2)) AS remnpy,
-				t1.buydanga
+				CAST(((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID AND IN4.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID)) AS DECIMAL(12, 2)) AS conm2,
+				CAST(((SELECT IFNULL(IN2.BUYM2, 0) AS BUYM2 FROM mm_buymst IN2 WHERE IN2.BUYID = t1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONM2), 0) AS CONM2 FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID AND IN4.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')) + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID))) AS DECIMAL(12, 2)) AS remnm2,
+				CAST(((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID AND IN4.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID)) AS DECIMAL(12, 2)) AS conpy, 
+				CAST(((SELECT IFNULL(IN2.BUYPY, 0) AS BUYPY FROM mm_buymst IN2 WHERE IN2.BUYID = t1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = t1.BUYID AND IN4.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID))) AS DECIMAL(12, 2)) AS remnpy,
+				t1.buydanga,
+				t1.PMDANGA
 				from mm_buymst t1, 
 				(select DISTINCT buyid from mm_payscheduletb where 1=1 and !(paygubun = '005' and payyn = 'Y')) t2
 			where 1=1

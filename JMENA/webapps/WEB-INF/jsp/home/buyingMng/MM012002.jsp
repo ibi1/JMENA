@@ -1,10 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>  
-<%
-Date currDate = new Date();
-SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -88,7 +82,9 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 				success: function(data) {
 					var sTemp = "";
 					data.dcodeList.forEach(function(currentValue, index, array) {
-						sTemp += "<option value=\"" + currentValue.DCODE + "\">" + currentValue.DCODENAME + "</option>";
+						if(currentValue.DCODE != "003") {
+							sTemp += "<option value=\"" + currentValue.DCODE + "\">" + currentValue.DCODENAME + "</option>";
+						}
 					});
 					$("#S_BUYGUBUN").append(sTemp);
 				},
@@ -188,7 +184,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		});
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
-			//$("#mainGrid").jqxGrid('exportdata', 'xls', 'MM012002_<%=f.format(currDate)%>', true, null, false, null, 'utf-8');
+			//$("#mainGrid").jqxGrid('exportdata', 'xls', 'MM012002', true, null, false, null, 'utf-8');
 			if($.trim($("#mainGridCount").text()) == "0") {
 				alert("엑셀로 내려받을 데이터가 없습니다.");
 				return;

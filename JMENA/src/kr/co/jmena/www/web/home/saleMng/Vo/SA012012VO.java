@@ -6,33 +6,24 @@ public class SA012012VO {
 	private String S_DEPOSITDATE_TO;
 	private String S_SALEGUBUN;
     private String S_REGYN;
+    private String S_ADDRESS;
     
-	private String SALEID;
-	private String DEPOSITDATE;
-	private String SALEDATE;
-	private String SALEGUBUN;
-	private String SALEGUBUNNAME;
-	private String SALERCD;
-	private String CONNAME;
-	private String CONM2;
-	private String CONPY;
-	private String SALEDANGA;
-	private String SELLAMT;
-	private String REGYN;
-	private String REGNAME;
-	private String REGDATE;
-	private String CITYCODE;
-	private String CITYNAME;
-	private String BOROUGHCODE;
-	private String BOROUGHNAME;
-	private String ADDRESS;
-	private String KNAME;
-	private String BRANCHCODE;
-	private String BRANCHNAME;
-	private String DEPTCODE;
-	private String DEPTNAME;
-	private String MNGRNAME;
-	
+    private String SALEID;
+    private String SALEDATE;
+    private String NAME_SALEGUBUN;
+    private String CONNAME;
+    private String CONM2;
+    private String CONPY;
+    private String SALEDANGA;
+    private String SELLAMT;
+    private String NAME_REGYN;
+    private String REGDATE;
+    private String CITYNAME;
+    private String BOROUGHNAME;
+    private String ADDRESS;
+    private String KNAME;
+    private String MNGRNAME;
+    
 	public String getS_DEPOSITDATE_FR() {
 		return this.S_DEPOSITDATE_FR;
 	}
@@ -57,17 +48,17 @@ public class SA012012VO {
 	public void setS_REGYN(String s_REGYN) {
 		this.S_REGYN = s_REGYN;
 	}
+	public String getS_ADDRESS() {
+		return this.S_ADDRESS;
+	}
+	public void setS_ADDRESS(String s_ADDRESS) {
+		this.S_ADDRESS = s_ADDRESS;
+	}
 	public String getSALEID() {
 		return this.SALEID;
 	}
 	public void setSALEID(String sALEID) {
 		this.SALEID = sALEID;
-	}
-	public String getDEPOSITDATE() {
-		return this.DEPOSITDATE;
-	}
-	public void setDEPOSITDATE(String dEPOSITDATE) {
-		this.DEPOSITDATE = dEPOSITDATE;
 	}
 	public String getSALEDATE() {
 		return this.SALEDATE;
@@ -75,23 +66,11 @@ public class SA012012VO {
 	public void setSALEDATE(String sALEDATE) {
 		this.SALEDATE = sALEDATE;
 	}
-	public String getSALEGUBUN() {
-		return this.SALEGUBUN;
+	public String getNAME_SALEGUBUN() {
+		return this.NAME_SALEGUBUN;
 	}
-	public void setSALEGUBUN(String sALEGUBUN) {
-		this.SALEGUBUN = sALEGUBUN;
-	}
-	public String getSALEGUBUNNAME() {
-		return this.SALEGUBUNNAME;
-	}
-	public void setSALEGUBUNNAME(String sALEGUBUNNAME) {
-		this.SALEGUBUNNAME = sALEGUBUNNAME;
-	}
-	public String getSALERCD() {
-		return this.SALERCD;
-	}
-	public void setSALERCD(String sALERCD) {
-		this.SALERCD = sALERCD;
+	public void setNAME_SALEGUBUN(String nAME_SALEGUBUN) {
+		this.NAME_SALEGUBUN = nAME_SALEGUBUN;
 	}
 	public String getCONNAME() {
 		return this.CONNAME;
@@ -123,17 +102,11 @@ public class SA012012VO {
 	public void setSELLAMT(String sELLAMT) {
 		this.SELLAMT = sELLAMT;
 	}
-	public String getREGYN() {
-		return this.REGYN;
+	public String getNAME_REGYN() {
+		return this.NAME_REGYN;
 	}
-	public void setREGYN(String rEGYN) {
-		this.REGYN = rEGYN;
-	}
-	public String getREGNAME() {
-		return this.REGNAME;
-	}
-	public void setREGNAME(String rEGNAME) {
-		this.REGNAME = rEGNAME;
+	public void setNAME_REGYN(String nAME_REGYN) {
+		this.NAME_REGYN = nAME_REGYN;
 	}
 	public String getREGDATE() {
 		return this.REGDATE;
@@ -141,23 +114,11 @@ public class SA012012VO {
 	public void setREGDATE(String rEGDATE) {
 		this.REGDATE = rEGDATE;
 	}
-	public String getCITYCODE() {
-		return this.CITYCODE;
-	}
-	public void setCITYCODE(String cITYCODE) {
-		this.CITYCODE = cITYCODE;
-	}
 	public String getCITYNAME() {
 		return this.CITYNAME;
 	}
 	public void setCITYNAME(String cITYNAME) {
 		this.CITYNAME = cITYNAME;
-	}
-	public String getBOROUGHCODE() {
-		return this.BOROUGHCODE;
-	}
-	public void setBOROUGHCODE(String bOROUGHCODE) {
-		this.BOROUGHCODE = bOROUGHCODE;
 	}
 	public String getBOROUGHNAME() {
 		return this.BOROUGHNAME;
@@ -176,30 +137,6 @@ public class SA012012VO {
 	}
 	public void setKNAME(String kNAME) {
 		this.KNAME = kNAME;
-	}
-	public String getBRANCHCODE() {
-		return this.BRANCHCODE;
-	}
-	public void setBRANCHCODE(String bRANCHCODE) {
-		this.BRANCHCODE = bRANCHCODE;
-	}
-	public String getBRANCHNAME() {
-		return this.BRANCHNAME;
-	}
-	public void setBRANCHNAME(String bRANCHNAME) {
-		this.BRANCHNAME = bRANCHNAME;
-	}
-	public String getDEPTCODE() {
-		return this.DEPTCODE;
-	}
-	public void setDEPTCODE(String dEPTCODE) {
-		this.DEPTCODE = dEPTCODE;
-	}
-	public String getDEPTNAME() {
-		return this.DEPTNAME;
-	}
-	public void setDEPTNAME(String dEPTNAME) {
-		this.DEPTNAME = dEPTNAME;
 	}
 	public String getMNGRNAME() {
 		return this.MNGRNAME;

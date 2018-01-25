@@ -1,10 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>  
-<%
-Date currDate = new Date();
-SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -40,7 +34,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					<td width="150"><input type="text" id="S_KNAME" /></td>
 				</tr>
 				<tr>
-					<th width="120">검색기준</th>
+					<th width="120">매출구분</th>
 					<td colspan="5"><select id="S_SALEGUBUN" style="width:120px"></select></td>
 				</tr>
 			</table>
@@ -154,31 +148,31 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	        };
 	        var source = {
         		type: "POST",
-	        	url: "/home/selectListSA012011.do",
+	        	url: "/home/SA012011_s1.do",
 	        	data: param,
 	            datatype: "json",
 	            datafields: [
 					{name: "SALEID", type: "string"},
-					{name: "SALEGUBUNNAME", type: "string"},
-					{name: "BRANCHNAME", type: "string"},
+					{name: "DEPOSITDATE", type: "string"},
 					{name: "SALEDATE", type: "string"},
-					{name: "KNAME", type: "string"},
-					{name: "MNGRNAME", type: "string"},
+					{name: "NAME_SALEGUBUN", type: "string"},
 					{name: "CONNAME", type: "string"},
-					{name: "FULLADDRESS", type: "string"},
 					{name: "CONPY", type: "number"},
 					{name: "SALEAMT", type: "number"},
 					{name: "DCAMT", type: "number"},
 					{name: "SELLAMT", type: "number"},
 					{name: "AGENCYAMT", type: "number"},
-					{name: "DEPOSITDATE", type: "string"}
+					{name: "FULLADDRESS", type: "string"},
+					{name: "KNAME", type: "string"},
+					{name: "BRANCHNAME", type: "string"},
+					{name: "MNGRNAME", type: "string"}
 	            ],
 	            root: "rows"
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
 	            loadComplete: function(data) {	            	
 	            	var countRow = $("#mainGrid").jqxGrid("getrows");
-	            	$("#mainGridCount").html(countRow.length);
+	            	$("#mainGridCount").text(countRow.length);
 	            },
 	            loadError: function(x, s, e) {
 	            	alert("[ERROR]"+ e);
@@ -198,8 +192,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            selectionmode: 'singlerow',
 	            columnsresize: true,
 	            columns: [
-					{text: "판매번호", datafield: "SALEID", width: 100, cellsalign: "center", align: "center", hidden: true},
-					{text: "매출구분", datafield: "SALEGUBUNNAME", width: 80, cellsalign: "center", align: "center"},
+					{text: "매출구분", datafield: "NAME_SALEGUBUN", width: 80, cellsalign: "center", align: "center"},
 					{text: "지사", datafield: "BRANCHNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "계약날짜", datafield: "SALEDATE", width: 100, cellsalign: "center", align: "center"},
 					{text: "담당", datafield: "KNAME", width: 100, cellsalign: "center", align: "center"},
@@ -211,7 +204,8 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{text: "DC금액", datafield: "DCAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "실판매가", datafield: "SELLAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "위탁수수료", datafield: "AGENCYAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
-					{text: "잔금입금일", datafield: "DEPOSITDATE", width: 100, cellsalign: "center", align: "center"}
+					{text: "잔금입금일", datafield: "DEPOSITDATE", width: 100, cellsalign: "center", align: "center"},
+					{text: "판매번호", datafield: "SALEID", width: 100, cellsalign: "center", align: "center", hidden: true}
 	            ]
 	        });			
 		}
@@ -243,7 +237,21 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		});
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
-			$("#mainGrid").jqxGrid('exportdata', 'xls', 'SA012011_<%=f.format(currDate)%>', true, null, false, null, 'utf-8'); 	
+			//$("#mainGrid").jqxGrid('exportdata', 'xls', 'SA012011', true, null, false, null, 'utf-8');
+			if($.trim($("#mainGridCount").text()) == "0") {
+				alert("엑셀로 내려받을 데이터가 없습니다.");
+				return;
+			} else {
+				var param = {
+		        	S_DEPOSITDATE_FR: $("#S_DEPOSITDATE_FR").val().replace(/[^0-9-]/g, ""),
+		        	S_DEPOSITDATE_TO: $("#S_DEPOSITDATE_TO").val().replace(/[^0-9-]/g, ""),
+		        	S_BRANCHCODE: $("#S_BRANCHCODE").val(),
+		        	S_DEPTCODE: $("#S_DEPTCODE").val(),
+		        	S_KNAME: $.trim($("#S_KNAME").val()),
+		        	S_SALEGUBUN: $("#S_SALEGUBUN").val()
+		        };
+				$.download("/home/SA012011_e1.do", param, "post");
+			};
 		});
 	});
 </script>

@@ -16,9 +16,7 @@ import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.springframework.stereotype.Repository;
 
-@Repository("ExcelUtil")
 public class ExcelUtil {
 	
 	private static ExcelUtil excelUtil = null;
@@ -128,7 +126,7 @@ public class ExcelUtil {
 		bodyStyle.setBorderRight(BorderStyle.THIN);
 		bodyStyle.setBorderBottom(BorderStyle.THIN);
 		bodyStyle.setBorderLeft(BorderStyle.THIN);
-		bodyStyle.setDataFormat(format.getFormat("#,##0"));
+		//bodyStyle.setDataFormat(format.getFormat("#,##0"));
 
 		cell.setCellType(CellType.NUMERIC);
 		cell.setCellStyle(bodyStyle);
@@ -155,7 +153,7 @@ public class ExcelUtil {
 		bodyStyle.setBorderRight(BorderStyle.THIN);
 		bodyStyle.setBorderBottom(BorderStyle.THIN);
 		bodyStyle.setBorderLeft(BorderStyle.THIN);
-		bodyStyle.setDataFormat(format.getFormat("#,##0.00"));
+		bodyStyle.setDataFormat(format.getFormat("0.00"));
 
 		cell.setCellType(CellType.NUMERIC);
 		cell.setCellStyle(bodyStyle);

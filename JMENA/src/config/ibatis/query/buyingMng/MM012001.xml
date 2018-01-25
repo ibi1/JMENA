@@ -18,6 +18,7 @@
 		<result property="BUNBUYPY"		column="BUNBUYPY"/>
 		<result property="JANBUYPY"		column="JANBUYPY"/>
 		<result property="BUYAMT"		column="BUYAMT"/>
+		<result property="PAYAMT"		column="PAYAMT"/>
 		<result property="PAYAMT1"		column="PAYAMT1"/>
 		<result property="PAYDATE1"		column="PAYDATE1"/>
 		<result property="PAYAMT2"		column="PAYAMT2"/>
@@ -26,7 +27,7 @@
 		<result property="PAYDATE3"		column="PAYDATE3"/>
 		<result property="PAYAMT4"		column="PAYAMT4"/>
 		<result property="PAYDATE4"		column="PAYDATE4"/>
-		<result property="JANPAYAMT"	column="JANPAYAMT"/>
+		<result property="NONPAYAMT"	column="NONPAYAMT"/>
 		<result property="OPENYN"		column="OPENYN"/>
 		<result property="REMARK"		column="REMARK"/>
 	</resultMap>
@@ -65,7 +66,9 @@
 		                    FROM
 		                        sa_salemst IN4
 		                    WHERE
-		                        IN4.BUYID = T1.BUYID) + (SELECT 
+		                        IN4.BUYID = T1.BUYID
+		                    	AND IN4.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+		                    ) + (SELECT 
 		                        IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY
 		                    FROM
 		                        mm_salesopentb IN3
@@ -82,7 +85,9 @@
 		                    FROM
 		                        sa_salemst IN4
 		                    WHERE
-		                        IN4.BUYID = T1.BUYID) + (SELECT 
+		                        IN4.BUYID = T1.BUYID
+		                        AND IN4.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+		                    ) + (SELECT 
 		                        IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY
 		                    FROM
 		                        mm_salesopentb IN3
@@ -90,6 +95,12 @@
 		                        IN3.BUYID = T1.BUYID)))
 		                AS DECIMAL (12 , 2 )) AS JANBUYPY,
 		            T1.BUYAMT,
+		            (SELECT 
+		                    SUM(PAYAMT)
+		                FROM
+		                    mm_payscheduletb
+		                WHERE
+		                    BUYID = T1.BUYID AND PAYYN = 'Y') AS PAYAMT,
 		            (SELECT 
 		                    PAYAMT
 		                FROM
@@ -152,12 +163,7 @@
 		                    mm_payscheduletb
 		                WHERE
 		                    BUYID = T1.BUYID AND PAYGUBUN = '005') AS PAYDATE4,
-		            (SELECT 
-		                    SUM(PAYAMT)
-		                FROM
-		                    mm_payscheduletb
-		                WHERE
-		                    BUYID = T1.BUYID AND PAYYN = 'Y') AS JANPAYAMT,
+					(T1.BUYAMT - (SELECT SUM(PAYAMT) FROM mm_payscheduletb WHERE BUYID = T1.BUYID AND PAYYN = 'Y')) AS NONPAYAMT,
 		            'Y' AS OPENYN,
 		            T1.REMARK
 		    FROM

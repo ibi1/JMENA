@@ -128,122 +128,162 @@
 		/* SA012001.selectListSA012001_4 */
 		SELECT 
 			(
-			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT6 
+			SELECT IFNULL(SUM(T3.SALEAMT), 0) AMT6 
 			FROM (
 				SELECT *
 				FROM sa_ipgumscheduletb
 				WHERE DEPOSITGUBUN = '004'
-			    AND DEPOSITYN = 'Y') T1
-			    INNER JOIN sa_salemst T2
+			    	AND DEPOSITYN = 'Y'
+			    ) T1
+			    INNER JOIN (
+				    SELECT *
+			        FROM sa_salemst T
+			        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			    ) T2
 					ON T1.SALEID = T2.SALEID
 				INNER JOIN sa_saledtl T3
 					ON T2.SALEID = T3.SALEID
-			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			WHERE 1 = 1
 				AND T1.DEPOSITDATE BETWEEN #M6_FR# AND #M6_TO#
 				AND T2.SALERCD = #INSACODE#
 			) AS AMT6
 			, (
-			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT5 
+			SELECT IFNULL(SUM(T3.SALEAMT), 0) AMT5 
 			FROM (
 				SELECT *
 				FROM sa_ipgumscheduletb
 				WHERE DEPOSITGUBUN = '004'
-			    AND DEPOSITYN = 'Y') T1
-			    INNER JOIN sa_salemst T2
+			    	AND DEPOSITYN = 'Y'
+			    ) T1
+			    INNER JOIN (
+				    SELECT *
+			        FROM sa_salemst T
+			        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			    ) T2
 					ON T1.SALEID = T2.SALEID
 				INNER JOIN sa_saledtl T3
 					ON T2.SALEID = T3.SALEID
-			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			WHERE 1 = 1
 				AND T1.DEPOSITDATE BETWEEN #M5_FR# AND #M5_TO#
 				AND T2.SALERCD = #INSACODE#
 			) AS AMT5
 			, (
-			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT4 
+			SELECT IFNULL(SUM(T3.SALEAMT), 0) AMT4 
 			FROM (
 				SELECT *
 				FROM sa_ipgumscheduletb
 				WHERE DEPOSITGUBUN = '004'
-			    AND DEPOSITYN = 'Y') T1
-			    INNER JOIN sa_salemst T2
+			    	AND DEPOSITYN = 'Y'
+			    ) T1
+			    INNER JOIN (
+				    SELECT *
+			        FROM sa_salemst T
+			        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			    ) T2
 					ON T1.SALEID = T2.SALEID
 				INNER JOIN sa_saledtl T3
 					ON T2.SALEID = T3.SALEID
-			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			WHERE 1 = 1
 				AND T1.DEPOSITDATE BETWEEN #M4_FR# AND #M4_TO#
 				AND T2.SALERCD = #INSACODE#
 			) AS AMT4
 			, (
-			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT3 
+			SELECT IFNULL(SUM(T3.SALEAMT), 0) AMT3 
 			FROM (
 				SELECT *
 				FROM sa_ipgumscheduletb
 				WHERE DEPOSITGUBUN = '004'
-			    AND DEPOSITYN = 'Y') T1
-			    INNER JOIN sa_salemst T2
+			    	AND DEPOSITYN = 'Y'
+			    ) T1
+			    INNER JOIN (
+				    SELECT *
+			        FROM sa_salemst T
+			        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			    ) T2
 					ON T1.SALEID = T2.SALEID
 				INNER JOIN sa_saledtl T3
 					ON T2.SALEID = T3.SALEID
-			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			WHERE 1 = 1
 				AND T1.DEPOSITDATE BETWEEN #M3_FR# AND #M3_TO#
 				AND T2.SALERCD = #INSACODE#
 			) AS AMT3
 			, (
-			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT2 
+			SELECT IFNULL(SUM(T3.SALEAMT), 0) AMT2 
 			FROM (
 				SELECT *
 				FROM sa_ipgumscheduletb
 				WHERE DEPOSITGUBUN = '004'
-			    AND DEPOSITYN = 'Y') T1
-			    INNER JOIN sa_salemst T2
+			    	AND DEPOSITYN = 'Y'
+			    ) T1
+			    INNER JOIN (
+				    SELECT *
+			        FROM sa_salemst T
+			        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			    ) T2
 					ON T1.SALEID = T2.SALEID
 				INNER JOIN sa_saledtl T3
 					ON T2.SALEID = T3.SALEID
-			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			WHERE 1 = 1
 				AND T1.DEPOSITDATE BETWEEN #M2_FR# AND #M2_TO#
 				AND T2.SALERCD = #INSACODE#
 			) AS AMT2
 			, (
-			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT1 
+			SELECT IFNULL(SUM(T3.SALEAMT), 0) AMT1 
 			FROM (
 				SELECT *
 				FROM sa_ipgumscheduletb
 				WHERE DEPOSITGUBUN = '004'
-			    AND DEPOSITYN = 'Y') T1
-			    INNER JOIN sa_salemst T2
+			    	AND DEPOSITYN = 'Y'
+			    ) T1
+			    INNER JOIN (
+				    SELECT *
+			        FROM sa_salemst T
+			        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			    ) T2
 					ON T1.SALEID = T2.SALEID
 				INNER JOIN sa_saledtl T3
 					ON T2.SALEID = T3.SALEID
-			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			WHERE 1 = 1
 				AND T1.DEPOSITDATE BETWEEN #M1_FR# AND #M1_TO#
 				AND T2.SALERCD = #INSACODE#
 			) AS AMT1
 			, (
-			SELECT IFNULL(SUM(T3.SELLAMT), 0) AMT0
+			SELECT IFNULL(SUM(T3.SALEAMT), 0) AMT0
 			FROM (
 				SELECT *
 				FROM sa_ipgumscheduletb
 				WHERE DEPOSITGUBUN = '004'
-			    AND DEPOSITYN = 'Y') T1
-			    INNER JOIN sa_salemst T2
+			    	AND DEPOSITYN = 'Y'
+			    ) T1
+			    INNER JOIN (
+				    SELECT *
+			        FROM sa_salemst T
+			        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			    ) T2
 					ON T1.SALEID = T2.SALEID
 				INNER JOIN sa_saledtl T3
 					ON T2.SALEID = T3.SALEID
-			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			WHERE 1 = 1
 				AND T1.DEPOSITDATE BETWEEN #S_DEPOSITDATE_FR# AND #S_DEPOSITDATE_TO#
 				AND T2.SALERCD = #INSACODE#
 			) AS AMT0
 			, (
-			SELECT IFNULL(SUM(T3.SELLAMT), 0) TOTAMT 
+			SELECT IFNULL(SUM(T3.SALEAMT), 0) TOTAMT 
 			FROM (
 				SELECT *
 				FROM sa_ipgumscheduletb
 				WHERE DEPOSITGUBUN = '004'
-			    AND DEPOSITYN = 'Y') T1
-			    INNER JOIN sa_salemst T2
+			    	AND DEPOSITYN = 'Y'
+			    ) T1
+			    INNER JOIN (
+				    SELECT *
+			        FROM sa_salemst T
+			        WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			    ) T2
 					ON T1.SALEID = T2.SALEID
 				INNER JOIN sa_saledtl T3
 					ON T2.SALEID = T3.SALEID
-			WHERE T1.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			WHERE 1 = 1
 				AND T1.DEPOSITDATE BETWEEN #M6_FR# AND #S_DEPOSITDATE_TO#
 				AND T2.SALERCD = #INSACODE#
 			) AS TOTAMT

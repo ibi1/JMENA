@@ -1,10 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>  
-<%
-Date currDate = new Date();
-SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -159,7 +153,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
 	            loadComplete: function(data) {	            	
 	            	var countRow = $("#mainGrid").jqxGrid("getrows");
-	            	$("#mainGridCount").html(countRow.length);
+	            	$("#mainGridCount").text(countRow.length);
 	            },
 	            loadError: function(x, s, e) {
 	            	alert("[ERROR]"+ e);
@@ -221,7 +215,22 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		});
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
-			$("#mainGrid").jqxGrid('exportdata', 'xls', 'MM012003_<%=f.format(currDate)%>', true, null, false, null, 'utf-8'); 	
+			//$("#mainGrid").jqxGrid('exportdata', 'xls', 'MM012003', true, null, false, null, 'utf-8');
+			if($.trim($("#mainGridCount").text()) == "0") {
+				alert("엑셀로 내려받을 데이터가 없습니다.");
+				return;
+			} else {
+				var param = {
+	        		S_BUYDATE_FR: $("#S_BUYDATE_FR").val().replace(/[^0-9-]/g, ""),
+	        		S_BUYDATE_TO: $("#S_BUYDATE_TO").val().replace(/[^0-9-]/g, ""),
+	        		S_BUYGUBUN: $("#S_BUYGUBUN").val(),
+	        		S_BRANCHCODE: $("#S_BRANCHCODE").val(),
+	        		S_KNAME: $.trim($("#S_KNAME").val()),
+	        		S_CONNAME: $.trim($("#S_CONNAME").val()),
+	        		S_ADDRESS: $.trim($("#S_ADDRESS").val())
+		        };
+				$.download("/home/MM012003_e1.do", param, "post");
+			};
 		});
 	});
 </script>

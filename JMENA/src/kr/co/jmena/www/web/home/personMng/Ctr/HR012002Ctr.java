@@ -325,7 +325,7 @@ public class HR012002Ctr {
 							
 							vo2.setINSACODE(lst.get(i).getINSACODE());
 							vo2.setO_JOINDATE(lst.get(i).getJOINDATE());
-							vo2.setO_RETIREDATE(lst.get(i).getRETIREDATE());
+							vo2.setO_RETIREDATE(lst.get(i).getRETIREDATE());							
 							
 							List<HR012002VO> lst3 = HR012002Biz.selectListHR012002_3(vo2);
 							if(lst3.size() > 0){
@@ -360,6 +360,7 @@ public class HR012002Ctr {
 						vo2.setINSACODE(lst.get(i).getINSACODE());
 						vo2.setO_JOINDATE(lst2.get(j).getO_JOINDATE());
 						vo2.setO_RETIREDATE(lst2.get(j).getO_RETIREDATE());
+						
 						
 						List<HR012002VO> lst3 = HR012002Biz.selectListHR012002_3(vo2);
 						if(lst3.size() > 0){
@@ -451,7 +452,7 @@ public class HR012002Ctr {
         header.createCell(13).setCellValue("퇴사");
         header.createCell(14).setCellValue("실적");
         header.createCell(15).setCellValue("비고");
-        header.createCell(16).setCellValue("비고");
+        //header.createCell(16).setCellValue("비고");
         
     }
 
@@ -472,7 +473,7 @@ public class HR012002Ctr {
         header.getCell(13).setCellStyle(style);
         header.getCell(14).setCellStyle(style);
         header.getCell(15).setCellStyle(style);
-        header.getCell(16).setCellStyle(style);
+        //header.getCell(16).setCellStyle(style);
     }
 
 
@@ -493,8 +494,9 @@ public class HR012002Ctr {
         aRow.createCell(12).setCellValue(HR012002vo.getO_JOINDATE());
         aRow.createCell(13).setCellValue(HR012002vo.getO_RETIREDATE());
         aRow.createCell(14).setCellValue(HR012002vo.getO_SELLAMT());
-        aRow.createCell(15).setCellValue(HR012002vo.getO_REMARK());
-        aRow.createCell(16).setCellValue(HR012002vo.getREMARK());
+        aRow.createCell(15).setCellValue(HR012002vo.getREMARK());
+        //aRow.createCell(15).setCellValue(HR012002vo.getO_REMARK());
+        //aRow.createCell(16).setCellValue(HR012002vo.getREMARK());
         
     }
 	

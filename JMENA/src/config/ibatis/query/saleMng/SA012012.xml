@@ -5,79 +5,64 @@
 <sqlMap namespace="SA012012">
 	<typeAlias alias="SA012012VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA012012VO"/>
 	
-	<resultMap class="SA012012VO" id="SA012012Data">
+	<resultMap class="SA012012VO" id="selectListSaleMst">
 		<result property="SALEID" column="SALEID"/>
-		<result property="DEPOSITDATE" column="DEPOSITDATE"/>
 		<result property="SALEDATE" column="SALEDATE"/>
-		<result property="SALEGUBUN" column="SALEGUBUN"/>
-		<result property="SALEGUBUNNAME" column="SALEGUBUNNAME"/>
-		<result property="SALERCD" column="SALERCD"/>
-		<result property="CONNAME" column="CONNAME"/>		
+		<result property="NAME_SALEGUBUN" column="NAME_SALEGUBUN"/>
+		<result property="CONNAME" column="CONNAME"/>
 		<result property="CONM2" column="CONM2"/>
 		<result property="CONPY" column="CONPY"/>
 		<result property="SALEDANGA" column="SALEDANGA"/>
 		<result property="SELLAMT" column="SELLAMT"/>
-		<result property="REGYN" column="REGYN"/>
-		<result property="REGNAME" column="REGNAME"/>
+		<result property="NAME_REGYN" column="NAME_REGYN"/>
 		<result property="REGDATE" column="REGDATE"/>
-		<result property="CITYCODE" column="CITYCODE"/>
 		<result property="CITYNAME" column="CITYNAME"/>
-		<result property="BOROUGHCODE" column="BOROUGHCODE"/>
 		<result property="BOROUGHNAME" column="BOROUGHNAME"/>
 		<result property="ADDRESS" column="ADDRESS"/>
 		<result property="KNAME" column="KNAME"/>
-		<result property="BRANCHCODE" column="BRANCHCODE"/>
-		<result property="BRANCHNAME" column="BRANCHNAME"/>
-		<result property="DEPTCODE" column="DEPTCODE"/>
-		<result property="DEPTNAME" column="DEPTNAME"/>
 		<result property="MNGRNAME" column="MNGRNAME"/>
 	</resultMap>
 
-	<select id="selectListSA012012" resultMap="SA012012Data">
-		/* SA012012.selectListSA012012 */		
+	<select id="selectListSaleMst" resultMap="selectListSaleMst">
+		/* SA012012.selectListSaleMst */
 		SELECT A.SALEID
-			, A.DEPOSITDATE
 			, B.SALEDATE
-			, B.SALEGUBUN
-			, fn_codename('01', '014', B.SALEGUBUN) AS SALEGUBUNNAME
-			, B.SALERCD
+			, fn_codename('01', '014', B.SALEGUBUN) AS NAME_SALEGUBUN
 			, B.CONNAME
-			, B.CONM2
-			, B.CONPY
+			, CAST(B.CONM2 AS DECIMAL(12, 2)) AS CONM2
+			, CAST(B.CONPY AS DECIMAL(12, 2)) AS CONPY
 			, C.SALEDANGA
 			, C.SELLAMT
-			, C.REGYN
 			, CASE C.REGYN
 				WHEN 'Y' THEN '등기'
 				WHEN 'N' THEN '미등기'
 				ELSE ''
-			  END AS REGNAME
+			  END AS NAME_REGYN
 			, C.REGDATE
-			, D.CITYCODE
 			, fn_codename('03', D.CITYCODE, NULL) AS CITYNAME
-			, D.BOROUGHCODE
 			, (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = D.CITYCODE AND BOROUGHCODE = D.BOROUGHCODE) AS BOROUGHNAME
-			, D.ADDRESS    
-			, E.KNAME
-			, E.BRANCHCODE
-			, fn_codename('02', E.BRANCHCODE, NULL) AS BRANCHNAME
-			, E.DEPTCODE
-			, fn_codename('05', E.DEPTCODE, NULL) AS DEPTNAME
-			, (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = E.DEPTCODE AND GRADE = '007' AND DUTY = '002' LIMIT 1) AS MNGRNAME
+			, D.ADDRESS
+			, I.KNAME
+			, (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = I.DEPTCODE AND GRADE = '007' AND DUTY = '002' AND RETIREDATE IS NULL LIMIT 1) AS MNGRNAME
 		FROM (
-			SELECT *
-			FROM sa_ipgumscheduletb
-			WHERE DEPOSITGUBUN = '004'
-				AND DEPOSITYN = 'Y') A
-			INNER JOIN sa_salemst B
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+					AND DEPOSITYN = 'Y'
+			) A
+			INNER JOIN (
+				SELECT *
+				FROM sa_salemst T
+				WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			) B
 				ON A.SALEID = B.SALEID
 			INNER JOIN sa_saledtl C
 				ON B.SALEID = C.SALEID
 			INNER JOIN mm_buymst D
 				ON B.BUYID = D.BUYID
-			LEFT OUTER JOIN hr_insamst E
-				ON B.SALERCD = E.INSACODE
-		WHERE A.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			LEFT OUTER JOIN hr_insamst I
+				ON B.SALERCD = I.INSACODE
+		WHERE 1 = 1
 			<isNotEmpty property="S_DEPOSITDATE_FR">
 				<isNotEmpty property="S_DEPOSITDATE_TO">
 				AND A.DEPOSITDATE BETWEEN #S_DEPOSITDATE_FR# AND #S_DEPOSITDATE_TO#
@@ -93,7 +78,10 @@
 		    	AND C.REGYN = #S_REGYN#
 		    	</isNotEqual>
 		    </isNotEmpty>
-		ORDER BY C.REGDATE DESC
+		    <isNotEmpty property="S_ADDRESS">
+		    AND D.ADDRESS LIKE '%$S_ADDRESS$%'
+		    </isNotEmpty>
+		ORDER BY C.REGDATE DESC, A.SALEID ASC
 	</select>
 
 </sqlMap>  

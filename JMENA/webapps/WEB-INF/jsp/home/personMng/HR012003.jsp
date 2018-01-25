@@ -20,7 +20,6 @@
 		
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_JOINDATE").jqxInput({theme: 'energyblue', height: 25, width: 80, maxLength: 8, minLength: 1});
 
@@ -253,7 +252,6 @@
 					<td align="right">
 						<input type="button" value="조회" id='selectButton' />
 						<input type="button" value="엑셀" id='excelButton' />
-						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>

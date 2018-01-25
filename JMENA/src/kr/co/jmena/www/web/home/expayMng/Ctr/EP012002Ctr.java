@@ -55,45 +55,40 @@ public class EP012002Ctr {
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
 		String S_DEPTCODE = ("ALL".equals(request.getParameter("S_DEPTCODE"))) ? "" : request.getParameter("S_DEPTCODE");
 		String S_KNAME = (URLDecoder.decode(request.getParameter("S_KNAME"),"UTF-8"));
-
 		
 		vo.setS_PAYDATE(request.getParameter("S_PAYDATE"));
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
-		vo.setS_DEPTCODE(S_DEPTCODE);
 		vo.setS_KNAME(S_KNAME);
 
 		JSONArray jCell = new JSONArray();
 		JSONObject json = new JSONObject();
 
-		List<EP012002VO> lst = EP012002Biz.selectListEP012002(vo);
-		
-		
+		List<EP012002VO> lst = EP012002Biz.selectListSudangMst(vo);
 		
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = new JSONObject();
 			
-			obj.put("PAYDATE",lst.get(i).getPAYDATE());
-			obj.put("CONNAME",lst.get(i).getCONNAME());
-			obj.put("CONADDRESS",lst.get(i).getCONADDRESS());
-			obj.put("CONPY",lst.get(i).getCONPY());
-			obj.put("PAYAMT",lst.get(i).getPAYAMT());
-			
-			if(lst.get(i).getEMPLOYGUBUN().equals("F")){
-				obj.put("TAXAMT",lst.get(i).getTAXINCOME());
-			}else{
-				obj.put("TAXAMT",lst.get(i).getSUPPLYTAX());
-			}
-			
-			obj.put("TAXLOCAL",lst.get(i).getTAXLOCAL());
-			obj.put("DEDUCTAMT",lst.get(i).getDEDUCTAMT());
-			
+			obj.put("SALEID", lst.get(i).getSALEID());
+			obj.put("PAYSEQ", lst.get(i).getPAYSEQ());
+			obj.put("PAYDATE", lst.get(i).getPAYDATE());
+			obj.put("PAYAMT", lst.get(i).getPAYAMT());
+			obj.put("TAX", lst.get(i).getTAX());
+			obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
+			obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());
+			obj.put("CONNAME", lst.get(i).getCONNAME());
+			obj.put("CONPY", lst.get(i).getCONPY());
+			obj.put("ADDRESS", lst.get(i).getADDRESS());
+			obj.put("KNAME", lst.get(i).getKNAME());
+			obj.put("JUMINID", lst.get(i).getJUMINID());
+			obj.put("NAME_BRANCHCODE", lst.get(i).getNAME_BRANCHCODE());
+			obj.put("NAME_DEPTCODE", lst.get(i).getNAME_DEPTCODE());
 			
 			jCell.add(obj);
 		}
 		
 		json.put("rows", jCell);
 		
-		logger.debug("[selectListSysMst]" + json);
+		logger.debug("[selectListEP012002]" + json);
 		
 		return new ModelAndView("jsonView", json);
 	}

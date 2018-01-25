@@ -111,9 +111,9 @@
 			BRANCHCODE, BRANCHNAME 
 		FROM ba_branchmst
 		WHERE 1=1
-		<isEqual property="USEYN" compareValue="Y">
+		<!-- <isEqual property="USEYN" compareValue="Y"> -->
 		AND USEYN = 'Y'
-		</isEqual>
+		<!-- </isEqual> -->
 		ORDER BY BRANCHCODE
 	</select>
 

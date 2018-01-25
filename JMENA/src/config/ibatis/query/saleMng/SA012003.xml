@@ -144,11 +144,14 @@
 			, B.BRROWDATE
 			, B.EXPIREDATE
 			, B.PAYRATE
-			, FLOOR((B.PAYAMT * 0.01)) * 100 AS PAYAMT
-		    , FLOOR((FLOOR((B.PAYAMT * 0.01)) * 100) * 0.25) AS TAXINCOME
-		    , FLOOR((FLOOR((B.PAYAMT * 0.01)) * 100) * 0.10) AS TAXLOCAL
-		    , ((FLOOR((B.PAYAMT * 0.01)) * 100)
-				- (FLOOR((FLOOR((B.PAYAMT * 0.01)) * 100) * 0.25) + FLOOR((FLOOR((B.PAYAMT * 0.01)) * 100) * 0.10))
+			, (FLOOR(B.PAYAMT * 0.1) * 10) AS PAYAMT
+		    , (FLOOR(FLOOR((FLOOR(B.PAYAMT * 0.1) * 10) * 0.25) * 0.1) * 10) AS TAXINCOME
+		    , (FLOOR(FLOOR((FLOOR(FLOOR((FLOOR(B.PAYAMT * 0.1) * 10) * 0.25) * 0.1) * 10) * 0.1) * 0.1) * 10) AS TAXLOCAL
+		    , ((FLOOR(B.PAYAMT * 0.1) * 10)
+			   - (
+					(FLOOR(FLOOR((FLOOR(B.PAYAMT * 0.1) * 10) * 0.25) * 0.1) * 10)
+				  + (FLOOR(FLOOR((FLOOR(FLOOR((FLOOR(B.PAYAMT * 0.1) * 10) * 0.25) * 0.1) * 10) * 0.1) * 0.1) * 10)
+				 )
 			  ) AS ACTPAYAMT
 			, B.PAYACCOUNT
 			, fn_codename('04', B.PAYBANK, NULL) AS NAME_PAYBANK
@@ -201,6 +204,7 @@
 			<isNotEmpty property="S_KNAME">
 			AND I.KNAME LIKE '%$S_KNAME$%'
 			</isNotEmpty>
+		ORDER BY A.SALEDATE DESC, A.SALEID ASC			
 	</select>
 	
 </sqlMap>

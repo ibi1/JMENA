@@ -23,8 +23,7 @@
 		var S_JUMINID = "";
 		
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });		
 		
 		$("#S_RETIREDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, maxLength: 8, minLength: 1});
 		$("#S_RETIREDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, maxLength: 8, minLength: 1});
@@ -167,7 +166,7 @@
 				{ text: '입사', 			columngroup: '전근무현황',	datafield: 'O_JOINDATE',		width: 150, cellsalign: 'center', align:"center"},
 				{ text: '퇴사', 			columngroup: '전근무현황',	datafield: 'O_RETIREDATE',		width: 150, cellsalign: 'center', align:"center"},
 				{ text: '실적', 			columngroup: '전근무현황',	datafield: 'O_SELLAMT',			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '비고', 			columngroup: '전근무현황',	datafield: 'O_REMARK',			width: 250, cellsalign: 'center', align:"center"},
+				{ text: '비고', 			columngroup: '전근무현황',	datafield: 'O_REMARK',			width: 250, cellsalign: 'center', align:"center", hidden: true},
 				{ text: '비고', 			datafield: 'REMARK',			width: 250, cellsalign: 'center', align:"center"}
             ],
             columngroups: [
@@ -223,7 +222,6 @@
 					<td align="right">
 						<input type="button" value="조회" id='selectButton' />
 						<input type="button" value="엑셀" id='excelButton' />
-						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>

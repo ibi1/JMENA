@@ -27,23 +27,25 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			<table>
 				<tr>
 					<th width="120">기간</th>
-					<td>
+					<td colspan="3">
 						<input type="text" id="S_DEPOSITDATE_FR" /> - <input type="text" id="S_DEPOSITDATE_TO" />
 					</td>
 				</tr>
 				<tr>
-					<th width="120">검색기준</th>
-					<td><select id="S_SALEGUBUN" style="width:120px"></select></td>
-				</tr>
-				<tr>
-					<th width="120">검색기준</th>
-					<td>
+					<th width="120">매출구분</th>
+					<td width="150"><select id="S_SALEGUBUN" style="width:120px"></select></td>
+					<th width="120">등기여부</th>
+					<td width="150">
 						<select id="S_REGYN" style="width:120px">
 							<option value="ALL" selected="selected">전체</option>
 							<option value="Y">등기완료</option>
 							<option value="N">미등기</option>
 						</select>
 					</td>
+				</tr>
+				<tr>
+					<th width="120">주소(지번)</th>
+					<td colspan="3"><input type="text" id="S_ADDRESS" /></td>
 				</tr>
 			</table>
 			<div align="right" style="padding-top:10px; padding-bottom:3px">
@@ -61,6 +63,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		// 스타일 적용
 		$("#selectButton, #excelButton").jqxButton({theme: 'energyblue', width: 80, height: 25});
 		$("#S_DEPOSITDATE_FR, #S_DEPOSITDATE_TO").jqxMaskedInput({theme: 'energyblue', width: 90, height: 25, mask: '####-##-##'});
+		$("#S_ADDRESS").jqxInput({theme: 'energyblue', width: 250, height: 25});
 		// 버튼권한 설정
 		init.setAuth = function() {
 			<%if("N".equals(session.getAttribute("AUTH_I"))) {%>
@@ -104,34 +107,35 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	        	S_DEPOSITDATE_FR: $("#S_DEPOSITDATE_FR").val().replace(/[^0-9-]/g, ""),
 	        	S_DEPOSITDATE_TO: $("#S_DEPOSITDATE_TO").val().replace(/[^0-9-]/g, ""),
 	        	S_SALEGUBUN: $("#S_SALEGUBUN").val(),
-	        	S_REGYN: $("#S_REGYN").val()
+	        	S_REGYN: $("#S_REGYN").val(),
+	        	S_ADDRESS: $.trim($("#S_ADDRESS").val())
 	        };
 	        var source = {
         		type: "POST",
-	        	url: "/home/selectListSA012012.do",
+	        	url: "/home/SA012012_s1.do",
 	        	data: param,
 	            datatype: "json",
 	            datafields: [
 					{name: "SALEID", type: "string"},
-					{name: "SALEGUBUNNAME", type: "string"},
-					{name: "KNAME", type: "string"},
-					{name: "MNGRNAME", type: "string"},
-					{name: "CONNAME", type: "string"},
 					{name: "SALEDATE", type: "string"},
-					{name: "FULLADDRESS", type: "string"},
+					{name: "NAME_SALEGUBUN", type: "string"},
+					{name: "CONNAME", type: "string"},
 					{name: "CONM2", type: "number"},
 					{name: "CONPY", type: "number"},
 					{name: "SALEDANGA", type: "number"},
 					{name: "SELLAMT", type: "number"},
-					{name: "REGNAME", type: "string"},
-					{name: "REGDATE", type: "string"}
+					{name: "NAME_REGYN", type: "string"},
+					{name: "REGDATE", type: "string"},
+					{name: "FULLADDRESS", type: "string"},
+					{name: "KNAME", type: "string"},
+					{name: "MNGRNAME", type: "string"}
 	            ],
 	            root: "rows"
 	        };
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
 	            loadComplete: function(data) {	            	
 	            	var countRow = $("#mainGrid").jqxGrid("getrows");
-	            	$("#mainGridCount").html(countRow.length);
+	            	$("#mainGridCount").text(countRow.length);
 	            },
 	            loadError: function(x, s, e) {
 	            	alert("[ERROR]"+ e);
@@ -151,10 +155,9 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            selectionmode: 'singlerow',
 	            columnsresize: true,
 	            columns: [
-					{text: "판매번호", datafield: "SALEID", width: 100, cellsalign: "center", align: "center", hidden: true},
-					{text: "매입구분", datafield: "SALEGUBUNNAME", width: 80, cellsalign: "center", align: "center"},
-					{text: "담당", datafield: "KNAME", width: 100, cellsalign: "center", align: "center"},
+					{text: "매입구분", datafield: "NAME_SALEGUBUN", width: 80, cellsalign: "center", align: "center"},
 					{text: "실장", datafield: "MNGRNAME", width: 100, cellsalign: "center", align: "center"},
+					{text: "담당", datafield: "KNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "계약자", datafield: "CONNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "계약날짜", datafield: "SALEDATE", width: 100, cellsalign: "center", align: "center"},
 					{text: "주소", datafield: "FULLADDRESS", width: 240, cellsalign: "left", align: "center"},
@@ -162,8 +165,9 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{text: "평", datafield: "CONPY", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
 					{text: "단가", datafield: "SALEDANGA", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "매매금액", datafield: "SELLAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
-					{text: "등기여부", datafield: "REGNAME", width: 100, cellsalign: "center", align: "center"},
-					{text: "등기일자", datafield: "REGDATE", width: 100, cellsalign: "center", align: "center"}
+					{text: "등기여부", datafield: "NAME_REGYN", width: 100, cellsalign: "center", align: "center"},
+					{text: "등기일자", datafield: "REGDATE", width: 100, cellsalign: "center", align: "center"},
+					{text: "판매번호", datafield: "SALEID", width: 100, cellsalign: "center", align: "center", hidden: true}
 	            ]
 	        });			
 		}

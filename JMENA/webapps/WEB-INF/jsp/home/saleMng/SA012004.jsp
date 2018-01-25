@@ -25,22 +25,19 @@
 		var auth_p = true;
 
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
+		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });		
 		
 		<%if ("N".equals(session.getAttribute("AUTH_P"))) { %>
-			$("#excelButton").hide();
-			$("#printButton").hide();
+			$("#excelButton").hide();			
 			auth_p = false;
 		<% }%>
 		
-		$("#S_IPGUMDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
-		$("#S_IPGUMDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
+		$("#S_IPGUMDATE_FR, #S_IPGUMDATE_TO").jqxMaskedInput({theme: 'energyblue', width: 90, height: 25, mask: '####-##-##'});
 		$("#S_IPGUMPERSON").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		$("#S_IPGUMAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		
 		f_selectListEnaBranchCode();
-		f_selectListEnaSalerCode();
+		//f_selectListEnaSalerCode();
 		f_selectListEnaIpgumGubunCode();
 		
 		f_selectListSA012004(S_IPGUMDATE_FR, S_IPGUMDATE_TO, S_BRANCHCODE, S_SALERCD, S_IPGUMGUBUN, S_IPGUMPERSON, S_IPGUMAMT);
@@ -178,21 +175,22 @@
             enabletooltips: true,
             editable: false,
             selectionmode: 'singlerow',
+            columnsresize: true,
             columns: [
                       
-				{ text: '입금일자', 		datafield: "IPGUMDATE",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '입금일자', 		datafield: "IPGUMDATE",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '지사', 			datafield: "BRANCHNAME",	width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '담당자', 			datafield: "KNAME",			width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '계약자', 			datafield: "CONNAME",		width: 150, cellsalign: 'center', align: 'center'},
+				{ text: '담당자', 			datafield: "KNAME",			width: 100, cellsalign: 'center', align: 'center'},
+				{ text: '계약자', 			datafield: "CONNAME",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '입금구분', 		datafield: "IPGUMGUBUN",	width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
+				{ text: '입금금액', 		datafield: "IPGUMAMT",		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'n'},
+				{ text: '수금처리금액', 	datafield: "SUGUMAMT",		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'n'},
+				{ text: '처리잔액', 		datafield: "JANGUMAMT",		width: 120, cellsalign: 'right', align: 'center', cellsformat: 'n'},
 				{ text: '입금은행', 		datafield: "BANKNAME",		width: 100, cellsalign: 'center', align: 'center'},
 				{ text: '입금형태', 		datafield: "IPGUMTYPE",		width: 100, cellsalign: 'center', align: 'center'},
-				{ text: '소재지', 			datafield: "ADDRESS",		width: 200, cellsalign: 'center', align: 'center'},
-				{ text: '평수', 			datafield: "CONPY",			width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-				{ text: '비고', 			datafield: "REMARK",		width: 250, cellsalign: 'center', align: 'center'}
+				{ text: '소재지', 			datafield: "ADDRESS",		width: 200, cellsalign: 'left', align: 'center'},
+				{ text: '평수', 			datafield: "CONPY",			width: 80, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
+				{ text: '비고', 			datafield: "REMARK",		width: 200, cellsalign: 'left', align: 'center'}
 				
 			]
 
@@ -205,18 +203,17 @@
 			//콤마 remove
 			f_commaInputData("remove");
 			
-			var S_IPGUMDATE_FR = $("#S_IPGUMDATE_FR").val();
-			var S_IPGUMDATE_TO = $("#S_IPGUMDATE_TO").val();
+			var S_IPGUMDATE_FR = $("#S_IPGUMDATE_FR").val().replace(/[^0-9-]/g, "");
+			var S_IPGUMDATE_TO = $("#S_IPGUMDATE_TO").val().replace(/[^0-9-]/g, "");
 			var S_BRANCHCODE = $("#S_BRANCHCODE").val();
-			var S_SALERCD = $("#S_SALERCD").val();
+			//var S_SALERCD = $("#S_SALERCD").val();
+			var S_SALERCD = "";
 			var S_IPGUMGUBUN = $("#S_IPGUMGUBUN").val();
 			var S_IPGUMPERSON = $("#S_IPGUMPERSON").val();
 			var S_IPGUMAMT = $("#S_IPGUMAMT").val();
 
-			if (S_IPGUMDATE_FR == "" || S_IPGUMDATE_TO == "") {
-				alert("입금기간을 입력하셔야합니다.");
-				
-				$("#S_SALEDATE").focus();	
+			if (S_IPGUMDATE_FR.length < 10 || S_IPGUMDATE_TO.length < 10) {
+				alert("입금기간을 입력하셔야합니다.");	
 				
 				//콤마 set
 				f_commaInputData("click");
@@ -261,8 +258,7 @@
 				<tr>
 					<td align="right">
 						<input type="button" value="조회" id='selectButton' />
-						<input type="button" value="엑셀" id='excelButton' />
-						<input type="button" value="출력" id='printButton' />
+						<input type="button" value="엑셀" id='excelButton' />						
 					</td>
 				</tr>
 			</table>
@@ -271,32 +267,32 @@
 			<table>
 				<tr>
 					<th width="120">입금기간</th>
-					<td width="190"><input type="text" id="S_IPGUMDATE_FR" name="S_IPGUMDATE_FR" /> ~ <input type="text" id="S_IPGUMDATE_TO" name="S_IPGUMDATE_TO" /></td>
-				</tr>
-				<tr>
-					<th width="120">지사</th>
-					<td>
-						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:90px">
-							<option value="ALL" selected="selected">전체</option>
-						</select>
-					</td>
-					<th width="120">담당자</th>
-					<td>
-						<select id="S_SALERCD" name="S_SALERCD">
-							<option value="ALL" selected="selected">전체</option>
-						</select>
-					</td>
+					<td colspan="5"><input type="text" id="S_IPGUMDATE_FR" name="S_IPGUMDATE_FR" /> ~ <input type="text" id="S_IPGUMDATE_TO" name="S_IPGUMDATE_TO" /></td>
 				</tr>
 				<tr>
 					<th width="120">입금구분</th>
-					<td>
-						<select id="S_IPGUMGUBUN" name="S_IPGUMGUBUN" style="width:90px">
+					<td width="150">
+						<select id="S_IPGUMGUBUN" name="S_IPGUMGUBUN" style="width:120px">
 						</select>
 					</td>
 					<th width="120">입금인</th>
 					<td width="170"><input type="text" id="S_IPGUMPERSON" name="S_IPGUMPERSON" /></td>
 					<th width="120">입금금액</th>
-					<td><input type="text" id="S_IPGUMAMT" name="S_IPGUMAMT" /></td>
+					<td width="170"><input type="text" id="S_IPGUMAMT" name="S_IPGUMAMT" /></td>
+				</tr>
+				<tr>
+					<th width="120">지사</th>
+					<td>
+						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:120px">
+							<option value="ALL" selected="selected">전체</option>
+						</select>
+					</td>
+					<!-- <th width="120">담당자</th>
+					<td>
+						<select id="S_SALERCD" name="S_SALERCD">
+							<option value="ALL" selected="selected">전체</option>
+						</select>
+					</td> -->
 				</tr>
 			</table>
 			<br/>

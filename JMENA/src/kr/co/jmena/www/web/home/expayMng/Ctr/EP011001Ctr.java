@@ -359,10 +359,9 @@ public class EP011001Ctr {
 		EP011001VO vo = new EP011001VO();
 		ModelAndView result = new ModelAndView();
 		
-		vo.setS_SALEID(request.getParameter("saleId"));
-		vo.setS_PAYSEQ(request.getParameter("paySeq"));		
-		vo.setINSACODE(request.getParameter("insaCode"));
-		
+		vo.setS_SALEID(request.getParameter("S_SALEID"));
+		vo.setS_PAYSEQ(request.getParameter("S_PAYSEQ"));		
+		vo.setS_INSACODE(request.getParameter("S_INSACODE"));
 		
 		List<EP011001VO> Sheet = EP011001Biz.selectEnaSudangMstSheet(vo);
 		List<EP011001VO> SheetList = EP011001Biz.selectEnaSudangMstSheetList(vo);
