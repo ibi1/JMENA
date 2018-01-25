@@ -67,6 +67,7 @@
 	</select>
 
 	<select id="selectListSA012008_2" resultMap="SA012008Data2">
+		/* SA012008.selectListSA012008_2 */
 <!-- 		select 
 			a.sellseq,
 		    a.conname,
@@ -106,18 +107,18 @@
 			a.regdate2,
 			a.saleamt,
 			a.remnm2,
-		    (a.remnm2 * (a.buym2 / a.buyamt)) as remnamt
+		    FLOOR(a.remnm2 * (a.buyamt / a.buym2)) as remnamt
 		from 
 		(	select 
 				(SELECT KNAME FROM hr_insamst WHERE INSACODE = SALERCD) AS sellseq,
 				t1.conname,
 				t1.conjuminid,
-				(t1.conm2 + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID)) AS conm2,
+		        t1.conm2,
 				ifnull(t2.regdate, "") as regdate2,
 				t2.sellamt as saleamt,
-				((select buym2 from mm_buymst where buyid = #BUYID#) - ((select sum(conm2) from sa_salemst where buyid = 'BU17050094') + (SELECT IFNULL(SUM(IN3.HOLDINGM2), 0) AS HOLDINGM2 FROM mm_salesopentb IN3 WHERE IN3.BUYID = t1.BUYID))) as remnm2,
-		        (select buym2 from mm_buymst where buyid = #BUYID#) as buym2,
-		        (select buyamt from mm_buymst where buyid = #BUYID#) as buyamt
+				((select buym2 from mm_buymst where buyid = t1.BUYID) - ((SELECT IFNULL(SUM(A.CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = t1.BUYID AND (B.CHGGUBUN != '004' OR B.CHGGUBUN IS NULL)) + (SELECT IFNULL(SUM(HOLDINGM2), 0) FROM mm_salesopentb WHERE BUYID = t1.BUYID))) as remnm2,
+				(select buym2 from mm_buymst where buyid = t1.BUYID) as buym2,
+				(select buyamt from mm_buymst where buyid = t1.BUYID) as buyamt
 			from (
 					SELECT *
 					FROM sa_salemst T
@@ -132,9 +133,7 @@
 		) a
 		where 1=1
 		and a.regdate2 <![CDATA[ <> ]]> ""
-		and substring(DATE_FORMAT(a.regdate2, '%Y%m%d'), 1,6) = #S_BUYYEAR#		
-		
+		and substring(DATE_FORMAT(a.regdate2, '%Y%m%d'), 1,6) = #S_BUYYEAR#
 	</select>
-	
 	
 </sqlMap>
