@@ -82,9 +82,14 @@ public class MM012001Ctr {
 		JSONObject json = new JSONObject();
 		
 		List<MM012001VO> lst = MM012001Biz.selectListMM012001(vo);
+		
+		double SUBNONPAYAMT = 0;
+		double tmpSUBNONPAYAMT = 0;
 
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = new JSONObject();
+			
+			int NONPAYAMT = 0;
 			
 			obj.put("id", i+1);
 			obj.put("BUYID", lst.get(i).getBUYID());
@@ -99,6 +104,7 @@ public class MM012001Ctr {
 			obj.put("BUNBUYPY", lst.get(i).getBUNBUYPY());
 			obj.put("JANBUYPY", lst.get(i).getJANBUYPY());
 			obj.put("BUYAMT", lst.get(i).getBUYAMT());
+			obj.put("PAYAMT", lst.get(i).getPAYAMT());
 			obj.put("PAYAMT1", lst.get(i).getPAYAMT1());
 			obj.put("PAYDATE1", lst.get(i).getPAYDATE1());
 			
@@ -126,9 +132,16 @@ public class MM012001Ctr {
 				
 			}
 			
+			if(lst.get(i).getNONPAYAMT() != null) {
+				NONPAYAMT = Integer.parseInt(lst.get(i).getNONPAYAMT().toString());	
+			}
+			
+			SUBNONPAYAMT = tmpSUBNONPAYAMT + NONPAYAMT;
+			
 			obj.put("PAYAMT4", lst.get(i).getPAYAMT4());
 			obj.put("PAYDATE4", lst.get(i).getPAYDATE4());
-			obj.put("JANPAYAMT", lst.get(i).getJANPAYAMT());
+			obj.put("NONPAYAMT", lst.get(i).getNONPAYAMT());
+			obj.put("SUBNONPAYAMT", SUBNONPAYAMT);
 			obj.put("OPENYN", lst.get(i).getOPENYN());
 			obj.put("REMARK", lst.get(i).getREMARK());
 			
@@ -142,6 +155,7 @@ public class MM012001Ctr {
 			}
 			obj.put("OPENBRANCH", OPENBRANCH);
 			
+			tmpSUBNONPAYAMT = SUBNONPAYAMT;
 			
 			jCell.add(obj);
 		}
@@ -259,7 +273,7 @@ public class MM012001Ctr {
 		header.createCell(16).setCellValue("중도일2");
 		header.createCell(17).setCellValue("잔금액");
 		header.createCell(18).setCellValue("잔금일");
-		header.createCell(19).setCellValue("잔금누계");
+		header.createCell(19).setCellValue("미지급액");
 		header.createCell(20).setCellValue("오픈여부");
 		header.createCell(21).setCellValue("비고");        
         
@@ -311,7 +325,7 @@ public class MM012001Ctr {
         aRow.createCell(16).setCellValue(mm012001vo.getPAYDATE3());
         aRow.createCell(17).setCellValue(mm012001vo.getPAYAMT4());
         aRow.createCell(18).setCellValue(mm012001vo.getPAYDATE4());
-        aRow.createCell(19).setCellValue(mm012001vo.getJANPAYAMT());
+        aRow.createCell(19).setCellValue(mm012001vo.getNONPAYAMT());
         aRow.createCell(20).setCellValue(mm012001vo.getOPENYN());
         aRow.createCell(21).setCellValue(mm012001vo.getREMARK());
 

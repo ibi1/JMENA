@@ -58,6 +58,7 @@ public class SA011002Ctr {
 		vo.setSL_BRROWDATE_TO(request.getParameter("SL_BRROWDATE_TO"));
 		vo.setSALERCD(request.getParameter("SL_SALERNAME"));			//담당자
 		vo.setADDRESS(request.getParameter("SL_ADDRESS"));
+		vo.setSL_CANCELYN(request.getParameter("SL_CANCELYN"));
 		
 		List<SA011002VO> lst = SA011002Biz.selectListEanSaleMstBDtl(vo);
 		
@@ -94,6 +95,7 @@ public class SA011002Ctr {
 			obj.put("BRROWPERIOD", lst.get(i).getBRROWPERIOD());
 			obj.put("PERIODGUBUN", lst.get(i).getPERIODGUBUN());
 			obj.put("BRROWDATE", lst.get(i).getBRROWDATE());
+			obj.put("EXPIREYN", lst.get(i).getEXPIREYN());
 			obj.put("EXPIREDATE", lst.get(i).getEXPIREDATE());
 			obj.put("PAYRATE", lst.get(i).getPAYRATE());
 			obj.put("PAYAMT", lst.get(i).getPAYAMT());
@@ -146,6 +148,7 @@ public class SA011002Ctr {
 		vo.setBRROWPERIOD(request.getParameter("BRROWPERIOD"));
 		vo.setPERIODGUBUN(request.getParameter("PERIODGUBUN"));
 		vo.setBRROWDATE(request.getParameter("BRROWDATE"));
+		vo.setEXPIREYN("on".equals(request.getParameter("EXPIREYN")) ? "Y" : "N");
 		vo.setEXPIREDATE(request.getParameter("EXPIREDATE"));
 		vo.setPAYRATE(request.getParameter("PAYRATE"));
 		vo.setPAYAMT(request.getParameter("PAYAMT"));

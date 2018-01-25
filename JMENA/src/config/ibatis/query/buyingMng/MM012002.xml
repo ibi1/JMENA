@@ -5,14 +5,12 @@
 <sqlMap namespace="MM012002">
 	<typeAlias alias="MM012002VO" type="kr.co.jmena.www.web.home.buyingMng.Vo.MM012002VO"/>
 
-	<resultMap id="MM012002Data" class="MM012002VO">
+	<resultMap id="selectListBuyMst" class="MM012002VO">
 		<result property="BUYID" column="BUYID"/>
 		<result property="BUYDATE" column="BUYDATE"/>
 		<result property="BUYGUBUN" column="BUYGUBUN"/>
-		<result property="BUYGUBUNNAME" column="BUYGUBUNNAME"/>
-		<result property="CITYCODE" column="CITYCODE"/>
-		<result property="CITYNAME" column="CITYNAME"/>
-		<result property="BOROUGHCODE" column="BOROUGHCODE"/>
+		<result property="NAME_BUYGUBUN" column="NAME_BUYGUBUN"/>
+		<result property="NAME_CITYCODE" column="NAME_CITYCODE"/>
 		<result property="BOROUGHNAME" column="BOROUGHNAME"/>
 		<result property="ADDRESS" column="ADDRESS"/>
 		<result property="OWNERNAME" column="OWNERNAME"/>
@@ -21,41 +19,39 @@
 		<result property="BUYAMT" column="BUYAMT"/>
 		<result property="BUYDANGA" column="BUYDANGA"/>
 		<result property="REGYN" column="REGYN"/>
-		<result property="REGNAME" column="REGNAME"/>
+		<result property="NAME_REGYN" column="NAME_REGYN"/>
 		<result property="REGDATE" column="REGDATE"/>
 		<result property="CONM2" column="CONM2"/>
 		<result property="REMM2" column="REMM2"/>
 	</resultMap>
 
-	<select id="selectListMM012002" resultMap="MM012002Data">
-		/* MM012002.selectListMM012002 */
+	<select id="selectListBuyMst" resultMap="selectListBuyMst">
+		/* MM012002.selectListBuyMst */
 		SELECT *
 		FROM (
 			SELECT BUYID
 				, BUYDATE
 				, BUYGUBUN
-				, fn_codename('01', '014', BUYGUBUN) AS BUYGUBUNNAME
-				, CITYCODE
-				, fn_codename('03', CITYCODE, NULL) AS CITYNAME
-				, BOROUGHCODE
+				, fn_codename('01', '014', BUYGUBUN) AS NAME_BUYGUBUN		
+				, fn_codename('03', CITYCODE, NULL) AS NAME_CITYCODE
 				, (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = T.CITYCODE AND BOROUGHCODE = T.BOROUGHCODE) AS BOROUGHNAME
 				, ADDRESS
 				, OWNERNAME
-				, BUYM2
-				, BUYPY
+				, CAST(BUYM2 AS DECIMAL(12, 2)) AS BUYM2
+				, CAST(BUYPY AS DECIMAL(12, 2)) AS BUYPY
 				, BUYAMT
 				, BUYDANGA
-				, REGYN
+		        , REGYN
 				, CASE REGYN
 					WHEN 'Y' THEN '등기'
 		            WHEN 'N' THEN '미등기'
 		            ELSE ''
-				  END AS REGNAME
+				  END AS NAME_REGYN
 				, REGDATE
-				, CAST((SELECT IFNULL(SUM(CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = T.BUYID AND (B.SALEID IS NULL OR B.CHGGUBUN != '004')) AS DECIMAL(12, 2)) AS CONM2
-				, CAST(BUYM2 - (SELECT IFNULL(SUM(CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = T.BUYID AND (B.SALEID IS NULL OR B.CHGGUBUN != '004')) AS DECIMAL(12, 2)) AS REMM2
+				, CAST((SELECT IFNULL(SUM(CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = T.BUYID AND B.CHGGUBUN != '004') AS DECIMAL(12, 2)) AS CONM2
+				, CAST(BUYM2 - (SELECT IFNULL(SUM(CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = T.BUYID AND B.CHGGUBUN != '004') AS DECIMAL(12, 2)) AS REMM2
 			FROM mm_buymst T
-		) S   
+		) V
 		WHERE 1 = 1
 			<isNotEmpty property="S_BUYDATE_FR">
 				<isNotEmpty property="S_BUYDATE_TO">
@@ -77,7 +73,7 @@
 					</isNotEqual>	
 				</isNotEqual>
 			</isNotEmpty>
-		ORDER BY BUYDATE DESC
+		ORDER BY BUYDATE DESC, BUYID ASC
 	</select>
 	
 </sqlMap>  

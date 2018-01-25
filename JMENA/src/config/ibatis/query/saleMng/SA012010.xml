@@ -46,40 +46,45 @@
 		    , D.BOROUGHCODE
 		    , (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = D.CITYCODE AND BOROUGHCODE = D.BOROUGHCODE) AS BOROUGHNAME
 		    , D.ADDRESS    
-		    , E.KNAME
-		    , E.BRANCHCODE
-		    , fn_codename('02', E.BRANCHCODE, NULL) AS BRANCHNAME
-		    , E.DEPTCODE
-		    , fn_codename('05', E.DEPTCODE, NULL) AS DEPTNAME
-		    , (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = E.DEPTCODE AND GRADE = '007' AND DUTY = '002' LIMIT 1) AS MNGRNAME
+		    , I.KNAME
+		    , I.BRANCHCODE
+		    , fn_codename('02', I.BRANCHCODE, NULL) AS BRANCHNAME
+		    , I.DEPTCODE
+		    , fn_codename('05', I.DEPTCODE, NULL) AS DEPTNAME
+		    , (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = I.DEPTCODE AND GRADE = '007' AND DUTY = '002' AND RETIREDATE IS NULL LIMIT 1) AS MNGRNAME
 		FROM (
-			SELECT *
-			FROM sa_ipgumscheduletb
-			WHERE DEPOSITGUBUN = '004'
-		    AND DEPOSITYN = 'Y') A 
-			INNER JOIN sa_salemst B
+				SELECT *
+				FROM sa_ipgumscheduletb
+				WHERE DEPOSITGUBUN = '004'
+				AND DEPOSITYN = 'Y'
+		    ) A 
+			INNER JOIN (
+				SELECT *
+				FROM sa_salemst T
+				WHERE NOT EXISTS (SELECT SALEID FROM sa_salehistorytb WHERE SALEID = T.SALEID AND CHGGUBUN = '004') 
+			) B
 				ON A.SALEID = B.SALEID
 			INNER JOIN sa_saledtl C
 				ON B.SALEID = C.SALEID
 			INNER JOIN mm_buymst D
 				ON B.BUYID = D.BUYID
-			LEFT OUTER JOIN hr_insamst E
-				ON B.SALERCD = E.INSACODE
-		WHERE A.SALEID NOT IN (SELECT SALEID FROM sa_salehistorytb WHERE CHGGUBUN = '004')
+			LEFT OUTER JOIN hr_insamst I
+				ON B.SALERCD = I.INSACODE
+		WHERE 1 = 1
 			AND A.DEPOSITDATE BETWEEN STR_TO_DATE(#S_DEPOSITDATE_FR#, '%Y-%m-%D') AND STR_TO_DATE(#S_DEPOSITDATE_TO#, '%Y-%m-%D')
 			AND B.SALEGUBUN = '002'
 		    <isNotEmpty property="S_BRANCHCODE">
 		    	<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
-		    	AND E.BRANCHCODE = #S_BRANCHCODE#
+		    	AND I.BRANCHCODE = #S_BRANCHCODE#
 		    	</isNotEqual>
 		    </isNotEmpty>
 		    <isNotEmpty property="S_DEPTCODE">
 		    	<isNotEqual property="S_DEPTCODE" compareValue="ALL">
-		    	AND E.DEPTCODE = #S_DEPTCODE#
+		    	AND I.DEPTCODE = #S_DEPTCODE#
 		    	</isNotEqual>
 		    </isNotEmpty>
 		    <isNotEmpty property="S_KNAME">
-		    	AND E.KNAME LIKE '%$S_KNAME$%'
+		    	AND I.KNAME LIKE '%$S_KNAME$%'
 		    </isNotEmpty>
 		ORDER BY A.DEPOSITDATE ASC, D.OWNERNAME ASC, CITYNAME ASC, BOROUGHNAME ASC, ADDRESS ASC
 	</select>

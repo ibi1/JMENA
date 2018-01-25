@@ -48,7 +48,7 @@
 		<result property="CONTELNO"		column="CONTELNO"/>
 		<result property="CONM2"		column="CONM2"/>
 		<result property="CONPY"		column="CONPY"/>
-		<result property="REMARK"		column="REMARK"/>
+		<result property="REMARK"		column="REMARK"/>		
 		<result property="BRROWTYPE" 			column="BRROWTYPE"/>
 		<result property="BRROWAMT" 			column="BRROWAMT"/>
 		<result property="BRROWPERIOD" 			column="BRROWPERIOD"/>
@@ -59,6 +59,7 @@
 		<result property="PAYBANK" 				column="PAYBANK"/>
 		<result property="PAYOWNER" 			column="PAYOWNER"/>
 		<result property="BRROWDATE" 			column="BRROWDATE"/>
+		<result property="EXPIREYN"				column="EXPIREYN"/>
 		<result property="EXPIREDATE" 			column="EXPIREDATE"/>
 		<result property="EXTENDYN" 			column="EXTENDYN"/>
 		<result property="EXTENDDATE" 			column="EXTENDDATE"/>
@@ -67,7 +68,7 @@
 		<result property="JOINYN" 				column="JOINYN"/>
 		<result property="REGYN" 				column="REGYN"/>
 		<result property="REGDATE" 				column="REGDATE"/>
-		<result property="SALERNAME"		column="SALERNAME"/>
+		<result property="SALERNAME"			column="SALERNAME"/>
 	</resultMap>
 	
 	<resultMap id="jointNameTbDataList" class="SA011001VO">
@@ -83,6 +84,7 @@
 	</resultMap>
 	
 	<select id="selectListEanSaleMstBDtl" resultMap="saleMstBDtlDataList">
+	/* selectListEanSaleMstBDtl */
 		SELECT * FROM (
 			SELECT
 				T3.MANAGENO, T3.CITYCODE, (SELECT IN1.BRANCHCODE FROM enadb.hr_insamst IN1 WHERE IN1.INSACODE = T1.SALERCD) AS BRANCHCODE, T3.ADDRESS, T3.OWNERNAME, T3.OWNERJUMINID,
@@ -92,8 +94,8 @@
 				CAST(((SELECT IFNULL(IN2.BUYPY, 0) AS BUYPY FROM mm_buymst IN2 WHERE IN2.BUYID = T1.BUYID) - ((SELECT IFNULL(SUM(IN4.CONPY), 0) AS CONPY FROM sa_salemst IN4 WHERE IN4.BUYID = T1.BUYID) + (SELECT IFNULL(SUM(IN3.HOLDINGPY), 0) AS HOLDINGPY FROM mm_salesopentb IN3 WHERE IN3.BUYID = T1.BUYID))) AS DECIMAL(12, 2)) AS CONJPY,
 				T1.SALEID, T1.SALEDATE, T1.SALEGUBUN, T1.SALERCD, 
 				(SELECT HR1.KNAME FROM hr_insamst HR1 WHERE HR1.INSACODE = T1.SALERCD) AS SALERNAME,
-				T1.BUYID, T1.CONNAME, T1.CONJUMINID, T1.CONADDRESS, T1.CONTELNO,  T1.CONM2, T1.CONPY, T1.REMARK, 
-				T2.BRROWTYPE, T2.BRROWAMT, T2.BRROWPERIOD, T2.PERIODGUBUN, T2.BRROWDATE, T2.EXPIREDATE, T2.PAYRATE, T2.PAYAMT, T2.PAYACCOUNT, T2.PAYBANK, T2.EXTENDYN, T2.EXTENDDATE,
+				T1.BUYID, T1.CONNAME, T1.CONJUMINID, T1.CONADDRESS, T1.CONTELNO,  T1.CONM2, T1.CONPY, T1.REMARK,
+				T2.BRROWTYPE, T2.BRROWAMT, T2.BRROWPERIOD, T2.PERIODGUBUN, T2.BRROWDATE, T2.EXPIREYN, T2.EXPIREDATE, T2.PAYRATE, T2.PAYAMT, T2.PAYACCOUNT, T2.PAYBANK, T2.EXTENDYN, T2.EXTENDDATE,
 				T2.CANCELYN, T2.CANCELDATE, T2.PAYOWNER, T2.JOINYN, T2.REGYN, T2.REGDATE
 			FROM 
 			(SELECT SA1.* FROM enadb.sa_salemst SA1 WHERE SA1.SALEGUBUN = '003') T1, enadb.sa_salebdtl T2, (SELECT MM1.* FROM enadb.mm_buymst MM1 WHERE MM1.BUYGUBUN = '001') T3
@@ -111,6 +113,14 @@
 			</isNotNull>
 			<isNotEmpty property="ADDRESS">
 				AND T3.ADDRESS LIKE '%$ADDRESS$%'  
+			</isNotEmpty>
+			<isNotEmpty property="SL_CANCELYN">
+				<isEqual property="SL_CANCELYN" compareValue="Y">
+				AND (T2.EXPIREYN = 'Y' OR T2.CANCELYN = 'Y')	
+				</isEqual>
+				<isEqual property="SL_CANCELYN" compareValue="N">
+				AND (T2.EXPIREYN = 'N' AND T2.CANCELYN = 'N')
+				</isEqual>
 			</isNotEmpty>
 		) A1
 		WHERE 1=1
@@ -146,6 +156,7 @@
 			BRROWPERIOD = #BRROWPERIOD#,
 			PERIODGUBUN = #PERIODGUBUN#,
 			BRROWDATE = #BRROWDATE#,
+			EXPIREYN = #EXPIREYN#,
 			EXPIREDATE = #EXPIREDATE#,
 			PAYRATE = #PAYRATE#,
 			PAYAMT = #PAYAMT#,
@@ -211,6 +222,7 @@
 			BRROWPERIOD,
 			PERIODGUBUN,
 			BRROWDATE,
+			EXPIREYN,
 			EXPIREDATE,
 			PAYRATE,
 			PAYAMT,
@@ -232,6 +244,7 @@
 			#BRROWPERIOD#,
 			#PERIODGUBUN#,
 			#BRROWDATE#,
+			#EXPIREYN#,
 			#EXPIREDATE#,
 			#PAYRATE#,
 			#PAYAMT#,

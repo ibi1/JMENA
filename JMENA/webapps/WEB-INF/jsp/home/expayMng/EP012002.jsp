@@ -19,12 +19,11 @@
 		
 		$("#selectButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		$("#excelButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
-		$("#printButton").jqxButton({ theme: 'energyblue', width: 80, height: 25 });
 		
 		$("#S_PAYDATE").jqxInput({theme: 'energyblue', height: 25, width: 100, maxLength: 6, minLength: 1});
 		$("#S_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 		
-		f_selectListEnaBranchCode();
+		//f_selectListEnaBranchCode();
 		f_selectListEnaDeptCode();
 		
 		f_selectListEP012002(S_PAYDATE, S_BRANCHCODE, S_DEPTCODE, S_KNAME);
@@ -93,20 +92,23 @@
         var source = {
             datatype: "json",
             datafields: [
-                         
-				{name:"PAYDATE",		type: 'string' },
-				{name:"CONNAME",		type: 'string' },
-				{name:"CONADDRESS",		type: 'string' },
-				{name:"CONPY",			type: 'number' },
-				{name:"PAYAMT",			type: 'number' },
-				{name:"TAXAMT",			type: 'number' },
-				{name:"TAXLOCAL",		type: 'number' },
-				{name:"DEDUCTAMT",		type: 'number' }
-
+				{name: "SALEID", type: "string"},
+				{name: "PAYSEQ", type: "string"},
+				{name: "PAYDATE", type: "string"},
+				{name: "PAYAMT", type: "number"},
+				{name: "TAX", type: "number"},
+				{name: "TAXLOCAL", type: "number"},
+				{name: "DEDUCTAMT", type: "number"},
+				{name: "CONNAME", type: "number"},
+				{name: "CONPY", type: "number"},
+				{name: "ADDRESS", type: "string"},
+				{name: "KNAME", type: "string"},
+				{name: "JUMINID", type: "string"},
+				{name: "NAME_BRANCHCODE", type: "string"},
+				{name: "NAME_DEPTCODE", type: "string"}
 			],
             root: "rows",
             //record: "records",
-            id: 'KNAME',
             url: url
         };
 
@@ -114,6 +116,7 @@
             downloadComplete: function (data, status, xhr) {
             },
             loadComplete: function (data) {
+            	console.info(data);
             	var countRow = $('#mainList').jqxGrid('getrows');
             	$("#mainListCount").html(countRow.length);
             },
@@ -133,17 +136,22 @@
             enabletooltips: true,
             editable: false,
             selectionmode: 'singlerow',
+            columnsresize: true,
             columns: [
-                      
-   				{ text: '지급일', 			datafield: 'PAYDATE',		width: 100, cellsalign: 'center', align: 'center' },
-   				{ text: '고객', 			datafield: 'CONNAME',		width: 100, cellsalign: 'center', align: 'center' },
-   				{ text: '물건지', 			datafield: 'CONADDRESS',	width: 100, cellsalign: 'center', align: 'center' },
-   				{ text: '평수', 			datafield: 'CONPY',			width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
-   				{ text: '지급액', 			datafield: 'PAYAMT',		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-   				{ text: '소득세(부가세)', 	datafield: 'TAXAMT',		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-   				{ text: '주민세', 			datafield: 'TAXLOCAL',		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'},
-   				{ text: '실지급액', 		datafield: 'DEDUCTAMT',		width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f0'}
-    				
+				{text: "소속지사", datafield: "NAME_BRANCHCODE", width: 100, cellsalign: "center", align: "center"},
+				{text: "부서", datafield: "NAME_DEPTCODE", width: 100, cellsalign: "center", align: "center"},
+				{text: "성명", datafield: "KNAME", width: 100, cellsalign: "center", align: "center"},
+				{text: "주민번호", datafield: "JUMINID", width: 140, cellsalign: "center", align: "center"},
+				{text: "지급일", datafield: "PAYDATE", width: 100, cellsalign: "center", align: "center"},
+				{text: "고객", datafield: "CONNAME", width: 100, cellsalign: "center", align: "center"},
+				{text: "물건지", datafield: "ADDRESS", width: 240, cellsalign: "left", align: "center"},
+				{text: "평수", datafield: "CONPY", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
+				{text: "지급액", datafield: "PAYAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
+				{text: "소득세(부가세)", datafield: "TAX", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
+				{text: "주민세", datafield: "TAXLOCAL", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
+				{text: "실지급액", datafield: "DEDUCTAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
+				{text: "판매번호", datafield: "SALEID", width: 100, cellsalign: "center", align: "center", hidden: true},
+				{text: "지급순번", datafield: "PAYSEQ", width: 100, cellsalign: "center", align: "center", hidden: true}
             ]
         });
 	}
@@ -188,7 +196,6 @@
 					<td align="right">
 						<input type="button" value="조회" id='selectButton' />
 						<input type="button" value="엑셀" id='excelButton' />
-						<input type="button" value="출력" id='printButton' />
 					</td>
 				</tr>
 			</table>
@@ -198,7 +205,7 @@
 				<tr>
 					<th width="120">지급년월</th>
 					<td width="120"><input type="text" id="S_PAYDATE" name="S_PAYDATE" /></td>
-					<th width="120">지사</th>
+					<!-- <th width="120">지사</th>
 					<td width="140">
 						<select id="S_BRANCHCODE" name="S_BRANCHCODE" style="width:120px">
 							<option value="ALL" selected="selected">전체</option>
@@ -209,7 +216,7 @@
 						<select id="S_DEPTCODE" name="S_DEPTCODE" style="width:120px">
 							<option value="ALL" selected="selected">전체</option>
 						</select>
-					</td>
+					</td> -->
 					<th width="120">담당자명</th>
 					<td><input type="text" id="S_KNAME" name="S_KNAME" /></td>
 				</tr>

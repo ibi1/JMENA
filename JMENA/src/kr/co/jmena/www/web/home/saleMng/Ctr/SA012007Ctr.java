@@ -84,6 +84,7 @@ public class SA012007Ctr {
 			obj.put("REMNM2",lst.get(i).getREMNM2());
 			obj.put("REMNPY",lst.get(i).getREMNPY());
 			obj.put("BUYDANGA",lst.get(i).getBUYDANGA());
+			obj.put("PMDANGA", lst.get(i).getPMDANGA());
 
 			SA012007VO vo2 = new SA012007VO();
 			vo2.setBUYID(lst.get(i).getBUYID());

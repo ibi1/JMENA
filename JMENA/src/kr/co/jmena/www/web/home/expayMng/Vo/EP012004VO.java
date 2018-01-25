@@ -20,19 +20,12 @@ public class EP012004VO {
 	private String TAXLOCAL;
 	private String SUPPLYTAX;
 	private String DEDUCTAMT;
-	private String SALERCD;
 	private String CONNAME;
 	private String CONPY;
 	private String CITYNAME;
-	private String BOROUGHCODE;
 	private String BOROUGHNAME;
 	private String ADDRESS;
 	private String KNAME;
-	private String BRANCHCODE;
-	private String BRANCHNAME;
-	private String DEPTCODE;
-	private String DEPTNAME;
-	private String MNGRNAME;
 	
 	public String getS_PAYDATE_FR() {
 		return this.S_PAYDATE_FR;
@@ -136,12 +129,6 @@ public class EP012004VO {
 	public void setDEDUCTAMT(String dEDUCTAMT) {
 		this.DEDUCTAMT = dEDUCTAMT;
 	}
-	public String getSALERCD() {
-		return this.SALERCD;
-	}
-	public void setSALERCD(String sALERCD) {
-		this.SALERCD = sALERCD;
-	}
 	public String getCONNAME() {
 		return this.CONNAME;
 	}
@@ -160,12 +147,6 @@ public class EP012004VO {
 	public void setCITYNAME(String cITYNAME) {
 		this.CITYNAME = cITYNAME;
 	}
-	public String getBOROUGHCODE() {
-		return this.BOROUGHCODE;
-	}
-	public void setBOROUGHCODE(String bOROUGHCODE) {
-		this.BOROUGHCODE = bOROUGHCODE;
-	}
 	public String getBOROUGHNAME() {
 		return this.BOROUGHNAME;
 	}
@@ -183,35 +164,5 @@ public class EP012004VO {
 	}
 	public void setKNAME(String kNAME) {
 		this.KNAME = kNAME;
-	}
-	public String getBRANCHCODE() {
-		return this.BRANCHCODE;
-	}
-	public void setBRANCHCODE(String bRANCHCODE) {
-		this.BRANCHCODE = bRANCHCODE;
-	}
-	public String getBRANCHNAME() {
-		return this.BRANCHNAME;
-	}
-	public void setBRANCHNAME(String bRANCHNAME) {
-		this.BRANCHNAME = bRANCHNAME;
-	}
-	public String getDEPTCODE() {
-		return this.DEPTCODE;
-	}
-	public void setDEPTCODE(String dEPTCODE) {
-		this.DEPTCODE = dEPTCODE;
-	}
-	public String getDEPTNAME() {
-		return this.DEPTNAME;
-	}
-	public void setDEPTNAME(String dEPTNAME) {
-		this.DEPTNAME = dEPTNAME;
-	}
-	public String getMNGRNAME() {
-		return this.MNGRNAME;
-	}
-	public void setMNGRNAME(String mNGRNAME) {
-		this.MNGRNAME = mNGRNAME;
 	}
 }

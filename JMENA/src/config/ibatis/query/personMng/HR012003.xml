@@ -63,7 +63,7 @@
 			(select kname from hr_insamst where insacode = t1.recoid) as reconame,
 			t1.joindate,
 			t1.mobileno,
-			t1.juminid,
+			fn_formatnum('I', t1.juminid) AS juminid,
 			(case t1.birthdaygubun 
 			         when 'S'  then '양력' 
 			         when 'M'  then '음력'
@@ -73,7 +73,7 @@
 			(select bankname from sy_bankmst where bankcode = t2.bankid) bankname,
 			t2.acctno,
 			t2.payername,
-			t2.payerid,
+			fn_formatnum('I', t2.payerid) AS payerid,
 			t1.address
 		FROM hr_insamst t1
 				LEFT JOIN hr_taxpayeritem t2

@@ -1,10 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>  
-<%
-Date currDate = new Date();
-SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,18 +21,15 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			<table>
 				<tr>
 					<th width="120">매출기간</th>
-					<td>
+					<td colspan="3">
 						<input type="text" id="S_BUYDATE_FR" /> - <input type="text" id="S_BUYDATE_TO" />
 					</td>
 				</tr>
 				<tr>
-					<th width="120">검색기준</th>
-					<td><select id="S_BUYGUBUN" style="width:120px"></select></td>
-				</tr>
-				<tr>
-					<th width="120">검색기준</th>
-					<td>
-						<!-- 등기구분 -->
+					<th width="120">매입구분</th>
+					<td width="150"><select id="S_BUYGUBUN" style="width:120px"></select></td>
+					<th width="120">등기여부</th>
+					<td width="150">
 						<select id="S_REGYN" style="width:120px">
 							<option value="ALL" selected="selected">전체</option>
 							<option value="R">잔량</option>
@@ -91,7 +82,9 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 				success: function(data) {
 					var sTemp = "";
 					data.dcodeList.forEach(function(currentValue, index, array) {
-						sTemp += "<option value=\"" + currentValue.DCODE + "\">" + currentValue.DCODENAME + "</option>";
+						if(currentValue.DCODE != "003") {
+							sTemp += "<option value=\"" + currentValue.DCODE + "\">" + currentValue.DCODENAME + "</option>";
+						}
 					});
 					$("#S_BUYGUBUN").append(sTemp);
 				},
@@ -110,12 +103,12 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 			};
 	        var source = {
 	        	type: "POST",
-	        	url: "/home/selectListMM012002.do",
+	        	url: "/home/MM012002_s1.do",
 	        	data: param,
 	        	datatype: "json",
 	            datafields: [
 					{name: "BUYID", type: "string"},
-					{name: "BUYGUBUNNAME", type: "string"},
+					{name: "NAME_BUYGUBUN", type: "string"},
 					{name: "OWNERNAME", type: "string"},
 					{name: "BUYDATE", type: "string"},
 					{name: "FULLADDRESS", type: "string"},
@@ -123,7 +116,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{name: "BUYPY", type: "number"},
 					{name: "BUYDANGA", type: "number"},
 					{name: "BUYAMT", type: "number"},
-					{name: "REGNAME", type: "string"},
+					{name: "NAME_REGYN", type: "string"},
 					{name: "REGDATE", type: "string"},
 					{name: "CONM2", type: "number"},
 					{name: "REMM2", type: "number"}
@@ -133,7 +126,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	        var dataAdapter = new $.jqx.dataAdapter(source, {
 	            loadComplete: function(data) {	            	
 	            	var countRow = $("#mainGrid").jqxGrid("getrows");
-	            	$("#mainGridCount").html(countRow.length);
+	            	$("#mainGridCount").text(countRow.length);
 	            },
 	            loadError: function(x, s, e) {
 	            	alert("[ERROR]"+ e);
@@ -153,19 +146,19 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            selectionmode: 'singlerow',
 	            columnsresize: true,
 	            columns: [
-					{text: "구매번호", datafield: "BUYID", width: 100, cellsalign: "center", align: "center", hidden: true},
-					{text: "매입구분", datafield: "BUYGUBUNNAME", width: 80, cellsalign: "center", align: "center"},
+					{text: "매입구분", datafield: "NAME_BUYGUBUN", width: 80, cellsalign: "center", align: "center"},
 					{text: "원지주", datafield: "OWNERNAME", width: 100, cellsalign: "center", align: "center"},
-					{text: "계약날짜", datafield: "BUYDATE", width: 100, cellsalign: "center", align: "center"},
+					{text: "계약일자", datafield: "BUYDATE", width: 100, cellsalign: "center", align: "center"},
 					{text: "주소", datafield: "FULLADDRESS", width: 240, cellsalign: "left", align: "center"},
 					{text: "면적", datafield: "BUYM2", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
-					{text: "평", datafield: "BUYPY", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
+					{text: "평수", datafield: "BUYPY", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
 					{text: "단가", datafield: "BUYDANGA", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "매매금액", datafield: "BUYAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
-					{text: "등기여부", datafield: "REGNAME", width: 80, cellsalign: "center", align: "center"},
+					{text: "등기여부", datafield: "NAME_REGYN", width: 80, cellsalign: "center", align: "center"},
 					{text: "등기일자", datafield: "REGDATE", width: 100, cellsalign: "center", align: "center"},
 					{text: "매출면적", datafield: "CONM2", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
-					{text: "잔여면적", datafield: "REMM2", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"}
+					{text: "잔여면적", datafield: "REMM2", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
+					{text: "구매번호", datafield: "BUYID", width: 100, cellsalign: "center", align: "center", hidden: true}
 	            ]
 	        });			
 		}
@@ -191,7 +184,19 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		});
 		// 엑셀 버튼 클릭 이벤트
 		$("#excelButton").click(function() {
-			$("#mainGrid").jqxGrid('exportdata', 'xls', 'MM012002_<%=f.format(currDate)%>', true, null, false, null, 'utf-8'); 	
+			//$("#mainGrid").jqxGrid('exportdata', 'xls', 'MM012002', true, null, false, null, 'utf-8');
+			if($.trim($("#mainGridCount").text()) == "0") {
+				alert("엑셀로 내려받을 데이터가 없습니다.");
+				return;
+			} else {
+				var param = {
+					S_BUYDATE_FR: $("#S_BUYDATE_FR").val().replace(/[^0-9-]/g, ""),
+					S_BUYDATE_TO: $("#S_BUYDATE_TO").val().replace(/[^0-9-]/g, ""),
+					S_BUYGUBUN: $("#S_BUYGUBUN").val(),
+					S_REGYN: $("#S_REGYN").val()
+				};
+				$.download("/home/MM012002_e1.do", param, "post");
+			};
 		});
 	});
 </script>

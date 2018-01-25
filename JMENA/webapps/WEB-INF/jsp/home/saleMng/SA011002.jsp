@@ -221,7 +221,8 @@
 					SL_BRROWDATE_FR : $("#SL_BRROWDATE_FR").val(),
 					SL_BRROWDATE_TO : $("#SL_BRROWDATE_TO").val(),
 					SL_SALERNAME : $("#SL_SALERNAME").val(),
-					SL_ADDRESS : $("#SL_ADDRESS").val()
+					SL_ADDRESS : $("#SL_ADDRESS").val(),
+					SL_CANCELYN : $("input[name='SL_CANCELYN']:checked").val()
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
@@ -229,7 +230,7 @@
 				          '계약번호', '계약일자', '관리번호', '지역구분', '지사구분', '원지주성명', '주민번호', '분양면적', '잔여면적', '분양평수', '잔여평수', 
 				          '매출구분', '담당자코드', '담당자', '매입번호', '차입자주민번호', '차입자주소', 
 				          '차입자연락처', '계약면적', '계약평수', '비고', 
-				          '차입기간', '차입기간구분', '만기일', '지급이율', '지급계좌', '지급은행', '연장여부', '연장일자', '해약여부', '해약일자',
+				          '차입기간', '차입기간구분', '만기여부', '만기일', '지급이율', '지급계좌', '지급은행', '연장여부', '연장일자', '해약여부', '해약일자',
 				          '계좌주', '공동명의구분', '등기여부', '등기일자'],
 				colModel:[
 					{name:"BRROWDATE",		index:'BRROWDATE',		width:100,	align:'center',	sortable:false},
@@ -261,6 +262,7 @@
 					{name:"REMARK",			index:'REMARK',			width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"BRROWPERIOD",	index:'BRROWPERIOD',	width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"PERIODGUBUN",	index:'PERIODGUBUN',	width:100,	align:'center',	sortable:false,	hidden:true},
+					{name:"EXPIREYN",		index:'EXPIREYN',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"EXPIREDATE",		index:'EXPIREDATE',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"PAYRATE",		index:'PAYRATE',		width:100,	align:'center',	sortable:false,	hidden:true},
 					{name:"PAYAMT",			index:'PAYAMT',			width:100,	align:'center',	sortable:false,	hidden:true},
@@ -324,7 +326,8 @@
 					$("#PAYACCOUNT").val(selRowData.PAYACCOUNT);
 					$("#PAYBANK").val(selRowData.PAYBANK);
 					$("#PAYOWNER").val(selRowData.PAYOWNER);
-					$("#BRROWDATE").val(selRowData.BRROWDATE);
+					$("#BRROWDATE").val(selRowData.BRROWDATE);					
+					selRowData.EXPIREYN == "Y" ? $("#EXPIREYN").attr("checked", true) : $("#EXPIREYN").attr("checked", false);
 					$("#EXPIREDATE").val(selRowData.EXPIREDATE);
 					selRowData.EXTENDYN == "Y" ? $("#EXTENDYN").attr("checked", true) : $("#EXTENDYN").attr("checked", false);
 					$("#EXTENDDATE").val(selRowData.EXTENDDATE);
@@ -458,6 +461,7 @@
 			$("#PAYBANK").val("");
 			$("#PAYOWNER").val("");
 			$("#BRROWDATE").val("");
+			$("#EXPIREYN").attr("checked", false);
 			$("#EXPIREDATE").val("");
 			$("#EXTENDYN").attr("checked", false);
 			$("#EXTENDDATE").val("");
@@ -1023,6 +1027,14 @@
 					<th width="120">지번(주소)</th>
 					<td><input type="text" id="SL_CONADDRESS" name="SL_CONADDRESS" onkeydown="f_selectButton();" /></td>
 				</tr>
+				<tr>
+					<th width="120">계약구분</th>
+					<td>
+						<div style="float:left; padding-right:20px;"><input type="radio" name="SL_CANCELYN" id="radio1" value="" /><label for="radio1">전체</label></div>
+						<div style="float:left; padding-right:20px;"><input type="radio" name="SL_CANCELYN" id="radio2" value="Y" /><label for="radio2">해지</label></div>
+						<div style="float:left;"><input type="radio" name="SL_CANCELYN" id="radio3" value="N" checked /><label for="radio3">계약</label></div>
+					</td>
+				</tr>
 			</table>
 			<div align="right">총 건수 : <font color="red"><sapn id="leftListCount"></sapn></font>건</div>
 			<table id="leftList"></table>
@@ -1126,7 +1138,10 @@
 				</tr>
 				<tr>
 					<th width="120">차입날짜</th>
-					<td colspan="2"><input type="text" id="BRROWDATE" name="BRROWDATE" /></td>
+					<td colspan="4"><input type="text" id="BRROWDATE" name="BRROWDATE" /></td>
+				</tr>
+					<th width="120">만기해지</th>
+					<td colspan="2"><input type="checkbox" id="EXPIREYN" name="EXPIREYN" /></td>
 					<th width="120">만기날짜</th>
 					<td><input type="text" id="EXPIREDATE" name="EXPIREDATE" /></td>
 				</tr>

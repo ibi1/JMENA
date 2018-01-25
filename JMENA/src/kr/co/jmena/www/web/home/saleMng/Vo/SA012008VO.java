@@ -19,144 +19,143 @@ public class SA012008VO {
 	private String REMNM2;
 	private String REMNAMT;
 	
+	private String S_BUYGUBUN;
 	private String S_CITYCODE;
 	private String S_BOROUGHCODE;
-	
 	private String S_BUYYEAR;
 	private String S_BUYMONTH;
-	
 	private String S_ADDRESS;
 	
 	public String getBUYID() {
 		return this.BUYID;
 	}
+	public void setBUYID(String bUYID) {
+		this.BUYID = bUYID;
+	}
 	public String getBUYGUBUN() {
 		return this.BUYGUBUN;
+	}
+	public void setBUYGUBUN(String bUYGUBUN) {
+		this.BUYGUBUN = bUYGUBUN;
 	}
 	public String getOWNERNAME() {
 		return this.OWNERNAME;
 	}
+	public void setOWNERNAME(String oWNERNAME) {
+		this.OWNERNAME = oWNERNAME;
+	}
 	public String getOWNERJUMINID() {
 		return this.OWNERJUMINID;
+	}
+	public void setOWNERJUMINID(String oWNERJUMINID) {
+		this.OWNERJUMINID = oWNERJUMINID;
 	}
 	public String getADDRESS() {
 		return this.ADDRESS;
 	}
+	public void setADDRESS(String aDDRESS) {
+		this.ADDRESS = aDDRESS;
+	}
 	public String getBUYM2() {
 		return this.BUYM2;
+	}
+	public void setBUYM2(String bUYM2) {
+		this.BUYM2 = bUYM2;
 	}
 	public String getREGDATE1() {
 		return this.REGDATE1;
 	}
+	public void setREGDATE1(String rEGDATE1) {
+		this.REGDATE1 = rEGDATE1;
+	}
 	public String getBUYAMT() {
 		return this.BUYAMT;
+	}
+	public void setBUYAMT(String bUYAMT) {
+		this.BUYAMT = bUYAMT;
 	}
 	public String getSELLSEQ() {
 		return this.SELLSEQ;
 	}
+	public void setSELLSEQ(String sELLSEQ) {
+		this.SELLSEQ = sELLSEQ;
+	}
 	public String getCONNAME() {
 		return this.CONNAME;
+	}
+	public void setCONNAME(String cONNAME) {
+		this.CONNAME = cONNAME;
 	}
 	public String getCONJUMINID() {
 		return this.CONJUMINID;
 	}
+	public void setCONJUMINID(String cONJUMINID) {
+		this.CONJUMINID = cONJUMINID;
+	}
 	public String getCONM2() {
 		return this.CONM2;
+	}
+	public void setCONM2(String cONM2) {
+		this.CONM2 = cONM2;
 	}
 	public String getREGDATE2() {
 		return this.REGDATE2;
 	}
+	public void setREGDATE2(String rEGDATE2) {
+		this.REGDATE2 = rEGDATE2;
+	}
 	public String getSALEAMT() {
 		return this.SALEAMT;
+	}
+	public void setSALEAMT(String sALEAMT) {
+		this.SALEAMT = sALEAMT;
 	}
 	public String getREMNM2() {
 		return this.REMNM2;
 	}
+	public void setREMNM2(String rEMNM2) {
+		this.REMNM2 = rEMNM2;
+	}
 	public String getREMNAMT() {
 		return this.REMNAMT;
+	}
+	public void setREMNAMT(String rEMNAMT) {
+		this.REMNAMT = rEMNAMT;
+	}
+	public String getS_BUYGUBUN() {
+		return this.S_BUYGUBUN;
+	}
+	public void setS_BUYGUBUN(String s_BUYGUBUN) {
+		this.S_BUYGUBUN = s_BUYGUBUN;
 	}
 	public String getS_CITYCODE() {
 		return this.S_CITYCODE;
 	}
+	public void setS_CITYCODE(String s_CITYCODE) {
+		this.S_CITYCODE = s_CITYCODE;
+	}
 	public String getS_BOROUGHCODE() {
 		return this.S_BOROUGHCODE;
 	}
-	public String getS_ADDRESS() {
-		return this.S_ADDRESS;
+	public void setS_BOROUGHCODE(String s_BOROUGHCODE) {
+		this.S_BOROUGHCODE = s_BOROUGHCODE;
 	}
-
 	public String getS_BUYYEAR() {
 		return this.S_BUYYEAR;
+	}
+	public void setS_BUYYEAR(String s_BUYYEAR) {
+		this.S_BUYYEAR = s_BUYYEAR;
 	}
 	public String getS_BUYMONTH() {
 		return this.S_BUYMONTH;
 	}
-	
-	public void setBUYID(String BUYID) {
-		this.BUYID = BUYID;
+	public void setS_BUYMONTH(String s_BUYMONTH) {
+		this.S_BUYMONTH = s_BUYMONTH;
 	}
-	public void setBUYGUBUN(String BUYGUBUN) {
-		this.BUYGUBUN = BUYGUBUN;
+	public String getS_ADDRESS() {
+		return this.S_ADDRESS;
 	}
-	public void setOWNERNAME(String OWNERNAME) {
-		this.OWNERNAME = OWNERNAME;
-	}
-	public void setOWNERJUMINID(String OWNERJUMINID) {
-		this.OWNERJUMINID = OWNERJUMINID;
-	}
-	public void setADDRESS(String ADDRESS) {
-		this.ADDRESS = ADDRESS;
-	}
-	public void setBUYM2(String BUYM2) {
-		this.BUYM2 = BUYM2;
-	}
-	public void setREGDATE1(String REGDATE1) {
-		this.REGDATE1 = REGDATE1;
-	}
-	public void setBUYAMT(String BUYAMT) {
-		this.BUYAMT = BUYAMT;
-	}
-	public void setSELLSEQ(String SELLSEQ) {
-		this.SELLSEQ = SELLSEQ;
-	}
-	public void setCONNAME(String CONNAME) {
-		this.CONNAME = CONNAME;
-	}
-	public void setCONJUMINID(String CONJUMINID) {
-		this.CONJUMINID = CONJUMINID;
-	}
-	public void setCONM2(String CONM2) {
-		this.CONM2 = CONM2;
-	}
-	public void setREGDATE2(String REGDATE2) {
-		this.REGDATE2 = REGDATE2;
-	}
-	public void setSALEAMT(String SALEAMT) {
-		this.SALEAMT = SALEAMT;
-	}
-	public void setREMNM2(String REMNM2) {
-		this.REMNM2 = REMNM2;
-	}
-	public void setREMNAMT(String REMNAMT) {
-		this.REMNAMT = REMNAMT;
-	}
-	public void setS_CITYCODE(String S_CITYCODE) {
-		this.S_CITYCODE = S_CITYCODE;
-	}
-	public void setS_BOROUGHCODE(String S_BOROUGHCODE) {
-		this.S_BOROUGHCODE = S_BOROUGHCODE;
-	}
-	public void setS_ADDRESS(String S_ADDRESS) {
-		this.S_ADDRESS = S_ADDRESS;
-	}
-	public void setS_BUYYEAR(String S_BUYYEAR) {
-		this.S_BUYYEAR = S_BUYYEAR;
-	}
-	public void setS_BUYMONTH(String S_BUYMONTH) {
-		this.S_BUYMONTH = S_BUYMONTH;
-	}
-
-	
-	
-	
+	public void setS_ADDRESS(String s_ADDRESS) {
+		this.S_ADDRESS = s_ADDRESS;
+	}	
 }

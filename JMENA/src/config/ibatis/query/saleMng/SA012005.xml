@@ -30,37 +30,39 @@
 
 	<select id="selectListSA012005" resultMap="SA012005Data1">
 		/* SA012005.selectListSA012005 */
-		select
-			t1.ipgumdate,
+		SELECT
+			t1.IPGUMDATE,
 			t1.IPGUMID,
-			(select dcodename from sy_ccodedtl where ccode = '009' and dcode = t1.ipgumgubun) as ipgumgubun,
+			fn_codename('01', '009', t1.IPGUMGUBUN) AS IPGUMGUBUN,
             t1.IPGUMPERSON,
-			t1.ipgumamt,
-			(select sum(sugumamt) from sa_ipgumdtl where ipgumid = t1.ipgumid) as sumsugumamt,
-            (t1.ipgumamt - (select sum(sugumamt) from sa_ipgumdtl where ipgumid = t1.ipgumid)) as jangumamt
-		from sa_ipgummst t1
-		where t1.R_IPGUMID IS NULL
+			t1.IPGUMAMT,
+			(SELECT SUM(SUGUMAMT) FROM sa_ipgumdtl WHERE IPGUMID = t1.IPGUMID) AS SUMSUGUMAMT,
+            (t1.IPGUMAMT - (SELECT SUM(SUGUMAMT) FROM sa_ipgumdtl WHERE IPGUMID = t1.IPGUMID)) AS JANGUMAMT
+		FROM sa_ipgummst t1
+			LEFT OUTER JOIN hr_insamst I
+				ON t1.SALERCD = I.INSACODE
+		WHERE t1.R_IPGUMID IS NULL
 		<isNotEmpty property="S_IPGUMDATE_FR">
 			<isNotEmpty property="S_IPGUMDATE_TO">
-				AND t1.ipgumdate BETWEEN #S_IPGUMDATE_FR# AND #S_IPGUMDATE_TO#
+				AND t1.IPGUMDATE BETWEEN #S_IPGUMDATE_FR# AND #S_IPGUMDATE_TO#
 			</isNotEmpty>
 		</isNotEmpty> 
 		<isNotEqual property="S_BRANCHCODE" compareValue="">
-		    AND t1.branchcode = #S_BRANCHCODE#
+		    AND t1.BRANCHCODE = #S_BRANCHCODE#
 		</isNotEqual>
 		<isNotEmpty property="S_SALERCD">
-		    AND t1.salercd = #S_SALERCD#
+		    AND t1.SALERCD = #S_SALERCD#
 		</isNotEmpty>
-		<isNotEmpty property="S_IPGUMGUBUN">
-		    AND t1.ipgumgubun = #S_IPGUMGUBUN#
-		</isNotEmpty>
+		<isNotEqual property="S_IPGUMGUBUN" compareValue="">
+		    AND t1.IPGUMGUBUN = #S_IPGUMGUBUN#
+		</isNotEqual>
 		<isNotEmpty property="S_IPGUMPERSON">
-		    AND t1.ipgumperson  LIKE '%$S_IPGUMPERSON$%' 
+		    AND t1.IPGUMPERSON  LIKE '%$S_IPGUMPERSON$%' 
 		</isNotEmpty>
 		<isNotEmpty property="S_IPGUMAMT">
-		    AND t1.ipgumamt LIKE '%$S_IPGUMAMT$%'
+		    AND t1.IPGUMAMT LIKE '%$S_IPGUMAMT$%'
 		</isNotEmpty>
-		order by t1.ipgumdate asc
+		ORDER BY t1.IPGUMDATE ASC
 	</select>
 	
 	<select id="selectListSA012005_2" resultMap="SA012005Data2">

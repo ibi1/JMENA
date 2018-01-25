@@ -5,7 +5,7 @@
 <sqlMap namespace="SA012003">
 	<typeAlias alias="SA012003VO" type="kr.co.jmena.www.web.home.saleMng.Vo.SA012003VO"/>
 
-	<resultMap id="SA012003Data" class="SA012003VO">
+	<!-- <resultMap id="SA012003Data" class="SA012003VO">
 		<result property="BRANCHCODE"		column="BRANCHCODE"/>
 		<result property="DEPTCODE"			column="DEPTCODE"/>
 		<result property="BRANCHNAME"		column="BRANCHNAME"/>
@@ -32,11 +32,39 @@
 		<result property="PAYACCOUNT"		column="PAYACCOUNT"/>
 		<result property="PAYOWNER"			column="PAYOWNER"/>
 		<result property="REMARK"			column="REMARK"/>
-
-		
+	</resultMap> -->
+	
+	<resultMap class="SA012003VO" id="selectListSaleMst">
+		<result property="SALEID" column="SALEID"/>
+		<result property="SALEDATE" column="SALEDATE"/>
+		<result property="CONNAME" column="CONNAME"/>
+		<result property="CONJUMINID" column="CONJUMINID"/>
+		<result property="NAME_BRROWTYPE" column="NAME_BRROWTYPE"/>
+		<result property="CONM2" column="CONM2"/>
+		<result property="REMARK" column="REMARK"/>
+		<result property="BRROWAMT" column="BRROWAMT"/>
+		<result property="BRROWPERIOD" column="BRROWPERIOD"/>
+		<result property="BRROWDATE" column="BRROWDATE"/>
+		<result property="EXPIREDATE" column="EXPIREDATE"/>
+		<result property="PAYRATE" column="PAYRATE"/>
+		<result property="PAYAMT" column="PAYAMT"/>
+		<result property="TAXINCOME" column="TAXINCOME"/>
+		<result property="TAXLOCAL" column="TAXLOCAL"/>
+		<result property="ACTPAYAMT" column="ACTPAYAMT"/>
+		<result property="PAYACCOUNT" column="PAYACCOUNT"/>
+		<result property="NAME_PAYBANK" column="NAME_PAYBANK"/>
+		<result property="EXTENDYN" column="EXTENDYN"/>
+		<result property="EXTENDDATE" column="EXTENDDATE"/>
+		<result property="CANCELYN" column="CANCELYN"/>
+		<result property="CANCELDATE" column="CANCELDATE"/>
+		<result property="PAYOWNER" column="PAYOWNER"/>
+		<result property="ADDRESS" column="ADDRESS"/>
+		<result property="MNGRNAME" column="MNGRNAME"/>
+		<result property="KNAME" column="KNAME"/>
+		<result property="BRANCHNAME" column="BRANCHNAME"/>
 	</resultMap>
 
-	<select id="selectListSA012003" resultMap="SA012003Data">
+	<!-- <select id="selectListSA012003" resultMap="SA012003Data">
 	select *
 	from (
 		select
@@ -96,6 +124,87 @@
 		    AND KNAME LIKE '%$S_KNAME$%'
 		</isNotEmpty>
 		ORDER BY SALEID ASC
+	</select> -->
+	
+	<select id="selectListSaleMst" resultMap="selectListSaleMst">
+		/* SA012003.selectListSaleMst */
+		SELECT A.SALEID 
+			, A.SALEDATE
+			, A.CONNAME
+		    , fn_formatnum('I', A.CONJUMINID) AS CONJUMINID
+		    , CAST(A.CONM2 AS DECIMAL(12, 2)) AS CONM2
+    		, A.REMARK
+		    , CASE B.BRROWTYPE
+				WHEN 'M' THEN '월지급'
+		        WHEN 'Y' THEN '년지급'
+				ELSE '-'
+			  END AS NAME_BRROWTYPE
+		    , B.BRROWAMT
+		    , CONCAT(B.BRROWPERIOD, fn_codename('01', '011', B.PERIODGUBUN)) AS BRROWPERIOD
+			, B.BRROWDATE
+			, B.EXPIREDATE
+			, B.PAYRATE
+			, (FLOOR(B.PAYAMT * 0.1) * 10) AS PAYAMT
+		    , (FLOOR(FLOOR((FLOOR(B.PAYAMT * 0.1) * 10) * 0.25) * 0.1) * 10) AS TAXINCOME
+		    , (FLOOR(FLOOR((FLOOR(FLOOR((FLOOR(B.PAYAMT * 0.1) * 10) * 0.25) * 0.1) * 10) * 0.1) * 0.1) * 10) AS TAXLOCAL
+		    , ((FLOOR(B.PAYAMT * 0.1) * 10)
+			   - (
+					(FLOOR(FLOOR((FLOOR(B.PAYAMT * 0.1) * 10) * 0.25) * 0.1) * 10)
+				  + (FLOOR(FLOOR((FLOOR(FLOOR((FLOOR(B.PAYAMT * 0.1) * 10) * 0.25) * 0.1) * 10) * 0.1) * 0.1) * 10)
+				 )
+			  ) AS ACTPAYAMT
+			, B.PAYACCOUNT
+			, fn_codename('04', B.PAYBANK, NULL) AS NAME_PAYBANK
+			, B.EXTENDYN
+			, B.EXTENDDATE
+			, B.CANCELYN
+			, B.CANCELDATE
+			, B.PAYOWNER
+		    , C.ADDRESS
+		    , (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = I.DEPTCODE AND GRADE = '007' AND DUTY = '002' AND RETIREDATE IS NULL LIMIT 1) AS MNGRNAME
+		    , I.KNAME
+		    , fn_codename('02', I.BRANCHCODE, NULL) AS BRANCHNAME
+		FROM (
+		    SELECT *
+		    FROM sa_salemst
+		    WHERE SALEGUBUN = '003'
+		    ) A
+		    INNER JOIN sa_salebdtl B
+				ON A.SALEID = B.SALEID
+			INNER JOIN mm_buymst C
+				ON A.BUYID = C.BUYID
+			LEFT OUTER JOIN hr_insamst I
+				ON A.SALERCD = I.INSACODE
+		WHERE 1 = 1
+			<isNotEmpty property="S_SALEDATE_FR">
+				<isNotEmpty property="S_SALEDATE_TO">
+				AND A.SALEDATE BETWEEN #S_SALEDATE_FR# AND #S_SALEDATE_TO#
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEqual property="S_DCODE" compareValue="">
+				<isEqual property="S_DCODE" compareValue="1">
+				AND B.EXPIREYN = 'Y'
+				</isEqual>
+				<isEqual property="S_DCODE" compareValue="2">
+				AND B.EXTENDYN = 'Y'
+				</isEqual>
+				<isEqual property="S_DCODE" compareValue="3">
+				AND B.CANCELYN = 'Y'
+				</isEqual>
+				<isEqual property="S_DCODE" compareValue="4">
+				AND (B.EXPIREYN = 'N' AND B.CANCELYN = 'N')
+				</isEqual>
+			</isNotEqual>
+			<isNotEqual property="S_BRANCHCODE" compareValue="">
+			AND I.BRANCHCODE = #S_BRANCHCODE#
+			</isNotEqual>
+			<isNotEqual property="S_DEPTCODE" compareValue="">
+			AND I.DEPTCODE = #S_DEPTCODE#
+			</isNotEqual>
+			<isNotEmpty property="S_KNAME">
+			AND I.KNAME LIKE '%$S_KNAME$%'
+			</isNotEmpty>
+		ORDER BY A.SALEDATE DESC, A.SALEID ASC			
 	</select>
 	
 </sqlMap>

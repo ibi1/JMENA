@@ -19,11 +19,11 @@ public class SA012012Biz {
 	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
-	public List<SA012012VO> selectListSA012012(SA012012VO vo) throws Exception {
+	public List<SA012012VO> selectListSaleMst(SA012012VO vo) throws Exception {
 		List<SA012012VO> lst = null;
 			
 		try {
-			lst = SA012012Dao.selectListSA012012(vo);
+			lst = SA012012Dao.selectListSaleMst(vo);
 		} catch (Exception e) {
 			throw e;
 		}

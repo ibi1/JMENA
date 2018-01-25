@@ -55,6 +55,7 @@ public class SA012005Ctr {
 		
 		String S_BRANCHCODE = ("ALL".equals(request.getParameter("S_BRANCHCODE"))) ? "" : request.getParameter("S_BRANCHCODE");
 		String S_SALERCD = ("ALL".equals(request.getParameter("S_SALERCD"))) ? "" : request.getParameter("S_SALERCD");
+		String S_IPGUMGUBUN = ("ALL".equals(request.getParameter("S_IPGUMGUBUN"))) ? "" : request.getParameter("S_IPGUMGUBUN");
 
 		String S_IPGUMPERSON = (URLDecoder.decode(request.getParameter("S_IPGUMPERSON"),"UTF-8"));
 		
@@ -62,7 +63,7 @@ public class SA012005Ctr {
 		vo.setS_IPGUMDATE_TO(request.getParameter("S_IPGUMDATE_TO"));
 		vo.setS_BRANCHCODE(S_BRANCHCODE);
 		vo.setS_SALERCD(S_SALERCD);
-		vo.setS_IPGUMGUBUN(request.getParameter("S_IPGUMGUBUN"));
+		vo.setS_IPGUMGUBUN(S_IPGUMGUBUN);
 		vo.setS_IPGUMPERSON(S_IPGUMPERSON);
 		vo.setS_IPGUMAMT(request.getParameter("S_IPGUMAMT"));
 		
