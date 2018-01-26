@@ -7,7 +7,6 @@ public class SA012012VO {
 	private String S_SALEGUBUN;
     private String S_REGYN;
     private String S_ADDRESS;
-    
     private String SALEID;
     private String SALEDATE;
     private String NAME_SALEGUBUN;
@@ -22,6 +21,7 @@ public class SA012012VO {
     private String BOROUGHNAME;
     private String ADDRESS;
     private String KNAME;
+    private String NAME_BRANCHCODE;
     private String MNGRNAME;
     
 	public String getS_DEPOSITDATE_FR() {
@@ -137,6 +137,12 @@ public class SA012012VO {
 	}
 	public void setKNAME(String kNAME) {
 		this.KNAME = kNAME;
+	}
+	public String getNAME_BRANCHCODE() {
+		return this.NAME_BRANCHCODE;
+	}
+	public void setNAME_BRANCHCODE(String nAME_BRANCHCODE) {
+		this.NAME_BRANCHCODE = nAME_BRANCHCODE;
 	}
 	public String getMNGRNAME() {
 		return this.MNGRNAME;

@@ -44,6 +44,7 @@
 			$("#SL_SALEDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#SL_SALEDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#SL_ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+			$("#SL_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 	
 			$('#bottomTabs').jqxTabs({theme: 'bootstrap', autoHeight: false, width: 1200});
 			
@@ -73,7 +74,7 @@
 			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 			$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});
 			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 190, minLength: 1, disabled: true });
-			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1, disabled: true});
+			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 400, minLength: 1, disabled: true});
 			$("#OWNERNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
 			$("#OWNERJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, disabled: true});
 			$("#CONBM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
@@ -82,8 +83,8 @@
 			$("#CONJPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#CONJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 13});
-			$("#CONADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
-			$("#CONTELNO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
+			$("#CONADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 400, minLength: 1});
+			$("#CONTELNO").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#CONM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 			$("#CONPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 			$("#SALEAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -92,7 +93,7 @@
 			$("#DCAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#DCRATE").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 			$("#SELLAMT").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 400, minLength: 1});
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});	
 			
 			
@@ -106,7 +107,7 @@
 			
 			f_selectListEnaDCode();
 			f_selectListEnaCityCode();
-			f_selectListEnaSalerCode();
+			//f_selectListEnaSalerCode();
 			f_selectListEnaBranchCode();
 			f_selectListEnaDcGubun();
 			
@@ -239,9 +240,10 @@
 				postData : {
 					SL_SALEDATE_FR : $("#SL_SALEDATE_FR").val(),
 					SL_SALEDATE_TO : $("#SL_SALEDATE_TO").val(),
-					SL_SALERNAME : $("#SL_SALERNAME").val(),
+					//SL_SALERNAME : $("#SL_SALERNAME").val(),
 					SL_ADDRESS : $("#SL_ADDRESS").val(),
-					SL_CANCELYN : $("input[name='SL_CANCELYN']:checked").val()
+					SL_CANCELYN : $("input[name='SL_CANCELYN']:checked").val(),
+					SL_KNAME: $.trim($("#SL_KNAME").val())
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
@@ -754,6 +756,7 @@
 		
 		$(function() {
 			$("#saveButton").click(function() {
+			
 				if ($("#SALEDATE").val() == "") {
 					alert("계약일자를 입력하셔야 합니다.");
 					
@@ -775,7 +778,14 @@
 					return false;
 				}
 				
-				if ($("#CONJUMINID").val() == "") {
+				/* if ($("#CONJUMINID").val() == "") {
+					alert("계약자 주민번호를 입력하셔야 합니다.");
+					
+					$("#CONJUMINID").focus();
+					return false;
+				} */
+				
+				if($("#CONJUMINID").val().replace(/[^0-9]/g, "") == "") {
 					alert("계약자 주민번호를 입력하셔야 합니다.");
 					
 					$("#CONJUMINID").focus();
@@ -1777,9 +1787,10 @@
 				<tr>
 					<th width="120">담당자</th>
 					<td>
-						<select id="SL_SALERNAME" name="SL_SALERNAME">
+						<!-- <select id="SL_SALERNAME" name="SL_SALERNAME">
 							<option value="ALL" selected="selected">전체</option>
-						</select>
+						</select> -->
+						<input type="text" id="SL_KNAME" />
 					</td>
 				</tr>
 				<tr>

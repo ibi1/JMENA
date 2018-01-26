@@ -84,7 +84,7 @@
 		    <isNotEmpty property="S_KNAME">
 		    AND I.KNAME LIKE '%$S_KNAME$%'
 		    </isNotEmpty>
-		ORDER BY B.SALEDATE DESC, A.SALEID ASC	
+		ORDER BY A.DEPOSITDATE ASC, A.SALEID ASC	
 	</select>
 
 </sqlMap>  

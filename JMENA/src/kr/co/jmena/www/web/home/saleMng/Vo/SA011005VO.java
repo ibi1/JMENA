@@ -68,6 +68,7 @@ public class SA011005VO {
 	private String PMDANGA;
 	private String BUYDANGA;
 	private String SALERNAME;
+	private String SL_KNAME;
 	
 	public String getSALEID_PK() {
 		return this.SALEID_PK;
@@ -464,5 +465,11 @@ public class SA011005VO {
 	}
 	public void setSALERNAME(String sALERNAME) {
 		this.SALERNAME = sALERNAME;
+	}
+	public String getSL_KNAME() {
+		return this.SL_KNAME;
+	}
+	public void setSL_KNAME(String sL_KNAME) {
+		this.SL_KNAME = sL_KNAME;
 	}
 }

@@ -20,6 +20,7 @@
 		<result property="BOROUGHNAME" column="BOROUGHNAME"/>
 		<result property="ADDRESS" column="ADDRESS"/>
 		<result property="KNAME" column="KNAME"/>
+		<result property="NAME_BRANCHCODE" column="NAME_BRANCHCODE"/>
 		<result property="MNGRNAME" column="MNGRNAME"/>
 	</resultMap>
 
@@ -43,6 +44,7 @@
 			, (SELECT BOROUGHNAME FROM ba_citydtl WHERE CITYCODE = D.CITYCODE AND BOROUGHCODE = D.BOROUGHCODE) AS BOROUGHNAME
 			, D.ADDRESS
 			, I.KNAME
+			, fn_codename('02', I.BRANCHCODE, NULL) AS NAME_BRANCHCODE
 			, (SELECT KNAME FROM hr_insamst WHERE DEPTCODE = I.DEPTCODE AND GRADE = '007' AND DUTY = '002' AND RETIREDATE IS NULL LIMIT 1) AS MNGRNAME
 		FROM (
 				SELECT *

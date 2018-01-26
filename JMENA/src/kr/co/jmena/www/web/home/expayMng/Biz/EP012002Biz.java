@@ -32,4 +32,15 @@ public class EP012002Biz {
 		return lst;
 	}
 	
+	public List<EP012002VO> selectListSudangPayerTb(EP012002VO vo) throws Exception {
+		List<EP012002VO> lst = null;
+
+		try {
+			lst = EP012002Dao.selectListSudangPayerTb(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}
 }

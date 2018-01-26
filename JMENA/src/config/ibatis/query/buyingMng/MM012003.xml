@@ -73,7 +73,7 @@
 				ON A.SALEID = B.SALEID  
 			LEFT OUTER JOIN hr_insamst I
 				ON A.SALERCD = I.INSACODE        
-		WHERE A.BUYID = #S_BUYID#
+		WHERE A.BUYID = #P_BUYID#
 			<isNotEmpty property="S_BRANCHCODE">
 				<isNotEqual property="S_BRANCHCODE" compareValue="ALL">
 				AND I.BRANCHCODE = #S_BRANCHCODE#

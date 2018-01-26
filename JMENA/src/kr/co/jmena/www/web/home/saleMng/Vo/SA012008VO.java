@@ -22,8 +22,10 @@ public class SA012008VO {
 	private String S_BUYGUBUN;
 	private String S_CITYCODE;
 	private String S_BOROUGHCODE;
-	private String S_BUYYEAR;
-	private String S_BUYMONTH;
+	private String S_BUYYEAR_FR;
+	private String S_BUYMONTH_FR;
+	private String S_BUYYEAR_TO;
+	private String S_BUYMONTH_TO;
 	private String S_ADDRESS;
 	
 	public String getBUYID() {
@@ -140,22 +142,34 @@ public class SA012008VO {
 	public void setS_BOROUGHCODE(String s_BOROUGHCODE) {
 		this.S_BOROUGHCODE = s_BOROUGHCODE;
 	}
-	public String getS_BUYYEAR() {
-		return this.S_BUYYEAR;
+	public String getS_BUYYEAR_FR() {
+		return this.S_BUYYEAR_FR;
 	}
-	public void setS_BUYYEAR(String s_BUYYEAR) {
-		this.S_BUYYEAR = s_BUYYEAR;
+	public void setS_BUYYEAR_FR(String s_BUYYEAR_FR) {
+		this.S_BUYYEAR_FR = s_BUYYEAR_FR;
 	}
-	public String getS_BUYMONTH() {
-		return this.S_BUYMONTH;
+	public String getS_BUYMONTH_FR() {
+		return this.S_BUYMONTH_FR;
 	}
-	public void setS_BUYMONTH(String s_BUYMONTH) {
-		this.S_BUYMONTH = s_BUYMONTH;
+	public void setS_BUYMONTH_FR(String s_BUYMONTH_FR) {
+		this.S_BUYMONTH_FR = s_BUYMONTH_FR;
+	}
+	public String getS_BUYYEAR_TO() {
+		return this.S_BUYYEAR_TO;
+	}
+	public void setS_BUYYEAR_TO(String s_BUYYEAR_TO) {
+		this.S_BUYYEAR_TO = s_BUYYEAR_TO;
+	}
+	public String getS_BUYMONTH_TO() {
+		return this.S_BUYMONTH_TO;
+	}
+	public void setS_BUYMONTH_TO(String s_BUYMONTH_TO) {
+		this.S_BUYMONTH_TO = s_BUYMONTH_TO;
 	}
 	public String getS_ADDRESS() {
 		return this.S_ADDRESS;
 	}
 	public void setS_ADDRESS(String s_ADDRESS) {
 		this.S_ADDRESS = s_ADDRESS;
-	}	
+	}
 }

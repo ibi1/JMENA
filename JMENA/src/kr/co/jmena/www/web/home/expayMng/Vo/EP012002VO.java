@@ -5,7 +5,6 @@ public class EP012002VO {
 	private String S_PAYDATE;
 	private String S_BRANCHCODE;
 	private String S_KNAME;
-	
 	private String SALEID;
 	private String PAYSEQ;
 	private String PAYDATE;
@@ -20,6 +19,11 @@ public class EP012002VO {
 	private String JUMINID;
 	private String NAME_BRANCHCODE;
 	private String NAME_DEPTCODE;
+	
+	private String P_SALEID;
+	private String P_PAYSEQ;
+	private String PAYERNAME;
+	private String PAYERID;
 	
 	public String getS_PAYDATE() {
 		return this.S_PAYDATE;
@@ -122,5 +126,29 @@ public class EP012002VO {
 	}
 	public void setNAME_DEPTCODE(String nAME_DEPTCODE) {
 		this.NAME_DEPTCODE = nAME_DEPTCODE;
+	}
+	public String getP_SALEID() {
+		return this.P_SALEID;
+	}
+	public void setP_SALEID(String p_SALEID) {
+		this.P_SALEID = p_SALEID;
+	}
+	public String getP_PAYSEQ() {
+		return this.P_PAYSEQ;
+	}
+	public void setP_PAYSEQ(String p_PAYSEQ) {
+		this.P_PAYSEQ = p_PAYSEQ;
+	}
+	public String getPAYERNAME() {
+		return this.PAYERNAME;
+	}
+	public void setPAYERNAME(String pAYERNAME) {
+		this.PAYERNAME = pAYERNAME;
+	}
+	public String getPAYERID() {
+		return this.PAYERID;
+	}
+	public void setPAYERID(String pAYERID) {
+		this.PAYERID = pAYERID;
 	}
 }

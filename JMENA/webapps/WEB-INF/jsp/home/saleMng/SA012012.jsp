@@ -128,6 +128,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 					{name: "REGDATE", type: "string"},
 					{name: "FULLADDRESS", type: "string"},
 					{name: "KNAME", type: "string"},
+					{name: "NAME_BRANCHCODE", type: "string"},
 					{name: "MNGRNAME", type: "string"}
 	            ],
 	            root: "rows"
@@ -156,6 +157,7 @@ SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 	            columnsresize: true,
 	            columns: [
 					{text: "매입구분", datafield: "NAME_SALEGUBUN", width: 80, cellsalign: "center", align: "center"},
+					{text: "지사", datafield: "NAME_BRANCHCODE", width: 100, cellsalign: "center", align: "center"},
 					{text: "실장", datafield: "MNGRNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "담당", datafield: "KNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "계약자", datafield: "CONNAME", width: 100, cellsalign: "center", align: "center"},

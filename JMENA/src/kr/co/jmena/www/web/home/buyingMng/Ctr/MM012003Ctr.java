@@ -70,10 +70,11 @@ public class MM012003Ctr {
 		
 		for(int i = 0; i < lst.size(); i++) {
 			
-			String S_BUYID = lst.get(i).getBUYID();
+			String P_BUYID = lst.get(i).getBUYID();
 			float BUYM2 = Float.parseFloat(lst.get(i).getBUYM2());
 			
-			vo.setS_BUYID(S_BUYID);
+			vo.setP_BUYID(P_BUYID);
+			
 			List<MM012003VO> s_lst = MM012003Biz.selectListSaleMst(vo);
 			
 			if(s_lst.size() > 0) {
@@ -123,6 +124,7 @@ public class MM012003Ctr {
 				obj.put("ADDRESS", lst.get(i).getADDRESS());
 				obj.put("BUYM2", lst.get(i).getBUYM2());
 				obj.put("BUYAMT", lst.get(i).getBUYAMT());
+				
 				obj.put("SALEID", null);
 				obj.put("SALEDATE", null);
 				obj.put("CONNAME", null);
@@ -184,10 +186,11 @@ public class MM012003Ctr {
 			
 			for(int i = 0; i < lst.size(); i++) {
 				
-				String S_BUYID = lst.get(i).getBUYID();
+				String P_BUYID = lst.get(i).getBUYID();
 				float BUYM2 = Float.parseFloat(lst.get(i).getBUYM2());
 				
-				vo.setS_BUYID(S_BUYID);
+				vo.setP_BUYID(P_BUYID);
+				
 				List<MM012003VO> s_lst = MM012003Biz.selectListSaleMst(vo);
 				
 				if(s_lst.size() > 0) {
@@ -260,6 +263,7 @@ public class MM012003Ctr {
 					dataType.add("decimal");
 					data.add(lst.get(i).getBUYAMT());
 					dataType.add("number");
+					
 					data.add(null);
 					dataType.add("string");
 					data.add(null);

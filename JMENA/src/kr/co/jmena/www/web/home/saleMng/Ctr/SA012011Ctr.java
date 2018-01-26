@@ -131,7 +131,7 @@ public class SA012011Ctr {
 		ExcelUtil ex = ExcelUtil.getExcelUtil();
 		SXSSFWorkbook wb = new SXSSFWorkbook();
 		
-		String[] heads = new String[]{"매출구분", "지사", "계약날짜", "담당", "실장", "고객", "물건지", "평수", "매매가", "DC금액", "실판매가", "위탁수수료", "잔금입금일"};
+		String[] heads = new String[]{"매출구분", "지사", "계약날짜", "잔금입금일", "담당", "실장", "고객", "물건지", "평수", "매매가", "DC금액", "실판매가", "위탁수수료"};
 		int cellCnt = (heads.length - 1);
 		
 		try {
@@ -148,6 +148,8 @@ public class SA012011Ctr {
 				data.add(lst.get(i).getBRANCHNAME());
 				dataType.add("string");
 				data.add(lst.get(i).getSALEDATE());
+				dataType.add("string");
+				data.add(lst.get(i).getDEPOSITDATE());
 				dataType.add("string");
 				data.add(lst.get(i).getKNAME());
 				dataType.add("string");
@@ -167,8 +169,6 @@ public class SA012011Ctr {
 				dataType.add("number");
 				data.add(lst.get(i).getAGENCYAMT());
 				dataType.add("number");
-				data.add(lst.get(i).getDEPOSITDATE());
-				dataType.add("string");
 				
 				// 엑셀 데이터 생성 
 				ex.MakeExcelBody(wb, data, dataType);

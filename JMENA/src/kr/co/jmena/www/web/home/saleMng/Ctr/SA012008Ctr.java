@@ -60,9 +60,11 @@ public class SA012008Ctr {
 		vo.setS_BUYGUBUN(request.getParameter("S_BUYGUBUN"));
 		vo.setS_CITYCODE(request.getParameter("S_CITYCODE"));
 		vo.setS_BOROUGHCODE(request.getParameter("S_BOROUGHCODE"));
-		String S_BUYYEAR = request.getParameter("S_BUYYEAR") + request.getParameter("S_BUYMONTH");  
+		String S_BUYYEAR_FR = request.getParameter("S_BUYYEAR_FR") + request.getParameter("S_BUYMONTH_FR");
+		String S_BUYYEAR_TO = request.getParameter("S_BUYYEAR_TO") + request.getParameter("S_BUYMONTH_TO");
 		
-		vo.setS_BUYYEAR(S_BUYYEAR);
+		vo.setS_BUYYEAR_FR(S_BUYYEAR_FR);
+		vo.setS_BUYYEAR_TO(S_BUYYEAR_TO);
 		
 		vo.setS_ADDRESS(S_ADDRESS);
 		
@@ -77,7 +79,8 @@ public class SA012008Ctr {
 			JSONObject obj = new JSONObject();
 			
 			vo1.setBUYID(lst.get(i).getBUYID());
-			vo1.setS_BUYYEAR(S_BUYYEAR);
+			vo1.setS_BUYYEAR_FR(S_BUYYEAR_FR);
+			vo1.setS_BUYYEAR_TO(S_BUYYEAR_TO);
 	
 			List<SA012008VO> lst2 = SA012008Biz.selectListSA012008_2(vo1);
 			if(lst2.size() > 0){

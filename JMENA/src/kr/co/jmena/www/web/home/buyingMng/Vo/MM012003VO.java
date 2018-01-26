@@ -8,13 +8,14 @@ public class MM012003VO {
 	private String S_BRANCHCODE;
 	private String S_KNAME;
 	private String S_ADDRESS;
-	private String S_BUYID;
 	private String BUYID;
 	private String BUYDATE;
 	private String OWNERNAME;
 	private String ADDRESS;
 	private String BUYM2;
 	private String BUYAMT;
+	
+	private String P_BUYID;
 	private String SALEID;
 	private String SALEDATE;
 	private String CONNAME;
@@ -62,12 +63,6 @@ public class MM012003VO {
 	public void setS_ADDRESS(String s_ADDRESS) {
 		this.S_ADDRESS = s_ADDRESS;
 	}
-	public String getS_BUYID() {
-		return this.S_BUYID;
-	}
-	public void setS_BUYID(String s_BUYID) {
-		this.S_BUYID = s_BUYID;
-	}
 	public String getBUYID() {
 		return this.BUYID;
 	}
@@ -103,6 +98,12 @@ public class MM012003VO {
 	}
 	public void setBUYAMT(String bUYAMT) {
 		this.BUYAMT = bUYAMT;
+	}
+	public String getP_BUYID() {
+		return this.P_BUYID;
+	}
+	public void setP_BUYID(String p_BUYID) {
+		this.P_BUYID = p_BUYID;
 	}
 	public String getSALEID() {
 		return this.SALEID;
