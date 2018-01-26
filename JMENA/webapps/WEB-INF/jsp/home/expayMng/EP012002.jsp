@@ -99,13 +99,15 @@
 				{name: "TAX", type: "number"},
 				{name: "TAXLOCAL", type: "number"},
 				{name: "DEDUCTAMT", type: "number"},
-				{name: "CONNAME", type: "number"},
+				{name: "CONNAME", type: "string"},
 				{name: "CONPY", type: "number"},
 				{name: "ADDRESS", type: "string"},
 				{name: "KNAME", type: "string"},
 				{name: "JUMINID", type: "string"},
 				{name: "NAME_BRANCHCODE", type: "string"},
-				{name: "NAME_DEPTCODE", type: "string"}
+				{name: "NAME_DEPTCODE", type: "string"},
+				{name: "PAYERNAME", type: "string"},
+				{name: "PAYERID", type: "string"}				
 			],
             root: "rows",
             //record: "records",
@@ -143,6 +145,8 @@
 				{text: "성명", datafield: "KNAME", width: 100, cellsalign: "center", align: "center"},
 				{text: "주민번호", datafield: "JUMINID", width: 140, cellsalign: "center", align: "center"},
 				{text: "지급일", datafield: "PAYDATE", width: 100, cellsalign: "center", align: "center"},
+				{text: "신고인", datafield: "PAYERNAME", width: 100, cellsalign: "center", align: "center"},
+				{text: "주민번호", datafield: "PAYERID", width: 140, cellsalign: "center", align: "center"},
 				{text: "고객", datafield: "CONNAME", width: 100, cellsalign: "center", align: "center"},
 				{text: "물건지", datafield: "ADDRESS", width: 240, cellsalign: "left", align: "center"},
 				{text: "평수", datafield: "CONPY", width: 80, cellsalign: "right", align: "center", cellsformat: "f2"},
@@ -179,7 +183,7 @@
 		
 		$("#excelButton").click(function () {
 			
-	        $("#mainList").jqxGrid('exportdata', 'xls', 'monthsudang', true, null, true, null, 'utf-8');
+	        $("#mainList").jqxGrid('exportdata', 'xls', 'monthsudang', true, null, false, null, 'utf-8');
 	        
 	    });
 		

@@ -33,6 +33,7 @@
 			$("#SL_BRROWDATE_FR").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#SL_BRROWDATE_TO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			$("#SL_CONADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+			$("#SL_KNAME").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
 			
 			$("#searchPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
 			$("#searchManageNoPopButton").jqxButton({ theme: 'energyblue', width: 25, height: 25, imgPosition: "center", imgSrc: "/resource/jqwidgets-ver5.4.0/jqwidgets/styles/images/icon-right.png", textImageRelation: "overlay" });
@@ -53,15 +54,15 @@
 			$("#SALEDATE").jqxInput({theme: 'energyblue', height: 25, width: 120, minLength: 1});
 			$("#SALEID").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1, disabled: true});
 			$("#MANAGENO").jqxInput({theme: 'energyblue', height: 25, width: 190, minLength: 1, disabled: true});
-			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1, disabled: true});
+			$("#ADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 400, minLength: 1, disabled: true});
 			$("#CONBM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONJM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONBPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONJPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1, disabled: true});
 			$("#CONNAME").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#CONJUMINID").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1, maxLength: 13});
-			$("#CONTELNO").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
-			$("#CONADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+			$("#CONTELNO").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
+			$("#CONADDRESS").jqxInput({theme: 'energyblue', height: 25, width: 400, minLength: 1});
 			$("#CONM2").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 			$("#CONPY").jqxInput({theme: 'energyblue', height: 25, width: 80, minLength: 1});
 			$("#BRROWAMT").jqxInput({theme: 'energyblue', height: 25, width: 100, minLength: 1});
@@ -74,7 +75,7 @@
 			$("#EXPIREDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#EXTENDDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
 			$("#CANCELDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});
-			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 250, minLength: 1});
+			$("#REMARK").jqxInput({theme: 'energyblue', height: 25, width: 400, minLength: 1});
 			$("#REGDATE").jqxInput({theme: 'energyblue', height: 25, width: 150, minLength: 1});		
 			
 			$("#CITYCODE").attr("disabled", true);
@@ -212,7 +213,7 @@
 		//매출관리 소비대차 메인 그리드
 		function f_selectListEnaSaleMstBDtl(){
 			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-			
+			console.info($.trim($("#SL_KNAME").val()));
 			$('#leftList').jqGrid({
 				url:"/home/selectListEanSaleMstBDtl.do" ,
 				datatype:"json",
@@ -220,9 +221,10 @@
 				postData : {
 					SL_BRROWDATE_FR : $("#SL_BRROWDATE_FR").val(),
 					SL_BRROWDATE_TO : $("#SL_BRROWDATE_TO").val(),
-					SL_SALERNAME : $("#SL_SALERNAME").val(),
+					//SL_SALERNAME : $("#SL_SALERNAME").val(),
 					SL_ADDRESS : $("#SL_ADDRESS").val(),
-					SL_CANCELYN : $("input[name='SL_CANCELYN']:checked").val()
+					SL_CANCELYN : $("input[name='SL_CANCELYN']:checked").val(),
+					SL_KNAME : $.trim($("#SL_KNAME").val())
 				},
 				loadtext: '로딩중...',
 				loadError:function(){alert("Error~!!");},
@@ -551,7 +553,14 @@
 					return false;
 				}
 				
-				if ($("#CONJUMINID").val() == "") {
+				/* if ($("#CONJUMINID").val() == "") {
+					alert("차입자 주민번호를 입력하셔야 합니다.");
+					
+					$("#CONJUMINID").focus();
+					return false;
+				} */
+				
+				if($("#CONJUMINID").val().replace(/[^0-9]/g, "") == "") {
 					alert("차입자 주민번호를 입력하셔야 합니다.");
 					
 					$("#CONJUMINID").focus();
@@ -1018,9 +1027,10 @@
 				<tr>
 					<th width="120">담당자</th>
 					<td>
-						<select id="SL_SALERNAME" name="SL_SALERNAME">
+						<!-- <select id="SL_SALERNAME" name="SL_SALERNAME">
 							<option value="ALL" selected="selected">전체</option>
-						</select>
+						</select> -->
+						<input type="text" id="SL_KNAME" />
 					</td>
 				</tr>
 				<tr>

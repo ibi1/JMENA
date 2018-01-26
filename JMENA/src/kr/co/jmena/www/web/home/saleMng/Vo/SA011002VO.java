@@ -4,9 +4,10 @@ public class SA011002VO {
 	
 	private String SL_BRROWDATE_FR;
 	private String SL_BRROWDATE_TO;
-	private String SL_SALERCD;
+	/*private String SL_SALERCD;*/
 	private String SL_ADDRESS;
 	private String SL_CANCELYN;
+	private String SL_KNAME;
 	
 	private String SALEDATE;
 	private String SALEID;
@@ -71,12 +72,6 @@ public class SA011002VO {
 	public void setSL_BRROWDATE_TO(String sL_BRROWDATE_TO) {
 		this.SL_BRROWDATE_TO = sL_BRROWDATE_TO;
 	}
-	public String getSL_SALERCD() {
-		return this.SL_SALERCD;
-	}
-	public void setSL_SALERCD(String sL_SALERCD) {
-		this.SL_SALERCD = sL_SALERCD;
-	}
 	public String getSL_ADDRESS() {
 		return this.SL_ADDRESS;
 	}
@@ -88,6 +83,12 @@ public class SA011002VO {
 	}
 	public void setSL_CANCELYN(String sL_CANCELYN) {
 		this.SL_CANCELYN = sL_CANCELYN;
+	}
+	public String getSL_KNAME() {
+		return this.SL_KNAME;
+	}
+	public void setSL_KNAME(String sL_KNAME) {
+		this.SL_KNAME = sL_KNAME;
 	}
 	public String getSALEDATE() {
 		return this.SALEDATE;

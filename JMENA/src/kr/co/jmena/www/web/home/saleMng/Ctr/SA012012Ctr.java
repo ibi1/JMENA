@@ -82,6 +82,7 @@ public class SA012012Ctr {
 			obj.put("REGDATE", lst.get(i).getREGDATE());
 			obj.put("FULLADDRESS", lst.get(i).getCITYNAME() +" "+ lst.get(i).getBOROUGHNAME() +" "+ lst.get(i).getADDRESS());
 			obj.put("KNAME", lst.get(i).getKNAME());
+			obj.put("NAME_BRANCHCODE", lst.get(i).getNAME_BRANCHCODE());
 			obj.put("MNGRNAME", lst.get(i).getMNGRNAME());			
 			
 			jCell.add(obj);

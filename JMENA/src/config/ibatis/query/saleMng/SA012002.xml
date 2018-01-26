@@ -112,7 +112,7 @@
 					AND E.KNAME LIKE '%$S_KNAME$%'
 				</isNotEmpty>
 			) V
-			ORDER BY DEPOSITDATE DESC, SALEID ASC
+			ORDER BY DEPOSITDATE ASC, SALEID ASC
 	</select>
 	
 </sqlMap>

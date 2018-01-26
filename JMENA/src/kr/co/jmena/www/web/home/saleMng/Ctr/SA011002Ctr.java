@@ -1,5 +1,6 @@
 package kr.co.jmena.www.web.home.saleMng.Ctr;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -56,9 +57,10 @@ public class SA011002Ctr {
 		
 		vo.setSL_BRROWDATE_FR(request.getParameter("SL_BRROWDATE_FR"));
 		vo.setSL_BRROWDATE_TO(request.getParameter("SL_BRROWDATE_TO"));
-		vo.setSALERCD(request.getParameter("SL_SALERNAME"));			//담당자
+		/*vo.setSALERCD(request.getParameter("SL_SALERNAME"));*/			//담당자
 		vo.setADDRESS(request.getParameter("SL_ADDRESS"));
 		vo.setSL_CANCELYN(request.getParameter("SL_CANCELYN"));
+		vo.setSL_KNAME(URLDecoder.decode(request.getParameter("SL_KNAME"), "UTF-8"));
 		
 		List<SA011002VO> lst = SA011002Biz.selectListEanSaleMstBDtl(vo);
 		
@@ -135,7 +137,7 @@ public class SA011002Ctr {
 		vo.setBUYID(request.getParameter("MANAGENO"));
 		vo.setMANAGENO(request.getParameter("MANAGENO"));
 		vo.setCONNAME(request.getParameter("CONNAME"));
-		vo.setCONJUMINID(request.getParameter("CONJUMINID"));
+		vo.setCONJUMINID(request.getParameter("CONJUMINID").replaceAll("-", ""));
 		vo.setCONADDRESS(request.getParameter("CONADDRESS"));
 		vo.setCONTELNO(request.getParameter("CONTELNO"));
 		vo.setCONM2(request.getParameter("CONM2"));

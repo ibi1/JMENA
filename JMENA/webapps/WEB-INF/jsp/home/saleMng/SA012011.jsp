@@ -195,6 +195,7 @@
 					{text: "매출구분", datafield: "NAME_SALEGUBUN", width: 80, cellsalign: "center", align: "center"},
 					{text: "지사", datafield: "BRANCHNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "계약날짜", datafield: "SALEDATE", width: 100, cellsalign: "center", align: "center"},
+					{text: "잔금입금일", datafield: "DEPOSITDATE", width: 100, cellsalign: "center", align: "center"},
 					{text: "담당", datafield: "KNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "실장", datafield: "MNGRNAME", width: 100, cellsalign: "center", align: "center"},
 					{text: "고객", datafield: "CONNAME", width: 100, cellsalign: "center", align: "center"},
@@ -204,7 +205,6 @@
 					{text: "DC금액", datafield: "DCAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "실판매가", datafield: "SELLAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
 					{text: "위탁수수료", datafield: "AGENCYAMT", width: 120, cellsalign: "right", align: "center", cellsformat: "n"},
-					{text: "잔금입금일", datafield: "DEPOSITDATE", width: 100, cellsalign: "center", align: "center"},
 					{text: "판매번호", datafield: "SALEID", width: 100, cellsalign: "center", align: "center", hidden: true}
 	            ]
 	        });			

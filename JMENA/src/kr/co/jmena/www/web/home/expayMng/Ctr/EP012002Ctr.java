@@ -66,24 +66,80 @@ public class EP012002Ctr {
 		List<EP012002VO> lst = EP012002Biz.selectListSudangMst(vo);
 		
 		for (int i = 0; i < lst.size(); i++) {
-			JSONObject obj = new JSONObject();
 			
-			obj.put("SALEID", lst.get(i).getSALEID());
-			obj.put("PAYSEQ", lst.get(i).getPAYSEQ());
-			obj.put("PAYDATE", lst.get(i).getPAYDATE());
-			obj.put("PAYAMT", lst.get(i).getPAYAMT());
-			obj.put("TAX", lst.get(i).getTAX());
-			obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
-			obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());
-			obj.put("CONNAME", lst.get(i).getCONNAME());
-			obj.put("CONPY", lst.get(i).getCONPY());
-			obj.put("ADDRESS", lst.get(i).getADDRESS());
-			obj.put("KNAME", lst.get(i).getKNAME());
-			obj.put("JUMINID", lst.get(i).getJUMINID());
-			obj.put("NAME_BRANCHCODE", lst.get(i).getNAME_BRANCHCODE());
-			obj.put("NAME_DEPTCODE", lst.get(i).getNAME_DEPTCODE());
+			String P_SALEID = lst.get(i).getSALEID();
+			String P_PAYSEQ = lst.get(i).getPAYSEQ();
 			
-			jCell.add(obj);
+			vo.setP_SALEID(P_SALEID);
+			vo.setP_PAYSEQ(P_PAYSEQ);
+			
+			List<EP012002VO> s_lst = EP012002Biz.selectListSudangPayerTb(vo);
+			
+			if(s_lst.size() > 0) {
+				
+				for(int j = 0; j < s_lst.size(); j++) {
+					JSONObject obj = new JSONObject();
+					
+					if(j == 0) {
+						obj.put("SALEID", lst.get(i).getSALEID());
+						obj.put("PAYSEQ", lst.get(i).getPAYSEQ());
+						obj.put("PAYDATE", lst.get(i).getPAYDATE());
+						obj.put("PAYAMT", lst.get(i).getPAYAMT());
+						obj.put("TAX", lst.get(i).getTAX());
+						obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
+						obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());
+						obj.put("CONNAME", lst.get(i).getCONNAME());
+						obj.put("CONPY", lst.get(i).getCONPY());
+						obj.put("ADDRESS", lst.get(i).getADDRESS());
+						obj.put("KNAME", lst.get(i).getKNAME());
+						obj.put("JUMINID", lst.get(i).getJUMINID());
+						obj.put("NAME_BRANCHCODE", lst.get(i).getNAME_BRANCHCODE());
+						obj.put("NAME_DEPTCODE", lst.get(i).getNAME_DEPTCODE());
+					} else {
+						obj.put("SALEID", null);
+						obj.put("PAYSEQ", null);
+						obj.put("PAYDATE", null);
+						obj.put("PAYAMT", null);
+						obj.put("TAX", null);
+						obj.put("TAXLOCAL", null);
+						obj.put("DEDUCTAMT", null);
+						obj.put("CONNAME", null);
+						obj.put("CONPY", null);
+						obj.put("ADDRESS", null);
+						obj.put("KNAME", null);
+						obj.put("JUMINID", null);
+						obj.put("NAME_BRANCHCODE", null);
+						obj.put("NAME_DEPTCODE", null);
+					}
+					
+					obj.put("PAYERNAME", s_lst.get(j).getPAYERNAME());
+					obj.put("PAYERID", s_lst.get(j).getPAYERID());
+					
+					jCell.add(obj);
+				}
+			} else {
+				JSONObject obj = new JSONObject();
+				
+				obj.put("SALEID", lst.get(i).getSALEID());
+				obj.put("PAYSEQ", lst.get(i).getPAYSEQ());
+				obj.put("PAYDATE", lst.get(i).getPAYDATE());
+				obj.put("PAYAMT", lst.get(i).getPAYAMT());
+				obj.put("TAX", lst.get(i).getTAX());
+				obj.put("TAXLOCAL", lst.get(i).getTAXLOCAL());
+				obj.put("DEDUCTAMT", lst.get(i).getDEDUCTAMT());
+				obj.put("CONNAME", lst.get(i).getCONNAME());
+				obj.put("CONPY", lst.get(i).getCONPY());
+				obj.put("ADDRESS", lst.get(i).getADDRESS());
+				obj.put("KNAME", lst.get(i).getKNAME());
+				obj.put("JUMINID", lst.get(i).getJUMINID());
+				obj.put("NAME_BRANCHCODE", lst.get(i).getNAME_BRANCHCODE());
+				obj.put("NAME_DEPTCODE", lst.get(i).getNAME_DEPTCODE());
+				
+				obj.put("PAYERNAME", null);
+				obj.put("PAYERID", null);
+				
+				jCell.add(obj);
+			}
 		}
 		
 		json.put("rows", jCell);
@@ -92,5 +148,4 @@ public class EP012002Ctr {
 		
 		return new ModelAndView("jsonView", json);
 	}
-	
 }

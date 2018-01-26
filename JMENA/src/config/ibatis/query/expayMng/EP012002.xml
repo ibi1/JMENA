@@ -35,6 +35,11 @@
 		<result property="NAME_BRANCHCODE" column="NAME_BRANCHCODE"/>
 		<result property="NAME_DEPTCODE" column="NAME_DEPTCODE"/>	
 	</resultMap>
+	
+	<resultMap class="EP012002VO" id="selectListSudangPayerTb">
+		<result property="PAYERNAME" column="PAYERNAME"/>
+		<result property="PAYERID" column="PAYERID"/>
+	</resultMap>
 <!-- 
 	<select id="selectListEP012002" resultMap="EP012002Data">
 		select 
@@ -95,6 +100,16 @@
 		 	AND SUBSTRING(DATE_FORMAT(A.PAYDATE, '%Y%m%d'), 1, 6) = #S_PAYDATE#
 		 	AND I.KNAME LIKE '%$S_KNAME$%'
 		ORDER BY A.PAYDATE ASC, A.SALEID ASC, A.PAYSEQ ASC	
+	</select>
+	
+	<select id="selectListSudangPayerTb" resultMap="selectListSudangPayerTb">
+		/* EP012002.selectListSudangPayerTb */
+		SELECT PAYERNAME
+			, fn_formatnum('I', PAYERID) AS PAYERID
+		FROM sa_sudangpayertb
+		WHERE SALEID = #P_SALEID#
+			AND PAYSEQ = #P_PAYSEQ#
+		ORDER BY REGISTERSEQ ASC
 	</select>
 	
 </sqlMap>
