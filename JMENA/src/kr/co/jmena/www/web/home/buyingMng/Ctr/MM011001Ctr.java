@@ -194,7 +194,7 @@ public class MM011001Ctr {
 		vo.setUSETYPE(request.getParameter("USETYPE"));
 		vo.setADDRESS(request.getParameter("ADDRESS"));
 		vo.setOWNERNAME(request.getParameter("OWNERNAME"));
-		vo.setOWNERJUMINID(request.getParameter("OWNERJUMINID"));
+		vo.setOWNERJUMINID(request.getParameter("OWNERJUMINID").replaceAll("-", ""));
 		vo.setBUYM2(request.getParameter("BUYM2"));
 		vo.setBUYPY(request.getParameter("BUYPY"));
 		vo.setBUYAMT(request.getParameter("BUYAMT"));
