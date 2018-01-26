@@ -45,6 +45,9 @@ public class HR011001VO {
 	private String PREBASICPAY;
 	private String BASICACCT;
 	
+	private String S_BANKNAME;
+	private String BANKCODE;
+	
 	
 	public String getRECONAME() {
 		return this.RECONAME;
@@ -359,5 +362,17 @@ public class HR011001VO {
 	}
 	public void setDUTYNAME(String dUTYNAME) {
 		this.DUTYNAME = dUTYNAME;
-	}	
+	}
+	public String getS_BANKNAME() {
+		return this.S_BANKNAME;
+	}
+	public void setS_BANKNAME(String s_BANKNAME) {
+		this.S_BANKNAME = s_BANKNAME;
+	}
+	public String getBANKCODE() {
+		return this.BANKCODE;
+	}
+	public void setBANKCODE(String bANKCODE) {
+		this.BANKCODE = bANKCODE;
+	}
 }

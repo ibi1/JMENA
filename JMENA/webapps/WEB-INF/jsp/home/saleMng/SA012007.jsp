@@ -171,12 +171,13 @@
             enabletooltips: true,
             editable: false,
             selectionmode: 'singlerow',
+            columnsresize: true,
             columns: [
                       
 				{ text: '매출구분',			datafield: "DCODENAME",			width: 80, cellsalign: 'center', align: 'center'},
 				{ text: '지역',				datafield: "CITYNAME",			width: 150, cellsalign: 'center', align: 'center'},
 				{ text: '시/도',			datafield: "BOROUGHNAME",		width: 150, cellsalign: 'center', align: 'center'},
-				{ text: '주소/지번',		datafield: "ADDRESS",			width: 200, cellsalign: 'center', align: 'center'},
+				{ text: '주소/지번',		datafield: "ADDRESS",			width: 200, cellsalign: 'left', align: 'center'},
 				{ text: '면적(m2)',			datafield: "BUYM2",				width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
 				{ text: '평수',				datafield: "BUYPY",				width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
 				{ text: '계약면적',			datafield: "CONM2",				width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
@@ -184,8 +185,8 @@
 				{ text: '잔여면적',			datafield: "REMNM2",			width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
 				{ text: '잔여평수',			datafield: "REMNPY",			width: 100, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
 				{ text: '평단가',			datafield: "PMDANGA",			width: 150, cellsalign: 'right', align: 'center', cellsformat: 'f2'},
-				{ text: '오픈지사현황',		datafield: "OPENBRANCH",		width: 200, cellsalign: 'center', align: 'center'},
-				{ text: '비고',				datafield: "HOLDING",			width: 250, cellsalign: 'center', align: 'center'}
+				{ text: '오픈지사현황',		datafield: "OPENBRANCH",		width: 200, cellsalign: 'left', align: 'center'},
+				{ text: '비고',				datafield: "HOLDING",			width: 250, cellsalign: 'left', align: 'center'}
 				
 			]            
         });

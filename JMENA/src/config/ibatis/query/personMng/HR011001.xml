@@ -95,6 +95,10 @@
 		<result property="RECONAME"		column="RECONAME"/>
 	</resultMap>
 	
+	<resultMap id="selectOneBankMst" class="HR011001VO">
+		<result property="BANKCODE"		column="BANKCODE"/>
+		<result property="BANKNAME"		column="BANKNAME"/>
+	</resultMap>
 	
 	<select id="selectListEnaInsaMst" resultMap="selectListEnaInsaMstData">
 		SELECT 
@@ -451,4 +455,16 @@
 		AND T1.KNAME = #KNAME#
 	</select>
 	
+	<select id="selectOneBankMst" resultMap="selectOneBankMst">
+		SELECT BANKCODE
+			, BANKNAME
+		FROM sy_bankmst
+		WHERE USEYN = 'Y'
+			<isNotEmpty property="S_BANKNAME">
+			AND BANKNAME LIKE '$S_BANKNAME$%'
+			</isNotEmpty>
+		ORDER BY BANKCODE ASC
+		LIMIT 1
+	</select>
+		
 </sqlMap>

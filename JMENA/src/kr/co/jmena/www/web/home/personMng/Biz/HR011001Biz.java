@@ -212,4 +212,16 @@ public class HR011001Biz {
 		return lst;
 	}
 	
+	public List<HR011001VO> selectOneBankMst(HR011001VO vo) throws Exception {
+		List<HR011001VO> lst = null;
+
+		try {
+			lst = HR011001Dao.selectOneBankMst(vo);
+		} catch ( Exception e ) {
+			throw e;
+		}
+		
+		return lst;
+	}	
+	
 }

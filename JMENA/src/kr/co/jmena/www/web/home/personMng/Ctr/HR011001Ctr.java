@@ -617,7 +617,29 @@ public class HR011001Ctr {
 		logger.debug("[selectHRInsamstBranchCode]" + json);
 		
 		return new ModelAndView("jsonView", json);
-	}
+	}	
 	
-	
+	@RequestMapping("/home/selectOneBankMst.do")
+	public ModelAndView selectOneBankMst(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HR011001VO vo = new HR011001VO();
+		
+		vo.setS_BANKNAME(request.getParameter("S_BANKNAME"));
+		
+		List<HR011001VO> lst = HR011001Biz.selectOneBankMst(vo);
+		
+		JSONArray jCell = new JSONArray();
+		JSONObject json = new JSONObject();
+		
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = new JSONObject();
+			
+			obj.put("BANKCODE", lst.get(i).getBANKCODE());
+			obj.put("BANKNAME", lst.get(i).getBANKNAME());
+			
+			jCell.add(obj);
+		}
+		json.put("rows", jCell);
+		
+		return new ModelAndView("jsonView", json);
+	}		
 }

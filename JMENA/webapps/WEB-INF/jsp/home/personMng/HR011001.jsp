@@ -391,13 +391,22 @@
 			datatype:"json" ,
 			loadtext: '로딩중...',
 			loadError:function(){alert("Error~!!");} ,
-			colNames:['사번','순번','소득신고인', '주민번호(사업자)', '거래은행', '계좌번호', '계좌주', '기본계좌', '비고'] ,
+			colNames:['사번','순번','소득신고인', '주민번호(사업자)', '거래은행', '은행코드', '계좌번호', '계좌주', '기본계좌', '비고'] ,
 			colModel:[
 				 {name:"INSACODE",		index:'INSACODE',		width:100,		align:'center',	sortable:false, hidden:true}
 				,{name:"ITEMSEQ",		index:'ITEMSEQ',		width:100,		align:'center',	sortable:false, hidden:true}
 				,{name:"PAYERNAME",		index:'PAYERNAME',		width:100,		align:'center',	sortable:false, editable:true}
 				,{name:"PAYERID",		index:'PAYERID',		width:120,		align:'center',	sortable:false, editable:true}
-				,{name:"BANKNAME",		index:'BANKNAME',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}}
+				/* ,{name:"BANKNAME",		index:'BANKNAME',		width:100,		align:'center',	sortable:false, editable:true, edittype:'select', editoptions:{dataUrl:"/codeCom/bankList.do", buildSelect:f_selectListEnaBankCode}} */				
+				,{name:"BANKNAME",		index:'BANKNAME',		width:100,		align:'center',	sortable:false, editable:true, edittype:'text', editoptions:{
+					dataEvents:[{
+						type: 'change',
+						fn: function(e) {
+							f_selectOneBankMst();
+						}
+					}]
+				}}
+				,{name:"BANKID",		index:'BANKID',			width:60,		align:'center',	sortable:false}
 				,{name:"ACCTNO",		index:'ACCTNO',			width:100,		align:'center',	sortable:false, editable:true}
 				,{name:"ACCTOWNER",		index:'ACCTOWNER',		width:100,		align:'center',	sortable:false, editable:true}
 				,{name:"BASICACCT",		index:'BASICACCT',		width:100,		align:'center',	sortable:false, editable: true, formatter:'checkbox', edittype:'checkbox', editoptions:{value:"Y:N",			
@@ -678,7 +687,34 @@
 		
 		result +="</select>";
 		return result;
-	}		
+	}
+	
+	function f_selectOneBankMst() {
+		var ids = $("#bottomList2").jqGrid('getGridParam', 'selrow');		//선택아이디 가져오기		
+		
+		var S_BANKNAME = $.trim($("#bottomList2 input[name=BANKNAME]").val());
+		if (S_BANKNAME != "") {
+			$.ajax({ 
+				type: "POST",
+				url: "/home/selectOneBankMst.do",
+				data: {S_BANKNAME : S_BANKNAME},
+				dataType: "json", 
+				success: function(data) {
+					var receiveData = data.rows;
+					
+					if(receiveData.length > 0) {
+						$("#bottomList2 input[name=BANKNAME]").val(receiveData[0].BANKNAME);
+						$("#bottomList2").jqGrid('setCell', ids, 'BANKID', receiveData[0].BANKCODE);
+					} else {
+						$("#bottomList2 input[name=BANKNAME]").val("");
+					}
+				},
+				error: function(x, s, e) {
+					alert("[ERROR]"+ e);
+				}
+			});
+		}
+	}
 	
 	function selectListEnaCode(data){
 		var jsonValue = $.parseJSON(data).dcodeList;
@@ -1138,7 +1174,9 @@
 				return false;
 			}
 			
-			var bankId = $("#bottomList2 [name=BANKNAME] option:selected").val();			
+			//var bankId = $("#bottomList2 [name=BANKNAME] option:selected").val();
+			var bankName = $.trim($("#bottomList2 [name=BANKNAME]").val());
+			var bankId = $("#bottomList2").getCell(ids,"BANKID");
 			
 			var basicAcct = $("#bottomList2").getCell(ids,"BASICACCT");
 			
@@ -1167,11 +1205,12 @@
 				return false;
 			}
 		
-			if (bankId == "") {
-				alert("거래은행을 선택하셔야 합니다.");
+			if (bankName == "" || bankId == "") {
+				//alert("거래은행을 선택하셔야 합니다.");
+				alert("거래은행을 입력하셔야 합니다.");
 			
 				$('#bottomList2').jqGrid('editRow', ids, true);
-				$("#"+ids+"BANKNAME").focus();
+				$("#"+ids+"_BANKNAME").focus();
 			
 				return false;
 			}
@@ -1221,8 +1260,7 @@
 				alert("기본계좌를 하나만 선택해 주세요");
 				$('#bottomList2').jqGrid('editRow', ids, true);
 				return false; 
-			}	
-			
+			}
 			
 			var insacode = $("#INSACODE").val();
 			if (confirm(msg) == true) {

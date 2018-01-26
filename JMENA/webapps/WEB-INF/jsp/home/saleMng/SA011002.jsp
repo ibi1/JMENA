@@ -213,7 +213,6 @@
 		//매출관리 소비대차 메인 그리드
 		function f_selectListEnaSaleMstBDtl(){
 			$('#leftList').jqGrid("GridUnload");	//새로운 값으로 변경할 때 사용
-			console.info($.trim($("#SL_KNAME").val()));
 			$('#leftList').jqGrid({
 				url:"/home/selectListEanSaleMstBDtl.do" ,
 				datatype:"json",

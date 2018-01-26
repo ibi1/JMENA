@@ -91,7 +91,10 @@ public class SA012007Ctr {
 			List<SA012007VO> lst2 = SA012007Biz.selectListSA012007_1(vo2);
 			String OPENBRANCH = "";
 			for (int j = 0; j < lst2.size(); j++) {
-				OPENBRANCH = OPENBRANCH + lst2.get(j).getOPENBRANCH() + ",";
+				if(!OPENBRANCH.equals("")) {
+					if(j > 0) OPENBRANCH += ", ";
+				}
+				OPENBRANCH = OPENBRANCH + lst2.get(j).getOPENBRANCH();
 			}
 			obj.put("OPENBRANCH", OPENBRANCH);
 			
@@ -100,7 +103,10 @@ public class SA012007Ctr {
 			List<SA012007VO> lst3 = SA012007Biz.selectListSA012007_2(vo3);
 			String HOLDING = "";
 			for (int k = 0; k < lst3.size(); k++) {
-				HOLDING = HOLDING + lst3.get(k).getHOLDING() + ",";
+				if(!HOLDING.equals("")) {
+					if(k > 0) HOLDING += ", ";
+				}
+				HOLDING = HOLDING + lst3.get(k).getHOLDING();
 			}
 			obj.put("HOLDING", HOLDING);
 			

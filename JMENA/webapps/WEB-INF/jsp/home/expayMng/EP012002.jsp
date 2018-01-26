@@ -118,7 +118,6 @@
             downloadComplete: function (data, status, xhr) {
             },
             loadComplete: function (data) {
-            	console.info(data);
             	var countRow = $('#mainList').jqxGrid('getrows');
             	$("#mainListCount").html(countRow.length);
             },

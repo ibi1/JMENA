@@ -150,6 +150,13 @@ public class HR011001Dao extends SqlMapClientDaoSupport {
 		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectHRInsamst", vo);
 		
 		return lst;
-	}	
+	}
 	
+	public List<HR011001VO> selectOneBankMst(HR011001VO vo) throws DataAccessException {
+		List<HR011001VO> lst = null;
+		
+		lst = getSqlMapClientTemplate().queryForList(NAME_SPACE + "selectOneBankMst", vo);
+		
+		return lst;
+	}	
 }

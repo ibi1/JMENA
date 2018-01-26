@@ -84,11 +84,13 @@
 	
 
 	<select id="selectListSA012007_1" resultMap="SA012007Data1">
+		/* SA012007.selectListSA012007_1 */
 		select
-			(select branchname from ba_branchmst where branchcode = t1.branchcode) as OPENBRANCH
+			<!-- (select branchname from ba_branchmst where branchcode = t1.branchcode) as OPENBRANCH -->
+			IFNULL(CONCAT(fn_codename('02', t1.BRANCHCODE, NULL), ' (', HOLDINGDATE, ', ', CAST(HOLDINGM2 AS DECIMAL(12, 2)), ')'), '') as OPENBRANCH
 		from mm_salesopentb t1
 		where 1=1
-		and t1.buyid = #BUYID# 
+		and t1.buyid = #BUYID#
 		order by t1.buyid asc
 	</select>
 
