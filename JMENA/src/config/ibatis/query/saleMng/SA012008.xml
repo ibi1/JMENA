@@ -121,7 +121,15 @@
 		        (t1.conm2 + (SELECT IFNULL(SUM(HOLDINGM2), 0) FROM mm_salesopentb WHERE BUYID = t1.BUYID)) as conm2,
 				ifnull(t2.regdate, "") as regdate2,
 				t2.sellamt as saleamt,
-				((select buym2 from mm_buymst where buyid = t1.BUYID) - ((SELECT IFNULL(SUM(A.CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = t1.BUYID AND (B.CHGGUBUN != '004' OR B.CHGGUBUN IS NULL)) + (SELECT IFNULL(SUM(HOLDINGM2), 0) FROM mm_salesopentb WHERE BUYID = t1.BUYID))) as remnm2,
+				<!-- ((select buym2 from mm_buymst where buyid = t1.BUYID) - ((SELECT IFNULL(SUM(A.CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = t1.BUYID AND (B.CHGGUBUN != '004' OR B.CHGGUBUN IS NULL)) + (SELECT IFNULL(SUM(HOLDINGM2), 0) FROM mm_salesopentb WHERE BUYID = t1.BUYID))) as remnm2, -->
+				CAST((
+					(select IFNULL(buym2, 0) from mm_buymst where buyid = t1.BUYID)
+                    - (
+						(SELECT IFNULL(SUM(A.CONM2), 0) FROM sa_salemst A LEFT OUTER JOIN sa_salehistorytb B ON A.SALEID = B.SALEID WHERE A.BUYID = t1.BUYID AND A.SALEGUBUN != '003' AND (B.CHGGUBUN != '004' OR B.CHGGUBUN IS NULL)) 
+                        + (SELECT IFNULL(SUM(A.CONM2), 0) FROM sa_salemst A INNER JOIN sa_salebdtl B ON A.SALEID = B.SALEID WHERE A.BUYID = t1.BUYID AND A.SALEGUBUN = '003' AND (B.CANCELYN = 'N' AND B.EXPIREYN = 'N'))
+						+ (SELECT IFNULL(SUM(HOLDINGM2), 0) FROM mm_salesopentb WHERE BUYID = t1.BUYID)
+					)
+				) AS DECIMAL(12, 2)) as remnm2,
 				(select buym2 from mm_buymst where buyid = t1.BUYID) as buym2,
 				(select buyamt from mm_buymst where buyid = t1.BUYID) as buyamt
 			from (

@@ -61,7 +61,7 @@
 		            T1.OWNERNAME,
 		            T1.BUYM2,
 		            T1.BUYPY,
-		            CAST(((SELECT 
+		            <!-- CAST(((SELECT 
 		                        IFNULL(SUM(IN4.CONPY), 0) AS CONPY
 		                    FROM
 		                        sa_salemst IN4
@@ -93,7 +93,20 @@
 		                        mm_salesopentb IN3
 		                    WHERE
 		                        IN3.BUYID = T1.BUYID)))
-		                AS DECIMAL (12 , 2 )) AS JANBUYPY,
+		                AS DECIMAL (12 , 2 )) AS JANBUYPY, -->
+		            CAST((
+						(SELECT IFNULL(SUM(IN1.CONPY), 0) FROM sa_salemst IN1 LEFT OUTER JOIN sa_salehistorytb IN2 ON IN1.SALEID = IN2.SALEID WHERE IN1.BUYID = T1.BUYID AND IN1.SALEGUBUN != '003' AND (IN2.CHGGUBUN != '004' OR IN2.CHGGUBUN IS NULL))
+	                    + (SELECT IFNULL(SUM(IN1.CONPY), 0) FROM sa_salemst IN1 INNER JOIN sa_salebdtl IN2 ON IN1.SALEID = IN2.SALEID WHERE IN1.BUYID = T1.BUYID AND IN1.SALEGUBUN = '003' AND (IN2.CANCELYN = 'N' AND IN2.EXPIREYN = 'N'))
+	                    + (SELECT IFNULL(SUM(IN1.HOLDINGM2), 0) FROM mm_salesopentb IN1 WHERE IN1.BUYID = T1.BUYID)
+					) AS DECIMAL(12, 2)) AS BUNBUYPY,
+	                CAST((
+						IFNULL(T1.BUYPY, 0)
+	                    - (
+							(SELECT IFNULL(SUM(IN1.CONPY), 0) FROM sa_salemst IN1 LEFT OUTER JOIN sa_salehistorytb IN2 ON IN1.SALEID = IN2.SALEID WHERE IN1.BUYID = T1.BUYID AND IN1.SALEGUBUN != '003' AND (IN2.CHGGUBUN != '004' OR IN2.CHGGUBUN IS NULL))
+							+ (SELECT IFNULL(SUM(IN1.CONPY), 0) FROM sa_salemst IN1 INNER JOIN sa_salebdtl IN2 ON IN1.SALEID = IN2.SALEID WHERE IN1.BUYID = T1.BUYID AND IN1.SALEGUBUN = '003' AND (IN2.CANCELYN = 'N' AND IN2.EXPIREYN = 'N'))
+							+ (SELECT IFNULL(SUM(IN1.HOLDINGM2), 0) FROM mm_salesopentb IN1 WHERE IN1.BUYID = T1.BUYID)
+						)
+					) AS DECIMAL(12, 2)) AS JANBUYPY,
 		            T1.BUYAMT,
 		            (SELECT 
 		                    SUM(PAYAMT)

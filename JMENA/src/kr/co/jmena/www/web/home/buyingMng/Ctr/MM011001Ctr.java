@@ -456,8 +456,13 @@ public class MM011001Ctr {
 		
 		JSONObject obj = new JSONObject();
 		
-		obj.put("CONM2", lst.get(0).getCONM2());
-		obj.put("CONPY", lst.get(0).getCONPY());
+		if(lst.size() > 0) {
+			obj.put("CONM2", lst.get(0).getCONM2());
+			obj.put("CONPY", lst.get(0).getCONPY());
+		} else {
+			obj.put("CONM2", 0);
+			obj.put("CONPY", 0);
+		}
 		
 		json.put("rows", obj);
 		
