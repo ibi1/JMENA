@@ -86,8 +86,8 @@
 				) AS DECIMAL(12, 2)) AS remnpy,
 				t1.buydanga,
 				t1.PMDANGA
-				from mm_buymst t1, 
-				(select DISTINCT buyid from mm_payscheduletb where 1=1 and !(paygubun = '005' and payyn = 'Y')) t2
+				from mm_buymst t1<!-- , 
+				(select DISTINCT buyid from mm_payscheduletb where 1=1 and !(paygubun = '005' and payyn = 'Y')) t2 -->
 			where 1=1
 			<isNotEqual property="S_SALEGUBUN" compareValue="ALL">
 			and t1.buygubun = #S_SALEGUBUN#
@@ -101,7 +101,7 @@
 			<isNotEmpty property="S_ADDRESS">
 			    AND t1.address LIKE '%$S_ADDRESS$%'
 			</isNotEmpty>
-				and t1.buyid = t2.buyid
+				<!-- and t1.buyid = t2.buyid -->
 			order by t1.citycode, t1.boroughcode asc		
 		) A
 		where 1=1
